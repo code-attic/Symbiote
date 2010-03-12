@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Symbiote">
+</Property><Property Name="Solution File" Value="E:\git\Symbiote\src\Symbiote.sln">
+</Property><Property Name="Date" Value="Monday, February 22, 2010">
+</Property><Property Name="Time" Value="0:01 AM">
+</Property></Properties><Event ErrorLevel="0" Project="Symbiote.Core" Source="Symbiote.Core\Symbiote.Core.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Core" Source="Symbiote.Core\Symbiote.Core.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Daemon" Source="Symbiote.Daemon\Symbiote.Daemon.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Daemon" Source="Symbiote.Daemon\Symbiote.Daemon.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Eidetic" Source="Symbiote.Eidetic\Symbiote.Eidetic.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Eidetic" Source="Symbiote.Eidetic\Symbiote.Eidetic.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jackalope" Source="Symbiote.Jackalope\Symbiote.Jackalope.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Jackalope" Source="Symbiote.Jackalope\Symbiote.Jackalope.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Relax" Source="Symbiote.Relax\Symbiote.Relax.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Relax" Source="Symbiote.Relax\Symbiote.Relax.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="DaemonDemo" Source="..\demo\DaemonDemo\DaemonDemo.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="DaemonDemo" Source="..\demo\DaemonDemo\DaemonDemo.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Log4Net" Source="Symbiote.Log4Net\Symbiote.Log4Net.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Log4Net" Source="Symbiote.Log4Net\Symbiote.Log4Net.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jabber.Tests" Source="..\tests\Symbiote.Jabber.Tests\Symbiote.Jabber.Tests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Jabber.Tests" Source="..\tests\Symbiote.Jabber.Tests\Symbiote.Jabber.Tests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jabber" Source="Symbiote.Jabber\Symbiote.Jabber.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Jabber" Source="Symbiote.Jabber\Symbiote.Jabber.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.TestSpec" Source="..\tests\Symbiote.TestSpec\Symbiote.TestSpec.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.TestSpec" Source="..\tests\Symbiote.TestSpec\Symbiote.TestSpec.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Hibernate" Source="Symbiote.Hibernate\Symbiote.Hibernate.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Hibernate" Source="Symbiote.Hibernate\Symbiote.Hibernate.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Telepathy" Source="Symbiote.Hypertext\Symbiote.Telepathy.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Symbiote.Telepathy" Source="Symbiote.Hypertext\Symbiote.Telepathy.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Jackalope.Tests" Source="..\tests\Jackalope.Tests\Jackalope.Tests.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Jackalope.Tests" Source="..\tests\Jackalope.Tests\Jackalope.Tests.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="PublishDemo" Source="..\demo\PublishDemo\PublishDemo.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="PublishDemo" Source="..\demo\PublishDemo\PublishDemo.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="SubscribeDemo" Source="..\demo\SubscribeDemo\SubscribeDemo.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="SubscribeDemo" Source="..\demo\SubscribeDemo\SubscribeDemo.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="" Source="Symbiote.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Symbiote.sln" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Symbiote.Core" Source="Symbiote.Core\Symbiote.Core.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Daemon" Source="Symbiote.Daemon\Symbiote.Daemon.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Eidetic" Source="Symbiote.Eidetic\Symbiote.Eidetic.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jackalope" Source="Symbiote.Jackalope\Symbiote.Jackalope.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Relax" Source="Symbiote.Relax\Symbiote.Relax.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Log4Net" Source="Symbiote.Log4Net\Symbiote.Log4Net.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jabber" Source="Symbiote.Jabber\Symbiote.Jabber.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Hibernate" Source="Symbiote.Hibernate\Symbiote.Hibernate.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Telepathy" Source="Symbiote.Hypertext\Symbiote.Telepathy.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="DaemonDemo" Source="..\demo\DaemonDemo\DaemonDemo.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="PublishDemo" Source="..\demo\PublishDemo\PublishDemo.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="SubscribeDemo" Source="..\demo\SubscribeDemo\SubscribeDemo.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.Jabber.Tests" Source="..\tests\Symbiote.Jabber.Tests\Symbiote.Jabber.Tests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Symbiote.TestSpec" Source="..\tests\Symbiote.TestSpec\Symbiote.TestSpec.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event><Event ErrorLevel="0" Project="Jackalope.Tests" Source="..\tests\Jackalope.Tests\Jackalope.Tests.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

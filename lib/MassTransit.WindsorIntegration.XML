@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MassTransit.WindsorIntegration</name>
+    </assembly>
+    <members>
+        <member name="T:MassTransit.WindsorIntegration.MassTransitFacility">
+            <summary>
+            Facility to simplify the use of MT
+            </summary>
+        </member>
+    </members>
+</doc>
