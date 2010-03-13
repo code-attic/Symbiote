@@ -51,5 +51,20 @@ namespace Symbiote.Core.Extensions
         {
             return DelimitedBuilder.Construct(source, delimiter);
         }
+
+        public static IEnumerable<IEnumerable<T>> UniquePermutations<T>(this IEnumerable<T> enumerable)
+        {
+            var count = enumerable.Count();
+            int total = (int)(Math.Pow(2, count)) - 1;
+            var permutations = (from m in Enumerable.Range(1, 1 << count)
+                                select
+                                    from i in Enumerable.Range(0, count)
+                                    where (m & (1 << i)) != 0
+                                    select enumerable.Skip(i).Take(1).First());
+            return
+                permutations
+                    .Take(total)
+                    .Select(x => x.ToList()).ToList();
+        }
     }
 }

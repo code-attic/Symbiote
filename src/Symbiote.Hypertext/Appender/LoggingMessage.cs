@@ -28,6 +28,8 @@ namespace Symbiote.Telepathy.Appender
 
         public virtual Level Level { get; set; }
 
+        public virtual string RenderedMessage { get; set; }
+
         public LoggingMessage(LoggingEvent loggingEvent)
         {
             Domain = loggingEvent.Domain;
@@ -40,6 +42,7 @@ namespace Symbiote.Telepathy.Appender
             Body = loggingEvent.RenderedMessage;
             LoggedOn = loggingEvent.TimeStamp;
             User = loggingEvent.UserName;
+            RenderedMessage = loggingEvent.RenderedMessage;
         }
     }
 }
