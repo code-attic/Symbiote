@@ -66,5 +66,12 @@ namespace Symbiote.Core.Extensions
                     .Take(total)
                     .Select(x => x.ToList()).ToList();
         }
+
+        public static T TakeRandomly<T>(this IEnumerable<T> enumerable)
+        {
+            var rnd = new Random((int) DateTime.Now.TimeOfDay.TotalSeconds);
+            var index = rnd.Next(0, enumerable.Count());
+            return enumerable.Skip(index).Take(1).First();
+        }
     }
 }
