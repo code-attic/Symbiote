@@ -1,14 +1,15 @@
 using NHibernate;
 
-namespace Symbiote.Hibernate
+namespace Symbiote.Hibernate.Impl
 {
     public class SessionManager : ISessionManager
     {
-        private readonly IContext _context;
+        private readonly ISessionContext _context;
 
-        public SessionManager(IContext context)
+        public SessionManager(ISessionContext context)
         {
             _context = context;
+            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
 
         public ISession CurrentSession
@@ -25,11 +26,6 @@ namespace Symbiote.Hibernate
                 }
             }
             set { _context.Set("CurrentSession", value); }
-        }
-
-        private SessionManager()
-        {
-            
         }
     }
 }
