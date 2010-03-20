@@ -41,6 +41,7 @@ namespace Symbiote.Hibernate
                                             x.For<ISessionContext>().Use<InMemoryContext>();
                                             x.For<ISessionManager>().Use<SessionManager>();
                                             x.For<ISessionModule>().Use<SessionModule>();
+                                            x.For(typeof (IRepository<>)).Use(typeof (Repository<>));
                                         });
         }
     }

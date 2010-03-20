@@ -9,7 +9,9 @@ namespace Symbiote.Web.Impl
         public override IController CreateController(RequestContext requestContext, string controllerName)
         {
             var controllerType = base.GetControllerType(requestContext, controllerName);
-            return ObjectFactory.GetInstance(controllerType) as IController;
+            if(controllerType != null)
+                return ObjectFactory.GetInstance(controllerType) as IController;
+            return null;
         }
     }
 }
