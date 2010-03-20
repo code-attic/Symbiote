@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appender\BusAppender.cs" />
+    <Compile Include="Appender\BusConfigurator.cs" />
     <Compile Include="Appender\LoggingMessage.cs" />
     <Compile Include="IControlProvider.cs" />
     <Compile Include="Impl\EndpointMessageHandle.cs" />
