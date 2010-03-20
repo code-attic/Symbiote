@@ -1,6 +1,6 @@
 namespace Symbiote.Hibernate
 {
-    public interface IContext
+    public interface ISessionContext
     {
         bool Contains(string key);
         void Set(string key, object value);

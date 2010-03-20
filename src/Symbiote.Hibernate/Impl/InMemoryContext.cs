@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 
-namespace Symbiote.Hibernate
+namespace Symbiote.Hibernate.Impl
 {
-    public class InMemoryContext : IContext
+    public class InMemoryContext : ISessionContext
     {
         private Dictionary<string, object> _hash = new Dictionary<string, object>();
 

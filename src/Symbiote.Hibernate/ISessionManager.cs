@@ -1,3 +1,4 @@
+using System;
 using NHibernate;
 
 namespace Symbiote.Hibernate
