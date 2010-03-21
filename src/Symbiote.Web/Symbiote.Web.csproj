@@ -46,14 +46,12 @@
     <Reference Include="NHibernate.ByteCode.Castle">
       <HintPath>..\..\lib\NHibernate.ByteCode.Castle.dll</HintPath>
     </Reference>
-    <Reference Include="Spark">
+    <Reference Include="Spark, Version=1.0.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="Spark.Web.Mvc">
-      <HintPath>..\..\lib\Spark.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="SparkLanguage">
-      <HintPath>..\..\lib\SparkLanguage.dll</HintPath>
+    <Reference Include="Spark.Web.Mvc2">
+      <HintPath>..\..\lib\Spark.Web.Mvc2.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
