@@ -85,10 +85,7 @@ namespace Symbiote.Jackalope
                                        AppDomain
                                            .CurrentDomain
                                            .GetAssemblies()
-                                           .Where(
-                                           a =>
-                                           a.GetReferencedAssemblies().Any(
-                                               r => r.FullName.Contains("Jackalope")))
+                                           .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("Jackalope")))
                                            .ForEach(s.Assembly);
                                        s.ConnectImplementationsToTypesClosing(
                                            typeof (IMessageHandler<>));

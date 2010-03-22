@@ -73,10 +73,11 @@ namespace Symbiote.Web
                 .Dependencies(x => x.Scan(s =>
                                               {
                                                   s.TheCallingAssembly();
-                                                  AppDomain
+                                                  var assemblies = AppDomain
                                                       .CurrentDomain
                                                       .GetAssemblies()
-                                                      .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("System.Web.Mvc")))
+                                                      .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("System.Web.Mvc")));
+                                                  assemblies
                                                       .ForEach(s.Assembly);
                                                   s.AddAllTypesOf<Controller>();
                                                   s.Include(i => i.IsSubclassOf(typeof(Controller)));
@@ -99,8 +100,11 @@ namespace Symbiote.Web
                 .AddNamespace("System.Web.Mvc")
                 .AddNamespace("System.Web.Mvc.Html");
 
+            list
+                .ForEach(x => settings.AddNamespace(x.Namespace));
+
             var sparkViewFactory = new SparkViewFactory(settings);
-            sparkViewFactory.Precompile(batch);
+            //sparkViewFactory.Precompile(batch);
             ViewEngines.Engines.Add(sparkViewFactory);
         }
 
