@@ -50,8 +50,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Spark.dll</HintPath>
     </Reference>
-    <Reference Include="Spark.Web.Mvc2">
-      <HintPath>..\..\lib\Spark.Web.Mvc2.dll</HintPath>
+    <Reference Include="Spark.Web.Mvc, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Spark.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap.dll</HintPath>

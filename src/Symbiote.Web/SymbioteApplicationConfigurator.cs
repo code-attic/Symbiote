@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Spark;
@@ -72,12 +73,20 @@ namespace Symbiote.Web
                 .Dependencies(x => x.Scan(s =>
                                               {
                                                   s.TheCallingAssembly();
+                                                  AppDomain
+                                                      .CurrentDomain
+                                                      .GetAssemblies()
+                                                      .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("System.Web.Mvc")))
+                                                      .ForEach(s.Assembly);
                                                   s.AddAllTypesOf<Controller>();
                                                   s.Include(i => i.IsSubclassOf(typeof(Controller)));
                                               }));
             var batch = new SparkBatchDescriptor();
             var allInstances = ObjectFactory
                 .GetAllInstances<Controller>();
+
+            var types = allInstances.Select(x => x.GetType());
+
             allInstances
                 .ForEach(x => batch.For(x.GetType()));
 
