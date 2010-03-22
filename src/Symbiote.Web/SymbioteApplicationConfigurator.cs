@@ -1,13 +1,32 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using Spark;
 using Spark.Web.Mvc;
+using StructureMap;
 using Symbiote.Core;
+using Symbiote.Core.Extensions;
 using Symbiote.Hibernate;
 using Symbiote.Web.Impl;
 
 namespace Symbiote.Web
 {
+    public class TypeList : List<Type>
+    {
+        public TypeList AddType<T>()
+        {
+            this.Add(typeof(T));
+            return this;
+        }
+
+        public TypeList AddType(Type type)
+        {
+            this.Add(type);
+            return this;
+        }
+    }
+
     public class SymbioteApplicationConfigurator
     {
         private IAssimilate _assimilate;
@@ -20,7 +39,14 @@ namespace Symbiote.Web
 
         public SymbioteApplicationConfigurator UseSparkViews()
         {
-            RegisterSpark();
+            var newList = new TypeList();
+            RegisterSpark(newList);
+            return this;
+        }
+
+        public SymbioteApplicationConfigurator UseSparkViews(TypeList list)
+        {
+            RegisterSpark(list);
             return this;
         }
 
@@ -40,16 +66,33 @@ namespace Symbiote.Web
             return this;
         }
 
-        private void RegisterSpark()
+        private void RegisterSpark(TypeList list)
         {
+            _assimilate
+                .Dependencies(x => x.Scan(s =>
+                                              {
+                                                  s.TheCallingAssembly();
+                                                  s.AddAllTypesOf<Controller>();
+                                                  s.Include(i => i.IsSubclassOf(typeof(Controller)));
+                                              }));
+            var batch = new SparkBatchDescriptor();
+            var allInstances = ObjectFactory
+                .GetAllInstances<Controller>();
+            allInstances
+                .ForEach(x => batch.For(x.GetType()));
+
             var settings = new SparkSettings()
                 .SetDebug(true)
+                .SetAutomaticEncoding(true)
                 .AddNamespace("System")
                 .AddNamespace("System.Collections.Generic")
                 .AddNamespace("System.Linq")
-                .AddNamespace("System.Web.Mvc");
+                .AddNamespace("System.Web.Mvc")
+                .AddNamespace("System.Web.Mvc.Html");
 
-            ViewEngines.Engines.Add(new SparkViewFactory(settings));
+            var sparkViewFactory = new SparkViewFactory(settings);
+            sparkViewFactory.Precompile(batch);
+            ViewEngines.Engines.Add(sparkViewFactory);
         }
 
         private void UseStructureMapFactory()
