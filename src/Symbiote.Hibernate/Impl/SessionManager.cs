@@ -9,7 +9,6 @@ namespace Symbiote.Hibernate.Impl
         public SessionManager(ISessionContext context)
         {
             _context = context;
-            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
 
         public ISession CurrentSession

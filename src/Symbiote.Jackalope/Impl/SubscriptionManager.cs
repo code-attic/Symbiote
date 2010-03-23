@@ -54,7 +54,7 @@ namespace Symbiote.Jackalope.Impl
                 .With<string>(queueName)
                 .GetInstance<ISubscription>();
 
-            _subscriptions.Add(queueName, subscription);
+            _subscriptions[queueName] = subscription;
 
             return subscription;
         }

@@ -43,6 +43,7 @@ namespace Symbiote.Hibernate
                                             x.For<ISessionModule>().Use<SessionModule>();
                                             x.For(typeof (IRepository<>)).Use(typeof (Repository<>));
                                         });
+            HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
     }
 }
