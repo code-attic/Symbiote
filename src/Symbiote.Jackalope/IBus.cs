@@ -24,5 +24,6 @@ namespace Symbiote.Jackalope
         bool ClearQueue(string queueName);
         void DestroyQueue(string queueName);
         void DestroyExchange(string exchangeName);
+        Tuple<object, IResponse> Get(string queueName);
     }
 }

@@ -52,6 +52,13 @@ namespace Symbiote.Jackalope.Impl
             return Channel.BasicGet(_configuration.QueueName, true);
         }
 
+        public Tuple<object, IResponse> GetNext()
+        {
+            var result = GetConsumer().Queue.Dequeue() as BasicDeliverEventArgs;
+            var message = Serializer.Deserialize(result.Body);
+            return Tuple.Create(message, new Response(this, result) as IResponse);
+        }
+
         public void Send<T>(T body, string routingKey) where T : class
         {
             var contentType = "text/plain";

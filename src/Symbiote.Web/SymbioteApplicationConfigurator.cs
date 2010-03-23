@@ -9,6 +9,7 @@ using StructureMap;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Hibernate;
+using Symbiote.Jackalope.Impl;
 using Symbiote.Web.Impl;
 
 namespace Symbiote.Web
@@ -120,6 +121,8 @@ namespace Symbiote.Web
         public SymbioteApplicationConfigurator(IAssimilate assimilate)
         {
             _assimilate = assimilate;
+            _assimilate
+                .Dependencies(x => x.For<ISubscription>().Use<NullSubscription>());
         }
     }
 }

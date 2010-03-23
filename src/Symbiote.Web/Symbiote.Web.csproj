@@ -86,6 +86,10 @@
       <Project>{6D7C4F20-D3EA-460F-820D-BC7B9048DCFF}</Project>
       <Name>Symbiote.Hibernate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
+      <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
+      <Name>Symbiote.Jackalope</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

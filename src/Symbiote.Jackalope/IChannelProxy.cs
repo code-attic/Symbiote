@@ -1,5 +1,6 @@
 using System;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Impl;
 using Symbiote.Jackalope.Impl;
 
@@ -16,5 +17,6 @@ namespace Symbiote.Jackalope
             where T : class;
         void Reject(ulong tag, bool requeue);
         BasicGetResult Get();
+        Tuple<object, IResponse> GetNext();
     }
 }
