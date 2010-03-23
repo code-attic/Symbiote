@@ -15,7 +15,7 @@ namespace Symbiote.Jackalope.Impl
             _queueName = queueName;
             Run = true;
             var tasks = new List<Task>();
-            var threshold = 50;
+            var threshold = 5;
             while (Run)
             {
                 while(tasks.Count < threshold)
