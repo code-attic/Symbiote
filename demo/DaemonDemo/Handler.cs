@@ -14,9 +14,9 @@ namespace DaemonDemo
 
         public void Process(IMessage message, IResponse response)
         {
-            var rnd = new Random(DateTime.Now.Millisecond).Next(100);
-            if (rnd >= 90)
-                throw new Exception("Because I can...");
+            //var rnd = new Random(DateTime.Now.Millisecond).Next(100);
+            //if (rnd >= 99)
+            //    throw new Exception("Because I can...");
 
             _demoService.Configure();
             if(message.Rejection)

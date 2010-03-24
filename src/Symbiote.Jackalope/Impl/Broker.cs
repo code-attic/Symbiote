@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
 {
@@ -14,19 +18,39 @@ namespace Symbiote.Jackalope.Impl
         {
             _queueName = queueName;
             Run = true;
-            var tasks = new List<Task>();
             var threshold = 5;
             while (Run)
             {
-                while(tasks.Count < threshold)
-                {
-                    var task = Task
-                        .Factory
-                        .StartNew(Dispatch);
-                    tasks.Add(task);
-                }
+                Dispatch();
+            }
+        }
 
-                tasks.RemoveAll(x => x.Status == TaskStatus.RanToCompletion);
+        protected override void Dispatch()
+        {
+            IChannelProxy proxy = null;
+            BasicDeliverEventArgs result = null;
+            QueueingBasicConsumer consumer = null;
+            try
+            {
+                proxy = ProxyFactory.GetProxyForQueue(_queueName);
+                consumer = proxy.GetConsumer();
+                result = consumer.Queue.Dequeue() as BasicDeliverEventArgs;
+                if (result != null)
+                {
+                    var payload = Serializer.Deserialize(result.Body);
+                    var dispatchers = GetDispatchersForPayload(payload);
+                    dispatchers.AsParallel().ForEach(x => x.Dispatch(payload, proxy, result));
+                }
+            }
+            catch (Exception e)
+            {
+                "An exception occurred while attempting to dispatch a message from the exchange named {0} with routing key {1} \r\n\t {2}"
+                    .ToError<IBus>(result.Exchange, result.RoutingKey, e);
+                proxy.Reject(result.DeliveryTag, true);
+            }
+            finally
+            {
+                proxy.Dispose();
             }
         }
 

@@ -87,10 +87,6 @@
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
       <Name>Symbiote.Jackalope</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Symbiote.TestSpec\Symbiote.TestSpec.csproj">
-      <Project>{2F09AF57-ABF9-4BD1-8B2C-0B8526698257}</Project>
-      <Name>Symbiote.TestSpec</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.0">
