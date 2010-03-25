@@ -46,5 +46,20 @@ namespace Symbiote.Jackalope.Impl
                 throw;
             }
         }
+
+        public object Dispatch(Envelope envelope)
+        {
+            try
+            {
+                var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
+                handler.Process(envelope.Message as TMessage, envelope.Response);
+                return envelope.Message;
+            }
+            catch (Exception e)
+            {
+                envelope.Response.Reject();
+                throw;
+            }
+        }
     }
 }

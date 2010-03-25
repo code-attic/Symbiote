@@ -24,6 +24,13 @@ namespace Symbiote.Jackalope
         bool ClearQueue(string queueName);
         void DestroyQueue(string queueName);
         void DestroyExchange(string exchangeName);
-        Tuple<object, IResponse> Get(string queueName);
+
+        Envelope Get(string queueName);
+        Envelope Get(string queueName, int miliseconds);
+        object Process(string queueName);
+        object Process(string queueName, int miliseconds);
+
+        IBus AddProcessor<TMessage>(Func<TMessage, IResponse, object> processor)
+            where TMessage : class;
     }
 }

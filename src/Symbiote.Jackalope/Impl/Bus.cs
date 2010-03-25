@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Symbiote.Jackalope.Impl
         private IChannelProxyFactory _channelFactory;
         private IEndpointManager _endpointManager;
         private ISubscriptionManager _subscriptionManager;
+        private ConcurrentDictionary<Type, IDispatch> _functionalDispatchers 
+            = new ConcurrentDictionary<Type, IDispatch>();
 
         public bool ClearQueue(string queueName)
         {
@@ -58,25 +61,7 @@ namespace Symbiote.Jackalope.Impl
             _endpointManager.AddEndpoint(endpoint);
         }
 
-        public void Get(string queueName, Action<object, IResponse> messageHandler)
-        {
-            using(var proxy = _channelFactory.GetProxyForQueue(queueName))
-            {
-                try
-                {
-                    var result = proxy.GetNext();
-                    messageHandler(result.Item1, result.Item2);
-                }
-                catch (Exception e)
-                {
-                    "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
-                        .ToError<IBus>(queueName, e);
-                    throw;
-                }
-            }
-        }
-
-        public Tuple<object, IResponse> Get(string queueName)
+        public Envelope Get(string queueName)
         {
             var proxy = _channelFactory.GetProxyForQueue(queueName);
             try
@@ -89,6 +74,70 @@ namespace Symbiote.Jackalope.Impl
                     .ToError<IBus>(queueName, e);
                 throw;
             }
+        }
+
+        public Envelope Get(string queueName, int miliseconds)
+        {
+            var proxy = _channelFactory.GetProxyForQueue(queueName);
+            try
+            {
+                return proxy.GetNext(miliseconds);
+            }
+            catch (Exception e)
+            {
+                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
+                    .ToError<IBus>(queueName, e);
+                throw;
+            }
+        }
+
+        public object Process(string queueName)
+        {
+            var proxy = _channelFactory.GetProxyForQueue(queueName);
+            try
+            {
+                using(var envelope = proxy.GetNext())
+                {
+                    var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
+                    var result = dispatcher.Dispatch(envelope);
+                    envelope.Response.Acknowledge();
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
+                    .ToError<IBus>(queueName, e);
+                throw;
+            }
+        }
+
+        public object Process(string queueName, int miliseconds)
+        {
+            var proxy = _channelFactory.GetProxyForQueue(queueName);
+            try
+            {
+                using (var envelope = proxy.GetNext(miliseconds))
+                {
+                    var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
+                    var result = dispatcher.Dispatch(envelope);
+                    envelope.Response.Acknowledge();
+                    return result;
+                }
+            }
+            catch (Exception e)
+            {
+                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
+                    .ToError<IBus>(queueName, e);
+                throw;
+            }
+        }
+
+        public IBus AddProcessor<TMessage>(Func<TMessage, IResponse, object> processor) where TMessage : class
+        {
+            var actionDispatcher = new ActionDispatcher<TMessage>(processor);
+            _functionalDispatchers[typeof (TMessage)] = actionDispatcher;
+            return this;
         }
 
         public void Send<T>(string exchangeName, T body)

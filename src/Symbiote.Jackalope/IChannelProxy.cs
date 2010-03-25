@@ -16,7 +16,8 @@ namespace Symbiote.Jackalope
         void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
             where T : class;
         void Reject(ulong tag, bool requeue);
-        BasicGetResult Get();
-        Tuple<object, IResponse> GetNext();
+        Envelope Get();
+        Envelope GetNext();
+        Envelope GetNext(int miliseconds);
     }
 }

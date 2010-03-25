@@ -8,7 +8,7 @@ namespace Symbiote.Jackalope.Impl
     public class ActionDispatcher<TMessage> : IDispatch<TMessage>
         where TMessage : class
     {
-        private Action<TMessage, IResponse> _messageHandler;
+        private Func<TMessage, IResponse, object> _processor;
 
         public bool CanHandle(object payload)
         {
@@ -19,8 +19,12 @@ namespace Symbiote.Jackalope.Impl
         {
             try
             {
-                var response = new Response(proxy, args);
-                _messageHandler(payload as TMessage, response);
+                var envelope = new Envelope()
+                                   {
+                                       Message = payload,
+                                       Response = new Response(proxy, args)
+                                   };
+                _processor(envelope.Message as TMessage, envelope.Response);
             }
             catch (Exception e)
             {
@@ -33,8 +37,12 @@ namespace Symbiote.Jackalope.Impl
         {
             try
             {
-                var response = new Response(proxy, result);
-                _messageHandler(payload as TMessage, response);
+                var envelope = new Envelope()
+                {
+                    Message = payload,
+                    Response = new Response(proxy, result)
+                };
+                _processor(envelope.Message as TMessage, envelope.Response);
             }
             catch (Exception e)
             {
@@ -43,9 +51,22 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public ActionDispatcher(Action<TMessage, IResponse> messageHandler)
+        public object Dispatch(Envelope envelope)
         {
-            _messageHandler = messageHandler;
+            try
+            {
+                return _processor(envelope.Message as TMessage, envelope.Response);
+            }
+            catch (Exception e)
+            {
+                envelope.Response.Reject();
+                throw;
+            }
+        }
+
+        public ActionDispatcher(Func<TMessage, IResponse, object> processor)
+        {
+            _processor = processor;
         }
     }
 }

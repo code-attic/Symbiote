@@ -8,6 +8,7 @@ namespace Symbiote.Jackalope.Impl
         bool CanHandle(object payload);
         void Dispatch(object payload, IChannelProxy proxy, BasicDeliverEventArgs args);
         void Dispatch(object payload, IChannelProxy proxy, BasicGetResult result);
+        object Dispatch(Envelope envelope);
     }
 
     public interface IDispatch<TMessage> : IDispatch

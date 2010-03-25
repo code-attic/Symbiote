@@ -47,16 +47,43 @@ namespace Symbiote.Jackalope.Impl
             _channel.BasicAck(tag, multiple);
         }
 
-        public BasicGetResult Get()
+        public Envelope Get()
         {
-            return Channel.BasicGet(_configuration.QueueName, true);
+            var result = Channel.BasicGet(_configuration.QueueName, true);
+            var envelope = new Envelope();
+
+            if(result != null)
+            {
+                envelope.Message = Serializer.Deserialize(result.Body);
+                envelope.Response = new Response(this, result);
+            }
+            return envelope;
         }
 
-        public Tuple<object, IResponse> GetNext()
+        public Envelope GetNext()
         {
             var result = GetConsumer().Queue.Dequeue() as BasicDeliverEventArgs;
-            var message = Serializer.Deserialize(result.Body);
-            return Tuple.Create(message, new Response(this, result) as IResponse);
+            var envelope = new Envelope();
+
+            if (result != null)
+            {
+                envelope.Message = Serializer.Deserialize(result.Body);
+                envelope.Response = new Response(this, result);
+            }
+            return envelope;
+        }
+
+        public Envelope GetNext(int miliseconds)
+        {
+            object message = null;
+            var envelope = new Envelope();
+            if(GetConsumer().Queue.Dequeue(miliseconds, out message))
+            {
+                var result = message as BasicDeliverEventArgs;
+                envelope.Message = Serializer.Deserialize(result.Body);
+                envelope.Response = new Response(this, result);
+            }
+            return envelope;
         }
 
         public void Send<T>(T body, string routingKey) where T : class

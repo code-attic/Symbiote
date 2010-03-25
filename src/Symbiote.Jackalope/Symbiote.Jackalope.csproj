@@ -88,6 +88,7 @@
     <Compile Include="Config\AmqpServerConfiguration.cs" />
     <Compile Include="Config\IAmqpConfigurationProvider.cs" />
     <Compile Include="Config\IAmqpServerConfiguration.cs" />
+    <Compile Include="Envelope.cs" />
     <Compile Include="Impl\ActionDispatcher.cs" />
     <Compile Include="Impl\BaseBroker.cs" />
     <Compile Include="Impl\ISubscriptionManager.cs" />
