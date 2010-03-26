@@ -9,6 +9,11 @@ namespace Symbiote.Relax
     {
         private CouchConfiguration _config = new CouchConfiguration();
 
+        public CouchConfigurator UseDefaults()
+        {
+            return this;
+        }
+
         public CouchConfigurator Cache()
         {
             _config.Cache = true;

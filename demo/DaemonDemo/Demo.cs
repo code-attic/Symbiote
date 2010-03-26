@@ -3,6 +3,7 @@ using System.Diagnostics;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 using Symbiote.Daemon;
+using Symbiote.Eidetic;
 using Symbiote.Eidetic.Extensions;
 using Symbiote.Jackalope;
 using Symbiote.Relax;
@@ -15,6 +16,7 @@ namespace DaemonDemo
         private IBus _bus;
         private IDocumentRepository _documents;
         private bool _configured;
+        private IRemember rememory;
         private string _message =
 @"
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra, diam in tempus sollicitudin, odio arcu suscipit orci, lobortis tincidunt neque magna eget elit. Nunc elit diam, vehicula ut volutpat id, bibendum id odio. Proin lobortis orci sit amet neque scelerisque a varius ligula pharetra. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla lacinia purus id mauris consequat sit amet aliquam odio iaculis. Phasellus ut vestibulum quam. Vestibulum rhoncus, libero sed faucibus bibendum, lorem massa feugiat libero, id imperdiet sem risus non massa. Aliquam iaculis pharetra auctor. Donec bibendum dictum est sodales blandit. Duis tempus luctus dolor, ut mattis turpis semper et.
