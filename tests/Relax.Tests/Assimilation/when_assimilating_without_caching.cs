@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Machine.Specifications;
 using StructureMap;
 using Symbiote.Core;
@@ -10,31 +7,28 @@ using Symbiote.Relax.Impl;
 
 namespace Relax.Tests.Assimilation
 {
-    public abstract class with_relax_assimilation
-    {
-        private Establish context = () => Assimilate.Core().Relax(x => x.UseDefaults());
-    }
-
     [Subject("Assimilation")]
-    public class when_assimilation_without_caching : with_relax_assimilation
+    public class when_assimilating_without_caching
     {
+        private Because of = () => RelaxAssimilation.Relax(Assimilate.Core(), x => x.UseDefaults());
+
         private It should_use_CouchConfiguration_for_ICouchConfiguration = 
-            () => ObjectFactory
-                    .Container
-                    .Model
-                    .DefaultTypeFor<ICouchConfiguration>()
-                    .ShouldEqual(typeof(CouchConfiguration));
+            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory
+                                       .Container
+                                       .Model
+                                       .DefaultTypeFor<ICouchConfiguration>(), typeof(CouchConfiguration));
 
         private It should_use_DocumentRepository_for_IDocumentRepository =
-            () => ObjectFactory.Model.DefaultTypeFor<IDocumentRepository>().ShouldEqual(typeof(DocumentRepository));
+            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory.Model.DefaultTypeFor<IDocumentRepository>(), typeof(DocumentRepository));
 
         private It should_use_DocumentRepository_for_IDocumentRepository_with_closed_generic =
-            () => ObjectFactory.Model.DefaultTypeFor(typeof(IDocumentRepository<Guid, string>)).ShouldEqual(typeof(DocumentRepository));
+            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory.Model.DefaultTypeFor(typeof(IDocumentRepository<Guid, string>)), typeof(DocumentRepository));
 
         private It should_use_DocumentRepository_for_IDocumentRepository_with_open_generic =
             () => ObjectFactory
-                    .Model
-                    .
-                    .ShouldBe(typeof(DocumentRepository<DefaultCouchDocument>));
+                      .Model
+                      .For<IDocumentRepository<DefaultCouchDocument>>()
+                      .PluginType
+                      .IsAssignableFrom(typeof (DocumentRepository<DefaultCouchDocument>));
     }
 }
