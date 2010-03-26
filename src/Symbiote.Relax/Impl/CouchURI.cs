@@ -12,7 +12,7 @@ namespace Symbiote.Relax.Impl
             return new CouchURI(prefix, server, port, database);
         }
 
-        public CouchURI ListAll()
+        public CouchURI ListAll() 
         {
             _builder.Append("/_all_docs");
             return this;
@@ -30,6 +30,7 @@ namespace Symbiote.Relax.Impl
                                           : "longpoll");
             }
             _builder.AppendFormat("&since={0}", since);
+            _hasArguments = true;
             return this;
         }
 

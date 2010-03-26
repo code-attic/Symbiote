@@ -1,9 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using StructureMap;
@@ -30,6 +28,11 @@ namespace Symbiote.Relax.Impl
         public virtual void DeleteDatabase()
         {
             _repository.DeleteDatabase<TModel>();
+        }
+
+        public void DeleteDocument(TKey id)
+        {
+            _repository.DeleteDocument<TModel>(id);
         }
 
         public virtual bool DatabaseExists()
@@ -79,7 +82,7 @@ namespace Symbiote.Relax.Impl
 
         public virtual void StopChangeStreaming()
         {
-            _repository.StopChangeStreaming();
+            _repository.StopChangeStreaming<TModel>();
         }
 
         public BaseDocumentRepository(IDocumentRepository<TKey, TRev> repository)
@@ -105,11 +108,10 @@ namespace Symbiote.Relax.Impl
     public abstract class BaseDocumentRepository<TKey, TRev>
         : IDocumentRepository<TKey, TRev>
     {
-        protected bool _preAuth;
-        private bool _pollForChanges;
         protected ICouchConfiguration _configuration;
-        protected Dictionary<string, bool> _databaseExists = new Dictionary<string, bool>();
-        protected ReaderWriterLockSlim _databaseExistsLock = new ReaderWriterLockSlim();
+        protected ConcurrentDictionary<string, bool> _databaseExists = new ConcurrentDictionary<string, bool>();
+        protected ConcurrentDictionary<Type, CouchCommand> _continuousUpdateCommands =
+            new ConcurrentDictionary<Type, CouchCommand>();
 
         protected virtual CouchURI BaseURI<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
@@ -129,187 +131,107 @@ namespace Symbiote.Relax.Impl
         {
             var dbCreated = false;
             var shouldCheckCouch = false;
-            _databaseExistsLock.EnterReadLock();
             try
             {
+                var command = new CouchCommand(_configuration);
                 shouldCheckCouch = !_databaseExists.TryGetValue(database, out dbCreated);
-            }
-            finally
-            {
-                _databaseExistsLock.ExitReadLock();
-            }
-            if(shouldCheckCouch && !dbCreated)
-            {
-                var response = Get(baseURI);
-                dbCreated = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
-            }
-            if(!dbCreated)
-            {
-                Put(baseURI);
-                _databaseExistsLock.EnterWriteLock();
-                try
+                if (shouldCheckCouch && !dbCreated)
                 {
+                    var response = command.Get(baseURI);
+                    dbCreated = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
+                }
+                if (!dbCreated)
+                {
+                    command.Put(baseURI);
                     _databaseExists[database] = true;
                 }
-                finally
-                {
-                    _databaseExistsLock.ExitWriteLock();
-                }
+            }
+            catch(Exception ex)
+            {
+                "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(database, baseURI.ToString(), ex);
+                throw;
             }
         }
 
         public virtual void CreateDatabase<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
         {
-            Put(BaseURI<TModel>());
-            var database = _configuration.GetDatabaseNameForType<TModel>();
-            _databaseExistsLock.EnterWriteLock();
+            string database = "";
+            var uri = BaseURI<TModel>();
             try
             {
+                database = _configuration.GetDatabaseNameForType<TModel>();
+                var command = new CouchCommand(_configuration);
+                command.Put(uri);
                 _databaseExists[database] = true;
             }
-            finally
+            catch (Exception ex)
             {
-                _databaseExistsLock.ExitWriteLock();
+                "An exception occurred trying to create the database {0} at uri {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                throw;
+            }
+        }
+
+        public void DeleteDocument<TModel>(TKey id)
+            where TModel : class, ICouchDocument<TKey, TRev>
+        {
+            var uri = BaseURI<TModel>();
+            try
+            {
+                var command = new CouchCommand(_configuration);
+                uri = uri.Key(id);
+                command.Delete(uri);
+            }
+            catch (Exception ex)
+            {
+                "An exception occurred trying to delete a document of type {0} with id {1} at {2}. \r\n\t {3}"
+                    .ToError<IDocumentRepository>(typeof (TModel).FullName, id.ToString(), uri.ToString(), ex);
+                throw;
             }
         }
 
         public virtual void DeleteDatabase<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
         {
-            Delete(BaseURI<TModel>());
-            var database = _configuration.GetDatabaseNameForType<TModel>();
-            _databaseExistsLock.EnterWriteLock();
+            var database = "";
+            var uri = BaseURI<TModel>();
             try
             {
+                database = _configuration.GetDatabaseNameForType<TModel>();
+                var command = new CouchCommand(_configuration);
+                command.Delete(uri);
                 _databaseExists[database] = false;
             }
-            finally
+            catch (Exception ex)
             {
-                _databaseExistsLock.ExitWriteLock();
+                "An exception occurred trying to delete the database {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                throw;
             }
         }
 
         public virtual bool DatabaseExists<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
         {
-            var response = Get(BaseURI<TModel>());
-            var exists = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
-            _databaseExistsLock.EnterWriteLock();
-            var database = _configuration.GetDatabaseNameForType<TModel>();
+            var uri = BaseURI<TModel>();
+            var database = "";
+            var exists = false;
             try
             {
+                database = _configuration.GetDatabaseNameForType<TModel>();
+                var command = new CouchCommand(_configuration);
+                var response = command.Get(uri);
+                exists = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
                 _databaseExists[database] = exists;
+                return exists;
             }
-            finally
+            catch (Exception ex)
             {
-                _databaseExistsLock.ExitWriteLock();
-            }
-            return exists;
-        }
-
-        protected virtual string Post(CouchURI uri)
-        {
-            return GetResponse(uri, "POST", "");
-        }
-
-        protected virtual string Post(CouchURI uri, string body)
-        {
-            return GetResponse(uri, "POST", body);
-        }
-
-        protected virtual string Put(CouchURI uri)
-        {
-            return GetResponse(uri, "PUT", "");
-        }
-
-        protected virtual string Put(CouchURI uri, string body)
-        {
-            return GetResponse(uri, "PUT", body);
-        }
-
-        protected virtual string Get(CouchURI uri)
-        {
-            return GetResponse(uri, "GET", "");
-        }
-
-        protected virtual string Delete(CouchURI uri)
-        {
-            return GetResponse(uri, "DELETE", "");
-        }
-
-        protected virtual string GetResponse(CouchURI uri, string method, string body)
-        {
-            var request = WebRequest.Create(uri.ToString());
-            request.Method = method;
-            request.Timeout = _configuration.TimeOut;
-            request.PreAuthenticate = _preAuth;
-
-            if (!string.IsNullOrEmpty(body))
-            {
-                var bytes = UTF8Encoding.UTF8.GetBytes(body);
-                request.ContentType = "application/json";
-                request.ContentLength = bytes.Length;
-
-                var writer = request.GetRequestStream();
-                writer.Write(bytes, 0, bytes.Length);
-                writer.Close();
-            }
-
-            var result = "";
-
-            try
-            {
-                var response = request.GetResponse();
-
-                using (var reader = new StreamReader(response.GetResponseStream()))
-                {
-                    result = reader.ReadToEnd();
-                    response.Close();
-                }
-            }
-            catch (Exception e)
-            {
-            }
-            return result;
-        }
-
-        protected virtual void GetContinuousResponse<TModel>(int since, Action<ChangeRecord> callback)
-            where TModel : class, ICouchDocument<TKey, TRev>
-        {
-            var uri = BaseURI<TModel>().Changes(Feed.Continuous, since);
-            var request = WebRequest.Create(uri.ToString());
-            request.Method = "GET";
-            request.Timeout = int.MaxValue;
-            request.PreAuthenticate = _preAuth;
-
-            var result = "";
-
-            try
-            {
-                var response = request.GetResponse();
-
-                using (var reader = new StreamReader(response.GetResponseStream()))
-                {
-                    while (_pollForChanges)
-                    {
-                        result = reader.ReadLine();
-                        if (!string.IsNullOrEmpty(result))
-                        {
-                            var change = result.FromJson<ChangeRecord>();
-                            change.Document = GetResponse(BaseURI<TModel>().Key(change.Id), "GET", "");
-                            callback.BeginInvoke(change, null, null);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-            finally
-            {
-                callback = null;
+                "An exception occurred checking for the existence of database {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                throw;
             }
         }
 
@@ -318,11 +240,12 @@ namespace Symbiote.Relax.Impl
             get
             {
                 var uri = CouchURI.Build(
-                    _configuration.Protocol, 
-                    _configuration.Server, 
-                    _configuration.Port, 
-                    "_all_dbs");
-                var json = Get(uri);
+                    _configuration.Protocol,
+                    _configuration.Server,
+                    _configuration.Port,
+                    "_all_dbs");    
+                var command = new CouchCommand(_configuration);
+                var json = command.Get(uri);
                 return new List<string>(json.FromJson<string[]>());
             }
         }
@@ -331,35 +254,51 @@ namespace Symbiote.Relax.Impl
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var uri = BaseURI<TModel>().KeyAndRev(id, revision);
-            var json = Get(uri);
-
-            TModel model = default(TModel);
+            
             try
             {
+                TModel model = default(TModel);
+                var command = new CouchCommand(_configuration);
+                var json = command.Get(uri);
                 model = json.FromJson<TModel>();
+                return model;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                "An exception occurred trying to retrieve a document of type {0} with id {1} and rev {2} at {3}. \r\n\t {4}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName, 
+                        id.ToString(), 
+                        revision.ToString(),
+                        uri.ToString(),
+                        ex);
+                throw;
             }
-            return model;
         }
 
         public virtual TModel Get<TModel>(TKey id)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var uri = BaseURI<TModel>().Key(id);
-            var json = Get(uri);
-
-            TModel model = default(TModel);
+            
             try
             {
+                TModel model = default(TModel);
+                var command = new CouchCommand(_configuration);
+                var json = command.Get(uri);
                 model = json.FromJson<TModel>();
+                return model;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                "An exception occurred trying to retrieve a document of type {0} with id {1} at {2}. \r\n\t {3}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        id.ToString(),
+                        uri.ToString(),
+                        ex);
+                throw;
             }
-            return model;
         }
 
         public virtual IList<TModel> GetAll<TModel>()
@@ -368,18 +307,25 @@ namespace Symbiote.Relax.Impl
             var uri = BaseURI<TModel>()
                 .ListAll()
                 .IncludeDocuments();
-            var json = Get(uri);
             
-            List<TModel> list = new List<TModel>();
             try
             {
+                var command = new CouchCommand(_configuration);
+                var json = command.Get(uri);
+                List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
                 list = view.GetList().ToList();
+                return list;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                "An exception occurred trying to retrieve all documents of type {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        uri.ToString(),
+                        ex);
+                throw;
             }
-            return list;
         }
 
         public virtual IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
@@ -390,18 +336,25 @@ namespace Symbiote.Relax.Impl
                 .IncludeDocuments()
                 .Skip((pageNumber - 1)*pageSize)
                 .Limit(pageSize);
-
-            var json = Get(uri);
-            List<TModel> list = new List<TModel>();
+            
             try
             {
+                var command = new CouchCommand(_configuration);
+                var json = command.Get(uri);
+                List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
                 list = view.GetList().ToList();
+                return list;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                "An exception occurred trying to retrieve all documents of type {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        uri.ToString(),
+                        ex);
+                throw;
             }
-            return list;
         }
 
         public virtual void Save<TModel>(TModel model)
@@ -410,44 +363,75 @@ namespace Symbiote.Relax.Impl
             var uri = BaseURI<TModel>()
                 .Key(model.Id);
 
-            var body = model.ToJson();
-            var updatedJSON = Put(uri, body);
-            var updated = updatedJSON.FromJson<SaveResponse>();
-            model.UpdateRevision(updated.Revision);
+            try
+            {
+                var body = model.ToJson();
+                var command = new CouchCommand(_configuration);
+                var updatedJSON = command.Put(uri, body);
+                var updated = updatedJSON.FromJson<SaveResponse>();
+                model.UpdateRevision(updated.Revision);
+            }
+            catch (Exception ex)
+            {
+                "An exception occurred trying to save a document of type {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        uri.ToString(),
+                        ex);
+                throw;
+            }
         }
 
         public virtual void Save<TModel>(IEnumerable<TModel> list)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var uri = BaseURI<TModel>().BulkInsert();
-
-            var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
-
-            var body = documentList.ToJson();
-            var updatedJSON = Post(uri, body);
-            var updated = updatedJSON.FromJson<SaveResponse[]>();
-
-            list
-                .ToList()
-                .ForEach(x =>
-                             {
-                                 var update = updated.FirstOrDefault(y => y.Id == x.Id.ToString());
-                                 if (update != null)
-                                     x.UpdateRevision(update.Revision);
-                             });
+            
+            try
+            {
+                var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
+                var command = new CouchCommand(_configuration);
+                var body = documentList.ToJson();
+                var updatedJson = command.Post(uri, body);
+                var updated = updatedJson.FromJson<SaveResponse[]>();
+                list
+                    .ToList()
+                    .ForEach(x =>
+                                 {
+                                     var update = updated.FirstOrDefault(y => y.Id == x.Id.ToString());
+                                     if (update != null)
+                                         x.UpdateRevision(update.Revision);
+                                 });
+            }
+            catch (Exception ex)
+            {
+                "An exception occurred trying to save a document of type {0} at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        uri.ToString(),
+                        ex);
+                throw;
+            }
         }
 
         public virtual void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
-            _pollForChanges = true;
-            Action<int, Action<ChangeRecord>> proxy = GetContinuousResponse<TModel>;
-            proxy.BeginInvoke(since, onUpdate, updatesInterrupted, null);
+            var command = new CouchCommand(_configuration);
+            Action<CouchURI, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
+            proxy.BeginInvoke(BaseURI<TModel>(), since, onUpdate, updatesInterrupted, null);
+            _continuousUpdateCommands[typeof(TModel)] = command;
         }
 
-        public virtual void StopChangeStreaming()
+        public virtual void StopChangeStreaming<TModel>()
         {
-            _pollForChanges = false;
+            CouchCommand command;
+            var key = typeof (TModel);
+            if(_continuousUpdateCommands.TryGetValue(key, out command))
+            {
+                command.StopContinousResponse();
+                _continuousUpdateCommands.TryRemove(key, out command);
+            }
         }
 
         public BaseDocumentRepository(ICouchConfiguration configuration)

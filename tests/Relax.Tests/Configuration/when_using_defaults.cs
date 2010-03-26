@@ -11,5 +11,10 @@ namespace Relax.Tests.Configuration
         private It should_not_require_preauthorization = () => configuration.Preauthorize.ShouldBeFalse();
         private It should_have_six_second_timeout = () => configuration.TimeOut.ShouldEqual(6000);
         private It should_not_use_cache = () => configuration.Cache.ShouldBeFalse();
+
+        private It should_provide_default_couch_name_for_type = () =>
+                                                                configuration
+                                                                    .GetDatabaseNameForType<TestingDoc>()
+                                                                    .ShouldEqual("testingdoc");
     }
 }

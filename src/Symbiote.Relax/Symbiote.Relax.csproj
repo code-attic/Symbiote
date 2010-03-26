@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="BaseCouchDocument.cs" />
     <Compile Include="ChangeRecord.cs" />
+    <Compile Include="Impl\CouchCommand.cs" />
     <Compile Include="Impl\CouchConfiguration.cs" />
     <Compile Include="CouchConfigurator.cs" />
     <Compile Include="DefaultCouchDocument.cs" />

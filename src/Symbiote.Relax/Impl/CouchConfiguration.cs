@@ -10,14 +10,15 @@ namespace Symbiote.Relax.Impl
         public string GetDatabaseNameForType<T>()
         {
             var type = typeof (T);
-            var dbname = type.Name;
+            var dbname = "";
             _databaseForType.TryGetValue(type, out dbname);
+            dbname = dbname ?? type.Name.ToLower();
             return dbname;
         }
 
         public void SetDatabaseNameForType<T>(string databaseName)
         {
-            _databaseForType[typeof (T)] = databaseName;
+            _databaseForType[typeof (T)] = databaseName.ToLower();
         }
 
         public string Protocol { get; set; }

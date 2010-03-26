@@ -10,6 +10,8 @@ namespace Symbiote.Relax
             where TModel : class, ICouchDocument<TKey, TRev>;
         void DeleteDatabase<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>;
+        void DeleteDocument<TModel>(TKey id)
+            where TModel : class, ICouchDocument<TKey, TRev>;
         bool DatabaseExists<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>;
         IList<string> DatabaseList { get; }
@@ -27,7 +29,7 @@ namespace Symbiote.Relax
             where TModel : class, ICouchDocument<TKey, TRev>;
         void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
             where TModel : class, ICouchDocument<TKey, TRev>;
-        void StopChangeStreaming();
+        void StopChangeStreaming<TModel>();
     }
 
     public interface IDocumentRepository<TModel, TKey, TRev>
@@ -37,6 +39,7 @@ namespace Symbiote.Relax
         void CreateDatabase();
         void DeleteDatabase();
         bool DatabaseExists();
+        void DeleteDocument(TKey id);
         IList<string> DatabaseList { get; }
         TModel Get(TKey id, TRev revision);
         TModel Get(TKey id);

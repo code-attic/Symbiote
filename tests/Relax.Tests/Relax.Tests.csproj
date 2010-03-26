@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="Assimilation\when_assimilating_with_caching.cs" />
     <Compile Include="Assimilation\when_assimilating_without_caching.cs" />
+    <Compile Include="Configuration\TestingDoc.cs" />
     <Compile Include="Configuration\when_using_caching_with_time_limit.cs" />
     <Compile Include="Configuration\when_providing_custom_configuration.cs" />
     <Compile Include="Configuration\when_using_caching_with_expiration_date.cs" />
@@ -68,7 +69,22 @@
     <Compile Include="Configuration\with_couch_configuration.cs" />
     <Compile Include="Configuration\with_couch_configurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="URI\Class1.cs" />
+    <Compile Include="URI\when_bulk_inserting.cs" />
+    <Compile Include="URI\when_creating_baseline_uri.cs" />
+    <Compile Include="URI\when_retrieving_by_key.cs" />
+    <Compile Include="URI\when_retrieving_by_key_and_revision.cs" />
+    <Compile Include="URI\when_retrieving_by_list_all.cs" />
+    <Compile Include="URI\when_retrieving_by_list_all_with_descending.cs" />
+    <Compile Include="URI\when_retrieving_by_list_all_with_descending_and_limit.cs" />
+    <Compile Include="URI\when_retrieving_by_list_all_with_descending_and_skip.cs" />
+    <Compile Include="URI\when_retrieving_by_named_list_with_descending_and_skip.cs" />
+    <Compile Include="URI\when_retrieving_by_range.cs" />
+    <Compile Include="URI\when_retrieving_by_view.cs" />
+    <Compile Include="URI\when_retrieving_changes_continuously.cs" />
+    <Compile Include="URI\when_retrieving_changes_continuously_including_documents.cs" />
+    <Compile Include="URI\when_retrieving_changes_via_longpolling.cs" />
+    <Compile Include="URI\when_retrieving_design_document.cs" />
+    <Compile Include="URI\with_basic_uri.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
