@@ -96,8 +96,8 @@ namespace Symbiote.Relax.Impl
     {
         protected IRemember _cache;
 
-        public CachedDocumentRepository(ICouchConfiguration configuration, IRemember cache)
-            : base(configuration)
+        public CachedDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory, IRemember cache)
+            : base(configuration, commandFactory)
         {
             _cache = cache;
         }

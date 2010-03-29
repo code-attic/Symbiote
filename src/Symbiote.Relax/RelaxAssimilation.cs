@@ -19,6 +19,8 @@ namespace Symbiote.Relax
                               {
                                   var configuration = config.GetConfiguration();
                                   c.For<ICouchConfiguration>().Use(configuration);
+                                  c.For<ICouchCommand>().Use<CouchCommand>();
+                                  c.For<ICouchCommandFactory>().Use<CouchCommandFactory>();
 
                                   if (configuration.Cache)
                                   {

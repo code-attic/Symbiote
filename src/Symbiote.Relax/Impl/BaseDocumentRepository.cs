@@ -109,9 +109,11 @@ namespace Symbiote.Relax.Impl
         : IDocumentRepository<TKey, TRev>
     {
         protected ICouchConfiguration _configuration;
+        protected ICouchCommandFactory _commandFactory;
         protected ConcurrentDictionary<string, bool> _databaseExists = new ConcurrentDictionary<string, bool>();
-        protected ConcurrentDictionary<Type, CouchCommand> _continuousUpdateCommands =
-            new ConcurrentDictionary<Type, CouchCommand>();
+        protected ConcurrentDictionary<Type, ICouchCommand> _continuousUpdateCommands =
+            new ConcurrentDictionary<Type, ICouchCommand>();
+        
 
         protected virtual CouchURI BaseURI<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
@@ -133,7 +135,7 @@ namespace Symbiote.Relax.Impl
             var shouldCheckCouch = false;
             try
             {
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 shouldCheckCouch = !_databaseExists.TryGetValue(database, out dbCreated);
                 if (shouldCheckCouch && !dbCreated)
                 {
@@ -162,7 +164,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 command.Put(uri);
                 _databaseExists[database] = true;
             }
@@ -180,7 +182,7 @@ namespace Symbiote.Relax.Impl
             var uri = BaseURI<TModel>();
             try
             {
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 uri = uri.Key(id);
                 command.Delete(uri);
             }
@@ -200,7 +202,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 command.Delete(uri);
                 _databaseExists[database] = false;
             }
@@ -221,7 +223,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var response = command.Get(uri);
                 exists = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
                 _databaseExists[database] = exists;
@@ -244,7 +246,7 @@ namespace Symbiote.Relax.Impl
                     _configuration.Server,
                     _configuration.Port,
                     "_all_dbs");    
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 return new List<string>(json.FromJson<string[]>());
             }
@@ -258,7 +260,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 TModel model = default(TModel);
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 model = json.FromJson<TModel>();
                 return model;
@@ -284,7 +286,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 TModel model = default(TModel);
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 model = json.FromJson<TModel>();
                 return model;
@@ -310,7 +312,7 @@ namespace Symbiote.Relax.Impl
             
             try
             {
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
@@ -339,7 +341,7 @@ namespace Symbiote.Relax.Impl
             
             try
             {
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
@@ -366,7 +368,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 var body = model.ToJson();
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var updatedJSON = command.Put(uri, body);
                 var updated = updatedJSON.FromJson<SaveResponse>();
                 model.UpdateRevision(updated.Revision);
@@ -390,7 +392,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
-                var command = new CouchCommand(_configuration);
+                var command = _commandFactory.GetCommand();
                 var body = documentList.ToJson();
                 var updatedJson = command.Post(uri, body);
                 var updated = updatedJson.FromJson<SaveResponse[]>();
@@ -417,7 +419,7 @@ namespace Symbiote.Relax.Impl
         public virtual void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
-            var command = new CouchCommand(_configuration);
+            var command = _commandFactory.GetCommand();
             Action<CouchURI, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
             proxy.BeginInvoke(BaseURI<TModel>(), since, onUpdate, updatesInterrupted, null);
             _continuousUpdateCommands[typeof(TModel)] = command;
@@ -425,7 +427,7 @@ namespace Symbiote.Relax.Impl
 
         public virtual void StopChangeStreaming<TModel>()
         {
-            CouchCommand command;
+            ICouchCommand command;
             var key = typeof (TModel);
             if(_continuousUpdateCommands.TryGetValue(key, out command))
             {
@@ -434,14 +436,16 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public BaseDocumentRepository(ICouchConfiguration configuration)
+        public BaseDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory)
         {
             _configuration = configuration;
+            _commandFactory = commandFactory;
         }
 
         protected BaseDocumentRepository(string configurationName)
         {
             _configuration = ObjectFactory.GetNamedInstance<ICouchConfiguration>(configurationName);
+            _commandFactory = ObjectFactory.GetInstance<ICouchCommandFactory>();
         }
 
         public void Dispose()

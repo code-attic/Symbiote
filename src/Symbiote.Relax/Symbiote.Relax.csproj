@@ -78,6 +78,7 @@
     <Compile Include="BaseCouchDocument.cs" />
     <Compile Include="ChangeRecord.cs" />
     <Compile Include="Impl\CouchCommand.cs" />
+    <Compile Include="Impl\CouchCommandFactory.cs" />
     <Compile Include="Impl\CouchConfiguration.cs" />
     <Compile Include="CouchConfigurator.cs" />
     <Compile Include="DefaultCouchDocument.cs" />
@@ -89,6 +90,8 @@
     <Compile Include="Impl\CouchURI.cs" />
     <Compile Include="Impl\DocumentRepository.cs" />
     <Compile Include="Impl\Feed.cs" />
+    <Compile Include="Impl\ICouchCommand.cs" />
+    <Compile Include="Impl\ICouchCommandFactory.cs" />
     <Compile Include="Impl\ICouchConfiguration.cs" />
     <Compile Include="JsonDocument.cs" />
     <Compile Include="Impl\SaveResponse.cs" />

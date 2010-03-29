@@ -7,7 +7,7 @@ namespace Symbiote.Relax.Impl
 {
     public class DocumentRepository : BaseDocumentRepository<Guid, string>, IDocumentRepository, IDocumentRepository<Guid,String>
     {
-        public DocumentRepository(ICouchConfiguration configuration) : base(configuration)
+        public DocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory) : base(configuration, commandFactory)
         {
         }
 

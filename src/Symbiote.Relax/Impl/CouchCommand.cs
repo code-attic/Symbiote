@@ -6,7 +6,7 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Relax.Impl
 {
-    public class CouchCommand
+    public class CouchCommand : ICouchCommand
     {
         protected ICouchConfiguration _configuration;
         protected bool _pollForChanges = false;
