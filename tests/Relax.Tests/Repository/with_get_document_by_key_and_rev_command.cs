@@ -12,7 +12,7 @@ namespace Relax.Tests.Repository
         private Establish context = () =>
                                         {
                                             id = Guid.NewGuid();
-                                            uri = new CouchURI("http", "localhost", 5984, "testdocument")
+                                            uri = new CouchUri("http", "localhost", 5984, "testdocument")
                                                 .KeyAndRev(id, "2");
                                             commandMock
                                                 .Setup(x => x.Get(couchUri))

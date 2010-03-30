@@ -21,7 +21,7 @@ namespace Relax.Tests.Repository
                                                            };
                                             originalDocument = document.ToJson();
 
-                                            uri = new CouchURI("http", "localhost", 5984, "testdocument")
+                                            uri = new CouchUri("http", "localhost", 5984, "testdocument")
                                                 .Key(id);
                                             commandMock.Setup(x => x.Put(couchUri, document.ToJson()))
                                                 .Returns("{{ ok : \"true\", id : \"{0}\", rev : \"3\" }}".AsFormat(id));

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
 using StructureMap;
@@ -30,9 +31,9 @@ namespace Symbiote.Relax.Impl
             _repository.DeleteDatabase<TModel>();
         }
 
-        public void DeleteDocument(TKey id)
+        public void DeleteDocument(TKey id, TRev rev)
         {
-            _repository.DeleteDocument<TModel>(id);
+            _repository.DeleteDocument<TModel>(id, rev);
         }
 
         public virtual bool DatabaseExists()
@@ -115,11 +116,11 @@ namespace Symbiote.Relax.Impl
             new ConcurrentDictionary<Type, ICouchCommand>();
         
 
-        protected virtual CouchURI BaseURI<TModel>()
+        protected virtual CouchUri BaseURI<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var database = _configuration.GetDatabaseNameForType<TModel>();
-            var baseURI = CouchURI.Build(
+            var baseURI = CouchUri.Build(
                 _configuration.Protocol, 
                 _configuration.Server, 
                 _configuration.Port, 
@@ -129,7 +130,7 @@ namespace Symbiote.Relax.Impl
             return baseURI;
         }
 
-        protected void EnsureDatabaseExists(string database, CouchURI baseURI)
+        protected void EnsureDatabaseExists(string database, CouchUri baseURI)
         {
             var dbCreated = false;
             var shouldCheckCouch = false;
@@ -139,14 +140,23 @@ namespace Symbiote.Relax.Impl
                 shouldCheckCouch = !_databaseExists.TryGetValue(database, out dbCreated);
                 if (shouldCheckCouch && !dbCreated)
                 {
-                    var response = command.Get(baseURI);
-                    dbCreated = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
-                }
-                if (!dbCreated)
-                {
                     command.Put(baseURI);
                     _databaseExists[database] = true;
                 }
+            }
+            catch(WebException webEx)
+            {
+                if(webEx.Message.Contains("(412) Precondition Failed"))
+                {
+                    _databaseExists[database] = true;
+                }
+                else
+                {
+                    "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(database, baseURI.ToString(), webEx);
+                    throw;
+                }
+
             }
             catch(Exception ex)
             {
@@ -176,14 +186,14 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public void DeleteDocument<TModel>(TKey id)
+        public void DeleteDocument<TModel>(TKey id, TRev rev)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var uri = BaseURI<TModel>();
             try
             {
                 var command = _commandFactory.GetCommand();
-                uri = uri.Key(id);
+                uri = uri.KeyAndRev(id, rev);
                 command.Delete(uri);
             }
             catch (Exception ex)
@@ -241,7 +251,7 @@ namespace Symbiote.Relax.Impl
         {
             get
             {
-                var uri = CouchURI.Build(
+                var uri = CouchUri.Build(
                     _configuration.Protocol,
                     _configuration.Server,
                     _configuration.Port,
@@ -391,9 +401,15 @@ namespace Symbiote.Relax.Impl
             
             try
             {
-                var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
+                //var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
+                var documentList = new
+                                       {
+                                           all_or_nothing = true,
+                                           non_atomic = false,
+                                           docs = list
+                                       };
                 var command = _commandFactory.GetCommand();
-                var body = documentList.ToJson();
+                var body = documentList.ToJson(false);
                 var updatedJson = command.Post(uri, body);
                 var updated = updatedJson.FromJson<SaveResponse[]>();
                 list
@@ -420,7 +436,7 @@ namespace Symbiote.Relax.Impl
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var command = _commandFactory.GetCommand();
-            Action<CouchURI, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
+            Action<CouchUri, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
             proxy.BeginInvoke(BaseURI<TModel>(), since, onUpdate, updatesInterrupted, null);
             _continuousUpdateCommands[typeof(TModel)] = command;
         }

@@ -1,24 +1,25 @@
+using System;
 using System.Text;
 
 namespace Symbiote.Relax.Impl
 {
-    public class CouchURI
+    public class CouchUri : ICloneable
     {
         private StringBuilder _builder = new StringBuilder();
         private bool _hasArguments = false;
 
-        public static CouchURI Build(string prefix, string server, int port, string database)
+        public static CouchUri Build(string prefix, string server, int port, string database)
         {
-            return new CouchURI(prefix, server, port, database);
+            return new CouchUri(prefix, server, port, database);
         }
 
-        public CouchURI ListAll() 
+        public CouchUri ListAll() 
         {
             _builder.Append("/_all_docs");
             return this;
         }
 
-        public CouchURI Changes(Feed feed, int since)
+        public CouchUri Changes(Feed feed, int since)
         {
             _builder.Append("/_changes");
 
@@ -34,25 +35,25 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI Design(string designDocumentName)
+        public CouchUri Design(string designDocumentName)
         {
             _builder.AppendFormat("/_design/{0}", designDocumentName);
             return this;
         }
 
-        public CouchURI View(string viewName)
+        public CouchUri View(string viewName)
         {
             _builder.AppendFormat("/_view/{0}", viewName);
             return this;
         }
 
-        public CouchURI List(string listName)
+        public CouchUri List(string listName)
         {
             _builder.AppendFormat("/_list/{0}", listName);
             return this;
         }
 
-        public CouchURI Descending()
+        public CouchUri Descending()
         {
             _builder.AppendFormat("{0}descending=true",
                                   _hasArguments ? "&" : "?");
@@ -63,7 +64,7 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI Limit(int limit)
+        public CouchUri Limit(int limit)
         {
             _builder.AppendFormat("{0}limit={1}",
                                   _hasArguments ? "&" : "?", limit);
@@ -74,7 +75,7 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI Skip(int number)
+        public CouchUri Skip(int number)
         {
             _builder.AppendFormat("{0}skip={1}",
                                   _hasArguments ? "&" : "?", number);
@@ -85,7 +86,7 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI Format(string format)
+        public CouchUri Format(string format)
         {
             _builder.AppendFormat("{0}format={1}",
                                   _hasArguments ? "&" : "?", format);
@@ -96,18 +97,18 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI KeyAndRev<TKey, TRev>(TKey key, TRev rev)
+        public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
         {
             if (!_hasArguments)
                 _hasArguments = true;
 
-            _builder.AppendFormat("/key={0}?rev={1}",
+            _builder.AppendFormat("/{0}?rev={1}",
                                   key,
                                   rev);
             return this;
         }
 
-        public CouchURI Key<TKey>(TKey key)
+        public CouchUri Key<TKey>(TKey key)
         {
             if (!_hasArguments)
                 _hasArguments = true;
@@ -117,7 +118,7 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI ByRange<TKey>(TKey start, TKey end)
+        public CouchUri ByRange<TKey>(TKey start, TKey end)
         {
             _builder.AppendFormat("{0}startkey={1}&endkey={2}",
                                   _hasArguments ? "&" : "?",
@@ -130,7 +131,7 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI IncludeDocuments()
+        public CouchUri IncludeDocuments()
         {
             _builder.AppendFormat("{0}include_docs=true", _hasArguments
                                                               ? "&"
@@ -142,16 +143,27 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchURI BulkInsert()
+        public CouchUri BulkInsert()
         {
             _builder.Append("/_bulk_docs");
             return this;
         }
 
-        public CouchURI(string prefix, string server, int port, string database)
+        public CouchUri(string prefix, string server, int port, string database)
         {
             _builder
                 .AppendFormat(@"{0}://{1}:{2}/{3}", prefix, server, port, database);
+        }
+
+        protected CouchUri(string content, bool hasArgs)
+        {
+            _builder.Append(content);
+            _hasArguments = hasArgs;
+        }
+
+        public object Clone()
+        {
+            return new CouchUri(ToString(), _hasArguments);
         }
 
         public override string ToString()

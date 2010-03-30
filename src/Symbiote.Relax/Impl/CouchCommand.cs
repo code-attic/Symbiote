@@ -11,7 +11,7 @@ namespace Symbiote.Relax.Impl
         protected ICouchConfiguration _configuration;
         protected bool _pollForChanges = false;
 
-        public virtual string GetResponse(CouchURI uri, string method, string body)
+        public virtual string GetResponse(CouchUri uri, string method, string body)
         {
             var request = WebRequest.Create(uri.ToString());
             request.Method = method;
@@ -41,8 +41,9 @@ namespace Symbiote.Relax.Impl
             return result;
         }
 
-        public virtual void GetContinuousResponse(CouchURI uri, int since, Action<ChangeRecord> callback)
+        public virtual void GetContinuousResponse(CouchUri uri, int since, Action<ChangeRecord> callback)
         {
+            var baseUri = uri.Clone() as CouchUri;
             uri = uri.Changes(Feed.Continuous, since);
             var request = WebRequest.Create(uri.ToString());
             request.Method = "GET";
@@ -62,8 +63,9 @@ namespace Symbiote.Relax.Impl
                         result = reader.ReadLine();
                         if (!string.IsNullOrEmpty(result))
                         {
+                            var changeUri = baseUri.Clone() as CouchUri;
                             var change = result.FromJson<ChangeRecord>();
-                            change.Document = GetResponse(uri.Key(change.Id), "GET", "");
+                            change.Document = GetResponse(changeUri.Key(change.Id), "GET", "");
                             callback.BeginInvoke(change, null, null);
                         }
                     }
@@ -86,32 +88,32 @@ namespace Symbiote.Relax.Impl
             _pollForChanges = false;
         }
 
-        public virtual string Post(CouchURI uri)
+        public virtual string Post(CouchUri uri)
         {
             return GetResponse(uri, "POST", "");
         }
 
-        public virtual string Post(CouchURI uri, string body)
+        public virtual string Post(CouchUri uri, string body)
         {
             return GetResponse(uri, "POST", body);
         }
 
-        public virtual string Put(CouchURI uri)
+        public virtual string Put(CouchUri uri)
         {
             return GetResponse(uri, "PUT", "");
         }
 
-        public virtual string Put(CouchURI uri, string body)
+        public virtual string Put(CouchUri uri, string body)
         {
             return GetResponse(uri, "PUT", body);
         }
 
-        public virtual string Get(CouchURI uri)
+        public virtual string Get(CouchUri uri)
         {
             return GetResponse(uri, "GET", "");
         }
 
-        public virtual string Delete(CouchURI uri)
+        public virtual string Delete(CouchUri uri)
         {
             return GetResponse(uri, "DELETE", "");
         }

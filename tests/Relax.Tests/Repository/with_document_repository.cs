@@ -8,13 +8,13 @@ namespace Relax.Tests.Repository
     public abstract class with_document_repository : with_configuration
     {
         protected static IDocumentRepository repository;
-        protected static CouchURI uri;
+        protected static CouchUri uri;
         protected static Mock<ICouchCommand> commandMock;
-        protected static CouchURI couchUri 
+        protected static CouchUri couchUri 
         {
             get
             {
-                return Moq.It.Is<CouchURI>(u => u.ToString().Equals(uri.ToString()));
+                return Moq.It.Is<CouchUri>(u => u.ToString().Equals(uri.ToString()));
             }
         }
         

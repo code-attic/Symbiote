@@ -28,4 +28,22 @@ namespace Symbiote.Relax.Impl
             Documents = docs.ToArray();
         }
     }
+
+    public class BulkResponse
+    {
+        [JsonProperty(PropertyName = "ok")]
+        public bool Success { get; set; }
+
+        [JsonProperty(PropertyName = "new_revs")]
+        public NewRevision[] Revisions { get; set; }
+    }
+
+    public class NewRevision
+    {
+        [JsonProperty(PropertyName = "_id")]
+        public string Id { get; set; }
+
+        [JsonProperty(PropertyName = "rev")]
+        public string Revision { get; set; }
+    }
 }

@@ -7,7 +7,7 @@ namespace Relax.Tests.Repository
     {
         private Establish context = () =>
                                         {
-                                            uri = new CouchURI("http", "localhost", 5984, "_all_dbs");
+                                            uri = new CouchUri("http", "localhost", 5984, "_all_dbs");
                                             commandMock.Setup(x => x.Get(couchUri))
                                                 .Returns("[ \"one\", \"two\", \"three\" ]");
                                             WireUpCommandMock(commandMock.Object);

@@ -20,7 +20,7 @@ namespace Symbiote.Daemon
                 .Dependencies(x =>
                                   {
                                       // Jeremy Miller, you are a genius!
-                                      // Behold a late-bound, singleton dependency!
+                                      // Behold; a late-bound, singleton dependency!
                                       x.For<TDaemon>().Singleton().Use(
                                           c => c.GetInstance<TDaemon>(daemonConfiguration.ServiceName));
                                       x.For<DaemonConfiguration<TDaemon>>().Use(daemonConfiguration);

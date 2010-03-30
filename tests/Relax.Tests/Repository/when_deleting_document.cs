@@ -9,7 +9,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => repository.DeleteDocument<TestDocument>(id)
+                                         () => repository.DeleteDocument<TestDocument>(id, "1")
                                          );
                                  };
 

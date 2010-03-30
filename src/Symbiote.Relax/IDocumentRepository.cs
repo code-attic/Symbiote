@@ -10,7 +10,7 @@ namespace Symbiote.Relax
             where TModel : class, ICouchDocument<TKey, TRev>;
         void DeleteDatabase<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>;
-        void DeleteDocument<TModel>(TKey id)
+        void DeleteDocument<TModel>(TKey id, TRev rev)
             where TModel : class, ICouchDocument<TKey, TRev>;
         bool DatabaseExists<TModel>()
             where TModel : class, ICouchDocument<TKey, TRev>;
@@ -39,7 +39,7 @@ namespace Symbiote.Relax
         void CreateDatabase();
         void DeleteDatabase();
         bool DatabaseExists();
-        void DeleteDocument(TKey id);
+        void DeleteDocument(TKey id, TRev rev);
         IList<string> DatabaseList { get; }
         TModel Get(TKey id, TRev revision);
         TModel Get(TKey id);
