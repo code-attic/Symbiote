@@ -31,7 +31,12 @@ namespace Symbiote.Relax.Impl
             _repository.DeleteDatabase<TModel>();
         }
 
-        public void DeleteDocument(TKey id, TRev rev)
+        public virtual void DeleteDocument(TKey id)
+        {
+            _repository.DeleteDocument<TModel>(id);
+        }
+
+        public virtual void DeleteDocument(TKey id, TRev rev)
         {
             _repository.DeleteDocument<TModel>(id, rev);
         }
@@ -186,7 +191,30 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public void DeleteDocument<TModel>(TKey id, TRev rev)
+        public virtual void DeleteDocument<TModel>(TKey id)
+            where TModel : class, ICouchDocument<TKey, TRev>
+        {
+            var doc = Get<TModel>(id);
+
+            if(doc != null)
+            {
+                var uri = BaseURI<TModel>();
+                try
+                {
+                    var command = _commandFactory.GetCommand();
+                    uri = uri.KeyAndRev(doc.Id, doc.Revision);
+                    command.Delete(uri);
+                }
+                catch (Exception ex)
+                {
+                    "An exception occurred trying to delete a document of type {0} with id {1} at {2}. \r\n\t {3}"
+                        .ToError<IDocumentRepository>(typeof(TModel).FullName, id.ToString(), uri.ToString(), ex);
+                    throw;
+                }
+            }
+        }
+
+        public virtual void DeleteDocument<TModel>(TKey id, TRev rev)
             where TModel : class, ICouchDocument<TKey, TRev>
         {
             var uri = BaseURI<TModel>();

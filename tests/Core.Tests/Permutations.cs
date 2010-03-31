@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Gallio.Framework;
 using Machine.Specifications;
-using MbUnit.Framework;
-using MbUnit.Framework.ContractVerifiers;
 using Symbiote.Core.Extensions;
 
 namespace Core.Tests

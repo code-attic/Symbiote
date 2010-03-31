@@ -32,19 +32,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Gallio" />
-    <Reference Include="Machine.Specifications">
-      <HintPath>C:\mspec\Machine.Specifications.dll</HintPath>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Machine.Specifications.dll</HintPath>
     </Reference>
-    <Reference Include="Machine.Specifications.GallioAdapter">
-      <HintPath>C:\mspec\Machine.Specifications.GallioAdapter.dll</HintPath>
+    <Reference Include="Machine.Specifications.GallioAdapter, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="MbUnit" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Gallio35" />
-    <Reference Include="MbUnit35" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>

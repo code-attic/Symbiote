@@ -31,8 +31,22 @@ namespace Symbiote.Relax.Impl
         }
     }
 
+    public class DocumentRepository<TKey, TRev>
+        : BaseDocumentRepository<TKey, TRev>
+    {
+        public DocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory) 
+            : base(configuration, commandFactory)
+        {
+        }
+
+        public DocumentRepository(string configurationName) 
+            : base(configurationName)
+        {
+        }
+    }
+
     public class DocumentRepository<TModel, TKey, TRev> 
-        : BaseDocumentRepository<TModel, TKey, TRev>, IDocumentRepository<TModel, TKey, TRev>
+        : BaseDocumentRepository<TModel, TKey, TRev>
         where TModel : class, ICouchDocument<TKey, TRev>
     {
         public DocumentRepository(IDocumentRepository<TKey, TRev> repository)
