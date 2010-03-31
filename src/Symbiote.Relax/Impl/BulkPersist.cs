@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Symbiote.Relax.Impl
 {
     public class BulkPersist<TModel, TKey, TRev>
-        where TModel : class, ICouchDocument<TKey, TRev>
+        where TModel : class, ICouchDocument
     {
         [JsonProperty(PropertyName = "all_or_nothing")]
         public bool AllOrNothing { get; set; }

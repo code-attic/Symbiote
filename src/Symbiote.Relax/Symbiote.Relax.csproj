@@ -77,6 +77,7 @@
   <ItemGroup>
     <Compile Include="BaseCouchDocument.cs" />
     <Compile Include="ChangeRecord.cs" />
+    <Compile Include="CustomCouchDocument.cs" />
     <Compile Include="Impl\CouchCommand.cs" />
     <Compile Include="Impl\CouchCommandFactory.cs" />
     <Compile Include="Impl\CouchConfiguration.cs" />
@@ -95,7 +96,6 @@
     <Compile Include="Impl\ICouchConfiguration.cs" />
     <Compile Include="JsonDocument.cs" />
     <Compile Include="Impl\SaveResponse.cs" />
-    <Compile Include="Impl\SimpleDocumentRepository.cs" />
     <Compile Include="Impl\ViewResult.cs" />
     <Compile Include="Impl\ViewRow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

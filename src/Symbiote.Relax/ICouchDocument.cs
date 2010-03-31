@@ -1,11 +1,8 @@
 namespace Symbiote.Relax
 {
-    public interface ICouchDocument<TKey, TRev>
+    public interface ICouchDocument
     {
-        TKey Id { get; set; }
-        TRev Revision { get; set; }
-
-        void UpdateRevision(string revision);
-        void UpdateId(string id);
+        string DocumentId { get; set; }
+        string DocumentRevision { get; set; }
     }
 }

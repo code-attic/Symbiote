@@ -10,109 +10,9 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Relax.Impl
 {
-    public abstract class BaseDocumentRepository<TModel, TKey, TRev>
-        : IDocumentRepository<TModel, TKey, TRev>
-        where TModel : class, ICouchDocument<TKey, TRev>
-    {
-        protected BaseDocumentRepository<TKey, TRev> _repository;
-
-        public void Dispose()
-        {
-            _repository.Dispose();
-        }
-
-        public virtual void CreateDatabase()
-        {
-            _repository.CreateDatabase<TModel>();
-        }
-
-        public virtual void DeleteDatabase()
-        {
-            _repository.DeleteDatabase<TModel>();
-        }
-
-        public virtual void DeleteDocument(TKey id)
-        {
-            _repository.DeleteDocument<TModel>(id);
-        }
-
-        public virtual void DeleteDocument(TKey id, TRev rev)
-        {
-            _repository.DeleteDocument<TModel>(id, rev);
-        }
-
-        public virtual bool DatabaseExists()
-        {
-            return _repository.DatabaseExists<TModel>();
-        }
-
-        public virtual IList<string> DatabaseList
-        {
-            get { return _repository.DatabaseList; }
-        }
-
-        public virtual TModel Get(TKey id, TRev revision)
-        {
-            return _repository.Get<TModel>(id, revision);
-        }
-
-        public virtual TModel Get(TKey id)
-        {
-            return _repository.Get<TModel>(id);
-        }
-
-        public virtual IList<TModel> GetAll()
-        {
-            return _repository.GetAll<TModel>();
-        }
-
-        public virtual IList<TModel> GetAll(int pageSize, int pageNumber)
-        {
-            return _repository.GetAll<TModel>(pageSize, pageNumber);
-        }
-
-        public virtual void Save(TModel model)
-        {
-            _repository.Save(model);
-        }
-
-        public virtual void Save(IEnumerable<TModel> list)
-        {
-            _repository.Save(list);
-        }
-
-        public virtual void HandleUpdates(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
-        {
-            _repository.HandleUpdates<TModel>(since, onUpdate, updatesInterrupted);
-        }
-
-        public virtual void StopChangeStreaming()
-        {
-            _repository.StopChangeStreaming<TModel>();
-        }
-
-        public BaseDocumentRepository(IDocumentRepository<TKey, TRev> repository)
-        {
-            _repository = repository as BaseDocumentRepository<TKey, TRev>;
-            if(!_repository.DatabaseExists<TModel>())
-            {
-                _repository.CreateDatabase<TModel>();
-            }
-        }
-
-        protected BaseDocumentRepository(string configurationName)
-        {
-            var configuration = ObjectFactory.GetNamedInstance<ICouchConfiguration>(configurationName);
-            _repository = new DocumentRepository<TModel, TKey, TRev>(configurationName) as BaseDocumentRepository<TKey, TRev>;
-            if (!_repository.DatabaseExists<TModel>())
-            {
-                _repository.CreateDatabase<TModel>();
-            }
-        }
-    }
-
-    public abstract class BaseDocumentRepository<TKey, TRev>
-        : IDocumentRepository<TKey, TRev>
+    public abstract class BaseDocumentRepository<TModel>
+        : IDocumentRepository<TModel>
+        where TModel : class, ICouchDocument
     {
         protected ICouchConfiguration _configuration;
         protected ICouchCommandFactory _commandFactory;
@@ -120,9 +20,7 @@ namespace Symbiote.Relax.Impl
         protected ConcurrentDictionary<Type, ICouchCommand> _continuousUpdateCommands =
             new ConcurrentDictionary<Type, ICouchCommand>();
         
-
-        protected virtual CouchUri BaseURI<TModel>()
-            where TModel : class, ICouchDocument<TKey, TRev>
+        protected virtual CouchUri BaseURI()
         {
             var database = _configuration.GetDatabaseNameForType<TModel>();
             var baseURI = CouchUri.Build(
@@ -158,7 +56,7 @@ namespace Symbiote.Relax.Impl
                 else
                 {
                     "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, baseURI.ToString(), webEx);
+                    .ToError<IDocumentRepository<TModel>>(database, baseURI.ToString(), webEx);
                     throw;
                 }
 
@@ -166,16 +64,15 @@ namespace Symbiote.Relax.Impl
             catch(Exception ex)
             {
                 "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, baseURI.ToString(), ex);
+                    .ToError<IDocumentRepository<TModel>>(database, baseURI.ToString(), ex);
                 throw;
             }
         }
 
-        public virtual void CreateDatabase<TModel>()
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void CreateDatabase()
         {
             string database = "";
-            var uri = BaseURI<TModel>();
+            var uri = BaseURI();
             try
             {
                 database = _configuration.GetDatabaseNameForType<TModel>();
@@ -186,38 +83,36 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred trying to create the database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                    .ToError<IDocumentRepository<TModel>>(database, uri.ToString(), ex);
                 throw;
             }
         }
 
-        public virtual void DeleteDocument<TModel>(TKey id)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void DeleteDocument<TKey>(TKey id)
         {
-            var doc = Get<TModel>(id);
+            var doc = Get<TKey>(id);
 
             if(doc != null)
             {
-                var uri = BaseURI<TModel>();
+                var uri = BaseURI();
                 try
                 {
                     var command = _commandFactory.GetCommand();
-                    uri = uri.KeyAndRev(doc.Id, doc.Revision);
+                    uri = uri.KeyAndRev(doc.DocumentId, doc.DocumentRevision);
                     command.Delete(uri);
                 }
                 catch (Exception ex)
                 {
                     "An exception occurred trying to delete a document of type {0} with id {1} at {2}. \r\n\t {3}"
-                        .ToError<IDocumentRepository>(typeof(TModel).FullName, id.ToString(), uri.ToString(), ex);
+                        .ToError<IDocumentRepository<TModel>>(typeof(TModel).FullName, id.ToString(), uri.ToString(), ex);
                     throw;
                 }
             }
         }
 
-        public virtual void DeleteDocument<TModel>(TKey id, TRev rev)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void DeleteDocument<TKey, TRev>(TKey id, TRev rev)
         {
-            var uri = BaseURI<TModel>();
+            var uri = BaseURI();
             try
             {
                 var command = _commandFactory.GetCommand();
@@ -227,16 +122,15 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred trying to delete a document of type {0} with id {1} at {2}. \r\n\t {3}"
-                    .ToError<IDocumentRepository>(typeof (TModel).FullName, id.ToString(), uri.ToString(), ex);
+                    .ToError<IDocumentRepository<TModel>>(typeof(TModel).FullName, id.ToString(), uri.ToString(), ex);
                 throw;
             }
         }
 
-        public virtual void DeleteDatabase<TModel>()
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void DeleteDatabase()
         {
             var database = "";
-            var uri = BaseURI<TModel>();
+            var uri = BaseURI();
             try
             {
                 database = _configuration.GetDatabaseNameForType<TModel>();
@@ -247,15 +141,14 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred trying to delete the database {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                    .ToError<IDocumentRepository<TModel>>(database, uri.ToString(), ex);
                 throw;
             }
         }
 
-        public virtual bool DatabaseExists<TModel>()
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual bool DatabaseExists()
         {
-            var uri = BaseURI<TModel>();
+            var uri = BaseURI();
             var database = "";
             var exists = false;
             try
@@ -270,7 +163,7 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred checking for the existence of database {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                    .ToError<IDocumentRepository<TModel>>(database, uri.ToString(), ex);
                 throw;
             }
         }
@@ -290,10 +183,9 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual TModel Get<TModel>(TKey id, TRev revision)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual TModel Get<TKey, TRev>(TKey id, TRev revision)
         {
-            var uri = BaseURI<TModel>().KeyAndRev(id, revision);
+            var uri = BaseURI().KeyAndRev(id, revision);
             
             try
             {
@@ -306,7 +198,7 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred trying to retrieve a document of type {0} with id {1} and rev {2} at {3}. \r\n\t {4}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName, 
                         id.ToString(), 
                         revision.ToString(),
@@ -316,10 +208,9 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual TModel Get<TModel>(TKey id)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual TModel Get<TKey>(TKey id)
         {
-            var uri = BaseURI<TModel>().Key(id);
+            var uri = BaseURI().Key(id);
             
             try
             {
@@ -332,7 +223,7 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred trying to retrieve a document of type {0} with id {1} at {2}. \r\n\t {3}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName,
                         id.ToString(),
                         uri.ToString(),
@@ -341,10 +232,9 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual IList<TModel> GetAll<TModel>()
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual IList<TModel> GetAll()
         {
-            var uri = BaseURI<TModel>()
+            var uri = BaseURI()
                 .ListAll()
                 .IncludeDocuments();
             
@@ -353,14 +243,14 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 List<TModel> list = new List<TModel>();
-                var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
+                var view = (json.FromJson<ViewResult<TModel>>());
                 list = view.GetList().ToList();
                 return list;
             }
             catch (Exception ex)
             {
                 "An exception occurred trying to retrieve all documents of type {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
@@ -368,10 +258,9 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual IList<TModel> GetAll(int pageSize, int pageNumber)
         {
-            var uri = BaseURI<TModel>()
+            var uri = BaseURI()
                 .ListAll()
                 .IncludeDocuments()
                 .Skip((pageNumber - 1)*pageSize)
@@ -382,14 +271,14 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
                 List<TModel> list = new List<TModel>();
-                var view = (json.FromJson<ViewResult<TModel, TKey, TRev>>());
+                var view = (json.FromJson<ViewResult<TModel>>());
                 list = view.GetList().ToList();
                 return list;
             }
             catch (Exception ex)
             {
                 "An exception occurred trying to retrieve all documents of type {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
@@ -397,11 +286,10 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual void Save<TModel>(TModel model)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void Save(TModel model)
         {
-            var uri = BaseURI<TModel>()
-                .Key(model.Id);
+            var uri = BaseURI()
+                .Key(model.DocumentId);
 
             try
             {
@@ -409,12 +297,12 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var updatedJSON = command.Put(uri, body);
                 var updated = updatedJSON.FromJson<SaveResponse>();
-                model.UpdateRevision(updated.Revision);
+                model.DocumentRevision = updated.Revision;
             }
             catch (Exception ex)
             {
                 "An exception occurred trying to save a document of type {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
@@ -422,10 +310,9 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual void Save<TModel>(IEnumerable<TModel> list)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void Save(IEnumerable<TModel> list)
         {
-            var uri = BaseURI<TModel>().BulkInsert();
+            var uri = BaseURI().BulkInsert();
             
             try
             {
@@ -444,15 +331,15 @@ namespace Symbiote.Relax.Impl
                     .ToList()
                     .ForEach(x =>
                                  {
-                                     var update = updated.FirstOrDefault(y => y.Id == x.Id.ToString());
+                                     var update = updated.FirstOrDefault(y => y.Id == x.DocumentId.ToString());
                                      if (update != null)
-                                         x.UpdateRevision(update.Revision);
+                                         x.DocumentRevision = update.Revision;
                                  });
             }
             catch (Exception ex)
             {
                 "An exception occurred trying to save a document of type {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(
+                    .ToError<IDocumentRepository<TModel>>(
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
@@ -460,16 +347,15 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public virtual void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
-            where TModel : class, ICouchDocument<TKey, TRev>
+        public virtual void HandleUpdates(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
         {
             var command = _commandFactory.GetCommand();
             Action<CouchUri, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
-            proxy.BeginInvoke(BaseURI<TModel>(), since, onUpdate, updatesInterrupted, null);
+            proxy.BeginInvoke(BaseURI(), since, onUpdate, updatesInterrupted, null);
             _continuousUpdateCommands[typeof(TModel)] = command;
         }
 
-        public virtual void StopChangeStreaming<TModel>()
+        public virtual void StopChangeStreaming()
         {
             ICouchCommand command;
             var key = typeof (TModel);

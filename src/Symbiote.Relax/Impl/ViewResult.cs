@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 
 namespace Symbiote.Relax.Impl
 {
-    public class ViewResult<TModel, TKey, TRev>
-        where TModel : class, ICouchDocument<TKey, TRev>
+    public class ViewResult<TModel>
+        where TModel : class, ICouchDocument
     {
         [JsonProperty(PropertyName = "total_rows")]
         public int TotalRows { get; set; }
@@ -14,13 +14,13 @@ namespace Symbiote.Relax.Impl
         public int Offset { get; set; }
 
         [JsonProperty(PropertyName = "rows")]
-        public ViewRow<TModel, TKey, TRev>[] Rows { get; set; }
+        public ViewRow<TModel>[] Rows { get; set; }
 
         public IEnumerable<TModel> GetList()
         {
             return Rows.Select(x =>
                                {
-                                   x.Model.UpdateId(x.Id);
+                                   x.Model.DocumentId = x.Id;
                                    return x.Model;
                                });
         }

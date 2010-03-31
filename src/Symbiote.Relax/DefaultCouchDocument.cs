@@ -5,35 +5,25 @@ namespace Symbiote.Relax
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    public abstract class DefaultCouchDocument : ICouchDocument<Guid, string>
+    public abstract class DefaultCouchDocument : ICouchDocument
     {
-        private Guid? _id;
+        private Guid? _documentId;
 
         [JsonProperty(PropertyName = "_id")]
-        public Guid Id
+        public string DocumentId
         {
             get
             {
-                _id = _id ?? Guid.NewGuid();
-                return (Guid)_id;
+                _documentId = _documentId ?? Guid.NewGuid();
+                return _documentId.ToString();
             }
             set
             {
-                _id = value;
+                _documentId = new Guid(value);
             }
         }
 
         [JsonProperty(PropertyName = "_rev")]
-        public string Revision { get; set; }
-
-        public virtual void UpdateRevision(string revision)
-        {
-            Revision = revision;
-        }
-
-        public virtual void UpdateId(string id)
-        {
-            _id = new Guid(id);
-        }
+        public string DocumentRevision { get; set; }
     }
 }

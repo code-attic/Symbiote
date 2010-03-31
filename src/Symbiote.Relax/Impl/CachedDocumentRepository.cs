@@ -1,44 +1,30 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using StructureMap;
 using Symbiote.Core.Extensions;
 using Symbiote.Eidetic;
 
 namespace Symbiote.Relax.Impl
 {
-    public class CachedDocumentRepository 
-        : BaseDocumentRepository<Guid, string>, IDocumentRepository
+    public class CachedDocumentRepository<TModel> 
+        : BaseDocumentRepository<TModel>
+        where TModel : class, ICouchDocument
     {
-        protected IRemember _cache;
+        protected ICouchCacheProvider _cache;
+        protected IDocumentRepository<TModel> _repository;
+        protected ICacheKeyBuilder _builder;
 
-        public CachedDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory, IRemember cache)
+        public CachedDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory, ICouchCacheProvider cacheProvider) 
             : base(configuration, commandFactory)
         {
-            _cache = cache;
+            _cache = cacheProvider;
         }
 
-        public CachedDocumentRepository(string configurationName, IRemember cache)
+        public CachedDocumentRepository(string configurationName, ICouchCacheProvider cacheProvider)
             : base(configurationName)
         {
-            _cache = cache;
-        }
-    }
-
-    public class CachedDocumentRepository<TModel> 
-        : BaseDocumentRepository<TModel, Guid, string>, IDocumentRepository<TModel>
-        where TModel : class, ICouchDocument<Guid, string>
-    {
-        protected IRemember _cache;
-
-        public CachedDocumentRepository(IDocumentRepository<Guid, string> repository, IRemember cache)
-            : base(repository)
-        {
-            _cache = cache;
-        }
-
-        public CachedDocumentRepository(string configurationName, IRemember cache)
-            : base(configurationName)
-        {
-            _cache = cache;
+            _cache = cacheProvider;
         }
 
         public override void Save(IEnumerable<TModel> list)
@@ -222,7 +208,7 @@ namespace Symbiote.Relax.Impl
 
     public class CachedDocumentRepository<TModel, TKey, TRev>
         : BaseDocumentRepository<TModel, TKey, TRev>
-        where TModel : class, ICouchDocument<TKey, TRev>
+        where TModel : class, ICouchDocument
     {
         protected IRemember _cache;
         protected ICacheKeyBuilder _keyBuilder;
@@ -327,6 +313,120 @@ namespace Symbiote.Relax.Impl
 
         public CachedDocumentRepository(string configurationName, IRemember cache, ICacheKeyBuilder keyBuilder)
             : base(configurationName)
+        {
+            _cache = cache;
+            _keyBuilder = keyBuilder;
+        }
+    }
+
+    public interface ICouchCacheProvider
+    {
+        
+    }
+
+    public class ListKey
+    {
+        public bool Paged { get; set;}
+        public int PageNumber { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public class EideticCacheProvider : ICouchCacheProvider
+    {
+        protected IRemember _cache;
+        protected ICacheKeyBuilder _keyBuilder;
+        protected ConcurrentStack<ListKey> _activeListKeys = new ConcurrentStack<ListKey>();
+        protected Dictionary<string, string> _crossReferences = new Dictionary<string, string>();
+
+        public void InvalidateLists<TModel>()
+        {
+            ListKey listKey = null;
+            while(_activeListKeys.TryPop(out listKey))
+            {
+                var key = listKey.Paged
+                              ? _keyBuilder.GetListKey<TModel>(listKey.PageNumber, listKey.PageSize)
+                              : _keyBuilder.GetListKey<TModel>();
+                _cache.Remove(key);
+            }
+        }
+
+        public void Delete<TModel, TKey>(TKey key, Action<TKey> delete)
+        {
+            var cacheKey = _keyBuilder.GetKey<TModel>(key);
+            InvalidateLists<TModel>();
+            _cache.Remove(cacheKey);
+            delete(key);
+        }
+
+        public void Delete<TModel, TKey, TRev>(TKey key, TRev rev, Action<TKey, TRev> delete)
+        {
+            var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
+            InvalidateLists<TModel>();
+            _cache.Remove(cacheKey);
+            delete(key, rev);
+        }
+
+        public TModel Get<TModel, TKey, TRev>(TKey key, TRev rev, Func<TKey, TRev, TModel> retrieve)
+        {
+            var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
+            var model = _cache.Get<TModel>(cacheKey);
+            if(model == null)
+            {
+                model = retrieve(key, rev);
+                _cache.Store(StoreMode.Add, cacheKey, model);
+            }
+            return model;
+        }
+
+        public TModel Get<TModel, TKey>(TKey key, Func<TKey, TModel> retrieve)
+        {
+            var cacheKey = _keyBuilder.GetKey<TModel>(key);
+            var result = _cache.Get<TModel>(cacheKey);
+            if (result == null)
+            {
+                result = retrieve(key);
+                _cache.Store(StoreMode.Add, cacheKey, result);
+            }
+            return result;
+        }
+
+        public IList<TModel> GetAll<TModel>(Func<IList<TModel>> retrieve)
+        {
+            var cacheKey = _keyBuilder.GetListKey<TModel>();
+            var result = _cache.Get<IList<TModel>>(cacheKey);
+            if (result == null)
+            {
+                result = retrieve();
+                _cache.Store(StoreMode.Add, cacheKey, result);
+                _activeListKeys.Push(new ListKey());
+            }
+            return result;
+        }
+
+        public IList<TModel> GetAll<TModel>(int pageNumber, int pageSize, Func<int, int, IList<TModel>> retrieve)
+        {
+            var cacheKey = _keyBuilder.GetListKey<TModel>(pageNumber, pageSize);
+            var result = _cache.Get<IList<TModel>>(cacheKey);
+            if (result == null)
+            {
+                result = retrieve(pageNumber, pageSize);
+                _cache.Store(StoreMode.Add, cacheKey, result);
+                _activeListKeys.Push(new ListKey() { Paged = true, PageNumber = pageNumber, PageSize = pageSize });
+            }
+            return result;
+        }
+
+        public void Save<TModel>(TModel model)
+        {
+            
+        }
+
+        public void Save<TModel>(IEnumerable<TModel> list)
+        {
+
+        }
+
+        public EideticCacheProvider(IRemember cache, ICacheKeyBuilder keyBuilder)
         {
             _cache = cache;
             _keyBuilder = keyBuilder;
