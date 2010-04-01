@@ -10,7 +10,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => exists = repository.DatabaseExists<TestDocument>()
+                                         () => exists = repository.DatabaseExists()
                                          );
                                  };
 

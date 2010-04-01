@@ -32,7 +32,7 @@ namespace Symbiote.Telepathy
         int Process { get; set; }
     }
 
-    public class Registration : BaseCouchDocument<string, string>
+    public class Registration : DefaultCouchDocument
     {
         public INodeName Node { get; set; }
     }
@@ -80,7 +80,6 @@ namespace Symbiote.Telepathy
         private string _queueName = "";
         private NodeName _nodeName;
         private IBus _bus;
-        private IDocumentRepository _couch;
 
         private IAssimilate assimilate;
 
@@ -139,7 +138,6 @@ namespace Symbiote.Telepathy
             this.assimilate = assimilate;
             _nodeName = new NodeName();
             _queueName = _nodeName.ToString("_");
-            _couch = ObjectFactory.GetInstance<IDocumentRepository>();
             _bus = ObjectFactory.GetInstance<IBus>();
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
+using Relax.Tests.Repository;
 using StructureMap;
 using Symbiote.Core;
 using Symbiote.Relax;
@@ -13,22 +14,17 @@ namespace Relax.Tests.Assimilation
         private Because of = () => RelaxAssimilation.Relax(Assimilate.Core(), x => x.UseDefaults());
 
         private It should_use_CouchConfiguration_for_ICouchConfiguration = 
-            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory
-                                       .Container
-                                       .Model
-                                       .DefaultTypeFor<ICouchConfiguration>(), typeof(CouchConfiguration));
+            () => ObjectFactory
+                       .Container
+                       .Model
+                       .DefaultTypeFor<ICouchConfiguration>()
+                       .ShouldEqual(typeof(CouchConfiguration));
 
         private It should_use_DocumentRepository_for_IDocumentRepository =
-            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory.Model.DefaultTypeFor<IDocumentRepository>(), typeof(DocumentRepository));
-
-        private It should_use_DocumentRepository_for_IDocumentRepository_with_closed_generic =
-            () => ShouldExtensionMethods.ShouldEqual(ObjectFactory.Model.DefaultTypeFor(typeof(IDocumentRepository<Guid, string>)), typeof(DocumentRepository));
-
-        private It should_use_DocumentRepository_for_IDocumentRepository_with_open_generic =
             () => ObjectFactory
+                      .Container
                       .Model
-                      .For<IDocumentRepository<DefaultCouchDocument>>()
-                      .PluginType
-                      .IsAssignableFrom(typeof (DocumentRepository<DefaultCouchDocument>));
+                      .HasImplementationsFor(typeof(IDocumentRepository<>))
+                      .ShouldBeTrue();
     }
 }

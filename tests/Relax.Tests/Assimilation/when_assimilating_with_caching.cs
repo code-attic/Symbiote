@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Machine.Specifications;
+using Relax.Tests.Repository;
 using StructureMap;
 using Symbiote.Core;
 using Symbiote.Relax;
@@ -23,16 +24,10 @@ namespace Relax.Tests.Assimilation
                     .ShouldEqual(typeof(CouchConfiguration));
 
         private It should_use_DocumentRepository_for_IDocumentRepository =
-            () => ObjectFactory.Model.DefaultTypeFor<IDocumentRepository>().ShouldEqual(typeof(CachedDocumentRepository));
-
-        private It should_use_DocumentRepository_for_IDocumentRepository_with_closed_generic =
-            () => ObjectFactory.Model.DefaultTypeFor(typeof(IDocumentRepository<Guid, string>)).ShouldEqual(typeof(CachedDocumentRepository));
-
-        private It should_use_DocumentRepository_for_IDocumentRepository_with_open_generic =
             () => ObjectFactory
+                      .Container
                       .Model
-                      .For<IDocumentRepository<DefaultCouchDocument>>()
-                      .PluginType
-                      .IsAssignableFrom(typeof(CachedDocumentRepository<DefaultCouchDocument>));
+                      .HasImplementationsFor(typeof (IDocumentRepository<>))
+                      .ShouldBeTrue();
     }
 }

@@ -74,7 +74,7 @@ namespace Symbiote.Relax.Impl
             catch (Exception ex)
             {
                 "An exception occurred while receiving the change stream from {0}. \r\n\t {1}"
-                    .ToError<IDocumentRepository>(uri.ToString(), ex);
+                    .ToError<IDocumentRepository<DefaultCouchDocument>>(uri.ToString(), ex);
                 throw;
             }
             finally

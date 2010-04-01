@@ -11,7 +11,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => records = repository.GetAll<TestDocument>(10, 1)
+                                         () => records = repository.GetAll(10, 1)
                                          );
                                  };
 
@@ -19,9 +19,9 @@ namespace Relax.Tests.Repository
         private It should_get_one_record = () => records.Count.ShouldEqual(1);
         private It should_get_right_record = () =>
                                                  {
-                                                     records[0].Id.ShouldEqual(id);
+                                                     records[0].DocumentId.ShouldEqual(id.ToString());
                                                      records[0].Message.ShouldEqual("Hello");
-                                                     records[0].Revision.ShouldEqual("2");
+                                                     records[0].DocumentRevision.ShouldEqual("2");
                                                  };
         private It should_call_get_correctly = () => commandMock.Verify(x => x.Get(couchUri));
     }

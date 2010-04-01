@@ -39,7 +39,7 @@ namespace RelaxDemo
 
     public class RelaxDemoService : IDaemon
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
         private DatabaseDeleter _databaseDeleter;
         private BulkDataPersister _bulkPersister;
         private DocumentSaver _documentSaver;
@@ -89,7 +89,7 @@ namespace RelaxDemo
             "Loading each document by id ..."
                 .ToInfo<RelaxDemoService>();
 
-            list.ForEach(x => _retriever.GetById(x.Id));
+            list.ForEach(x => _retriever.GetById(x.DocumentId));
 
             "... Done"
                 .ToInfo<RelaxDemoService>();
@@ -98,7 +98,7 @@ namespace RelaxDemo
             "Deleting all documents ..."
                 .ToInfo<RelaxDemoService>();
 
-            list.ForEach(x => _couch.DeleteDocument<TestDocument>(x.Id, x.Revision));
+            list.ForEach(x => _couch.DeleteDocument(x.DocumentId, x.DocumentRevision));
 
             "... Done"
                 .ToInfo<RelaxDemoService>();
@@ -132,7 +132,7 @@ namespace RelaxDemo
             _databaseDeleter.Nuke();
         }
 
-        public RelaxDemoService(IDocumentRepository couch)
+        public RelaxDemoService(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
             _databaseDeleter = new DatabaseDeleter(couch);
@@ -147,11 +147,11 @@ namespace RelaxDemo
 
     public class ChangeWatcher
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
         public void Start()
         {
-            _couch.HandleUpdates<TestDocument>(0, Update, null);
+            _couch.HandleUpdates(0, Update, null);
         }
 
         private void Update(ChangeRecord obj)
@@ -162,10 +162,10 @@ namespace RelaxDemo
 
         public void Stop()
         {
-            _couch.StopChangeStreaming<TestDocument>();
+            _couch.StopChangeStreaming();
         }
 
-        public ChangeWatcher(IDocumentRepository couch)
+        public ChangeWatcher(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -173,14 +173,14 @@ namespace RelaxDemo
 
     public class BulkDataLoader
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
         public IList<TestDocument> GetAllDocuments()
         {
-            return _couch.GetAll<TestDocument>();
+            return _couch.GetAll();
         }
 
-        public BulkDataLoader(IDocumentRepository couch)
+        public BulkDataLoader(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -188,15 +188,15 @@ namespace RelaxDemo
 
     public class PagingDataLoader
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
         private int _page = 0;
 
         public IList<TestDocument> GetNext3Documents()
         {
-            return _couch.GetAll<TestDocument>(3, ++_page);
+            return _couch.GetAll(3, ++_page);
         }
 
-        public PagingDataLoader(IDocumentRepository couch)
+        public PagingDataLoader(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -204,14 +204,14 @@ namespace RelaxDemo
 
     public class DocumentRetriever
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
-        public TestDocument GetById(Guid id)
+        public TestDocument GetById(string id)
         {
-            return _couch.Get<TestDocument>(id);
+            return _couch.Get(id);
         }
 
-        public DocumentRetriever(IDocumentRepository couch)
+        public DocumentRetriever(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -219,14 +219,14 @@ namespace RelaxDemo
 
     public class DocumentSaver
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
         public void Save(TestDocument document)
         {
             _couch.Save(document);
         }
 
-        public DocumentSaver(IDocumentRepository couch)
+        public DocumentSaver(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -234,7 +234,7 @@ namespace RelaxDemo
 
     public class BulkDataPersister
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
         private TestDocument[] documents = new TestDocument[]
                 {
@@ -252,10 +252,10 @@ namespace RelaxDemo
 
         public void SaveDocuments()
         {
-            _couch.Save<TestDocument>(documents);
+            _couch.Save(documents);
         }
 
-        public BulkDataPersister(IDocumentRepository couch)
+        public BulkDataPersister(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }
@@ -263,14 +263,14 @@ namespace RelaxDemo
 
     public class DatabaseDeleter
     {
-        private IDocumentRepository _couch;
+        private IDocumentRepository<TestDocument> _couch;
 
         public void Nuke()
         {
-            _couch.DeleteDatabase<TestDocument>();
+            _couch.DeleteDatabase();
         }
 
-        public DatabaseDeleter(IDocumentRepository couch)
+        public DatabaseDeleter(IDocumentRepository<TestDocument> couch)
         {
             _couch = couch;
         }

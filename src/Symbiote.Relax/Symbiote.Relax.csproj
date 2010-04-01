@@ -75,9 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseCouchDocument.cs" />
     <Compile Include="ChangeRecord.cs" />
     <Compile Include="CustomCouchDocument.cs" />
+    <Compile Include="Impl\CacheKeyBuilder.cs" />
     <Compile Include="Impl\CouchCommand.cs" />
     <Compile Include="Impl\CouchCommandFactory.cs" />
     <Compile Include="Impl\CouchConfiguration.cs" />
@@ -90,7 +90,10 @@
     <Compile Include="Impl\CachedDocumentRepository.cs" />
     <Compile Include="Impl\CouchURI.cs" />
     <Compile Include="Impl\DocumentRepository.cs" />
+    <Compile Include="Impl\EideticCacheProvider.cs" />
     <Compile Include="Impl\Feed.cs" />
+    <Compile Include="Impl\ICacheKeyBuilder.cs" />
+    <Compile Include="Impl\ICouchCacheProvider.cs" />
     <Compile Include="Impl\ICouchCommand.cs" />
     <Compile Include="Impl\ICouchCommandFactory.cs" />
     <Compile Include="Impl\ICouchConfiguration.cs" />

@@ -10,16 +10,16 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => record = repository.Get<TestDocument>(id, "2")
+                                         () => record = repository.Get(id, "2")
                                          );
                                  };
 
         private It should_get_document_without_exception = () => exception.ShouldBeNull();
         private It should_get_record = () =>
                                            {
-                                               record.Id.ShouldEqual(id);
+                                               record.DocumentId.ShouldEqual(id.ToString());
                                                record.Message.ShouldEqual("Hello");
-                                               record.Revision.ShouldEqual("2");
+                                               record.DocumentRevision.ShouldEqual("2");
                                            };
         private It should_call_get_correctly = () => commandMock.Verify(x => x.Get(couchUri));
     }

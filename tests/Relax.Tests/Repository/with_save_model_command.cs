@@ -15,9 +15,9 @@ namespace Relax.Tests.Repository
                                             id = Guid.NewGuid();
                                             document = new TestDocument()
                                                            {
-                                                               Id = id,
+                                                               DocumentId = id.ToString(),
                                                                Message = "Hello",
-                                                               Revision = "2"
+                                                               DocumentRevision = "2"
                                                            };
                                             originalDocument = document.ToJson();
 

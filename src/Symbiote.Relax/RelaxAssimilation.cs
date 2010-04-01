@@ -21,20 +21,15 @@ namespace Symbiote.Relax
                                   c.For<ICouchConfiguration>().Use(configuration);
                                   c.For<ICouchCommand>().Use<CouchCommand>();
                                   c.For<ICouchCommandFactory>().Use<CouchCommandFactory>();
-
+                                  c.For<ICouchCacheProvider>().Use<EideticCacheProvider>();
+                                  c.For<ICacheKeyBuilder>().Use<CacheKeyBuilder>();
                                   if (configuration.Cache)
                                   {
-                                      c.For<IDocumentRepository>().Use<CachedDocumentRepository>();
                                       c.For(typeof (IDocumentRepository<>)).Use(typeof (CachedDocumentRepository<>));
-                                      c.For(typeof (IDocumentRepository<,>)).Use(typeof (CachedDocumentRepository<,>));
-                                      c.For(typeof (IDocumentRepository<,,>)).Use(typeof (CachedDocumentRepository<,,>));
                                   }
                                   else
                                   {
-                                      c.For<IDocumentRepository>().Use<DocumentRepository>();
                                       c.For(typeof (IDocumentRepository<>)).Use(typeof (DocumentRepository<>));
-                                      c.For(typeof (IDocumentRepository<,>)).Use(typeof (DocumentRepository<,>));
-                                      c.For(typeof (IDocumentRepository<,,>)).Use(typeof (DocumentRepository<,,>));
                                   }
                               });
 

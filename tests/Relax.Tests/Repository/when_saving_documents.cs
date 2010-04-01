@@ -10,12 +10,12 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => repository.Save<TestDocument>(new [] {document})
+                                         () => repository.Save(new [] {document})
                                          );
                                  };
         
         private It should_save_documents_without_exception = () => exception.ShouldBeNull();
-        private It should_update_revision = () => document.Revision.ShouldEqual("3");
+        private It should_update_revision = () => document.DocumentRevision.ShouldEqual("3");
         private It should_call_post_correctly = () => commandMock.Verify(x => x.Post(couchUri, bulkSave));
     }
 }
