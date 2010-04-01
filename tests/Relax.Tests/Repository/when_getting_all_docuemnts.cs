@@ -11,7 +11,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => records = repository.GetAll()
+                                         () => records = repository.GetAll<TestDocument>()
                                          );
                                  };
 

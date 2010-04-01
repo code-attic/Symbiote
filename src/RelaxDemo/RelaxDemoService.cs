@@ -6,7 +6,7 @@ namespace RelaxDemo
 {
     public class RelaxDemoService : IDaemon
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
         private DatabaseDeleter _databaseDeleter;
         private BulkDataPersister _bulkPersister;
         private DocumentSaver _documentSaver;
@@ -65,7 +65,7 @@ namespace RelaxDemo
             "Deleting all documents ..."
                 .ToInfo<RelaxDemoService>();
 
-            list.ForEach(x => _couch.DeleteDocument(x.DocumentId, x.DocumentRevision));
+            list.ForEach(x => _couch.DeleteDocument<TestDocument>(x.DocumentId, x.DocumentRevision));
 
             "... Done"
                 .ToInfo<RelaxDemoService>();
@@ -99,7 +99,7 @@ namespace RelaxDemo
             _databaseDeleter.Nuke();
         }
 
-        public RelaxDemoService(IDocumentRepository<TestDocument> couch)
+        public RelaxDemoService(IDocumentRepository couch)
         {
             _couch = couch;
             _databaseDeleter = new DatabaseDeleter(couch);

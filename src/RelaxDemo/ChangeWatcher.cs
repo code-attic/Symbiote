@@ -5,11 +5,11 @@ namespace RelaxDemo
 {
     public class ChangeWatcher
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public void Start()
         {
-            _couch.HandleUpdates(0, Update, null);
+            _couch.HandleUpdates<TestDocument>(0, Update, null);
         }
 
         private void Update(ChangeRecord obj)
@@ -20,10 +20,10 @@ namespace RelaxDemo
 
         public void Stop()
         {
-            _couch.StopChangeStreaming();
+            _couch.StopChangeStreaming<TestDocument>();
         }
 
-        public ChangeWatcher(IDocumentRepository<TestDocument> couch)
+        public ChangeWatcher(IDocumentRepository couch)
         {
             _couch = couch;
         }

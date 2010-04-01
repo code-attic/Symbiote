@@ -4,14 +4,14 @@ namespace RelaxDemo
 {
     public class DocumentRetriever
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public TestDocument GetById(string id)
         {
-            return _couch.Get(id);
+            return _couch.Get<TestDocument>(id);
         }
 
-        public DocumentRetriever(IDocumentRepository<TestDocument> couch)
+        public DocumentRetriever(IDocumentRepository couch)
         {
             _couch = couch;
         }

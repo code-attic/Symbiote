@@ -10,7 +10,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => record = repository.Get(id)
+                                         () => record = repository.Get<TestDocument>(id)
                                          );
                                  };
 

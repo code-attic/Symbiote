@@ -4,14 +4,14 @@ namespace RelaxDemo
 {
     public class DocumentSaver
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public void Save(TestDocument document)
         {
             _couch.Save(document);
         }
 
-        public DocumentSaver(IDocumentRepository<TestDocument> couch)
+        public DocumentSaver(IDocumentRepository couch)
         {
             _couch = couch;
         }

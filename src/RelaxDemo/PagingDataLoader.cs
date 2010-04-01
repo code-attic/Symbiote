@@ -5,15 +5,15 @@ namespace RelaxDemo
 {
     public class PagingDataLoader
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
         private int _page = 0;
 
         public IList<TestDocument> GetNext3Documents()
         {
-            return _couch.GetAll(3, ++_page);
+            return _couch.GetAll<TestDocument>(3, ++_page);
         }
 
-        public PagingDataLoader(IDocumentRepository<TestDocument> couch)
+        public PagingDataLoader(IDocumentRepository couch)
         {
             _couch = couch;
         }

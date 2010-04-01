@@ -5,14 +5,14 @@ namespace RelaxDemo
 {
     public class BulkDataLoader
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public IList<TestDocument> GetAllDocuments()
         {
-            return _couch.GetAll();
+            return _couch.GetAll<TestDocument>();
         }
 
-        public BulkDataLoader(IDocumentRepository<TestDocument> couch)
+        public BulkDataLoader(IDocumentRepository couch)
         {
             _couch = couch;
         }

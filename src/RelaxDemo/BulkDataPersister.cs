@@ -4,7 +4,7 @@ namespace RelaxDemo
 {
     public class BulkDataPersister
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         private TestDocument[] documents = new TestDocument[]
                                                {
@@ -22,10 +22,10 @@ namespace RelaxDemo
 
         public void SaveDocuments()
         {
-            _couch.Save(documents);
+            _couch.SaveAll(documents);
         }
 
-        public BulkDataPersister(IDocumentRepository<TestDocument> couch)
+        public BulkDataPersister(IDocumentRepository couch)
         {
             _couch = couch;
         }

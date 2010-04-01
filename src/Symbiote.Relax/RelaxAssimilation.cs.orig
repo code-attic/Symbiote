@@ -27,6 +27,9 @@ namespace Symbiote.Relax
                                   c.For<ICacheKeyBuilder>().Use<CacheKeyBuilder>();
                                   if (configuration.Cache)
                                   {
+<<<<<<< HEAD
+                                      c.For(typeof (IDocumentRepository)).Use(typeof (CachedDocumentRepository));
+=======
                                       if(!ObjectFactory.Container.Model.HasDefaultImplementationFor<IRemember>())
                                       {
                                           throw new AssimilationException(
@@ -34,11 +37,12 @@ namespace Symbiote.Relax
                                           );
                                       }
 
-                                      c.For<IDocumentRepository>().Use<CachedDocumentRepository>();
+                                      c.For(typeof (IDocumentRepository<>)).Use(typeof (CachedDocumentRepository<>));
+>>>>>>> 311783550c580f31193aaf0f4667a68082f57c6f
                                   }
                                   else
                                   {
-                                      c.For<IDocumentRepository>().Use<DocumentRepository>();
+                                      c.For(typeof (IDocumentRepository)).Use(typeof (DocumentRepository));
                                   }
                               });
 
