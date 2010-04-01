@@ -17,7 +17,7 @@ namespace Relax.Tests.Repository
         private It should_get_document_without_exception = () => exception.ShouldBeNull();
         private It should_get_record = () =>
                                            {
-                                               record.DocumentId.ShouldEqual(id.ToString());
+                                               record.DocumentId.ShouldEqual(id);
                                                record.Message.ShouldEqual("Hello");
                                                record.DocumentRevision.ShouldEqual("1");
                                            };

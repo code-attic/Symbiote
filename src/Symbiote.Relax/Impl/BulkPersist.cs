@@ -4,8 +4,8 @@ using Newtonsoft.Json;
 
 namespace Symbiote.Relax.Impl
 {
-    public class BulkPersist<TModel, TKey, TRev>
-        where TModel : class, ICouchDocument
+    public class BulkPersist<TModel>
+        where TModel : class
     {
         [JsonProperty(PropertyName = "all_or_nothing")]
         public bool AllOrNothing { get; set; }
@@ -27,23 +27,5 @@ namespace Symbiote.Relax.Impl
             NonAtomic = nonAtomic;
             Documents = docs.ToArray();
         }
-    }
-
-    public class BulkResponse
-    {
-        [JsonProperty(PropertyName = "ok")]
-        public bool Success { get; set; }
-
-        [JsonProperty(PropertyName = "new_revs")]
-        public NewRevision[] Revisions { get; set; }
-    }
-
-    public class NewRevision
-    {
-        [JsonProperty(PropertyName = "_id")]
-        public string Id { get; set; }
-
-        [JsonProperty(PropertyName = "rev")]
-        public string Revision { get; set; }
     }
 }

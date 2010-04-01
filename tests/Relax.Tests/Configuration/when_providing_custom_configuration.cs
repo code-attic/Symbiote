@@ -11,7 +11,7 @@ namespace Relax.Tests.Configuration
                                        .Preauthorize()
                                        .Server("couchdb")
                                        .TimeOut(1000)
-                                       .UseForType<TestingDoc>("TeStIngDoC");
+                                       .UseForType<TestDocument>("TeStIngDoC");
 
         private It should_use_http_as_protocol = () => configuration.Protocol.ShouldEqual("https");
         private It should_use_localhost_as_server = () => configuration.Server.ShouldEqual("couchdb");
@@ -21,7 +21,7 @@ namespace Relax.Tests.Configuration
         private It should_not_use_cache = () => configuration.Cache.ShouldBeFalse();
         private It should_change_database_names_to_lower_case = 
             () => configuration
-                .GetDatabaseNameForType<TestingDoc>()
+                .GetDatabaseNameForType<TestDocument>()
                 .ShouldEqual("testingdoc");
     }
 }

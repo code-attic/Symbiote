@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace Symbiote.Relax.Impl
 {
     public class ViewResult<TModel>
-        where TModel : class, ICouchDocument
+        where TModel : class, IHandleJsonDocumentId
     {
         [JsonProperty(PropertyName = "total_rows")]
         public int TotalRows { get; set; }
@@ -20,7 +20,7 @@ namespace Symbiote.Relax.Impl
         {
             return Rows.Select(x =>
                                {
-                                   x.Model.DocumentId = x.Id;
+                                   x.Model.UpdateKeyFromJson(x.Id);
                                    return x.Model;
                                });
         }

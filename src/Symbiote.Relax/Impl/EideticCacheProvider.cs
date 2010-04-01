@@ -25,7 +25,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public void InvalidateItem<TModel>(string affectedKey)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             ConcurrentStack<string> relatedKeys = null;
             if(_crossReferences.TryGetValue(affectedKey, out relatedKeys))
@@ -39,7 +39,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public void Delete<TModel>(object key, Action<object> delete)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key);
             InvalidateItem<TModel>(key.ToString());
@@ -47,7 +47,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public void Delete<TModel>(object key, object rev, Action<object, object> delete)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
             InvalidateItem<TModel>(key.ToString());
@@ -55,13 +55,13 @@ namespace Symbiote.Relax.Impl
         }
 
         public void DeleteAll<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             _crossReferences.Keys.ForEach(InvalidateItem<TModel>);
         }
 
         public TModel Get<TModel>(object key, object rev, Func<object, object, TModel> retrieve)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
             var result = _cache.Get<TModel>(cacheKey);
@@ -69,13 +69,13 @@ namespace Symbiote.Relax.Impl
             {
                 result = retrieve(key, rev);
                 _cache.Store(StoreMode.Add, cacheKey, result);
-                AddCrossReference(result.DocumentId, cacheKey);
+                AddCrossReference(result.GetIdAsJson(), cacheKey);
             }
             return result;
         }
 
         public TModel Get<TModel>(object key, Func<object, TModel> retrieve)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key);
             var result = _cache.Get<TModel>(cacheKey);
@@ -83,13 +83,13 @@ namespace Symbiote.Relax.Impl
             {
                 result = retrieve(key);
                 _cache.Store(StoreMode.Add, cacheKey, result);
-                AddCrossReference(result.DocumentId, cacheKey);
+                AddCrossReference(result.GetIdAsJson(), cacheKey);
             }
             return result;
         }
 
         public IList<TModel> GetAll<TModel>(Func<IList<TModel>> retrieve)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetListKey<TModel>();
             var result = _cache.Get<IList<TModel>>(cacheKey);
@@ -97,13 +97,13 @@ namespace Symbiote.Relax.Impl
             {
                 result = retrieve();
                 _cache.Store(StoreMode.Add, cacheKey, result);
-                result.ForEach(x => AddCrossReference(x.DocumentId, cacheKey));
+                result.ForEach(x => AddCrossReference(x.GetIdAsJson(), cacheKey));
             }
             return result;
         }
 
         public IList<TModel> GetAll<TModel>(int pageNumber, int pageSize, Func<int, int, IList<TModel>> retrieve)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetListKey<TModel>(pageNumber, pageSize);
             var result = _cache.Get<IList<TModel>>(cacheKey);
@@ -111,32 +111,32 @@ namespace Symbiote.Relax.Impl
             {
                 result = retrieve(pageNumber, pageSize);
                 _cache.Store(StoreMode.Add, cacheKey, result);
-                result.ForEach(x => AddCrossReference(x.DocumentId, cacheKey));
+                result.ForEach(x => AddCrossReference(x.GetIdAsJson(), cacheKey));
             }
             return result;
         }
 
         public void Save<TModel>(TModel model, Action<TModel> save)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            InvalidateItem<TModel>(model.DocumentId);
+            InvalidateItem<TModel>(model.GetIdAsJson());
             save(model);
             CacheSavedModel(model);
         }
 
         protected void CacheSavedModel<TModel>(TModel model)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            var simpleKey = _keyBuilder.GetKey<TModel>(model.DocumentId);
-            var revKey = _keyBuilder.GetKey<TModel>(model.DocumentId, model.DocumentRevision);
+            var simpleKey = _keyBuilder.GetKey<TModel>(model.GetIdAsJson());
+            var revKey = _keyBuilder.GetKey<TModel>(model.GetIdAsJson(), model.GetRevAsJson());
             _cache.Store(StoreMode.Add, simpleKey, model);
             _cache.Store(StoreMode.Add, revKey, model);
         }
 
         public void Save<TModel>(IEnumerable<TModel> list, Action<IEnumerable<TModel>> save)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            list.ForEach(x => InvalidateItem<TModel>(x.DocumentId));
+            list.ForEach(x => InvalidateItem<TModel>(x.GetIdAsJson()));
             save(list);
             list.ForEach(CacheSavedModel);
         }

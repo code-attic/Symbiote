@@ -16,12 +16,12 @@ namespace Relax.Tests.Repository
                                             id = Guid.NewGuid();
                                             document = new TestDocument()
                                                            {
-                                                               DocumentId = id.ToString(),
+                                                               DocumentId = id,
                                                                Message = "Hello",
                                                                DocumentRevision = "2"
                                                            };
-                                            originalDocument = document.ToJson();
-                                            bulkSave = new BulkPersist<TestDocument, Guid, string>(true, false, new[] {document}).ToJson(false);
+                                            originalDocument = document.ToJson(false);
+                                            bulkSave = new BulkPersist<TestDocument>(true, false, new[] {document}).ToJson(false);
                                             uri = new CouchUri("http", "localhost", 5984, "testdocument").BulkInsert();
                                             var saveResponse = 
                                                 new SaveResponse[]
@@ -30,7 +30,7 @@ namespace Relax.Tests.Repository
                                                     };
 
                                             commandMock.Setup(x => x.Post(couchUri, bulkSave))
-                                                .Returns(saveResponse.ToJson());
+                                                .Returns(saveResponse.ToJson(false));
                                             WireUpCommandMock(commandMock.Object);
                                         };
     }

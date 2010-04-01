@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 namespace Symbiote.Relax.Impl
 {
     public class ViewRow<TModel>
-        where TModel : class, ICouchDocument
     {
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }

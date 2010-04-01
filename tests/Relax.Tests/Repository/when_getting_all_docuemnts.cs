@@ -19,7 +19,7 @@ namespace Relax.Tests.Repository
         private It should_get_one_record = () => records.Count.ShouldEqual(1);
         private It should_get_right_record = () =>
                                                  {
-                                                     records[0].DocumentId.ShouldEqual(id.ToString());
+                                                     records[0].DocumentId.ShouldEqual(id);
                                                      records[0].Message.ShouldEqual("Hello");
                                                      records[0].DocumentRevision.ShouldEqual("2");
                                                  };

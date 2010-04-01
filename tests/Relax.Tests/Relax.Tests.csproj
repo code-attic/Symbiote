@@ -63,7 +63,6 @@
   <ItemGroup>
     <Compile Include="Assimilation\when_assimilating_with_caching.cs" />
     <Compile Include="Assimilation\when_assimilating_without_caching.cs" />
-    <Compile Include="Configuration\TestingDoc.cs" />
     <Compile Include="Configuration\when_using_caching_with_time_limit.cs" />
     <Compile Include="Configuration\when_providing_custom_configuration.cs" />
     <Compile Include="Configuration\when_using_caching_with_expiration_date.cs" />
@@ -73,7 +72,7 @@
     <Compile Include="Configuration\with_couch_configurator.cs" />
     <Compile Include="Mocks\with_mock_repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\TestDocument.cs" />
+    <Compile Include="TestDocument.cs" />
     <Compile Include="Repository\when_checking_database_existence.cs" />
     <Compile Include="Repository\when_creating_database.cs" />
     <Compile Include="Repository\when_deleteing_database.cs" />

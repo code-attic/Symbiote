@@ -20,7 +20,7 @@ namespace Symbiote.Relax.Impl
             new ConcurrentDictionary<Type, ICouchCommand>();
         
         protected virtual CouchUri BaseURI<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var database = _configuration.GetDatabaseNameForType<TModel>();
             var baseURI = CouchUri.Build(
@@ -34,7 +34,7 @@ namespace Symbiote.Relax.Impl
         }
 
         protected void EnsureDatabaseExists<TModel>(string database, CouchUri baseURI)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var dbCreated = false;
             var shouldCheckCouch = false;
@@ -71,7 +71,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void CreateDatabase<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             string database = "";
             var uri = BaseURI<TModel>();
@@ -91,7 +91,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void DeleteDocument<TModel>(object id)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var doc = Get<TModel>(id);
 
@@ -101,7 +101,7 @@ namespace Symbiote.Relax.Impl
                 try
                 {
                     var command = _commandFactory.GetCommand();
-                    uri = uri.KeyAndRev(doc.DocumentId, doc.DocumentRevision);
+                    uri = uri.KeyAndRev(doc.GetIdAsJson(), doc.GetRevAsJson());
                     command.Delete(uri);
                 }
                 catch (Exception ex)
@@ -114,7 +114,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void DeleteDocument<TModel>(object id, object rev)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>();
             try
@@ -132,7 +132,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void DeleteDatabase<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var database = "";
             var uri = BaseURI<TModel>();
@@ -152,7 +152,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual bool DatabaseExists<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>();
             var database = "";
@@ -190,7 +190,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual TModel Get<TModel>(object id, object revision)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>().KeyAndRev(id, revision);
             
@@ -216,7 +216,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual TModel Get<TModel>(object id)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>().Key(id);
             
@@ -241,7 +241,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual IList<TModel> GetAll<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>()
                 .ListAll()
@@ -268,7 +268,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>()
                 .ListAll()
@@ -297,18 +297,18 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void Save<TModel>(TModel model)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>()
-                .Key(model.DocumentId);
+                .Key(model.GetIdAsJson());
 
             try
             {
-                var body = model.ToJson();
+                var body = model.ToJson(false);
                 var command = _commandFactory.GetCommand();
                 var updatedJSON = command.Put(uri, body);
                 var updated = updatedJSON.FromJson<SaveResponse>();
-                model.DocumentRevision = updated.Revision;
+                model.UpdateRevFromJson(updated.Revision);
             }
             catch (Exception ex)
             {
@@ -322,7 +322,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void SaveAll<TModel>(IEnumerable<TModel> list)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>().BulkInsert();
             
@@ -343,9 +343,9 @@ namespace Symbiote.Relax.Impl
                     .ToList()
                     .ForEach(x =>
                                  {
-                                     var update = updated.FirstOrDefault(y => y.Id == x.DocumentId.ToString());
+                                     var update = updated.FirstOrDefault(y => y.Id == x.GetIdAsJson());
                                      if (update != null)
-                                         x.DocumentRevision = update.Revision;
+                                         x.UpdateRevFromJson(update.Revision);
                                  });
             }
             catch (Exception ex)
@@ -360,7 +360,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var command = _commandFactory.GetCommand();
             Action<CouchUri, int, Action<ChangeRecord>> proxy = command.GetContinuousResponse;
@@ -369,7 +369,7 @@ namespace Symbiote.Relax.Impl
         }
 
         public virtual void StopChangeStreaming<TModel>()
-            where TModel : class, ICouchDocument
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             ICouchCommand command;
             var key = typeof (TModel);

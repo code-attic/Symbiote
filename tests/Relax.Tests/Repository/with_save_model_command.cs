@@ -15,15 +15,15 @@ namespace Relax.Tests.Repository
                                             id = Guid.NewGuid();
                                             document = new TestDocument()
                                                            {
-                                                               DocumentId = id.ToString(),
+                                                               DocumentId = id,
                                                                Message = "Hello",
                                                                DocumentRevision = "2"
                                                            };
-                                            originalDocument = document.ToJson();
+                                            originalDocument = document.ToJson(false);
 
                                             uri = new CouchUri("http", "localhost", 5984, "testdocument")
                                                 .Key(id);
-                                            commandMock.Setup(x => x.Put(couchUri, document.ToJson()))
+                                            commandMock.Setup(x => x.Put(couchUri, document.ToJson(false)))
                                                 .Returns("{{ ok : \"true\", id : \"{0}\", rev : \"3\" }}".AsFormat(id));
                                             WireUpCommandMock(commandMock.Object);
                                         };
