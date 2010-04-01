@@ -4,16 +4,18 @@ using Symbiote.Relax;
 namespace RelaxDemo
 {
     [Serializable]
-    public class TestDocument : DefaultCouchDocument
+    public class TestDocument : CouchDocument<TestDocument, Guid, string>
     {
         public virtual string Message { get; set; }
 
         public TestDocument()
         {
+            _documentId = Guid.NewGuid();
         }
 
         public TestDocument(string message)
         {
+            _documentId = Guid.NewGuid();
             Message = message;
         }
     }

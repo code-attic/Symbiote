@@ -7,9 +7,8 @@ namespace Relax.Tests.Repository
     {
         private static Exception exception = null;
         
-        private Because of = () => { exception = Catch.Exception(
-            () => repository.Save(document)
-            ); 
+        private Because of = () => {
+            exception = Catch.Exception(() => repository.Save(document)); 
         };
 
         private It should_save_document_without_exception = () => exception.ShouldBeNull();

@@ -24,7 +24,7 @@ namespace Relax.Tests.Repository
                                             bulkSave = new BulkPersist<TestDocument>(true, false, new[] {document}).ToJson(false);
                                             uri = new CouchUri("http", "localhost", 5984, "testdocument").BulkInsert();
                                             var saveResponse = 
-                                                new SaveResponse[]
+                                                new []
                                                     {
                                                         new SaveResponse() {Id = id.ToString(), Revision = "3", Success = true}
                                                     };

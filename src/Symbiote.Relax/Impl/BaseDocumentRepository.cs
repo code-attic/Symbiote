@@ -308,7 +308,7 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var updatedJSON = command.Put(uri, body);
                 var updated = updatedJSON.FromJson<SaveResponse>();
-                model.UpdateRevFromJson(updated.Revision);
+                model.UpdateRevFromJson(updated.Revision.ToJson(false));
             }
             catch (Exception ex)
             {
@@ -328,13 +328,7 @@ namespace Symbiote.Relax.Impl
             
             try
             {
-                //var documentList = new BulkPersist<TModel, TKey, TRev>(true, false, list);
-                var documentList = new
-                                       {
-                                           all_or_nothing = true,
-                                           non_atomic = false,
-                                           docs = list
-                                       };
+                var documentList = new BulkPersist<TModel>(true, false, list);
                 var command = _commandFactory.GetCommand();
                 var body = documentList.ToJson(false);
                 var updatedJson = command.Post(uri, body);
@@ -343,7 +337,7 @@ namespace Symbiote.Relax.Impl
                     .ToList()
                     .ForEach(x =>
                                  {
-                                     var update = updated.FirstOrDefault(y => y.Id == x.GetIdAsJson());
+                                     var update = updated.FirstOrDefault(y => y.Id.ToJson() == x.GetIdAsJson());
                                      if (update != null)
                                          x.UpdateRevFromJson(update.Revision);
                                  });

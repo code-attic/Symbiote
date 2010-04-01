@@ -15,6 +15,6 @@ namespace Relax.Tests.Configuration
         private It should_provide_default_couch_name_for_type = () =>
                                                                 configuration
                                                                     .GetDatabaseNameForType<TestDocument>()
-                                                                    .ShouldEqual("testingdoc");
+                                                                    .ShouldEqual("testdocument");
     }
 }

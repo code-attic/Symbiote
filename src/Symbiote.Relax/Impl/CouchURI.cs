@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Relax.Impl
 {
@@ -103,8 +104,8 @@ namespace Symbiote.Relax.Impl
                 _hasArguments = true;
 
             _builder.AppendFormat("/{0}?rev={1}",
-                                  key,
-                                  rev);
+                                  key.ToString().TrimStart('"').TrimEnd('"'),
+                                  rev.ToString().TrimStart('"').TrimEnd('"'));
             return this;
         }
 
@@ -113,7 +114,7 @@ namespace Symbiote.Relax.Impl
             if (!_hasArguments)
                 _hasArguments = true;
 
-            _builder.AppendFormat("/{0}", key);
+            _builder.AppendFormat("/{0}", key.ToString().TrimStart('"').TrimEnd('"'));
 
             return this;
         }
@@ -122,8 +123,8 @@ namespace Symbiote.Relax.Impl
         {
             _builder.AppendFormat("{0}startkey={1}&endkey={2}",
                                   _hasArguments ? "&" : "?",
-                                  start,
-                                  end);
+                                  start.ToString().TrimStart('"').TrimEnd('"'),
+                                  end.ToString().TrimStart('"').TrimEnd('"'));
 
             if (!_hasArguments)
                 _hasArguments = true;

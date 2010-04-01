@@ -18,11 +18,7 @@ namespace Symbiote.Relax.Impl
 
         public IEnumerable<TModel> GetList()
         {
-            return Rows.Select(x =>
-                               {
-                                   x.Model.UpdateKeyFromJson(x.Id);
-                                   return x.Model;
-                               });
+            return Rows.Select(x => x.Model);
         }
     }
 }

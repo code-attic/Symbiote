@@ -53,11 +53,14 @@ namespace Symbiote.Relax
         }
         public void UpdateKeyFromJson(string jsonKey)
         {
-            DocumentId = jsonKey.FromJson<TKey>();
+            var documentId = jsonKey.FromJson<TKey>();
+            DocumentId = object.Equals(documentId, default(TKey)) ? "\"{0}\"".AsFormat(jsonKey).FromJson<TKey>() : documentId;
         }
+
         public void UpdateRevFromJson(string jsonRev)
         {
-            DocumentRevision = jsonRev.FromJson<TRev>();
+            var documentRevision = jsonRev.FromJson<TRev>();
+            DocumentRevision = object.Equals(documentRevision, default(TRev)) ? "\"{0}\"".AsFormat(jsonRev).FromJson<TRev>() : documentRevision;
         }
     }
 }
