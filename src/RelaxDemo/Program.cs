@@ -39,7 +39,7 @@ namespace RelaxDemo
 
     public class RelaxDemoService : IDaemon
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
         private DatabaseDeleter _databaseDeleter;
         private BulkDataPersister _bulkPersister;
         private DocumentSaver _documentSaver;
@@ -132,7 +132,7 @@ namespace RelaxDemo
             _databaseDeleter.Nuke();
         }
 
-        public RelaxDemoService(IDocumentRepository<TestDocument> couch)
+        public RelaxDemoService(IDocumentRepository couch)
         {
             _couch = couch;
             _databaseDeleter = new DatabaseDeleter(couch);
@@ -147,7 +147,7 @@ namespace RelaxDemo
 
     public class ChangeWatcher
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public void Start()
         {
@@ -263,14 +263,14 @@ namespace RelaxDemo
 
     public class DatabaseDeleter
     {
-        private IDocumentRepository<TestDocument> _couch;
+        private IDocumentRepository _couch;
 
         public void Nuke()
         {
             _couch.DeleteDatabase();
         }
 
-        public DatabaseDeleter(IDocumentRepository<TestDocument> couch)
+        public DatabaseDeleter(IDocumentRepository couch)
         {
             _couch = couch;
         }

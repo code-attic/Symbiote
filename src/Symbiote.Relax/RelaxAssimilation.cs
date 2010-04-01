@@ -25,11 +25,11 @@ namespace Symbiote.Relax
                                   c.For<ICacheKeyBuilder>().Use<CacheKeyBuilder>();
                                   if (configuration.Cache)
                                   {
-                                      c.For(typeof (IDocumentRepository<>)).Use(typeof (CachedDocumentRepository<>));
+                                      c.For(typeof (IDocumentRepository)).Use(typeof (CachedDocumentRepository));
                                   }
                                   else
                                   {
-                                      c.For(typeof (IDocumentRepository<>)).Use(typeof (DocumentRepository<>));
+                                      c.For(typeof (IDocumentRepository)).Use(typeof (DocumentRepository));
                                   }
                               });
 

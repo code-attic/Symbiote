@@ -7,7 +7,7 @@ namespace Relax.Tests.Repository
 {
     public abstract class with_document_repository : with_configuration
     {
-        protected static IDocumentRepository<TestDocument> repository;
+        protected static IDocumentRepository repository;
         protected static CouchUri uri;
         protected static Mock<ICouchCommand> commandMock;
         protected static CouchUri couchUri 
@@ -21,7 +21,7 @@ namespace Relax.Tests.Repository
         private Establish context = () =>
                                         {
                                             commandMock = new Mock<ICouchCommand>();
-                                            repository = new DocumentRepository<TestDocument>(configuration, new CouchCommandFactory());
+                                            repository = new DocumentRepository(configuration, new CouchCommandFactory());
                                         };
     }
 }

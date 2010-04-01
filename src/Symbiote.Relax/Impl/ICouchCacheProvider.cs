@@ -10,19 +10,19 @@ namespace Symbiote.Relax.Impl
         void InvalidateItem<TModel>(string affectedKey)
             where TModel : class, ICouchDocument;
 
-        void Delete<TModel, TKey>(TKey key, Action<TKey> delete)
+        void Delete<TModel>(object key, Action<object> delete)
             where TModel : class, ICouchDocument;
 
-        void Delete<TModel, TKey, TRev>(TKey key, TRev rev, Action<TKey, TRev> delete)
+        void Delete<TModel>(object key, object rev, Action<object, object> delete)
             where TModel : class, ICouchDocument;
 
         void DeleteAll<TModel>()
             where TModel : class, ICouchDocument;
 
-        TModel Get<TModel, TKey, TRev>(TKey key, TRev rev, Func<TKey, TRev, TModel> retrieve)
+        TModel Get<TModel>(object key, object rev, Func<object, object, TModel> retrieve)
             where TModel : class, ICouchDocument;
 
-        TModel Get<TModel, TKey>(TKey key, Func<TKey, TModel> retrieve)
+        TModel Get<TModel>(object key, Func<object, TModel> retrieve)
             where TModel : class, ICouchDocument;
 
         IList<TModel> GetAll<TModel>(Func<IList<TModel>> retrieve)

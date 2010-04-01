@@ -38,7 +38,7 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public void Delete<TModel, TKey>(TKey key, Action<TKey> delete)
+        public void Delete<TModel>(object key, Action<object> delete)
             where TModel : class, ICouchDocument
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key);
@@ -46,7 +46,7 @@ namespace Symbiote.Relax.Impl
             delete(key);
         }
 
-        public void Delete<TModel, TKey, TRev>(TKey key, TRev rev, Action<TKey, TRev> delete)
+        public void Delete<TModel>(object key, object rev, Action<object, object> delete)
             where TModel : class, ICouchDocument
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
@@ -60,7 +60,7 @@ namespace Symbiote.Relax.Impl
             _crossReferences.Keys.ForEach(InvalidateItem<TModel>);
         }
 
-        public TModel Get<TModel, TKey, TRev>(TKey key, TRev rev, Func<TKey, TRev, TModel> retrieve)
+        public TModel Get<TModel>(object key, object rev, Func<object, object, TModel> retrieve)
             where TModel : class, ICouchDocument
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key, rev);
@@ -74,7 +74,7 @@ namespace Symbiote.Relax.Impl
             return result;
         }
 
-        public TModel Get<TModel, TKey>(TKey key, Func<TKey, TModel> retrieve)
+        public TModel Get<TModel>(object key, Func<object, TModel> retrieve)
             where TModel : class, ICouchDocument
         {
             var cacheKey = _keyBuilder.GetKey<TModel>(key);

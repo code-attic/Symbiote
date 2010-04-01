@@ -27,7 +27,7 @@ namespace Relax.Tests.Assimilation
             () => ObjectFactory
                       .Container
                       .Model
-                      .HasImplementationsFor(typeof (IDocumentRepository<>))
+                      .HasImplementationsFor(typeof (IDocumentRepository))
                       .ShouldBeTrue();
     }
 }

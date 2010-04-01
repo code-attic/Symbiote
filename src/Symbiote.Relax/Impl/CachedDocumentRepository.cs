@@ -3,12 +3,11 @@ using StructureMap;
 
 namespace Symbiote.Relax.Impl
 {
-    public class CachedDocumentRepository<TModel> 
-        : BaseDocumentRepository<TModel>
-        where TModel : class, ICouchDocument
+    public class CachedDocumentRepository
+        : BaseDocumentRepository
     {
         protected ICouchCacheProvider _cache;
-        protected IDocumentRepository<TModel> _repository;
+        protected IDocumentRepository _repository;
         protected ICacheKeyBuilder _builder;
 
         public CachedDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory, ICouchCacheProvider cacheProvider) 
@@ -23,50 +22,50 @@ namespace Symbiote.Relax.Impl
             _cache = cacheProvider;
         }
 
-        public override void DeleteDatabase()
+        public override void DeleteDatabase<TModel>()
         {
             _cache.DeleteAll<TModel>();
-            base.DeleteDatabase();
+            base.DeleteDatabase<TModel>();
         }
 
-        public override void DeleteDocument<TKey, TRev>(TKey id, TRev rev)
+        public override void DeleteDocument<TModel>(object id, object rev)
         {
-            _cache.Delete<TModel, TKey, TRev>(id, rev, base.DeleteDocument);
+            _cache.Delete<TModel>(id, rev, base.DeleteDocument<TModel>);
         }
 
-        public override void DeleteDocument<TKey>(TKey id)
+        public override void DeleteDocument<TModel>(object id)
         {
-            _cache.Delete<TModel, TKey>(id, base.DeleteDocument);
+            _cache.Delete<TModel>(id, base.DeleteDocument<TModel>);
         }
 
-        public override TModel Get<TKey, TRev>(TKey id, TRev revision)
+        public override TModel Get<TModel>(object id, object revision)
         {
-            return _cache.Get(id, revision, base.Get);
+            return _cache.Get(id, revision, base.Get<TModel>);
         }
 
-        public override TModel Get<TKey>(TKey id)
+        public override TModel Get<TModel>(object id)
         {
-            return _cache.Get(id, base.Get);
+            return _cache.Get(id, base.Get<TModel>);
         }
 
-        public override IList<TModel> GetAll()
+        public override IList<TModel> GetAll<TModel>()
         {
-            return _cache.GetAll(base.GetAll);
+            return _cache.GetAll(base.GetAll<TModel>);
         }
 
-        public override IList<TModel> GetAll(int pageSize, int pageNumber)
+        public override IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
         {
-            return _cache.GetAll(pageNumber, pageSize, base.GetAll);
+            return _cache.GetAll(pageNumber, pageSize, base.GetAll<TModel>);
         }
 
-        public override void Save(TModel model)
+        public override void Save<TModel>(TModel model)
         {
             _cache.Save(model, base.Save);
         }
 
-        public override void Save(IEnumerable<TModel> list)
+        public override void SaveAll<TModel>(IEnumerable<TModel> list)
         {
-            _cache.Save(list, base.Save);
+            _cache.Save(list, base.SaveAll);
         }
     }
 }

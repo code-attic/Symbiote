@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Symbiote.Relax.Impl
 {
-    public class DocumentRepository<TModel> 
-        : BaseDocumentRepository<TModel>
-        where TModel : class, ICouchDocument
+    public class DocumentRepository
+        : BaseDocumentRepository
     {
         public DocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory) 
             : base(configuration, commandFactory)

@@ -3,23 +3,36 @@ using System.Collections.Generic;
 
 namespace Symbiote.Relax
 {
-    public interface IDocumentRepository<TModel>
+    public interface IDocumentRepository
         : IDisposable
-        where TModel : class, ICouchDocument
+        
     {
-        void CreateDatabase();
-        void DeleteDatabase();
-        bool DatabaseExists();
-        void DeleteDocument<TKey>(TKey id);
-        void DeleteDocument<TKey,TRev>(TKey id, TRev rev);
+        void CreateDatabase<TModel>()
+            where TModel : class, ICouchDocument;
+        void DeleteDatabase<TModel>()
+            where TModel : class, ICouchDocument;
+        bool DatabaseExists<TModel>()
+            where TModel : class, ICouchDocument;
+        void DeleteDocument<TModel>(object id) 
+            where TModel : class, ICouchDocument;
+        void DeleteDocument<TModel>(object id, object rev)
+            where TModel : class, ICouchDocument;
         IList<string> DatabaseList { get; }
-        TModel Get<TKey, TRev>(TKey id, TRev revision);
-        TModel Get<TKey>(TKey id);
-        IList<TModel> GetAll();
-        IList<TModel> GetAll(int pageSize, int pageNumber);
-        void Save(TModel model);
-        void Save(IEnumerable<TModel> list);
-        void HandleUpdates(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted);
-        void StopChangeStreaming();
+        TModel Get<TModel>(object id, object revision)
+            where TModel : class, ICouchDocument;
+        TModel Get<TModel>(object id)
+            where TModel : class, ICouchDocument;
+        IList<TModel> GetAll<TModel>()
+            where TModel : class, ICouchDocument;
+        IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
+            where TModel : class, ICouchDocument;
+        void Save<TModel>(TModel model)
+            where TModel : class, ICouchDocument;
+        void SaveAll<TModel>(IEnumerable<TModel> list)
+            where TModel : class, ICouchDocument;
+        void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
+            where TModel : class, ICouchDocument;
+        void StopChangeStreaming<TModel>()
+            where TModel : class, ICouchDocument;
     }
 }
