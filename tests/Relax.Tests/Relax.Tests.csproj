@@ -121,6 +121,10 @@
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Eidetic\Symbiote.Eidetic.csproj">
+      <Project>{5F7BC676-C3BA-4705-8A40-DBFF382F7DAA}</Project>
+      <Name>Symbiote.Eidetic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
       <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
       <Name>Symbiote.Relax</Name>
