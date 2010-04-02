@@ -1,6 +1,7 @@
 ﻿using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Relax;
+using Symbiote.Relax.Impl;
 
 namespace RelaxDemo
 {
@@ -89,6 +90,12 @@ namespace RelaxDemo
                 "Page {0} has {1} records"
                     .ToInfo<RelaxDemoService>(i, docs.Count);
             }
+
+            // one time replication
+            "Copying database via one-time replication ..."
+                .ToInfo<RelaxDemoService>();
+
+            _couch.CopyDatabase<TestDocument>(CouchUri.Build("http", "localhost", 5984, "copytest"));
         }
 
         public void Stop()

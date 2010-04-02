@@ -99,6 +99,7 @@
     <Compile Include="Impl\ICouchCommandFactory.cs" />
     <Compile Include="Impl\ICouchConfiguration.cs" />
     <Compile Include="Impl\NewRevision.cs" />
+    <Compile Include="Impl\ReplicationCommand.cs" />
     <Compile Include="JsonDocument.cs" />
     <Compile Include="Impl\SaveResponse.cs" />
     <Compile Include="Impl\ViewResult.cs" />

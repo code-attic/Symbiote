@@ -25,6 +25,8 @@ namespace Symbiote.Relax.Impl
         public string Server { get; set; }
         public int Port { get; set; }
         public bool Preauthorize { get; set; }
+        public string User { get; set; }
+        public string Password { get; set; }
         public int TimeOut { get; set; }
         public bool Cache { get; set; }
         public DateTime CacheExpiration { get; set; }

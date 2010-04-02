@@ -72,6 +72,12 @@
     <Compile Include="Configuration\with_couch_configurator.cs" />
     <Compile Include="Mocks\with_mock_repository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\when_copying_from_any_database.cs" />
+    <Compile Include="Repository\when_copying_from_local_database.cs" />
+    <Compile Include="Repository\when_starting_replication_from_any_database.cs" />
+    <Compile Include="Repository\when_starting_replication_from_local_database.cs" />
+    <Compile Include="Repository\with_continuous_replication.cs" />
+    <Compile Include="Repository\with_copy_replication.cs" />
     <Compile Include="TestDocument.cs" />
     <Compile Include="Repository\when_checking_database_existence.cs" />
     <Compile Include="Repository\when_creating_database.cs" />
@@ -99,6 +105,8 @@
     <Compile Include="Repository\with_save_model_command.cs" />
     <Compile Include="Repository\with_test_document.cs" />
     <Compile Include="URI\when_bulk_inserting.cs" />
+    <Compile Include="URI\when_cleaning_up_view.cs" />
+    <Compile Include="URI\when_compacting_database.cs" />
     <Compile Include="URI\when_creating_baseline_uri.cs" />
     <Compile Include="URI\when_retrieving_by_key.cs" />
     <Compile Include="URI\when_retrieving_by_key_and_revision.cs" />
@@ -113,7 +121,9 @@
     <Compile Include="URI\when_retrieving_changes_continuously_including_documents.cs" />
     <Compile Include="URI\when_retrieving_changes_via_longpolling.cs" />
     <Compile Include="URI\when_retrieving_design_document.cs" />
+    <Compile Include="URI\when_setting_up_replication.cs" />
     <Compile Include="URI\with_basic_uri.cs" />
+    <Compile Include="URI\with_basic_uri_without_db.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

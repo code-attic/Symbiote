@@ -53,9 +53,11 @@ namespace Symbiote.Relax
             return this;
         }
 
-        public CouchConfigurator Preauthorize()
+        public CouchConfigurator Preauthorize(string username, string password)
         {
             _config.Preauthorize = true;
+            _config.User = username;
+            _config.Password = password;
             return this;
         }
 

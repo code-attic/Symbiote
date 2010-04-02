@@ -9,6 +9,8 @@ namespace Symbiote.Relax.Impl
         int TimeOut { get; set; }
         string Protocol { get; set; }
         string Server { get; set; }
+        string User { get; set; }
+        string Password { get; set; }
         bool Cache { get; set; }
         DateTime CacheExpiration { get; set; }
         TimeSpan CacheLimit { get; set; }

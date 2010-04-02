@@ -23,13 +23,35 @@ namespace Symbiote.Relax.Impl
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var database = _configuration.GetDatabaseNameForType<TModel>();
-            var baseURI = CouchUri.Build(
-                _configuration.Protocol, 
-                _configuration.Server, 
-                _configuration.Port, 
-                database
-                );
+            var baseURI = _configuration.Preauthorize ?
+                CouchUri.Build(
+                    _configuration.User,
+                    _configuration.Password,
+                    _configuration.Protocol,
+                    _configuration.Server,
+                    _configuration.Port)
+                : CouchUri.Build(
+                    _configuration.Protocol, 
+                    _configuration.Server, 
+                    _configuration.Port, 
+                    database);
             EnsureDatabaseExists<TModel>(database, baseURI);
+            return baseURI;
+        }
+
+        protected virtual CouchUri BaseURI()
+        {
+            var baseURI = _configuration.Preauthorize ?
+                CouchUri.Build(
+                    _configuration.User,
+                    _configuration.Password,
+                    _configuration.Protocol,
+                    _configuration.Server,
+                    _configuration.Port)
+                : CouchUri.Build(
+                    _configuration.Protocol,
+                    _configuration.Server,
+                    _configuration.Port);
             return baseURI;
         }
 
@@ -86,6 +108,40 @@ namespace Symbiote.Relax.Impl
             {
                 "An exception occurred trying to create the database {0} at uri {1}. \r\n\t {2}"
                     .ToError<IDocumentRepository>(database, uri.ToString(), ex);
+                throw;
+            }
+        }
+
+        public void CopyDatabase<TModel>(CouchUri targetUri)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
+        {
+            try
+            {
+                var serverUri = BaseURI().Replicate();
+                var sourceUri = BaseURI<TModel>();
+                var request = ReplicationCommand.Once(sourceUri, targetUri);
+                var command = _commandFactory.GetCommand();
+                command.Post(serverUri, request.ToJson(false));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public void CopyDatabase(CouchUri sourceUri, CouchUri targetUri)
+        {
+            try
+            {
+                var serverUri = BaseURI().Replicate();
+                var request = ReplicationCommand.Once(sourceUri, targetUri);
+                var command = _commandFactory.GetCommand();
+                command.Post(serverUri, request.ToJson(false));
+            }
+            catch (Exception ex)
+            {
+
                 throw;
             }
         }
@@ -292,6 +348,39 @@ namespace Symbiote.Relax.Impl
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
+                throw;
+            }
+        }
+
+        public void Replicate<TModel>(CouchUri targetUri) where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
+        {
+            try
+            {
+                var serverUri = BaseURI().Replicate();
+                var sourceUri = BaseURI<TModel>();
+                var request = ReplicationCommand.Continuous(sourceUri, targetUri);
+                var command = _commandFactory.GetCommand();
+                command.Post(serverUri, request.ToJson(false));
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public void Replicate(CouchUri sourceUri, CouchUri targetUri)
+        {
+            try
+            {
+                var serverUri = BaseURI().Replicate();
+                var request = ReplicationCommand.Continuous(sourceUri, targetUri);
+                var command = _commandFactory.GetCommand();
+                command.Post(serverUri, request.ToJson(false));
+            }
+            catch (Exception ex)
+            {
+
                 throw;
             }
         }

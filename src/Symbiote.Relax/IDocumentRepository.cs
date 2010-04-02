@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Symbiote.Relax.Impl;
 
 namespace Symbiote.Relax
 {
@@ -34,5 +35,12 @@ namespace Symbiote.Relax
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
         void StopChangeStreaming<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+
+        void CopyDatabase<TModel>(CouchUri targetUri)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+        void CopyDatabase(CouchUri sourceUri, CouchUri targetUri);
+        void Replicate<TModel>(CouchUri targetUri)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+        void Replicate(CouchUri sourceUri, CouchUri targetUri);
     }
 }

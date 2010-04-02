@@ -14,6 +14,21 @@ namespace Symbiote.Relax.Impl
             return new CouchUri(prefix, server, port, database);
         }
 
+        public static CouchUri Build(string user, string password, string prefix, string server, int port, string database)
+        {
+            return new CouchUri(user, password, prefix, server, port, database);
+        }
+
+        public static CouchUri Build(string prefix, string server, int port)
+        {
+            return new CouchUri(prefix, server, port);
+        }
+
+        public static CouchUri Build(string user, string password, string prefix, string server, int port)
+        {
+            return new CouchUri(user, password, prefix, server, port);
+        }
+
         public CouchUri ListAll() 
         {
             _builder.Append("/_all_docs");
@@ -33,6 +48,18 @@ namespace Symbiote.Relax.Impl
             }
             _builder.AppendFormat("&since={0}", since);
             _hasArguments = true;
+            return this;
+        }
+
+        public CouchUri CleanupViews()
+        {
+            _builder.Append("/_view_cleanup");
+            return this;
+        }
+
+        public CouchUri Compact()
+        {
+            _builder.Append("/_compact");
             return this;
         }
 
@@ -150,10 +177,45 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
+        public CouchUri Replicate()
+        {
+            _builder.Append("/_replicate");
+            return this;
+        }
+
         public CouchUri(string prefix, string server, int port, string database)
         {
             _builder
                 .AppendFormat(@"{0}://{1}:{2}/{3}", prefix, server, port, database);
+        }
+
+        public CouchUri(string prefix, string server, int port)
+        {
+            _builder
+                .AppendFormat(@"{0}://{1}:{2}", prefix, server, port);
+        }
+
+        public CouchUri(string user, string password, string prefix, string server, int port)
+        {
+            _builder
+                .AppendFormat(@"{0}://{1}:{2}@{3}:{4}", 
+                    user,
+                    password,
+                    prefix, 
+                    server, 
+                    port);
+        }
+
+        public CouchUri(string user, string password, string prefix, string server, int port, string database)
+        {
+            _builder
+                .AppendFormat(@"{0}://{1}:{2}@{3}:{4}/{5}", 
+                    user,
+                    password,
+                    prefix, 
+                    server, 
+                    port, 
+                    database);
         }
 
         protected CouchUri(string content, bool hasArgs)
