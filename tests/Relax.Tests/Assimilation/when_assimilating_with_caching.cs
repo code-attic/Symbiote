@@ -40,5 +40,11 @@ namespace Relax.Tests.Assimilation
                       .Model
                       .HasImplementationsFor(typeof (IDocumentRepository))
                       .ShouldBeTrue();
+
+        private It should_have_couch_server_configured = 
+            () => ObjectFactory
+                    .Container
+                    .Model
+                    .HasDefaultImplementationFor<ICouchServer>();
     }
 }

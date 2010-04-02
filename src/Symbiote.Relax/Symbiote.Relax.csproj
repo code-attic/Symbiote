@@ -77,6 +77,8 @@
   <ItemGroup>
     <Compile Include="ChangeRecord.cs" />
     <Compile Include="CouchDocument.cs" />
+    <Compile Include="ICouchServer.cs" />
+    <Compile Include="Impl\BaseCouchDbController.cs" />
     <Compile Include="Impl\BulkResponse.cs" />
     <Compile Include="Impl\CacheKeyBuilder.cs" />
     <Compile Include="Impl\CouchCommand.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Impl\BaseDocumentRepository.cs" />
     <Compile Include="Impl\BulkPersist.cs" />
     <Compile Include="Impl\CachedDocumentRepository.cs" />
+    <Compile Include="Impl\CouchDbServer.cs" />
     <Compile Include="Impl\CouchURI.cs" />
     <Compile Include="Impl\DocumentRepository.cs" />
     <Compile Include="Impl\EideticCacheProvider.cs" />
@@ -100,6 +103,7 @@
     <Compile Include="Impl\ICouchConfiguration.cs" />
     <Compile Include="Impl\NewRevision.cs" />
     <Compile Include="Impl\ReplicationCommand.cs" />
+    <Compile Include="Impl\ViewQuery.cs" />
     <Compile Include="JsonDocument.cs" />
     <Compile Include="Impl\SaveResponse.cs" />
     <Compile Include="Impl\ViewResult.cs" />

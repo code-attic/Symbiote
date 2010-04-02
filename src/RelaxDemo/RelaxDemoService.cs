@@ -1,4 +1,5 @@
-﻿using Symbiote.Core.Extensions;
+﻿using System.Collections.Generic;
+using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Relax;
 using Symbiote.Relax.Impl;
@@ -7,7 +8,7 @@ namespace RelaxDemo
 {
     public class RelaxDemoService : IDaemon
     {
-        private IDocumentRepository _couch;
+        private ICouchServer _couch;
         private DatabaseDeleter _databaseDeleter;
         private BulkDataPersister _bulkPersister;
         private DocumentSaver _documentSaver;
@@ -66,7 +67,7 @@ namespace RelaxDemo
             "Deleting all documents ..."
                 .ToInfo<RelaxDemoService>();
 
-            list.ForEach(x => _couch.DeleteDocument<TestDocument>(x.DocumentId, x.DocumentRevision));
+            list.ForEach(x => _couch.Repository.DeleteDocument<TestDocument>(x.DocumentId, x.DocumentRevision));
 
             "... Done"
                 .ToInfo<RelaxDemoService>();
@@ -75,6 +76,19 @@ namespace RelaxDemo
             "Adding 10 new documents one at a time ..."
                 .ToInfo<RelaxDemoService>();
 
+            list = new List<TestDocument>
+                           {
+                               new TestDocument("Message 1"),
+                               new TestDocument("Message 2"),
+                               new TestDocument("Message 3"),
+                               new TestDocument("Message 4"),
+                               new TestDocument("Message 5"),
+                               new TestDocument("Message 6"),
+                               new TestDocument("Message 7"),
+                               new TestDocument("Message 8"),
+                               new TestDocument("Message 9"),
+                               new TestDocument("Message 10"),
+                           };
             list.ForEach(_documentSaver.Save);
 
             "... Done"
@@ -106,16 +120,16 @@ namespace RelaxDemo
             _databaseDeleter.Nuke();
         }
 
-        public RelaxDemoService(IDocumentRepository couch)
+        public RelaxDemoService(ICouchServer couch)
         {
             _couch = couch;
             _databaseDeleter = new DatabaseDeleter(couch);
-            _bulkPersister = new BulkDataPersister(couch);
-            _documentSaver = new DocumentSaver(couch);
-            _retriever = new DocumentRetriever(couch);
-            _pager = new PagingDataLoader(couch);
-            _bulkLoader = new BulkDataLoader(couch);
-            _watcher = new ChangeWatcher(couch);
+            _bulkPersister = new BulkDataPersister(couch.Repository);
+            _documentSaver = new DocumentSaver(couch.Repository);
+            _retriever = new DocumentRetriever(couch.Repository);
+            _pager = new PagingDataLoader(couch.Repository);
+            _bulkLoader = new BulkDataLoader(couch.Repository);
+            _watcher = new ChangeWatcher(couch.Repository);
         }
     }
 }

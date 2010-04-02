@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
     public class when_getting_list_of_databases : with_list_databases_command
     {
@@ -11,7 +11,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => databases = repository.DatabaseList
+                                         () => databases = server.DatabaseList
                                          );
                                  };
 

@@ -1,5 +1,6 @@
 ﻿using Machine.Specifications;
 using Moq;
+using Symbiote.Core.Extensions;
 using Symbiote.Relax;
 using Symbiote.Relax.Impl;
 
@@ -24,4 +25,6 @@ namespace Relax.Tests.Repository
                                             repository = new DocumentRepository(configuration, new CouchCommandFactory());
                                         };
     }
+
+
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
     public class when_deleteing_database : with_create_delete_database_command
     {
@@ -9,7 +9,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => repository.DeleteDatabase<TestDocument>()
+                                         () => server.DeleteDatabase<TestDocument>()
                                          );
                                  };
 

@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Linq;
-using System.Text;
 using Machine.Specifications;
-using Symbiote.Core.Extensions;
-using It = Machine.Specifications.It;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
     public class when_creating_database : with_create_database_command
     {
@@ -13,7 +9,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => repository.CreateDatabase<TestDocument>()
+                                         () => server.CreateDatabase<TestDocument>()
                                      );
                                  };
 

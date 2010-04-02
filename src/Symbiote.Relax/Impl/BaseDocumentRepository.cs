@@ -2,7 +2,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using Newtonsoft.Json;
 using StructureMap;
@@ -11,141 +10,11 @@ using Symbiote.Core.Extensions;
 namespace Symbiote.Relax.Impl
 {
     public abstract class BaseDocumentRepository
-        : IDocumentRepository
+        : BaseCouchDbController, IDocumentRepository
     {
-        protected ICouchConfiguration _configuration;
-        protected ICouchCommandFactory _commandFactory;
-        protected ConcurrentDictionary<string, bool> _databaseExists = new ConcurrentDictionary<string, bool>();
         protected ConcurrentDictionary<Type, ICouchCommand> _continuousUpdateCommands =
             new ConcurrentDictionary<Type, ICouchCommand>();
         
-        protected virtual CouchUri BaseURI<TModel>()
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            var database = _configuration.GetDatabaseNameForType<TModel>();
-            var baseURI = _configuration.Preauthorize ?
-                CouchUri.Build(
-                    _configuration.User,
-                    _configuration.Password,
-                    _configuration.Protocol,
-                    _configuration.Server,
-                    _configuration.Port)
-                : CouchUri.Build(
-                    _configuration.Protocol, 
-                    _configuration.Server, 
-                    _configuration.Port, 
-                    database);
-            EnsureDatabaseExists<TModel>(database, baseURI);
-            return baseURI;
-        }
-
-        protected virtual CouchUri BaseURI()
-        {
-            var baseURI = _configuration.Preauthorize ?
-                CouchUri.Build(
-                    _configuration.User,
-                    _configuration.Password,
-                    _configuration.Protocol,
-                    _configuration.Server,
-                    _configuration.Port)
-                : CouchUri.Build(
-                    _configuration.Protocol,
-                    _configuration.Server,
-                    _configuration.Port);
-            return baseURI;
-        }
-
-        protected void EnsureDatabaseExists<TModel>(string database, CouchUri baseURI)
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            var dbCreated = false;
-            var shouldCheckCouch = false;
-            try
-            {
-                var command = _commandFactory.GetCommand();
-                shouldCheckCouch = !_databaseExists.TryGetValue(database, out dbCreated);
-                if (shouldCheckCouch && !dbCreated)
-                {
-                    command.Put(baseURI);
-                    _databaseExists[database] = true;
-                }
-            }
-            catch(WebException webEx)
-            {
-                if(webEx.Message.Contains("(412) Precondition Failed"))
-                {
-                    _databaseExists[database] = true;
-                }
-                else
-                {
-                    "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, baseURI.ToString(), webEx);
-                    throw;
-                }
-
-            }
-            catch(Exception ex)
-            {
-                "An exception occurred while trying to check for the existence of database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, baseURI.ToString(), ex);
-                throw;
-            }
-        }
-
-        public virtual void CreateDatabase<TModel>()
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            string database = "";
-            var uri = BaseURI<TModel>();
-            try
-            {
-                database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = _commandFactory.GetCommand();
-                command.Put(uri);
-                _databaseExists[database] = true;
-            }
-            catch (Exception ex)
-            {
-                "An exception occurred trying to create the database {0} at uri {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
-                throw;
-            }
-        }
-
-        public void CopyDatabase<TModel>(CouchUri targetUri)
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            try
-            {
-                var serverUri = BaseURI().Replicate();
-                var sourceUri = BaseURI<TModel>();
-                var request = ReplicationCommand.Once(sourceUri, targetUri);
-                var command = _commandFactory.GetCommand();
-                command.Post(serverUri, request.ToJson(false));
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        public void CopyDatabase(CouchUri sourceUri, CouchUri targetUri)
-        {
-            try
-            {
-                var serverUri = BaseURI().Replicate();
-                var request = ReplicationCommand.Once(sourceUri, targetUri);
-                var command = _commandFactory.GetCommand();
-                command.Post(serverUri, request.ToJson(false));
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
         public virtual void DeleteDocument<TModel>(object id)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
@@ -184,64 +53,6 @@ namespace Symbiote.Relax.Impl
                 "An exception occurred trying to delete a document of type {0} with id {1} at {2}. \r\n\t {3}"
                     .ToError<IDocumentRepository>(typeof(TModel).FullName, id.ToString(), uri.ToString(), ex);
                 throw;
-            }
-        }
-
-        public virtual void DeleteDatabase<TModel>()
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            var database = "";
-            var uri = BaseURI<TModel>();
-            try
-            {
-                database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = _commandFactory.GetCommand();
-                command.Delete(uri);
-                _databaseExists[database] = false;
-            }
-            catch (Exception ex)
-            {
-                "An exception occurred trying to delete the database {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
-                throw;
-            }
-        }
-
-        public virtual bool DatabaseExists<TModel>()
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            var uri = BaseURI<TModel>();
-            var database = "";
-            var exists = false;
-            try
-            {
-                database = _configuration.GetDatabaseNameForType<TModel>();
-                var command = _commandFactory.GetCommand();
-                var response = command.Get(uri);
-                exists = !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
-                _databaseExists[database] = exists;
-                return exists;
-            }
-            catch (Exception ex)
-            {
-                "An exception occurred checking for the existence of database {0} at {1}. \r\n\t {2}"
-                    .ToError<IDocumentRepository>(database, uri.ToString(), ex);
-                throw;
-            }
-        }
-
-        public IList<string> DatabaseList
-        {
-            get
-            {
-                var uri = CouchUri.Build(
-                    _configuration.Protocol,
-                    _configuration.Server,
-                    _configuration.Port,
-                    "_all_dbs");    
-                var command = _commandFactory.GetCommand();
-                var json = command.Get(uri);
-                return new List<string>(json.FromJson<string[]>());
             }
         }
 
@@ -352,39 +163,6 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public void Replicate<TModel>(CouchUri targetUri) where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
-        {
-            try
-            {
-                var serverUri = BaseURI().Replicate();
-                var sourceUri = BaseURI<TModel>();
-                var request = ReplicationCommand.Continuous(sourceUri, targetUri);
-                var command = _commandFactory.GetCommand();
-                command.Post(serverUri, request.ToJson(false));
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
-        public void Replicate(CouchUri sourceUri, CouchUri targetUri)
-        {
-            try
-            {
-                var serverUri = BaseURI().Replicate();
-                var request = ReplicationCommand.Continuous(sourceUri, targetUri);
-                var command = _commandFactory.GetCommand();
-                command.Post(serverUri, request.ToJson(false));
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-        }
-
         public virtual void Save<TModel>(TModel model)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
@@ -463,7 +241,7 @@ namespace Symbiote.Relax.Impl
             }
         }
 
-        public BaseDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory)
+        protected BaseDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory)
         {
             _configuration = configuration;
             _commandFactory = commandFactory;

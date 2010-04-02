@@ -4,14 +4,14 @@ namespace RelaxDemo
 {
     public class DatabaseDeleter
     {
-        private IDocumentRepository _couch;
+        private ICouchServer _couch;
 
         public void Nuke()
         {
             _couch.DeleteDatabase<TestDocument>();
         }
 
-        public DatabaseDeleter(IDocumentRepository couch)
+        public DatabaseDeleter(ICouchServer couch)
         {
             _couch = couch;
         }

@@ -16,12 +16,12 @@ namespace Symbiote.Relax.Impl
             var request = WebRequest.Create(uri.ToString());
             request.Method = method;
             request.Timeout = _configuration.TimeOut;
-            request.PreAuthenticate = _configuration.Preauthorize;
+            //request.PreAuthenticate = _configuration.Preauthorize;
 
             if (!string.IsNullOrEmpty(body))
             {
                 var bytes = UTF8Encoding.UTF8.GetBytes(body);
-                request.ContentType = "application/json";
+                request.ContentType = "application/json; charset=utf-8";
                 request.ContentLength = bytes.Length;
 
                 var writer = request.GetRequestStream();

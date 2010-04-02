@@ -63,6 +63,12 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
+        public CouchUri CompactView(string designDocument)
+        {
+            _builder.Append("/_compact/{0}".AsFormat(designDocument));
+            return this;
+        }
+
         public CouchUri Design(string designDocumentName)
         {
             _builder.AppendFormat("/_design/{0}", designDocumentName);

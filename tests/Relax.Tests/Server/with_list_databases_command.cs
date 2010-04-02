@@ -1,9 +1,10 @@
 ﻿using Machine.Specifications;
+using Relax.Tests.Repository;
 using Symbiote.Relax.Impl;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
-    public abstract class with_list_databases_command : with_document_repository
+    public abstract class with_list_databases_command : with_couch_server
     {
         private Establish context = () =>
                                         {

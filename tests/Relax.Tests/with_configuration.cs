@@ -2,7 +2,7 @@
 using StructureMap;
 using Symbiote.Relax.Impl;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests
 {
     public abstract class with_configuration
     {

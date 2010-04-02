@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
     public class when_starting_replication_from_local_database : with_continuous_replication
     {
@@ -9,7 +9,7 @@ namespace Relax.Tests.Repository
 
         private Because of = () =>
                                  {
-                                     exception = Catch.Exception(() => repository.Replicate<TestDocument>(targetUri));
+                                     exception = Catch.Exception(() => server.Replicate<TestDocument>(targetUri));
                                  };
 
         private It should_replication_without_exceptions = () => exception.ShouldBeNull();

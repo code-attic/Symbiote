@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
     public class when_checking_database_existence : with_check_database_exists_command
     {
@@ -10,7 +10,7 @@ namespace Relax.Tests.Repository
         private Because of = () =>
                                  {
                                      exception = Catch.Exception(
-                                         () => exists = repository.DatabaseExists<TestDocument>()
+                                         () => exists = server.DatabaseExists<TestDocument>()
                                          );
                                  };
 

@@ -1,30 +1,32 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Symbiote.Relax.Impl;
 
 namespace Symbiote.Relax
 {
-    public interface IDocumentRepository
+    public interface ICouchServer
         : IDisposable
     {
-        void DeleteDocument<TModel>(object id) 
+        void CleanViews<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        void DeleteDocument<TModel>(object id, object rev)
+        void CreateDatabase<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        TModel Get<TModel>(object id, object revision)
+        void CompactDatabase<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        TModel Get<TModel>(object id)
+        void CompactView<TModel>(string testview)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        IList<TModel> GetAll<TModel>()
+        void CopyDatabase<TModel>(CouchUri targetUri)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
+        void CopyDatabase(CouchUri sourceUri, CouchUri targetUri);
+        bool DatabaseExists<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        void Save<TModel>(TModel model)
+        IList<string> DatabaseList { get; }
+        void DeleteDatabase<TModel>()
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        void SaveAll<TModel>(IEnumerable<TModel> list)
+        void Replicate<TModel>(CouchUri targetUri)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        void StopChangeStreaming<TModel>()
-            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+        void Replicate(CouchUri sourceUri, CouchUri targetUri);
+
+        IDocumentRepository Repository { get; }
     }
 }

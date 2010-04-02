@@ -1,18 +1,18 @@
 ﻿using System;
 using Machine.Specifications;
 
-namespace Relax.Tests.Repository
+namespace Relax.Tests.Server
 {
-    public class when_copying_from_any_database : with_copy_replication
+    public class when_starting_replication_from_any_database : with_continuous_replication
     {
         protected static Exception exception;
 
         private Because of = () =>
                                  {
-                                     exception = Catch.Exception(() => repository.CopyDatabase(sourceUri, targetUri));
+                                     exception = Catch.Exception(() => server.Replicate(sourceUri, targetUri));
                                  };
 
-        private It should_copy_without_exceptions = () => exception.ShouldBeNull();
+        private It should_replication_without_exceptions = () => exception.ShouldBeNull();
         private It should_call_replicate_via_post = () => commandMock.Verify(x => x.Post(couchUri, replication));
     }
 }

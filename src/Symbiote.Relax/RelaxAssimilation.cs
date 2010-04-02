@@ -25,6 +25,7 @@ namespace Symbiote.Relax
                                   c.For<ICouchCommandFactory>().Use<CouchCommandFactory>();
                                   c.For<ICouchCacheProvider>().Use<EideticCacheProvider>();
                                   c.For<ICacheKeyBuilder>().Use<CacheKeyBuilder>();
+                                  c.For<ICouchServer>().Use<CouchDbServer>();
                                   if (configuration.Cache)
                                   {
                                       if(!ObjectFactory.Container.Model.HasDefaultImplementationFor<IRemember>())

@@ -22,11 +22,11 @@ namespace Symbiote.Relax.Impl
             _cache = cacheProvider;
         }
 
-        public override void DeleteDatabase<TModel>()
-        {
-            _cache.DeleteAll<TModel>();
-            base.DeleteDatabase<TModel>();
-        }
+        //public override void DeleteDatabase<TModel>()
+        //{
+        //    _cache.DeleteAll<TModel>();
+        //    base.DeleteDatabase<TModel>();
+        //}
 
         public override void DeleteDocument<TModel>(object id, object rev)
         {
