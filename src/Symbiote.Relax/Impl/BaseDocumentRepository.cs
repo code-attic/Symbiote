@@ -56,6 +56,28 @@ namespace Symbiote.Relax.Impl
             }
         }
 
+        public IList<TModel> FromView<TModel>(string designDocument, string viewName, Action<ViewQuery> query) where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
+        {
+            try
+            {
+                var uri = BaseURI<TModel>()
+                    .Design(designDocument)
+                    .View(viewName);
+                var viewQuery = new ViewQuery(uri);
+                query(viewQuery);
+                uri.IncludeDocuments();
+                var command = _commandFactory.GetCommand();
+                var json = command.Get(uri);
+                var view = (json.FromJson<ViewResult<TModel>>());
+                return view.GetList().ToList();
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
+
         public virtual TModel Get<TModel>(object id, object revision)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {

@@ -29,9 +29,22 @@ namespace Symbiote.Relax.Impl
             return new CouchUri(user, password, prefix, server, port);
         }
 
-        public CouchUri ListAll() 
+        public CouchUri BulkInsert()
         {
-            _builder.Append("/_all_docs");
+            _builder.Append("/_bulk_docs");
+            return this;
+        }
+
+        public CouchUri ByRange<TKey>(TKey start, TKey end)
+        {
+            _builder.AppendFormat("{0}startkey={1}&endkey={2}",
+                                  _hasArguments ? "&" : "?",
+                                  start.ToString().TrimStart('"').TrimEnd('"'),
+                                  end.ToString().TrimStart('"').TrimEnd('"'));
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
             return this;
         }
 
@@ -69,24 +82,6 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchUri Design(string designDocumentName)
-        {
-            _builder.AppendFormat("/_design/{0}", designDocumentName);
-            return this;
-        }
-
-        public CouchUri View(string viewName)
-        {
-            _builder.AppendFormat("/_view/{0}", viewName);
-            return this;
-        }
-
-        public CouchUri List(string listName)
-        {
-            _builder.AppendFormat("/_list/{0}", listName);
-            return this;
-        }
-
         public CouchUri Descending()
         {
             _builder.AppendFormat("{0}descending=true",
@@ -98,25 +93,9 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchUri Limit(int limit)
+        public CouchUri Design(string designDocumentName)
         {
-            _builder.AppendFormat("{0}limit={1}",
-                                  _hasArguments ? "&" : "?", limit);
-
-            if (!_hasArguments)
-                _hasArguments = true;
-
-            return this;
-        }
-
-        public CouchUri Skip(int number)
-        {
-            _builder.AppendFormat("{0}skip={1}",
-                                  _hasArguments ? "&" : "?", number);
-
-            if (!_hasArguments)
-                _hasArguments = true;
-
+            _builder.AppendFormat("/_design/{0}", designDocumentName);
             return this;
         }
 
@@ -124,40 +103,6 @@ namespace Symbiote.Relax.Impl
         {
             _builder.AppendFormat("{0}format={1}",
                                   _hasArguments ? "&" : "?", format);
-
-            if (!_hasArguments)
-                _hasArguments = true;
-
-            return this;
-        }
-
-        public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
-        {
-            if (!_hasArguments)
-                _hasArguments = true;
-
-            _builder.AppendFormat("/{0}?rev={1}",
-                                  key.ToString().TrimStart('"').TrimEnd('"'),
-                                  rev.ToString().TrimStart('"').TrimEnd('"'));
-            return this;
-        }
-
-        public CouchUri Key<TKey>(TKey key)
-        {
-            if (!_hasArguments)
-                _hasArguments = true;
-
-            _builder.AppendFormat("/{0}", key.ToString().TrimStart('"').TrimEnd('"'));
-
-            return this;
-        }
-
-        public CouchUri ByRange<TKey>(TKey start, TKey end)
-        {
-            _builder.AppendFormat("{0}startkey={1}&endkey={2}",
-                                  _hasArguments ? "&" : "?",
-                                  start.ToString().TrimStart('"').TrimEnd('"'),
-                                  end.ToString().TrimStart('"').TrimEnd('"'));
 
             if (!_hasArguments)
                 _hasArguments = true;
@@ -177,15 +122,145 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchUri BulkInsert()
+        public CouchUri InclusiveEnd()
         {
-            _builder.Append("/_bulk_docs");
+            _builder.AppendFormat("{0}inclusive_end=true",
+                _hasArguments ? "&" : "?");
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri Key<TKey>(TKey key)
+        {
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            _builder.AppendFormat("/{0}", key.ToString().TrimStart('"').TrimEnd('"'));
+
+            return this;
+        }
+
+        public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
+        {
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            _builder.AppendFormat("/{0}?rev={1}",
+                                  key.ToString().TrimStart('"').TrimEnd('"'),
+                                  rev.ToString().TrimStart('"').TrimEnd('"'));
+            return this;
+        }
+
+        public CouchUri Group()
+        {
+            return Group(1);
+        }
+
+        public CouchUri Group(int groupLevel)
+        {
+            _builder.AppendFormat("{0}group=true&group_level={1}",
+                                  _hasArguments ? "&" : "?", groupLevel);
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri Limit(int limit)
+        {
+            _builder.AppendFormat("{0}limit={1}",
+                                  _hasArguments ? "&" : "?", limit);
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri List(string listName)
+        {
+            _builder.AppendFormat("/_list/{0}", listName);
+            return this;
+        }
+
+        public CouchUri ListAll()
+        {
+            _builder.Append("/_all_docs");
+            return this;
+        }
+
+        public CouchUri NoReduce()
+        {
+            _builder.AppendFormat("{0}reduce=false",
+                                  _hasArguments ? "&" : "?");
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
             return this;
         }
 
         public CouchUri Replicate()
         {
             _builder.Append("/_replicate");
+            return this;
+        }
+
+        public CouchUri StartKey<TKey>(TKey start)
+        {
+            _builder.AppendFormat("{0}startkey={1}", 
+                _hasArguments ? "&" : "?",
+                start.ToString().TrimStart('"').TrimEnd('"')
+                                );
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri EndKey<TKey>(TKey end)
+        {
+            _builder.AppendFormat("{0}endkey={1}",
+                _hasArguments ? "&" : "?",
+                end.ToString().TrimStart('"').TrimEnd('"')
+                                );
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri Skip(int number)
+        {
+            _builder.AppendFormat("{0}skip={1}",
+                                  _hasArguments ? "&" : "?", number);
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri StaleOk()
+        {
+            _builder.AppendFormat("{0}stale=ok",
+                _hasArguments ? "&" : "?");
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri View(string viewName)
+        {
+            _builder.AppendFormat("/_view/{0}", viewName);
             return this;
         }
 

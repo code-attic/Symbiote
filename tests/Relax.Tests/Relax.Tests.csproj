@@ -115,6 +115,9 @@
     <Compile Include="URI\when_compacting_database.cs" />
     <Compile Include="URI\when_compacting_view.cs" />
     <Compile Include="URI\when_creating_baseline_uri.cs" />
+    <Compile Include="URI\when_grouping.cs" />
+    <Compile Include="URI\when_grouping_with_level.cs" />
+    <Compile Include="URI\when_inclusive_end_in_view.cs" />
     <Compile Include="URI\when_retrieving_by_key.cs" />
     <Compile Include="URI\when_retrieving_by_key_and_revision.cs" />
     <Compile Include="URI\when_retrieving_by_list_all.cs" />
@@ -129,6 +132,10 @@
     <Compile Include="URI\when_retrieving_changes_via_longpolling.cs" />
     <Compile Include="URI\when_retrieving_design_document.cs" />
     <Compile Include="URI\when_setting_up_replication.cs" />
+    <Compile Include="URI\when_stale_records_are_ok.cs" />
+    <Compile Include="URI\when_turning_off_reduce.cs" />
+    <Compile Include="URI\when_using_end_key_only.cs" />
+    <Compile Include="URI\when_using_start_key_only.cs" />
     <Compile Include="URI\with_basic_uri.cs" />
     <Compile Include="URI\with_basic_uri_without_db.cs" />
     <Compile Include="with_configuration.cs" />
