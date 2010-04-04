@@ -6,7 +6,7 @@ namespace Symbiote.Relax
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    public abstract class DefaultCouchDocument : ICouchDocument<string, string>
+    public abstract class DefaultCouchDocument : BaseDocument, ICouchDocument<string, string>
     {
         [JsonProperty(PropertyName = "_id")]
         public string DocumentId { get; set; }
@@ -18,14 +18,17 @@ namespace Symbiote.Relax
         {
             return DocumentId.ToJson(false);
         }
+
         public string GetRevAsJson()
         {
             return DocumentRevision.ToJson(false);
         }
+
         public void UpdateKeyFromJson(string jsonKey)
         {
             DocumentId = jsonKey.FromJson<string>();
         }
+
         public void UpdateRevFromJson(string jsonRev)
         {
             DocumentRevision = jsonRev.FromJson<string>();

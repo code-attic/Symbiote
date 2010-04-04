@@ -75,9 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDocument.cs" />
     <Compile Include="ChangeRecord.cs" />
     <Compile Include="CouchDocument.cs" />
     <Compile Include="ICouchServer.cs" />
+    <Compile Include="IHandleJsonDocumentId.cs" />
+    <Compile Include="IHandleJsonDocumentRevision.cs" />
+    <Compile Include="IHaveAttachments.cs" />
     <Compile Include="Impl\BaseCouchDbController.cs" />
     <Compile Include="Impl\BulkResponse.cs" />
     <Compile Include="Impl\CacheKeyBuilder.cs" />

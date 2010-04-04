@@ -13,6 +13,9 @@ namespace Symbiote.Relax
         void DeleteDocument<TModel>(object id, object rev)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
 
+        void DeleteAttachment<TModel>(TModel model, string attachmentName)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments;
+
         IList<TModel> FromView<TModel>(string designDocument, string viewName, Action<ViewQuery> query)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
 
@@ -27,13 +30,19 @@ namespace Symbiote.Relax
         
         IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+
+        Tuple<string, byte[]> GetAttachment<TModel>(object id, string attachmentName)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments;
         
         void Save<TModel>(TModel model)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
         
         void SaveAll<TModel>(IEnumerable<TModel> list)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
-        
+
+        void SaveAttachment<TModel>(TModel model, string attachmentName, string contentType, byte[] content)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments;
+
         void HandleUpdates<TModel>(int since, Action<ChangeRecord> onUpdate, AsyncCallback updatesInterrupted)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
         

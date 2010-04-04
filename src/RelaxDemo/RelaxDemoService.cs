@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Relax;
@@ -58,7 +60,7 @@ namespace RelaxDemo
             "Loading each document by id ..."
                 .ToInfo<RelaxDemoService>();
 
-            list.ForEach(x => _retriever.GetById(x.DocumentId));
+            list.ForEach(x => _retriever.GetById(x.DocumentId, x.DocumentRevision));
 
             "... Done"
                 .ToInfo<RelaxDemoService>();
@@ -105,7 +107,38 @@ namespace RelaxDemo
                     .ToInfo<RelaxDemoService>(i, docs.Count);
             }
 
-            // one time replication
+            // create file
+            "Creating a file ..."
+                .ToInfo<RelaxDemoService>();
+
+            using(var file = new StreamWriter("test.txt", false))
+            {
+                file.WriteLine("Look. It's a test file! I'm going to put some crap in it.");
+                new [] {1,2,3,4,5}.ForEach(x => file.WriteLine("Look, a crap line {0}".AsFormat(x)));
+            }
+
+            "... Done"
+                .ToInfo<RelaxDemoService>();
+
+            // load and add attachment to all documents
+            "Load file and add attachment to each document..."
+                .ToInfo<RelaxDemoService>();
+
+            string fileContent = "";
+            using(var file = new StreamReader("test.txt"))
+            {
+                fileContent = file.ReadToEnd();
+            }
+
+            var bytes = UTF8Encoding.UTF8.GetBytes(fileContent);
+
+            list.ForEach(x => _couch.Repository.SaveAttachment(x, "test.txt", @"text/plain", bytes));
+            
+            "... Done"
+                .ToInfo<RelaxDemoService>();
+
+
+            // one time replication);
             "Copying database via one-time replication ..."
                 .ToInfo<RelaxDemoService>();
 

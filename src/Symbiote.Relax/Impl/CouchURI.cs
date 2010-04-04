@@ -29,6 +29,12 @@ namespace Symbiote.Relax.Impl
             return new CouchUri(user, password, prefix, server, port);
         }
 
+        public CouchUri Attachment(string attachmentName)
+        {
+            _builder.AppendFormat("/{0}", attachmentName);
+            return this;
+        }
+
         public CouchUri BulkInsert()
         {
             _builder.Append("/_bulk_docs");
@@ -135,9 +141,6 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri Key<TKey>(TKey key)
         {
-            if (!_hasArguments)
-                _hasArguments = true;
-
             _builder.AppendFormat("/{0}", key.ToString().TrimStart('"').TrimEnd('"'));
 
             return this;
@@ -207,6 +210,16 @@ namespace Symbiote.Relax.Impl
         public CouchUri Replicate()
         {
             _builder.Append("/_replicate");
+            return this;
+        }
+
+        public CouchUri Revision<TRev>(TRev revision)
+        {
+            _builder.AppendFormat("{0}rev={1}",
+                                  _hasArguments ? "&" : "?", revision.ToString().TrimStart('"').TrimEnd('"'));
+            if (!_hasArguments)
+                _hasArguments = true;
+
             return this;
         }
 

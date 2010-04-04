@@ -14,7 +14,30 @@ namespace Symbiote.Relax.Impl
     {
         protected ConcurrentDictionary<Type, ICouchCommand> _continuousUpdateCommands =
             new ConcurrentDictionary<Type, ICouchCommand>();
-        
+
+        public void DeleteAttachment<TModel>(TModel model, string attachmentName)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
+        {
+            var uri = BaseURI<TModel>()
+                .Key(model.GetIdAsJson())
+                .Attachment(attachmentName)
+                .Revision(model.GetRevAsJson());
+
+            try
+            {
+                var command = _commandFactory.GetCommand();
+                var updatedJson = command.Delete(uri);
+                var updated = updatedJson.FromJson<SaveResponse>();
+                model.UpdateRevFromJson(updated.Revision.ToJson(false));
+                model.RemoveAttachment(attachmentName);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public virtual void DeleteDocument<TModel>(object id)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
@@ -185,6 +208,25 @@ namespace Symbiote.Relax.Impl
             }
         }
 
+        public Tuple<string, byte[]> GetAttachment<TModel>(object id, string attachmentName)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
+        {
+            var uri = BaseURI<TModel>()
+                .Key(id)
+                .Attachment(attachmentName);
+
+            try
+            {
+                var command = _commandFactory.GetCommand();
+                return command.GetAttachment(uri);
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
+        }
+
         public virtual void Save<TModel>(TModel model)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
@@ -238,6 +280,29 @@ namespace Symbiote.Relax.Impl
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
+                throw;
+            }
+        }
+
+        public void SaveAttachment<TModel>(TModel model, string attachmentName, string contentType, byte[] content)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
+        {
+            var uri = BaseURI<TModel>()
+                .Key(model.GetIdAsJson())
+                .Attachment(attachmentName)
+                .Revision(model.GetRevAsJson());
+
+            try
+            {
+                var command = _commandFactory.GetCommand();
+                var updatedJson = command.SaveAttachment(uri, contentType, content);
+                var updated = updatedJson.FromJson<SaveResponse>();
+                model.UpdateRevFromJson(updated.Revision.ToJson(false));
+                model.AddAttachment(attachmentName, contentType, content.Length);
+            }
+            catch (Exception ex)
+            {
+                
                 throw;
             }
         }

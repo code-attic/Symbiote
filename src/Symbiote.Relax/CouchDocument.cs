@@ -6,7 +6,7 @@ namespace Symbiote.Relax
 {
     [Serializable]
     [JsonObject(MemberSerialization.OptOut)]
-    public abstract class CouchDocument<TModel, TKey, TRev> : ICouchDocument<TKey, TRev>
+    public abstract class CouchDocument<TModel, TKey, TRev> : BaseDocument, ICouchDocument<TKey, TRev>
         where TModel : CouchDocument<TModel, TKey, TRev>
     {
         protected TKey _documentId;
@@ -47,10 +47,12 @@ namespace Symbiote.Relax
         {
             return DocumentId.ToJson(false);
         }
+
         public string GetRevAsJson()
         {
             return DocumentRevision.ToJson(false);
         }
+
         public void UpdateKeyFromJson(string jsonKey)
         {
             var documentId = jsonKey.FromJson<TKey>();
