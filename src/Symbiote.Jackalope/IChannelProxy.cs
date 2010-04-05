@@ -11,6 +11,7 @@ namespace Symbiote.Jackalope
         IModel Channel { get; }
         void Acknowledge(ulong tag, bool multiple);
         QueueingBasicConsumer GetConsumer();
+        string QueueName { get; }
         void Send<T>(T body, string routingKey)
             where T : class;
         void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)

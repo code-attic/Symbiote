@@ -29,6 +29,11 @@ namespace Symbiote.WebSocket
         public string WebServerUrl { get; private set; }
         public string WebSocketUrl { get; private set; }
 
+        public virtual void AddMessageHandle(Action<Tuple<string, string>> messageHandler)
+        {
+            Subscribe(new DefaultClientObserver(messageHandler));
+        }
+
         public virtual void Close()
         {
             if(Shutdown != null)
@@ -89,6 +94,10 @@ namespace Symbiote.WebSocket
             Handshake(newSocket);
             var clientId = Guid.NewGuid().ToString();
             var webSocket = _socketFactory.GetSocket(clientId, newSocket, _bufferSize);
+            webSocket.OnDisconnect = x =>
+                                         {
+                                             if (ClientDisconnected != null) ClientDisconnected(x);
+                                         };
             ClientSockets.Add(webSocket);
 
             if(ClientConnected != null)
@@ -161,7 +170,7 @@ namespace Symbiote.WebSocket
 
             configuration
                 .MessageProcessors
-                .ForEach(x => Subscribe(new DefaultClientObserver(x)));
+                .ForEach(AddMessageHandle);
         }
     }
 }

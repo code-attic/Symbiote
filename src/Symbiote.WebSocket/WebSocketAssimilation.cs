@@ -13,7 +13,7 @@ namespace Symbiote.WebSocket
             assimilate
                 .Dependencies(x =>
                                   {
-                                      x.For<ISocketServer>().Use<WebSocketServer>();
+                                      x.For<ISocketServer>().Singleton().Use<WebSocketServer>();
                                       x.For<IWebSocketServerConfiguration>().Use(config.Configuration);
                                       x.For<ICreateWebSockets>().Use<WebSocketFactory>();
                                   });

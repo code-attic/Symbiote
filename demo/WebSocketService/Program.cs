@@ -23,10 +23,6 @@ namespace WebSocketService
                     x.ServerUrl(@"http://localhost:8080")
                      .SocketUrl(@"ws://localhost:8181/chat")
                      .Port(8181))
-                    //.OnClientConnect(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.ClientConnected)
-                    //.OnClientDisconnect(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.ClientDisconnected)
-                    //.OnMessage(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.ClientMessage)
-                    //.OnServerShutdown(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.Shutdown))
                 .AddConsoleLogger<WebSocketService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow())
                 .RunDaemon<WebSocketService>();
@@ -76,6 +72,10 @@ namespace WebSocketService
         public WebSocketService(ISocketServer server)
         {
             _server = server;
+            _server.ClientConnected += ClientConnected;
+            _server.ClientDisconnected += ClientDisconnected;
+            _server.Shutdown += Shutdown;
+            _server.AddMessageHandle(ClientMessage);
         }
     }
 }

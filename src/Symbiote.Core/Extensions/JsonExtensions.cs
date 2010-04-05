@@ -73,9 +73,10 @@ namespace Symbiote.Core.Extensions
                 PreserveReferencesHandling = PreserveReferencesHandling.All
             };
             var serializer = JsonSerializer.Create(settings);
+            StringReader textReader = null;
             try
             {
-                var textReader = new StringReader(json);
+                textReader = new StringReader(json);
                 var typeName = JObject.Parse(json).Value<string>("$type");
                 var type = Type.GetType(typeName);
                 if (type == null)
@@ -85,7 +86,9 @@ namespace Symbiote.Core.Extensions
             }
             catch (Exception e)
             {
-                return null;
+                //return null;
+                var jsonReader = new JsonTextReader(textReader);
+                return serializer.Deserialize(jsonReader);
             }
         }
 

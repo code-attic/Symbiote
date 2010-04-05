@@ -21,6 +21,7 @@ namespace Symbiote.Jackalope.Impl
         {
             get { return _configuration; }
         }
+
         public IModel Channel
         {
             get
@@ -33,6 +34,12 @@ namespace Symbiote.Jackalope.Impl
                 return _channel;
             }
         }
+
+        public string QueueName
+        {
+            get { return _configuration.QueueName ?? ""; }
+        }
+
         public IMessageSerializer Serializer
         {
             get

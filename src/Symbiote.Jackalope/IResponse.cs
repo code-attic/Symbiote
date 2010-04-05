@@ -7,5 +7,8 @@ namespace Symbiote.Jackalope
 
         void Reply<TReply>(TReply reply)
             where TReply : class;
+
+        string FromQueue { get; }
+        string ExchangeName { get; }
     }
 }

@@ -114,14 +114,12 @@
     <Compile Include="Impl\IChannelProxyFactory.cs" />
     <Compile Include="Impl\IConnectionManager.cs" />
     <Compile Include="Impl\IConnectionProvider.cs" />
-    <Compile Include="IMessage.cs" />
     <Compile Include="Impl\IDispatch.cs" />
     <Compile Include="Impl\IEndPoint.cs" />
     <Compile Include="Impl\IEndpointManager.cs" />
     <Compile Include="IResponse.cs" />
     <Compile Include="Impl\ISubscription.cs" />
     <Compile Include="Impl\JsonMessageSerializer.cs" />
-    <Compile Include="Impl\Message.cs" />
     <Compile Include="Impl\NetBinarySerializer.cs" />
     <Compile Include="Impl\Response.cs" />
     <Compile Include="Impl\Subscription.cs" />

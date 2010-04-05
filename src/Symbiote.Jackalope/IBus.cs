@@ -8,7 +8,7 @@ namespace Symbiote.Jackalope
     public interface IBus : IDisposable
     {
         void AddEndPoint(Action<IEndPoint> endpointConfiguration);
-
+        
         void Subscribe(string queueName, AsyncCallback onSubscriptionFailed);
 
         void Subscribe(string queueName, int brokers, AsyncCallback onSubscriptionFailed);

@@ -15,6 +15,9 @@ namespace Symbiote.Jackalope.Impl
         private bool _isReplyToPresent;
         private IBasicProperties _properties;
 
+        public string FromQueue { get { return _proxy.QueueName ?? ""; } }
+        public string ExchangeName { get { return _exchange; } }
+
         public void Acknowledge()
         {
             Respond(x => x.Acknowledge(_deliveryTag, false), _exchange);

@@ -11,8 +11,10 @@ namespace Symbiote.WebSocket
         IList<IWebSocket> ClientSockets { get; }
         event Action<string> ClientConnected;
         event Action<string> ClientDisconnected;
-        void Close();
+        event Action Shutdown;
 
+        void AddMessageHandle(Action<Tuple<string, string>> messageHandler);
+        void Close();
         Socket Listener { get; }
         int Port { get; }
         string WebServerUrl { get; }

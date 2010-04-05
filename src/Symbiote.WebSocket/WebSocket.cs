@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Timers;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
@@ -15,6 +16,7 @@ namespace Symbiote.WebSocket
         protected int _bufferSize;
         protected DelimitedBuilder _builder = new DelimitedBuilder("");
         protected bool _receiving = false;
+        protected Timer _timer;
 
         public string ClientId { get; set; }
 
@@ -34,6 +36,9 @@ namespace Symbiote.WebSocket
 
         public virtual void Close()
         {
+            _timer.Enabled = false;
+            _timer.Stop();
+            _timer.Dispose();
             _socket.Close();
             _observers.ForEach(x => x.OnCompleted());
             _observers.Clear();
@@ -92,12 +97,27 @@ namespace Symbiote.WebSocket
             _socket.BeginReceive(buffer, 0, _bufferSize, SocketFlags.None, Receive, buffer);
         }
 
+        protected void SetupTimer()
+        {
+            _timer = new Timer(1000);
+            _timer.AutoReset = true;
+            _timer.Elapsed += new ElapsedEventHandler(OnTimer);                                  
+            _timer.Start();
+        }
+
+        void OnTimer(object sender, ElapsedEventArgs e)
+        {
+            if (!_socket.Connected && OnDisconnect != null)
+                OnDisconnect(ClientId);
+        }
+
         public WebSocket(string clientId, Socket socket, int bufferSize)
         {
             ClientId = clientId;
             _socket = socket;
             _bufferSize = bufferSize;
             Listen();
+            SetupTimer();
         }
     }
 }
