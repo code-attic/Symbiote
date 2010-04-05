@@ -135,13 +135,13 @@ namespace Symbiote.WebSocket
                 writer.WriteLine("HTTP/1.1 101 Web Socket Protocol Handshake");
                 writer.WriteLine("Upgrade: WebSocket");
                 writer.WriteLine("Connection: Upgrade");
-                writer.WriteLine("WebSocket-Origin: " + WebSocketUrl);
-                writer.WriteLine("WebSocket-Location: " + WebServerUrl);
+                writer.WriteLine("WebSocket-Origin: " + WebServerUrl);
+                writer.WriteLine("WebSocket-Location: " + WebSocketUrl);
                 writer.WriteLine("");
-
-                "Handshake complete."
-                    .ToInfo<ISocketServer>();
             }
+
+            "Handshake complete."
+                .ToInfo<ISocketServer>();
         }
 
         public virtual IDisposable Subscribe(IObserver<Tuple<string, string>> observer)
@@ -150,7 +150,7 @@ namespace Symbiote.WebSocket
             return observer as IDisposable;
         }
 
-        public WebSocketServer(WebSocketServerConfiguration configuration, ICreateWebSockets socketFactory)
+        public WebSocketServer(IWebSocketServerConfiguration configuration, ICreateWebSockets socketFactory)
         {
             ClientSockets = new List<IWebSocket>();
             WebServerUrl = configuration.ServerUrl;

@@ -20,8 +20,8 @@ namespace WebSocketService
                 .Daemon<WebSocketService>(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x => 
-                    x.ServerUrl(@"http://localhost:80")
-                     .SocketUrl(@"ws://localhost:8181/test")
+                    x.ServerUrl(@"http://localhost:8080")
+                     .SocketUrl(@"ws://localhost:8181/chat")
                      .Port(8181))
                     //.OnClientConnect(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.ClientConnected)
                     //.OnClientDisconnect(FutureInstanceProxy<WebSocketService>.New<WebSocketService>().Instance.ClientDisconnected)

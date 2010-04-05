@@ -38,7 +38,8 @@ namespace Symbiote.WebSocket
             _observers.ForEach(x => x.OnCompleted());
             _observers.Clear();
             _observers = null;
-            OnDisconnect(ClientId);
+            if(OnDisconnect != null)
+                OnDisconnect(ClientId);
         }
 
         public virtual void Dispose()
@@ -61,18 +62,18 @@ namespace Symbiote.WebSocket
             if(received > 0)
             {
                 var buffer = result.AsyncState as byte[];
-                var start = 0;
-                var end = buffer.Length - 1;
 
                 if(buffer[0] == (byte)Signal.Start)
                 {
                     _receiving = true;
                     _builder.Clear();
-                    start = 1;
                 }
 
                 var ends = buffer.Contains((byte) Signal.End);
-                _builder.Append(UTF8Encoding.UTF8.GetString(buffer, start, end));
+                _builder.Append(UTF8Encoding.UTF8.GetString(
+                        buffer
+                            .SkipWhile(x => x == (byte)Signal.Start)
+                            .TakeWhile(x => x != (byte)Signal.End).ToArray()));
                 
                 if(ends)
                 {
