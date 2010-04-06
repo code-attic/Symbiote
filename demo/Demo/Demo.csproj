@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>2fec9837-37c5-4c04-b59a-e16f06a4c368</ProjectGuid>
+    <ProjectGuid>{C39ED5F2-817E-4E73-8E31-A3A0BDFC31BA}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Demo</RootNamespace>
@@ -34,6 +34,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Antlr3.Runtime">
+      <HintPath>..\..\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Castle.DynamicProxy2">
+      <HintPath>..\..\lib\Castle.DynamicProxy2.dll</HintPath>
+    </Reference>
+    <Reference Include="Enyim.Caching">
+      <HintPath>..\..\lib\Enyim.Caching.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentNHibernate">
+      <HintPath>..\..\lib\FluentNHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="Iesi.Collections">
+      <HintPath>..\..\lib\Iesi.Collections.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate">
+      <HintPath>..\..\lib\NHibernate.dll</HintPath>
+    </Reference>
+    <Reference Include="NHibernate.Linq">
+      <HintPath>..\..\lib\NHibernate.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\lib\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,10 +74,51 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Topshelf">
+      <HintPath>..\..\lib\Topshelf.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
+      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
+      <Name>Symbiote.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Eidetic\Symbiote.Eidetic.csproj">
+      <Project>{5F7BC676-C3BA-4705-8A40-DBFF382F7DAA}</Project>
+      <Name>Symbiote.Eidetic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Hibernate\Symbiote.Hibernate.csproj">
+      <Project>{6D7C4F20-D3EA-460F-820D-BC7B9048DCFF}</Project>
+      <Name>Symbiote.Hibernate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
+      <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
+      <Name>Symbiote.Jackalope</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
+      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
+      <Name>Symbiote.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
+      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
+      <Name>Symbiote.Relax</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Warren\Symbiote.Warren.csproj">
+      <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
+      <Name>Symbiote.Warren</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
+      <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>
+      <Name>Symbiote.WebSocket</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

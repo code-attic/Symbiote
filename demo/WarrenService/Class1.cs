@@ -32,18 +32,18 @@ namespace WarrenService
         }
     }
 
-    public class MessageHandler : IMessageHandler<string>
+    public class MessageHandler : IMessageHandler<SocketMessage>
     {
         protected IBus _bus;
 
-        public void Process(string message, IResponse response)
+        public void Process(SocketMessage message, IResponse response)
         {
             try
             {
-                "Client sez: {0}".ToInfo<ClientMessage>(message);
+                "Client {0} sez: {1}".ToInfo<ClientMessage>(message.From, message.Body);
                 response.Acknowledge();
 
-                _bus.Send("client", new SocketMessage() {Body = "If you ever speak to me that way again. I'll kill your face.", To = response.FromQueue});
+                _bus.Send("client", new SocketMessage() {Body = "If you ever speak to me that way again. I'll kill your face.", To = "client"});
             }
             catch (Exception ex)
             {
