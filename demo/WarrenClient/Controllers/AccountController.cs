@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using StructureMap;
 using WarrenClient.Models;
 
 namespace WarrenClient.Controllers
@@ -18,6 +19,7 @@ namespace WarrenClient.Controllers
 
         // This constructor is used by the MVC framework to instantiate the controller using
         // the default forms authentication and membership providers.
+        [DefaultConstructor]
         public AccountController()
             : this(null, null)
         {

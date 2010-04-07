@@ -1,0 +1,9 @@
+﻿<content name="TitleContent">
+    Error
+</content>
+
+<content name="MainContent">
+    <h2>
+        Sorry, an error occurred while processing your request.
+    </h2>
+</content>

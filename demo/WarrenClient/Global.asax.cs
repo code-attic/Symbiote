@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Symbiote.Core;
+using Symbiote.Web;
 
 namespace WarrenClient
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
     // visit http://go.microsoft.com/?LinkId=9394801
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : SymbioteMvcApplication
     {
         public static void RegisterRoutes(RouteCollection routes)
         {
@@ -29,6 +31,12 @@ namespace WarrenClient
             AreaRegistration.RegisterAllAreas();
 
             RegisterRoutes(RouteTable.Routes);
+
+            Assimilate
+                .Core()
+                .Web(x => x
+                        .SupplyControllerDependencies()
+                        .UseSparkViews());
         }
     }
 }
