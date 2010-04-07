@@ -74,8 +74,7 @@ namespace Symbiote.Warren
             _proxyFactory = proxyFactory;
             _server = server;
         }
-
-
+        
         public void Dispose()
         {
             Stop();

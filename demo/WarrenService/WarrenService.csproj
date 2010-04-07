@@ -58,8 +58,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="ClientMessage.cs" />
+    <Compile Include="MessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarrenService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

@@ -81,6 +81,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
+    <Content Include="Scripts\jquery.json-2.2.min.js" />
     <Content Include="Scripts\symbiote.warren.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -141,8 +142,8 @@
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>50460</DevelopmentServerPort>
+          <AutoAssignPort>False</AutoAssignPort>
+          <DevelopmentServerPort>8080</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>
