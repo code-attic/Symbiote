@@ -62,6 +62,11 @@
 
     var messageReceived = function (msg) {
         try {
+
+            if ($.evalJSON(msg.data).userAliasLoggedSuccessfully) {
+                log('subscribing...');
+                setTimeout(send(clients()), 800);
+            }
             log('message recieved');
             var json = $.evalJSON(msg.data);
             log('processed message to: ' + json);
@@ -73,10 +78,7 @@
 
     var setup = function () {
         try {
-            setTimeout(send(userJson()), 200);
-            setTimeout(send(all_clients()), 200);
-            setTimeout(send(clients()), 200);
-            setTimeout(send(node()), 200);
+            setTimeout(send(userJson()), 100);
             if (connected_callback) connected_callback();
             sock.onmessage = messageReceived;
             sock.onclose = disconnected_callback;
@@ -85,26 +87,10 @@
         }
     }
 
-    var all_clients = function () {
-        return {
-            "$type": "Subscribe",
-            "Exchange": "allclients",
-            "RoutingKeys": ""
-        };
-    }
-
     var clients = function () {
         return {
             "$type": "Subscribe",
-            "Exchange": "clients",
-            "RoutingKeys": username
-        };
-    }
-
-    var node = function () {
-        return {
-            "$type": "Subscribe",
-            "Exchange": "node",
+            "Exchange": "client",
             "RoutingKeys": ""
         };
     }

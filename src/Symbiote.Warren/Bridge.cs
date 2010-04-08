@@ -26,30 +26,36 @@ namespace Symbiote.Warren
             _server.AddMessageHandle(ProcessMessage);
         }
 
-        private void ProcessMessage(Tuple<string, string> obj)
+        private void ProcessMessage(Tuple<string, string> message)
         {
-            var subscribe = obj.Item2.FromJson<Subscribe>();
+            var subscribe = message.Item2.FromJson<Subscribe>();
             if(subscribe.Exchange != null)
             {
-                var proxy = _proxyFactory.GetProxyForExchange(subscribe.Exchange);
-                if (proxy != null)
-                {
-                    try
-                    {
-                        proxy.Channel.QueueBind(obj.Item1, subscribe.Exchange, subscribe.RoutingKey, false, null);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                } 
+                ProcessSubscriptionRequest(message, subscribe);
             }
             else
             {
-                var socketMessage = obj.Item2.FromJson<ServerSocketMessage>();
-                _bus.Send(socketMessage.To, socketMessage);
+                var socketMessage = message.Item2.FromJson<ServerSocketMessage>();
+                _bus.Send(socketMessage.To, socketMessage.Body, socketMessage.RoutingKey);
             }
 
+        }
+
+        protected void ProcessSubscriptionRequest(Tuple<string, string> message, Subscribe subscribe)
+        {
+            var proxy = _proxyFactory.GetProxyForExchange(subscribe.Exchange);
+            if (proxy != null)
+            {
+                try
+                {
+                    proxy.Channel.QueueBind(message.Item1, subscribe.Exchange, subscribe.RoutingKeys, false, null);
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }
+            }
         }
 
         private void HandleClientDisconnect(string clientId)

@@ -6,6 +6,6 @@ namespace Symbiote.Warren
     public class Subscribe
     {
         public string Exchange { get; set; }
-        public string RoutingKey { get; set; }
+        public string RoutingKeys { get; set; }
     }
 }

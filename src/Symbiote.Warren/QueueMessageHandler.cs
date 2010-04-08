@@ -13,13 +13,11 @@ namespace Symbiote.Warren
         {
             try
             {
-                var socketMessage = message as SocketMessage;
-                if (socketMessage == null)
-                    socketMessage = new ServerSocketMessage()
+                var socketMessage = new SocketMessage()
                                         {
                                             Body = message,
-                                            From = response.FromQueue,
-                                            To = "",
+                                            From = response.ExchangeName,
+                                            To = response.FromQueue,
                                             RoutingKey = ""
                                         };
 

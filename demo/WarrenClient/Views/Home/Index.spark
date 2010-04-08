@@ -30,7 +30,7 @@
     }
 
     function send() {
-    warren.sendmessage('server', $('#console_input').val(), '');
+    warren.sendmessage('client', $('#console_input').val(), '');
     }
 
     $(function() {

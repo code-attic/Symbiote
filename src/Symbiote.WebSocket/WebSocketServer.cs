@@ -124,7 +124,7 @@ namespace Symbiote.WebSocket
                 var client = _clientAliasTable
                     .Where(x => x.Value == to)
                     .Select(x => x.Key)
-                    .FirstOrDefault();
+                    .FirstOrDefault() ?? to;
                 ClientSockets
                     .Where(x => x.ClientId == client)
                     .ForEach(x => x.Send(data));   
@@ -183,6 +183,7 @@ namespace Symbiote.WebSocket
                 _clientAliasTable[message.Item1] = alias.Name;
                 if (ClientConnected != null)
                     ClientConnected(alias.Name);
+                Send(@"{""userAliasLoggedSuccessfully"":true}", "server", alias.Name);
             }
             else if(_clientAliasTable.ContainsKey(message.Item1))
             {

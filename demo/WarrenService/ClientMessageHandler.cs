@@ -5,52 +5,37 @@ using Symbiote.Warren;
 
 namespace WarrenService
 {
-    public class ClientMessageHandler : IMessageHandler<ClientSocketMessage>
-    {
-        protected IBus _bus;
+    //public class ClientMessageHandler : IMessageHandler<ClientSocketMessage>
+    //{
+    //    protected IBus _bus;
 
-        public void Process(ClientSocketMessage message, IResponse response)
-        {
-            try
-            {
-                "Client {0} sez: {1}".ToInfo<ClientMessage>(message.From, message.Body);
-                response.Acknowledge();
+    //    public void Process(ClientSocketMessage message, IResponse response)
+    //    {
+    //        try
+    //        {
+    //            "Client {0} sez: {1}".ToInfo<ClientMessage>(message.From, message.Body);
+    //            response.Acknowledge();
 
-                _bus.Send(
-                    "client", 
-                    new ServerSocketMessage()
-                        {
-                            Body = message.Body, 
-                            To = message.To,
-                            From = message.From,
-                            RoutingKey = message.RoutingKey
-                        });
-            }
-            catch (Exception ex)
-            {
+    //            _bus.Send(
+    //                "client", 
+    //                new ServerSocketMessage()
+    //                    {
+    //                        Body = message.Body, 
+    //                        To = message.To,
+    //                        From = message.From,
+    //                        RoutingKey = message.RoutingKey
+    //                    });
+    //        }
+    //        catch (Exception ex)
+    //        {
                 
-                throw;
-            }
-        }
+    //            throw;
+    //        }
+    //    }
 
-        public ClientMessageHandler(IBus bus)
-        {
-            _bus = bus;
-        }
-    }
-
-    public class ServerMessageHandler : IMessageHandler<ServerSocketMessage>
-    {
-        private Bridge _bridge;
-
-        public void Process(ServerSocketMessage message, IResponse response)
-        {
-            
-        }
-
-        public ServerMessageHandler(Bridge bridge)
-        {
-            _bridge = bridge;
-        }
-    }
+    //    public ClientMessageHandler(IBus bus)
+    //    {
+    //        _bus = bus;
+    //    }
+    //}
 }
