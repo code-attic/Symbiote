@@ -16,6 +16,7 @@ namespace Symbiote.Warren
 
         public string To { get; set; }
         public string From { get; set; }
+        public string RoutingKey { get; set; }
 
         public SocketMessage()
         {
@@ -26,6 +27,19 @@ namespace Symbiote.Warren
             Body = body;
             To = "";
             From = "";
+            RoutingKey = "";
         }
+    }
+
+    [JsonObject(MemberSerialization.OptOut)]
+    [Serializable]
+    public class ClientSocketMessage : SocketMessage
+    {
+    }
+
+    [JsonObject(MemberSerialization.OptOut)]
+    [Serializable]
+    public class ServerSocketMessage : SocketMessage
+    {
     }
 }

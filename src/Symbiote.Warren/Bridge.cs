@@ -46,7 +46,7 @@ namespace Symbiote.Warren
             }
             else
             {
-                var socketMessage = obj.Item2.FromJson<SocketMessage>();
+                var socketMessage = obj.Item2.FromJson<ServerSocketMessage>();
                 _bus.Send(socketMessage.To, socketMessage);
             }
 

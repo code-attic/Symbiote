@@ -13,9 +13,18 @@ namespace Symbiote.Warren
         {
             try
             {
-                var socketMessage = new SocketMessage(message);
+                var socketMessage = message as SocketMessage;
+                if (socketMessage == null)
+                    socketMessage = new ServerSocketMessage()
+                                        {
+                                            Body = message,
+                                            From = response.FromQueue,
+                                            To = "",
+                                            RoutingKey = ""
+                                        };
+
                 var body = socketMessage.ToJson(false);
-                _server.Send(body, response.ExchangeName, response.FromQueue);
+                _server.Send(body, socketMessage.From, socketMessage.To);
                 response.Acknowledge();
             }
             catch (Exception e)

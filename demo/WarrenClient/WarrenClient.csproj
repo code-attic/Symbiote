@@ -123,8 +123,12 @@
   <ItemGroup>
     <None Include="Views\Account\LogOn.spark" />
     <None Include="Views\Home\About.spark" />
-    <None Include="Views\Home\Index.spark" />
-    <None Include="Views\Shared\Application.spark" />
+    <None Include="Views\Home\Index.spark">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Views\Shared\Application.spark">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Views\Shared\Error.spark" />
     <None Include="Views\Shared\_LogOnUserControl.spark" />
   </ItemGroup>

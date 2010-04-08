@@ -1,24 +1,61 @@
 ﻿<content name="MainContent">
 
 	<script type="text/javascript" language="javascript">
-	function connect() {
-		warren.onerror(function(err) { alert(err); });
-		warren.connect('http://localhost:8181/chat','alex');
-	}
-	
-	$(function() { 
-		
-	  });
-	</script>
+    function connect() {
+    warren.onerror(function(err) { alert(err); });
+    warren.onconnect(connected);
+    warren.ondisconnect(disconnected);
+    warren.debug(logger);
+    warren.onmessage(message);
+    warren.connect('ws://localhost:8181/chat','!{Context.User.Identity.Name}');
+    }
+
+    function connected()
+    {
+      logger('Connected!');
+    }
+    
+    function disconnected()
+    {
+      logger('Disconnected :(');
+    }
+
+    function logger(msg) {
+      $('#log')
+      .append(msg + '<br/>');
+    }
+
+    function message(msg) {
+    $('#console').append(msg.From + ': ' + msg.Body);
+    }
+
+    function send() {
+    warren.sendmessage('server', $('#console_input').val(), '');
+    }
+
+    $(function() {
+    $('#console_send').click(send);
+    $('#console_input').keyup(function (e) {
+    if(e.keyCode == 13) send();
+    });
+
+    });
+  </script>
 
 	<content name="TitleContent">
 	    Home Page
 	</content>
-		
-    <h2>${ViewData["Message"]}</h2>
+
+    <div id="console_wrapper">
+      <pre id="console"></pre>
+      <input type="text" name="console_input" id="console_input" value="" />
+      <input type="submit" name="console_send" id="console_send" value="Send"  />
+    </div>
     <p>
         <input type="button" value="click to connect" onclick="connect();" />
     </p>
-	<UniverseList />
-	<UniverseRequest />
+  <div id="log">
+    
+    
+  </div>
 </content>

@@ -114,13 +114,21 @@ namespace Symbiote.WebSocket
 
         public virtual void Send(string data, string from, string to)
         {
-            var client = _clientAliasTable
-                .Where(x => x.Value == to)
-                .Select(x => x.Key)
-                .FirstOrDefault();
-            ClientSockets
-                .Where(x => x.ClientId == client)
-                .ForEach(x => x.Send(data));
+            if(string.IsNullOrEmpty(to))
+            {
+                ClientSockets
+                    .ForEach(x => x.Send(data));   
+            }
+            else
+            {
+                var client = _clientAliasTable
+                    .Where(x => x.Value == to)
+                    .Select(x => x.Key)
+                    .FirstOrDefault();
+                ClientSockets
+                    .Where(x => x.ClientId == client)
+                    .ForEach(x => x.Send(data));   
+            }
         }
 
         public virtual void Start()

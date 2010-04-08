@@ -4,6 +4,7 @@ using System.Text;
 using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Log4Net;
+using Symbiote.Warren;
 using Symbiote.WebSocket;
 using Symbiote.Jackalope;
 
@@ -25,6 +26,8 @@ namespace WarrenService
                 .AddConsoleLogger<WarrenService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow().ForAllOutput())
                 .AddColorConsoleLogger<ClientMessage>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsBlue().ForAllOutput())
+                .AddFileLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("log.log"))
+                .AddFileLogger<Bridge>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("warren.log"))
                 .RunDaemon<WarrenService>();
         }
     }
