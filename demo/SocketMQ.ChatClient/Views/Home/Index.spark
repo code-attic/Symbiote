@@ -1,0 +1,67 @@
+﻿<content name="MainContent">
+
+	<script type="text/javascript" language="javascript">
+
+    var username = '!{Context.User.Identity.Name}';
+    
+    function connect() {
+    warren.onerror(function(err) { alert(err); });
+    warren.onconnect(connected);
+    warren.ondisconnect(disconnected);
+    //warren.debug(logger);
+    warren.onmessage(message);
+    warren.connect('ws://localhost:8181/chat',username);
+    }
+
+    function connected()
+    {
+    logger('Connected!');
+    }
+
+    function disconnected()
+    {
+    logger('Disconnected :(');
+    }
+
+    function logger(msg) {
+    $('#log')
+    .append(msg + '<br/>');
+    }
+
+    function message(msg) {
+    if(msg.Body.From)
+      $('#console').append(msg.Body.From+ ': ' + msg.Body.Body + '<br/>');
+    }
+
+    function send() {
+    var content = $('#console_input').val();
+    var message = { "From":username, "Body":content };
+    warren.sendmessage('client', message, '');
+    }
+
+    $(function() {
+    $('#console_send').click(send);
+    $('#console_input').keyup(function (e) {
+    if(e.keyCode == 13) send();
+    });
+
+    });
+  </script>
+
+	<content name="TitleContent">
+	    Home Page
+	</content>
+
+    <div id="console_wrapper">
+      <pre id="console"></pre>
+      <input type="text" name="console_input" id="console_input" value="" />
+      <input type="submit" name="console_send" id="console_send" value="Send"  />
+    </div>
+    <p>
+        <input type="button" value="click to connect" onclick="connect();" />
+    </p>
+  <div id="log">
+    
+    
+  </div>
+</content>

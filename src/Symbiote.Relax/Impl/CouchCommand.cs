@@ -129,28 +129,6 @@ namespace Symbiote.Relax.Impl
                 var bytes = client.UploadData(uri.ToString(), "PUT", content);
                 return UTF8Encoding.UTF8.GetString(bytes);
             }
-
-            //var request = WebRequest.Create(uri.ToString());
-            //request.Method = "PUT";
-            //request.Timeout = _configuration.TimeOut;
-            
-            //request.ContentType = type;
-            //request.ContentLength = content.Length;
-
-            //var writer = request.GetRequestStream();
-            //writer.Write(content, 0, content.Length);
-            //writer.Close();
-
-            //var result = "";
-            //var response = request.GetResponse();
-
-            //using (var reader = new StreamReader(response.GetResponseStream()))
-            //{
-            //    result = reader.ReadToEnd();
-            //    response.Close();
-            //}
-
-            //return result;
         }
 
         public virtual void StopContinousResponse()

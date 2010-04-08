@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A70FB068-DA21-4736-8164-8C13D53F3A74}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SocketMQ.ChatService</RootNamespace>
+    <AssemblyName>SocketMQ.ChatService</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\lib\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\lib\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Topshelf">
+      <HintPath>..\..\lib\Topshelf.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="ClientMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarrenService.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
+      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
+      <Name>Symbiote.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
+      <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
+      <Name>Symbiote.Jackalope</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
+      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
+      <Name>Symbiote.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
+      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
+      <Name>Symbiote.Relax</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Warren\Symbiote.SocketMQ.csproj">
+      <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
+      <Name>Symbiote.SocketMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
+      <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>
+      <Name>Symbiote.WebSocket</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -12,10 +12,34 @@ namespace Symbiote.Relax
         protected TKey _documentId;
         protected TRev _documentRev;
 
-        public static Func<TModel, TKey> GetDocumentId = x => x._documentId;
-        public static Func<TModel, TRev> GetDocumentRevision = x => x._documentRev;
-        public static Action<TModel, TKey> SetDocumentId = (x,k) => x._documentId = k;
-        public static Action<TModel, TRev> SetDocumentRevision= (x,r) => x._documentRev = r;
+        protected Func<TModel, TKey> GetDocumentId = x => x._documentId;
+        protected Func<TModel, TRev> GetDocumentRevision = x => x._documentRev;
+        protected Action<TModel, TKey> SetDocumentId = (x,k) => x._documentId = k;
+        protected Action<TModel, TRev> SetDocumentRevision= (x,r) => x._documentRev = r;
+
+        protected TModel KeyGetter(Func<TModel, TKey> getter)
+        {
+            GetDocumentId = getter;
+            return this as TModel;
+        }
+
+        protected TModel KeySetter(Action<TModel, TKey> setter)
+        {
+            SetDocumentId = setter;
+            return this as TModel;
+        }
+
+        protected TModel RevisionGetter(Func<TModel, TRev> getter)
+        {
+            GetDocumentRevision = getter;
+            return this as TModel;
+        }
+
+        protected TModel RevisionSetter(Action<TModel, TRev> setter)
+        {
+            SetDocumentRevision = setter;
+            return this as TModel;
+        }
 
         [JsonProperty(PropertyName = "_id")]
         public TKey DocumentId
