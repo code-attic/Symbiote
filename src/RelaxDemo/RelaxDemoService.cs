@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
@@ -114,7 +115,10 @@ namespace RelaxDemo
             using(var file = new StreamWriter("test.txt", false))
             {
                 file.WriteLine("Look. It's a test file! I'm going to put some crap in it.");
-                new [] {1,2,3,4,5}.ForEach(x => file.WriteLine("Look, a crap line {0}".AsFormat(x)));
+                for (int i = 0; i < 101000; i++)
+                {
+                    file.WriteLine("Look, a crap line {0}".AsFormat(i));    
+                }
             }
 
             "... Done"
@@ -134,6 +138,17 @@ namespace RelaxDemo
 
             list.ForEach(x => _couch.Repository.SaveAttachment(x, "test.txt", @"text/plain", bytes));
             
+            "... Done"
+                .ToInfo<RelaxDemoService>();
+
+            // retrieve attachment from one document
+            "Retreive attachment frmo a document..."
+                .ToInfo<RelaxDemoService>();
+
+            var attachment = _couch.Repository.GetAttachment<TestDocument>(list.First().DocumentId, "test.txt");
+            "Attachment size: {0}"
+                .ToInfo<RelaxDemoService>(attachment.Item2.Length);
+
             "... Done"
                 .ToInfo<RelaxDemoService>();
 

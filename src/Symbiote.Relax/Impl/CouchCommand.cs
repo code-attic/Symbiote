@@ -90,31 +90,18 @@ namespace Symbiote.Relax.Impl
             request.Timeout = _configuration.TimeOut;
 
             var response = request.GetResponse();
-            long bytesRead = 0;
-            long bytesToRead = response.ContentLength;
-            var bytes = new byte[bytesToRead];
+            int bytesRead = 0;
+            var memoryStream = new MemoryStream();
             
             using(var stream = response.GetResponseStream())
             {
-                while(bytesToRead > 0)
-                {
-                    var read = stream.Read(bytes, (int)bytesRead, 1024);
-                    if(read == 0)
-                    {
-                        bytesToRead = 0;
-                    }
-                    else
-                    {
-                        bytesRead += read;
-                        bytesToRead -= read;
-                    }
-                }
+                stream.CopyTo(memoryStream);
             }
-            
+            memoryStream.Position = 0;
             var result =
                 Tuple.Create(
                     response.ContentType, 
-                    bytes
+                    memoryStream.ToArray()
                     );
 
             response.Close();
