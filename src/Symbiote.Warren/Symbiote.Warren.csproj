@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A70FB068-DA21-4736-8164-8C13D53F3A74}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{04A32975-6423-4611-889C-615C6D6FE75B}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocketMQ.ChatService</RootNamespace>
-    <AssemblyName>SocketMQ.ChatService</AssemblyName>
+    <RootNamespace>Symbiote.Warren</RootNamespace>
+    <AssemblyName>Symbiote.Warren</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,14 +30,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client">
@@ -53,42 +51,24 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Topshelf">
-      <HintPath>..\..\lib\Topshelf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="ClientMessage.cs" />
+    <Compile Include="Bridge.cs" />
+    <Compile Include="SocketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WarrenService.cs" />
+    <Compile Include="QueueMessageHandler.cs" />
+    <Compile Include="Subscribe.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
-      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
-      <Name>Symbiote.Daemon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
+    <ProjectReference Include="..\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
       <Name>Symbiote.Jackalope</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
-      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
-      <Name>Symbiote.Log4Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
-      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
-      <Name>Symbiote.Relax</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.SocketMQ\Symbiote.SocketMQ.csproj">
-      <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
-      <Name>Symbiote.SocketMQ</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
+    <ProjectReference Include="..\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
       <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>
       <Name>Symbiote.WebSocket</Name>
     </ProjectReference>

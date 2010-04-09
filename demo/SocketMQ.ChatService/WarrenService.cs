@@ -24,7 +24,6 @@ namespace SocketMQ.ChatService
             _bridge = bridge;
             _bus = bus;
             _bus.AddEndPoint(x => x.Exchange("client", ExchangeType.fanout));
-            _bus.Subscribe("serverQueue", null);
         }
     }
 }

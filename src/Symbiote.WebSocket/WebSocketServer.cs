@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
@@ -19,7 +20,9 @@ namespace Symbiote.WebSocket
         protected ConcurrentDictionary<string, string> _clientAliasTable = new ConcurrentDictionary<string, string>();
         protected int _bufferSize;
         protected IPEndPoint _localEndPoint;
+        protected IPEndPoint _policyEndPoint;
         protected ICreateWebSockets _socketFactory;
+        protected XDocument _policyResponse;
 
         protected readonly string _handshake_line1 = "GET {0} HTTP/1.1";
         protected readonly string _handshake_line2 = "Upgrade: WebSocket";
@@ -27,6 +30,7 @@ namespace Symbiote.WebSocket
         protected readonly string _handshake_line4 = "Host: {0}";
         protected readonly string _handshake_line5 = "Origin: {0}";
         protected readonly string _handshake_line6 = "";
+        protected bool _listenForPolicyRequests;
 
         protected string HandshakeLine1
         {
@@ -72,6 +76,7 @@ namespace Symbiote.WebSocket
 
         public virtual IList<IWebSocket> ClientSockets { get; private set; }
         public virtual Socket Listener { get; private set; }
+        public virtual Socket PolicyListener { get; private set; }
         public virtual int Port { get; private set; }
         public string WebServerUrl { get; private set; }
         public string WebSocketUrl { get; private set; }
@@ -133,19 +138,58 @@ namespace Symbiote.WebSocket
 
         public virtual void Start()
         {
+            CreateSocketListener();
+            if (_listenForPolicyRequests)
+                CreatePolicyListener();
+            "Web socket server started on {0} \r\n\t at {1}, Port: {2}"
+                .ToInfo<ISocketServer>(DateTime.Now, WebServerUrl, Port);
+        }
+
+        protected virtual void CreatePolicyListener()
+        {
+            PolicyListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
+            _policyEndPoint = new IPEndPoint(IPAddress.Loopback, 843);
+            PolicyListener.Bind(_policyEndPoint);
+            PolicyListener.Listen(50);
+            ListenForPolicyConnections();
+        }
+
+        protected virtual void CreateSocketListener()
+        {
             Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
             _localEndPoint = new IPEndPoint(IPAddress.Loopback, Port);
             Listener.Bind(_localEndPoint);
             Listener.Listen(50);
-            "Web socket server started on {0} \r\n\t at {1}, Port: {2}"
-                .ToInfo<ISocketServer>(DateTime.Now, WebServerUrl, Port);
-
             ListenForConnections();
         }
 
         protected virtual void ListenForConnections()
         {
             Listener.BeginAccept(OnIncommingConnection, null);
+        }
+
+        protected virtual void ListenForPolicyConnections()
+        {
+            PolicyListener.BeginAccept(OnPolicyRequest, null);
+        }
+
+        private void OnPolicyRequest(IAsyncResult ar)
+        {
+            var policySocket = PolicyListener.EndAccept(ar);
+            var policyString = _policyResponse.ToString();
+            using(var stream = new NetworkStream(policySocket))
+            using(var reader = new StreamReader(stream))
+            using(var writer = new StreamWriter(stream))
+            {
+                var line = reader.ReadLine();
+                do
+                {
+                    "Policy Request: {0}".ToInfo<ISocketServer>();
+                } while (!string.IsNullOrEmpty(line));
+                writer.Write(policyString);
+                stream.Flush();
+            }
+            ListenForPolicyConnections();
         }
 
         protected virtual void OnIncommingConnection(IAsyncResult ar)
@@ -211,12 +255,18 @@ namespace Symbiote.WebSocket
                     requestLine = reader.ReadLine();
                     if(requestLine != expected[handshakeIndex])
                     {
-                        "Step {0} of handshake from client is: \r\n\t {1}. \r\n\t Expected: {2}"
-                            .ToError<ISocketServer>(handshakeIndex, requestLine, expected[handshakeIndex]);
-                        socket.Close();
-                        return false;
+                        if(!requestLine.StartsWith("Cookie"))
+                        {
+                            "Step {0} of handshake from client is: \r\n\t {1}. \r\n\t Expected: {2}"
+                                .ToError<ISocketServer>(handshakeIndex, requestLine, expected[handshakeIndex]);
+                            socket.Close();
+                            return false;
+                        }
                     }
-                    handshakeIndex++;
+                    else
+                    {
+                        handshakeIndex++;
+                    }
                     request.Append(requestLine);
                 } while (!string.IsNullOrEmpty(requestLine));
 
@@ -250,6 +300,16 @@ namespace Symbiote.WebSocket
             _bufferSize = configuration.ReceiveBufferSize;
             Port = configuration.Port;
             _socketFactory = socketFactory;
+            _listenForPolicyRequests = configuration.ListenForPolicyRequests;
+
+            _policyResponse = new XDocument(
+                    new XElement("cross-domain-policy",
+                            new XElement("allow-access-from",
+                                    new XAttribute("domain", "*"),
+                                    new XAttribute("to-ports", Port)
+                                )
+                        )
+                );
 
             configuration
                 .MessageProcessors

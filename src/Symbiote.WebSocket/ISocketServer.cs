@@ -19,6 +19,7 @@ namespace Symbiote.WebSocket
         int Port { get; }
         string WebServerUrl { get; }
         string WebSocketUrl { get; }
+        Socket PolicyListener { get; }
         void SendToAll(string data, string from);
         void Send(string data, string from, string to);
         void Start();

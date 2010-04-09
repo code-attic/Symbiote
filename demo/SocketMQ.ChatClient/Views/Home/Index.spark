@@ -1,14 +1,13 @@
 ﻿<content name="MainContent">
 
 	<script type="text/javascript" language="javascript">
-
     var username = '!{Context.User.Identity.Name}';
-    
+
     function connect() {
     warren.onerror(function(err) { alert(err); });
     warren.onconnect(connected);
     warren.ondisconnect(disconnected);
-    //warren.debug(logger);
+    warren.debug(logger);
     warren.onmessage(message);
     warren.connect('ws://localhost:8181/chat',username);
     }
@@ -48,7 +47,7 @@
     });
   </script>
 
-	<content name="TitleContent">
+  <content name="TitleContent">
 	    Home Page
 	</content>
 

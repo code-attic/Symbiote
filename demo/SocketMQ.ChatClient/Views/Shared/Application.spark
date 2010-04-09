@@ -1,11 +1,14 @@
-﻿<meta http-equiv="X-UA-Compatible" content="chrome=1">
+﻿<html>
 <head id="Head1" runat="server">
     <title><use content="TitleContent" /></title>
     <link href="../../Content/Site.css" rel="stylesheet" type="text/css" />
 	<script src="~/Scripts/jquery-1.4.2.min.js" type="text/javascript" ></script>
 	<script src="~/Scripts/jquery.databind.min.js" type="text/javascript" ></script>
 	<script src="~/Scripts/jquery.json-2.2.min.js" type="text/javascript" ></script>
-	<script src="~/Scripts/symbiote.warren.js" type="text/javascript" ></script>
+	<script src="~/Scripts/swfobject.js" type="text/javascript" ></script>
+	<script src="~/Scripts/FABridge.js" type="text/javascript" ></script>
+	<script src="~/Scripts/web_socket.js" type="text/javascript" ></script>
+	<script src="~/Scripts/socketmq-0.0.1.js" type="text/javascript" ></script>
 	<use content="head" />
 </head>
 

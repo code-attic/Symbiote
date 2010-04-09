@@ -18,7 +18,8 @@ namespace SocketMQ.ChatService
                 .WebSocketServer(x =>
                     x.ServerUrl(@"http://localhost:8080")
                      .SocketUrl(@"ws://localhost:8181/chat")
-                     .Port(8181))
+                     .Port(8181)
+                     .PermitFlashSocketConnections())
                 .Jackalope(x => x.AddServer(s => s.AMQP08()))
                 .AddConsoleLogger<WarrenService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow().ForAllOutput())

@@ -10,8 +10,8 @@
     <ProjectTypeGuids>{F85E285D-A4E0-4152-9332-AB1D724D3325};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SocketMQ.ChatClient</RootNamespace>
-    <AssemblyName>SocketMQ.ChatClient</AssemblyName>
+    <RootNamespace>WarrenClient</RootNamespace>
+    <AssemblyName>WarrenClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
   </PropertyGroup>
@@ -34,14 +34,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark.Web.Mvc, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Spark.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
@@ -88,14 +80,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
-    <Content Include="Scripts\FABridge.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery.json-2.2.min.js" />
-    <Content Include="Scripts\swfobject.js" />
-    <Content Include="Scripts\socketmq-0.0.1.js" />
-    <Content Include="Scripts\WebSocketMain.swf" />
-    <Content Include="Scripts\web_socket.js" />
-    <Content Include="Views\Home\WebSocketMain.swf" />
+    <Content Include="Scripts\symbiote.warren.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -134,11 +121,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\LogOn.spark" />
-    <Content Include="Views\Home\About.spark" />
-    <Content Include="Views\Home\Index.spark">
+    <None Include="Views\Account\LogOn.spark" />
+    <None Include="Views\Home\About.spark" />
+    <None Include="Views\Home\Index.spark">
       <SubType>Designer</SubType>
-    </Content>
+    </None>
     <None Include="Views\Shared\Application.spark">
       <SubType>Designer</SubType>
     </None>

@@ -6,33 +6,34 @@
     var error_callback = null;
     var on_message = null;
     var username = '';
+    var serverUrl = '';
     var info = null;
+    var goodToGo = false;
+    var loaded = 0;
+
+    WebSocket.__swfLocation = "/Scripts/WebSocketMain.swf";
 
     var log = function (msg) {
         if (info) info(msg);
     }
 
     var connect = function (url, user) {
-        if (checkBrowser()) {
-            try {
-                username = user;
-                log('Attempting connection...');
-                sock = new WebSocket(url);
-                sock.onopen = setup;
-            } catch (Error) {
-                if (error_callback) error_callback('Error occurred during connection attempt: ' + Error);
-            }
-        }
-        else {
-            if (error_callback) error_callback('oh shit');
+        username = user;
+        serverUrl = url;
+        try {
+            log('Attempting connection...');
+            sock = new WebSocket(serverUrl);
+            sock.onopen = setup;
+        } catch (Error) {
+            if (error_callback) error_callback('Error occurred during connection attempt: ' + Error);
         }
     }
 
-    var checkBrowser = function () {
-        if ("WebSocket" in window) {
-            return true;
-        }
-        return false;
+    function dhtmlLoadScript(url) {
+        var e = document.createElement("script");
+        e.src = url;
+        e.type = "text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(e);
     }
 
     var send = function (json) {
@@ -65,12 +66,14 @@
 
             if ($.evalJSON(msg.data).userAliasLoggedSuccessfully) {
                 log('subscribing...');
-                setTimeout(send(clients()), 800);
+                send(clients());
             }
-            log('message recieved');
-            var json = $.evalJSON(msg.data);
-            log('processed message to: ' + json);
-            if (on_message) on_message(json);
+            else {
+                log('message recieved');
+                var json = $.evalJSON(msg.data);
+                log('processed message to: ' + json);
+                if (on_message) on_message(json);
+            }
         } catch (Error) {
             if (error_callback) error_callback(Error);
         }
@@ -78,7 +81,7 @@
 
     var setup = function () {
         try {
-            setTimeout(send(userJson()), 100);
+            send(userJson());
             if (connected_callback) connected_callback();
             sock.onmessage = messageReceived;
             sock.onclose = disconnected_callback;

@@ -24,6 +24,12 @@ namespace Symbiote.WebSocket
             return this;
         }
 
+        public virtual WebSocketConfigurator PermitFlashSocketConnections()
+        {
+            Configuration.ListenForPolicyRequests = true;
+            return this;
+        }
+
         public virtual WebSocketConfigurator ServerUrl(string serverUrl)
         {
             Configuration.ServerUrl = serverUrl;
