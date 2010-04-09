@@ -8,6 +8,6 @@ namespace Symbiote.Jackalope
     public interface IMessageHandler<TBody> : IMessageHandler
         where TBody : class
     {
-        void Process(TBody message, IResponse response);
+        void Process(TBody message, IRespond respond);
     }
 }

@@ -6,7 +6,7 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
 {
-    public class Response : IResponse, IDisposable
+    public class Response : IRespond, IDisposable
     {
         private IChannelProxy _proxy;
         private IChannelProxyFactory _factory;
@@ -14,9 +14,6 @@ namespace Symbiote.Jackalope.Impl
         private ulong _deliveryTag;
         private bool _isReplyToPresent;
         private IBasicProperties _properties;
-
-        public string FromQueue { get { return _proxy.QueueName ?? ""; } }
-        public string ExchangeName { get { return _exchange; } }
 
         public void Acknowledge()
         {

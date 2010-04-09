@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace Symbiote.WebSocket
+namespace Symbiote.WebSocket.Impl
 {
     public class WebSocketFactory : ICreateWebSockets
     {

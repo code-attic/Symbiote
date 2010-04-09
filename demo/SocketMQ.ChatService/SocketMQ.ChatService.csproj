@@ -61,7 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="ClientMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WarrenService.cs" />
+    <Compile Include="ChatService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

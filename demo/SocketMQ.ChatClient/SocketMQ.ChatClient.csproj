@@ -91,8 +91,8 @@
     <Content Include="Scripts\FABridge.js" />
     <Content Include="Scripts\jquery-1.4.2.min.js" />
     <Content Include="Scripts\jquery.json-2.2.min.js" />
-    <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\socketmq-0.0.1.js" />
+    <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\WebSocketMain.swf" />
     <Content Include="Scripts\web_socket.js" />
     <Content Include="Views\Home\WebSocketMain.swf" />

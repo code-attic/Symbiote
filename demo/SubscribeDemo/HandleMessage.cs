@@ -9,7 +9,7 @@ namespace SubscribeDemo
     {
         private static long total = 0;
 
-        public void Process(Message message, IResponse response)
+        public void Process(Message message, IRespond respond)
         {
             var rnd = new Random(DateTime.Now.Millisecond).Next(100);
             if(rnd > 50)
@@ -19,7 +19,7 @@ namespace SubscribeDemo
                 .ToInfo<Subscriber>(message.Body, ++total);
             
             
-            response.Acknowledge();
+            respond.Acknowledge();
         }
     }
 }

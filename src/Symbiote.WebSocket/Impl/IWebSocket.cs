@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 
-namespace Symbiote.WebSocket
+namespace Symbiote.WebSocket.Impl
 {
     public interface IWebSocket 
         : IDisposable, IObservable<Tuple<string, string>>

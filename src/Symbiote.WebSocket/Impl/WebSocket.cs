@@ -7,7 +7,7 @@ using System.Timers;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
-namespace Symbiote.WebSocket
+namespace Symbiote.WebSocket.Impl
 {
     public class WebSocket : IWebSocket
     {

@@ -89,6 +89,8 @@
     <Compile Include="Config\IAmqpConfigurationProvider.cs" />
     <Compile Include="Config\IAmqpServerConfiguration.cs" />
     <Compile Include="Envelope.cs" />
+    <Compile Include="ICorrelate.cs" />
+    <Compile Include="IHaveMessageDetail.cs" />
     <Compile Include="Impl\ActionDispatcher.cs" />
     <Compile Include="Impl\BaseBroker.cs" />
     <Compile Include="Impl\ISubscriptionManager.cs" />
@@ -117,7 +119,7 @@
     <Compile Include="Impl\IDispatch.cs" />
     <Compile Include="Impl\IEndPoint.cs" />
     <Compile Include="Impl\IEndpointManager.cs" />
-    <Compile Include="IResponse.cs" />
+    <Compile Include="IRespond.cs" />
     <Compile Include="Impl\ISubscription.cs" />
     <Compile Include="Impl\JsonMessageSerializer.cs" />
     <Compile Include="Impl\NetBinarySerializer.cs" />

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symbiote.WebSocket
+namespace Symbiote.WebSocket.Impl
 {
     public abstract class BaseClientObserver :
         IObserver<Tuple<string,string>>,

@@ -30,7 +30,7 @@ namespace Symbiote.Jackalope
         object Process(string queueName);
         object Process(string queueName, int miliseconds);
 
-        IBus AddProcessor<TMessage>(Func<TMessage, IResponse, object> processor)
+        IBus AddProcessor<TMessage>(Func<TMessage, IRespond, object> processor)
             where TMessage : class;
     }
 }

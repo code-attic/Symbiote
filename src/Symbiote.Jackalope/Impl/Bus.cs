@@ -100,7 +100,7 @@ namespace Symbiote.Jackalope.Impl
                 {
                     var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
                     var result = dispatcher.Dispatch(envelope);
-                    envelope.Response.Acknowledge();
+                    envelope.Respond.Acknowledge();
                     return result;
                 }
             }
@@ -121,7 +121,7 @@ namespace Symbiote.Jackalope.Impl
                 {
                     var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
                     var result = dispatcher.Dispatch(envelope);
-                    envelope.Response.Acknowledge();
+                    envelope.Respond.Acknowledge();
                     return result;
                 }
             }
@@ -133,7 +133,7 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public IBus AddProcessor<TMessage>(Func<TMessage, IResponse, object> processor) where TMessage : class
+        public IBus AddProcessor<TMessage>(Func<TMessage, IRespond, object> processor) where TMessage : class
         {
             var actionDispatcher = new ActionDispatcher<TMessage>(processor);
             _functionalDispatchers[typeof (TMessage)] = actionDispatcher;

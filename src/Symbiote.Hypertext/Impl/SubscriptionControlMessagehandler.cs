@@ -38,20 +38,20 @@ namespace Symbiote.Telepathy
                               }},
                   };
 
-        public void Process(SubscriptionControlMessage message, IResponse response)
+        public void Process(SubscriptionControlMessage message, IRespond respond)
         {
             var reply = new ServiceControlResponse();
             try
             {
                 _controlActions[message.Action](_subscriptionManager, message);
                 reply.Success = true;
-                response.Reply(reply);
+                respond.Reply(reply);
             }
             catch (Exception ex)
             {
                 reply.ExceptionOccurred = true;
                 reply.Exceptions.Add(ex);
-                response.Reply(reply);
+                respond.Reply(reply);
                 throw;
             }
         }

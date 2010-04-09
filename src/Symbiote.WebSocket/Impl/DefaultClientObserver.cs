@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symbiote.WebSocket
+namespace Symbiote.WebSocket.Impl
 {
     public class DefaultClientObserver : BaseClientObserver
     {

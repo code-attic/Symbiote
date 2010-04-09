@@ -8,7 +8,7 @@ namespace Symbiote.Jackalope.Impl
     public class ActionDispatcher<TMessage> : IDispatch<TMessage>
         where TMessage : class
     {
-        private Func<TMessage, IResponse, object> _processor;
+        private Func<TMessage, IRespond, object> _processor;
 
         public bool CanHandle(object payload)
         {
@@ -22,9 +22,9 @@ namespace Symbiote.Jackalope.Impl
                 var envelope = new Envelope()
                                    {
                                        Message = payload,
-                                       Response = new Response(proxy, args)
+                                       Respond = new Response(proxy, args)
                                    };
-                _processor(envelope.Message as TMessage, envelope.Response);
+                _processor(envelope.Message as TMessage, envelope.Respond);
             }
             catch (Exception e)
             {
@@ -40,9 +40,9 @@ namespace Symbiote.Jackalope.Impl
                 var envelope = new Envelope()
                 {
                     Message = payload,
-                    Response = new Response(proxy, result)
+                    Respond = new Response(proxy, result)
                 };
-                _processor(envelope.Message as TMessage, envelope.Response);
+                _processor(envelope.Message as TMessage, envelope.Respond);
             }
             catch (Exception e)
             {
@@ -55,16 +55,16 @@ namespace Symbiote.Jackalope.Impl
         {
             try
             {
-                return _processor(envelope.Message as TMessage, envelope.Response);
+                return _processor(envelope.Message as TMessage, envelope.Respond);
             }
             catch (Exception e)
             {
-                envelope.Response.Reject();
+                envelope.Respond.Reject();
                 throw;
             }
         }
 
-        public ActionDispatcher(Func<TMessage, IResponse, object> processor)
+        public ActionDispatcher(Func<TMessage, IRespond, object> processor)
         {
             _processor = processor;
         }

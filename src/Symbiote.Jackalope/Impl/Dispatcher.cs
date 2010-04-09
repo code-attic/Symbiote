@@ -52,12 +52,12 @@ namespace Symbiote.Jackalope.Impl
             try
             {
                 var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                handler.Process(envelope.Message as TMessage, envelope.Response);
+                handler.Process(envelope.Message as TMessage, envelope.Respond);
                 return envelope.Message;
             }
             catch (Exception e)
             {
-                envelope.Response.Reject();
+                envelope.Respond.Reject();
                 throw;
             }
         }

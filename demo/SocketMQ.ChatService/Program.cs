@@ -2,6 +2,7 @@
 using Symbiote.Daemon;
 using Symbiote.Log4Net;
 using Symbiote.SocketMQ;
+using Symbiote.SocketMQ.Impl;
 using Symbiote.WebSocket;
 using Symbiote.Jackalope;
 
@@ -13,7 +14,7 @@ namespace SocketMQ.ChatService
         {
             Assimilate
                 .Core()
-                .Daemon<WarrenService>(
+                .Daemon<ChatService>(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x =>
                     x.ServerUrl(@"http://localhost:8080")
@@ -21,12 +22,13 @@ namespace SocketMQ.ChatService
                      .Port(8181)
                      .PermitFlashSocketConnections())
                 .Jackalope(x => x.AddServer(s => s.AMQP08()))
-                .AddConsoleLogger<WarrenService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
+                .SocketMQ()
+                .AddConsoleLogger<ChatService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow().ForAllOutput())
                 .AddColorConsoleLogger<ClientMessage>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsBlue().ForAllOutput())
                 .AddFileLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("log.log"))
-                .AddFileLogger<Bridge>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("warren.log"))
-                .RunDaemon<WarrenService>();
+                .AddFileLogger<MessageGateway>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("warren.log"))
+                .RunDaemon<ChatService>();
         }
     }
 }

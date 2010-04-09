@@ -1,5 +1,5 @@
 ﻿var warren = function () {
-
+    WebSocket.__swfLocation = "/Scripts/WebSocketMain.swf";
     var sock = null; // web socket
     var connected_callback = null;
     var disconnected_callback = null;
@@ -10,9 +10,6 @@
     var info = null;
     var goodToGo = false;
     var loaded = 0;
-
-    WebSocket.__swfLocation = "/Scripts/WebSocketMain.swf";
-
     var log = function (msg) {
         if (info) info(msg);
     }

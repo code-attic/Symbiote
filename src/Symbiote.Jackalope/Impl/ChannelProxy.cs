@@ -28,8 +28,7 @@ namespace Symbiote.Jackalope.Impl
             {
                 if (_channel == null || !_channel.IsOpen)
                 {
-                    Dispose();
-                    //throw new Exception("Channel is closed. No further communication can take place on a closed channel.");
+                    Close();
                 }
                 return _channel;
             }
@@ -62,7 +61,7 @@ namespace Symbiote.Jackalope.Impl
             if(result != null)
             {
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Response = new Response(this, result);
+                envelope.Respond = new Response(this, result);
             }
             return envelope;
         }
@@ -75,7 +74,7 @@ namespace Symbiote.Jackalope.Impl
             if (result != null)
             {
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Response = new Response(this, result);
+                envelope.Respond = new Response(this, result);
             }
             return envelope;
         }
@@ -88,7 +87,7 @@ namespace Symbiote.Jackalope.Impl
             {
                 var result = message as BasicDeliverEventArgs;
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Response = new Response(this, result);
+                envelope.Respond = new Response(this, result);
             }
             return envelope;
         }
@@ -138,6 +137,24 @@ namespace Symbiote.Jackalope.Impl
             return properties;
         }
 
+        protected void GetMessageCorrelation<T>(T body, IBasicProperties properties)
+        {
+            var correlated = body as ICorrelate;
+            if(correlated != null)
+            {
+                properties.CorrelationId = correlated.CorrelationId;
+            }
+        }
+
+        protected void SetMessageCorrelation(object message, BasicGetResult result)
+        {
+            var correlated = message as ICorrelate;
+            if(correlated != null)
+            {
+                correlated.CorrelationId = result.BasicProperties.CorrelationId;
+            }
+        }
+
         public QueueingBasicConsumer GetConsumer()
         {
             var consumer = new QueueingBasicConsumer(Channel);
@@ -173,6 +190,11 @@ namespace Symbiote.Jackalope.Impl
         }
 
         public void Dispose()
+        {
+            Close();
+        }
+
+        protected void Close()
         {
             if (_channel != null)
             {

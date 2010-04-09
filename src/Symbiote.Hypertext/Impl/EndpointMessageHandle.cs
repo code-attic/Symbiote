@@ -7,7 +7,7 @@ namespace Symbiote.Telepathy
     {
         private IEndpointManager _endpointManager;
 
-        public void Process(IAmqpEndpointConfiguration message, IResponse response)
+        public void Process(IAmqpEndpointConfiguration message, IRespond respond)
         {
             var wrapper = BusEndPoint.CreateFromAmqpEndpoint(message);
             _endpointManager.AddEndpoint(wrapper);

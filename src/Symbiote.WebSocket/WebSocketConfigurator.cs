@@ -1,10 +1,11 @@
 ﻿using System;
+using Symbiote.WebSocket.Impl;
 
 namespace Symbiote.WebSocket
 {
     public class WebSocketConfigurator
     {
-        public virtual WebSocketServerConfiguration Configuration { get; private set; }
+        public virtual IWebSocketServerConfiguration Configuration { get; private set; }
 
         public virtual WebSocketConfigurator BufferSize(int buffer)
         {
@@ -39,30 +40,6 @@ namespace Symbiote.WebSocket
         public virtual WebSocketConfigurator SocketUrl(string socketUrl)
         {
             Configuration.SocketUrl = socketUrl;
-            return this;
-        }
-
-        public virtual WebSocketConfigurator OnMessage(Action<Tuple<string, string>> messageHandler)
-        {
-            Configuration.MessageProcessors.Add(messageHandler);
-            return this;
-        }
-
-        public virtual WebSocketConfigurator OnClientConnect(Action<string> clientConnectionHandler)
-        {
-            Configuration.ClientConnectionHandlers.Add(clientConnectionHandler);
-            return this;
-        }
-
-        public virtual WebSocketConfigurator OnClientDisconnect(Action<string> clientDisconnectionHandler)
-        {
-            Configuration.ClientDisconnectionHandlers.Add(clientDisconnectionHandler);
-            return this;
-        }
-
-        public virtual WebSocketConfigurator OnServerShutdown(Action serverShutdownHandler)
-        {
-            Configuration.ServerShutdownHandlers.Add(serverShutdownHandler);
             return this;
         }
 

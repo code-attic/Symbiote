@@ -53,11 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bridge.cs" />
-    <Compile Include="SocketMessage.cs" />
+    <Compile Include="Impl\MessageGateway.cs" />
+    <Compile Include="IMessageGateway.cs" />
+    <Compile Include="Impl\SocketMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueueMessageHandler.cs" />
-    <Compile Include="Subscribe.cs" />
+    <Compile Include="Impl\QueueMessageHandler.cs" />
+    <Compile Include="Impl\Subscribe.cs" />
+    <Compile Include="SocketMQAssimilation.cs" />
+    <Compile Include="SocketMQException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
