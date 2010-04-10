@@ -6,6 +6,6 @@ namespace Symbiote.SocketMQ
     public class Subscribe
     {
         public string Exchange { get; set; }
-        public string RoutingKeys { get; set; }
+        public string[] RoutingKeys { get; set; }
     }
 }

@@ -1,9 +1,11 @@
+﻿using RabbitMQ.Client;
+
 namespace Symbiote.Jackalope.Impl
 {
     public interface IEndpointManager
     {
-        IEndPoint GetEndpointByExchange(string exchangeName);
-        IEndPoint GetEndpointByQueue(string queueName);
-        void AddEndpoint(IEndPoint endpoint);
+        void ConfigureEndpoint(IEndPoint endpoint);
+        void BindQueue(string exchangeName, string queueName, params string[] routingKeys);
+        void BindQueue(IModel channel, string exchangeName, string queueName, params string[] routingKeys);
     }
 }

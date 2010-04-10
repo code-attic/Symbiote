@@ -1,6 +1,4 @@
-using System.Threading;
-
-namespace Symbiote.Jackalope
+namespace Symbiote.Jackalope.Impl
 {
     public interface IBroker
     {

@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Xml.Linq;
 using Symbiote.Core.Extensions;
+using Symbiote.WebSocket.Impl;
 
 namespace Symbiote.WebSocket
 {

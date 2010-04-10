@@ -1,36 +1,90 @@
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using RabbitMQ.Client;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
 {
     public class EndpointManager : IEndpointManager
     {
-        private Dictionary<string, IEndPoint> _endpointsByQueue = new Dictionary<string, IEndPoint>();
-        private Dictionary<string, IEndPoint> _endpointsByExchange = new Dictionary<string, IEndPoint>();
+        protected IConnectionManager _connectionManager;
 
-        public IEndPoint GetEndpointByExchange(string exchangeName)
+        public void ConfigureEndpoint(IEndPoint endpoint)
         {
-            IEndPoint endpoint = null;
-            _endpointsByExchange.TryGetValue(exchangeName, out endpoint);
-            return endpoint;
+            var configuration = endpoint.EndpointConfiguration;
+            using(var channel = _connectionManager.GetConnection().CreateModel())
+            {
+                if (!endpoint.Initialized)
+                {
+                    if (!string.IsNullOrEmpty(configuration.ExchangeName))
+                        BuildExchange(channel, configuration);
+
+                    if (!string.IsNullOrEmpty(configuration.QueueName))
+                        BuildQueue(channel, configuration);
+
+                    if (!string.IsNullOrEmpty(configuration.ExchangeName) && !string.IsNullOrEmpty(configuration.QueueName))
+                        BindQueue(channel, configuration.ExchangeName, configuration.QueueName, configuration.RoutingKeys.ToArray());
+
+                    endpoint.Initialized = true;
+                }
+            }
         }
 
-        public IEndPoint GetEndpointByQueue(string queueName)
+        public void BindQueue(string exchangeName, string queueName, params string[] routingKeys)
         {
-            IEndPoint endpoint = null;
-            _endpointsByQueue.TryGetValue(queueName, out endpoint);
-            return endpoint;
+            var channel = _connectionManager.GetConnection().CreateModel();
+            BindQueue(channel, exchangeName, queueName, routingKeys);
         }
 
-        public void AddEndpoint(IEndPoint endpoint)
+        public void BindQueue(IModel channel, string exchangeName, string queueName, params string[] routingKeys)
         {
-            if(!string.IsNullOrEmpty(endpoint.EndpointConfiguration.ExchangeName))
+            if(routingKeys.Length == 0)
+                routingKeys = new [] {""};
+            try
             {
-                _endpointsByExchange[endpoint.EndpointConfiguration.ExchangeName] = endpoint;
+                routingKeys
+                    .ForEach(x => Bind(channel, exchangeName, queueName, x, true, null));
             }
-            if(!string.IsNullOrEmpty(endpoint.EndpointConfiguration.QueueName))
+            catch (Exception)
             {
-                _endpointsByQueue[endpoint.EndpointConfiguration.QueueName] = endpoint;
+                
+                throw;
             }
+        }
+
+        protected void Bind(IModel channel, string exchangeName, string queueName, string routingKey, bool noWait, IDictionary args)
+        {
+            channel.QueueBind(queueName, exchangeName, routingKey, noWait, args);
+        }
+
+        public void BuildExchange(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
+        {
+            channel.ExchangeDeclare(
+                endpointConfiguration.ExchangeName,
+                endpointConfiguration.ExchangeTypeName,
+                endpointConfiguration.Passive,
+                endpointConfiguration.Durable,
+                endpointConfiguration.AutoDelete,
+                endpointConfiguration.Internal,
+                endpointConfiguration.NoWait,
+                endpointConfiguration.Arguments);
+        }
+
+        public void BuildQueue(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
+        {
+            channel.QueueDeclare(
+                endpointConfiguration.QueueName,
+                endpointConfiguration.Passive,
+                endpointConfiguration.Durable,
+                endpointConfiguration.Exclusive,
+                endpointConfiguration.AutoDelete,
+                endpointConfiguration.NoWait,
+                endpointConfiguration.Arguments);
+        }
+        
+        public EndpointManager(IConnectionManager connectionManager)
+        {
+            _connectionManager = connectionManager;
         }
     }
 }

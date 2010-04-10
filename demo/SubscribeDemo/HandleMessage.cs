@@ -2,6 +2,7 @@ using System;
 using PublishDemo;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope;
+using Symbiote.Jackalope.Impl;
 
 namespace SubscribeDemo
 {
@@ -9,7 +10,7 @@ namespace SubscribeDemo
     {
         private static long total = 0;
 
-        public void Process(Message message, IRespond respond)
+        public void Process(Message message, IMessageDelivery messageDelivery)
         {
             var rnd = new Random(DateTime.Now.Millisecond).Next(100);
             if(rnd > 50)
@@ -19,7 +20,7 @@ namespace SubscribeDemo
                 .ToInfo<Subscriber>(message.Body, ++total);
             
             
-            respond.Acknowledge();
+            messageDelivery.Acknowledge();
         }
     }
 }

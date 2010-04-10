@@ -61,7 +61,7 @@ namespace Symbiote.Jackalope.Impl
             if(result != null)
             {
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Respond = new Response(this, result);
+                envelope.MessageDelivery = new MessageDelivery(this, result);
             }
             return envelope;
         }
@@ -74,7 +74,7 @@ namespace Symbiote.Jackalope.Impl
             if (result != null)
             {
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Respond = new Response(this, result);
+                envelope.MessageDelivery = new MessageDelivery(this, result);
             }
             return envelope;
         }
@@ -87,7 +87,7 @@ namespace Symbiote.Jackalope.Impl
             {
                 var result = message as BasicDeliverEventArgs;
                 envelope.Message = Serializer.Deserialize(result.Body);
-                envelope.Respond = new Response(this, result);
+                envelope.MessageDelivery = new MessageDelivery(this, result);
             }
             return envelope;
         }

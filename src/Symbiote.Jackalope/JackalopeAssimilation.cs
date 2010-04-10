@@ -8,7 +8,6 @@ using RabbitMQ.Client.Events;
 using StructureMap;
 using Symbiote.Core;
 using Symbiote.Jackalope.Config;
-using Symbiote.Jackalope.Control;
 using Symbiote.Jackalope.Impl;
 using Symbiote.Core.Extensions;
 using Tuple = System.Tuple;
@@ -72,8 +71,10 @@ namespace Symbiote.Jackalope
                             .Use<JsonMessageSerializer>();
                         x.For<IChannelProxyFactory>()
                             .Use<ChannelProxyFactory>();
+                        x.For<IEndpointIndex>()
+                            .Use(new EndpointIndex());
                         x.For<IEndpointManager>()
-                            .Use(new EndpointManager());
+                            .Use<EndpointManager>();
                         x.For<IConnectionManager>()
                             .Use<ConnectionManager>();
                         x.For<ISubscription>()

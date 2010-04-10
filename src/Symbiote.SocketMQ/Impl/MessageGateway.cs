@@ -10,7 +10,6 @@ namespace Symbiote.SocketMQ.Impl
         IDisposable, IMessageGateway
     {
         protected IBus _bus;
-        protected IChannelProxyFactory _proxyFactory;
         protected ISocketServer _server;
 
         public void Start()
@@ -53,26 +52,22 @@ namespace Symbiote.SocketMQ.Impl
 
         protected void ProcessSubscriptionRequest(Tuple<string, string> message, Subscribe subscribe)
         {
-            var proxy = _proxyFactory.GetProxyForExchange(subscribe.Exchange);
-            if (proxy != null)
+            try
             {
-                try
-                {
-                    proxy.Channel.QueueBind(message.Item1, subscribe.Exchange, subscribe.RoutingKeys, false, null);
-                }
-                catch (Exception e)
-                {
-                    var exceptionMessage =
-                        "An exception occurred when trying to bind queue {0} to exchange {1} using routing keys {2}";
+                _bus.BindQueue(message.Item1, subscribe.Exchange, subscribe.RoutingKeys);
+            }
+            catch (Exception e)
+            {
+                var exceptionMessage =
+                    "An exception occurred when trying to bind queue {0} to exchange {1} using routing keys {2}";
 
-                    exceptionMessage.ToError<IMessageGateway>(message.Item1, subscribe.Exchange, subscribe.RoutingKeys);
+                exceptionMessage.ToError<IMessageGateway>(message.Item1, subscribe.Exchange, subscribe.RoutingKeys);
 
-                    var exception =
-                        new SocketMQException(
-                            exceptionMessage.AsFormat(message.Item1, subscribe.Exchange, subscribe.RoutingKeys), e);
-                    
-                    throw exception;
-                }
+                var exception =
+                    new SocketMQException(
+                        exceptionMessage.AsFormat(message.Item1, subscribe.Exchange, subscribe.RoutingKeys), e);
+                
+                throw exception;
             }
         }
 
@@ -93,11 +88,10 @@ namespace Symbiote.SocketMQ.Impl
             _server.Dispose();
         }
 
-        public MessageGateway(IBus bus, IChannelProxyFactory proxyFactory, ISocketServer server)
+        public MessageGateway(IBus bus, ISocketServer server)
         {
             CheckArguments(bus, server);
             _bus = bus;
-            _proxyFactory = proxyFactory;
             _server = server;
         }
 

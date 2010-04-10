@@ -11,17 +11,17 @@ using RabbitMQ.Client.Impl;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
 using StructureMap;
-using Symbiote.Jackalope.Control;
 
 namespace Symbiote.Jackalope.Impl
 {
     public class Bus : IBus
     {
         private IChannelProxyFactory _channelFactory;
-        private IEndpointManager _endpointManager;
+        private IEndpointIndex _endpointIndex;
         private ISubscriptionManager _subscriptionManager;
         private ConcurrentDictionary<Type, IDispatch> _functionalDispatchers 
             = new ConcurrentDictionary<Type, IDispatch>();
+        private IEndpointManager _endpointManager;
 
         public bool ClearQueue(string queueName)
         {
@@ -58,7 +58,12 @@ namespace Symbiote.Jackalope.Impl
         {
             var endpoint = new BusEndPoint();
             endpointConfiguration(endpoint);
-            _endpointManager.AddEndpoint(endpoint);
+            _endpointIndex.AddEndpoint(endpoint);
+        }
+
+        public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
+        {
+            _endpointManager.BindQueue(exchangeName, queueName, routingKeys);
         }
 
         public Envelope Get(string queueName)
@@ -100,7 +105,7 @@ namespace Symbiote.Jackalope.Impl
                 {
                     var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
                     var result = dispatcher.Dispatch(envelope);
-                    envelope.Respond.Acknowledge();
+                    envelope.MessageDelivery.Acknowledge();
                     return result;
                 }
             }
@@ -121,7 +126,7 @@ namespace Symbiote.Jackalope.Impl
                 {
                     var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
                     var result = dispatcher.Dispatch(envelope);
-                    envelope.Respond.Acknowledge();
+                    envelope.MessageDelivery.Acknowledge();
                     return result;
                 }
             }
@@ -133,7 +138,7 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public IBus AddProcessor<TMessage>(Func<TMessage, IRespond, object> processor) where TMessage : class
+        public IBus AddProcessor<TMessage>(Func<TMessage, IMessageDelivery, object> processor) where TMessage : class
         {
             var actionDispatcher = new ActionDispatcher<TMessage>(processor);
             _functionalDispatchers[typeof (TMessage)] = actionDispatcher;
@@ -174,9 +179,10 @@ namespace Symbiote.Jackalope.Impl
 
         }
 
-        public Bus(IChannelProxyFactory channelFactory, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
+        public Bus(IChannelProxyFactory channelFactory, IEndpointIndex endpointIndex, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
         {
             _channelFactory = channelFactory;
+            _endpointIndex = endpointIndex;
             _endpointManager = endpointManager;
             _subscriptionManager = subscriptionManager;
         }

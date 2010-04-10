@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Daemon;
 using Symbiote.Jackalope;
+using Symbiote.Jackalope.Impl;
 
 namespace Symbiote.Telepathy
 {
@@ -28,20 +29,20 @@ namespace Symbiote.Telepathy
                               }},
                   };
 
-        public void Process(ServiceControlMessage message, IRespond respond)
+        public void Process(ServiceControlMessage message, IMessageDelivery messageDelivery)
         {
             var reply = new ServiceControlResponse();
             try
             {
                 _controlActions[message.Action](_service, message);
                 reply.Success = true;
-                respond.Reply(reply);
+                messageDelivery.Reply(reply);
             }
             catch (Exception ex)
             {
                 reply.ExceptionOccurred = true;
                 reply.Exceptions.Add(ex);
-                respond.Reply(reply);
+                messageDelivery.Reply(reply);
                 throw;
             }
         }

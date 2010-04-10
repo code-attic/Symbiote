@@ -1,6 +1,4 @@
-using Symbiote.Jackalope.Impl;
-
-namespace Symbiote.Jackalope.Control
+namespace Symbiote.Jackalope.Impl
 {
     public interface ISubscriptionManager
     {

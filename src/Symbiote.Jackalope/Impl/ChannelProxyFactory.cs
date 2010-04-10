@@ -6,8 +6,9 @@ namespace Symbiote.Jackalope.Impl
 {
     public class ChannelProxyFactory : IChannelProxyFactory
     {
-        private IEndpointManager _endpointManager;
+        private IEndpointIndex _endpointIndex;
         private IConnectionManager _connectionManager;
+        private IEndpointManager _endpointManager;
         
         private IModel GetModel()
         {
@@ -25,114 +26,28 @@ namespace Symbiote.Jackalope.Impl
 
         public IChannelProxy GetProxyForQueue(string queueName)
         {
-            var endpoint = _endpointManager.GetEndpointByQueue(queueName);
+            var endpoint = _endpointIndex.GetEndpointByQueue(queueName);
+            _endpointManager.ConfigureEndpoint(endpoint);
             return CreateProxy(endpoint);
         }
 
         public IChannelProxy GetProxyForExchange(string exchangeName)
         {
-            var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
+            var endpoint = _endpointIndex.GetEndpointByExchange(exchangeName);
+            _endpointManager.ConfigureEndpoint(endpoint);
             return CreateProxy(endpoint);
         }
 
         protected IChannelProxy CreateProxy(IEndPoint endpoint)
         {
-            IChannelProxy proxy = null;
-            if (!endpoint.Initialized)
-            {
-                proxy = ConfigureEndpoint(endpoint);
-                endpoint.Initialized = true;
-            }
-            else
-            {
-                proxy = new ChannelProxy(GetModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
-            }
-            
-            return proxy;
+            return new ChannelProxy(GetModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
         }
 
-        protected IChannelProxy ConfigureEndpoint(IEndPoint endpoint)
+        public ChannelProxyFactory(IEndpointIndex endpointIndex, IConnectionManager connectionManager, IEndpointManager endpointManager)
         {
-            var channel = GetModel();
-            var configuration = endpoint.EndpointConfiguration;
-            if (configuration.ExchangeName != null)
-                BuildExchange(channel, configuration);
-
-            if (configuration.QueueName != null)
-                BuildQueue(channel, configuration);
-
-            if (configuration.ExchangeName != null && configuration.QueueName != null)
-                ForceBindQueue(channel, configuration);
-
-            return new ChannelProxy(channel, _connectionManager.Protocol, configuration);
-        }
-
-        protected void BindQueue(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
-        {
-            Action<IModel, IAmqpEndpointConfiguration, string> setup = 
-                (x, y, z) => x.QueueBind(
-                            y.QueueName,
-                            y.ExchangeName,
-                            z,
-                            y.NoWait,
-                            y.Arguments);
-
-            if(endpointConfiguration.RoutingKeys.Count == 0)
-            {
-                setup(channel, endpointConfiguration, "");
-            }
-            else
-            {
-                endpointConfiguration.RoutingKeys.ForEach(x => setup(channel, endpointConfiguration, x));
-            }
-        }
-
-        protected void BuildExchange(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
-        {
-            channel.ExchangeDeclare(
-                endpointConfiguration.ExchangeName,
-                endpointConfiguration.ExchangeTypeName,
-                endpointConfiguration.Passive,
-                endpointConfiguration.Durable,
-                endpointConfiguration.AutoDelete,
-                endpointConfiguration.Internal,
-                endpointConfiguration.NoWait,
-                endpointConfiguration.Arguments);
-        }
-
-        protected void BuildQueue(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
-        {
-            channel.QueueDeclare(
-                endpointConfiguration.QueueName,
-                endpointConfiguration.Passive,
-                endpointConfiguration.Durable,
-                endpointConfiguration.Exclusive,
-                endpointConfiguration.AutoDelete,
-                endpointConfiguration.NoWait,
-                endpointConfiguration.Arguments);
-        }
-
-        protected void ForceBindQueue(IModel channel, IAmqpEndpointConfiguration endpointConfiguration)
-        {
-            try
-            {
-                BindQueue(channel, endpointConfiguration);
-            }
-            catch (RabbitMQ.Client.Exceptions.OperationInterruptedException e)
-            {
-                channel = GetModel();
-                channel.ExchangeDelete(endpointConfiguration.ExchangeName, false, true);
-                channel = GetModel();
-                BuildExchange(channel, endpointConfiguration);
-                BuildQueue(channel, endpointConfiguration);
-                BindQueue(channel, endpointConfiguration);
-            }
-        }
-
-        public ChannelProxyFactory(IEndpointManager endpointManager, IConnectionManager connectionManager)
-        {
-            _endpointManager = endpointManager;
+            _endpointIndex = endpointIndex;
             _connectionManager = connectionManager;
+            _endpointManager = endpointManager;
         }
     }
 }

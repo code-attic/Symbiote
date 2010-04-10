@@ -87,11 +87,20 @@
         }
     }
 
+    var subscribe = function (exchange, keys) {
+        var subscription = getSubscription(exchange, keys);
+        send(subscription);
+    }
+
     var clients = function () {
+        return getSubscription("client", [""]);
+    }
+
+    var getSubscription = function (exchange, keys) {
         return {
             "$type": "Subscribe",
-            "Exchange": "client",
-            "RoutingKeys": ""
+            "Exchange": exchange,
+            "RoutingKeys": keys
         };
     }
 
@@ -131,6 +140,7 @@
         onconnect: onConnect,
         ondisconnect: onDisconnect,
         onmessage: onMessage,
-        debug: debug
+        debug: debug,
+        subscribe: subscribe
     };
 } ();

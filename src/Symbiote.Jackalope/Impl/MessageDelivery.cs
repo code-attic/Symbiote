@@ -6,7 +6,7 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
 {
-    public class Response : IRespond, IDisposable
+    public class MessageDelivery : IMessageDelivery, IDisposable
     {
         private IChannelProxy _proxy;
         private IChannelProxyFactory _factory;
@@ -14,6 +14,20 @@ namespace Symbiote.Jackalope.Impl
         private ulong _deliveryTag;
         private bool _isReplyToPresent;
         private IBasicProperties _properties;
+        private bool _redelivered;
+        private string _key;
+
+        public string Exchange {  get { return _exchange; } }
+
+        public string Queue { get { return _proxy.QueueName; } }
+
+        public bool Redelivered { get { return _redelivered; } }
+
+        public bool IsReply { get { return _isReplyToPresent; } }
+
+        public string RoutingKey { get { return _key; } }
+
+        public IBasicProperties Details { get { return _properties; } }
 
         public void Acknowledge()
         {
@@ -57,22 +71,26 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public Response(IChannelProxy proxy, BasicDeliverEventArgs args)
+        public MessageDelivery(IChannelProxy proxy, BasicDeliverEventArgs args)
         {
             _factory = ObjectFactory.GetInstance<IChannelProxyFactory>();
             _proxy = proxy;
             _exchange = args.Exchange;
             _deliveryTag = args.DeliveryTag;
             _properties = args.BasicProperties;
+            _redelivered = args.Redelivered;
+            _key = args.RoutingKey;
         }
 
-        public Response(IChannelProxy proxy, BasicGetResult result)
+        public MessageDelivery(IChannelProxy proxy, BasicGetResult result)
         {
             _factory = ObjectFactory.GetInstance<IChannelProxyFactory>();
             _proxy = proxy;
             _exchange = result.Exchange;
             _deliveryTag = result.DeliveryTag;
             _properties = result.BasicProperties;
+            _redelivered = result.Redelivered;
+            _key = result.RoutingKey;
         }
 
         public void Dispose()

@@ -1,23 +1,14 @@
 ﻿using System;
 using RabbitMQ.Client;
+using Symbiote.Jackalope.Impl;
 
 namespace Symbiote.Jackalope
 {
     public class Envelope : IDisposable
     {
-        public bool Empty { get { return Respond == null || Message == null; } }
-        public IRespond Respond { get; set; }
+        public bool Empty { get { return MessageDelivery == null || Message == null; } }
+        public IMessageDelivery MessageDelivery { get; set; }
         public object Message { get; set; }
-        public IBasicProperties MessageDetails
-        {
-            get
-            {
-                var details = Message as IHaveMessageDetail;
-                if (details == null)
-                    return null;
-                return details.MessageProperties;
-            }
-        }
         public string CorrelationId
         {
             get
@@ -31,7 +22,7 @@ namespace Symbiote.Jackalope
 
         public void Dispose()
         {
-            (Respond as IDisposable).Dispose();
+            (MessageDelivery as IDisposable).Dispose();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Symbiote.Jackalope.Impl
             try
             {
                 var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                var response = new Response(proxy, args);
+                var response = new MessageDelivery(proxy, args);
                 handler.Process(payload as TMessage, response);
             }
             catch (Exception e)
@@ -37,7 +37,7 @@ namespace Symbiote.Jackalope.Impl
             try
             {
                 var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                var response = new Response(proxy, result);
+                var response = new MessageDelivery(proxy, result);
                 handler.Process(payload as TMessage, response);
             }
             catch (Exception e)
@@ -52,12 +52,12 @@ namespace Symbiote.Jackalope.Impl
             try
             {
                 var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                handler.Process(envelope.Message as TMessage, envelope.Respond);
+                handler.Process(envelope.Message as TMessage, envelope.MessageDelivery);
                 return envelope.Message;
             }
             catch (Exception e)
             {
-                envelope.Respond.Reject();
+                envelope.MessageDelivery.Reject();
                 throw;
             }
         }

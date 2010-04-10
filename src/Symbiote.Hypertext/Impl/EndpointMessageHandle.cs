@@ -5,17 +5,17 @@ namespace Symbiote.Telepathy
 {
     public class EndpointMessageHandle : IMessageHandler<IAmqpEndpointConfiguration>
     {
-        private IEndpointManager _endpointManager;
+        private IEndpointIndex _endpointIndex;
 
-        public void Process(IAmqpEndpointConfiguration message, IRespond respond)
+        public void Process(IAmqpEndpointConfiguration message, IMessageDelivery messageDelivery)
         {
             var wrapper = BusEndPoint.CreateFromAmqpEndpoint(message);
-            _endpointManager.AddEndpoint(wrapper);
+            _endpointIndex.AddEndpoint(wrapper);
         }
 
-        public EndpointMessageHandle(IEndpointManager endpointManager)
+        public EndpointMessageHandle(IEndpointIndex endpointIndex)
         {
-            _endpointManager = endpointManager;
+            _endpointIndex = endpointIndex;
         }
     }
 }

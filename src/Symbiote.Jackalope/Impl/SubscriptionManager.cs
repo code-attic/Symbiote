@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using StructureMap;
-using Symbiote.Jackalope.Control;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
