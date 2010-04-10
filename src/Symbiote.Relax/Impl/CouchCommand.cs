@@ -113,6 +113,7 @@ namespace Symbiote.Relax.Impl
         {
             using(var client = new WebClient())
             {
+                client.Headers.Add("Content-Type", type);
                 var bytes = client.UploadData(uri.ToString(), "PUT", content);
                 return UTF8Encoding.UTF8.GetString(bytes);
             }
