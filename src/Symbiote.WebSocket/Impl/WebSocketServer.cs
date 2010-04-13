@@ -100,8 +100,12 @@ namespace Symbiote.WebSocket.Impl
         protected virtual void CreateSocketListener()
         {
             Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            _localEndPoint = new IPEndPoint(IPAddress.Loopback, Port);
+            var hostName = Dns.GetHostName();
+            var ipEntries = Dns.GetHostAddresses(hostName).Where(x => x.AddressFamily == AddressFamily.InterNetwork);
+            _localEndPoint = new IPEndPoint(ipEntries.First(), Port);
             Listener.Bind(_localEndPoint);
+            //ipEntries
+            //    .ForEach(x => Listener.Bind(new IPEndPoint(x, Port)));
             Listener.Listen(50);
             ListenForConnections();
         }

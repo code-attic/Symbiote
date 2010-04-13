@@ -112,8 +112,6 @@ namespace Symbiote.WebSocket.Impl
         {
             if (!_socket.Connected && OnDisconnect != null)
                 OnDisconnect(ClientId);
-            //else if(!_receiving && !_listening)
-            //    Listen();
         }
 
         public WebSocket(string clientId, Socket socket, int bufferSize)
