@@ -16,6 +16,7 @@ namespace Symbiote.WebSocket.Impl
         protected int _bufferSize;
         protected DelimitedBuilder _builder = new DelimitedBuilder("");
         protected bool _receiving = false;
+        protected bool _listening = false;
         protected Timer _timer;
 
         public string ClientId { get; set; }
@@ -62,6 +63,7 @@ namespace Symbiote.WebSocket.Impl
 
         protected void Receive(IAsyncResult result)
         {
+            _listening = false;
             var received = _socket.EndReceive(result);
 
             if(received > 0)
@@ -84,7 +86,7 @@ namespace Symbiote.WebSocket.Impl
                 {
                     _receiving = false;
                     var message = Tuple.Create(ClientId, _builder.ToString());
-                    _observers.ForEach(x => x.OnNext(message));
+                    _observers.AsParallel().ForEach(x => x.OnNext(message));
                 }
             }
 
@@ -93,6 +95,7 @@ namespace Symbiote.WebSocket.Impl
 
         protected virtual void Listen()
         {
+            _listening = true;
             var buffer = new byte[_bufferSize];
             _socket.BeginReceive(buffer, 0, _bufferSize, SocketFlags.None, Receive, buffer);
         }
@@ -109,6 +112,8 @@ namespace Symbiote.WebSocket.Impl
         {
             if (!_socket.Connected && OnDisconnect != null)
                 OnDisconnect(ClientId);
+            //else if(!_receiving && !_listening)
+            //    Listen();
         }
 
         public WebSocket(string clientId, Socket socket, int bufferSize)

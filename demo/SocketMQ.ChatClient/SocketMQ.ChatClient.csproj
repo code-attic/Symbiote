@@ -95,7 +95,6 @@
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\WebSocketMain.swf" />
     <Content Include="Scripts\web_socket.js" />
-    <Content Include="Views\Home\WebSocketMain.swf" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -143,6 +142,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Views\Shared\Error.spark" />
+    <None Include="Views\Shared\_global.spark" />
     <None Include="Views\Shared\_LogOnUserControl.spark" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

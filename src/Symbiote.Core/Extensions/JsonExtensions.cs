@@ -78,17 +78,24 @@ namespace Symbiote.Core.Extensions
             {
                 textReader = new StringReader(json);
                 var typeName = JObject.Parse(json).Value<string>("$type");
-                var type = Type.GetType(typeName);
-                if (type == null)
-                    type = Type.GetType(typeName.Split(',')[0].Split('.')[1]);
-                var jsonReader = new JsonTextReader(textReader);
-                return serializer.Deserialize(jsonReader, type);
+                if(string.IsNullOrEmpty(typeName))
+                {
+                    var jsonReader = new JsonTextReader(textReader);
+                    return serializer.Deserialize(jsonReader);    
+                }
+                else
+                {
+                    var type = Type.GetType(typeName);
+                    if (type == null)
+                        type = Type.GetType(typeName.Split(',')[0].Split('.')[1]);
+                    var jsonReader = new JsonTextReader(textReader);
+                    return serializer.Deserialize(jsonReader, type);    
+                }
+                
             }
             catch (Exception e)
             {
-                //return null;
-                var jsonReader = new JsonTextReader(textReader);
-                return serializer.Deserialize(jsonReader);
+                return null;
             }
         }
 

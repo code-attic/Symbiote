@@ -14,8 +14,15 @@ namespace Symbiote.WebSocket
 
         public virtual void OnNext(Tuple<string, string> value)
         {
-            if(MessageReceived != null)
-                MessageReceived(value);
+            try
+            {
+                if(MessageReceived != null)
+                    MessageReceived(value);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
 
         public virtual void OnError(Exception error)

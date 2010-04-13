@@ -3,16 +3,16 @@
   <publishProfile publishUrl="d:/chat" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="chat" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="False" msdeployMarkAsApp="True" profileName="test" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="bin/FluentNHibernate.dll" publishTime="02/05/2010 01:58:39" />
     <file relUrl="bin/Microsoft.Practices.ServiceLocation.dll" publishTime="02/05/2010 01:58:39" />
-    <file relUrl="bin/Symbiote.Core.pdb" publishTime="04/09/2010 14:11:48" />
+    <file relUrl="bin/Symbiote.Core.pdb" publishTime="04/12/2010 16:30:19" />
     <file relUrl="bin/log4net.xml" publishTime="02/05/2010 01:58:41" />
     <file relUrl="Scripts/MicrosoftAjax.js" publishTime="04/07/2010 17:20:03" />
     <file relUrl="Global.asax" publishTime="04/08/2010 17:33:49" />
     <file relUrl="bin/FluentNHibernate.pdb" publishTime="02/05/2010 01:58:39" />
-    <file relUrl="bin/Symbiote.Hibernate.pdb" publishTime="04/09/2010 14:11:49" />
+    <file relUrl="bin/Symbiote.Hibernate.pdb" publishTime="04/12/2010 16:30:21" />
     <file relUrl="bin/log4net.dll" publishTime="02/05/2010 01:58:41" />
     <file relUrl="Scripts/swfobject.js" publishTime="04/09/2010 15:03:33" />
     <file relUrl="bin/Iesi.Collections.dll" publishTime="02/05/2010 01:58:39" />
-    <file relUrl="bin/Spark.Web.Mvc.dll" publishTime="03/22/2010 00:59:51" />
+    <file relUrl="bin/Spark.Web.Mvc.dll" publishTime="03/11/2010 12:51:36" />
     <file relUrl="Views/Home/Index.spark" publishTime="04/09/2010 15:41:56" />
     <file relUrl="bin/Microsoft.Practices.ServiceLocation.xml" publishTime="02/05/2010 01:58:39" />
     <file relUrl="Scripts/jquery-1.3.2-vsdoc.js" publishTime="04/07/2010 17:20:03" />
@@ -21,26 +21,26 @@
     <file relUrl="bin/FluentNHibernate.xml" publishTime="02/05/2010 01:58:39" />
     <file relUrl="bin/NHibernate.Linq.xml" publishTime="02/05/2010 01:58:40" />
     <file relUrl="bin/NHibernate.Linq.pdb" publishTime="02/05/2010 01:58:40" />
-    <file relUrl="bin/SocketMQ.ChatClient.dll" publishTime="04/10/2010 01:33:50" />
+    <file relUrl="bin/SocketMQ.ChatClient.dll" publishTime="04/12/2010 16:42:12" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="02/05/2010 01:58:40" />
     <file relUrl="bin/NHibernate.dll" publishTime="02/05/2010 01:58:40" />
     <file relUrl="Scripts/web_socket.js" publishTime="04/09/2010 10:54:29" />
-    <file relUrl="Scripts/socketmq-0.0.1.js" publishTime="04/09/2010 15:42:56" />
-    <file relUrl="bin/Symbiote.Web.dll" publishTime="04/10/2010 01:33:47" />
-    <file relUrl="bin/Spark.pdb" publishTime="03/22/2010 00:59:51" />
-    <file relUrl="bin/Symbiote.Jackalope.pdb" publishTime="04/10/2010 01:33:46" />
+    <file relUrl="Scripts/socketmq-0.0.1.js" publishTime="04/10/2010 02:13:18" />
+    <file relUrl="bin/Symbiote.Web.dll" publishTime="04/12/2010 16:30:22" />
+    <file relUrl="bin/Spark.pdb" publishTime="03/11/2010 12:51:34" />
+    <file relUrl="bin/Symbiote.Jackalope.pdb" publishTime="04/12/2010 16:30:20" />
     <file relUrl="Scripts/jquery.validate.js" publishTime="04/07/2010 17:20:03" />
-    <file relUrl="bin/Symbiote.Hibernate.dll" publishTime="04/09/2010 14:11:49" />
-    <file relUrl="bin/Spark.Web.Mvc.pdb" publishTime="03/22/2010 00:59:51" />
+    <file relUrl="bin/Symbiote.Hibernate.dll" publishTime="04/12/2010 16:30:21" />
+    <file relUrl="bin/Spark.Web.Mvc.pdb" publishTime="03/11/2010 12:51:36" />
     <file relUrl="bin/RabbitMQ.Client.dll" publishTime="02/15/2010 14:57:30" />
     <file relUrl="bin/StructureMap.xml" publishTime="02/05/2010 01:58:40" />
     <file relUrl="bin/Antlr3.Runtime.dll" publishTime="02/05/2010 01:58:39" />
     <file relUrl="bin/Newtonsoft.Json.dll" publishTime="02/05/2010 01:58:40" />
     <file relUrl="Scripts/MicrosoftMvcAjax.js" publishTime="04/07/2010 17:20:03" />
-    <file relUrl="bin/Spark.dll" publishTime="03/22/2010 00:59:51" />
+    <file relUrl="bin/Spark.dll" publishTime="03/11/2010 12:51:34" />
     <file relUrl="Scripts/jquery.validate.min.js" publishTime="04/07/2010 17:20:03" />
     <file relUrl="Scripts/MicrosoftMvcAjax.debug.js" publishTime="04/07/2010 17:20:03" />
-    <file relUrl="bin/Symbiote.Jackalope.dll" publishTime="04/10/2010 01:33:46" />
+    <file relUrl="bin/Symbiote.Jackalope.dll" publishTime="04/12/2010 16:30:20" />
     <file relUrl="bin/NHibernate.Linq.dll" publishTime="02/05/2010 01:58:40" />
     <file relUrl="bin/Newtonsoft.Json.pdb" publishTime="02/05/2010 01:58:40" />
     <file relUrl="bin/Iesi.Collections.xml" publishTime="02/05/2010 01:58:39" />
@@ -50,14 +50,13 @@
     <file relUrl="Scripts/FABridge.js" publishTime="04/09/2010 10:54:29" />
     <file relUrl="Views/Home/About.spark" publishTime="04/07/2010 17:20:03" />
     <file relUrl="Scripts/jquery.validate-vsdoc.js" publishTime="04/07/2010 17:20:03" />
-    <file relUrl="Views/Home/WebSocketMain.swf" publishTime="04/09/2010 10:54:29" />
-    <file relUrl="bin/Symbiote.Web.pdb" publishTime="04/10/2010 01:33:47" />
-    <file relUrl="Web.config" publishTime="04/10/2010 01:52:55" />
+    <file relUrl="bin/Symbiote.Web.pdb" publishTime="04/12/2010 16:30:21" />
+    <file relUrl="Web.config" publishTime="04/12/2010 16:30:30" />
     <file relUrl="Scripts/jquery.json-2.2.min.js" publishTime="04/07/2010 18:24:51" />
-    <file relUrl="bin/SocketMQ.ChatClient.pdb" publishTime="04/10/2010 01:33:50" />
+    <file relUrl="bin/SocketMQ.ChatClient.pdb" publishTime="04/12/2010 16:42:12" />
     <file relUrl="Content/Site.css" publishTime="04/09/2010 15:08:16" />
     <file relUrl="Scripts/MicrosoftAjax.debug.js" publishTime="04/07/2010 17:20:03" />
-    <file relUrl="bin/Symbiote.Core.dll" publishTime="04/09/2010 14:11:48" />
+    <file relUrl="bin/Symbiote.Core.dll" publishTime="04/12/2010 16:30:19" />
     <file relUrl="Scripts/MicrosoftMvcValidation.js" publishTime="04/07/2010 17:20:03" />
     <file relUrl="Scripts/jquery-1.4.2.min.js" publishTime="04/07/2010 17:20:03" />
     <file relUrl="Scripts/WebSocketMain.swf" publishTime="04/09/2010 10:54:29" />

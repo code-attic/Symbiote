@@ -17,7 +17,6 @@ namespace Symbiote.Jackalope.Impl
     public class Bus : IBus
     {
         private IChannelProxyFactory _channelFactory;
-        private IEndpointIndex _endpointIndex;
         private ISubscriptionManager _subscriptionManager;
         private ConcurrentDictionary<Type, IDispatch> _functionalDispatchers 
             = new ConcurrentDictionary<Type, IDispatch>();
@@ -58,7 +57,7 @@ namespace Symbiote.Jackalope.Impl
         {
             var endpoint = new BusEndPoint();
             endpointConfiguration(endpoint);
-            _endpointIndex.AddEndpoint(endpoint);
+            _endpointManager.AddEndpoint(endpoint);
         }
 
         public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
@@ -179,10 +178,9 @@ namespace Symbiote.Jackalope.Impl
 
         }
 
-        public Bus(IChannelProxyFactory channelFactory, IEndpointIndex endpointIndex, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
+        public Bus(IChannelProxyFactory channelFactory, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
         {
             _channelFactory = channelFactory;
-            _endpointIndex = endpointIndex;
             _endpointManager = endpointManager;
             _subscriptionManager = subscriptionManager;
         }

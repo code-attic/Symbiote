@@ -2,6 +2,7 @@
 using System.Web.Routing;
 using Symbiote.Core;
 using Symbiote.Web;
+using Spark.Web.Mvc;
 
 namespace SocketMQ.ChatClient
 {
