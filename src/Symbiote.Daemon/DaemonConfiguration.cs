@@ -1,16 +1,21 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 using StructureMap;
 using Topshelf.Configuration;
+using Topshelf.Configuration.Dsl;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon
 {
-    public class DaemonConfiguration<TDaemon>
-        where TDaemon : class, IDaemon
+    public class DaemonConfiguration
     {
         private string _name;
         private string _displayName;
         private string _description;
         private string[] _arguments;
+        private List<Type> _daemons = new List<Type>();
 
         public string[] CommandLineArgs
         {
@@ -20,50 +25,64 @@ namespace Symbiote.Daemon
 
         public string ServiceName { get { return _name; } }
 
-        public DaemonConfiguration<TDaemon> Name(string name)
+        public DaemonConfiguration Name(string name)
         {
             _name = name;
             return this;
         }
-        public DaemonConfiguration<TDaemon> DisplayName(string displayName)
+        public DaemonConfiguration DisplayName(string displayName)
         {
             _displayName = displayName;
             return this;
         }
-        public DaemonConfiguration<TDaemon> Description(string description)
+        public DaemonConfiguration Description(string description)
         {
             _description = description;
             return this;
         }
 
-        public DaemonConfiguration<TDaemon> Arguments(string[] arguments)
+        public DaemonConfiguration Arguments(string[] arguments)
         {
             _arguments = arguments;
             return this;
         }
 
-        internal IRunConfiguration GetTopShelfConfiguration()
+        public DaemonConfiguration IncludeDaemon<TDaemon>()
+            where TDaemon : class, IDaemon
         {
-            var serviceKey = typeof(TDaemon).FullName;
+            _daemons.Add(typeof(TDaemon));
+            return this;
+        }
 
-            var config = RunnerConfigurator.New(
-                c =>
-                    {
-                        c.SetServiceName(_name);
-                        c.SetDisplayName(_displayName);
-                        c.SetDescription(_description);
-
-                        c.ConfigureService<TDaemon>(
-                            serviceKey,
-                            service =>
-                                {
-                                    service.CreateServiceLocator(() => ServiceLocator.Current);
-                                    service.WhenStarted(s => s.Start());
-                                    service.WhenStopped(s => s.Stop());
-                                });
-                        c.DependencyOnMsmq();
-                    });
+        internal RunConfiguration GetTopShelfConfiguration()
+        {
+            var config = RunnerConfigurator.New(ConfigureServices);
+            ObjectFactory.Inject(config.Coordinator);
             return config;
+        }
+
+        protected void ConfigureServices(IRunnerConfigurator config)
+        {
+            var concreteTypes = ObjectFactory.Model.InstancesOf<IDaemon>();
+
+            if (_daemons.Count > 0)
+                concreteTypes = concreteTypes.Where(x => _daemons.Contains(x.ConcreteType));
+
+            config.SetServiceName(_name);
+            config.SetDisplayName(_displayName);
+            config.SetDescription(_description);
+            concreteTypes.ForEach(x => ConfigureService(config, x.ConcreteType));
+        }
+
+        protected void ConfigureService(IRunnerConfigurator config, Type serviceType)
+        {
+
+            config.ConfigureService<IDaemon>(service =>
+            {
+                service.HowToBuildService(builder => ObjectFactory.GetInstance(serviceType));
+                service.WhenStarted(x => x.Start());
+                service.WhenStopped(x => x.Stop());
+            });
         }
 
         public DaemonConfiguration()

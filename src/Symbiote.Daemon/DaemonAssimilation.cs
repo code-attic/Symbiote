@@ -6,39 +6,35 @@ using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using StructureMap;
 using Topshelf;
+using Topshelf.Configuration;
+using Topshelf.Configuration.Dsl;
 
 namespace Symbiote.Daemon
 {
     public static class DaemonAssimilation
     {
-        public static IAssimilate Daemon<TDaemon>(this IAssimilate assimilate, Action<DaemonConfiguration<TDaemon>> config)
-            where TDaemon : class, IDaemon
+        public static IAssimilate Daemon(this IAssimilate assimilate, Action<DaemonConfiguration> config)
         {
-            var daemonConfiguration = new DaemonConfiguration<TDaemon>();
+            assimilate.Dependencies(x => x.Scan(s =>
+                                                    {
+                                                        s.TheCallingAssembly();
+                                                        s.AssembliesFromApplicationBaseDirectory();
+                                                        s.AddAllTypesOf<IDaemon>();
+                                                    }));
+            var daemonConfiguration = new DaemonConfiguration();
             config(daemonConfiguration);
-            assimilate
-                .Dependencies(x =>
-                                  {
-                                      // Jeremy Miller, you are a genius!
-                                      // Behold; a late-bound, singleton dependency!
-                                      x.For<TDaemon>().Singleton().Use(
-                                          c => c.GetInstance<TDaemon>(daemonConfiguration.ServiceName));
-                                      x.For<DaemonConfiguration<TDaemon>>().Use(daemonConfiguration);
-                                  });
+            assimilate.Dependencies(x => x.For<DaemonConfiguration>().Use(daemonConfiguration));
             return assimilate;
         }
 
-        public static void RunDaemon<TDaemon>(this IAssimilate assimilate)
-            where TDaemon : class, IDaemon
+        public static void RunDaemon(this IAssimilate assimilate)
         {
-            var configuration = ObjectFactory.GetInstance<DaemonConfiguration<TDaemon>>();
-
+            var configuration = ObjectFactory.GetInstance<DaemonConfiguration>();
+            var topshelfConfig = configuration.GetTopShelfConfiguration();
             if (configuration == null)
-                throw new Exception("Please configure your service first with the ConfigureService call before attempting to run this service.");
+                throw new Exception("Please configure your service first with the Daemon<> call before attempting to run this service.");
 
-            Runner.Host(
-                configuration.GetTopShelfConfiguration(),
-                configuration.CommandLineArgs);
+            Runner.Host(topshelfConfig, configuration.CommandLineArgs);
         }
     }
 }

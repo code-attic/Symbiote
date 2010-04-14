@@ -14,7 +14,7 @@ namespace SocketMQ.ChatService
         {
             Assimilate
                 .Core()
-                .Daemon<ChatService>(
+                .Daemon(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x =>
                     x.ServerUrl(@"http://localhost")
@@ -28,7 +28,7 @@ namespace SocketMQ.ChatService
                 .AddColorConsoleLogger<ClientMessage>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsBlue().ForAllOutput())
                 .AddFileLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("log.log"))
                 .AddFileLogger<MessageGateway>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("warren.log"))
-                .RunDaemon<ChatService>();
+                .RunDaemon();
         }
     }
 }

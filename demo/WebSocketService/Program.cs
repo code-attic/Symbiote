@@ -17,7 +17,7 @@ namespace WebSocketService
         {
             Assimilate
                 .Core()
-                .Daemon<WebSocketService>(
+                .Daemon(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x => 
                     x.ServerUrl(@"http://localhost:8080")
@@ -25,7 +25,7 @@ namespace WebSocketService
                      .Port(8181))
                 .AddConsoleLogger<WebSocketService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow())
-                .RunDaemon<WebSocketService>();
+                .RunDaemon();
         }
     }
 

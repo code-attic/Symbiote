@@ -15,11 +15,11 @@ namespace RelaxDemo
         {
             Assimilate
                 .Core()
-                .Daemon<RelaxDemoService>(x => x
-                                                   .Arguments(args)
-                                                   .Name("relaxdemo")
-                                                   .DisplayName("Relax Demo")
-                                                   .Description("Relax Integration Testing")
+                .Daemon(x => x
+                           .Arguments(args)
+                           .Name("relaxdemo")
+                           .DisplayName("Relax Demo")
+                           .Description("Relax Integration Testing")
                 )
                 .Eidetic()
                 .Relax(x => x.UseDefaults().Cache())
@@ -33,7 +33,7 @@ namespace RelaxDemo
                                                              .Info()
                                                              .MessageLayout(m => m.Message().Newline())
                 )
-                .RunDaemon<RelaxDemoService>();
+                .RunDaemon();
         }
     }
 }

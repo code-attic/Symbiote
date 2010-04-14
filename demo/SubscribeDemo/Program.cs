@@ -23,8 +23,8 @@ namespace SubscribeDemo
                     .DefineColor()
                         .Text.IsHighIntensity().BackGround.IsRed().ForAllOutput())
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.Message().Newline()))
-                .Daemon<Subscriber>(x => x.Arguments(args).DisplayName("Subscriber Demo").Description("A subscriber").Name("Subscriber"))
-                .RunDaemon<Subscriber>();
+                .Daemon(x => x.Arguments(args).DisplayName("Subscriber Demo").Description("A subscriber").Name("Subscriber"))
+                .RunDaemon();
         }
     }
 }
