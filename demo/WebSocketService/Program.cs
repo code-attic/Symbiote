@@ -21,8 +21,10 @@ namespace WebSocketService
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x => 
                     x.ServerUrl(@"http://localhost:8080")
-                     .SocketUrl(@"ws://localhost:8181/chat")
-                     .Port(8181))
+                     .SocketServer("localhost")
+                     .SocketResource("chat")
+                     .Port(8181)
+                     .PermitFlashSocketConnections())
                 .AddConsoleLogger<WebSocketService>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow())
                 .RunDaemon();

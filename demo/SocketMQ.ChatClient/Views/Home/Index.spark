@@ -4,12 +4,12 @@
     var username = '!{Context.User.Identity.Name}';
 
     function connect() {
-      socketmq.onerror(function(err) { alert(err); });
-      socketmq.onconnect(connected);
-      socketmq.ondisconnect(disconnected);
-      socketmq.debug(logger);
-      socketmq.onmessage(message);
-      socketmq.connect('ws://obelisk:8181/chat',username);
+    socketmq.onerror(function(err) { alert(err); });
+    socketmq.onconnect(connected);
+    socketmq.ondisconnect(disconnected);
+    socketmq.debug(logger);
+    socketmq.onmessage(message);
+    socketmq.connect('ws://localhost:8181/chat',username);
     }
 
     function connected()

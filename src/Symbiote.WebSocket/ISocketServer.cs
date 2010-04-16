@@ -17,9 +17,6 @@ namespace Symbiote.WebSocket
         void AddMessageHandle(Action<Tuple<string, string>> messageHandler);
         void Close();
         Socket Listener { get; }
-        int Port { get; }
-        string WebServerUrl { get; }
-        string WebSocketUrl { get; }
         void SendToAll(string data, string from);
         void Send(string data, string from, string to);
         void Start();

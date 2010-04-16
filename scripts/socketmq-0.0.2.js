@@ -15,12 +15,12 @@
     }
 
     var connect = function (url, user) {
-        $(window).unload(disconnect);
         username = user;
         serverUrl = url;
         try {
+            $(window).unload(disconnect);
+            disconnect();
             log('Attempting connection...');
-            //disconnect();
             sock = new WebSocket(serverUrl);
             sock.onopen = setup;
         } catch (Error) {
@@ -29,8 +29,9 @@
     }
 
     var disconnect = function () {
-        if (sock != null && sock.readyState < 2)
+        if (sock != null && sock.readyState < 2) {
             sock.close();
+        }
     }
 
     function dhtmlLoadScript(url) {

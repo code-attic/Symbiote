@@ -10,7 +10,7 @@ namespace Symbiote.WebSocket.Impl
 {
     public class DefaultHandShake : IShakeHands
     {
-        protected readonly string _handshake_line1 = "GET {0} HTTP/1.1";
+        protected readonly string _handshake_line1 = "GET /{0} HTTP/1.1";
         protected readonly string _handshake_line2 = "Upgrade: WebSocket";
         protected readonly string _handshake_line3 = "Connection: Upgrade";
         protected readonly string _handshake_line4 = "Host: {0}";
@@ -18,14 +18,11 @@ namespace Symbiote.WebSocket.Impl
         protected readonly string _handshake_line6 = "";
         protected IWebSocketServerConfiguration _configuration;
 
-        protected string HandshakeLine1
+        protected string HandshakeLine1 
         {
             get
             {
-                var regex = new Regex(@"(?<=[:][0-9]+(?=[\/])).+");
-                var applicationPath = regex.Match(_configuration.SocketUrl).Value;
-                return
-                    _handshake_line1.AsFormat(applicationPath);
+                return _handshake_line1.AsFormat(_configuration.SocketResource);
             }
         }
         protected string HandshakeLine2 { get { return _handshake_line2; } }
@@ -34,10 +31,7 @@ namespace Symbiote.WebSocket.Impl
         {
             get
             {
-                var regex = new Regex(@"(?<=[:][0-9]+(?=[\/])).+");
-                var applicationPath = regex.Match(_configuration.SocketUrl).Value;
-                return _handshake_line4
-                    .AsFormat(_configuration.SocketUrl.Replace(applicationPath, "").Replace(@"ws://", ""));
+                return "Host: {0}:{1}".AsFormat(_configuration.SocketServer, _configuration.Port);
             }
         }
         protected string HandshakeLine5 { get { return _handshake_line5.AsFormat(_configuration.ServerUrl); } }

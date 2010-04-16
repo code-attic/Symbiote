@@ -13,12 +13,11 @@ namespace Symbiote.WebSocket.Impl
         protected IList<IObserver<Tuple<string, string>>> _observers = new List<IObserver<Tuple<string, string>>>();
         protected ConcurrentDictionary<string, IDisposable> _socketObservers = new ConcurrentDictionary<string, IDisposable>();
         protected ConcurrentDictionary<string, string> _clientAliasTable = new ConcurrentDictionary<string, string>();
-        protected int _bufferSize;
         protected IPEndPoint _localEndPoint;
         protected ICreateWebSockets _socketFactory;
         protected IHandlePolicyRequests _policyRequestHandler;
         protected IShakeHands _handShaker;
-        protected bool _listenForPolicyRequests;
+        protected IWebSocketServerConfiguration _config;
 
         public event Action<string> ClientConnected;
         public event Action<string> ClientDisconnected;
@@ -26,10 +25,7 @@ namespace Symbiote.WebSocket.Impl
 
         public virtual IList<IWebSocket> ClientSockets { get; private set; }
         public virtual Socket Listener { get; private set; }
-        public virtual int Port { get; private set; }
-        public string WebServerUrl { get; private set; }
-        public string WebSocketUrl { get; private set; }
-
+        
         public virtual void AddMessageHandle(Action<Tuple<string, string>> messageHandler)
         {
             Subscribe(new DefaultClientObserver(messageHandler));
@@ -90,8 +86,8 @@ namespace Symbiote.WebSocket.Impl
         {
             CreateSocketListener();
             "Web socket server started on {0} \r\n\t at {1}, Port: {2}"
-                .ToInfo<ISocketServer>(DateTime.Now, WebServerUrl, Port);
-            if (_listenForPolicyRequests)
+                .ToInfo<ISocketServer>(DateTime.Now, _config.SocketServer, _config.Port);
+            if (_config.ListenForPolicyRequests)
             {
                 _policyRequestHandler.Start();
             }
@@ -100,12 +96,9 @@ namespace Symbiote.WebSocket.Impl
         protected virtual void CreateSocketListener()
         {
             Listener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            var hostName = Dns.GetHostName();
-            var ipEntries = Dns.GetHostAddresses(hostName).Where(x => x.AddressFamily == AddressFamily.InterNetwork);
-            _localEndPoint = new IPEndPoint(ipEntries.First(), Port);
-            Listener.Bind(_localEndPoint);
-            //ipEntries
-            //    .ForEach(x => Listener.Bind(new IPEndPoint(x, Port)));
+            var hostIP = Dns.GetHostEntry(_config.SocketServer).AddressList.First(x => x.AddressFamily == AddressFamily.InterNetwork);
+            var endpoint = new IPEndPoint(hostIP, _config.Port);
+            Listener.Bind(endpoint);
             Listener.Listen(50);
             ListenForConnections();
         }
@@ -121,7 +114,7 @@ namespace Symbiote.WebSocket.Impl
             var clientId = Guid.NewGuid().ToString();
             if(_handShaker.ValidateHandShake(newSocket))
             {
-                var webSocket = _socketFactory.GetSocket(clientId, newSocket, _bufferSize);
+                var webSocket = _socketFactory.GetSocket(clientId, newSocket, _config.ReceiveBufferSize);
                 webSocket.OnDisconnect = x =>
                 {
                     if (ClientDisconnected != null) ClientDisconnected(x);
@@ -172,15 +165,11 @@ namespace Symbiote.WebSocket.Impl
             IShakeHands handShaker,
             IHandlePolicyRequests policyRequestHandler)
         {
-            ClientSockets = new List<IWebSocket>();
+            _config = configuration;
             _handShaker = handShaker;
             _policyRequestHandler = policyRequestHandler;
-            WebServerUrl = configuration.ServerUrl;
-            WebSocketUrl = configuration.SocketUrl;
-            _bufferSize = configuration.ReceiveBufferSize;
-            Port = configuration.Port;
             _socketFactory = socketFactory;
-            _listenForPolicyRequests = configuration.ListenForPolicyRequests;
+            ClientSockets = new List<IWebSocket>();
         }
     }
 }

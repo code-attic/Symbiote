@@ -37,9 +37,21 @@ namespace Symbiote.WebSocket
             return this;
         }
 
-        public virtual WebSocketConfigurator SocketUrl(string socketUrl)
+        public virtual WebSocketConfigurator SocketServer(string serverName)
         {
-            Configuration.SocketUrl = socketUrl;
+            Configuration.SocketServer = serverName;
+            return this;
+        }
+
+        public virtual WebSocketConfigurator SocketResource(string resourcePath)
+        {
+            Configuration.SocketResource= resourcePath;
+            return this;
+        }
+
+        public virtual WebSocketConfigurator UseSecureSocket()
+        {
+            Configuration.UseSecureSocket = true;
             return this;
         }
 

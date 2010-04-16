@@ -17,8 +17,9 @@ namespace SocketMQ.ChatService
                 .Daemon(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x =>
-                    x.ServerUrl(@"http://obelisk")
-                     .SocketUrl(@"ws://obelisk:8181/chat")
+                    x.ServerUrl(@"http://localhost:8080")
+                     .SocketServer("localhost")
+                     .SocketResource("chat")
                      .Port(8181)
                      .PermitFlashSocketConnections())
                 .Jackalope(x => x.AddServer(s => s.AMQP08()))

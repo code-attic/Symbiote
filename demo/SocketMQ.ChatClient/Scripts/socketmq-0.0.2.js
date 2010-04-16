@@ -18,11 +18,19 @@
         username = user;
         serverUrl = url;
         try {
+            $(window).unload(disconnect);
+            disconnect();
             log('Attempting connection...');
             sock = new WebSocket(serverUrl);
             sock.onopen = setup;
         } catch (Error) {
             if (error_callback) error_callback('Error occurred during connection attempt: ' + Error);
+        }
+    }
+
+    var disconnect = function () {
+        if (sock != null && sock.readyState < 2) {
+            sock.close();
         }
     }
 
@@ -134,6 +142,7 @@
 
     return {
         connect: connect,
+        disconnect: disconnect,
         sendmessage: sendMessage,
         test: test,
         onerror: onError,

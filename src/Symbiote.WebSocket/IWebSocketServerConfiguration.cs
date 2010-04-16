@@ -5,8 +5,11 @@ namespace Symbiote.WebSocket
 {
     public interface IWebSocketServerConfiguration
     {
-        string SocketUrl { get; set; }
         string ServerUrl { get; set; }
+        string SocketUrl { get; }
+        string SocketServer { get; set; }
+        string SocketResource { get; set; }
+        bool UseSecureSocket { get; set; }
         int Port { get; set; }
         int ReceiveBufferSize { get; set; }
         int MaxPendingConnections { get; set; }
