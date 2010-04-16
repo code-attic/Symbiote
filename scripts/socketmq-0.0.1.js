@@ -15,22 +15,15 @@
     }
 
     var connect = function (url, user) {
-        $(window).unload(disconnect);
         username = user;
         serverUrl = url;
         try {
             log('Attempting connection...');
-            //disconnect();
             sock = new WebSocket(serverUrl);
             sock.onopen = setup;
         } catch (Error) {
             if (error_callback) error_callback('Error occurred during connection attempt: ' + Error);
         }
-    }
-
-    var disconnect = function () {
-        if (sock != null && sock.readyState < 2)
-            sock.close();
     }
 
     function dhtmlLoadScript(url) {
@@ -141,7 +134,6 @@
 
     return {
         connect: connect,
-        disconnect: disconnect,
         sendmessage: sendMessage,
         test: test,
         onerror: onError,

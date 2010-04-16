@@ -15,6 +15,9 @@ namespace Symbiote.Daemon
         private string _displayName;
         private string _description;
         private string[] _arguments;
+        private bool _asLocalSystem = true;
+        private string _runAs = "";
+        private string _password = "";
         private List<Type> _daemons = new List<Type>();
 
         public string[] CommandLineArgs
@@ -30,11 +33,13 @@ namespace Symbiote.Daemon
             _name = name;
             return this;
         }
+
         public DaemonConfiguration DisplayName(string displayName)
         {
             _displayName = displayName;
             return this;
         }
+
         public DaemonConfiguration Description(string description)
         {
             _description = description;
@@ -44,6 +49,14 @@ namespace Symbiote.Daemon
         public DaemonConfiguration Arguments(string[] arguments)
         {
             _arguments = arguments;
+            return this;
+        }
+
+        public DaemonConfiguration AsAccount(string user, string password)
+        {
+            _runAs = user;
+            _password = password;
+            _asLocalSystem = false;
             return this;
         }
 
@@ -71,6 +84,10 @@ namespace Symbiote.Daemon
             config.SetServiceName(_name);
             config.SetDisplayName(_displayName);
             config.SetDescription(_description);
+
+            if(!_asLocalSystem)
+                config.RunAs(_runAs, _password);
+
             concreteTypes.ForEach(x => ConfigureService(config, x.ConcreteType));
         }
 
