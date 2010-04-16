@@ -31,6 +31,9 @@ namespace Symbiote.Relax
         IList<TModel> GetAll<TModel>(int pageSize, int pageNumber)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
 
+        IList<TModel> GetAllByKeys<TModel>(object[] ids)
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision;
+
         Tuple<string, byte[]> GetAttachment<TModel>(object id, string attachmentName)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments;
         

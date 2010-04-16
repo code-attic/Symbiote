@@ -9,27 +9,27 @@ namespace Symbiote.Relax
     public abstract class DefaultCouchDocument : BaseDocument, ICouchDocument<string, string>
     {
         [JsonProperty(PropertyName = "_id")]
-        public string DocumentId { get; set; }
+        public virtual string DocumentId { get; set; }
 
         [JsonProperty(PropertyName = "_rev")]
-        public string DocumentRevision { get; set; }
+        public virtual string DocumentRevision { get; set; }
 
-        public string GetIdAsJson()
+        public virtual string GetIdAsJson()
         {
             return DocumentId.ToJson(false);
         }
 
-        public string GetRevAsJson()
+        public virtual string GetRevAsJson()
         {
             return DocumentRevision.ToJson(false);
         }
 
-        public void UpdateKeyFromJson(string jsonKey)
+        public virtual void UpdateKeyFromJson(string jsonKey)
         {
             DocumentId = jsonKey.FromJson<string>();
         }
 
-        public void UpdateRevFromJson(string jsonRev)
+        public virtual void UpdateRevFromJson(string jsonRev)
         {
             DocumentRevision = jsonRev.FromJson<string>();
         }

@@ -208,6 +208,35 @@ namespace Symbiote.Relax.Impl
             }
         }
 
+        public virtual IList<TModel> GetAllByKeys<TModel>(object[] ids) 
+            where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
+        {
+            var uri = BaseURI<TModel>()
+                .ListAll()
+                .IncludeDocuments();
+
+            try
+            {
+                var keys = new KeyList() {keys = ids};
+                var jsonKeyList = keys.ToJson(false);
+                var command = _commandFactory.GetCommand();
+                var json = command.Post(uri, jsonKeyList);
+                List<TModel> list = new List<TModel>();
+                var view = (json.FromJson<ViewResult<TModel>>());
+                list = view.GetList().ToList();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                "An exception occurred trying to retrieve a list of documents of type {0} by keys at {1}. \r\n\t {2}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        uri.ToString(),
+                        ex);
+                throw;
+            }
+        }
+
         public Tuple<string, byte[]> GetAttachment<TModel>(object id, string attachmentName)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
         {
@@ -344,5 +373,10 @@ namespace Symbiote.Relax.Impl
         {
 
         }
+    }
+
+    public class KeyList
+    {
+        public object[] keys { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace Symbiote.Relax
         private JObject attachments { get; set; }
 
         [JsonIgnore]
-        public IEnumerable<string> Attachments
+        public virtual IEnumerable<string> Attachments
         {
             get
             {
@@ -20,7 +20,7 @@ namespace Symbiote.Relax
             }
         }
 
-        public void AddAttachment(string attachmentName, string contentType, long contentLength)
+        public virtual void AddAttachment(string attachmentName, string contentType, long contentLength)
         {
             var attachment = new
             {
@@ -40,7 +40,7 @@ namespace Symbiote.Relax
             }
         }
 
-        public void RemoveAttachment(string attachmentName)
+        public virtual void RemoveAttachment(string attachmentName)
         {
             if (attachments.Properties().Any(x => x.Name == attachmentName))
             {

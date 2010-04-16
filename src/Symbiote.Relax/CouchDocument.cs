@@ -17,32 +17,32 @@ namespace Symbiote.Relax
         protected Action<TModel, TKey> SetDocumentId = (x,k) => x._documentId = k;
         protected Action<TModel, TRev> SetDocumentRevision= (x,r) => x._documentRev = r;
 
-        protected TModel KeyGetter(Func<TModel, TKey> getter)
+        protected virtual TModel KeyGetter(Func<TModel, TKey> getter)
         {
             GetDocumentId = getter;
             return this as TModel;
         }
 
-        protected TModel KeySetter(Action<TModel, TKey> setter)
+        protected virtual TModel KeySetter(Action<TModel, TKey> setter)
         {
             SetDocumentId = setter;
             return this as TModel;
         }
 
-        protected TModel RevisionGetter(Func<TModel, TRev> getter)
+        protected virtual TModel RevisionGetter(Func<TModel, TRev> getter)
         {
             GetDocumentRevision = getter;
             return this as TModel;
         }
 
-        protected TModel RevisionSetter(Action<TModel, TRev> setter)
+        protected virtual TModel RevisionSetter(Action<TModel, TRev> setter)
         {
             SetDocumentRevision = setter;
             return this as TModel;
         }
 
         [JsonProperty(PropertyName = "_id")]
-        public TKey DocumentId
+        public virtual TKey DocumentId
         {
             get
             {
@@ -55,7 +55,7 @@ namespace Symbiote.Relax
         }
 
         [JsonProperty(PropertyName = "_rev")]
-        public TRev DocumentRevision
+        public virtual TRev DocumentRevision
         {
             get
             {
@@ -67,23 +67,23 @@ namespace Symbiote.Relax
             }
         }
 
-        public string GetIdAsJson()
+        public virtual string GetIdAsJson()
         {
             return DocumentId.ToJson(false);
         }
 
-        public string GetRevAsJson()
+        public virtual string GetRevAsJson()
         {
             return DocumentRevision.ToJson(false);
         }
 
-        public void UpdateKeyFromJson(string jsonKey)
+        public virtual void UpdateKeyFromJson(string jsonKey)
         {
             var documentId = jsonKey.FromJson<TKey>();
             DocumentId = object.Equals(documentId, default(TKey)) ? "\"{0}\"".AsFormat(jsonKey).FromJson<TKey>() : documentId;
         }
 
-        public void UpdateRevFromJson(string jsonRev)
+        public virtual void UpdateRevFromJson(string jsonRev)
         {
             var documentRevision = jsonRev.FromJson<TRev>();
             DocumentRevision = object.Equals(documentRevision, default(TRev)) ? "\"{0}\"".AsFormat(jsonRev).FromJson<TRev>() : documentRevision;
