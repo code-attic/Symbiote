@@ -61,6 +61,12 @@ namespace Symbiote.Relax
             return this;
         }
 
+        public CouchConfigurator FailedGetShouldThrowException()
+        {
+            _config.Throw404Exceptions = true;
+            return this;
+        }
+
         public CouchConfigurator TimeOut(int timeOut)
         {
             _config.TimeOut = timeOut;

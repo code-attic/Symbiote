@@ -15,6 +15,7 @@ namespace Symbiote.Relax.Impl
         DateTime CacheExpiration { get; set; }
         TimeSpan CacheLimit { get; set; }
         string GetDatabaseNameForType<T>();
+        bool Throw404Exceptions { get; set; }
         void SetDatabaseNameForType<T>(string databaseName);
     }
 }

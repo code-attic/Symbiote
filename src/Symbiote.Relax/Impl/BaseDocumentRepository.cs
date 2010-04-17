@@ -31,9 +31,16 @@ namespace Symbiote.Relax.Impl
                 model.UpdateRevFromJson(updated.Revision.ToJson(false));
                 model.RemoveAttachment(attachmentName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                "An exception occurred trying to delete attachment {0} from document of type {1} with id {2} and rev {3} at {4}. \r\n\t {5}"
+                    .ToError<IDocumentRepository>(
+                        attachmentName,
+                        typeof(TModel).FullName,
+                        model.GetIdAsJson(),
+                        model.GetRevAsJson(),
+                        uri.ToString(),
+                        ex);
                 throw;
             }
         }
@@ -81,11 +88,11 @@ namespace Symbiote.Relax.Impl
 
         public IList<TModel> FromView<TModel>(string designDocument, string viewName, Action<ViewQuery> query) where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            try
-            {
-                var uri = BaseURI<TModel>()
+            var uri = BaseURI<TModel>()
                     .Design(designDocument)
                     .View(viewName);
+            try
+            {
                 var viewQuery = new ViewQuery(uri);
                 query(viewQuery);
                 uri.IncludeDocuments();
@@ -94,10 +101,20 @@ namespace Symbiote.Relax.Impl
                 var view = (json.FromJson<ViewResult<TModel>>());
                 return view.GetList().ToList();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
+                "An exception occurred trying to retrieve a documents of type {0} from design document {1} and view {2} at {3}. \r\n\t {4}"
+                    .ToError<IDocumentRepository>(
+                        typeof(TModel).FullName,
+                        designDocument,
+                        viewName,
+                        uri.ToString(),
+                        ex);
 
-                throw;
+                if (_configuration.Throw404Exceptions)
+                    throw;
+
+                return new List<TModel>();
             }
         }
 
@@ -123,7 +140,11 @@ namespace Symbiote.Relax.Impl
                         revision.ToString(),
                         uri.ToString(),
                         ex);
-                throw;
+
+                if(_configuration.Throw404Exceptions)
+                    throw;
+                
+                return default(TModel);
             }
         }
 
@@ -148,7 +169,11 @@ namespace Symbiote.Relax.Impl
                         id.ToString(),
                         uri.ToString(),
                         ex);
-                throw;
+
+                if (_configuration.Throw404Exceptions)
+                    throw;
+
+                return default(TModel);
             }
         }
 
@@ -175,7 +200,11 @@ namespace Symbiote.Relax.Impl
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
-                throw;
+
+                if (_configuration.Throw404Exceptions)
+                    throw;
+
+                return new List<TModel>();
             }
         }
 
@@ -204,7 +233,11 @@ namespace Symbiote.Relax.Impl
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
-                throw;
+
+                if (_configuration.Throw404Exceptions)
+                    throw;
+
+                return new List<TModel>();
             }
         }
 
@@ -233,7 +266,11 @@ namespace Symbiote.Relax.Impl
                         typeof(TModel).FullName,
                         uri.ToString(),
                         ex);
-                throw;
+
+                if (_configuration.Throw404Exceptions)
+                    throw;
+
+                return new List<TModel>();
             }
         }
 
@@ -249,9 +286,16 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 return command.GetAttachment(uri);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                
+                "An exception occurred trying to retrieve an attachment {0} from a document of type {1} with id {2} at {3}. \r\n\t {4}"
+                    .ToError<IDocumentRepository>(
+                        attachmentName,
+                        typeof(TModel).FullName,
+                        id.ToString(),
+                        uri.ToString(),
+                        ex);
+
                 throw;
             }
         }
@@ -331,7 +375,15 @@ namespace Symbiote.Relax.Impl
             }
             catch (Exception ex)
             {
-                
+                "An exception occurred trying to save an attachment {0} to a document of type {1} with id {2} and rev {3} at {4}. \r\n\t {5}"
+                    .ToError<IDocumentRepository>(
+                        attachmentName,
+                        typeof(TModel).FullName,
+                        model.GetIdAsJson(),
+                        model.GetRevAsJson(),
+                        uri.ToString(),
+                        ex);
+
                 throw;
             }
         }
