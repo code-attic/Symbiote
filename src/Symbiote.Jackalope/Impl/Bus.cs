@@ -22,6 +22,25 @@ namespace Symbiote.Jackalope.Impl
             = new ConcurrentDictionary<Type, IDispatch>();
         private IEndpointManager _endpointManager;
 
+        public void AddEndPoint(Action<IEndPoint> endpointConfiguration)
+        {
+            var endpoint = new BusEndPoint();
+            endpointConfiguration(endpoint);
+            _endpointManager.AddEndpoint(endpoint);
+        }
+
+        public IBus AddProcessor<TMessage>(Func<TMessage, IMessageDelivery, object> processor) where TMessage : class
+        {
+            var actionDispatcher = new ActionDispatcher<TMessage>(processor);
+            _functionalDispatchers[typeof(TMessage)] = actionDispatcher;
+            return this;
+        }
+
+        public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
+        {
+            _endpointManager.BindQueue(exchangeName, queueName, routingKeys);
+        }
+
         public bool ClearQueue(string queueName)
         {
             using (var proxy = _channelFactory.GetProxyForQueue(queueName))
@@ -32,7 +51,7 @@ namespace Symbiote.Jackalope.Impl
                 return purged > 0;
             }
         }
-
+        
         public void DestroyExchange(string exchangeName)
         {
             using(var proxy = _channelFactory.GetProxyForExchange(exchangeName))
@@ -52,20 +71,8 @@ namespace Symbiote.Jackalope.Impl
                     .QueueDelete(queueName, false, false, true);
             }
         }
-
-        public void AddEndPoint(Action<IEndPoint> endpointConfiguration)
-        {
-            var endpoint = new BusEndPoint();
-            endpointConfiguration(endpoint);
-            _endpointManager.AddEndpoint(endpoint);
-        }
-
-        public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
-        {
-            _endpointManager.BindQueue(exchangeName, queueName, routingKeys);
-        }
-
-        public Envelope Get(string queueName)
+        
+        public Envelope GetNextMessage(string queueName)
         {
             var proxy = _channelFactory.GetProxyForQueue(queueName);
             try
@@ -80,7 +87,7 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public Envelope Get(string queueName, int miliseconds)
+        public Envelope GetNextMessage(string queueName, int miliseconds)
         {
             var proxy = _channelFactory.GetProxyForQueue(queueName);
             try
@@ -95,7 +102,7 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public object Process(string queueName)
+        public object ProcessNextMessage(string queueName)
         {
             var proxy = _channelFactory.GetProxyForQueue(queueName);
             try
@@ -116,7 +123,7 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public object Process(string queueName, int miliseconds)
+        public object ProcessNextMessage(string queueName, int miliseconds)
         {
             var proxy = _channelFactory.GetProxyForQueue(queueName);
             try
@@ -136,14 +143,7 @@ namespace Symbiote.Jackalope.Impl
                 throw;
             }
         }
-
-        public IBus AddProcessor<TMessage>(Func<TMessage, IMessageDelivery, object> processor) where TMessage : class
-        {
-            var actionDispatcher = new ActionDispatcher<TMessage>(processor);
-            _functionalDispatchers[typeof (TMessage)] = actionDispatcher;
-            return this;
-        }
-
+        
         public void Send<T>(string exchangeName, T body)
             where T : class
         {
