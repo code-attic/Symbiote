@@ -43,6 +43,10 @@
     <Reference Include="Moq">
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
@@ -146,6 +150,7 @@
     <Compile Include="URI\when_using_start_key_only.cs" />
     <Compile Include="URI\with_basic_uri.cs" />
     <Compile Include="URI\with_basic_uri_without_db.cs" />
+    <Compile Include="ViewFilter\when_filtering_get_all.cs" />
     <Compile Include="with_configuration.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using StructureMap;
 using Symbiote.Core.Extensions;
 
@@ -98,6 +99,7 @@ namespace Symbiote.Relax.Impl
                 uri.IncludeDocuments();
                 var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
+                json = FilterOutDesignDocuments(json);
                 var view = (json.FromJson<ViewResult<TModel>>());
                 return view.GetList().ToList();
             }
@@ -188,6 +190,7 @@ namespace Symbiote.Relax.Impl
             {
                 var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
+                json = FilterOutDesignDocuments(json);
                 List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel>>());
                 list = view.GetList().ToList();
@@ -221,6 +224,7 @@ namespace Symbiote.Relax.Impl
             {
                 var command = _commandFactory.GetCommand();
                 var json = command.Get(uri);
+                json = FilterOutDesignDocuments(json);
                 List<TModel> list = new List<TModel>();
                 var view = (json.FromJson<ViewResult<TModel>>());
                 list = view.GetList().ToList();
@@ -407,6 +411,16 @@ namespace Symbiote.Relax.Impl
                 command.StopContinousResponse();
                 _continuousUpdateCommands.TryRemove(key, out command);
             }
+        }
+
+        protected virtual string FilterOutDesignDocuments(string json)
+        {
+            var jsonDoc = JObject.Parse(json);
+            jsonDoc["rows"]
+                .Children()
+                .Where(x => x["doc"]["_id"].ToString().StartsWith(@"""_design"))
+                .ForEach(x => x.Remove());
+            return jsonDoc.ToString();
         }
 
         protected BaseDocumentRepository(ICouchConfiguration configuration, ICouchCommandFactory commandFactory)
