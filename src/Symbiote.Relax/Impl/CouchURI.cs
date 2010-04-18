@@ -43,10 +43,13 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri ByRange<TKey>(TKey start, TKey end)
         {
+            var startKey = start.ToJson(false);
+            var endKey = end.ToJson(false);
+
             _builder.AppendFormat("{0}startkey={1}&endkey={2}",
                                   _hasArguments ? "&" : "?",
-                                  start.ToString().TrimStart('"').TrimEnd('"'),
-                                  end.ToString().TrimStart('"').TrimEnd('"'));
+                                  startKey,
+                                  endKey);
 
             if (!_hasArguments)
                 _hasArguments = true;
@@ -159,9 +162,10 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri Key<TKey>(TKey key)
         {
+            var json = key.ToJson(false);
             _builder.AppendFormat("{0}key={1}", 
                 _hasArguments ? "&" : "?",
-                key);
+                json);
 
             if (!_hasArguments)
                 _hasArguments = true;
@@ -171,9 +175,10 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
         {
+            var json = key.ToJson(false);
             _builder.AppendFormat("{0}key={1}&rev={2}",
                 _hasArguments ? "&" : "?",
-                key,
+                json,
                 rev);
 
             if (!_hasArguments)
@@ -250,10 +255,10 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri StartKey<TKey>(TKey start)
         {
+            var json = start.ToJson(false);
             _builder.AppendFormat("{0}startkey={1}", 
                 _hasArguments ? "&" : "?",
-                start.ToString().TrimStart('"').TrimEnd('"')
-                                );
+                json);
 
             if (!_hasArguments)
                 _hasArguments = true;
@@ -263,10 +268,10 @@ namespace Symbiote.Relax.Impl
 
         public CouchUri EndKey<TKey>(TKey end)
         {
+            var json = end.ToJson(false);
             _builder.AppendFormat("{0}endkey={1}",
                 _hasArguments ? "&" : "?",
-                end.ToString().TrimStart('"').TrimEnd('"')
-                                );
+                json);
 
             if (!_hasArguments)
                 _hasArguments = true;

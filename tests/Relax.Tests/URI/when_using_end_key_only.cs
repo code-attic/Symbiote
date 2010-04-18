@@ -18,6 +18,7 @@ namespace Relax.Tests.URI
                                  };
 
         private It should_append_reduce_false
-            = () => uri.ToString().ShouldEqual("http://localhost:5984/test?endkey=%5B%22id%22,1%5D");
+            //= () => uri.ToString().ShouldEqual("http://localhost:5984/test?endkey=%5B%22id%22,1%5D");
+            = () => uri.ToString().ShouldEqual(@"http://localhost:5984/test?endkey=""%5B%22id%22,1%5D""");
     }
 }

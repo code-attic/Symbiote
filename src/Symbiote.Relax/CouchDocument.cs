@@ -21,7 +21,7 @@ namespace Symbiote.Relax
         {
             GetDocumentId = getter;
             return this as TModel;
-        }
+        }           
 
         protected virtual TModel KeySetter(Action<TModel, TKey> setter)
         {
