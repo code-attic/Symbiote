@@ -13,7 +13,7 @@ namespace Relax.Tests.Repository
                                         {
                                             id = Guid.NewGuid();
                                             uri = new CouchUri("http", "localhost", 5984, "testdocument")
-                                                .KeyAndRev(id, "2");
+                                                .IdAndRev(id, "2");
                                             commandMock
                                                 .Setup(x => x.Get(couchUri))
                                                 .Returns("{{ _id : \"{0}\", _rev : \"2\", Message : \"Hello\"}}".AsFormat(id));

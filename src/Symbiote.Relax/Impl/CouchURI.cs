@@ -139,14 +139,14 @@ namespace Symbiote.Relax.Impl
             return this;
         }
 
-        public CouchUri Key<TKey>(TKey key)
+        public CouchUri Id<TKey>(TKey key)
         {
             _builder.AppendFormat("/{0}", key.ToString().TrimStart('"').TrimEnd('"'));
 
             return this;
         }
 
-        public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
+        public CouchUri IdAndRev<TKey, TRev>(TKey key, TRev rev)
         {
             if (!_hasArguments)
                 _hasArguments = true;
@@ -154,6 +154,31 @@ namespace Symbiote.Relax.Impl
             _builder.AppendFormat("/{0}?rev={1}",
                                   key.ToString().TrimStart('"').TrimEnd('"'),
                                   rev.ToString().TrimStart('"').TrimEnd('"'));
+            return this;
+        }
+
+        public CouchUri Key<TKey>(TKey key)
+        {
+            _builder.AppendFormat("{0}key={1}", 
+                _hasArguments ? "&" : "?",
+                key);
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
+            return this;
+        }
+
+        public CouchUri KeyAndRev<TKey, TRev>(TKey key, TRev rev)
+        {
+            _builder.AppendFormat("{0}key={1}&rev={2}",
+                _hasArguments ? "&" : "?",
+                key,
+                rev);
+
+            if (!_hasArguments)
+                _hasArguments = true;
+
             return this;
         }
 

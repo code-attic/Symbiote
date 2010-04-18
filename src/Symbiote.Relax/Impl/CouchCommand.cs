@@ -65,7 +65,7 @@ namespace Symbiote.Relax.Impl
                         {
                             var changeUri = baseUri.Clone() as CouchUri;
                             var change = result.FromJson<ChangeRecord>();
-                            change.Document = GetResponse(changeUri.Key(change.Id), "GET", "");
+                            change.Document = GetResponse(changeUri.Id(change.Id), "GET", "");
                             callback.BeginInvoke(change, null, null);
                         }
                     }

@@ -20,7 +20,7 @@ namespace Symbiote.Relax.Impl
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
         {
             var uri = BaseURI<TModel>()
-                .Key(model.GetIdAsJson())
+                .Id(model.GetIdAsJson())
                 .Attachment(attachmentName)
                 .Revision(model.GetRevAsJson());
 
@@ -57,7 +57,7 @@ namespace Symbiote.Relax.Impl
                 try
                 {
                     var command = _commandFactory.GetCommand();
-                    uri = uri.KeyAndRev(doc.GetIdAsJson(), doc.GetRevAsJson());
+                    uri = uri.IdAndRev(doc.GetIdAsJson(), doc.GetRevAsJson());
                     command.Delete(uri);
                 }
                 catch (Exception ex)
@@ -76,7 +76,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 var command = _commandFactory.GetCommand();
-                uri = uri.KeyAndRev(id, rev);
+                uri = uri.IdAndRev(id, rev);
                 command.Delete(uri);
             }
             catch (Exception ex)
@@ -123,7 +123,7 @@ namespace Symbiote.Relax.Impl
         public virtual TModel Get<TModel>(object id, object revision)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            var uri = BaseURI<TModel>().KeyAndRev(id, revision);
+            var uri = BaseURI<TModel>().IdAndRev(id, revision);
             
             try
             {
@@ -153,7 +153,7 @@ namespace Symbiote.Relax.Impl
         public virtual TModel Get<TModel>(object id)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
-            var uri = BaseURI<TModel>().Key(id);
+            var uri = BaseURI<TModel>().Id(id);
             
             try
             {
@@ -282,7 +282,7 @@ namespace Symbiote.Relax.Impl
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
         {
             var uri = BaseURI<TModel>()
-                .Key(id)
+                .Id(id)
                 .Attachment(attachmentName);
 
             try
@@ -308,7 +308,7 @@ namespace Symbiote.Relax.Impl
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var uri = BaseURI<TModel>()
-                .Key(model.GetIdAsJson());
+                .Id(model.GetIdAsJson());
 
             try
             {
@@ -365,7 +365,7 @@ namespace Symbiote.Relax.Impl
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision, IHaveAttachments
         {
             var uri = BaseURI<TModel>()
-                .Key(model.GetIdAsJson())
+                .Id(model.GetIdAsJson())
                 .Attachment(attachmentName)
                 .Revision(model.GetRevAsJson());
 
