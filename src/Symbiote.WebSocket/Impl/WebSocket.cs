@@ -17,7 +17,6 @@ namespace Symbiote.WebSocket.Impl
         protected DelimitedBuilder _builder = new DelimitedBuilder("");
         protected bool _receiving = false;
         protected bool _listening = false;
-        protected Timer _timer;
 
         public string ClientId { get; set; }
 
@@ -37,9 +36,6 @@ namespace Symbiote.WebSocket.Impl
 
         public virtual void Close()
         {
-            _timer.Enabled = false;
-            _timer.Stop();
-            _timer.Dispose();
             _socket.Close();
             _observers.ForEach(x => x.OnCompleted());
             _observers.Clear();
@@ -97,21 +93,22 @@ namespace Symbiote.WebSocket.Impl
         {
             _listening = true;
             var buffer = new byte[_bufferSize];
-            _socket.BeginReceive(buffer, 0, _bufferSize, SocketFlags.None, Receive, buffer);
-        }
+            try
+            {
+                _socket.BeginReceive(buffer, 0, _bufferSize, SocketFlags.None, Receive, buffer);
+            }
+            catch (Exception e)
+            {
+                "An exception occurred while listening to the socket \r\n\t {0}"
+                    .ToError<ISocketServer>(e);
 
-        protected void SetupTimer()
-        {
-            _timer = new Timer(1000);
-            _timer.AutoReset = true;
-            _timer.Elapsed += new ElapsedEventHandler(OnTimer);                                  
-            _timer.Start();
+                Close();
+            }
         }
 
         void OnTimer(object sender, ElapsedEventArgs e)
         {
-            if (!_socket.Connected && OnDisconnect != null)
-                OnDisconnect(ClientId);
+            _socket.Poll(50, SelectMode.SelectError);
         }
 
         public WebSocket(string clientId, Socket socket, int bufferSize)
@@ -120,7 +117,6 @@ namespace Symbiote.WebSocket.Impl
             _socket = socket;
             _bufferSize = bufferSize;
             Listen();
-            SetupTimer();
         }
     }
 }

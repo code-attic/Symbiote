@@ -23,8 +23,11 @@ namespace Symbiote.SocketMQ
                                         };
 
                 var body = socketMessage.ToJson(false);
-                _server.Send(body, socketMessage.From, socketMessage.To);
-                messageDelivery.Acknowledge();
+                if (_server.Send(body, socketMessage.From, socketMessage.To))
+                    messageDelivery.Acknowledge();
+                else
+                    "Message could not be delivered to client {0} because they disconnected"
+                        .ToError<IMessageGateway>(socketMessage.To);
             }
             catch (Exception e)
             {

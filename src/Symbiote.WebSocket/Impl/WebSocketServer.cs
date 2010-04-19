@@ -57,28 +57,47 @@ namespace Symbiote.WebSocket.Impl
             Close();
         }
 
-        public virtual void SendToAll(string data, string from)
+        public virtual bool SendToAll(string data, string from)
         {
-            ClientSockets
-                .ForEach(x => x.Send(data));
+            try
+            {
+                ClientSockets
+                    .ForEach(x => x.Send(data));
+                return true;
+            }
+            catch (Exception e)
+            {
+                "An exception occurred sending the message '{0}' from {1} to all recipients \r\n\t {2}"
+                    .ToError<ISocketServer>(data, from, e);
+                return false;
+            }
         }
 
-        public virtual void Send(string data, string from, string to)
+        public virtual bool Send(string data, string from, string to)
         {
             if(string.IsNullOrEmpty(to))
             {
-                ClientSockets
-                    .ForEach(x => x.Send(data));   
+                return SendToAll(data, from);
             }
             else
             {
-                var client = _clientAliasTable
-                    .Where(x => x.Value == to)
-                    .Select(x => x.Key)
-                    .FirstOrDefault() ?? to;
-                ClientSockets
-                    .Where(x => x.ClientId == client)
-                    .ForEach(x => x.Send(data));   
+                try
+                {
+                    var client = _clientAliasTable
+                                     .Where(x => x.Value == to)
+                                     .Select(x => x.Key)
+                                     .FirstOrDefault() ?? to;
+                    ClientSockets
+                        .Where(x => x.ClientId == client)
+                        .ForEach(x => x.Send(data));
+                    return true;
+                }
+                catch (Exception e)
+                {
+                    "An exception occurred sending the message '{0}' from {1} to {2} \r\n\t {3}"
+                        .ToError<ISocketServer>(data, from, to, e);
+                    return false;
+                }
             }
         }
 
