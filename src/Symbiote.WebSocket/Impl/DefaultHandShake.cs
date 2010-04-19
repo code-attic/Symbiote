@@ -67,7 +67,7 @@ namespace Symbiote.WebSocket.Impl
                 do
                 {
                     requestLine = reader.ReadLine();
-                    var match = requestLine != expected[handshakeIndex];
+                    var match = requestLine == expected[handshakeIndex];
 
                     // if we're allowing just anyone to originate the request...
                     if(!_configuration.StrictOriginMatching && handshakeIndex == 4)
