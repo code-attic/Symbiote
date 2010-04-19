@@ -7,6 +7,7 @@ namespace RelaxDemo
     public class TestDocument : CouchDocument<TestDocument, Guid, string>
     {
         public virtual string Message { get; set; }
+        public virtual DateTime Time { get; set; }
 
         public TestDocument()
         {
@@ -17,6 +18,7 @@ namespace RelaxDemo
         {
             _documentId = Guid.NewGuid();
             Message = message;
+            Time = DateTime.Now;
         }
     }
 }

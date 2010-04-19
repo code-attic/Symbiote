@@ -1,7 +1,6 @@
 ﻿using Symbiote.Daemon;
 using Symbiote.Jackalope;
 using Symbiote.SocketMQ;
-using Symbiote.SocketMQ.Impl;
 
 namespace SocketMQ.ChatService
 {

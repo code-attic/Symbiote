@@ -10,6 +10,7 @@ namespace Symbiote.WebSocket
         string SocketServer { get; set; }
         string SocketResource { get; set; }
         bool UseSecureSocket { get; set; }
+        bool StrictOriginMatching { get; set; }
         int Port { get; set; }
         int ReceiveBufferSize { get; set; }
         int MaxPendingConnections { get; set; }

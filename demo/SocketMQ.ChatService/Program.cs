@@ -1,10 +1,10 @@
 ﻿using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Log4Net;
-using Symbiote.SocketMQ;
 using Symbiote.SocketMQ.Impl;
 using Symbiote.WebSocket;
 using Symbiote.Jackalope;
+using Symbiote.SocketMQ;
 
 namespace SocketMQ.ChatService
 {

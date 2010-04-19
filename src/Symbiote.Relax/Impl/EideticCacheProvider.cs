@@ -102,7 +102,7 @@ namespace Symbiote.Relax.Impl
             return result;
         }
 
-        public IList<TModel> GetAll<TModel>(int pageNumber, int pageSize, Func<int, int, IList<TModel>> retrieve)
+        public IList<TModel> GetAll<TModel>(int pageSize, int pageNumber, Func<int, int, IList<TModel>> retrieve)
             where TModel : class, IHandleJsonDocumentId, IHandleJsonDocumentRevision
         {
             var cacheKey = _keyBuilder.GetListKey<TModel>(pageNumber, pageSize);

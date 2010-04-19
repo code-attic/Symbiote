@@ -24,9 +24,10 @@ namespace Symbiote.WebSocket.Impl
         public virtual int ReceiveBufferSize { get; set; }
         public virtual int MaxPendingConnections { get; set; }
         public virtual bool ListenForPolicyRequests { get; set; }
-        public string SocketServer { get; set; }
-        public string SocketResource { get; set; }
-        public bool UseSecureSocket { get; set; }
+        public virtual string SocketServer { get; set; }
+        public virtual string SocketResource { get; set; }
+        public virtual bool UseSecureSocket { get; set; }
+        public virtual bool StrictOriginMatching { get; set; }
 
         public virtual IList<Action<Tuple<string, string>>> MessageProcessors { get; set; }
         public virtual IList<Action<string>> ClientConnectionHandlers { get; set;}

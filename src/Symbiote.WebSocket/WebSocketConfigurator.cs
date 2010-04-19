@@ -13,6 +13,12 @@ namespace Symbiote.WebSocket
             return this;
         }
         
+        public virtual WebSocketConfigurator EnforceStrictOriginMatching()
+        {
+            Configuration.StrictOriginMatching = true;
+            return this;
+        }
+
         public virtual WebSocketConfigurator LimitPendingConnectionsTo(int limit)
         {
             Configuration.MaxPendingConnections = limit;

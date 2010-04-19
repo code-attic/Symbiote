@@ -3,6 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 
 namespace Symbiote.Core.Extensions
@@ -17,10 +18,12 @@ namespace Symbiote.Core.Extensions
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.All
             };
+
             var serializer = JsonSerializer.Create(settings);
             var textWriter = new StringWriter();
             var jsonWriter = new JsonTextWriter(textWriter);
-            
+
+            serializer.Converters.Add(new IsoDateTimeConverter());
             serializer.Serialize(jsonWriter, model);
             return textWriter.ToString();
         }
@@ -39,6 +42,8 @@ namespace Symbiote.Core.Extensions
             var textWriter = new StringWriter();
             var jsonWriter = new JsonTextWriter(textWriter);
 
+
+            serializer.Converters.Add(new IsoDateTimeConverter());
             serializer.Serialize(jsonWriter, model);
             return textWriter.ToString();
         }

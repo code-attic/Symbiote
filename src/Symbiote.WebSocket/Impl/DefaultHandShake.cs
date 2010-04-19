@@ -63,11 +63,20 @@ namespace Symbiote.WebSocket.Impl
                 var requestLine = "";
                 var expected = ExpectedHandshakeLines.ToArray();
                 var handshakeIndex = 0;
-                var origin = "";
+                var origin = _configuration.ServerUrl;
                 do
                 {
                     requestLine = reader.ReadLine();
-                    if (requestLine != expected[handshakeIndex] && handshakeIndex != 4)
+                    var match = requestLine != expected[handshakeIndex];
+
+                    // if we're allowing just anyone to originate the request...
+                    if(!_configuration.StrictOriginMatching && handshakeIndex == 4)
+                    {
+                        origin = Regex.Match(requestLine, @"(?<=Origin:[ ]).+").Value;
+                        match = true;
+                    }
+
+                    if (!match)
                     {
                         if (!requestLine.StartsWith("Cookie"))
                         {
@@ -80,11 +89,6 @@ namespace Symbiote.WebSocket.Impl
                     else
                     {
                         handshakeIndex++;
-                    }
-
-                    if(handshakeIndex == 5)
-                    {
-                        origin = Regex.Match(requestLine, @"(?<=Origin:[ ]).+").Value;
                     }
 
                     request.Append(requestLine);
