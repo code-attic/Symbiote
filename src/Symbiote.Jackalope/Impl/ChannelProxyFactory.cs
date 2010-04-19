@@ -6,7 +6,6 @@ namespace Symbiote.Jackalope.Impl
 {
     public class ChannelProxyFactory : IChannelProxyFactory
     {
-        private IEndpointIndex _endpointIndex;
         private IConnectionManager _connectionManager;
         private IEndpointManager _endpointManager;
         
@@ -26,15 +25,13 @@ namespace Symbiote.Jackalope.Impl
 
         public IChannelProxy GetProxyForQueue(string queueName)
         {
-            var endpoint = _endpointIndex.GetEndpointByQueue(queueName);
-            _endpointManager.ConfigureEndpoint(endpoint);
+            var endpoint = _endpointManager.GetEndpointByQueue(queueName);
             return CreateProxy(endpoint);
         }
 
         public IChannelProxy GetProxyForExchange(string exchangeName)
         {
-            var endpoint = _endpointIndex.GetEndpointByExchange(exchangeName);
-            _endpointManager.ConfigureEndpoint(endpoint);
+            var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
             return CreateProxy(endpoint);
         }
 
@@ -43,9 +40,8 @@ namespace Symbiote.Jackalope.Impl
             return new ChannelProxy(GetModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
         }
 
-        public ChannelProxyFactory(IEndpointIndex endpointIndex, IConnectionManager connectionManager, IEndpointManager endpointManager)
+        public ChannelProxyFactory(IConnectionManager connectionManager, IEndpointManager endpointManager)
         {
-            _endpointIndex = endpointIndex;
             _connectionManager = connectionManager;
             _endpointManager = endpointManager;
         }

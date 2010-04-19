@@ -70,8 +70,7 @@
         try {
 
             if ($.evalJSON(msg.data).userAliasLoggedSuccessfully) {
-                log('subscribing...');
-                send(clients());
+                if (connected_callback) connected_callback();
             }
             else {
                 log('message recieved');
@@ -87,7 +86,6 @@
     var setup = function () {
         try {
             send(userJson());
-            if (connected_callback) connected_callback();
             sock.onmessage = messageReceived;
             sock.onclose = disconnected_callback;
         } catch (Error) {
@@ -98,10 +96,6 @@
     var subscribe = function (exchange, keys) {
         var subscription = getSubscription(exchange, keys);
         send(subscription);
-    }
-
-    var clients = function () {
-        return getSubscription("client", [""]);
     }
 
     var getSubscription = function (exchange, keys) {

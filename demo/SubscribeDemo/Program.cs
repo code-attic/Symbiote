@@ -16,7 +16,7 @@ namespace SubscribeDemo
         {
             Assimilate
                 .Core()
-                .Jackalope(x => x.AddServer(s => s.Address("localhost").AMQP08()))
+                .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .AddColorConsoleLogger<IBus>(x => 
                     x.Info()
                     .MessageLayout(m => m.Message().Newline())

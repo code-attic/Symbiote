@@ -21,7 +21,7 @@ namespace PublishDemo
         {
             Assimilate
                 .Core()
-                .Jackalope(x => x.AddServer(s => s.Address("localhost").AMQP08()))
+                .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .Dependencies(x => x.For<Publisher>().Use<Publisher>());

@@ -95,6 +95,7 @@
     <Compile Include="Impl\EndpointManager.cs" />
     <Compile Include="Impl\IEndpointManager.cs" />
     <Compile Include="Impl\ISubscriptionManager.cs" />
+    <Compile Include="JackalopeConfigurationException.cs" />
     <Compile Include="Impl\NullSubscription.cs" />
     <Compile Include="Impl\SubscriptionManager.cs" />
     <Compile Include="DeliveryMode.cs" />

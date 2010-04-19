@@ -1,11 +1,12 @@
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Symbiote.Jackalope.Impl
 {
     public class EndpointIndex : IEndpointIndex
     {
-        private Dictionary<string, IEndPoint> _endpointsByQueue = new Dictionary<string, IEndPoint>();
-        private Dictionary<string, IEndPoint> _endpointsByExchange = new Dictionary<string, IEndPoint>();
+        private ConcurrentDictionary<string, IEndPoint> _endpointsByQueue = new ConcurrentDictionary<string, IEndPoint>();
+        private ConcurrentDictionary<string, IEndPoint> _endpointsByExchange = new ConcurrentDictionary<string, IEndPoint>();
 
         public IEndPoint GetEndpointByExchange(string exchangeName)
         {

@@ -63,10 +63,11 @@ namespace Symbiote.WebSocket.Impl
                 var requestLine = "";
                 var expected = ExpectedHandshakeLines.ToArray();
                 var handshakeIndex = 0;
+                var origin = "";
                 do
                 {
                     requestLine = reader.ReadLine();
-                    if (requestLine != expected[handshakeIndex])
+                    if (requestLine != expected[handshakeIndex] && handshakeIndex != 4)
                     {
                         if (!requestLine.StartsWith("Cookie"))
                         {
@@ -80,6 +81,12 @@ namespace Symbiote.WebSocket.Impl
                     {
                         handshakeIndex++;
                     }
+
+                    if(handshakeIndex == 5)
+                    {
+                        origin = Regex.Match(requestLine, @"(?<=Origin:[ ]).+").Value;
+                    }
+
                     request.Append(requestLine);
                 } while (!string.IsNullOrEmpty(requestLine));
 
@@ -88,7 +95,7 @@ namespace Symbiote.WebSocket.Impl
                 writer.WriteLine("HTTP/1.1 101 Web Socket Protocol Handshake");
                 writer.WriteLine("Upgrade: WebSocket");
                 writer.WriteLine("Connection: Upgrade");
-                writer.WriteLine("WebSocket-Origin: " + _configuration.ServerUrl);
+                writer.WriteLine("WebSocket-Origin: " + origin);
                 writer.WriteLine("WebSocket-Location: " + _configuration.SocketUrl);
                 writer.WriteLine("");
             }

@@ -35,7 +35,7 @@
     function send() {
     var content = $('#console_input').val();
     var message = { "From":username, "Body":content };
-    warren.sendmessage('client', message, '');
+    socketmq.sendmessage('client', message, '');
     }
 
     $(function() {

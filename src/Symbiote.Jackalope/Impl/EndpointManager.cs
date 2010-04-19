@@ -5,7 +5,7 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl
 {
-    public class EndpointManager : IEndpointManager, IEndpointIndex
+    public class EndpointManager : IEndpointManager
     {
         protected IConnectionManager _connectionManager;
         protected IEndpointIndex _endpointIndex;
@@ -18,21 +18,22 @@ namespace Symbiote.Jackalope.Impl
 
         public void ConfigureEndpoint(IEndPoint endpoint)
         {
-            var configuration = endpoint.EndpointConfiguration;
-            using(var channel = _connectionManager.GetConnection().CreateModel())
+            if (!endpoint.Initialized)
             {
-                if (!endpoint.Initialized)
+                var configuration = endpoint.EndpointConfiguration;
+                using(var channel = _connectionManager.GetConnection().CreateModel())
                 {
-                    if (!string.IsNullOrEmpty(configuration.ExchangeName))
-                        BuildExchange(channel, configuration);
+                    
+                        if (!string.IsNullOrEmpty(configuration.ExchangeName))
+                            BuildExchange(channel, configuration);
 
-                    if (!string.IsNullOrEmpty(configuration.QueueName))
-                        BuildQueue(channel, configuration);
+                        if (!string.IsNullOrEmpty(configuration.QueueName))
+                            BuildQueue(channel, configuration);
 
-                    if (!string.IsNullOrEmpty(configuration.ExchangeName) && !string.IsNullOrEmpty(configuration.QueueName))
-                        BindQueue(channel, configuration.ExchangeName, configuration.QueueName, configuration.RoutingKeys.ToArray());
+                        if (!string.IsNullOrEmpty(configuration.ExchangeName) && !string.IsNullOrEmpty(configuration.QueueName))
+                            BindQueue(channel, configuration.ExchangeName, configuration.QueueName, configuration.RoutingKeys.ToArray());
 
-                    endpoint.Initialized = true;
+                        endpoint.Initialized = true;
                 }
             }
         }
@@ -91,12 +92,22 @@ namespace Symbiote.Jackalope.Impl
 
         public IEndPoint GetEndpointByExchange(string exchangeName)
         {
-            return _endpointIndex.GetEndpointByExchange(exchangeName);
+            var endpoint = _endpointIndex.GetEndpointByExchange(exchangeName);
+            if (endpoint == null)
+                throw new JackalopeConfigurationException(
+                    "There was no endpoint configured for exchange {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(exchangeName));
+            ConfigureEndpoint(endpoint);
+            return endpoint;
         }
 
         public IEndPoint GetEndpointByQueue(string queueName)
         {
-            return _endpointIndex.GetEndpointByQueue(queueName);
+            var endpoint = _endpointIndex.GetEndpointByQueue(queueName);
+            if (endpoint == null)
+                throw new JackalopeConfigurationException(
+                    "There was no endpoint configured for exchange {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(queueName));
+            ConfigureEndpoint(endpoint);
+            return endpoint;
         }
 
         public EndpointManager(IConnectionManager connectionManager, IEndpointIndex endpointIndex)
