@@ -28,7 +28,7 @@ namespace SocketMQ.ChatService
                 .AddColorConsoleLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsYellow().ForAllOutput())
                 .AddColorConsoleLogger<ClientMessage>(x => x.Info().MessageLayout(m => m.Message().Newline()).DefineColor().Text.IsBlue().ForAllOutput())
                 .AddFileLogger<ISocketServer>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("log.log"))
-                .AddFileLogger<MessageGateway>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("warren.log"))
+                .AddFileLogger<IMessageGateway>(x => x.Info().MessageLayout(m => m.Message().Newline()).FileName("socketmq.log"))
                 .RunDaemon();
         }
     }

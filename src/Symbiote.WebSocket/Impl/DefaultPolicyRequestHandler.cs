@@ -44,7 +44,7 @@ namespace Symbiote.WebSocket
         protected virtual void CreatePolicyListener()
         {
             PolicyListener = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP);
-            _policyEndPoint = new IPEndPoint(IPAddress.Loopback, 843);
+            _policyEndPoint = new IPEndPoint(IPAddress.Any, 843);
             PolicyListener.Bind(_policyEndPoint);
             PolicyListener.Listen(50);
             ListenForPolicyConnections();

@@ -35,26 +35,31 @@ namespace Symbiote.Jackalope.Impl
 
         public void StartSubscription(string queueName)
         {
-            var subscription = _subscriptions[queueName];
-            if(subscription.Stopped || subscription.Stopping)
-                subscription.Start();
+            ISubscription subscription = null; 
+            if(_subscriptions.TryGetValue(queueName, out subscription))
+                if(subscription.Stopped || subscription.Stopping)
+                    subscription.Start();
         }
 
         public void StopSubscription(string queueName)
         {
-            var subscription = _subscriptions[queueName];
-            if (subscription.Started || subscription.Starting)
-                subscription.Stop();
+            ISubscription subscription = null;
+            if (_subscriptions.TryGetValue(queueName, out subscription))
+                if (subscription.Started || subscription.Starting)
+                    subscription.Start();
         }
 
         public ISubscription AddSubscription(string queueName, int threads)
         {
-            var subscription = ObjectFactory
-                .With<string>(queueName)
-                .GetInstance<ISubscription>();
+            ISubscription subscription = null;
 
-            _subscriptions[queueName] = subscription;
-
+            if(!_subscriptions.TryGetValue(queueName, out subscription))
+            {
+                subscription = ObjectFactory
+                    .With<string>(queueName)
+                    .GetInstance<ISubscription>();
+                    _subscriptions[queueName] = subscription;
+            }
             return subscription;
         }
     }

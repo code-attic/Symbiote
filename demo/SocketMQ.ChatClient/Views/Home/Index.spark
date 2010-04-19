@@ -15,6 +15,7 @@
     function connected()
     {
     logger('Connected!');
+    socketmq.subscribe('client', ['']);
     }
 
     function disconnected()
