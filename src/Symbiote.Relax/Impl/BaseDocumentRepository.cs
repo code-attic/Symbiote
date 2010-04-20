@@ -29,7 +29,7 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var updatedJson = command.Delete(uri);
                 var updated = updatedJson.FromJson<SaveResponse>();
-                model.UpdateRevFromJson(updated.Revision.ToJson(false));
+                model.UpdateRevFromJson(updated.Revision.ToJson(_configuration.ExcludeTypeSpecification));
                 model.RemoveAttachment(attachmentName);
             }
             catch (Exception ex)
@@ -255,7 +255,7 @@ namespace Symbiote.Relax.Impl
             try
             {
                 var keys = new KeyList() {keys = ids};
-                var jsonKeyList = keys.ToJson(false);
+                var jsonKeyList = keys.ToJson(_configuration.ExcludeTypeSpecification);
                 var command = _commandFactory.GetCommand();
                 var json = command.Post(uri, jsonKeyList);
                 List<TModel> list = new List<TModel>();
@@ -312,11 +312,11 @@ namespace Symbiote.Relax.Impl
 
             try
             {
-                var body = model.ToJson(false);
+                var body = model.ToJson(_configuration.ExcludeTypeSpecification);
                 var command = _commandFactory.GetCommand();
                 var updatedJSON = command.Put(uri, body);
                 var updated = updatedJSON.FromJson<SaveResponse>();
-                model.UpdateRevFromJson(updated.Revision.ToJson(false));
+                model.UpdateRevFromJson(updated.Revision.ToJson(_configuration.ExcludeTypeSpecification));
             }
             catch (Exception ex)
             {
@@ -338,7 +338,7 @@ namespace Symbiote.Relax.Impl
             {
                 var documentList = new BulkPersist<TModel>(true, false, list);
                 var command = _commandFactory.GetCommand();
-                var body = documentList.ToJson(false);
+                var body = documentList.ToJson(_configuration.ExcludeTypeSpecification);
                 var updatedJson = command.Post(uri, body);
                 var updated = updatedJson.FromJson<SaveResponse[]>();
                 list
@@ -374,7 +374,7 @@ namespace Symbiote.Relax.Impl
                 var command = _commandFactory.GetCommand();
                 var updatedJson = command.SaveAttachment(uri, contentType, content);
                 var updated = updatedJson.FromJson<SaveResponse>();
-                model.UpdateRevFromJson(updated.Revision.ToJson(false));
+                model.UpdateRevFromJson(updated.Revision.ToJson(_configuration.ExcludeTypeSpecification));
                 model.AddAttachment(attachmentName, contentType, content.Length);
             }
             catch (Exception ex)

@@ -14,7 +14,7 @@ namespace Symbiote.SocketMQ
         {
             try
             {
-                var socketMessage = new SocketMessage()
+                var socketMessage = new JsonSocketMessage()
                                         {
                                             Body = message,
                                             From = messageDelivery.Exchange,
@@ -22,7 +22,7 @@ namespace Symbiote.SocketMQ
                                             RoutingKey = ""
                                         };
 
-                var body = socketMessage.ToJson(false);
+                var body = socketMessage.ToJson();
                 if (_server.Send(body, socketMessage.From, socketMessage.To))
                     messageDelivery.Acknowledge();
                 else

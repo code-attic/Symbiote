@@ -27,10 +27,14 @@ namespace Symbiote.Jackalope.Impl
 
         public void Start()
         {
-            Starting = true;
-            _brokerTask.Start();
-            Starting = false;
-            Started = true;
+            if(!Started || !Starting)
+            {
+                Starting = true;
+                InitializeBrokerTask();
+                _brokerTask.Start();
+                Starting = false;
+                Started = true;
+            }
         }
 
         public void Stop()
@@ -45,6 +49,11 @@ namespace Symbiote.Jackalope.Impl
         public Subscription(string queueName)
         {
             _queueName = queueName;
+            Start();
+        }
+
+        protected void InitializeBrokerTask()
+        {
             _broker = ObjectFactory.GetInstance<Broker>() as IBroker;
             _tokenSource = new CancellationTokenSource();
             _brokerCancelToken = _tokenSource.Token;

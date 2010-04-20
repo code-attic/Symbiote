@@ -67,6 +67,12 @@ namespace Symbiote.Relax
             return this;
         }
 
+        public CouchConfigurator ExcludeTypeSpecificationFromJson()
+        {
+            _config.ExcludeTypeSpecification = true;
+            return this;
+        }
+
         public CouchConfigurator TimeOut(int timeOut)
         {
             _config.TimeOut = timeOut;

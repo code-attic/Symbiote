@@ -58,7 +58,7 @@
                 "To": to,
                 "Body": jsonMessage,
                 "From": username,
-                "RoutingKey": ""
+                "RoutingKey": key
             };
             send(json);
         } catch (Error) {
@@ -75,8 +75,9 @@
             else {
                 log('message recieved');
                 var json = $.evalJSON(msg.data);
+                //var body = $.evalJSON(json.Body);
                 log('processed message to: ' + json);
-                if (on_message) on_message(json);
+                if (on_message) on_message(json.Body);
             }
         } catch (Error) {
             if (error_callback) error_callback(Error);
@@ -100,7 +101,6 @@
 
     var getSubscription = function (exchange, keys) {
         return {
-            "$type": "Subscribe",
             "Exchange": exchange,
             "RoutingKeys": keys
         };

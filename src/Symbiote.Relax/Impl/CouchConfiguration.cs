@@ -32,6 +32,7 @@ namespace Symbiote.Relax.Impl
         public DateTime CacheExpiration { get; set; }
         public TimeSpan CacheLimit { get; set; }
         public bool Throw404Exceptions { get; set; }
+        public bool ExcludeTypeSpecification { get; set; }
 
         public CouchConfiguration()
         {

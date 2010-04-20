@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization.Formatters;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json;
@@ -16,7 +17,8 @@ namespace Symbiote.Core.Extensions
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore,
-                TypeNameHandling = TypeNameHandling.All
+                TypeNameHandling = TypeNameHandling.All,
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
             };
 
             var serializer = JsonSerializer.Create(settings);
@@ -54,7 +56,9 @@ namespace Symbiote.Core.Extensions
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.All
+                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
             };
             var serializer = JsonSerializer.Create(settings);
             try

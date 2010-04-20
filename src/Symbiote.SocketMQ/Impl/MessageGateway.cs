@@ -1,4 +1,7 @@
 ﻿using System;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope;
 using Symbiote.Jackalope.Impl;
@@ -36,8 +39,9 @@ namespace Symbiote.SocketMQ.Impl
             {
                 try
                 {
-                    var socketMessage = message.Item2.FromJson<SocketMessage>();
-                    _bus.Send(socketMessage.To, socketMessage.Body, socketMessage.RoutingKey);
+                    var socketMessage = message.Item2.FromJson<ServerSocketMessage>();
+                    var body = DecodeMessageContent(message.Item2);
+                    _bus.Send(socketMessage.To, body, socketMessage.RoutingKey);
                 }
                 catch (Exception e)
                 {
@@ -69,6 +73,17 @@ namespace Symbiote.SocketMQ.Impl
                 
                 throw exception;
             }
+        }
+
+        protected object DecodeMessageContent(string json)
+        {
+            JToken jsonDoc;
+            using (var reader = new StringReader(json))
+            using (var jsonReader = new JsonTextReader(reader))
+            {
+                jsonDoc = JToken.ReadFrom(jsonReader);
+            }
+            return jsonDoc["Body"].ToString().FromJson();
         }
 
         private void HandleClientDisconnect(string clientId)

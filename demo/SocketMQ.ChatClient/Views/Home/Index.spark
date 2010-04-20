@@ -29,8 +29,8 @@
     }
 
     function message(msg) {
-    if(msg.Body.From)
-      $('#console').append(msg.Body.From+ ': ' + msg.Body.Body + '<br/>');
+    if(msg.From)
+      $('#console').append(msg.From+ ': ' + msg.Body + '<br/>');
     }
 
     function send() {
