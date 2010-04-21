@@ -36,10 +36,15 @@ namespace Symbiote.WebSocket.Impl
 
         public virtual void Close()
         {
-            _socket.Close();
-            _observers.ForEach(x => x.OnCompleted());
-            _observers.Clear();
-            _observers = null;
+            if(_socket!=null && _socket.Connected)
+                _socket.Close();
+            
+            if(_observers != null && _observers.Count > 0)
+            {
+                _observers.ForEach(x => x.OnCompleted());
+                _observers.Clear();
+                _observers = null;
+            }
             if(OnDisconnect != null)
                 OnDisconnect(ClientId);
         }
@@ -116,6 +121,7 @@ namespace Symbiote.WebSocket.Impl
             ClientId = clientId;
             _socket = socket;
             _bufferSize = bufferSize;
+            socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.KeepAlive, true);
             Listen();
         }
     }

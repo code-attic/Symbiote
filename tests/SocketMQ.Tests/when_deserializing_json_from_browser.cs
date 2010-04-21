@@ -22,7 +22,9 @@ namespace SocketMQ.Tests
                                      {
                                          jsonDoc = JToken.ReadFrom(jsonReader);
                                      }
-                                     body = jsonDoc["Body"].ToString().FromJson() as ElaborateMessageType;
+                                     var s = jsonDoc["Body"].ToString();
+                                     var fromJson = s.FromJson();
+                                     body = fromJson as ElaborateMessageType;
                                  };
 
         private It should_have_to_value = () =>

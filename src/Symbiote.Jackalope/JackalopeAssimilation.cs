@@ -67,6 +67,8 @@ namespace Symbiote.Jackalope
                     {
                         x.For<IBus>()
                             .Use<Bus>();
+                        x.For<IBroker>()
+                            .Use<Broker>();
                         x.For<IMessageSerializer>()
                             .Use<JsonMessageSerializer>();
                         x.For<IChannelProxyFactory>()

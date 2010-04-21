@@ -46,7 +46,10 @@ namespace Symbiote.Jackalope.Impl
             ISubscription subscription = null;
             if (_subscriptions.TryGetValue(queueName, out subscription))
                 if (subscription.Started || subscription.Starting)
-                    subscription.Start();
+                {
+                    _subscriptions.Remove(queueName);
+                    subscription.Dispose();
+                }
         }
 
         public ISubscription AddSubscription(string queueName, int threads)

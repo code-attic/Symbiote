@@ -54,7 +54,7 @@ namespace Symbiote.Jackalope.Impl
 
         protected void InitializeBrokerTask()
         {
-            _broker = ObjectFactory.GetInstance<Broker>() as IBroker;
+            _broker = ObjectFactory.GetInstance<IBroker>();
             _tokenSource = new CancellationTokenSource();
             _brokerCancelToken = _tokenSource.Token;
             _brokerCancelToken.Register(_broker.Stop);

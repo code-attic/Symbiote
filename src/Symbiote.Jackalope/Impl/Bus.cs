@@ -147,14 +147,18 @@ namespace Symbiote.Jackalope.Impl
         public void Send<T>(string exchangeName, T body)
             where T : class
         {
-            Send(exchangeName, body, "");
+            if(body != default(T))
+                Send(exchangeName, body, "");
         }
 
         public void Send<T>(string exchangeName, T body, string routingKey) where T : class
         {
-            using (var proxy = _channelFactory.GetProxyForExchange(exchangeName))
+            if (body != default(T))
             {
-                proxy.Send(body, routingKey);
+                using (var proxy = _channelFactory.GetProxyForExchange(exchangeName))
+                {
+                    proxy.Send(body, routingKey);
+                }
             }
         }
 

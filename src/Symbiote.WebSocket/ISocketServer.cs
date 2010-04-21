@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using Symbiote.WebSocket.Impl;
@@ -9,7 +10,7 @@ namespace Symbiote.WebSocket
         IDisposable,
         IObservable<Tuple<string, string>>
     {
-        IList<IWebSocket> ClientSockets { get; }
+        ConcurrentDictionary<string, IWebSocket> ClientSockets { get; }
         event Action<string> ClientConnected;
         event Action<string> ClientDisconnected;
         event Action Shutdown;

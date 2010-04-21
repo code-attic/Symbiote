@@ -23,7 +23,7 @@ namespace Symbiote.WebSocket.Impl
         public event Action<string> ClientDisconnected;
         public event Action Shutdown;
 
-        public virtual IList<IWebSocket> ClientSockets { get; private set; }
+        public virtual ConcurrentDictionary<string, IWebSocket> ClientSockets { get; private set; }
         public virtual Socket Listener { get; private set; }
         
         public virtual void AddMessageHandle(Action<Tuple<string, string>> messageHandler)
@@ -43,7 +43,7 @@ namespace Symbiote.WebSocket.Impl
             Listener.Close();
             Listener.Dispose();
             Listener = null;
-            ClientSockets.ForEach(x => x.Dispose());
+            ClientSockets.Values.ForEach(x => x.Dispose());
             ClientSockets.Clear();
             ClientSockets = null;
             _socketObservers.Clear();
@@ -62,7 +62,7 @@ namespace Symbiote.WebSocket.Impl
             try
             {
                 ClientSockets
-                    .ForEach(x => x.Send(data));
+                    .ForEach(x => x.Value.Send(data));
                 return true;
             }
             catch (Exception e)
@@ -87,10 +87,14 @@ namespace Symbiote.WebSocket.Impl
                                      .Where(x => x.Value == to)
                                      .Select(x => x.Key)
                                      .FirstOrDefault() ?? to;
-                    ClientSockets
-                        .Where(x => x.ClientId == client)
-                        .ForEach(x => x.Send(data));
-                    return true;
+
+                    IWebSocket socket = null;
+                    if(ClientSockets.TryGetValue(client, out socket))
+                    {
+                        socket.Send(data);
+                        return true;
+                    }
+                    return false;
                 }
                 catch (Exception e)
                 {
@@ -127,18 +131,22 @@ namespace Symbiote.WebSocket.Impl
             Listener.BeginAccept(OnIncommingConnection, null);
         }
 
+        protected virtual void OnClientDisconnect(string clientId)
+        {
+            KillSocketById(clientId);
+            if (ClientDisconnected != null) ClientDisconnected(clientId);
+        }
+
         protected virtual void OnIncommingConnection(IAsyncResult ar)
         {
             var newSocket = Listener.EndAccept(ar);
+            
             var clientId = Guid.NewGuid().ToString();
             if(_handShaker.ValidateHandShake(newSocket))
             {
                 var webSocket = _socketFactory.GetSocket(clientId, newSocket, _config.ReceiveBufferSize);
-                webSocket.OnDisconnect = x =>
-                {
-                    if (ClientDisconnected != null) ClientDisconnected(x);
-                };
-                ClientSockets.Add(webSocket);
+                webSocket.OnDisconnect = x => OnClientDisconnect(x);
+                ClientSockets.TryAdd(clientId, webSocket);
 
                 var observer = new WebSocketObserver()
                 {
@@ -159,6 +167,7 @@ namespace Symbiote.WebSocket.Impl
             var alias = message.Item2.FromJson<AliasDefinition>();
             if (alias != null && !string.IsNullOrEmpty(alias.Name))
             {
+                KillSocketByClientId(alias.Name);
                 _clientAliasTable[message.Item1] = alias.Name;
                 if (ClientConnected != null)
                     ClientConnected(alias.Name);
@@ -170,6 +179,30 @@ namespace Symbiote.WebSocket.Impl
                 _observers
                     .ForEach(x => x.OnNext(newMessage));
             }
+        }
+
+        protected virtual void KillSocketByClientId(string clientId)
+        {
+            IWebSocket existingSocket = null;
+            var id = Guid.Empty.ToString();
+
+            if(_clientAliasTable.TryRemove(clientId, out id))
+            if (ClientSockets.TryRemove(id, out existingSocket))
+            {
+                existingSocket.Dispose();
+            }
+        }
+
+        protected virtual void KillSocketById(string id)
+        {
+            IWebSocket existingSocket = null;
+            if (ClientSockets.TryRemove(id, out existingSocket))
+            {
+                existingSocket.Dispose();
+            }
+            var nothing = ""; // its really lame they don't let you remove a key w/o getting the value...
+            var aliases = _clientAliasTable.Where(x => x.Value == id).Select(x => x.Key);
+            aliases.ForEach(x => _clientAliasTable.TryRemove(x, out nothing));
         }
 
         public virtual IDisposable Subscribe(IObserver<Tuple<string, string>> observer)
@@ -188,7 +221,7 @@ namespace Symbiote.WebSocket.Impl
             _handShaker = handShaker;
             _policyRequestHandler = policyRequestHandler;
             _socketFactory = socketFactory;
-            ClientSockets = new List<IWebSocket>();
+            ClientSockets = new ConcurrentDictionary<string, IWebSocket>();
         }
     }
 }

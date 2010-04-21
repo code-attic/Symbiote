@@ -94,6 +94,9 @@ namespace Symbiote.Jackalope.Impl
 
         public void Send<T>(T body, string routingKey) where T : class
         {
+            if (body == default(T))
+                return;
+
             var contentType = "text/plain";
             var stream = Serializer.Serialize(body);
             IBasicProperties properties = CreatePublishingProperties(contentType);
@@ -103,6 +106,9 @@ namespace Symbiote.Jackalope.Impl
 
         public void Send<T>(T body, string routingKey, bool mandatory, bool immediate) where T : class
         {
+            if (body == default(T))
+                return;
+
             var contentType = "text/plain";
             var stream = Serializer.Serialize(body);
             IBasicProperties properties = CreatePublishingProperties(contentType);
