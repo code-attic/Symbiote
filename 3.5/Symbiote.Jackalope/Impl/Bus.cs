@@ -184,11 +184,6 @@ namespace Symbiote.Jackalope.Impl
             _subscriptionManager.StopSubscription(queueName);
         }
 
-        protected void CloseConnection()
-        {
-
-        }
-
         public Bus(IChannelProxyFactory channelFactory, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
         {
             _channelFactory = channelFactory;

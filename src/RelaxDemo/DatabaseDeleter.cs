@@ -1,4 +1,5 @@
-﻿using Symbiote.Relax;
+﻿using Relax;
+using Symbiote.Relax;
 
 namespace RelaxDemo
 {

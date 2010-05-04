@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using System.Text;
+using Relax;
+using Relax.Impl;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
-using Symbiote.Relax;
-using Symbiote.Relax.Impl;
 
 namespace RelaxDemo
 {
