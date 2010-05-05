@@ -125,10 +125,6 @@
       <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
       <Name>Symbiote.Log4Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Symbiote.Relax\Symbiote.Relax.csproj">
-      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
-      <Name>Symbiote.Relax</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

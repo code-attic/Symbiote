@@ -13,15 +13,7 @@ namespace Symbiote.Relax
             var config = new CouchConfigurator();
             configure(config);
             var configuration = config.GetConfiguration();
-
-            if(configuration.Cache)
-            {
-                assimilate
-                    .Dependencies(x => x.For<ICacheProvider>().Use<EideticCacheProvider>());
-            }
-
             RelaxConfiguration.Configure(configuration);
-
             return assimilate;
         }
     }

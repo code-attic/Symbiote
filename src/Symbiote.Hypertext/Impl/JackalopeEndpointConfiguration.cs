@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Relax;
 using Symbiote.Jackalope;
 using Symbiote.Jackalope.Impl;
-using Symbiote.Relax;
 
 namespace Symbiote.Telepathy
 {

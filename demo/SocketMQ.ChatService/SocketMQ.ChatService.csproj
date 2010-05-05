@@ -80,10 +80,6 @@
       <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
       <Name>Symbiote.Log4Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
-      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
-      <Name>Symbiote.Relax</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.SocketMQ\Symbiote.SocketMQ.csproj">
       <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
       <Name>Symbiote.SocketMQ</Name>
