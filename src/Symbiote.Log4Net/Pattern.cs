@@ -35,7 +35,9 @@ namespace Symbiote.Log4Net
                 return "%{0}{1}".AsFormat(max, arg);
             return "%{0}".AsFormat(arg);
         }
+        
         private DelimitedBuilder _builder = new DelimitedBuilder(" ");
+        
         private Pattern Add(string argument)
         {
             _builder.Append(GetArgument(argument, null, null));

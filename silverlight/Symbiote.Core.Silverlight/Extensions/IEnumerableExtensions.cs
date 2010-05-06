@@ -49,7 +49,7 @@ namespace Symbiote.Core.Extensions
 
         public static string BuildString(this IEnumerable<string> source, string delimiter)
         {
-            return String.Join(delimiter, source);
+            return DelimitedBuilder.Construct(source, delimiter);
         }
 
         public static IEnumerable<IEnumerable<T>> UniquePermutations<T>(this IEnumerable<T> enumerable)
