@@ -60,10 +60,6 @@
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
       <Name>Symbiote.Jackalope</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Relax\Symbiote.Relax.csproj">
-      <Project>{82EA8EFB-6B35-4690-9A53-5143C1CC9249}</Project>
-      <Name>Symbiote.Relax</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

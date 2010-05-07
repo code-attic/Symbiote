@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2F1486DA-85F6-401C-A9D8-360AF6FE9360}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Symbiote.Jackalope</RootNamespace>
+    <AssemblyName>Symbiote.Jackalope</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=1.7.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\IAmqpConfiguration.cs" />
+    <Compile Include="Config\AmqpFluentConfiguration.cs" />
+    <Compile Include="Config\AmqpFluentServerConfiguration.cs" />
+    <Compile Include="Config\AmqpServer.cs" />
+    <Compile Include="Config\AmqpServerCollection.cs" />
+    <Compile Include="Config\AmqpServerConfiguration.cs" />
+    <Compile Include="Config\IAmqpConfigurationProvider.cs" />
+    <Compile Include="Config\IAmqpServerConfiguration.cs" />
+    <Compile Include="Envelope.cs" />
+    <Compile Include="ICorrelate.cs" />
+    <Compile Include="Impl\ActionDispatcher.cs" />
+    <Compile Include="Impl\BaseBroker.cs" />
+    <Compile Include="Impl\EndpointManager.cs" />
+    <Compile Include="Impl\IEndpointManager.cs" />
+    <Compile Include="Impl\ISubscriptionManager.cs" />
+    <Compile Include="JackalopeConfigurationException.cs" />
+    <Compile Include="Impl\NullSubscription.cs" />
+    <Compile Include="Impl\SubscriptionManager.cs" />
+    <Compile Include="DeliveryMode.cs" />
+    <Compile Include="ExchangeType.cs" />
+    <Compile Include="Impl\IBroker.cs" />
+    <Compile Include="IBus.cs" />
+    <Compile Include="Impl\IChannelProxy.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="Impl\IMessageSerializer.cs" />
+    <Compile Include="Impl\AmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\Broker.cs" />
+    <Compile Include="Impl\Bus.cs" />
+    <Compile Include="Impl\BusEndPoint.cs" />
+    <Compile Include="Impl\ChannelProxy.cs" />
+    <Compile Include="Impl\ChannelProxyFactory.cs" />
+    <Compile Include="Impl\ConnectionManager.cs" />
+    <Compile Include="Impl\Dispatcher.cs" />
+    <Compile Include="Impl\EndpointIndex.cs" />
+    <Compile Include="Impl\IAmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\IChannelProxyFactory.cs" />
+    <Compile Include="Impl\IConnectionManager.cs" />
+    <Compile Include="Impl\IConnectionProvider.cs" />
+    <Compile Include="Impl\IDispatch.cs" />
+    <Compile Include="Impl\IEndPoint.cs" />
+    <Compile Include="Impl\IEndpointIndex.cs" />
+    <Compile Include="IMessageDelivery.cs" />
+    <Compile Include="Impl\ISubscription.cs" />
+    <Compile Include="Impl\JsonMessageSerializer.cs" />
+    <Compile Include="Impl\NetBinarySerializer.cs" />
+    <Compile Include="Impl\MessageDelivery.cs" />
+    <Compile Include="Impl\Subscription.cs" />
+    <Compile Include="JackalopeAssimilation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{3B862239-2F67-4F50-B65C-D2051866AED6}</Project>
+      <Name>Symbiote.Core %283.5\Symbiote.Core%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

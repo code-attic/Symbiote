@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Enyim.Caching.Configuration;
 using Symbiote.Core;
+using Symbiote.Core.Cache;
 using Symbiote.Eidetic.Config;
 using Symbiote.Eidetic.Extensions;
 using Symbiote.Eidetic.Impl;
@@ -23,6 +24,8 @@ namespace Symbiote.Eidetic
                           .Use<JsonRemembrance>();
                       x.For<IRemember>()
                           .Use<MemcachedAdapter>();
+                      x.For<ICacheProvider>()
+                          .Use<EideticCacheProvider>();
                   });
             return assimilate;
         }

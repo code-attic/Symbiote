@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Assimilate.cs" />
     <Compile Include="AssimilationException.cs" />
+    <Compile Include="Cache\ICacheProvider.cs" />
     <Compile Include="Config\StructureMapServiceLocator.cs" />
     <Compile Include="DelimitedBuilder.cs">
       <SubType>Code</SubType>

@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Relax;
 using StructureMap;
 using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Jackalope;
-using Symbiote.Jackalope.Config;
-using Symbiote.Jackalope.Impl;
-using Symbiote.Relax;
-using Symbiote.Relax.Impl;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Telepathy

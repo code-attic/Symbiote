@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Symbiote.Relax;
+using Relax;
 
 namespace RelaxDemo
 {

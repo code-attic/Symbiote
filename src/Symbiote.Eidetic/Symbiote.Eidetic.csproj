@@ -83,12 +83,13 @@
     <Compile Include="EideticAssimilation.cs" />
     <Compile Include="Extensions\EideticExtensions.cs" />
     <Compile Include="Extensions\IRemembrance.cs" />
+    <Compile Include="Impl\EideticCacheProvider.cs" />
     <Compile Include="Impl\JsonRemembrance.cs" />
     <Compile Include="Impl\MemcachedAdapter.cs" />
     <Compile Include="Config\MemcachedConfig.cs" />
     <Compile Include="Config\MemcachedServer.cs" />
     <Compile Include="Config\MemcachedServerList.cs" />
-    <Compile Include="Impl\MemoryManager.cs" />
+    <Compile Include="Impl\MemoryMananger.cs" />
     <Compile Include="IRemember.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StoreMode.cs" />

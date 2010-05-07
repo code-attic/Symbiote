@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Eidetic", "Symbiot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Jackalope", "Symbiote.Jackalope\Symbiote.Jackalope.csproj", "{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Relax", "Symbiote.Relax\Symbiote.Relax.csproj", "{82EA8EFB-6B35-4690-9A53-5143C1CC9249}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Log4Net", "Symbiote.Log4Net\Symbiote.Log4Net.csproj", "{2A11B3F6-CBDF-463C-A507-5694AA5236BC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Jabber", "Symbiote.Jabber\Symbiote.Jabber.csproj", "{3DDF0C1A-02E2-4925-9310-2726F289F772}"
@@ -49,8 +47,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.GreyHound", "Symbi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Web", "Symbiote.Web\Symbiote.Web.csproj", "{9534CDC0-54D0-442E-AE46-B47E4DCE2B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Relax.Tests", "..\tests\Relax.Tests\Relax.Tests.csproj", "{6F1DB555-D2FF-4E2C-8F20-4A012D6F4581}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Relax", "Relax", "{1629CA99-8736-4052-AE1D-D947DD7B5427}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RelaxDemo", "RelaxDemo\RelaxDemo.csproj", "{B1BB0BE4-77B7-45D4-A973-C6BAEE76A709}"
@@ -70,6 +66,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketMQ.ChatClient", "..\demo\SocketMQ.ChatClient\SocketMQ.ChatClient.csproj", "{835853B7-9877-416F-A06D-E97F55DFE6A5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketMQ.Tests", "..\tests\SocketMQ.Tests\SocketMQ.Tests.csproj", "{0C318646-316B-472B-8991-434609C03561}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.5", "3.5", "{77E2030E-3FF1-4D4C-8814-6B7EF955036F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Jackalope", "..\3.5\Symbiote.Jackalope\Symbiote.Jackalope.csproj", "{2F1486DA-85F6-401C-A9D8-360AF6FE9360}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Core", "..\3.5\Symbiote.Core\Symbiote.Core.csproj", "{3B862239-2F67-4F50-B65C-D2051866AED6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Restfully", "Symbiote.Restfully\Symbiote.Restfully.csproj", "{5A02B843-4047-4885-8839-FE9E4A9EBFE1}"
 EndProject
@@ -353,16 +355,26 @@ Global
 		{0C318646-316B-472B-8991-434609C03561}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0C318646-316B-472B-8991-434609C03561}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{0C318646-316B-472B-8991-434609C03561}.Release|x86.ActiveCfg = Release|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{5A02B843-4047-4885-8839-FE9E4A9EBFE1}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360}.Release|x86.ActiveCfg = Release|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3B862239-2F67-4F50-B65C-D2051866AED6}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -400,5 +412,7 @@ Global
 		{77BEFB01-29E7-44D4-AEF8-EF0BAD312878} = {7B765B76-3DAA-455E-A35E-6327ECA7DF06}
 		{A70FB068-DA21-4736-8164-8C13D53F3A74} = {7B765B76-3DAA-455E-A35E-6327ECA7DF06}
 		{835853B7-9877-416F-A06D-E97F55DFE6A5} = {7B765B76-3DAA-455E-A35E-6327ECA7DF06}
+		{2F1486DA-85F6-401C-A9D8-360AF6FE9360} = {77E2030E-3FF1-4D4C-8814-6B7EF955036F}
+		{3B862239-2F67-4F50-B65C-D2051866AED6} = {77E2030E-3FF1-4D4C-8814-6B7EF955036F}
 	EndGlobalSection
 EndGlobal
