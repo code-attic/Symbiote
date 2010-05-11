@@ -31,12 +31,62 @@ namespace Symbiote.Restfully
         }
     }
 
+    public enum HttpVerb
+    {
+        GET,
+        PUT,
+        POST,
+        DELETE,
+        LOCK,
+        UNLOCK,
+        SEARCH,
+        COPY,
+        MOVE,
+    }
+
+    public class ResourceRequest
+    {
+        protected IHttpServerConfiguration Configuration { get; set; }
+
+        public HttpListenerContext Context { get; protected set; }
+        public HttpListenerRequest Request { get { return Context.Request; } }
+        public HttpListenerResponse Response { get { return Context.Response; } }
+        public string Resource { get; protected set; }
+        public string Action { get; protected set; }
+        public bool IsValid { get; protected set; }
+
+        protected virtual void Initialize()
+        {
+            var splits = Context.Request.Url.AbsolutePath.Split('/');
+
+            if (splits.Length == 2)
+            {
+                Resource = splits[0];
+                Action = splits[1];
+                IsValid = true;
+            }
+            else
+            {
+                IsValid = false;
+                return;
+            }
+        }
+
+        public ResourceRequest(HttpListenerContext context, IHttpServerConfiguration configuration)
+        {
+            Context = context;
+            Configuration = configuration;
+            Initialize();
+        }
+    }
+
     public interface IHttpServerConfiguration
     {
         IList<string> HostedUrls { get; set; }
         int Port { get; set; }
-        RouteCollection Routes { get; set; }
         AuthenticationSchemes AuthSchemes { get; set; }
+        string DefaultService { get; set; }
+        string DefaultAction { get; set; }
 
         void UseDefaults();
     }
@@ -46,7 +96,8 @@ namespace Symbiote.Restfully
         public AuthenticationSchemes AuthSchemes { get; set; }
         public IList<string> HostedUrls { get; set; }
         public int Port { get; set; }
-        public RouteCollection Routes { get; set; }
+        public string DefaultService { get; set; }
+        public string DefaultAction { get; set; }
 
         public void UseDefaults()
         {
@@ -58,22 +109,7 @@ namespace Symbiote.Restfully
 
         public HttpServerConfiguration()
         {
-            var virtualPathProvider = new SimpleVirtualPathProvider();
             HostedUrls = new List<string>();
-            Routes = new RouteCollection(virtualPathProvider);
-        }
-    }
-
-    public class SimpleVirtualPathProvider : VirtualPathProvider
-    {
-        public override bool DirectoryExists(string virtualDir)
-        {
-            return true;
-        }
-
-        public override bool FileExists(string virtualPath)
-        {
-            return true;
         }
     }
 
@@ -96,26 +132,6 @@ namespace Symbiote.Restfully
         public IHttpServerConfiguration GetConfiguration()
         {
             return _configuration;
-        }
-
-        public HttpServerConfigurator MapHandler<THandler>(THandler handler, string routeUrl, object defaults)
-            where THandler : IHttpHandler
-        {
-            if (routeUrl == null)
-            {
-                throw new ArgumentNullException("routeUrl");
-            }
-
-            Route route = new ServiceRoute<THandler>(routeUrl, new RouteDispatcher())
-            {
-                Defaults = new RouteValueDictionary(defaults),
-                Constraints = new RouteValueDictionary(),
-                DataTokens = new RouteValueDictionary()
-            };
-
-            _configuration.Routes.Add(typeof(THandler).FullName, route);
-
-            return this;
         }
 
         public HttpServerConfigurator(IHttpServerConfiguration configuration)
@@ -150,7 +166,6 @@ namespace Symbiote.Restfully
         {
             var listenerContext = _listener.EndGetContext(result);
             var httpContext = GetContext(listenerContext);
-            var routeData = _configuration.Routes.GetRouteData(httpContext);
             
         }
 
