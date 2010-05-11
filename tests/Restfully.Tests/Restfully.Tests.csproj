@@ -37,9 +37,6 @@
     <Reference Include="Machine.Specifications.GallioAdapter">
       <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Restfully">
-      <HintPath>..\..\bin\Symbiote.Restfully.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
@@ -54,6 +51,16 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Restfully\Symbiote.Restfully.csproj">
+      <Project>{5A02B843-4047-4885-8839-FE9E4A9EBFE1}</Project>
+      <Name>Symbiote.Restfully</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

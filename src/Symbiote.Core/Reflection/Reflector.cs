@@ -8,16 +8,19 @@ namespace Symbiote.Core.Reflection
 {
     public static class ReflectionExtensions
     {
+        private static readonly BindingFlags _bindingFlags = BindingFlags.FlattenHierarchy | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
+
         public static object GetMemberValue(this MemberInfo member, object source)
         {
             if(member.MemberType == MemberTypes.Field)
             {
-                
+                return source.GetType().GetField(member.Name, _bindingFlags).GetValue(source);
             }
             else if(member.MemberType == MemberTypes.Property)
             {
-                
+                return source.GetType().GetProperty(member.Name, _bindingFlags).GetValue(source, null);
             }
+            return null;
         }
     }
 

@@ -11,6 +11,7 @@ using System.Web.Routing;
 using Machine.Specifications;
 using Symbiote.Restfully;
 using Machine.Specifications.Runner.Impl;
+using Symbiote.Core.Reflection;
 
 namespace Restfully.Tests
 {
@@ -130,7 +131,7 @@ namespace Restfully.Tests
 
             var values = arguments
                 .Cast<MemberExpression>()
-                .Select(x => (x.Reduce() as ConstantExpression).Value)
+                .Select(x => GetExpressionValue(x))
                 .ToArray();
 
             int valueIndex = 0;
@@ -138,6 +139,13 @@ namespace Restfully.Tests
                 .Method
                 .GetParameters()
                 .ToDictionary<ParameterInfo,string, object>(x => x.Name, x => values[valueIndex++]);
+        }
+
+        protected object GetExpressionValue(MemberExpression x)
+        {
+            var expressionValue = (x.Expression as ConstantExpression).Value;
+            var result = x.Member.GetMemberValue(expressionValue);
+            return result;
         }
 
         public RestfulProxy()

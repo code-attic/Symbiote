@@ -65,9 +65,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Relax, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Relax.dll</HintPath>
+    <Reference Include="Relax">
+      <HintPath>..\..\lib\Relax.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
