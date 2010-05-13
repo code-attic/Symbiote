@@ -37,9 +37,21 @@
     <Reference Include="Machine.Specifications.GallioAdapter">
       <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
@@ -49,8 +61,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="with_http_listener.cs" />
+    <Compile Include="ComplexArg.cs" />
+    <Compile Include="ComplexReturn.cs" />
+    <Compile Include="ITestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestService.cs" />
+    <Compile Include="when_calling_simple_action.cs" />
+    <Compile Include="when_calling_simple_func.cs" />
+    <Compile Include="when_deserializing_remote_action.cs" />
+    <Compile Include="when_simple_get_request.cs" />
+    <Compile Include="with_client.cs" />
+    <Compile Include="with_configuration.cs" />
+    <Compile Include="with_server.cs" />
+    <Compile Include="with_web_request.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
@@ -61,6 +85,9 @@
       <Project>{5A02B843-4047-4885-8839-FE9E4A9EBFE1}</Project>
       <Name>Symbiote.Restfully</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

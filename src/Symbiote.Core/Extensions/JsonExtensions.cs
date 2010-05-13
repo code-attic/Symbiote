@@ -79,7 +79,8 @@ namespace Symbiote.Core.Extensions
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 NullValueHandling = NullValueHandling.Ignore,
-                PreserveReferencesHandling = PreserveReferencesHandling.All
+                PreserveReferencesHandling = PreserveReferencesHandling.All,
+                ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
             };
             var serializer = JsonSerializer.Create(settings);
             StringReader textReader = null;
