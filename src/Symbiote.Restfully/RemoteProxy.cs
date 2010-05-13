@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Security;
 using System.Text;
 using Symbiote.Core.Extensions;
+using Symbiote.Restfully.Impl;
 
 namespace Symbiote.Restfully
 {

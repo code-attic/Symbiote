@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using Machine.Specifications;
 using Symbiote.Restfully;
+using Symbiote.Restfully.Impl;
 
 namespace Restfully.Tests
 {

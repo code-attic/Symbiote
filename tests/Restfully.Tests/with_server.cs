@@ -1,6 +1,7 @@
 ﻿using Machine.Specifications;
 using StructureMap;
 using Symbiote.Restfully;
+using Symbiote.Restfully.Impl;
 
 namespace Restfully.Tests
 {

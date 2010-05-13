@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Hosting;
 using Symbiote.Core;
+using Symbiote.Restfully.Impl;
 
 namespace Symbiote.Restfully
 {

@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Restfully
+﻿using Symbiote.Restfully.Impl;
+
+namespace Symbiote.Restfully
 {
     public class HttpServerConfigurator
     {

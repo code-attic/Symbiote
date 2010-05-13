@@ -1,5 +1,6 @@
 ﻿using System;
 using Symbiote.Core;
+using Symbiote.Restfully.Impl;
 
 namespace Symbiote.Restfully
 {

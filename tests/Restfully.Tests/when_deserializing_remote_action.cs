@@ -3,8 +3,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using Machine.Specifications;
 using Newtonsoft.Json.Linq;
+using StructureMap;
 using Symbiote.Core.Extensions;
 using Symbiote.Restfully;
+using Symbiote.Restfully.Impl;
 
 namespace Restfully.Tests
 {
@@ -19,31 +21,21 @@ namespace Restfully.Tests
 
         private Because of = () =>
                                  {
+                                     ObjectFactory.Configure(x => x.For<ITestService>().Use<TestService>());
                                      remoteAction = new RemoteAction<ITestService>(x => x.OneArgCall(testArg));
                                      json = remoteAction.ToJson();
                                      deserializedAction = json.FromJson();
 
-                                     JObject.Parse(json)["ExpressionTree"];
-
                                      procedure = deserializedAction as IRemoteProcedure;
+                                     procedure.JsonExpressionTree = json;
+                                     procedure.Invoke();
                                  };
-
-        protected void CreateExpressionFromJObject()
-        {
-            
-        }
 
         private It should_be_of_correct_type = () => 
                                                deserializedAction.GetType().ShouldEqual(typeof (RemoteAction<ITestService>));
 
         private It should_have_method_name = () => 
                                              procedure.Method.ShouldEqual("OneArgCall");
-
-        private It should_have_argument_list = () => 
-                                               procedure.Args.Values.Count.ShouldEqual(1);
-
-        private It should_have_correct_argument_values = () => 
-                                                         ShouldExtensionMethods.ShouldBeTrue(procedure.Args.Values.SequenceEqual(new [] {"hi"}));
 
 
 

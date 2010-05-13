@@ -28,13 +28,6 @@ namespace Restfully.Tests
                                      stopwatch.Start();
                                      result = proxy.Call(x => x.TwoArgCall(time,id));
                                      stopwatch.Stop();
-
-                                     Expression<Func<ITestService, bool>> expr = x => x.TwoArgCall(time, id);
-                                     stopwatch.Reset();
-                                     stopwatch.Start();
-                                     result = expr.Compile().Invoke(serviceMock.Object);
-                                     stopwatch.Stop();
-                                     var tmp = "";
                                  };
 
         private It should_call_service_method = () => serviceMock.VerifyAll();
