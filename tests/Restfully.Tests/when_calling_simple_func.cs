@@ -23,7 +23,7 @@ namespace Restfully.Tests
                                      serviceMock
                                          .Setup(x => x.TwoArgCall(time, id))
                                          .Returns(true)
-                                         .AtMost(2);
+                                         .AtMost(1);
 
                                      stopwatch.Start();
                                      result = proxy.Call(x => x.TwoArgCall(time,id));

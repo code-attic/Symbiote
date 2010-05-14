@@ -17,25 +17,25 @@ namespace Symbiote.Restfully
 
         public void Call(Expression<Action<T>> call)
         {
-            var remoteAction = new RemoteAction<T>(call);
-            GetResponse(remoteAction);
+            var methodExpression = call.Body as MethodCallExpression;
+            GetResponse(methodExpression);
         }
 
         public R Call<R>(Expression<Func<T,R>> call)
         {
-            var remoteFunc = new RemoteFunc<T,R>(call);
-            var result = GetResponse(remoteFunc);
+            var methodExpression = call.Body as MethodCallExpression;
+            var result = GetResponse(methodExpression);
             return result.FromJson<R>();
         }
 
-        protected string GetResponse(RemoteProcedure<T> remoteProcedure)
+        protected string GetResponse(MethodCallExpression expression)
         {
-            var request = WebRequest.Create(GetAddress(remoteProcedure));
+            var request = WebRequest.Create(GetAddress(expression));
             request.Method = "POST";
             request.AuthenticationLevel = AuthenticationLevel.None;
             request.Timeout = Configuration.Timeout;
-            
-            var body = remoteProcedure.ToJson(true);
+
+            var body = expression.GetJsonForArguments();
             request.ContentType = "application/json; charset=utf-8";
             request.ContentLength = body.Length;
 
@@ -58,9 +58,9 @@ namespace Symbiote.Restfully
             return result;
         }
 
-        protected string GetAddress(RemoteProcedure<T> remoteProcedure)
+        protected string GetAddress(MethodCallExpression expression)
         {
-            return @"{0}\{1}\{2}".AsFormat(Configuration.ServerUrl, remoteProcedure.Contract, remoteProcedure.Method);
+            return @"{0}\{1}\{2}".AsFormat(Configuration.ServerUrl, typeof(T).Name, expression.Method.Name);
         }
 
         public RemoteProxy(IHttpClientConfiguration configuration)

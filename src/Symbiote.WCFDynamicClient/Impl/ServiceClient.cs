@@ -3,8 +3,8 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using StructureMap;
-using Symbiant.Core.Extensions;
-using Symbiant.Core.Log;
+using Symbiote.Core.Extensions;
+using Symbiote.Core.Log;
 
 namespace Symbiote.WCFDynamicClient.Impl
 {
@@ -21,7 +21,6 @@ namespace Symbiote.WCFDynamicClient.Impl
         protected Binding _binding;
         protected EndpointAddress _endpoint;
         protected string _mexAddress = "";
-        protected ObjectFactory _resolver;
         protected ILogger<IServiceConfiguration> _logger;
         protected bool _disposingShell = false;
         protected bool _disposingProxy = false;
@@ -73,7 +72,7 @@ namespace Symbiote.WCFDynamicClient.Impl
                 {
                     var message = "An exception occurred trying to instantiate the service proxy for {0}"
                         .AsFormat(typeof(TContract).AssemblyQualifiedName);
-                    _logger.Log(LogLevel.Error, message, e);
+                    _logger.Log(LogLevel.Error, message as object, e as Exception);
                     throw;
                 }
                 return _channelProxy;
@@ -110,7 +109,7 @@ namespace Symbiote.WCFDynamicClient.Impl
                 var message = string.Format(
                     "While calling service method {0} on {1} an exception occurred", call.Method,
                     typeof(TContract).AssemblyQualifiedName);
-                _logger.Error(message, e);
+                _logger.Log(LogLevel.Error, message as object, e);
                 throw;
             }
             finally
@@ -134,7 +133,7 @@ namespace Symbiote.WCFDynamicClient.Impl
                 var message = string.Format(
                     "While calling service method {0} on {1} an exception occurred", call.Method,
                     typeof(TContract).AssemblyQualifiedName);
-                _logger.Error(message, e);
+                _logger.Log(LogLevel.Error, message as object, e);
                 throw;
             }
             finally
@@ -166,12 +165,11 @@ namespace Symbiote.WCFDynamicClient.Impl
 
         #region Constructors
 
-        public ServiceClient(IResolver resolver, ILogger<IServiceConfiguration> logger)
+        public ServiceClient(ILogger<IServiceConfiguration> logger)
         {
             _logger = logger;
-            _logger.InfoFormat("{0} proxy instantiated", typeof(TContract).AssemblyQualifiedName);
-            _resolver = resolver;
-            var configurationStrategy = resolver.Resolve<IServiceClientConfigurationStrategy<TContract>>();
+            _logger.Log(LogLevel.Info, "{0} proxy instantiated", typeof(TContract).AssemblyQualifiedName);
+            var configurationStrategy = ObjectFactory.GetInstance<IServiceClientConfigurationStrategy<TContract>>();
             configurationStrategy.ConfigureServiceClient(this);
         }
 
@@ -181,7 +179,7 @@ namespace Symbiote.WCFDynamicClient.Impl
 
         public void Dispose()
         {
-            _logger.Info("Disposing service client...");
+            _logger.Log(LogLevel.Info, "Disposing service client...");
             DisposeChannelProxy();
             DisposeClientShell();
         }
@@ -237,7 +235,7 @@ namespace Symbiote.WCFDynamicClient.Impl
 
         private void ReadServiceInfoFromMetadataExchange(string mexAddress)
         {
-            var cache = _resolver.Resolve<IServiceMetadataCache>();
+            var cache = ObjectFactory.GetInstance<IServiceMetadataCache>();
             var serviceEndPoint = cache.GetEndPoint<TContract>(mexAddress);
 
             _endpoint = serviceEndPoint.Address;

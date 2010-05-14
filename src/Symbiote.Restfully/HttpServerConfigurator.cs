@@ -1,4 +1,6 @@
-﻿using Symbiote.Restfully.Impl;
+﻿using System;
+using StructureMap;
+using Symbiote.Restfully.Impl;
 
 namespace Symbiote.Restfully
 {
@@ -21,6 +23,20 @@ namespace Symbiote.Restfully
         public IHttpServerConfiguration GetConfiguration()
         {
             return _configuration;
+        }
+
+        public HttpServerConfigurator HostService<T>()
+            where T : class
+        {
+            ObjectFactory.Configure(x => x.Scan(s =>
+                                                    {
+                                                        //s.AssembliesFromApplicationBaseDirectory();
+                                                        s.TheCallingAssembly();
+                                                        s.SingleImplementationsOfInterface();
+                                                        s.AddAllTypesOf<T>();
+                                                    }));
+            _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), ObjectFactory.Model.DefaultTypeFor<T>()));
+            return this;
         }
 
         public HttpServerConfigurator(IHttpServerConfiguration configuration)

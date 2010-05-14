@@ -1,6 +1,6 @@
+using System;
 using System.Collections.Generic;
 using System.ServiceModel.Description;
-using Symbiant.Core;
 
 namespace Symbiote.WCFDynamicClient.Impl
 {

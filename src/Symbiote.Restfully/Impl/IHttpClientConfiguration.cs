@@ -1,4 +1,7 @@
-﻿namespace Symbiote.Restfully.Impl
+﻿using System;
+using System.Collections.Generic;
+
+namespace Symbiote.Restfully.Impl
 {
     public interface IHttpClientConfiguration
     {

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Symbiote.Restfully.Impl
@@ -10,6 +11,7 @@ namespace Symbiote.Restfully.Impl
         public int Port { get; set; }
         public string DefaultService { get; set; }
         public string DefaultAction { get; set; }
+        public List<Tuple<Type, Type>> RegisteredServices { get; set; }
 
         public void UseDefaults()
         {
@@ -22,6 +24,7 @@ namespace Symbiote.Restfully.Impl
         public HttpServerConfiguration()
         {
             HostedUrls = new List<string>();
+            RegisteredServices = new List<Tuple<Type, Type>>();
         }
     }
 }

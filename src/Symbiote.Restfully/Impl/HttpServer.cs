@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using Symbiote.Core.Extensions;
+using System.Linq;
 
 namespace Symbiote.Restfully.Impl
 {
@@ -28,18 +29,25 @@ namespace Symbiote.Restfully.Impl
             stopWatch.Start();
             var listenerContext = _listener.EndGetContext(result);
             var resourceRequest = new ResourceRequest(listenerContext, _configuration);
-            var procedure = resourceRequest.RequestBody.FromJson() as IRemoteProcedure;
-            procedure.JsonExpressionTree = resourceRequest.RequestBody;
-            var response = procedure.Invoke();
-            using(var stream = resourceRequest.Response.OutputStream)
+            var contractType = GetServiceContractTypeByName(resourceRequest.Resource);
+            var actionName = resourceRequest.Action;
+            var methodInfo = contractType.GetMethod(actionName);
+            var response = methodInfo.InvokeRemoteProcedure(contractType, resourceRequest.RequestBody);
+            using(var stream = resourceRequest.Context.Response.OutputStream)
             using(var streamWriter = new StreamWriter(stream))
             {
                 var body = response != null ? response.ToJson() : "ok";
                 streamWriter.Write(body);
+                stopWatch.Stop();
                 streamWriter.Flush();
             }
-            stopWatch.Stop();
             var elapsed = stopWatch.ElapsedMilliseconds;
+        }
+
+        protected virtual Type GetServiceContractTypeByName(string serviceName)
+        {
+            return _configuration.RegisteredServices.FirstOrDefault(
+                x => x.Item1.Name == serviceName || x.Item2.Name == serviceName).Item1;
         }
 
         protected virtual void CreateListener()

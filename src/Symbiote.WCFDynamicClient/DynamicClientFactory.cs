@@ -9,12 +9,10 @@ namespace Symbiote.WCFDynamicClient
 {
     public class ServiceClientFactory
     {
-
-
         public static IService<TContract> GetClient<TContract>()
             where TContract : class
         {
-            return new ObjectFactoryResolver().Resolve<IService<TContract>>();
+            return ObjectFactory.GetInstance<IService<TContract>>();
         }
 
         public static IService<TContract> GetClient<TContract>(Action<IServiceConfiguration> configure)

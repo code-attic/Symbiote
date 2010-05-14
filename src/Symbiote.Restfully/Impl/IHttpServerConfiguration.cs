@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Symbiote.Restfully.Impl
@@ -11,6 +12,9 @@ namespace Symbiote.Restfully.Impl
         string DefaultService { get; set; }
         string DefaultAction { get; set; }
 
+        List<Tuple<Type, Type>> RegisteredServices { get; set; }
+
         void UseDefaults();
+
     }
 }

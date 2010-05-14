@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="when_calling_action_natively.cs" />
     <Compile Include="with_http_listener.cs" />
     <Compile Include="ComplexArg.cs" />
     <Compile Include="ComplexReturn.cs" />
@@ -69,7 +70,6 @@
     <Compile Include="TestService.cs" />
     <Compile Include="when_calling_simple_action.cs" />
     <Compile Include="when_calling_simple_func.cs" />
-    <Compile Include="when_deserializing_remote_action.cs" />
     <Compile Include="when_simple_get_request.cs" />
     <Compile Include="with_client.cs" />
     <Compile Include="with_configuration.cs" />

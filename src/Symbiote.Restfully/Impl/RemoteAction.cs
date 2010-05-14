@@ -8,21 +8,9 @@ namespace Symbiote.Restfully.Impl
     public class RemoteAction<T> : RemoteProcedure<T>
         where T : class
     {
-        public Expression<Action<T>> ExpressionTree { get; protected set; }
-        
-        [JsonIgnore]
-        public override string JsonExpressionTree
+        protected Expression<Action<T>> DeserializeTree()
         {
-            set
-            {
-                var jObject = JObject.Parse(value);
-                ExpressionTree = DeserializeTree(jObject["ExpressionTree"]);
-            }
-        }
-
-        protected Expression<Action<T>> DeserializeTree(JToken jObject)
-        {
-            var expressionParts = RebuildExpressionComponents(jObject);
+            var expressionParts = RebuildExpressionComponents();
             return
                 Expression.Lambda<Action<T>>(
                     expressionParts.Item1,
@@ -34,18 +22,12 @@ namespace Symbiote.Restfully.Impl
         public override object Invoke()
         {
             var instance = GetInstance();
-            ExpressionTree.Compile().Invoke(instance);
+            DeserializeTree().Compile().Invoke(instance);
             return null;
         }
 
-        public RemoteAction()
+        public RemoteAction(string methodName, string json) : base(methodName, json)
         {
-        }
-
-        public RemoteAction(Expression<Action<T>> call)
-        {
-            ExpressionTree = call.ChangeArgsToConstants();
-            GetCallMetadata(call.Body as MethodCallExpression);
         }
     }
 }
