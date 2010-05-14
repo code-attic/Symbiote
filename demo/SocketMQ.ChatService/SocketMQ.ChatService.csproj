@@ -66,7 +66,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core</Name>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
       <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
@@ -74,7 +74,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
-      <Name>Symbiote.Jackalope</Name>
+      <Name>Symbiote.Jackalope %28Framework\Symbiote.Jackalope%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
       <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>

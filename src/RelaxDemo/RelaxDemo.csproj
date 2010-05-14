@@ -65,7 +65,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core</Name>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Symbiote.Daemon\Symbiote.Daemon.csproj">
       <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>

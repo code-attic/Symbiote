@@ -65,11 +65,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core</Name>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
-      <Name>Symbiote.Jackalope</Name>
+      <Name>Symbiote.Jackalope %28Framework\Symbiote.Jackalope%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
       <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>

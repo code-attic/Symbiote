@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</ProjectGuid>
+    <ProjectGuid>{447A45A1-DC27-4F4B-8BAD-282AD94AC45B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Symbiote.WebSocket</RootNamespace>
-    <AssemblyName>Symbiote.WebSocket</AssemblyName>
+    <RootNamespace>Wcf.Tests</RootNamespace>
+    <AssemblyName>Wcf.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,13 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\lib\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.GallioAdapter">
+      <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
-    <Reference Include="System.Web.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,32 +47,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\AliasDefinition.cs" />
-    <Compile Include="Impl\BaseClientObserver.cs" />
-    <Compile Include="Impl\DefaultClientObserver.cs" />
-    <Compile Include="Impl\DefaultHandShake.cs" />
-    <Compile Include="Impl\DefaultPolicyRequestHandler.cs" />
-    <Compile Include="Impl\ICreateWebSockets.cs" />
-    <Compile Include="Impl\IHandlePolicyRequests.cs" />
-    <Compile Include="Impl\IShakeHands.cs" />
-    <Compile Include="ISocketServer.cs" />
-    <Compile Include="Impl\IWebSocket.cs" />
-    <Compile Include="IWebSocketServerConfiguration.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Impl\Signal.cs" />
-    <Compile Include="Impl\WebSocket.cs" />
-    <Compile Include="WebSocketAssimilation.cs" />
-    <Compile Include="WebSocketConfigurator.cs" />
-    <Compile Include="Impl\WebSocketFactory.cs" />
-    <Compile Include="WebSocketObserver.cs" />
-    <Compile Include="Impl\WebSocketServer.cs" />
-    <Compile Include="Impl\WebSocketServerConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.WCFDynamicClient\Symbiote.Wcf.csproj">
+      <Project>{F6F5879C-61DD-4CFC-9F57-7356648DEE77}</Project>
+      <Name>Symbiote.Wcf</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
