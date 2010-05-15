@@ -64,9 +64,10 @@ namespace Wcf.Tests
 
         private Because of = () =>
                                  {
-                                     
                                      watch = Stopwatch.StartNew();
-                                     result = service.Call(x => x.TwoArgCall(DateTime.Now, Guid.NewGuid()));
+                                     var dateTime = DateTime.Now;
+                                     var newGuid = Guid.NewGuid();
+                                     result = service.Call(x => x.TwoArgCall(dateTime, newGuid));
                                      watch.Stop();
                                      host.Stop();
                                  };

@@ -27,7 +27,7 @@ namespace Symbiote.Wcf.Server
         {
             Address = "{0}".AsFormat(typeof (TContract).Name);
             Binding = new BasicHttpBinding(BasicHttpSecurityMode.None);
-            Timeout = 500;
+            Timeout = 600;
             EnableHttpMetadataExchange = true;
         }
     }

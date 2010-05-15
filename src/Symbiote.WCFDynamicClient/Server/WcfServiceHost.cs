@@ -31,17 +31,18 @@ namespace Symbiote.Wcf.Server
 
         private ServiceHost BuildHost(IWcfServiceConfiguration configuration)
         {
+            var serviceUri = "{0}/{1}".AsFormat(serverConfiguration.BaseAddress, configuration.Address);
             var host = new ServiceHost(configuration.ServiceType, new Uri(serverConfiguration.BaseAddress));
             host.AddServiceEndpoint(
                 configuration.ContractType, 
                 configuration.Binding,
-                configuration.Address);
+                serviceUri);
 
             host.Description.Behaviors.Add(
                 new ServiceMetadataBehavior()
                     {
                         HttpGetEnabled = true,
-                        HttpGetUrl = new Uri("{0}/{1}".AsFormat(serverConfiguration.BaseAddress, configuration.Address))
+                        HttpGetUrl = new Uri(serviceUri)
                     });
 
             //host.AddServiceEndpoint(typeof (IMetadataExchange), configuration.Binding, "mex");
