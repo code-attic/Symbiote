@@ -9,6 +9,7 @@ namespace Symbiote.Restfully.Impl
         public AuthenticationSchemes AuthSchemes { get; set; }
         public IList<string> HostedUrls { get; set; }
         public int Port { get; set; }
+        public bool UseHttps { get; set; }
         public string DefaultService { get; set; }
         public string DefaultAction { get; set; }
         public List<Tuple<Type, Type>> RegisteredServices { get; set; }
@@ -17,7 +18,7 @@ namespace Symbiote.Restfully.Impl
         {
             //set defaults
             Port = 8420;
-            AuthSchemes = AuthenticationSchemes.Anonymous;
+            AuthSchemes = AuthenticationSchemes.None;
             HostedUrls.Add(@"http://localhost:8420/");
         }
 

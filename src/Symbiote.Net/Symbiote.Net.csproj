@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{447A45A1-DC27-4F4B-8BAD-282AD94AC45B}</ProjectGuid>
+    <ProjectGuid>{45719B4E-23EA-44AC-863A-7B4CD458F0C2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Wcf.Tests</RootNamespace>
-    <AssemblyName>Wcf.Tests</AssemblyName>
+    <RootNamespace>Symbiote.Net</RootNamespace>
+    <AssemblyName>Symbiote.Net</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,15 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\lib\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.GallioAdapter">
-      <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,25 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestService.cs" />
-    <Compile Include="ITestService.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="when_calling_wcf_service_via_dynamic_proxy.cs" />
-    <Compile Include="with_wcf_client.cs" />
-    <Compile Include="with_wcf_server.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
-      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.WCFDynamicClient\Symbiote.Wcf.csproj">
-      <Project>{F6F5879C-61DD-4CFC-9F57-7356648DEE77}</Project>
-      <Name>Symbiote.Wcf</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
