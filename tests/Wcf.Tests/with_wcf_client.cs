@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.ServiceModel;
 using Machine.Specifications;
+using Symbiote.Core;
 using Symbiote.Wcf;
 using Symbiote.Wcf.Client;
 using WcfClientAssimilation = Symbiote.Wcf.WcfClientAssimilation;

@@ -163,6 +163,68 @@ namespace Net.Tests
         void SetCookie(Cookie cookie);
     }
 
+    public class HttpResponse : IHttpResponse
+    {
+        protected Socket Socket { get; set; }
+
+        public Encoding ContentEncoding { get; set; }
+        public long ContentLength { get; set; }
+        public string ContentType { get; set; }
+        public CookieCollection Cookies { get; set; }
+        public WebHeaderCollection Headers { get; set; }
+        public bool KeepAlive { get; set; }
+        public Stream OutputStream { get; set; }
+        public Version ProtocolVersion { get; set; }
+        public string RedirectLocation { get; set; }
+        public bool SendChunked { get; set; }
+        public int StatusCode { get; set; }
+        public string StatusDescription { get; set; }
+        public void Abort()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddHeader(string name, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AppendCookie(Cookie cookie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AppendHeader(string name, string value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Close()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Close(byte[] responseEntity, bool willBlock)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Redirect(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetCookie(Cookie cookie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public HttpResponse(Socket socket)
+        {
+            Socket = socket;
+        }
+    }
+
     public interface IHttpContext
     {
         IHttpRequest Request { get; set; }
