@@ -10,8 +10,7 @@ using Symbiote.Restfully.Impl;
 
 namespace Symbiote.Restfully
 {
-    public class RemoteProxy<T>
-        where T : class
+    public class RemoteProxy<T> : IRemoteProxy<T> where T : class
     {
         protected IHttpClientConfiguration Configuration { get; set; }
 

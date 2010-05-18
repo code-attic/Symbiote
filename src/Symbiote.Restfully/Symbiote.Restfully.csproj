@@ -65,6 +65,7 @@
     <Compile Include="Impl\IHttpServerConfiguration.cs" />
     <Compile Include="Impl\IRemoteProcedure.cs" />
     <Compile Include="Impl\IServiceRoute.cs" />
+    <Compile Include="IRemoteProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\RemoteAction.cs" />
     <Compile Include="Impl\RemoteFunc.cs" />

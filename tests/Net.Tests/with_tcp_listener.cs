@@ -8,7 +8,9 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using Machine.Specifications;
+using Symbiote.Core;
 
 namespace Net.Tests
 {
@@ -21,13 +23,27 @@ namespace Net.Tests
         protected static SslStream secureStream;
         protected static X509Certificate serverCertificate;
         protected static string certPath = @"symbiote.pfx";
-
+        
         private Establish context = () =>
                                         {
                                             serverAddress = IPAddress.Any;
                                             serverEndpoint = new IPEndPoint(serverAddress, 8001);
 
-                                            serverCertificate = new X509Certificate(certPath);
+                                            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+                                            store.Open(OpenFlags.ReadOnly);
+                                            var certCount = store.Certificates.Count;
+                                            var enumerator = store.Certificates.GetEnumerator();
+
+                                            var list = new List<X509Certificate>();
+
+                                            while(enumerator.MoveNext())
+                                            {
+                                                list.Add(enumerator.Current);
+                                            }
+
+                                            serverCertificate =
+                                                store.Certificates.Find(X509FindType.FindBySubjectName, "symbiote",
+                                                                        false)[0];
 
                                             listener = new TcpListener(serverEndpoint);
                                             listener.Start();
@@ -39,15 +55,20 @@ namespace Net.Tests
             try
             {
                 serversClient = listener.EndAcceptTcpClient(ar);
-                secureStream = new SslStream(serversClient.GetStream(), false);
-                secureStream.AuthenticateAsServer(serverCertificate, false, SslProtocols.Default, false);
+                secureStream = new SslStream(serversClient.GetStream(), false, validateCert);
+                secureStream.AuthenticateAsServer(serverCertificate, false, SslProtocols.Default, true);
 
-                secureStream.Write(UTF8Encoding.UTF8.GetBytes("HOWDY!"));
+                //secureStream.Write(UTF8Encoding.UTF8.GetBytes("HOWDY!" + Environment.NewLine));
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
+        }
+
+        protected static bool validateCert(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        {
+            return true;
         }
     }
 
@@ -68,22 +89,96 @@ namespace Net.Tests
 
         private Because of = () =>
                                  {
-                                     var stream = client.GetStream();
-
-                                     while (!stream.DataAvailable)
+                                     using (var stream = new SslStream(
+                                         client.GetStream(),
+                                         false,
+                                         validateCert2))
                                      {
-                                         // wait
+
+                                         stream.AuthenticateAsClient("symbiote");
+                                         using (var reader = new StreamReader(stream))
+                                         {
+                                             message = reader.ReadLine();
+                                         }
+
+                                         stream.Close();
+                                         client.Close();
                                      }
-
-                                     using (var reader = new StreamReader(stream))
-                                         message = reader.ReadToEnd();
-
-                                     stream.Close();
-                                     client.Close();
                                  };
 
+        protected static bool validateCert2(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslpolicyerrors)
+        {
+            return true;
+        }
+        
         private It should_have_message = () => message.ShouldEqual("HOWDY!");
     }
 
-    
+    public abstract class with_web_request : with_tcp_listener
+    {
+        protected static WebRequest request;
+        protected static WebResponse response;
+
+        private Establish context = () =>
+                                        {
+                                            ServicePointManager.ServerCertificateValidationCallback = validateCert;
+                                            request = WebRequest.Create("https://localhost:8001");
+                                            request.Credentials = new NetworkCredential("alex", "4l3x");
+                                            request.PreAuthenticate = true;
+                                            request.BeginGetResponse(onResponse, null);
+                                        };
+
+        private static void onResponse(IAsyncResult ar)
+        {
+            var response = request.EndGetResponse(ar);
+        }
+    }
+
+    public class when_receiving_web_request : with_web_request
+    {
+        protected static string request;
+
+        private Because of = () =>
+                                 {
+                                     int consecutiveFeeds = 0;
+
+                                     var builder = new DelimitedBuilder(Environment.NewLine);
+
+                                     while(secureStream == null || !secureStream.CanRead)
+                                     {
+                                         
+                                     }
+
+                                     var reader = new StreamReader(secureStream);
+                                     while(consecutiveFeeds < 2 && !reader.EndOfStream)
+                                     {
+                                         var nextChar = reader.Peek();
+                                         if (nextChar != 13)
+                                         {
+                                             var line = reader.ReadLine();
+                                             if (string.IsNullOrEmpty(line))
+                                             {
+                                                 consecutiveFeeds++;
+                                             }
+                                             else
+                                             {
+                                                 builder.Append(line);
+                                                 consecutiveFeeds = 0;
+                                             }
+                                         }
+                                         else
+                                         {
+                                             break;
+                                         }
+                                     }
+                                     request = builder.ToString();
+
+                                     using(var writer = new StreamWriter(secureStream))
+                                     {
+                                         writer.WriteLine("BOOGABOOGA!");
+                                     }
+                                 };
+
+        private It should_have_request_body = () => request.ShouldNotBeEmpty();
+    }
 }
