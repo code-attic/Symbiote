@@ -128,16 +128,36 @@ namespace Symbiote.Net
 
     public class HttpRequest
     {
+        protected string _rawUrl;
+
         public string Verb { get; protected set; }
-        public string Host { get; protected set; }
+        public string Host { get { return Headers[HttpRequestHeader.Host]; } }
         public string Path { get; protected set; }
         public string Query { get; protected set; }
-        public string RawUrl { get; protected set; }
+        public string RawUrl
+        {
+            get
+            {
+                _rawUrl = _rawUrl ?? "{0}://{1}{2}{3}".AsFormat(
+                    Protocol,
+                    Host,
+                    Path,
+                    Query != null ? "?{0}".AsFormat(Query) : ""
+                );
+                return _rawUrl;
+            }
+        }
         public string Protocol { get; protected set; }
         public Version Version { get; protected set; }
+        public WebHeaderCollection Headers { get; protected set; }
+        public string Body { get; protected set; }
+
+        public string UserAgent { get { return Headers[HttpRequestHeader.UserAgent]; } }
+        public string Authentication { get { return Headers[HttpRequestHeader.Authorization]; } }
 
         public HttpRequest(string requestBody)
         {
+            Headers = new WebHeaderCollection();
             Process(requestBody);
         }
 
@@ -146,12 +166,25 @@ namespace Symbiote.Net
             try
             {
                 // break into lines
-                var lines = requestBody.Split(new string[] { @"\r\n", "@\n" }, StringSplitOptions.None);
+                var lines = requestBody.Split(new string[] { "\r\n"}, StringSplitOptions.None);
 
                 // handle each line with a method
                 ProcessRequestLine(lines[0]);
-                ProcessHostHeader(lines[1]);
+                var lastLine = 1;
+                lines
+                    .Skip(1)
+                    .TakeWhile(x => !string.IsNullOrEmpty(x))
+                    .ForEach(x =>
+                                 {
+                                     var pair = x.Split(':');
+                                     Headers.Add(pair[0].Trim(), pair[1].Trim());
+                                     lastLine++;
+                                 });
 
+                if(lastLine < lines.Length)
+                {
+                    Body = string.Join("\r\n", lines.Skip(lastLine+1));
+                }
                 
             }
             catch (Exception ex)
@@ -159,11 +192,6 @@ namespace Symbiote.Net
                 throw new HttpServerException("Cannot process poorly formed client request. \r\n {0}".AsFormat(requestBody));
             }
             
-        }
-
-        private void ProcessHostHeader(string hostLine)
-        {
-            Host = hostLine.Split(':')[1].Trim();
         }
 
         private void ProcessRequestLine(string requestLine)
@@ -174,9 +202,9 @@ namespace Symbiote.Net
 
             Verb = values[0];
             Path = url[0];
-            Query = url[1];
+            Query = url.Length > 1 ? url[1] : null;
             Protocol = protocolAndVersion[0];
-            Version = protocolAndVersion[1] == "1.0" ? HttpVersion.Version11 : HttpVersion.Version11;
+            Version = Version.Parse(protocolAndVersion[1]);
         }
     }
 

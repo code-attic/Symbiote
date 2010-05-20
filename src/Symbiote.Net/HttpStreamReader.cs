@@ -18,6 +18,7 @@ namespace Symbiote.Net
 
         public void Start()
         {
+            Running = true;
             BeginRead();
         }
 
@@ -32,11 +33,8 @@ namespace Symbiote.Net
         private void CompleteRead(IAsyncResult ar)
         {
             BytesRead += HttpStream.EndRead(ar);
-            if(IsTransmissionComplete())
-            {
-                NotifyObservers();
-                InitializeBuffer();
-            }
+            NotifyObservers();
+            InitializeBuffer();
             BeginRead();
         }
 
