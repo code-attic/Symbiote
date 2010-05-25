@@ -11,6 +11,7 @@ namespace Symbiote.Restfully.Impl
         AuthenticationSchemes AuthSchemes { get; set; }
         string DefaultService { get; set; }
         string DefaultAction { get; set; }
+        bool SelfHosted { get; set; }
 
         List<Tuple<Type, Type>> RegisteredServices { get; set; }
 

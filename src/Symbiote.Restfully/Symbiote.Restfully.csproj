@@ -55,16 +55,21 @@
     <Compile Include="HttpClientAssimilation.cs" />
     <Compile Include="Impl\HttpClientConfiguration.cs" />
     <Compile Include="HttpClientConfigurator.cs" />
-    <Compile Include="Impl\HttpRequestHandler.cs" />
+    <Compile Include="Impl\HttpContextAdapter.cs" />
+    <Compile Include="Impl\HttpListenerRequestAdapter.cs" />
+    <Compile Include="Impl\HttpListenerResponseAdapter.cs" />
+    <Compile Include="Impl\HttpRequestAdapter.cs" />
+    <Compile Include="Impl\HttpResponseAdapter.cs" />
     <Compile Include="Impl\HttpServer.cs" />
     <Compile Include="Impl\HttpServerConfiguration.cs" />
     <Compile Include="HttpServerConfigurator.cs" />
-    <Compile Include="Impl\HttpVerb.cs" />
     <Compile Include="Impl\IHttpClientConfiguration.cs" />
+    <Compile Include="Impl\IHttpContextAdapter.cs" />
+    <Compile Include="Impl\IHttpRequestAdapter.cs" />
+    <Compile Include="Impl\IHttpResponseAdapter.cs" />
     <Compile Include="Impl\IHttpServer.cs" />
     <Compile Include="Impl\IHttpServerConfiguration.cs" />
     <Compile Include="Impl\IRemoteProcedure.cs" />
-    <Compile Include="Impl\IServiceRoute.cs" />
     <Compile Include="IRemoteProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\RemoteAction.cs" />
@@ -72,8 +77,7 @@
     <Compile Include="Impl\RemoteProcedure.cs" />
     <Compile Include="RemoteProxy.cs" />
     <Compile Include="Impl\ResourceRequest.cs" />
-    <Compile Include="Impl\RouteDispatcher.cs" />
-    <Compile Include="Impl\ServiceRoute.cs" />
+    <Compile Include="RestfullCallHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

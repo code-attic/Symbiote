@@ -44,14 +44,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="ClientFactory.cs" />
     <Compile Include="HttpBasicAuthChallenger.cs" />
+    <Compile Include="HttpContext.cs" />
+    <Compile Include="HttpRequest.cs" />
+    <Compile Include="HttpResponse.cs" />
+    <Compile Include="HttpServer.cs" />
     <Compile Include="HttpServerAssimilation.cs" />
     <Compile Include="HttpServerConfiguration.cs" />
     <Compile Include="HttpServerConfigurator.cs" />
+    <Compile Include="HttpServerException.cs" />
     <Compile Include="HttpStreamReader.cs" />
+    <Compile Include="IHttpClient.cs" />
     <Compile Include="IHttpServer.cs" />
     <Compile Include="IHttpServerConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecureHttpClient.cs" />
+    <Compile Include="SimpleHttpClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

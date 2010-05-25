@@ -20,6 +20,12 @@ namespace Symbiote.Restfully
             return this;
         }
 
+        public HttpServerConfigurator HostInIIS()
+        {
+            _configuration.SelfHosted = false;
+            return this;
+        }
+
         public IHttpServerConfiguration GetConfiguration()
         {
             return _configuration;
