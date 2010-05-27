@@ -2,10 +2,13 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.Reflection
 {
@@ -39,8 +42,18 @@ namespace Symbiote.Core.Reflection
 
     public class Reflector
     {
-        //static ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Getter, Setter>>
-        //    reflectorCache = new ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Getter, Setter>>();
+        private static ConcurrentBag<Type> initializedTypes = new ConcurrentBag<Type>();
+        static ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>> memberCache =
+            new ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>>();
+
+        static BindingFlags bindingFlags = BindingFlags.FlattenHierarchy |
+                                                   BindingFlags.Public |
+                                                   BindingFlags.NonPublic |
+                                                   BindingFlags.Instance;
+
+        static BindingFlags propertyFlags = BindingFlags.FlattenHierarchy |
+                                                   BindingFlags.Public |
+                                                   BindingFlags.Instance;
 
         public static IEnumerable<Type> GetInheritenceChain(Type type)
         {
@@ -53,27 +66,109 @@ namespace Symbiote.Core.Reflection
             return enumerable == null ? types : types.Concat(enumerable);
         }
 
+        static void CreateLookupsForType(Type type)
+        {
+            if (initializedTypes.Contains(type))
+                return;
+            try
+            {
+                type
+                    .GetMembers(bindingFlags)
+                    .Where(x => x.MemberType == MemberTypes.Property || x.MemberType == MemberTypes.Field)
+                    .ForEach(x =>
+                                 {
+                                     var key = Tuple.Create(type, x.Name);
+                                     var memberType = GetMemberInfoType(x);
+                                     var getter = BuildGet(type, x.Name);
+                                     var setter = BuildSet(type, x.Name);
+                                     var value = Tuple.Create(memberType, getter, setter);
+
+                                     memberCache.TryAdd(key, value);
+                                 }
+                    );
+               initializedTypes.Add(type);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
         public static IEnumerable<Type> GetInterfaceChain(Type type)
         {
             return type.GetInterfaces();
         }
 
-        public static Type GetMemberType(MemberInfo memberInfo)
+        static Type GetMemberInfoType(MemberInfo memberInfo)
         {
-            if(memberInfo.MemberType == MemberTypes.Field)
+            try
             {
-                
+                if (memberInfo.MemberType == MemberTypes.Property)
+                    return memberInfo.DeclaringType.GetProperty(memberInfo.Name, bindingFlags).PropertyType;
+                else
+                    return memberInfo.DeclaringType.GetField(memberInfo.Name, bindingFlags).FieldType;
             }
-            else if(memberInfo.MemberType == MemberTypes.Property)
+            catch (Exception e)
             {
-                
+                return null;
             }
-            return null;
         }
 
-        public static Type GetMemberType(Type type, string memberPath)
+        static Func<object, object> BuildGet(Type type, string member)
         {
-            return null;
+            var param = Expression.Parameter(typeof(object), "container");
+            var func = Expression.Lambda<Func<object, object>>(
+                Expression.Convert(
+                    Expression.PropertyOrField(
+                        Expression.Convert(param, type), member), typeof(object)
+                    ),
+                param);
+            return func.Compile();
+        }
+
+        static Action<object, object> BuildSet(Type type, string member)
+        {
+            var memberInfo = type.GetMember(member,
+                                            BindingFlags.Public |
+                                            BindingFlags.NonPublic |
+                                            BindingFlags.Instance |
+                                            BindingFlags.FlattenHierarchy).First();
+            var memberType = GetMemberInfoType(memberInfo);
+            var param1 = Expression.Parameter(typeof(object), "container");
+            var param2 = Expression.Parameter(typeof(object), "value");
+
+            var instanceConversion = Expression.Convert(param1, type);
+            var propertyOrField = Expression.PropertyOrField(instanceConversion, member);
+            var valueConversion = Expression.Convert(param2, memberType);
+            var assignment = Expression.Assign(propertyOrField, valueConversion);
+
+            var func = Expression.Lambda<Action<object, object>>(assignment, param1, param2);
+            return func.Compile();
+        }
+
+        public static Type GetMemberType(Type type, string memberName)
+        {
+            CreateLookupsForType(type);
+            return memberCache[Tuple.Create(type, memberName)].Item1;
+        }
+
+        public static IEnumerable<PropertyInfo> GetProperties(Type type)
+        {
+            return type.GetProperties(propertyFlags);
+        }
+
+        public static object ReadMember(object instance, string memberName)
+        {
+            var type = instance.GetType();
+            CreateLookupsForType(type);
+            return memberCache[Tuple.Create(type, memberName)].Item2.Invoke(instance);
+        }
+
+        public static void WriteMember(object instance, string memberName, object value)
+        {
+            var type = instance.GetType();
+            CreateLookupsForType(type);
+            memberCache[Tuple.Create(type, memberName)].Item3.Invoke(instance, value);
         }
     }
 }

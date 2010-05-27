@@ -105,14 +105,14 @@ namespace Core.Tests.Reflection
         private TimeSpan val3 = TimeSpan.FromSeconds(3);
         public Guid val4 = new Guid("00000000-0000-0000-0000-000000000004");
 
-        public string GetVal1()
-        {
-            return val1;
-        }
-
         public int GetVal2()
         {
             return val2;
+        }
+
+        public TimeSpan GetVal3()
+        {
+            return val3;
         }
     }
 
@@ -158,18 +158,23 @@ namespace Core.Tests.Reflection
         {
             assignmentWatch = Stopwatch.StartNew();
 
-            val1 = readCache[Tuple.Create(typeof(TestClass), "val1")].Item2(target) as string;
-            val2 = (int)readCache[Tuple.Create(typeof(TestClass), "val2")].Item2(target);
-            val3 = (TimeSpan)readCache[Tuple.Create(typeof(TestClass), "val3")].Item2(target);
-            val4 = (Guid)readCache[Tuple.Create(typeof(TestClass), "val4")].Item2(target);
+            val1 = "4";
+            val2 = 3;
+            val3 = TimeSpan.FromSeconds(2);
+            val4 = new Guid("00000000-0000-0000-0000-000000000001");
+
+            writeCache[Tuple.Create(typeof(TestClass), "val1")].Item2(target, val1);
+            writeCache[Tuple.Create(typeof(TestClass), "val2")].Item2(target, val2);
+            writeCache[Tuple.Create(typeof(TestClass), "val3")].Item2(target, val3);
+            writeCache[Tuple.Create(typeof(TestClass), "val4")].Item2(target, val4);
 
             assignmentWatch.Stop();
             var ms = assignmentWatch.ElapsedMilliseconds;
         };
 
-        private It should_match_val1 = () => val1.ShouldEqual(target.val1);
-        private It should_match_val2 = () => val2.ShouldEqual(2);
-        private It should_match_val3 = () => val3.ShouldEqual(TimeSpan.FromSeconds(3));
-        private It should_match_val4 = () => val4.ShouldEqual(target.val4);
+        private It should_match_val1 = () => target.val1.ShouldEqual(val1);
+        private It should_match_val2 = () => target.GetVal2().ShouldEqual(val2);
+        private It should_match_val3 = () => target.GetVal3().ShouldEqual(val3);
+        private It should_match_val4 = () => target.val4.ShouldEqual(val4);
     }
 }
