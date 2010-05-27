@@ -37,6 +37,9 @@
     <Reference Include="Machine.Specifications.GallioAdapter">
       <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -52,6 +55,7 @@
     <Compile Include="HttpStreamWatcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestProcessing\when_parsing_request.cs" />
+    <Compile Include="Server\with_server.cs" />
     <Compile Include="when_connecting_to_secure_server.cs" />
     <Compile Include="when_receiving_web_request.cs" />
     <Compile Include="with_tcp_client.cs" />

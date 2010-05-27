@@ -27,7 +27,10 @@ namespace Symbiote.Net
             //set defaults
             Port = 8420;
             AuthSchemes = AuthenticationSchemes.None;
-            BaseUrl = DEFAULT_HOST_URL;
+            BaseUrl = DEFAULT_HOST_URL
+                .Replace(@"http://","")
+                .Split('/')[0]
+                .Split(':')[0];
             HostedUrls.Add(DEFAULT_HOST_URL);
             AllowedPendingRequests = 100;
         }

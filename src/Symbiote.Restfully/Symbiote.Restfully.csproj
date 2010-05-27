@@ -60,7 +60,7 @@
     <Compile Include="Impl\HttpListenerResponseAdapter.cs" />
     <Compile Include="Impl\HttpRequestAdapter.cs" />
     <Compile Include="Impl\HttpResponseAdapter.cs" />
-    <Compile Include="Impl\HttpServer.cs" />
+    <Compile Include="Impl\HttpListenerServer.cs" />
     <Compile Include="Impl\HttpServerConfiguration.cs" />
     <Compile Include="HttpServerConfigurator.cs" />
     <Compile Include="Impl\IHttpClientConfiguration.cs" />

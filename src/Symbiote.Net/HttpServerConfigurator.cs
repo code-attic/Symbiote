@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using StructureMap;
 
 namespace Symbiote.Net
@@ -6,6 +7,11 @@ namespace Symbiote.Net
     public class HttpServerConfigurator
     {
         private IHttpServerConfiguration _configuration;
+
+        public IHttpServerConfiguration GetConfiguration()
+        {
+            return _configuration;
+        }
 
         public HttpServerConfigurator Port(int port)
         {
@@ -25,9 +31,16 @@ namespace Symbiote.Net
             return this;
         }
 
-        public IHttpServerConfiguration GetConfiguration()
+        public HttpServerConfigurator UseBasicAuth()
         {
-            return _configuration;
+            _configuration.AuthSchemes = AuthenticationSchemes.Basic;
+            return this;
+        }
+
+        public HttpServerConfigurator UseDigestAuth()
+        {
+            _configuration.AuthSchemes = AuthenticationSchemes.Digest;
+            return this;
         }
 
         public HttpServerConfigurator HostService<T>()

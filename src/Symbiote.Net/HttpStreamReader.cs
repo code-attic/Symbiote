@@ -73,11 +73,18 @@ namespace Symbiote.Net
             Observers = new ConcurrentBag<IObserver<string>>();
         }
 
+        public static HttpStreamReader StartNew(Stream stream, IObserver<string> observer)
+        {
+            var reader = new HttpStreamReader(stream);
+            reader.Subscribe(observer);
+            reader.Start();
+            return reader;
+        }
+
         public void Dispose()
         {
             Stop();
             Observers.ForEach(x => x.OnCompleted());
-            ((IDisposable)Observers).Dispose();
             HttpStream = null;
         }
     }

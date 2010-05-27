@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Linq;
 
 namespace Symbiote.Net
 {
@@ -15,23 +16,42 @@ namespace Symbiote.Net
         protected IPEndPoint ServerEndpoint { get; set; }
         protected ClientFactory ClientFactory { get; set; }
         protected ConcurrentBag<IObserver<HttpContext>> Watchers { get; set; }
+        protected IHttpAuthChallenger AuthenticationChallenger { get; set; }
 
         public void Start()
         {
             Listener.Start();
             Running = true;
+            Listen();
+        }
 
-            while(Running)
-            {
+        private void Listen()
+        {
+            if(Running)
                 Listener.BeginAcceptTcpClient(ProcessNewClient, null);
-            }
+        }
+
+        protected void AuthenticationFinished(bool success, HttpContext context)
+        {
+            Watchers.AsParallel().ForAll(x =>
+                                             {
+                                                 if(success)
+                                                 {
+                                                     x.OnNext(context);
+                                                 }
+                                                 else
+                                                 {
+                                                     x.OnError(new HttpServerException("Exception occurred authenticating client"));
+                                                 }
+                                             });
         }
 
         private void ProcessNewClient(IAsyncResult ar)
         {
+            Listen();
             var tcpClient = Listener.EndAcceptTcpClient(ar);
             var httpClient = ClientFactory.GetClient(tcpClient);
-
+            AuthenticationChallenger.ChallengeClient(httpClient, AuthenticationFinished);
         }
 
         public void Stop()
@@ -53,16 +73,17 @@ namespace Symbiote.Net
         protected void InitializeListener()
         {
             ServerAddress = IPAddress.Any;
-            ServerEndpoint = new IPEndPoint(ServerAddress, 8001);
+            ServerEndpoint = new IPEndPoint(ServerAddress, Configuration.Port);
             Listener = new TcpListener(ServerEndpoint);
             Listener.ExclusiveAddressUse = true;
         }
 
-        public HttpServer(IHttpServerConfiguration configuration)
+        public HttpServer(IHttpServerConfiguration configuration, IHttpAuthChallenger authChallenger)
         {
             Configuration = configuration;
             InitializeListener();
             ClientFactory = new ClientFactory(configuration);
+            AuthenticationChallenger = authChallenger;
         }
 
         public void Dispose()
