@@ -14,10 +14,13 @@ namespace Symbiote.Restfully.Impl
         public string DefaultAction { get; set; }
         public List<Tuple<Type, Type>> RegisteredServices { get; set; }
 
+        public bool SelfHosted { get; set; }
+
         public void UseDefaults()
         {
             //set defaults
             Port = 8420;
+            SelfHosted = true;
             AuthSchemes = AuthenticationSchemes.None;
             HostedUrls.Add(@"http://localhost:8420/");
         }

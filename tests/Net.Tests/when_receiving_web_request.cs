@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.Net;
 
 namespace Net.Tests
 {
@@ -11,45 +13,24 @@ namespace Net.Tests
 
         private Because of = () =>
                                  {
-                                     int consecutiveFeeds = 0;
-
-                                     var builder = new DelimitedBuilder(Environment.NewLine);
-
                                      while(secureStream == null || !secureStream.CanRead)
                                      {
-                                         
+                                         Thread.Sleep(1000);
                                      }
 
-                                     var reader = new StreamReader(secureStream);
-                                     while(consecutiveFeeds < 2 && !reader.EndOfStream)
-                                     {
-                                         var nextChar = reader.Peek();
-                                         if (nextChar != 13)
-                                         {
-                                             var line = reader.ReadLine();
-                                             if (string.IsNullOrEmpty(line))
-                                             {
-                                                 consecutiveFeeds++;
-                                             }
-                                             else
-                                             {
-                                                 builder.Append(line);
-                                                 consecutiveFeeds = 0;
-                                             }
-                                         }
-                                         else
-                                         {
-                                             break;
-                                         }
-                                     }
-                                     request = builder.ToString();
+                                     var reader = new HttpStreamReader(secureStream);
+                                     var watcher = new HttpStreamWatcher(); 
+                                     reader.Subscribe(watcher);
+                                     reader.Start();
+
+                                     request = watcher.GetMessage();
 
                                      using(var writer = new StreamWriter(secureStream))
                                      {
                                          writer.WriteLine("BOOGABOOGA!");
                                      }
                                  };
-
+        
         private It should_have_request_body = () => request.ShouldNotBeEmpty();
     }
 }

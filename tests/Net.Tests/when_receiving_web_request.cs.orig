@@ -1,0 +1,80 @@
+﻿using System;
+using System.IO;
+<<<<<<< HEAD
+using Machine.Specifications;
+using Symbiote.Core;
+=======
+using System.Threading;
+using Machine.Specifications;
+using Symbiote.Core;
+using Symbiote.Net;
+>>>>>>> 7dccb764b8677e12796064915e556af11a4e2364
+
+namespace Net.Tests
+{
+    public class when_receiving_web_request : with_web_request
+    {
+        protected static string request;
+
+        private Because of = () =>
+                                 {
+<<<<<<< HEAD
+                                     int consecutiveFeeds = 0;
+
+                                     var builder = new DelimitedBuilder(Environment.NewLine);
+
+                                     while(secureStream == null || !secureStream.CanRead)
+                                     {
+                                         
+                                     }
+
+                                     var reader = new StreamReader(secureStream);
+                                     while(consecutiveFeeds < 2 && !reader.EndOfStream)
+                                     {
+                                         var nextChar = reader.Peek();
+                                         if (nextChar != 13)
+                                         {
+                                             var line = reader.ReadLine();
+                                             if (string.IsNullOrEmpty(line))
+                                             {
+                                                 consecutiveFeeds++;
+                                             }
+                                             else
+                                             {
+                                                 builder.Append(line);
+                                                 consecutiveFeeds = 0;
+                                             }
+                                         }
+                                         else
+                                         {
+                                             break;
+                                         }
+                                     }
+                                     request = builder.ToString();
+=======
+                                     while(secureStream == null || !secureStream.CanRead)
+                                     {
+                                         Thread.Sleep(1000);
+                                     }
+
+                                     var reader = new HttpStreamReader(secureStream);
+                                     var watcher = new HttpStreamWatcher(); 
+                                     reader.Subscribe(watcher);
+                                     reader.Start();
+
+                                     request = watcher.GetMessage();
+>>>>>>> 7dccb764b8677e12796064915e556af11a4e2364
+
+                                     using(var writer = new StreamWriter(secureStream))
+                                     {
+                                         writer.WriteLine("BOOGABOOGA!");
+                                     }
+                                 };
+<<<<<<< HEAD
+
+=======
+        
+>>>>>>> 7dccb764b8677e12796064915e556af11a4e2364
+        private It should_have_request_body = () => request.ShouldNotBeEmpty();
+    }
+}

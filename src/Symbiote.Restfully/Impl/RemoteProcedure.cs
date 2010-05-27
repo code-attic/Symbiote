@@ -31,7 +31,9 @@ namespace Symbiote.Restfully.Impl
             var tailCall = false;
 
             var argumentTypes = methodInfo.GetParameters().ToDictionary(x => x.Name, x => x.ParameterType);
-            var arguments = jObject["arguments"]
+            List<ConstantExpression> arguments = new List<ConstantExpression>();
+            if (argumentTypes.Count > 0)
+                arguments = jObject["arguments"]
                     .Cast<JProperty>()
                     .Select(x => Expression.Constant(x.Value.ToString().FromJson(argumentTypes[x.Name]))).ToList();
 

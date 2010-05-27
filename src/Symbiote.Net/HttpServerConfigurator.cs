@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Net;
 using StructureMap;
-using Symbiote.Restfully.Impl;
 
-namespace Symbiote.Restfully
+namespace Symbiote.Net
 {
     public class HttpServerConfigurator
     {
         private IHttpServerConfiguration _configuration;
+
+        public IHttpServerConfiguration GetConfiguration()
+        {
+            return _configuration;
+        }
 
         public HttpServerConfigurator Port(int port)
         {
@@ -20,15 +25,22 @@ namespace Symbiote.Restfully
             return this;
         }
 
-        public HttpServerConfigurator HostInIIS()
+        public HttpServerConfigurator BaseUrl(string url)
         {
-            _configuration.SelfHosted = false;
+            _configuration.BaseUrl = url;
             return this;
         }
 
-        public IHttpServerConfiguration GetConfiguration()
+        public HttpServerConfigurator UseBasicAuth()
         {
-            return _configuration;
+            _configuration.AuthSchemes = AuthenticationSchemes.Basic;
+            return this;
+        }
+
+        public HttpServerConfigurator UseDigestAuth()
+        {
+            _configuration.AuthSchemes = AuthenticationSchemes.Digest;
+            return this;
         }
 
         public HttpServerConfigurator HostService<T>()

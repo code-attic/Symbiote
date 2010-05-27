@@ -22,8 +22,7 @@ namespace Symbiote.Restfully.Impl
         public override object Invoke()
         {
             var instance = GetInstance();
-            DeserializeTree().Compile().Invoke(instance);
-            return null;
+            return DeserializeTree().Compile().Invoke(instance);
         }
 
         public RemoteFunc(string methodName, string json) : base(methodName, json)

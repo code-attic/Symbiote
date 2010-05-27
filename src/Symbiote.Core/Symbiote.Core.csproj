@@ -99,6 +99,7 @@
     <Compile Include="Log\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflector.cs" />
+    <Compile Include="Utility\HierarchyVisitor.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

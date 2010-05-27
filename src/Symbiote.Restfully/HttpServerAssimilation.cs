@@ -16,7 +16,8 @@ namespace Symbiote.Restfully
                 .Dependencies(x =>
                                   {
                                       x.For<IHttpServerConfiguration>().Use(configurator.GetConfiguration());
-                                      x.For<IHttpServer>().Use<HttpServer>();
+                                      if(configurator.GetConfiguration().SelfHosted)
+                                          x.For<IHttpServer>().Use<HttpListenerServer>();
                                   });
 
             return assimilate;

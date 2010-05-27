@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace Symbiote.Restfully.Impl
 {
-    public class HttpServer : IHttpServer
+    public class HttpListenerServer : IHttpServer
     {
         protected IHttpServerConfiguration _configuration;
         protected HttpListener _listener;
@@ -50,7 +50,7 @@ namespace Symbiote.Restfully.Impl
             _listener.Stop();
         }
 
-        public HttpServer(IHttpServerConfiguration configuration)
+        public HttpListenerServer(IHttpServerConfiguration configuration)
         {
             _configuration = configuration;
         }
