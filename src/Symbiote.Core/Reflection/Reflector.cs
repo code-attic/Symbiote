@@ -164,6 +164,20 @@ namespace Symbiote.Core.Reflection
             return memberCache[Tuple.Create(type, memberName)].Item2.Invoke(instance);
         }
 
+        public static T ReadMember<T>(object instance, string memberName)
+        {
+            try
+            {
+                var type = instance.GetType();
+                CreateLookupsForType(type);
+                return (T) memberCache[Tuple.Create(type, memberName)].Item2.Invoke(instance);
+            }
+            catch (Exception e)
+            {
+                return default(T);
+            }
+        }
+
         public static void WriteMember(object instance, string memberName, object value)
         {
             var type = instance.GetType();

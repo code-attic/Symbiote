@@ -22,7 +22,7 @@ namespace RelaxDemo
                            .Description("Relax Integration Testing")
                 )
                 .Eidetic()
-                .Relax(x => x.UseDefaults().Cache())
+                .Relax(x => x.UseDefaults().Server("localhost").Cache().ExcludeTypeSpecificationFromJson())
                 .AddColorConsoleLogger<ChangeWatcher>(x => x
                                                                .Info()
                                                                .DefineColor()

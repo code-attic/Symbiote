@@ -58,16 +58,30 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JsonSerialization.cs" />
+    <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
+    <Compile Include="Json\when_serializing_string.cs" />
+    <Compile Include="Json\TestClass.cs" />
+    <Compile Include="Json\TestTarget.cs" />
+    <Compile Include="Json\when_adding_attachment_stub.cs" />
+    <Compile Include="Json\when_deserializing_attachments.cs" />
+    <Compile Include="Json\when_serializing_objects.cs" />
     <Compile Include="Permutations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Reflection\when_reflecting.cs" />
+    <Compile Include="Reflection\TestClass.cs" />
+    <Compile Include="Reflection\POC\when_reading_dynamically.cs" />
+    <Compile Include="Reflection\POC\with_precompiled_read_cache.cs" />
+    <Compile Include="Reflection\POC\when_writing_dynamically.cs" />
+    <Compile Include="Reflection\when_reading_dynamically.cs" />
+    <Compile Include="Reflection\when_writing_dynamically.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Utility\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
