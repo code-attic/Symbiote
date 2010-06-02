@@ -7,7 +7,7 @@ using Symbiote.Core.Extensions;
 namespace Core.Tests
 {
     [Subject("JSON Serialization")]
-    public class when_serializing_string
+    public class when_serializing_string : with_core_assimilation
     {
         protected static string test = "this is a string";
         protected static string result;

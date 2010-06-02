@@ -4,7 +4,7 @@ using Symbiote.Core.Extensions;
 
 namespace Core.Tests
 {
-    public class when_adding_attachment_stub
+    public class when_adding_attachment_stub : with_core_assimilation
     {
         protected static string test = @"{""_id"":""attachment_doc"",""_attachments"":{""foo.txt"":{""content_type"":""text/plain"",""data"":""abcdef""},""bar.txt"":{""content_type"":""text/plain"",""data"":""abcdef""}}}";
 

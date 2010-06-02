@@ -3,7 +3,7 @@ using Symbiote.Core.Extensions;
 
 namespace Core.Tests
 {
-    public class when_serializing_objects
+    public class when_serializing_objects : with_core_assimilation
     {
         protected static TestClass test = new TestClass() { Content = "yay"};
         protected static TestClass result;

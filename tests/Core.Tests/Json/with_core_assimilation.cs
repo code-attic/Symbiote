@@ -1,0 +1,13 @@
+﻿using Machine.Specifications;
+using Symbiote.Core;
+
+namespace Core.Tests
+{
+    public abstract class with_core_assimilation
+    {
+        private Establish context = () =>
+                                        {
+                                            Assimilate.Core();
+                                        };
+    }
+}

@@ -86,8 +86,11 @@
     <Compile Include="DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions\IContractResolverStrategy.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
+    <Compile Include="Extensions\IJsonSerializerFactory.cs" />
     <Compile Include="Extensions\JsonExtensions.cs" />
+    <Compile Include="Extensions\JsonSerializerFactory.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Log\ILogger.cs" />
     <Compile Include="Log\Impl\ILogger.cs" />
