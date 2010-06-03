@@ -21,13 +21,17 @@ namespace Symbiote.Core.Utility
             if(MatchIdentifier(instance))
                 NotifyWatchers(null, null, instance);
 
-            Crawl(instance);
+            if (IsCrawlableEnumerable(instance))
+                Visit(null, "", instance);
+            else
+                Crawl(instance);
         }
 
         protected void Crawl(object instance)
         {
             Reflector
                 .GetProperties(instance.GetType())
+                .Where(x => !x.PropertyType.IsValueType)
                 .ForEach(x => Visit(instance, x.Name, Reflector.ReadMember(instance, x.Name)));
         }
 
@@ -35,14 +39,22 @@ namespace Symbiote.Core.Utility
         {
             if(value != null)
             {
-                if(value.GetType().GetInterface("IEnumerable") != null)
+                if(IsCrawlableEnumerable(value))
                 {
-                    var enumerator = (value as IEnumerable).GetEnumerator();
-                    do
+                    try
                     {
-                        if(enumerator.Current != null)
-                            Visit(parent, member, enumerator.Current);
-                    } while (enumerator.MoveNext());
+                        var enumerator = (value as IEnumerable).GetEnumerator();
+                        enumerator.MoveNext();
+                        do
+                        {
+                            if(enumerator.Current != null)
+                                Visit(parent, member, enumerator.Current);
+                        } while (enumerator.MoveNext());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
                 }
                 else
                 {
@@ -51,6 +63,11 @@ namespace Symbiote.Core.Utility
                     Crawl(value);
                 }
             }
+        }
+
+        protected bool IsCrawlableEnumerable(object value)
+        {
+            return value.GetType().GetInterface("IEnumerable") != null && value.GetType().Name != "String";
         }
 
         protected void NotifyWatchers(object parent, string member, object instance)
@@ -67,6 +84,7 @@ namespace Symbiote.Core.Utility
 
         public HierarchyVisitor(Predicate<object> notifyOnMatches)
         {
+            MatchIdentifier = notifyOnMatches;
             Watchers = new ConcurrentBag<IObserver<Tuple<object, string, object>>>();
         }
     }

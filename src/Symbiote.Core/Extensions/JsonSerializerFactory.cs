@@ -11,6 +11,12 @@ using StructureMap;
 
 namespace Symbiote.Core.Extensions
 {
+    public enum SerializerAction
+    {
+        Serializing,
+        Deserializing
+    }
+
     public class JsonSerializerFactory : IJsonSerializerFactory
     {
         private readonly string _resolverFormat = "CustomJsonResolver-{0}";
@@ -37,19 +43,19 @@ namespace Symbiote.Core.Extensions
             return settings;
         }
 
-        public JsonSerializer GetSerializerFor(string json, bool includeTypeSpec)
+        public JsonSerializer GetSerializerFor(string json, bool includeTypeSpec, SerializerAction action)
         {
             var type = json.GetSerializedTypeFromJson();
-            return GetSerializerFor(type, includeTypeSpec);
+            return GetSerializerFor(type, includeTypeSpec, action);
         }
 
-        public JsonSerializer GetSerializerFor<T>(bool includeTypeSpec)
+        public JsonSerializer GetSerializerFor<T>(bool includeTypeSpec, SerializerAction action)
         {
             var type = typeof(T);
-            return GetSerializerFor(type, includeTypeSpec);
+            return GetSerializerFor(type, includeTypeSpec, action);
         }
 
-        public JsonSerializer GetSerializerFor(Type type, bool includeTypeSpec)
+        public JsonSerializer GetSerializerFor(Type type, bool includeTypeSpec, SerializerAction action)
         {
             JsonSerializer serializer = null;
             if (includeTypeSpec)
@@ -57,24 +63,37 @@ namespace Symbiote.Core.Extensions
             else
                 serializer = JsonSerializer.Create(GetSettingsWithoutTypeHandling());
 
-            SetContractResolver(serializer, type);
+            SetContractResolver(serializer, type, action);
             return serializer;
         }
 
-        protected void SetContractResolver(JsonSerializer serializer, Type type)
+        protected void SetContractResolver(JsonSerializer serializer, Type type, SerializerAction action)
         {
             if (type == null)
                 return;
+
+            Func<Type, IContractResolver> get = action == SerializerAction.Deserializing
+                          ? (Func<Type, IContractResolver>) GetResolverForDeserializationByStrategy
+                          : (Func<Type, IContractResolver>) GetResolverForSerializationByStrategy;
+
             serializer.ContractResolver = 
                 GetTypeSpecificContractResolver(type) ?? 
-                GetResolverByStrategy(type) ?? 
+                get(type) ?? 
                 serializer.ContractResolver;
         }
 
-        private IContractResolver GetResolverByStrategy(Type type)
+        private IContractResolver GetResolverForSerializationByStrategy(Type type)
         {
             return ContractResolverStrategies
-                .Where(x => x.ResolverApplies(type))
+                .Where(x => x.ResolverAppliesForSerialization(type))
+                .Select(x => x.Resolver)
+                .FirstOrDefault();
+        }
+
+        private IContractResolver GetResolverForDeserializationByStrategy(Type type)
+        {
+            return ContractResolverStrategies
+                .Where(x => x.ResolverAppliesForDeserialization(type))
                 .Select(x => x.Resolver)
                 .FirstOrDefault();
         }

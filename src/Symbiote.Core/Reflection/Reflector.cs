@@ -79,8 +79,9 @@ namespace Symbiote.Core.Reflection
                                  {
                                      var key = Tuple.Create(type, x.Name);
                                      var memberType = GetMemberInfoType(x);
-                                     var getter = BuildGet(type, x.Name);
-                                     var setter = BuildSet(type, x.Name);
+                                     
+                                     var getter = CanRead(type, x.Name) ? BuildGet(type, x.Name) : null;
+                                     var setter = CanWrite(type, x.Name) ? BuildSet(type, x.Name) : null;
                                      var value = Tuple.Create(memberType, getter, setter);
 
                                      memberCache.TryAdd(key, value);
@@ -157,11 +158,51 @@ namespace Symbiote.Core.Reflection
             return type.GetProperties(propertyFlags);
         }
 
+        public static bool CanRead(Type type, string memberName)
+        {
+            var member = type.GetMember(memberName, bindingFlags).First();
+            if(member.MemberType == MemberTypes.Field)
+            {
+                return true;
+            }
+            else if(member.MemberType == MemberTypes.Property)
+            {
+                var property = type.GetProperty(memberName, bindingFlags);
+                return property.CanRead;
+            }
+            return false;
+        }
+
+        public static bool CanWrite(Type type, string memberName)
+        {
+            var member = type.GetMember(memberName, bindingFlags).First();
+            if (member.MemberType == MemberTypes.Field)
+            {
+                return true;
+            }
+            else if (member.MemberType == MemberTypes.Property)
+            {
+                var property = type.GetProperty(memberName, bindingFlags);
+                return property.CanWrite;
+            }
+            return false;
+        }
+
         public static object ReadMember(object instance, string memberName)
         {
-            var type = instance.GetType();
-            CreateLookupsForType(type);
-            return memberCache[Tuple.Create(type, memberName)].Item2.Invoke(instance);
+            try
+            {
+                var type = instance.GetType();
+                CreateLookupsForType(type);
+                var tuple = memberCache[Tuple.Create(type, memberName)];
+                if (tuple.Item2 != null)
+                    return tuple.Item2.Invoke(instance);
+                return null;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
         public static T ReadMember<T>(object instance, string memberName)
@@ -170,7 +211,10 @@ namespace Symbiote.Core.Reflection
             {
                 var type = instance.GetType();
                 CreateLookupsForType(type);
-                return (T) memberCache[Tuple.Create(type, memberName)].Item2.Invoke(instance);
+                var tuple = memberCache[Tuple.Create(type, memberName)];
+                if(tuple.Item2 != null)
+                    return (T) tuple.Item2.Invoke(instance);
+                return default(T);
             }
             catch (Exception e)
             {
@@ -180,9 +224,18 @@ namespace Symbiote.Core.Reflection
 
         public static void WriteMember(object instance, string memberName, object value)
         {
-            var type = instance.GetType();
-            CreateLookupsForType(type);
-            memberCache[Tuple.Create(type, memberName)].Item3.Invoke(instance, value);
+            try
+            {
+                var type = instance.GetType();
+                CreateLookupsForType(type);
+                var tuple = memberCache[Tuple.Create(type, memberName)];
+                if (tuple.Item3 != null)
+                    tuple.Item3.Invoke(instance, value);
+            }
+            catch (Exception e)
+            {
+                // do nothing
+            }
         }
     }
 }

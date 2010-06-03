@@ -5,7 +5,8 @@ namespace Symbiote.Core.Extensions
 {
     public interface IContractResolverStrategy
     {
-        bool ResolverApplies(Type type);
+        bool ResolverAppliesForSerialization(Type type);
+        bool ResolverAppliesForDeserialization(Type type);
         IContractResolver Resolver { get; }
     }
 }

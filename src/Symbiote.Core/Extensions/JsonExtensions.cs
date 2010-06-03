@@ -27,7 +27,7 @@ namespace Symbiote.Core.Extensions
 
         public static string ToJson<T>(this T model, bool includeTypeData)
         {
-            var serializer = JsonSerializerFactory.GetSerializerFor(typeof(T), includeTypeData);
+            var serializer = JsonSerializerFactory.GetSerializerFor(typeof(T), includeTypeData, SerializerAction.Serializing);
             var textWriter = new StringWriter();
             var jsonWriter = new JsonTextWriter(textWriter);
 
@@ -49,7 +49,7 @@ namespace Symbiote.Core.Extensions
 
         public static object FromJson(this string json, Type type)
         {
-            var serializer = JsonSerializerFactory.GetSerializerFor(type, true);
+            var serializer = JsonSerializerFactory.GetSerializerFor(type, true, SerializerAction.Deserializing);
 
             try
             {
