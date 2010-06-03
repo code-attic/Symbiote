@@ -24,8 +24,7 @@ namespace Symbiote.Core.Extensions
                 NullValueHandling = NullValueHandling.Ignore,
                 MissingMemberHandling = MissingMemberHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.All,
-                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple,
-                PreserveReferencesHandling = PreserveReferencesHandling.All
+                TypeNameAssemblyFormat = FormatterAssemblyStyle.Simple
             };
             settings.Converters.Add(new IsoDateTimeConverter());
             return settings;

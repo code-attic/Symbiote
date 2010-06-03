@@ -16,7 +16,7 @@ namespace Symbiote.Core.Extensions
         {
             get
             {
-                return ObjectFactory.GetInstance<IJsonSerializerFactory>();
+                return ObjectFactory.TryGetInstance<IJsonSerializerFactory>() ?? new JsonSerializerFactory();
             }
         }
 
