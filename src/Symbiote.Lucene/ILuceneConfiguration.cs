@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Lucene
 {
     public interface ILuceneConfiguration
     {
-        Type DirectoryType { get; set; }
-        Type AnalyzerType { get; set; }
+        string DefaultIndexPath { get; set; }
+        IDictionary<string, IDirectoryFactory> DirectoryFactories { get; set; }
+        IDictionary<string, IAnalyzerFactory> AnalyzerFactories { get; set; }
+        IDictionary<string, string> DirectoryPaths { get; set; }
     }
 }

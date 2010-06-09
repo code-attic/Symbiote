@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9D4DDDC6-21B0-4A9A-92A5-3136E53F02B4}</ProjectGuid>
+    <ProjectGuid>{1FA8B487-2B83-4B2E-8A70-1D3AB83DE774}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Symbiote.Lucene</RootNamespace>
-    <AssemblyName>Symbiote.Lucene</AssemblyName>
+    <RootNamespace>Lucene.Tests</RootNamespace>
+    <AssemblyName>Lucene.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -34,6 +34,12 @@
     <Reference Include="Lucene.Net">
       <HintPath>..\..\lib\Lucene.Net.dll</HintPath>
     </Reference>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\lib\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Machine.Specifications.GallioAdapter">
+      <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap.dll</HintPath>
     </Reference>
@@ -46,20 +52,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LuceneAssimilation.cs" />
-    <Compile Include="LuceneConfiguration.cs" />
-    <Compile Include="ILuceneConfiguration.cs" />
-    <Compile Include="IVisit.cs" />
-    <Compile Include="LuceneConfigurator.cs" />
-    <Compile Include="LuceneIndexingObserver.cs" />
-    <Compile Include="LuceneSearchProvider.cs" />
-    <Compile Include="LuceneServiceFactory.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Lucene\Symbiote.Lucene.csproj">
+      <Project>{9D4DDDC6-21B0-4A9A-92A5-3136E53F02B4}</Project>
+      <Name>Symbiote.Lucene</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
