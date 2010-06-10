@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Symbiote.Lucene
+﻿namespace Symbiote.Lucene.Config
 {
     public class LuceneConfigurator
     {

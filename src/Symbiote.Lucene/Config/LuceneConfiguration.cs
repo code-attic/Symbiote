@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Lucene.Net.Analysis.Standard;
-using Lucene.Net.Store;
+﻿using System.Collections.Generic;
+using Symbiote.Lucene.Impl;
 
-namespace Symbiote.Lucene
+namespace Symbiote.Lucene.Config
 {
     public class LuceneConfiguration : ILuceneConfiguration
     {

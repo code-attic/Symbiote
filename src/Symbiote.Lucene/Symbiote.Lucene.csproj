@@ -46,14 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\BaseIndexingObserver.cs" />
+    <Compile Include="Impl\BaseSearchProvider.cs" />
+    <Compile Include="Impl\DefaultAnalyzerFactory.cs" />
+    <Compile Include="Impl\DefaultDirectoryFactory.cs" />
+    <Compile Include="Impl\IAnalyzerFactory.cs" />
+    <Compile Include="Impl\IDirectoryFactory.cs" />
+    <Compile Include="ILuceneIndexer.cs" />
+    <Compile Include="ILuceneSearchProvider.cs" />
+    <Compile Include="ILuceneServiceFactory.cs" />
     <Compile Include="LuceneAssimilation.cs" />
-    <Compile Include="LuceneConfiguration.cs" />
-    <Compile Include="ILuceneConfiguration.cs" />
+    <Compile Include="Config\LuceneConfiguration.cs" />
+    <Compile Include="Config\ILuceneConfiguration.cs" />
     <Compile Include="IVisit.cs" />
-    <Compile Include="LuceneConfigurator.cs" />
-    <Compile Include="LuceneIndexingObserver.cs" />
-    <Compile Include="LuceneSearchProvider.cs" />
-    <Compile Include="LuceneServiceFactory.cs" />
+    <Compile Include="Config\LuceneConfigurator.cs" />
+    <Compile Include="Impl\LuceneIndexingObserver.cs" />
+    <Compile Include="Impl\LuceneSearchProvider.cs" />
+    <Compile Include="Impl\LuceneServiceFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

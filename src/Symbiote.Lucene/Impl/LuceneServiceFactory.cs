@@ -2,21 +2,15 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Lucene.Net.Analysis;
-using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Index;
-using Lucene.Net.Search;
 using Lucene.Net.Store;
 using StructureMap;
 using StructureMap.Pipeline;
+using Symbiote.Core.Extensions;
+using Symbiote.Lucene.Config;
 
-namespace Symbiote.Lucene
+namespace Symbiote.Lucene.Impl
 {
-    public interface ILuceneServiceFactory
-    {
-        ILuceneIndexer GetIndexingObserverForIndex(string indexName);
-        ILuceneSearchProvider GetSearchProviderForIndex(string indexName);
-    }
-
     public class LuceneServiceFactory : ILuceneServiceFactory
     {
         protected ILuceneConfiguration configuration { get; set; }
@@ -29,8 +23,9 @@ namespace Symbiote.Lucene
             Directory directory = null;
             if(!indices.TryGetValue(indexName, out directory))
             {
-                IDirectoryFactory factory = new DefaultDirectoryFactory(configuration);
+                IDirectoryFactory factory = null;
                 configuration.DirectoryFactories.TryGetValue(indexName, out factory);
+                factory = factory ?? new DefaultDirectoryFactory(configuration);
 
                 directory = factory.CreateDirectoryFor(indexName);
                 indices.TryAdd(indexName, directory);
@@ -43,8 +38,9 @@ namespace Symbiote.Lucene
             Analyzer analyzer = null;
             if (!analyzers.TryGetValue(indexName, out analyzer))
             {
-                IAnalyzerFactory factory = new DefaultAnalyzerFactory();
+                IAnalyzerFactory factory = null;
                 configuration.AnalyzerFactories.TryGetValue(indexName, out factory);
+                factory = new DefaultAnalyzerFactory();
 
                 analyzer = factory.CreateAnalyzerFor(indexName);
                 analyzers.TryAdd(indexName, analyzer);
@@ -60,6 +56,8 @@ namespace Symbiote.Lucene
                 var index = GetIndex(indexName);
                 var analyzer = GetAnalyzer(indexName);
                 writer = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+                writer.SetRAMBufferSizeMB(512);
+                writer.MaybeMerge();
                 indexWriters.TryAdd(indexName, writer);
             }
             return writer;
@@ -94,89 +92,17 @@ namespace Symbiote.Lucene
             indices = new ConcurrentDictionary<string, Directory>();
             indexWriters = new ConcurrentDictionary<string, IndexWriter>();
         }
-    }
 
-    public interface IDirectoryFactory
-    {
-        Directory CreateDirectoryFor(string indexName);
-    }
-
-    public interface IAnalyzerFactory
-    {
-        Analyzer CreateAnalyzerFor(string indexName);
-    }
-
-    public class DefaultDirectoryFactory : IDirectoryFactory
-    {
-        protected ILuceneConfiguration configuration;
-
-        public Directory CreateDirectoryFor(string indexName)
+        public void Dispose()
         {
-            var indexFullPath = configuration.DirectoryPaths + @"/" + indexName;
-            configuration.DirectoryPaths.TryGetValue(indexName, out indexFullPath);
+            indexWriters.ForEach(x => x.Value.Close(true));
+            indexWriters.Clear();
 
-            var directoryInfo = System.IO.Directory.CreateDirectory(indexFullPath);
+            analyzers.ForEach(x => x.Value.Close());
+            analyzers.Clear();
 
-            return new RAMDirectory(
-                new SimpleFSDirectory(
-                    directoryInfo,
-                    new SimpleFSLockFactory()));
-        }
-
-        public DefaultDirectoryFactory (ILuceneConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
-    }
-
-    public class DefaultAnalyzerFactory : IAnalyzerFactory
-    {
-        public Analyzer CreateAnalyzerFor(string indexName)
-        {
-            return new StandardAnalyzer();
-        }
-    }
-
-    public class LuceneServiceFactory_OLD
-    {
-        protected ILuceneConfiguration configuration { get; set; }
-        public Directory Directory { get; protected set; }
-        public Analyzer Analyzer { get; protected set; }
-        public IndexWriter IndexWriter { get; protected set; }
-        
-        protected IndexSearcher IndexSearcher
-        {
-            get { return new IndexSearcher(IndexWriter.GetReader());}
-        }
-
-        protected Directory GetDirectory()
-        {
-            return new RAMDirectory();
-            //return ObjectFactory.GetInstance(configuration.DirectoryType) as Directory;
-        }
-
-        protected Analyzer GetAnalyzer()
-        {
-            return new StandardAnalyzer();
-            //return ObjectFactory.GetInstance(configuration.AnalyzerType) as Analyzer;
-        }
-
-        public LuceneIndexingObserver CreateIndexingObserver()
-        {
-            return new LuceneIndexingObserver(this.IndexWriter);
-        }
-
-        public LuceneSearchProvider CreateSearchProvider()
-        {
-            return new LuceneSearchProvider(this.IndexWriter, this.Analyzer);
-        }
-
-        public LuceneServiceFactory_OLD(ILuceneConfiguration configuration)
-        {
-            this.configuration = configuration;
-            Directory = GetDirectory();
-            Analyzer = GetAnalyzer();
-            IndexWriter = new IndexWriter(Directory, Analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
+            indices.ForEach(x => x.Value.Close());
+            indices.Clear();
         }
     }
 }

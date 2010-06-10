@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Symbiote.Lucene.Impl;
 
-namespace Symbiote.Lucene
+namespace Symbiote.Lucene.Config
 {
     public interface ILuceneConfiguration
     {

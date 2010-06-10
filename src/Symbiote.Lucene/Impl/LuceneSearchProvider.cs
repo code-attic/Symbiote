@@ -6,31 +6,8 @@ using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 
-namespace Symbiote.Lucene
+namespace Symbiote.Lucene.Impl
 {
-    public interface ILuceneSearchProvider
-    {
-        IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string field, string queryText);
-    }
-
-    public abstract class BaseSearchProvider : ILuceneSearchProvider
-    {
-        protected IndexWriter indexWriter { get; set; }
-        protected IndexSearcher indexSearcher
-        {
-            get { return new IndexSearcher(indexWriter.GetReader()); }
-        }
-        protected Analyzer analyzer { get; set; }
-
-        public abstract IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string field, string queryText);
-
-        protected BaseSearchProvider(IndexWriter indexWriter, Analyzer analyzer)
-        {
-            this.indexWriter = indexWriter;
-            this.analyzer = analyzer;
-        }
-    }
-
     public class LuceneSearchProvider : BaseSearchProvider
     {
         public override IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string field, string queryText)

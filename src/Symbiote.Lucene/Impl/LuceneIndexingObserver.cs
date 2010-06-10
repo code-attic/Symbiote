@@ -2,29 +2,8 @@
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 
-namespace Symbiote.Lucene
+namespace Symbiote.Lucene.Impl
 {
-    public interface ILuceneIndexer : IObserver<Tuple<string, string>>
-    {
-    }
-
-    public abstract class BaseIndexingObserver : ILuceneIndexer
-    {
-        protected IndexWriter indexWriter { get; set; }
-        protected Document document { get; set; }
-
-        public abstract void OnNext(Tuple<string, string> value);
-
-        public abstract void OnError(Exception error);
-
-        public abstract void OnCompleted();
-
-        protected BaseIndexingObserver(IndexWriter indexWriter)
-        {
-            this.indexWriter = indexWriter;
-        }
-    }
-
     public class LuceneIndexingObserver
         : BaseIndexingObserver
     {

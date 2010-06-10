@@ -52,8 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="IndexFeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_searching.cs" />
+    <Compile Include="with_index_feeder.cs" />
+    <Compile Include="with_index_on_disk.cs" />
+    <Compile Include="with_lucene.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

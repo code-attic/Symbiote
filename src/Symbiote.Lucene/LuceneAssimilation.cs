@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Symbiote.Core;
+using Symbiote.Lucene.Config;
+using Symbiote.Lucene.Impl;
 
 namespace Symbiote.Lucene
 {
@@ -18,7 +20,9 @@ namespace Symbiote.Lucene
                 .Dependencies(x =>
                 {
                     x.For<ILuceneConfiguration>().Singleton().Use(configuration);
-                    x.For<LuceneServiceFactory>().Singleton().Use<LuceneServiceFactory>();
+                    x.For<ILuceneServiceFactory>().Singleton().Use<LuceneServiceFactory>();
+                    x.For<BaseIndexingObserver>().Use<LuceneIndexingObserver>();
+                    x.For<BaseSearchProvider>().Use<LuceneSearchProvider>();
                 });
 
             return assimilate;
