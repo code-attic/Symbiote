@@ -29,7 +29,7 @@ namespace Restfully.Tests
                                      result = proxy.Call(x => x.TwoArgCall(time,id));
                                      stopwatch.Stop();
                                  };
-
+        
         private It should_call_service_method = () => serviceMock.VerifyAll();
         private It should_take_less_than_half_a_second = () => stopwatch.ElapsedMilliseconds.ShouldBeLessThan(400);
         private It should_return_true = () => result.ShouldBeTrue();

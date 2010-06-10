@@ -21,7 +21,7 @@ namespace Symbiote.Restfully.Impl
             //set defaults
             Port = 8420;
             SelfHosted = true;
-            AuthSchemes = AuthenticationSchemes.None;
+            AuthSchemes = AuthenticationSchemes.Anonymous;
             HostedUrls.Add(@"http://localhost:8420/");
         }
 

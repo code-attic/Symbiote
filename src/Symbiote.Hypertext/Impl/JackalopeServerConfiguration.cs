@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Relax;
 using Symbiote.Jackalope.Config;
 
 namespace Symbiote.Telepathy
