@@ -26,7 +26,7 @@ namespace Symbiote.Lucene.Impl
         public virtual IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery<TModel>(Expression<Func<TModel, bool>> predicate)
         {
             DelimitedBuilder builder = new DelimitedBuilder("");
-            ExpressionTreeProcessor.Process(predicate, builder);
+            ExpressionTreeProcessor.Process(predicate, "", builder);
             var query = builder.ToString();
             return GetDocumentsForQuery(query);
         }

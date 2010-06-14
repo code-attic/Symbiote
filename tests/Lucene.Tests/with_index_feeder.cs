@@ -16,7 +16,9 @@ namespace Lucene.Tests
                                                                  {"FirstName", "Alex"},
                                                                  {"LastName", "Robson"},
                                                                  {"Age", "31"},
-                                                                 {"DateOfBirth", "06/17/1979"}
+                                                                 {"DateOfBirth", "06/17/1979"},
+                                                                 {"Cars.Make", "Honda"},
+                                                                 {"Cars.Model", "Crosstour"}
                                                              };
                                         };
     }

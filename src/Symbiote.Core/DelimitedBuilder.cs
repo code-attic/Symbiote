@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core
 {
@@ -11,6 +12,8 @@ namespace Symbiote.Core
 
         private StringBuilder _builder;
         private string _delimiter = ", ";
+        private string _prefix = "";
+        private string _suffix = "";
 
         #endregion
 
@@ -18,54 +21,42 @@ namespace Symbiote.Core
 
         public void Append(object value)
         {
-            _builder.Append(value.ToString());
-            _builder.Append(_delimiter);
+            Append(value, true);
         }
 
         public void Append(object value, bool delimiter)
         {
-            _builder.Append(value.ToString());
-            if (delimiter)
-                _builder.Append(_delimiter);
+            Append(value, "", "", delimiter);
         }
 
         public void Append(object value, object prefix, object suffix)
         {
-            _builder.AppendFormat("{0}{1}{2}", prefix.ToString(), value.ToString(), suffix.ToString());
-            _builder.Append(_delimiter);
+            Append(value, prefix, suffix, true);
         }
 
         public void Append(object value, object prefix, object suffix, bool delimiter)
         {
-            _builder.AppendFormat("{0}{1}{2}", prefix.ToString(), value.ToString(), suffix.ToString());
-            if (delimiter)
-                _builder.Append(_delimiter);
+            Append(value.ToString(), prefix.ToString(), suffix.ToString(), delimiter);
         }
 
         public void Append(string value)
         {
-            _builder.Append(value);
-            _builder.Append(_delimiter);
+            Append(value, true);
         }
 
         public void Append(string value, bool delimiter)
         {
-            _builder.Append(value);
-            if (delimiter)
-                _builder.Append(_delimiter);
+            Append(value, "", "", delimiter);
         }
 
         public void Append(string value, string prefix, string suffix)
         {
-            _builder.AppendFormat("{0}{1}{2}", prefix.ToString(), value.ToString(), suffix.ToString());
-            _builder.Append(_delimiter);
+            Append(value, prefix, suffix, true);
         }
 
         public void Append(string value, string prefix, string suffix, bool delimiter)
         {
-            _builder.AppendFormat("{0}{1}{2}", prefix.ToString(), value.ToString(), suffix.ToString());
-            if (delimiter)
-                _builder.Append(_delimiter);
+            AppendFormat("{0}{1}{2}", delimiter, prefix, suffix, value);
         }
 
         public void AppendFormat(string format, params object[] values)
@@ -75,7 +66,8 @@ namespace Symbiote.Core
 
         public void AppendFormat(string format, bool delimiter, params object[] values)
         {
-            _builder.AppendFormat(format, values);
+            var value = format.AsFormat(values);
+            _builder.AppendFormat("{0}{1}{2}", _prefix, value, _suffix);
             if (delimiter)
                 _builder.Append(_delimiter);
         }
@@ -137,6 +129,14 @@ namespace Symbiote.Core
         {
             _builder = new StringBuilder();
             _delimiter = delimiter;
+        }
+
+        public DelimitedBuilder(string delimiter, string prefix, string suffix)
+        {
+            _builder = new StringBuilder();
+            _delimiter = delimiter;
+            _prefix = prefix;
+            _suffix = suffix;
         }
 
         #endregion

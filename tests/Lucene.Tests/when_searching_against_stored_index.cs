@@ -8,12 +8,19 @@ using Machine.Specifications;
 
 namespace Lucene.Tests
 {
-    public class TestModel
+    public class Person
     {
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }
         public virtual int Age { get; set; }
         public virtual DateTime DateOfBirth { get; set; }
+        public virtual List<Car> Cars { get; set; }
+    }
+
+    public class Car
+    {
+        public virtual string Make { get; set; }
+        public virtual string Model { get; set; }
     }
 
     public class when_searching_against_stored_index : with_index_on_disk
@@ -25,7 +32,8 @@ namespace Lucene.Tests
         private Because of = () =>
                                  {
                                      watch = Stopwatch.StartNew();
-                                     documents = searchProvider.GetDocumentsForQuery<TestModel>(x => x.DateOfBirth <= DateTime.Parse("01/01/1980")).ToList();
+                                     documents = searchProvider.GetDocumentsForQuery<Person>(x =>
+                                         x.Cars.Any(c => c.Make.StartsWith("H") && c.Model == "Crosstour")).ToList();
                                      watch.Stop();
                                      age = int.Parse(documents[0].Item2.Get("Age"));
                                  };
