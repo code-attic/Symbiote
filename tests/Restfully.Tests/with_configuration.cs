@@ -14,8 +14,8 @@ namespace Restfully.Tests
                                             serviceMock = new Mock<ITestService>();
                                             Assimilate
                                                 .Core()
-                                                .HttpServer(x => x.UseDefaults().HostService<ITestService>())
-                                                .HttpClient(x => x.Server(@"http://localhost:8420/").Timeout(9000))
+                                                .HttpServiceHost(x => x.UseDefaults().HostService<ITestService>())
+                                                .HttpServiceClient(x => x.Server(@"http://localhost:8420/").Timeout(9000))
                                                 .Dependencies(x => x.For<ITestService>().Use(serviceMock.Object));
                                         };
     }

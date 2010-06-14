@@ -51,32 +51,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\ExpressionExtensions.cs" />
-    <Compile Include="HttpServerAssimilation.cs" />
-    <Compile Include="HttpClientAssimilation.cs" />
-    <Compile Include="Impl\HttpClientConfiguration.cs" />
-    <Compile Include="HttpClientConfigurator.cs" />
-    <Compile Include="Impl\HttpContextAdapter.cs" />
-    <Compile Include="Impl\HttpListenerRequestAdapter.cs" />
-    <Compile Include="Impl\HttpListenerResponseAdapter.cs" />
-    <Compile Include="Impl\HttpRequestAdapter.cs" />
-    <Compile Include="Impl\HttpResponseAdapter.cs" />
-    <Compile Include="Impl\HttpListenerServer.cs" />
-    <Compile Include="Impl\HttpServerConfiguration.cs" />
-    <Compile Include="HttpServerConfigurator.cs" />
-    <Compile Include="Impl\IHttpClientConfiguration.cs" />
-    <Compile Include="Impl\IHttpContextAdapter.cs" />
-    <Compile Include="Impl\IHttpRequestAdapter.cs" />
-    <Compile Include="Impl\IHttpResponseAdapter.cs" />
-    <Compile Include="Impl\IHttpServer.cs" />
-    <Compile Include="Impl\IHttpServerConfiguration.cs" />
-    <Compile Include="Impl\IRemoteProcedure.cs" />
+    <Compile Include="HttpServiceHostAssimilation.cs" />
+    <Compile Include="HttpServiceClientAssimilation.cs" />
+    <Compile Include="Config\HttpServiceClientConfiguration.cs" />
+    <Compile Include="Config\HttpServiceClientConfigurator.cs" />
+    <Compile Include="Impl\Adapters\HttpContextAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpListenerRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpListenerResponseAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpResponseAdapter.cs" />
+    <Compile Include="Impl\SimpleHttpServiceHost.cs" />
+    <Compile Include="Config\HttpServiceHostConfiguration.cs" />
+    <Compile Include="Config\HttpServiceHostConfigurator.cs" />
+    <Compile Include="Config\IHttpServiceClientConfiguration.cs" />
+    <Compile Include="Impl\Adapters\IHttpContextAdapter.cs" />
+    <Compile Include="Impl\Adapters\IHttpRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\IHttpResponseAdapter.cs" />
+    <Compile Include="IHttpServiceHost.cs" />
+    <Compile Include="Config\IHttpServiceHostConfiguration.cs" />
+    <Compile Include="Impl\Rpc\IRemoteProcedure.cs" />
     <Compile Include="IRemoteProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Impl\RemoteAction.cs" />
-    <Compile Include="Impl\RemoteFunc.cs" />
-    <Compile Include="Impl\RemoteProcedure.cs" />
-    <Compile Include="RemoteProxy.cs" />
-    <Compile Include="Impl\ResourceRequest.cs" />
+    <Compile Include="Impl\Rpc\RemoteAction.cs" />
+    <Compile Include="Impl\Rpc\RemoteFunc.cs" />
+    <Compile Include="Impl\Rpc\RemoteProcedure.cs" />
+    <Compile Include="Impl\Rpc\RemoteProxy.cs" />
+    <Compile Include="Impl\Rpc\ResourceRequest.cs" />
     <Compile Include="RestfullCallHandler.cs" />
   </ItemGroup>
   <ItemGroup>

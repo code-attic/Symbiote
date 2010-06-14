@@ -4,6 +4,7 @@ using System.Net;
 using Machine.Specifications;
 using Symbiote.Restfully;
 using Symbiote.Restfully.Impl;
+using Symbiote.Restfully.Impl.Rpc;
 
 namespace Restfully.Tests
 {

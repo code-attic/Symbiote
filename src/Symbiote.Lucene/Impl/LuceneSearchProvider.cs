@@ -5,14 +5,16 @@ using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
+using Version = Lucene.Net.Util.Version;
 
 namespace Symbiote.Lucene.Impl
 {
     public class LuceneSearchProvider : BaseSearchProvider
     {
-        public override IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string field, string queryText)
+        public override IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string queryText)
         {
-            var parser = new QueryParser(field, analyzer);
+            var parser = new CustomQueryParser(Version.LUCENE_29, "", analyzer);
+            parser.SetAllowLeadingWildcard(true);
             var query = parser.Parse(queryText);
             var collector = TopScoreDocCollector.create(1000, true);
             indexSearcher.Search(query, collector);

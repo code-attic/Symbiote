@@ -55,6 +55,7 @@
     <Compile Include="IndexFeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_searching.cs" />
+    <Compile Include="when_searching_against_stored_index.cs" />
     <Compile Include="with_index_feeder.cs" />
     <Compile Include="with_index_on_disk.cs" />
     <Compile Include="with_lucene.cs" />

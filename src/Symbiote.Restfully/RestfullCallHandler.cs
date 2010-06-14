@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using StructureMap;
+using Symbiote.Restfully.Config;
 using Symbiote.Restfully.Impl;
+using Symbiote.Restfully.Impl.Rpc;
 
 namespace Symbiote.Restfully
 {
     public class RestfullCallHandler : IHttpHandler
     {
-        private IHttpServerConfiguration _configuration;
-        protected IHttpServerConfiguration Configuration 
+        private IHttpServiceHostConfiguration _configuration;
+        protected IHttpServiceHostConfiguration Configuration 
         {
             get 
             { 
-                _configuration = _configuration ?? ObjectFactory.GetInstance<IHttpServerConfiguration>();
+                _configuration = _configuration ?? ObjectFactory.GetInstance<IHttpServiceHostConfiguration>();
                 return _configuration;
             }
         }

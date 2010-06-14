@@ -16,6 +16,7 @@ namespace Lucene.Tests
                                                                  {"FirstName", "Alex"},
                                                                  {"LastName", "Robson"},
                                                                  {"Age", "31"},
+                                                                 {"DateOfBirth", "06/17/1979"}
                                                              };
                                         };
     }

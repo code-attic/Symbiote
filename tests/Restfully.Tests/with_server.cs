@@ -7,11 +7,11 @@ namespace Restfully.Tests
 {
     public abstract class with_server : with_configuration
     {
-        protected static IHttpServer server;
+        protected static IHttpServiceHost server;
 
         private Establish context = () =>
                                         {
-                                            server = ObjectFactory.GetInstance<IHttpServer>();
+                                            server = ObjectFactory.GetInstance<IHttpServiceHost>();
                                             server.Start();
                                         };
     }

@@ -48,8 +48,10 @@
   <ItemGroup>
     <Compile Include="Impl\BaseIndexingObserver.cs" />
     <Compile Include="Impl\BaseSearchProvider.cs" />
+    <Compile Include="Impl\CustomQueryParser.cs" />
     <Compile Include="Impl\DefaultAnalyzerFactory.cs" />
     <Compile Include="Impl\DefaultDirectoryFactory.cs" />
+    <Compile Include="Impl\ExpressionTreeParser.cs" />
     <Compile Include="Impl\IAnalyzerFactory.cs" />
     <Compile Include="Impl\IDirectoryFactory.cs" />
     <Compile Include="ILuceneIndexer.cs" />

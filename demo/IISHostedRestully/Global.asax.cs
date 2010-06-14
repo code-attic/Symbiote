@@ -16,7 +16,7 @@ namespace IISHostedRestully
         {
             Assimilate
                 .Core()
-                .HttpServer(x => x
+                .HttpServiceHost(x => x
                     .HostInIIS()
                     .HostService<SayHi>());
 

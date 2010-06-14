@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Newtonsoft.Json;
 using Symbiote.Core.Extensions;
+using Symbiote.Restfully.Impl.Rpc;
 
 namespace Symbiote.Restfully.Impl
 {
