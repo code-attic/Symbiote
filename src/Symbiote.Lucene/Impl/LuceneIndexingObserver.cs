@@ -13,10 +13,11 @@ namespace Symbiote.Lucene.Impl
             if(fieldType != null)
             {
                 document.Add(fieldType.ToField(value.Item1, value.Item2, Field.Store.YES));
+                document.Add(new Field(value.Item1, value.Item2, Field.Store.YES, Field.Index.NOT_ANALYZED));
             }
             else
             {
-                document.Add(new Field(value.Item1, value.Item2, Field.Store.YES, Field.Index.ANALYZED));   
+                document.Add(new Field(value.Item1, value.Item2, Field.Store.YES, Field.Index.ANALYZED));
             }
         }
 
@@ -28,8 +29,11 @@ namespace Symbiote.Lucene.Impl
         public override void OnCompleted()
         {
             indexWriter.AddDocument(document);
-            indexWriter.Optimize();
-            indexWriter.Commit();
+            if(indexWriter.NumRamDocs() > 0)
+            {
+                indexWriter.Optimize();
+                indexWriter.Commit();
+            }
         }
 
         public LuceneIndexingObserver(IndexWriter indexWriter)

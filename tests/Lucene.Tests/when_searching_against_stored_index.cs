@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
 using Lucene.Net.Search;
 using Machine.Specifications;
+using Version = Lucene.Net.Util.Version;
 
 namespace Lucene.Tests
 {
@@ -32,9 +35,10 @@ namespace Lucene.Tests
         private Because of = () =>
                                  {
                                      watch = Stopwatch.StartNew();
-                                     documents = searchProvider.GetDocumentsForQuery<Person>(x =>
-                                         x.Cars.Any(c => c.Make.StartsWith("H") && c.Model == "Crosstour")).ToList();
+                                     documents = searchProvider.GetDocumentsForQuery<Person>(x => 
+                                        x.Age == 31).ToList();
                                      watch.Stop();
+
                                      age = int.Parse(documents[0].Item2.Get("Age"));
                                  };
         

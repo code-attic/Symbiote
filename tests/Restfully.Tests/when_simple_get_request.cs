@@ -14,12 +14,12 @@ namespace Restfully.Tests
                                  {
                                      request.Method = "GET";
                                      request.ContentType = "text/plain";
-                                     using (var stream = request.GetRequestStream())
-                                     using (var writer = new StringWriter())
-                                     {
-                                         writer.WriteLine("Anyone home?");
-                                         writer.Flush();
-                                     }
+                                     //using (var stream = request.GetRequestStream())
+                                     //using (var writer = new StringWriter())
+                                     //{
+                                     //    writer.WriteLine("Anyone home?");
+                                     //    writer.Flush();
+                                     //}
                                      response = request.GetResponse();
                                      using (var reader = new StreamReader(response.GetResponseStream()))
                                      {

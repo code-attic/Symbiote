@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using Lucene.Net.Analysis;
+using Lucene.Net.Analysis.Standard;
 using Lucene.Net.Documents;
+using Lucene.Net.Index;
+using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Machine.Specifications;
 using Symbiote.Core.Extensions;
+using Symbiote.Lucene.Impl;
+using Version = Lucene.Net.Util.Version;
 
 namespace Lucene.Tests
 {
@@ -18,8 +25,9 @@ namespace Lucene.Tests
         private Because of = () =>
                                  {
                                      watch = Stopwatch.StartNew();
-                                     documents = searchProvider.GetDocumentsForQuery("DateOfBirth:[* TO 1/1/1980]").ToList();
+                                     documents = searchProvider.GetDocumentsForQuery("Age:31").ToList();
                                      watch.Stop();
+
                                      age = int.Parse(documents[0].Item2.Get("Age"));
                                  };
         

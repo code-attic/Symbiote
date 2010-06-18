@@ -16,7 +16,10 @@ namespace Symbiote.Lucene.Impl
         {
             get
             {
-                return new IndexSearcher(indexWriter.GetDirectory(), true);
+                var dirSearcher = new IndexSearcher(indexWriter.GetDirectory(), true);
+                var readerSearcher = new IndexSearcher(indexWriter.GetReader());
+                var searcher = new MultiSearcher(new Searchable[] {dirSearcher, readerSearcher});
+                return searcher;
             }
         }
         protected Analyzer analyzer { get; set; }

@@ -67,6 +67,25 @@ namespace Symbiote.Core.Extensions
             }
         }
 
+        public static void RefreshFromJson<T>(this string json, T target)
+        {
+            var type = typeof (T);
+            var serializer = JsonSerializerFactory.GetSerializerFor(type, true, SerializerAction.Deserializing);
+            JsonConvert.PopulateObject(json, target, 
+                new JsonSerializerSettings()
+                    {
+                        Binder = serializer.Binder,
+                        ConstructorHandling = serializer.ConstructorHandling,
+                        Context = serializer.Context,
+                        ContractResolver = serializer.ContractResolver,
+                        Converters = serializer.Converters,
+                        DefaultValueHandling = serializer.DefaultValueHandling,
+                        MissingMemberHandling = serializer.MissingMemberHandling,
+                        ObjectCreationHandling = serializer.ObjectCreationHandling,
+                        NullValueHandling = serializer.NullValueHandling
+                    });
+        }
+
         internal static Type GetSerializedTypeFromJson(this string json)
         {
             var typeToken = JObject.Parse(json).Value<string>("$type");

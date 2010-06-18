@@ -4,6 +4,7 @@ namespace Symbiote.Lucene.Impl
 {
     public interface IAnalyzerFactory
     {
-        Analyzer CreateAnalyzerFor(string indexName);
+        Analyzer GetQueryAnalyzerFor(string indexName);
+        Analyzer GetIndexAnalyzerFor(string indexName);
     }
 }

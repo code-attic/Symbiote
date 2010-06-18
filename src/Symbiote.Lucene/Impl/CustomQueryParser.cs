@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
+using Lucene.Net.Index;
 using Lucene.Net.QueryParsers;
 using Lucene.Net.Search;
 using Version = Lucene.Net.Util.Version;
@@ -29,12 +30,6 @@ namespace Symbiote.Lucene.Impl
                 return base.GetRangeQuery(field, part1, part2, inclusive);
             }
         }
-    }
-
-    public class TypedField
-    {
-        protected readonly string _regexPattern = @"^(\\w+)(<(\\w+)>)?$";
-        protected string FieldName { get; set; }
     }
 
     public class DateTimeFieldType : FieldType

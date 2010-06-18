@@ -43,11 +43,16 @@ namespace Symbiote.Core
                                             // Machine.Specifications blows itself all to heck when
                                             // StructureMap scans it. I haven't really tried to determine why
                                             // but this will prevent the scan code from running
-                                            if (Type.GetType("Machine.Specifications.Because, Machine.Specifications") == null)
-                                            {
-                                                s.AssembliesFromApplicationBaseDirectory();
-                                                s.AddAllTypesOf<IContractResolverStrategy>();
-                                            }
+                                            s.AssembliesFromApplicationBaseDirectory(a =>
+                                                {
+                                                    var fullName = a.FullName;
+                                                    return !
+                                                        (fullName.Contains("Microsoft") ||
+                                                            fullName.Contains("Machine.Specifications") ||
+                                                        fullName.Contains("Gallio")
+                                                        );
+                                                });
+                                            s.AddAllTypesOf<IContractResolverStrategy>();
                                         });
                          });
             return _assimilate;

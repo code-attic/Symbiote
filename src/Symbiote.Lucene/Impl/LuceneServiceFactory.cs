@@ -14,7 +14,8 @@ namespace Symbiote.Lucene.Impl
     public class LuceneServiceFactory : ILuceneServiceFactory
     {
         protected ILuceneConfiguration configuration { get; set; }
-        protected ConcurrentDictionary<string, Analyzer> analyzers;
+        protected ConcurrentDictionary<string, Analyzer> indexingAnalyzers;
+        protected ConcurrentDictionary<string, Analyzer> queryAnalyzers;
         protected ConcurrentDictionary<string, Directory> indices;
         protected ConcurrentDictionary<string, IndexWriter> indexWriters;
         
@@ -33,17 +34,32 @@ namespace Symbiote.Lucene.Impl
             return directory;
         }
 
-        public virtual Analyzer GetAnalyzer(string indexName)
+        public virtual Analyzer GetIndexingAnalyzer(string indexName)
         {
             Analyzer analyzer = null;
-            if (!analyzers.TryGetValue(indexName, out analyzer))
+            if (!indexingAnalyzers.TryGetValue(indexName, out analyzer))
             {
                 IAnalyzerFactory factory = null;
                 configuration.AnalyzerFactories.TryGetValue(indexName, out factory);
                 factory = new DefaultAnalyzerFactory();
 
-                analyzer = factory.CreateAnalyzerFor(indexName);
-                analyzers.TryAdd(indexName, analyzer);
+                analyzer = factory.GetIndexAnalyzerFor(indexName);
+                indexingAnalyzers.TryAdd(indexName, analyzer);
+            }
+            return analyzer;
+        }
+
+        public virtual Analyzer GetQueryAnalyzer(string indexName)
+        {
+            Analyzer analyzer = null;
+            if (!queryAnalyzers.TryGetValue(indexName, out analyzer))
+            {
+                IAnalyzerFactory factory = null;
+                configuration.AnalyzerFactories.TryGetValue(indexName, out factory);
+                factory = new DefaultAnalyzerFactory();
+
+                analyzer = factory.GetQueryAnalyzerFor(indexName);
+                queryAnalyzers.TryAdd(indexName, analyzer);
             }
             return analyzer;
         }
@@ -54,7 +70,7 @@ namespace Symbiote.Lucene.Impl
             if (!indexWriters.TryGetValue(indexName, out writer))
             {
                 var index = GetIndex(indexName);
-                var analyzer = GetAnalyzer(indexName);
+                var analyzer = GetIndexingAnalyzer(indexName);
                 writer = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
                 writer.SetRAMBufferSizeMB(512);
                 writer.MaybeMerge();
@@ -76,7 +92,7 @@ namespace Symbiote.Lucene.Impl
         public ILuceneSearchProvider GetSearchProviderForIndex(string indexName)
         {
             var writer = GetIndexWriter(indexName);
-            var analyzer = GetAnalyzer(indexName);
+            var analyzer = GetQueryAnalyzer(indexName);
             var args = new ExplicitArguments(new Dictionary<string, object>()
                                                  {
                                                      {"indexWriter",writer},
@@ -88,7 +104,8 @@ namespace Symbiote.Lucene.Impl
         public LuceneServiceFactory(ILuceneConfiguration configuration)
         {
             this.configuration = configuration;
-            analyzers = new ConcurrentDictionary<string, Analyzer>();
+            queryAnalyzers = new ConcurrentDictionary<string, Analyzer>();
+            indexingAnalyzers = new ConcurrentDictionary<string, Analyzer>();
             indices = new ConcurrentDictionary<string, Directory>();
             indexWriters = new ConcurrentDictionary<string, IndexWriter>();
         }
@@ -98,8 +115,11 @@ namespace Symbiote.Lucene.Impl
             indexWriters.ForEach(x => x.Value.Close(true));
             indexWriters.Clear();
 
-            analyzers.ForEach(x => x.Value.Close());
-            analyzers.Clear();
+            queryAnalyzers.ForEach(x => x.Value.Close());
+            queryAnalyzers.Clear();
+
+            indexingAnalyzers.ForEach(x => x.Value.Close());
+            indexingAnalyzers.Clear();
 
             indices.ForEach(x => x.Value.Close());
             indices.Clear();

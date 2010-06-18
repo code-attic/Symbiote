@@ -305,9 +305,15 @@ namespace Symbiote.Lucene.Impl
         private static void ProcessSimpleBinaryExpression(Expression expr, string prefix, DelimitedBuilder builder, string token)
         {
             var binaryExpr = expr as BinaryExpression;
+            if(binaryExpr.NodeType ==  ExpressionType.AndAlso || binaryExpr.NodeType == ExpressionType.OrElse)
+                builder.Append("(");
+            
             Process(binaryExpr.Left, prefix, builder);
             builder.Append(token);
             Process(binaryExpr.Right, prefix, builder);
+            
+            if (binaryExpr.NodeType == ExpressionType.AndAlso || binaryExpr.NodeType == ExpressionType.OrElse)
+                builder.Append(")");
         }
 
         private static string HandleFormatting(object value)
