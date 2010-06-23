@@ -28,14 +28,7 @@ namespace Symbiote.Jackalope.Impl
             endpointConfiguration(endpoint);
             _endpointManager.AddEndpoint(endpoint);
         }
-
-        public IBus AddProcessor<TMessage>(Func<TMessage, IMessageDelivery, object> processor) where TMessage : class
-        {
-            var actionDispatcher = new ActionDispatcher<TMessage>(processor);
-            _functionalDispatchers[typeof(TMessage)] = actionDispatcher;
-            return this;
-        }
-
+        
         public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
         {
             _endpointManager.BindQueue(exchangeName, queueName, routingKeys);
@@ -69,78 +62,6 @@ namespace Symbiote.Jackalope.Impl
                 proxy
                     .Channel
                     .QueueDelete(queueName, false, false, true);
-            }
-        }
-        
-        public Envelope GetNextMessage(string queueName)
-        {
-            var proxy = _channelFactory.GetProxyForQueue(queueName);
-            try
-            {
-                return proxy.GetNext();
-            }
-            catch (Exception e)
-            {
-                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
-                    .ToError<IBus>(queueName, e);
-                throw;
-            }
-        }
-
-        public Envelope GetNextMessage(string queueName, int miliseconds)
-        {
-            var proxy = _channelFactory.GetProxyForQueue(queueName);
-            try
-            {
-                return proxy.GetNext(miliseconds);
-            }
-            catch (Exception e)
-            {
-                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
-                    .ToError<IBus>(queueName, e);
-                throw;
-            }
-        }
-
-        public object ProcessNextMessage(string queueName)
-        {
-            var proxy = _channelFactory.GetProxyForQueue(queueName);
-            try
-            {
-                using(var envelope = proxy.GetNext())
-                {
-                    var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
-                    var result = dispatcher.Dispatch(envelope);
-                    envelope.MessageDelivery.Acknowledge();
-                    return result;
-                }
-            }
-            catch (Exception e)
-            {
-                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
-                    .ToError<IBus>(queueName, e);
-                throw;
-            }
-        }
-
-        public object ProcessNextMessage(string queueName, int miliseconds)
-        {
-            var proxy = _channelFactory.GetProxyForQueue(queueName);
-            try
-            {
-                using (var envelope = proxy.GetNext(miliseconds))
-                {
-                    var dispatcher = _functionalDispatchers[envelope.Message.GetType()];
-                    var result = dispatcher.Dispatch(envelope);
-                    envelope.MessageDelivery.Acknowledge();
-                    return result;
-                }
-            }
-            catch (Exception e)
-            {
-                "An exception occurred while attempting to retrieve a message from queue {0}: \r\n\t {1}"
-                    .ToError<IBus>(queueName, e);
-                throw;
             }
         }
         

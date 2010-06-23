@@ -70,6 +70,9 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.CoreEx, Version=1.0.2521.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Interactive, Version=1.0.2521.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive, Version=1.0.2521.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -91,42 +94,42 @@
     <Compile Include="Envelope.cs" />
     <Compile Include="ICorrelate.cs" />
     <Compile Include="Impl\ActionDispatcher.cs" />
-    <Compile Include="Impl\BaseBroker.cs" />
-    <Compile Include="Impl\EndpointManager.cs" />
-    <Compile Include="Impl\IEndpointManager.cs" />
-    <Compile Include="Impl\ISubscriptionManager.cs" />
+    <Compile Include="Impl\Dispatch\BaseBroker.cs" />
+    <Compile Include="Impl\Endpoint\EndpointManager.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
+    <Compile Include="Impl\Subscription\ISubscriptionManager.cs" />
     <Compile Include="JackalopeConfigurationException.cs" />
-    <Compile Include="Impl\NullSubscription.cs" />
-    <Compile Include="Impl\SubscriptionManager.cs" />
+    <Compile Include="Impl\Subscription\NullSubscription.cs" />
+    <Compile Include="Impl\Subscription\SubscriptionManager.cs" />
     <Compile Include="DeliveryMode.cs" />
     <Compile Include="ExchangeType.cs" />
-    <Compile Include="Impl\IBroker.cs" />
+    <Compile Include="Impl\Dispatch\IBroker.cs" />
     <Compile Include="IBus.cs" />
-    <Compile Include="Impl\IChannelProxy.cs" />
+    <Compile Include="Impl\Channel\IChannelProxy.cs" />
     <Compile Include="IMessageHandler.cs" />
-    <Compile Include="Impl\IMessageSerializer.cs" />
-    <Compile Include="Impl\AmqpEndpointConfiguration.cs" />
-    <Compile Include="Impl\Broker.cs" />
+    <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
+    <Compile Include="Config\AmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\Dispatch\Broker.cs" />
     <Compile Include="Impl\Bus.cs" />
-    <Compile Include="Impl\BusEndPoint.cs" />
-    <Compile Include="Impl\ChannelProxy.cs" />
-    <Compile Include="Impl\ChannelProxyFactory.cs" />
-    <Compile Include="Impl\ConnectionManager.cs" />
-    <Compile Include="Impl\Dispatcher.cs" />
-    <Compile Include="Impl\EndpointIndex.cs" />
-    <Compile Include="Impl\IAmqpEndpointConfiguration.cs" />
-    <Compile Include="Impl\IChannelProxyFactory.cs" />
-    <Compile Include="Impl\IConnectionManager.cs" />
-    <Compile Include="Impl\IConnectionProvider.cs" />
-    <Compile Include="Impl\IDispatch.cs" />
-    <Compile Include="Impl\IEndPoint.cs" />
-    <Compile Include="Impl\IEndpointIndex.cs" />
+    <Compile Include="Impl\Endpoint\BusEndPoint.cs" />
+    <Compile Include="Impl\Channel\ChannelProxy.cs" />
+    <Compile Include="Impl\Channel\ChannelProxyFactory.cs" />
+    <Compile Include="Impl\Server\ConnectionManager.cs" />
+    <Compile Include="Impl\Dispatch\Dispatcher.cs" />
+    <Compile Include="Impl\Endpoint\EndpointIndex.cs" />
+    <Compile Include="Config\IAmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\Channel\IChannelProxyFactory.cs" />
+    <Compile Include="Impl\Server\IConnectionManager.cs" />
+    <Compile Include="Impl\Server\IConnectionProvider.cs" />
+    <Compile Include="Impl\Dispatch\IDispatch.cs" />
+    <Compile Include="Impl\Endpoint\IEndPoint.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
     <Compile Include="IMessageDelivery.cs" />
-    <Compile Include="Impl\ISubscription.cs" />
-    <Compile Include="Impl\JsonMessageSerializer.cs" />
-    <Compile Include="Impl\NetBinarySerializer.cs" />
+    <Compile Include="Impl\Subscription\ISubscription.cs" />
+    <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
+    <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
     <Compile Include="Impl\MessageDelivery.cs" />
-    <Compile Include="Impl\Subscription.cs" />
+    <Compile Include="Impl\Subscription\Subscription.cs" />
     <Compile Include="JackalopeAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -153,6 +156,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
