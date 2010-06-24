@@ -94,7 +94,7 @@ namespace Symbiote.SocketMQ.Impl
         private void HandleClientConnect(string clientId)
         {
             _bus.AddEndPoint(x => x.QueueName(clientId));
-            _bus.Subscribe(clientId, null);
+            _bus.Subscribe(clientId);
         }
 
         public void Stop()

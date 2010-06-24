@@ -10,16 +10,21 @@ namespace Symbiote.Jackalope.Impl
     public class Subscription : ISubscription
     {
         private string _queueName;
-        private IBroker _broker;
+        private IQueueObserver _observer;
         private Task _brokerTask;
         private CancellationTokenSource _tokenSource;
         private CancellationToken _brokerCancelToken;
+
+        public IObservable<Envelope> MessageStream
+        {
+            get { return _observer; }
+        }
 
         public bool Starting { get; private set; }
         public bool Started { get; private set; }
         public bool Stopping { get; private set; }
         public bool Stopped { get; private set; }
-
+        
         public void Dispose()
         {
             Stop();
@@ -41,7 +46,7 @@ namespace Symbiote.Jackalope.Impl
         {
             Stopping = true;
             _tokenSource.Cancel();
-            _broker = null;
+            _observer = null;
             Stopping = false;
             Stopped = true;
         }
@@ -54,11 +59,11 @@ namespace Symbiote.Jackalope.Impl
 
         protected void InitializeBrokerTask()
         {
-            _broker = ObjectFactory.GetInstance<IBroker>();
+            _observer = ObjectFactory.GetInstance<IQueueObserver>();
             _tokenSource = new CancellationTokenSource();
             _brokerCancelToken = _tokenSource.Token;
-            _brokerCancelToken.Register(_broker.Stop);
-            _brokerTask = new Task(() => _broker.Start(_queueName), _brokerCancelToken);
+            _brokerCancelToken.Register(_observer.Stop);
+            _brokerTask = new Task(() => _observer.Start(_queueName), _brokerCancelToken);
         }
     }
 }

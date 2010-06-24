@@ -16,12 +16,15 @@ namespace Symbiote.Jackalope.Impl
         private IBasicProperties _properties;
         private bool _redelivered;
         private string _key;
+        private bool _responded = false;
 
         public string Exchange {  get { return _exchange; } }
 
         public string Queue { get { return _proxy.QueueName; } }
 
         public bool Redelivered { get { return _redelivered; } }
+
+        public bool RespondedTo { get { return _responded; } }
 
         public bool IsReply { get { return _isReplyToPresent; } }
 
@@ -50,6 +53,10 @@ namespace Symbiote.Jackalope.Impl
 
         private void Respond(Action<IChannelProxy> response, string exchange)
         {
+            if (_responded)
+                return;
+
+            _responded = true;
             try
             {
                 if(!_proxy.Channel.IsOpen)

@@ -22,6 +22,8 @@ namespace Symbiote.Jackalope.Impl
             = new ConcurrentDictionary<Type, IDispatch>();
         private IEndpointManager _endpointManager;
 
+        public IQueueStreamCollection QueueMessageStreams { get { return _subscriptionManager; } }
+
         public void AddEndPoint(Action<IEndPoint> endpointConfiguration)
         {
             var endpoint = new BusEndPoint();
@@ -83,14 +85,9 @@ namespace Symbiote.Jackalope.Impl
             }
         }
 
-        public void Subscribe(string queueName, AsyncCallback onBrokerDeath)
+        public void Subscribe(string queueName)
         {
-            _subscriptionManager.AddSubscription(queueName, 1).Start();
-        }
-
-        public void Subscribe(string queueName, int brokers, AsyncCallback onBrokerDeath)            
-        {
-            _subscriptionManager.AddSubscription(queueName, brokers).Start();
+            _subscriptionManager.AddSubscription(queueName).Start();
         }
 
         public void Unsubscribe(string queueName)

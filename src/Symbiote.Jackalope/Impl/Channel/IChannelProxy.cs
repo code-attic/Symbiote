@@ -9,13 +9,11 @@ namespace Symbiote.Jackalope.Impl
         void Acknowledge(ulong tag, bool multiple);
         QueueingBasicConsumer GetConsumer();
         string QueueName { get; }
+        Envelope Dequeue();
         void Send<T>(T body, string routingKey)
             where T : class;
         void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
             where T : class;
         void Reject(ulong tag, bool requeue);
-        //Envelope Get();
-        //Envelope GetNext();
-        //Envelope GetNext(int miliseconds);
     }
 }

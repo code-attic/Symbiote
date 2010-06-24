@@ -13,6 +13,7 @@ namespace Symbiote.Jackalope
         IBasicProperties Details { get; }
         bool IsReply { get; }
         bool Redelivered { get; }
+        bool RespondedTo { get; }
         string RoutingKey { get; }
     }
 }

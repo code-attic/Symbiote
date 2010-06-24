@@ -12,53 +12,48 @@ namespace Symbiote.Jackalope.Impl
     public class Dispatcher<TMessage> : IDispatch<TMessage>
         where TMessage : class
     {
+        protected List<Type> handlesMessagesOf { get; set; }
+
         public bool CanHandle(object payload)
         {
             return payload as TMessage != null;
         }
 
-        public void Dispatch(object payload, IChannelProxy proxy, BasicDeliverEventArgs args)
+        public IEnumerable<Type> Handles
         {
-            try
+            get
             {
-                var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                var response = new MessageDelivery(proxy, args);
-                handler.Process(payload as TMessage, response);
-            }
-            catch (Exception e)
-            {
-                proxy.Reject(args.DeliveryTag, true);
-                throw;
+                handlesMessagesOf = handlesMessagesOf ?? GetMessageChain().ToList();
+                return handlesMessagesOf;
             }
         }
 
-        public void Dispatch(object payload, IChannelProxy proxy, BasicGetResult result)
+        private IEnumerable<Type> GetMessageChain()
         {
-            try
+            yield return typeof (TMessage);
+            var chain = Reflector.GetInheritenceChain(typeof (TMessage));
+            if(chain != null)
             {
-                var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
-                var response = new MessageDelivery(proxy, result);
-                handler.Process(payload as TMessage, response);
+                foreach (var type in chain)
+                {
+                    yield return type;
+                }
             }
-            catch (Exception e)
-            {
-                proxy.Reject(result.DeliveryTag, true);
-                throw;
-            }
+            yield break;
         }
 
-        public object Dispatch(Envelope envelope)
+        public void Dispatch(Envelope envelope)
         {
             try
             {
                 var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
                 handler.Process(envelope.Message as TMessage, envelope.MessageDelivery);
-                return envelope.Message;
+                //return envelope.Message;
             }
             catch (Exception e)
             {
                 envelope.MessageDelivery.Reject();
-                throw;
+                //throw;
             }
         }
     }

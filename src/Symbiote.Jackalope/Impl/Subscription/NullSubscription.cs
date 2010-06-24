@@ -1,7 +1,14 @@
-﻿namespace Symbiote.Jackalope.Impl
+﻿using System;
+
+namespace Symbiote.Jackalope.Impl
 {
     public class NullSubscription : ISubscription
     {
+        public IObservable<Envelope> MessageStream
+        {
+            get { return null; }
+        }
+
         public void Dispose()
         {
             

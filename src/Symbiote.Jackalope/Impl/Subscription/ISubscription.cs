@@ -4,6 +4,7 @@ namespace Symbiote.Jackalope.Impl
 {
     public interface ISubscription: IDisposable
     {
+        IObservable<Envelope> MessageStream { get; }
         void Start();
         void Stop();
         bool Starting { get; }

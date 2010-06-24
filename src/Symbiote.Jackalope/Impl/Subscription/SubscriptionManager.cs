@@ -12,6 +12,15 @@ namespace Symbiote.Jackalope.Impl
     {
         private ConcurrentDictionary<string, ISubscription> _subscriptions = new ConcurrentDictionary<string, ISubscription>();
 
+        public IObservable<Envelope> this[string queueName]
+        {
+            get
+            {
+                EnsureSubscriptionIsRunning(queueName);
+                return _subscriptions[queueName].MessageStream;
+            }
+        }
+
         public void StartAllSubscriptions()
         {
             _subscriptions
@@ -52,7 +61,7 @@ namespace Symbiote.Jackalope.Impl
                 }
         }
 
-        public ISubscription AddSubscription(string queueName, int threads)
+        public ISubscription AddSubscription(string queueName)
         {
             ISubscription subscription = null;
 
@@ -64,6 +73,17 @@ namespace Symbiote.Jackalope.Impl
                     _subscriptions[queueName] = subscription;
             }
             return subscription;
+        }
+
+        protected void EnsureSubscriptionIsRunning(string queueName)
+        {
+            ISubscription subscription = null;
+            if(!_subscriptions.TryGetValue(queueName, out subscription))
+            {
+                subscription = AddSubscription(queueName);
+            }
+            if (subscription.Stopped || subscription.Stopping)
+                subscription.Start();
         }
     }
 }

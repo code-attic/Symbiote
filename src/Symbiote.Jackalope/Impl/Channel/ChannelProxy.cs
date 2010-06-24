@@ -53,44 +53,36 @@ namespace Symbiote.Jackalope.Impl
             _channel.BasicAck(tag, multiple);
         }
 
-        //public Envelope Get()
-        //{
-        //    var result = Channel.BasicGet(_configuration.QueueName, true);
-        //    var envelope = new Envelope();
-
-        //    if(result != null)
-        //    {
-        //        envelope.Message = Serializer.Deserialize(result.Body);
-        //        envelope.MessageDelivery = new MessageDelivery(this, result);
-        //    }
-        //    return envelope;
-        //}
-
-        //public Envelope GetNext()
-        //{
-        //    var result = GetConsumer().Queue.Dequeue() as BasicDeliverEventArgs;
-        //    var envelope = new Envelope();
-
-        //    if (result != null)
-        //    {
-        //        envelope.Message = Serializer.Deserialize(result.Body);
-        //        envelope.MessageDelivery = new MessageDelivery(this, result);
-        //    }
-        //    return envelope;
-        //}
-
-        //public Envelope GetNext(int miliseconds)
-        //{
-        //    object message = null;
-        //    var envelope = new Envelope();
-        //    if(GetConsumer().Queue.Dequeue(miliseconds, out message))
-        //    {
-        //        var result = message as BasicDeliverEventArgs;
-        //        envelope.Message = Serializer.Deserialize(result.Body);
-        //        envelope.MessageDelivery = new MessageDelivery(this, result);
-        //    }
-        //    return envelope;
-        //}
+        public virtual Envelope Dequeue()
+        {
+             BasicDeliverEventArgs result = null;
+            QueueingBasicConsumer consumer = null;
+            try
+            {
+                consumer = GetConsumer();
+                result = consumer.Queue.Dequeue() as BasicDeliverEventArgs;
+                if (result != null)
+                {
+                    var message = Serializer.Deserialize(result.Body);
+                    return Envelope.Create(message, this, result);
+                }
+            }
+            catch (Exception e)
+            {
+                if (result != null)
+                {
+                    "An exception occurred attempting dequeue a message from the exchange named {0} with routing key {1} \r\n\t {2}"
+                        .ToError<IBus>(result.Exchange, result.RoutingKey, e);
+                    Reject(result.DeliveryTag, true);
+                }
+                else
+                {
+                    "An exception occurred attempting to dequeue a message from queue {0}"
+                        .ToError<IBus>(QueueName);
+                }
+            }
+            return null;
+        }
 
         public void Send<T>(T body, string routingKey) where T : class
         {

@@ -15,7 +15,7 @@ namespace PublishDemo
             while(true)
             {
                 _bus.Send("publisher", new Message("Message {0}".AsFormat(++i)));
-                Thread.Sleep(3000);
+                //Thread.Sleep(3000);
             }
         }
 

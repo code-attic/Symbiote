@@ -12,18 +12,12 @@ namespace SubscribeDemo
         public void Start()
         {
             "Subscriber is starting.".ToInfo<Subscriber>();
-            _bus.Subscribe("subscriber", 1, FailWhale);
+            _bus.Subscribe("subscriber");
         }
 
         public void Stop()
         {
             "Stop was called. S that D."
-                .ToInfo<Subscriber>();
-        }
-
-        public void FailWhale(object status)
-        {
-            "Subscriber is dead. Boo."
                 .ToInfo<Subscriber>();
         }
 
