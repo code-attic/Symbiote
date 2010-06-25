@@ -3,8 +3,9 @@ using System.Collections;
 using RabbitMQ.Client;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
+using Symbiote.Jackalope.Impl.Server;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Endpoint
 {
     public class EndpointManager : IEndpointManager
     {

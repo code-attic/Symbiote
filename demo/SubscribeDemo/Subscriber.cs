@@ -2,6 +2,7 @@ using System;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Jackalope;
+using System.Linq;
 
 namespace SubscribeDemo
 {
@@ -29,6 +30,11 @@ namespace SubscribeDemo
                                       .QueueName("subscriber")
                                       .Durable()
                                       .PersistentDelivery());
+
+            _bus
+                .QueueMessageStreams["subscriber"]
+                .BufferWithTime(TimeSpan.FromSeconds(1))
+                .Subscribe(x => "Processed {0} messages in 1 second".ToInfo<Subscriber>(x.Count));
         }
     }
 }

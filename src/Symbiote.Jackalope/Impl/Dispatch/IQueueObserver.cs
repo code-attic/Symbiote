@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Dispatch
 {
     public interface IQueueObserver : 
         IObservable<Envelope>, 

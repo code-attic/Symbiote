@@ -3,6 +3,7 @@ using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using StructureMap;
 using Symbiote.Core.Extensions;
+using Symbiote.Jackalope.Impl.Channel;
 
 namespace Symbiote.Jackalope.Impl
 {

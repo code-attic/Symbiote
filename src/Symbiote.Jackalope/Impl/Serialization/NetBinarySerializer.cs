@@ -1,7 +1,7 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Serialization
 {
     public class NetBinarySerializer : IMessageSerializer
     {

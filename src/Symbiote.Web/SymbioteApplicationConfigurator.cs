@@ -10,6 +10,7 @@ using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Hibernate;
 using Symbiote.Jackalope.Impl;
+using Symbiote.Jackalope.Impl.Subscriptions;
 using Symbiote.Web.Impl;
 
 namespace Symbiote.Web

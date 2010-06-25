@@ -2,6 +2,7 @@ using System;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Impl;
 using Symbiote.Jackalope.Impl;
+using Symbiote.Jackalope.Impl.Endpoint;
 
 namespace Symbiote.Jackalope
 {

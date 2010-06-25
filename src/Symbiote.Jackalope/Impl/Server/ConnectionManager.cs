@@ -4,7 +4,7 @@ using RabbitMQ.Client;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Server
 {
     public class ConnectionManager : IConnectionManager
     {

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Core.Extensions;
+﻿using Symbiote.Core.Extensions;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Serialization
 {
     public class JsonMessageSerializer : IMessageSerializer
     {

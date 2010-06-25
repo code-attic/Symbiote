@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using StructureMap;
-using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 using System.Linq;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Dispatch
 {
     public class Dispatcher<TMessage> : IDispatch<TMessage>
         where TMessage : class

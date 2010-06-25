@@ -11,6 +11,10 @@ using RabbitMQ.Client.Impl;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
 using StructureMap;
+using Symbiote.Jackalope.Impl.Channel;
+using Symbiote.Jackalope.Impl.Dispatch;
+using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Subscriptions;
 
 namespace Symbiote.Jackalope.Impl
 {

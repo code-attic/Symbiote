@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using RabbitMQ.Client;
-using Symbiote.Core;
 using Symbiote.Jackalope.Config;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Endpoint
 {
     public class BusEndPoint : IEndPoint, IDisposable
     {

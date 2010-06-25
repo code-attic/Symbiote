@@ -10,6 +10,12 @@ using Symbiote.Core;
 using Symbiote.Jackalope.Config;
 using Symbiote.Jackalope.Impl;
 using Symbiote.Core.Extensions;
+using Symbiote.Jackalope.Impl.Channel;
+using Symbiote.Jackalope.Impl.Dispatch;
+using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Serialization;
+using Symbiote.Jackalope.Impl.Server;
+using Symbiote.Jackalope.Impl.Subscriptions;
 using Tuple = System.Tuple;
 
 namespace Symbiote.Jackalope
@@ -83,6 +89,9 @@ namespace Symbiote.Jackalope
                             .Use<Subscription>();
                         x.For<ISubscriptionManager>()
                             .Use(new SubscriptionManager());
+                        x.For<IDispatchMessages>()
+                            .Singleton()
+                            .Use<DispatchingObserver>();
                         x.Scan(s =>
                                    {
                                        AppDomain

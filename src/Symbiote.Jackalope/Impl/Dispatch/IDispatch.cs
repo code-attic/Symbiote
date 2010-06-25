@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Dispatch
 {
     public interface IDispatch
     {

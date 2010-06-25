@@ -1,7 +1,6 @@
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Endpoint
 {
     public class EndpointIndex : IEndpointIndex
     {

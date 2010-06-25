@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Jackalope.Impl;
 using StructureMap;
+using Symbiote.Jackalope.Impl.Serialization;
 
 namespace Symbiote.Jackalope.Config
 {

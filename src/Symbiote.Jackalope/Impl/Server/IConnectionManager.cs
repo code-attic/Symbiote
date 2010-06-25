@@ -1,6 +1,6 @@
 using RabbitMQ.Client;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Server
 {
     public interface IConnectionManager
     {

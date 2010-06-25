@@ -1,4 +1,4 @@
-﻿namespace Symbiote.Jackalope.Impl
+﻿namespace Symbiote.Jackalope.Impl.Serialization
 {
     public interface IMessageSerializer
     {

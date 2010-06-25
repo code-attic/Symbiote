@@ -2,6 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Symbiote.Jackalope.Impl;
+using Symbiote.Jackalope.Impl.Channel;
 
 namespace Symbiote.Jackalope
 {

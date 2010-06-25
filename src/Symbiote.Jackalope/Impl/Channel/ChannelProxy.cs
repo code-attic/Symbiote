@@ -1,13 +1,12 @@
 using System;
-using System.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using RabbitMQ.Client.Impl;
 using StructureMap;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
+using Symbiote.Jackalope.Impl.Serialization;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Channel
 {
     public class ChannelProxy : IChannelProxy
     {
@@ -55,7 +54,36 @@ namespace Symbiote.Jackalope.Impl
 
         public virtual Envelope Dequeue()
         {
-             BasicDeliverEventArgs result = null;
+            BasicGetResult result = null;
+            try
+            {
+                result = Channel.BasicGet(QueueName, _configuration.NoAck);
+                if (result != null)
+                {
+                    var message = Serializer.Deserialize(result.Body);
+                    return Envelope.Create(message, this, result);
+                }
+            }
+            catch (Exception e)
+            {
+                if (result != null)
+                {
+                    "An exception occurred attempting dequeue a message from the exchange named {0} with routing key {1} \r\n\t {2}"
+                        .ToError<IBus>(result.Exchange, result.RoutingKey, e);
+                    Reject(result.DeliveryTag, true);
+                }
+                else
+                {
+                    "An exception occurred attempting to dequeue a message from queue {0}"
+                        .ToError<IBus>(QueueName);
+                }
+            }
+            return null;
+        }
+
+        public virtual Envelope Dequeue2()
+        {
+            BasicDeliverEventArgs result = null;
             QueueingBasicConsumer consumer = null;
             try
             {

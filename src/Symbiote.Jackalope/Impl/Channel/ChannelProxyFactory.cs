@@ -1,8 +1,10 @@
 using System;
 using RabbitMQ.Client;
 using Symbiote.Core.Extensions;
+using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Server;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Channel
 {
     public class ChannelProxyFactory : IChannelProxyFactory
     {

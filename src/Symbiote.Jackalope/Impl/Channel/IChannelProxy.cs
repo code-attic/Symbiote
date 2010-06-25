@@ -1,7 +1,7 @@
 using System;
 using RabbitMQ.Client;
 
-namespace Symbiote.Jackalope.Impl
+namespace Symbiote.Jackalope.Impl.Channel
 {
     public interface IChannelProxy : IDisposable
     {

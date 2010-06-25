@@ -83,7 +83,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\IAmqpConfiguration.cs" />
+    <Compile Include="Config\AmqpConfiguration.cs" />
     <Compile Include="Config\AmqpFluentConfiguration.cs" />
     <Compile Include="Config\AmqpFluentServerConfiguration.cs" />
     <Compile Include="Config\AmqpServer.cs" />
@@ -93,15 +93,17 @@
     <Compile Include="Config\IAmqpServerConfiguration.cs" />
     <Compile Include="Envelope.cs" />
     <Compile Include="ICorrelate.cs" />
+    <Compile Include="Impl\Dispatch\DispatchingObserver.cs" />
+    <Compile Include="Impl\Dispatch\IDispatchMessages.cs" />
     <Compile Include="Impl\Dispatch\IQueueObserver.cs" />
     <Compile Include="Impl\Dispatch\ObservableQueue.cs" />
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
-    <Compile Include="Impl\Subscription\ISubscriptionManager.cs" />
+    <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="IQueueStreamCollection.cs" />
     <Compile Include="JackalopeConfigurationException.cs" />
-    <Compile Include="Impl\Subscription\NullSubscription.cs" />
-    <Compile Include="Impl\Subscription\SubscriptionManager.cs" />
+    <Compile Include="Impl\Subscriptions\NullSubscription.cs" />
+    <Compile Include="Impl\Subscriptions\SubscriptionManager.cs" />
     <Compile Include="DeliveryMode.cs" />
     <Compile Include="ExchangeType.cs" />
     <Compile Include="IBus.cs" />
@@ -124,11 +126,11 @@
     <Compile Include="Impl\Endpoint\IEndPoint.cs" />
     <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
     <Compile Include="IMessageDelivery.cs" />
-    <Compile Include="Impl\Subscription\ISubscription.cs" />
+    <Compile Include="Impl\Subscriptions\ISubscription.cs" />
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
     <Compile Include="Impl\MessageDelivery.cs" />
-    <Compile Include="Impl\Subscription\Subscription.cs" />
+    <Compile Include="Impl\Subscriptions\Subscription.cs" />
     <Compile Include="JackalopeAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
