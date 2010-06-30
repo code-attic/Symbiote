@@ -3,6 +3,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using StructureMap;
 using Symbiote.Jackalope.Impl.Dispatch;
+using System.Linq;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl.Subscriptions
 {
@@ -10,9 +12,6 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
     {
         private string _queueName;
         private IQueueObserver _observer;
-        private Task _brokerTask;
-        private CancellationTokenSource _tokenSource;
-        private CancellationToken _brokerCancelToken;
         private IDispatchMessages _dispatcher;
 
         public IObservable<Envelope> MessageStream
@@ -36,7 +35,6 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             {
                 Starting = true;
                 InitializeBrokerTask();
-                _brokerTask.Start();
                 Starting = false;
                 Started = true;
             }
@@ -45,7 +43,7 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
         public void Stop()
         {
             Stopping = true;
-            _tokenSource.Cancel();
+            _observer.Stop();
             _observer = null;
             Stopping = false;
             Stopped = true;
@@ -62,10 +60,25 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             _observer = ObjectFactory.GetInstance<IQueueObserver>();
             _dispatcher = ObjectFactory.GetInstance<IDispatchMessages>();
             _observer.Subscribe(_dispatcher);
-            _tokenSource = new CancellationTokenSource();
-            _brokerCancelToken = _tokenSource.Token;
-            _brokerCancelToken.Register(_observer.Stop);
-            _brokerTask = new Task(() => _observer.Start(_queueName), _brokerCancelToken);
+            _observer.Start(_queueName);
+            _observer
+                .TimeInterval()
+                .Subscribe(x =>
+                               {
+                                   var interval = x.Interval.Milliseconds;
+                                   if (interval == _observer.SleepFor && _observer.SleepFor > 0)
+                                   {
+                                       _observer.SleepFor -= 5;
+                                   }
+                                   else if (interval > _observer.SleepFor)
+                                   {
+                                       _observer.SleepFor = interval;
+                                   }
+                                   else
+                                   {
+                                       _observer.SleepFor = 0;
+                                   }
+                               });
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Symbiote.Jackalope
 {
     public interface IBus : IDisposable
     {
-        IQueueStreamCollection QueueMessageStreams { get; }
+        IQueueStreamCollection QueueStreams { get; }
         void AddEndPoint(Action<IEndPoint> endpointConfiguration);
         void BindQueue(string queueName, string exchangeName, params string[] routingKeys);
         bool ClearQueue(string queueName);

@@ -26,7 +26,7 @@ namespace Symbiote.Jackalope.Impl
             = new ConcurrentDictionary<Type, IDispatch>();
         private IEndpointManager _endpointManager;
 
-        public IQueueStreamCollection QueueMessageStreams { get { return _subscriptionManager; } }
+        public IQueueStreamCollection QueueStreams { get { return _subscriptionManager; } }
 
         public void AddEndPoint(Action<IEndPoint> endpointConfiguration)
         {

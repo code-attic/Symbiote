@@ -1,21 +1,25 @@
-﻿using System.Threading;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope;
+using System.Linq;
 
 namespace PublishDemo
 {
     public class Publisher
     {
         private IBus _bus;
+        private Action<string, Message> send;
 
         public void Start()
         {
             "Publisher is starting.".ToInfo<Publisher>();
             long i = 0;
+            var message = new Message("Message");
             while(true)
             {
-                _bus.Send("publisher", new Message("Message {0}".AsFormat(++i)));
-                //Thread.Sleep(3000);
+                send.BeginInvoke("publisher", message, null, null);
             }
         }
 
@@ -23,6 +27,7 @@ namespace PublishDemo
         {
             _bus = bus;
             _bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout).Durable().PersistentDelivery());
+            send = bus.Send;
         }
     }
 }
