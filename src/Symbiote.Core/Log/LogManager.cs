@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Log.Impl;
-using StructureMap;
 
 namespace Symbiote.Core.Log
 {
@@ -43,7 +43,7 @@ namespace Symbiote.Core.Log
         {
             try
             {
-                _provider = ObjectFactory.GetInstance<ILogProvider>();
+                _provider = ServiceLocator.Current.GetInstance<ILogProvider>();
             }
             catch (Exception e)
             {

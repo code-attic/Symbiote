@@ -61,24 +61,6 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             _dispatcher = ObjectFactory.GetInstance<IDispatchMessages>();
             _observer.Subscribe(_dispatcher);
             _observer.Start(_queueName);
-            _observer
-                .TimeInterval()
-                .Subscribe(x =>
-                               {
-                                   var interval = x.Interval.Milliseconds;
-                                   if (interval == _observer.SleepFor && _observer.SleepFor > 0)
-                                   {
-                                       _observer.SleepFor -= 5;
-                                   }
-                                   else if (interval > _observer.SleepFor)
-                                   {
-                                       _observer.SleepFor = interval;
-                                   }
-                                   else
-                                   {
-                                       _observer.SleepFor = 0;
-                                   }
-                               });
         }
     }
 }

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
-using StructureMap;
 using Topshelf.Configuration;
 using Topshelf.Configuration.Dsl;
 using Symbiote.Core.Extensions;
@@ -70,16 +69,15 @@ namespace Symbiote.Daemon
         internal RunConfiguration GetTopShelfConfiguration()
         {
             var config = RunnerConfigurator.New(ConfigureServices);
-            ObjectFactory.Inject(config.Coordinator);
             return config;
         }
 
         protected void ConfigureServices(IRunnerConfigurator config)
         {
-            var concreteTypes = ObjectFactory.Model.InstancesOf<IDaemon>();
+            var concreteTypes = ServiceLocator.Current.GetAllInstances<IDaemon>();
 
             if (_daemons.Count > 0)
-                concreteTypes = concreteTypes.Where(x => _daemons.Contains(x.ConcreteType));
+                concreteTypes = concreteTypes.Where(x => _daemons.Contains(x.GetType()));
 
             config.SetServiceName(_name);
             config.SetDisplayName(_displayName);
@@ -88,7 +86,7 @@ namespace Symbiote.Daemon
             if(!_asLocalSystem)
                 config.RunAs(_runAs, _password);
 
-            concreteTypes.ForEach(x => ConfigureService(config, x.ConcreteType));
+            concreteTypes.ForEach(x => ConfigureService(config, x.GetType()));
         }
 
         protected void ConfigureService(IRunnerConfigurator config, Type serviceType)
@@ -96,7 +94,7 @@ namespace Symbiote.Daemon
 
             config.ConfigureService<IDaemon>(service =>
             {
-                service.HowToBuildService(builder => ObjectFactory.GetInstance(serviceType));
+                service.HowToBuildService(builder => ServiceLocator.Current.GetInstance(serviceType));
                 service.WhenStarted(x => x.Start());
                 service.WhenStopped(x => x.Stop());
             });

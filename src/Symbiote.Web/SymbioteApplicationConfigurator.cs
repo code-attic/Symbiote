@@ -80,7 +80,7 @@ namespace Symbiote.Web
                                                       .GetAssemblies()
                                                       .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("System.Web.Mvc")));
                                                   assemblies
-                                                      .ForEach(s.Assembly);
+                                                      .ForEach(s.AddAssembly);
                                                   s.AddAllTypesOf<Controller>();
                                                   s.Include(i => i.IsSubclassOf(typeof(Controller)));
                                               }));

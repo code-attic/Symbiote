@@ -29,7 +29,7 @@ namespace Symbiote.Hibernate
         {
             var configuration = Fluently.Configure();
             config(configuration);
-            _assimilate.Dependencies(x => x.For<ISessionFactory>().Singleton().Use(configuration.BuildSessionFactory()));
+            _assimilate.Dependencies(x => x.For<ISessionFactory>().Use(configuration.BuildSessionFactory()).AsSingleton());
             return this;
         }
 

@@ -61,10 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -82,7 +78,6 @@
     <Compile Include="Assimilate.cs" />
     <Compile Include="AssimilationException.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
-    <Compile Include="Config\StructureMapServiceLocator.cs" />
     <Compile Include="DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -102,6 +97,7 @@
     <Compile Include="Log\LogManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflector.cs" />
+    <Compile Include="DI\IDependencyContainer.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />
   </ItemGroup>
@@ -122,6 +118,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

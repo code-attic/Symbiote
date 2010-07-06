@@ -4,41 +4,57 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Microsoft.Practices.ServiceLocation;
-using Symbiote.Core.Config;
+using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
-using StructureMap;
-using StructureMap.Configuration.DSL;
 
 namespace Symbiote.Core
 {
     public interface IAssimilate
     {
+        IDependencyAdapter DependencyAdapter { get; set; }
+    }
+
+    public class Assimilation : IAssimilate
+    {
+        public IDependencyAdapter DependencyAdapter { get; set; }
+
+        public Assimilation()
+        {
+
+        }
     }
 
     public static class Assimilate 
     {
-        private static IAssimilate _assimilate = new object() as IAssimilate;
+        public static IAssimilate Assimilation { get; set; }
         private static List<string> _assimilated = new List<string>();
         private static ReaderWriterLockSlim _assimilationLock = new ReaderWriterLockSlim();
         private static bool Initialized { get; set; }
 
-        public static IAssimilate Core()
+        static Assimilate()
+        {
+            Assimilation = new Assimilation();    
+        }
+
+        public static IAssimilate Core(IDependencyAdapter adapter)
         {
             if (Initialized)
-                return _assimilate;
+                return Assimilation;
             Initialized = true;
 
-            ServiceLocator.SetLocatorProvider(() => new StructureMapServiceLocator());
-            _assimilate.Dependencies(x =>
+            Assimilation.DependencyAdapter = adapter;
+
+            Assimilation.Dependencies(x =>
                          {
                              x.For<ILogProvider>().Use<NullLogProvider>();
                              x.For<ILogger>().Use<NullLogger>();
                              x.For(typeof (ILogger<>)).Add(typeof (ProxyLogger<>));
-                             x.For<IJsonSerializerFactory>().Singleton().Use<JsonSerializerFactory>();
+                             x.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
                              x.Scan(s =>
                                         {
+                                            
                                             // oh the shameful hack :(
                                             // Machine.Specifications blows itself all to heck when
                                             // StructureMap scans it. I haven't really tried to determine why
@@ -55,18 +71,14 @@ namespace Symbiote.Core
                                             s.AddAllTypesOf<IContractResolverStrategy>();
                                         });
                          });
-            return _assimilate;
+            return Assimilation;
         }
 
-        public static IAssimilate Register(this IAssimilate assimilate, Registry registry)
+        public static IAssimilate Dependencies(this IAssimilate assimilate, Action<DependencyConfigurator> configurator)
         {
-            ObjectFactory.Configure(c => c.AddRegistry(registry));
-            return assimilate;
-        }
-
-        public static IAssimilate Dependencies(this IAssimilate assimilate, Action<ConfigurationExpression> configuration)
-        {
-            ObjectFactory.Configure(configuration);
+            var config = new DependencyConfigurator();
+            configurator(config);
+            config.RegisterDependencies(assimilate.DependencyAdapter);
             return assimilate;
         }
 

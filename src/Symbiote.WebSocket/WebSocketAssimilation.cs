@@ -16,7 +16,7 @@ namespace Symbiote.WebSocket
                                   {
                                       x.For<IShakeHands>().Use<DefaultHandShake>();
                                       x.For<IHandlePolicyRequests>().Use<DefaultPolicyRequestHandler>();
-                                      x.For<ISocketServer>().Singleton().Use<WebSocketServer>();
+                                      x.For<ISocketServer>().Use<WebSocketServer>().AsSingleton();
                                       x.For<IWebSocketServerConfiguration>().Use(config.Configuration);
                                       x.For<ICreateWebSockets>().Use<WebSocketFactory>();
                                   });

@@ -19,8 +19,8 @@ namespace Symbiote.Lucene
             assimilate
                 .Dependencies(x =>
                 {
-                    x.For<ILuceneConfiguration>().Singleton().Use(configuration);
-                    x.For<ILuceneServiceFactory>().Singleton().Use<LuceneServiceFactory>();
+                    x.For<ILuceneConfiguration>().Use(configuration).AsSingleton();
+                    x.For<ILuceneServiceFactory>().Use<LuceneServiceFactory>().AsSingleton();
                     x.For<BaseIndexingObserver>().Use<LuceneIndexingObserver>();
                     x.For<BaseSearchProvider>().Use<LuceneSearchProvider>();
                 });

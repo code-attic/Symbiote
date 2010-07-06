@@ -17,8 +17,8 @@ namespace SubscribeDemo
             //    throw new Exception("Poopoo");
 
             ++total;
-            //"Received: {0}. {1} total."
-            //    .ToInfo<Subscriber>(message.Body, ++total);
+            "Received: {0}. {1} total."
+                .ToInfo<Subscriber>(message.Body, ++total);
             
             
             messageDelivery.Acknowledge();

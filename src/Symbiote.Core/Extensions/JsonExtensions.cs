@@ -3,10 +3,10 @@ using System.IO;
 using System.Runtime.Serialization.Formatters;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using StructureMap;
 
 namespace Symbiote.Core.Extensions
 {
@@ -16,7 +16,7 @@ namespace Symbiote.Core.Extensions
         {
             get
             {
-                return ObjectFactory.TryGetInstance<IJsonSerializerFactory>() ?? new JsonSerializerFactory();
+                return ServiceLocator.Current.GetInstance<IJsonSerializerFactory>() ?? new JsonSerializerFactory();
             }
         }
 

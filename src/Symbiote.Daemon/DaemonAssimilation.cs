@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
-using StructureMap;
 using Topshelf;
 using Topshelf.Configuration;
 using Topshelf.Configuration.Dsl;
@@ -21,15 +20,20 @@ namespace Symbiote.Daemon
                                                         s.AssembliesFromApplicationBaseDirectory();
                                                         s.AddAllTypesOf<IDaemon>();
                                                     }));
+            
             var daemonConfiguration = new DaemonConfiguration();
             config(daemonConfiguration);
-            assimilate.Dependencies(x => x.For<DaemonConfiguration>().Use(daemonConfiguration));
+            assimilate.Dependencies(x =>
+                                        {
+                                            x.For<DaemonConfiguration>().Use(daemonConfiguration);
+                                            x.For<RunConfiguration>().Use(daemonConfiguration.GetTopShelfConfiguration());
+                                        });
             return assimilate;
         }
 
         public static void RunDaemon(this IAssimilate assimilate)
         {
-            var configuration = ObjectFactory.GetInstance<DaemonConfiguration>();
+            var configuration = ServiceLocator.Current.GetInstance<DaemonConfiguration>();
             var topshelfConfig = configuration.GetTopShelfConfiguration();
             if (configuration == null)
                 throw new Exception("Please configure your service first with the Daemon<> call before attempting to run this service.");

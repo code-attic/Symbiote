@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
-using StructureMap;
 
 namespace Symbiote.Core.Extensions
 {
@@ -100,12 +100,12 @@ namespace Symbiote.Core.Extensions
 
         protected IContractResolver GetTypeSpecificContractResolver(Type type)
         {
-            return ObjectFactory.TryGetInstance<IContractResolver>(_resolverFormat.AsFormat(type.FullName));
+            return ServiceLocator.Current.GetInstance<IContractResolver>(_resolverFormat.AsFormat(type.FullName));
         }
 
         public JsonSerializerFactory()
         {
-            ContractResolverStrategies = ObjectFactory.GetAllInstances<IContractResolverStrategy>().ToList();
+            ContractResolverStrategies = ServiceLocator.Current.GetAllInstances<IContractResolverStrategy>().ToList();
         }
     }
 }
