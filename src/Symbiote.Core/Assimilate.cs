@@ -38,6 +38,13 @@ namespace Symbiote.Core
             Assimilation = new Assimilation();    
         }
 
+        public static IAssimilate Core<TDepedencyAdapter>()
+            where TDepedencyAdapter : class, IDependencyAdapter, new()
+        {
+            var adapter = Activator.CreateInstance<TDepedencyAdapter>();
+            return Core(adapter);
+        }
+
         public static IAssimilate Core(IDependencyAdapter adapter)
         {
             if (Initialized)
@@ -45,6 +52,8 @@ namespace Symbiote.Core
             Initialized = true;
 
             Assimilation.DependencyAdapter = adapter;
+
+            ServiceLocator.SetLocatorProvider(() => Assimilation.DependencyAdapter);
 
             Assimilation.Dependencies(x =>
                          {

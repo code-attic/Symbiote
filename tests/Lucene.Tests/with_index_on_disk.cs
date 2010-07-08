@@ -1,7 +1,8 @@
 ﻿using Machine.Specifications;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Lucene;
+using Symbiote.StructureMap;
 
 namespace Lucene.Tests
 {
@@ -12,8 +13,8 @@ namespace Lucene.Tests
 
         private Establish context = () =>
                                         {
-                                            LuceneAssimilation.Lucene(Assimilate.Core(), x => x.UseDefaults());
-                                            factory = ObjectFactory.GetInstance<ILuceneServiceFactory>();
+                                            LuceneAssimilation.Lucene(Assimilate.Core<StructureMapAdapter>(), x => x.UseDefaults());
+                                            factory = ServiceLocator.Current.GetInstance<ILuceneServiceFactory>();
                                             searchProvider = factory.GetSearchProviderForIndex("default");
                                         };
     }

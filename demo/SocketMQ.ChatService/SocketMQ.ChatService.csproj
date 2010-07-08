@@ -37,6 +37,10 @@
     <Reference Include="log4net">
       <HintPath>..\..\lib\log4net.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -83,6 +87,10 @@
     <ProjectReference Include="..\..\src\Symbiote.SocketMQ\Symbiote.SocketMQ.csproj">
       <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
       <Name>Symbiote.SocketMQ</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
+      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
+      <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
       <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>

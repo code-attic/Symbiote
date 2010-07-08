@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Symbiote.Core;
+using Symbiote.StructureMap;
 using Symbiote.Web;
 using Spark.Web.Mvc;
 
@@ -30,7 +31,7 @@ namespace SocketMQ.ChatClient
             RegisterRoutes(RouteTable.Routes);
 
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .Web(x => x
                         .SupplyControllerDependencies()
                         .UseSparkViews());

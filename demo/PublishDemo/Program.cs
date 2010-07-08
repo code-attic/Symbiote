@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Jackalope;
 using Symbiote.Log4Net;
+using Symbiote.StructureMap;
 
 namespace PublishDemo
 {
@@ -20,7 +21,7 @@ namespace PublishDemo
         static void Configure()
         {
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
@@ -29,7 +30,7 @@ namespace PublishDemo
 
         static void Publish()
         {
-            var publisher = ObjectFactory.GetInstance<Publisher>();
+            var publisher = ServiceLocator.Current.GetInstance<Publisher>();
             publisher.Start();
         }
     }

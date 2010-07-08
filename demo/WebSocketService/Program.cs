@@ -6,6 +6,7 @@ using StructureMap;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
+using Symbiote.StructureMap;
 using Symbiote.WebSocket;
 using Symbiote.Log4Net;
 
@@ -16,7 +17,7 @@ namespace WebSocketService
         static void Main(string[] args)
         {
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .Daemon(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x => 

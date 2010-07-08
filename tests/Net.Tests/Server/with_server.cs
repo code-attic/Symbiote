@@ -4,10 +4,11 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using Machine.Specifications;
+using Microsoft.Practices.ServiceLocation;
 using Moq;
-using StructureMap;
 using Symbiote.Core;
 using Symbiote.Net;
+using Symbiote.StructureMap;
 using It = Machine.Specifications.It;
 
 namespace Net.Tests.Server
@@ -17,7 +18,7 @@ namespace Net.Tests.Server
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core()
+                                                .Core<StructureMapAdapter>()
                                                 .HttpServer(x => x.UseDefaults().UseBasicAuth());
                                         };
     }
@@ -28,7 +29,7 @@ namespace Net.Tests.Server
 
         private Establish context = () =>
                                         {
-                                            server = ObjectFactory.GetInstance<IHttpServer>();
+                                            server = ServiceLocator.Current.GetInstance<IHttpServer>();
                                         };
     }
 

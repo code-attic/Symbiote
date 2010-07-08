@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using Symbiote.Core;
 using Symbiote.Restfully;
+using Symbiote.StructureMap;
 
 namespace IISHostedRestully
 {
@@ -15,7 +16,7 @@ namespace IISHostedRestully
         void Application_Start(object sender, EventArgs e)
         {
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .HttpServiceHost(x => x
                     .HostInIIS()
                     .HostService<SayHi>());

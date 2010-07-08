@@ -94,7 +94,7 @@ namespace Symbiote.Daemon
 
             config.ConfigureService<IDaemon>(service =>
             {
-                service.HowToBuildService(builder => ServiceLocator.Current.GetInstance(serviceType));
+                service.HowToBuildService(builder => ServiceLocator.Current.GetInstance(serviceType, builder));
                 service.WhenStarted(x => x.Start());
                 service.WhenStopped(x => x.Stop());
             });

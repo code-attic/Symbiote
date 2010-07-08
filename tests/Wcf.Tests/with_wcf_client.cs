@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.StructureMap;
 using Symbiote.Wcf;
 using Symbiote.Wcf.Client;
 using WcfClientAssimilation = Symbiote.Wcf.WcfClientAssimilation;
@@ -15,7 +16,7 @@ namespace Wcf.Tests
         
         private Establish context = () =>
                                         {
-                                            WcfClientAssimilation.WcfClient(Assimilate.Core(), x => 
+                                            WcfClientAssimilation.WcfClient(Assimilate.Core<StructureMapAdapter>(), x => 
                                                                         x.RegisterService<ITestService>(s =>
                                                                                                             {
                                                                                                                 //s.MetadataExchangeAddress = @"net.tcp://localhost:8000/TestService";

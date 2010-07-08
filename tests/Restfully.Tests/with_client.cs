@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Restfully;
 using Symbiote.Restfully.Impl.Rpc;
 
@@ -11,7 +11,7 @@ namespace Restfully.Tests
         
         private Establish context = () =>
                                         {
-                                            proxy = ObjectFactory.GetInstance<RemoteProxy<ITestService>>();
+                                            proxy = ServiceLocator.Current.GetInstance<RemoteProxy<ITestService>>();
                                         };
     }
 }

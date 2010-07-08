@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Restfully;
 using Symbiote.Restfully.Impl;
 
@@ -11,7 +11,7 @@ namespace Restfully.Tests
 
         private Establish context = () =>
                                         {
-                                            server = ObjectFactory.GetInstance<IHttpServiceHost>();
+                                            server = ServiceLocator.Current.GetInstance<IHttpServiceHost>();
                                             server.Start();
                                         };
     }

@@ -2,6 +2,7 @@
 using Symbiote.Daemon;
 using Symbiote.Log4Net;
 using Symbiote.SocketMQ.Impl;
+using Symbiote.StructureMap;
 using Symbiote.WebSocket;
 using Symbiote.Jackalope;
 using Symbiote.SocketMQ;
@@ -13,7 +14,7 @@ namespace SocketMQ.ChatService
         static void Main(string[] args)
         {
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .Daemon(
                     x => x.Name("wss").DisplayName("Web Socket Service").Description("A web socket service").Arguments(args))
                 .WebSocketServer(x =>

@@ -1,5 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.StructureMap;
 
 namespace Core.Tests
 {
@@ -7,7 +8,7 @@ namespace Core.Tests
     {
         private Establish context = () =>
                                         {
-                                            Assimilate.Core();
+                                            Assimilate.Core<StructureMapAdapter>();
                                         };
     }
 }

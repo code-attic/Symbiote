@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using StructureMap;
 using Symbiote.Core;
 using Symbiote.Jackalope;
 using Symbiote.Log4Net;
 using Symbiote.Daemon;
+using Symbiote.StructureMap;
 
 namespace SubscribeDemo
 {
@@ -15,7 +15,7 @@ namespace SubscribeDemo
         static void Main(string[] args)
         {
             Assimilate
-                .Core()
+                .Core<StructureMapAdapter>()
                 .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .AddColorConsoleLogger<IBus>(x => 
                     x.Info()

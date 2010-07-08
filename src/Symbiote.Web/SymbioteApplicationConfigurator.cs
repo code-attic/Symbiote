@@ -80,9 +80,8 @@ namespace Symbiote.Web
                                                       .GetAssemblies()
                                                       .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("System.Web.Mvc")));
                                                   assemblies
-                                                      .ForEach(s.AddAssembly);
+                                                      .ForEach(s.Assembly);
                                                   s.AddAllTypesOf<Controller>();
-                                                  s.Include(i => i.IsSubclassOf(typeof(Controller)));
                                               }));
             var batch = new SparkBatchDescriptor();
             var allInstances = ObjectFactory
@@ -106,7 +105,6 @@ namespace Symbiote.Web
                 .ForEach(x => settings.AddNamespace(x.Namespace));
 
             var sparkViewFactory = new SparkViewFactory(settings);
-            //sparkViewFactory.Precompile(batch);
             ViewEngines.Engines.Add(sparkViewFactory);
         }
 

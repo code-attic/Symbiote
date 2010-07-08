@@ -81,6 +81,19 @@
     <Compile Include="DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="DI\DependencyConfigurator.cs" />
+    <Compile Include="DI\DependencyExpression.cs" />
+    <Compile Include="DI\IDependencyAdapter.cs" />
+    <Compile Include="DI\IDependencyDefinition.cs" />
+    <Compile Include="DI\IDependencyRegistry.cs" />
+    <Compile Include="DI\IPluginConfiguration.cs" />
+    <Compile Include="DI\IRequestPlugin.cs" />
+    <Compile Include="DI\IScan.cs" />
+    <Compile Include="DI\IScanInstruction.cs" />
+    <Compile Include="DI\ISupplyPlugin.cs" />
+    <Compile Include="DI\ScanInstruction.cs" />
+    <Compile Include="DI\ScannerExtensions.cs" />
+    <Compile Include="DI\TypeScanner.cs" />
     <Compile Include="Extensions\IContractResolverStrategy.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\IJsonSerializerFactory.cs" />
