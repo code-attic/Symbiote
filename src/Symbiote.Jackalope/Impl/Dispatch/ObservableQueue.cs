@@ -51,13 +51,19 @@ namespace Symbiote.Jackalope.Impl.Dispatch
                 {
                     envelope = proxy.Dequeue();
                     if (envelope != null)
-                        dispatchers.Push(dispatch.BeginInvoke(envelope, null, null));
+                        dispatchers.Push(dispatch.BeginInvoke(envelope, DisposeProxy, proxy));
                     else
                     {
                         Thread.Sleep(TimeSpan.FromMilliseconds(50));
                     }
                 } while (envelope == null && Running);
             }
+        }
+
+        protected virtual void DisposeProxy(IAsyncResult ar)
+        {
+            var proxy = ar.AsyncState as IChannelProxy;
+            proxy.Dispose();
         }
 
         public void Stop()
