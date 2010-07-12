@@ -1,55 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Core.Reflection;
 
 namespace Symbiote.Jackalope.Impl.Routes
 {
-    public interface IDefineRoute
-    {
-        IDefineRoute For<TMessage>();
-        IDefineRoute SendTo(string exchangeName);
-        IDefineRoute WithSubject<TMessage>(Func<TMessage, string> subjectBuilder);
-        IDefineRoute WithSubject(string subject);
-    }
-
-    public class RouteBuilder : IDefineRoute
-    {
-        public IDefineRoute For<TMessage>()
-        {
-
-            return this;
-        }
-
-        public IDefineRoute SendTo(string exchangeName)
-        {
-
-            return this;
-        }
-
-        public IDefineRoute WithSubject<TMessage>(Func<TMessage, string> subjectBuilder)
-        {
-
-            return this;
-        }
-
-        public IDefineRoute WithSubject(string subject)
-        {
-
-            return this;
-        }
-    }
-
-    public interface IRouteMessage<TMessage>
-    {
-        string ExchangeName { get; set; }
-        Func<TMessage, string> SubjectBuilder { get; set; }
-    }
-
     public class MessageRoute<TMessage> : 
-        IRouteMessage<TMessage>
+        IRouteMessage
     {
-        public string ExchangeName { get; set; }
-        public Func<TMessage, string> SubjectBuilder { get; set; }
+        public bool AllowsInheritence { get; set; }
+
+        public bool AppliesToMessage(object message)
+        {
+            var type = message.GetType();
+            var handlesType = typeof(TMessage);
+            if(AllowsInheritence)
+            {
+                return Reflector.GetInheritenceChain(handlesType).Contains(type);
+            }
+            else
+            {
+                return type.Equals(handlesType);
+            }
+        }
+
+        public string GetExchange(object message)
+        {
+            return ExchangeStrategy((TMessage)message);
+        }
+
+        public string GetRoutingKey(object message)
+        {
+            return RoutingKeyBuilder((TMessage)message);
+        }
+
+
+        public Func<TMessage, string> RoutingKeyBuilder { get; set; }
+        public Func<TMessage, string> ExchangeStrategy { get; set; }
     }
 }

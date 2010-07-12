@@ -112,7 +112,12 @@
     <Compile Include="Impl\Dispatch\ObservableQueue.cs" />
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
+    <Compile Include="Impl\Routes\IDefineRoute.cs" />
+    <Compile Include="Impl\Routes\IRouteManager.cs" />
+    <Compile Include="Impl\Routes\IRouteMessage.cs" />
     <Compile Include="Impl\Routes\MessageRoute.cs" />
+    <Compile Include="Impl\Routes\RouteBuilder.cs" />
+    <Compile Include="Impl\Routes\RouteManager.cs" />
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="IQueueStreamCollection.cs" />
     <Compile Include="JackalopeConfigurationException.cs" />

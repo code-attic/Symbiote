@@ -14,6 +14,7 @@ using StructureMap;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Dispatch;
 using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Routes;
 using Symbiote.Jackalope.Impl.Subscriptions;
 
 namespace Symbiote.Jackalope.Impl
@@ -25,6 +26,7 @@ namespace Symbiote.Jackalope.Impl
         private ConcurrentDictionary<Type, IDispatch> _functionalDispatchers 
             = new ConcurrentDictionary<Type, IDispatch>();
         private IEndpointManager _endpointManager;
+        private IRouteManager _routeManager;
 
         public IQueueStreamCollection QueueStreams { get { return _subscriptionManager; } }
 
@@ -34,7 +36,13 @@ namespace Symbiote.Jackalope.Impl
             endpointConfiguration(endpoint);
             _endpointManager.AddEndpoint(endpoint);
         }
-        
+
+        public void AutoRouteFromSource<T>(IObservable<T> source)
+            where T : class
+        {
+            source.Subscribe(Send);
+        }
+
         public void BindQueue(string queueName, string exchangeName, params string[] routingKeys)
         {
             _endpointManager.BindQueue(exchangeName, queueName, routingKeys);
@@ -50,7 +58,12 @@ namespace Symbiote.Jackalope.Impl
                 return purged > 0;
             }
         }
-        
+
+        public void DefineRouteFor<T>(Action<IDefineRoute<T>> routeDefinition)
+        {
+            _routeManager.AddRoute(routeDefinition);
+        }
+
         public void DestroyExchange(string exchangeName)
         {
             using(var proxy = _channelFactory.GetProxyForExchange(exchangeName))
@@ -68,6 +81,27 @@ namespace Symbiote.Jackalope.Impl
                 proxy
                     .Channel
                     .QueueDelete(queueName, false, false, true);
+            }
+        }
+
+        public void Send<T>(T body)
+            where T : class
+        {
+            if(body != default(T))
+            {
+                _routeManager
+                    .GetRoutesForMessage(body)
+                    .ForEach(x =>
+                                 {
+                                     if(string.IsNullOrEmpty(x.Item2))
+                                     {
+                                         Send(x.Item1, body);
+                                     }
+                                     else
+                                     {
+                                         Send(x.Item1, body, x.Item2);
+                                     }
+                                 });
             }
         }
         
@@ -104,11 +138,16 @@ namespace Symbiote.Jackalope.Impl
 
         }
 
-        public Bus(IChannelProxyFactory channelFactory, IEndpointManager endpointManager, ISubscriptionManager subscriptionManager)
+        public Bus(
+            IChannelProxyFactory channelFactory, 
+            IEndpointManager endpointManager, 
+            ISubscriptionManager subscriptionManager,
+            IRouteManager routeManager)
         {
             _channelFactory = channelFactory;
             _endpointManager = endpointManager;
             _subscriptionManager = subscriptionManager;
+            _routeManager = routeManager;
         }
 
         public void Dispose()

@@ -13,6 +13,7 @@ using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Dispatch;
 using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Routes;
 using Symbiote.Jackalope.Impl.Serialization;
 using Symbiote.Jackalope.Impl.Server;
 using Symbiote.Jackalope.Impl.Subscriptions;
@@ -85,6 +86,9 @@ namespace Symbiote.Jackalope
                             .Use<EndpointManager>();
                         x.For<IConnectionManager>()
                             .Use<ConnectionManager>();
+                        x.For<IRouteManager>()
+                            .Singleton()
+                            .Use<RouteManager>();
                         x.For<ISubscription>()
                             .Use<Subscription>();
                         x.For<ISubscriptionManager>()
