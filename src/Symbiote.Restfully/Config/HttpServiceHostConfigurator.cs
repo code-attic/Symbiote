@@ -1,5 +1,5 @@
 ﻿using System;
-using StructureMap;
+using Symbiote.Core;
 
 namespace Symbiote.Restfully.Config
 {
@@ -33,14 +33,13 @@ namespace Symbiote.Restfully.Config
         public HttpServiceHostConfigurator HostService<T>()
             where T : class
         {
-            ObjectFactory.Configure(x => x.Scan(s =>
+            Assimilate.Dependencies(x => x.Scan(s =>
                                                     {
                                                         //s.AssembliesFromApplicationBaseDirectory();
                                                         s.TheCallingAssembly();
-                                                        s.SingleImplementationsOfInterface();
                                                         s.AddAllTypesOf<T>();
                                                     }));
-            _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), ObjectFactory.Model.DefaultTypeFor<T>()));
+            _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), Assimilate.Assimilation.DependencyAdapter.GetDefaultTypeFor<T>()));
             return this;
         }
 

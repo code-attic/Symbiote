@@ -13,7 +13,7 @@ namespace Symbiote.Lucene.Impl
     {
         public override IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string queryText)
         {
-            var parser = new CustomQueryParser(Version.LUCENE_29, "", analyzer);
+            var parser = new CustomQueryParser(Version.LUCENE_29, "", Analyzer);
             parser.SetAllowLeadingWildcard(true);
             var query = parser.Parse(queryText);
             var collector = TopScoreDocCollector.create(1000, true);
@@ -25,10 +25,6 @@ namespace Symbiote.Lucene.Impl
                 yield return Tuple.Create(scoreDoc, indexSearcher.Doc(scoreDoc.doc));
             }
             yield break;
-        }
-
-        public LuceneSearchProvider(IndexWriter indexWriter, Analyzer analyzer) : base(indexWriter, analyzer)
-        {
         }
     }
 }

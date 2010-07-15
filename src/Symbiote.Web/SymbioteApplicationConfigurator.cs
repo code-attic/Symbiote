@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.Practices.ServiceLocation;
 using Spark;
 using Spark.Web.Mvc;
-using StructureMap;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Hibernate;
-using Symbiote.Jackalope.Impl;
-using Symbiote.Jackalope.Impl.Subscriptions;
 using Symbiote.Web.Impl;
 
 namespace Symbiote.Web
@@ -84,8 +82,8 @@ namespace Symbiote.Web
                                                   s.AddAllTypesOf<Controller>();
                                               }));
             var batch = new SparkBatchDescriptor();
-            var allInstances = ObjectFactory
-                .GetAllInstances<Controller>();
+            var allInstances = ServiceLocator
+                .Current.GetAllInstances<Controller>();
 
             var types = allInstances.Select(x => x.GetType());
 
@@ -120,8 +118,6 @@ namespace Symbiote.Web
         public SymbioteApplicationConfigurator(IAssimilate assimilate)
         {
             _assimilate = assimilate;
-            _assimilate
-                .Dependencies(x => x.For<ISubscription>().Use<NullSubscription>());
         }
     }
 }

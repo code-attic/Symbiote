@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MassTransit.Transports.Nms</name>
+    </assembly>
+    <members>
+        <member name="T:MassTransit.Transports.Nms.NmsEndpoint">
+            <summary>
+            The NMS endpoint is used to communicate with systems like ActiveMQ via the Apache.NMS
+            project
+            </summary>
+        </member>
+    </members>
+</doc>

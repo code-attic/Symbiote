@@ -4,9 +4,9 @@ namespace Symbiote.Core.DI
 {
     public interface IRequestPlugin
     {
-        ISupplyPlugin For(Type pluginType);
-        ISupplyPlugin For<TPlugin>();
-        ISupplyPlugin For(string name, Type pluginType);
-        ISupplyPlugin For<TPlugin>(string name);
+        ISupplyPlugin<object> For(Type pluginType);
+        ISupplyPlugin<TPlugin> For<TPlugin>();
+        ISupplyPlugin<object> For(string name, Type pluginType);
+        ISupplyPlugin<TPlugin> For<TPlugin>(string name);
     }
 }

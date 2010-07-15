@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Symbiote.Web.Impl
 {
@@ -10,7 +10,7 @@ namespace Symbiote.Web.Impl
         {
             var controllerType = base.GetControllerType(requestContext, controllerName);
             if(controllerType != null)
-                return ObjectFactory.GetInstance(controllerType) as IController;
+                return ServiceLocator.Current.GetInstance(controllerType) as IController;
             return null;
         }
     }

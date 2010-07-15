@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Jackalope.Impl.Dispatch;
 using System.Linq;
 using Symbiote.Core.Extensions;
@@ -10,7 +10,6 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
 {
     public class Subscription : ISubscription
     {
-        private string _queueName;
         private IQueueObserver _observer;
         private IDispatchMessages _dispatcher;
 
@@ -19,10 +18,12 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             get { return _observer; }
         }
 
+        public string QueueName { get; set; }
         public bool Starting { get; private set; }
         public bool Started { get; private set; }
         public bool Stopping { get; private set; }
         public bool Stopped { get; private set; }
+
         
         public void Dispose()
         {
@@ -49,18 +50,12 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             Stopped = true;
         }
 
-        public Subscription(string queueName)
-        {
-            _queueName = queueName;
-            Start();
-        }
-
         protected void InitializeBrokerTask()
         {
-            _observer = ObjectFactory.GetInstance<IQueueObserver>();
-            _dispatcher = ObjectFactory.GetInstance<IDispatchMessages>();
+            _observer = ServiceLocator.Current.GetInstance<IQueueObserver>();
+            _dispatcher = ServiceLocator.Current.GetInstance<IDispatchMessages>();
             _observer.Subscribe(_dispatcher);
-            _observer.Start(_queueName);
+            _observer.Start(QueueName);
         }
     }
 }

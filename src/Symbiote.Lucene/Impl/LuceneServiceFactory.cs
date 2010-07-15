@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using Lucene.Net.Analysis;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
-using StructureMap;
-using StructureMap.Pipeline;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 using Symbiote.Lucene.Config;
 
@@ -81,24 +80,17 @@ namespace Symbiote.Lucene.Impl
 
         public ILuceneIndexer GetIndexingObserverForIndex(string indexName)
         {
-            var writer = GetIndexWriter(indexName);
-            var args = new ExplicitArguments(new Dictionary<string, object>()
-                                                 {
-                                                     {"indexWriter",writer}
-                                                 });
-            return ObjectFactory.GetInstance<BaseIndexingObserver>(args);
+            var indexer = ServiceLocator.Current.GetInstance<BaseIndexingObserver>();
+            indexer.IndexWriter = GetIndexWriter(indexName);
+            return indexer;
         }
 
         public ILuceneSearchProvider GetSearchProviderForIndex(string indexName)
         {
-            var writer = GetIndexWriter(indexName);
-            var analyzer = GetQueryAnalyzer(indexName);
-            var args = new ExplicitArguments(new Dictionary<string, object>()
-                                                 {
-                                                     {"indexWriter",writer},
-                                                     {"analyzer", analyzer}
-                                                 });
-            return ObjectFactory.GetInstance<BaseSearchProvider>(args);
+            var searchProvider = ServiceLocator.Current.GetInstance<BaseSearchProvider>();
+            searchProvider.IndexWriter = GetIndexWriter(indexName);
+            searchProvider.Analyzer = GetQueryAnalyzer(indexName);
+            return searchProvider;
         }
 
         public LuceneServiceFactory(ILuceneConfiguration configuration)

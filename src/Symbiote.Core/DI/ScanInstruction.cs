@@ -93,8 +93,8 @@ namespace Symbiote.Core.DI
 
                                  matches.ForEach(m =>
                                                      {
-                                                         var dependencyExpression = new DependencyExpression();
-                                                         dependencyExpression.For(m.Name, x).Add(m);
+                                                         var dependencyExpression = DependencyExpression.For(m.Name, x);
+                                                         dependencyExpression.Add(m);
                                                          registry.Register(dependencyExpression);
                                                      });
                              });
@@ -108,8 +108,8 @@ namespace Symbiote.Core.DI
 
                     if (match != null)
                     {
-                        var dependencyExpression = new DependencyExpression();
-                        dependencyExpression.For(x).Use(match);
+                        var dependencyExpression = DependencyExpression.For(x);
+                        dependencyExpression.Use(match);
                         registry.Register(dependencyExpression);
                     }
                 });

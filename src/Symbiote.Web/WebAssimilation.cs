@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using StructureMap;
 using Symbiote.Core;
 
 namespace Symbiote.Web

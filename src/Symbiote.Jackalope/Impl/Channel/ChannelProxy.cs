@@ -1,7 +1,7 @@
 using System;
+using Microsoft.Practices.ServiceLocation;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using StructureMap;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
 using Symbiote.Jackalope.Impl.Serialization;
@@ -42,7 +42,7 @@ namespace Symbiote.Jackalope.Impl.Channel
         {
             get
             {
-                _messageSerializer = _messageSerializer ?? ObjectFactory.GetInstance<IMessageSerializer>();
+                _messageSerializer = _messageSerializer ?? ServiceLocator.Current.GetInstance<IMessageSerializer>();
                 return _messageSerializer;
             }
         }
@@ -198,7 +198,7 @@ namespace Symbiote.Jackalope.Impl.Channel
             _channel = channel;
             _protocol = protocol;
             _configuration = endpointConfiguration;
-            _onReturn = ObjectFactory.GetInstance<Action<IModel, BasicReturnEventArgs>>();
+            _onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
             _channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
             _channel.ModelShutdown += ChannelShutdown;
         }

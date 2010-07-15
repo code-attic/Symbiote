@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl.Dispatch
@@ -29,7 +29,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         {
             if (dispatchers.Count == 0)
             {
-                ObjectFactory.GetAllInstances<IDispatch>()
+                ServiceLocator.Current.GetAllInstances<IDispatch>()
                     .ForEach(x => x.Handles.ForEach(y =>
                             {
                                 List<IDispatch> dispatchersForType = null;

@@ -2,10 +2,32 @@
 
 namespace Symbiote.Core.DI
 {
-    public class DependencyExpression : 
+    public class DependencyExpression
+    {
+        public static DependencyExpression<object> For(Type pluginType)
+        {
+            return new DependencyExpression<object>(pluginType);
+        }
+
+        public static DependencyExpression<TPlugin> For<TPlugin>()
+        {
+            return new DependencyExpression<TPlugin>();
+        }
+
+        public static DependencyExpression<object> For(string name, Type pluginType)
+        {
+            return new DependencyExpression<object>(pluginType, name);
+        }
+
+        public static DependencyExpression<TPlugin> For<TPlugin>(string name)
+        {
+            return new DependencyExpression<TPlugin>(name);
+        }
+    }
+
+    public class DependencyExpression<TPlugin> : 
         IDependencyDefinition,
-        ISupplyPlugin,
-        IRequestPlugin,
+        ISupplyPlugin<TPlugin>,
         IPluginConfiguration
     {
         public object ConcreteInstance { get; set; }
@@ -27,6 +49,7 @@ namespace Symbiote.Core.DI
         }
 
         public virtual IPluginConfiguration Add<TConcrete>()
+            where TConcrete : TPlugin
         {
             ConcreteType = typeof(TConcrete);
             IsAdd = true;
@@ -34,37 +57,10 @@ namespace Symbiote.Core.DI
         }
 
         public IPluginConfiguration Add<TConcrete>(TConcrete instance)
+            where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
             IsAdd = true;
-            return this;
-        }
-
-        public virtual ISupplyPlugin For(Type pluginType)
-        {
-            PluginType = pluginType;
-            return this;
-        }
-
-        public virtual ISupplyPlugin For<TPlugin>()
-        {
-            PluginType = typeof (TPlugin);
-            return this;
-        }
-
-        public virtual ISupplyPlugin For(string name, Type pluginType)
-        {
-            PluginName = name;
-            IsNamed = true;
-            PluginType = pluginType;
-            return this;
-        }
-
-        public virtual ISupplyPlugin For<TPlugin>(string name)
-        {
-            PluginName = name;
-            IsNamed = true;
-            PluginType = typeof(TPlugin);
             return this;
         }
 
@@ -75,12 +71,14 @@ namespace Symbiote.Core.DI
         }
 
         public virtual IPluginConfiguration Use<TConcrete>()
+            where TConcrete : TPlugin
         {
             ConcreteType = typeof (TConcrete);
             return this;
         }
 
         public virtual IPluginConfiguration Use<TConcrete>(TConcrete instance)
+            where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
             HasSingleton = true;
@@ -99,6 +97,30 @@ namespace Symbiote.Core.DI
         {
             IsSingleton = true;
             return this;
+        }
+
+        public DependencyExpression(Type pluginType)
+        {
+            PluginType = pluginType;
+        }
+
+        public DependencyExpression(Type pluginType, string pluginName)
+        {
+            PluginType = pluginType;
+            PluginName = pluginName;
+            IsNamed = true;
+        }
+
+        public DependencyExpression()
+        {
+            PluginType = typeof(TPlugin);
+        }
+
+        public DependencyExpression(string pluginName)
+        {
+            PluginType = typeof(TPlugin);
+            PluginName = pluginName;
+            IsNamed = true;
         }
     }
 }

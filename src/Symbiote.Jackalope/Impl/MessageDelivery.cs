@@ -1,7 +1,7 @@
 using System;
+using Microsoft.Practices.ServiceLocation;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using StructureMap;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Impl.Channel;
 
@@ -81,7 +81,7 @@ namespace Symbiote.Jackalope.Impl
 
         public MessageDelivery(IChannelProxy proxy, BasicDeliverEventArgs args)
         {
-            _factory = ObjectFactory.GetInstance<IChannelProxyFactory>();
+            _factory = ServiceLocator.Current.GetInstance<IChannelProxyFactory>();
             _proxy = proxy;
             _exchange = args.Exchange;
             _deliveryTag = args.DeliveryTag;
@@ -92,7 +92,7 @@ namespace Symbiote.Jackalope.Impl
 
         public MessageDelivery(IChannelProxy proxy, BasicGetResult result)
         {
-            _factory = ObjectFactory.GetInstance<IChannelProxyFactory>();
+            _factory = ServiceLocator.Current.GetInstance<IChannelProxyFactory>();
             _proxy = proxy;
             _exchange = result.Exchange;
             _deliveryTag = result.DeliveryTag;

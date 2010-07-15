@@ -91,6 +91,14 @@ namespace Symbiote.Core
             return assimilate;
         }
 
+        public static IAssimilate Dependencies(Action<DependencyConfigurator> configurator)
+        {
+            var config = new DependencyConfigurator();
+            configurator(config);
+            config.RegisterDependencies(Assimilation.DependencyAdapter);
+            return Assimilation;
+        }
+
         public static void Require(string prerequisite, Exception exception)
         {
             _assimilationLock.EnterReadLock();
@@ -107,7 +115,7 @@ namespace Symbiote.Core
             }
         }
 
-        public static void RegisterSliver(string sliverName)
+        public static void RegisterSymbioteLibrary(string sliverName)
         {
             _assimilationLock.EnterWriteLock();
             try

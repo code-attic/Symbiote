@@ -1,5 +1,5 @@
 ﻿using System;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Wcf.Client;
 
 namespace Symbiote.Wcf
@@ -9,7 +9,7 @@ namespace Symbiote.Wcf
         public static IService<TContract> GetClient<TContract>()
             where TContract : class
         {
-            return ObjectFactory.GetInstance<IService<TContract>>();
+            return ServiceLocator.Current.GetInstance<IService<TContract>>();
         }
 
         public static IService<TContract> GetClient<TContract>(Action<IServiceConfiguration> configure)

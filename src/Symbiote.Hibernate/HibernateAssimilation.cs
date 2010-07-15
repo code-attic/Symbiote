@@ -5,7 +5,6 @@ using System.Text;
 using FluentNHibernate.Cfg;
 using FluentNHibernate.Cfg.Db;
 using NHibernate;
-using StructureMap;
 using Symbiote.Core;
 using Symbiote.Hibernate.Impl;
 

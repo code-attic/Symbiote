@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json.Linq;
-using StructureMap;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Restfully.Impl.Rpc
@@ -19,7 +19,7 @@ namespace Symbiote.Restfully.Impl.Rpc
 
         protected T GetInstance()
         {
-            return ObjectFactory.GetInstance<T>();
+            return ServiceLocator.Current.GetInstance<T>();
         }
         protected Tuple<Expression, bool, List<ParameterExpression>> RebuildExpressionComponents()
         {

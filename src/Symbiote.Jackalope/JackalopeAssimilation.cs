@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Practices.ServiceLocation;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using StructureMap;
 using Symbiote.Core;
 using Symbiote.Jackalope.Config;
 using Symbiote.Jackalope.Impl;
@@ -27,14 +27,11 @@ namespace Symbiote.Jackalope
         {
             ConfigureStandardDependencies();
             assimilate
-                .Dependencies(x =>
-                              {
-                                  x.For<IAmqpConfigurationProvider>()
-                                      .Use<AmqpConfiguration>();
-                              });
+                .Dependencies(x => x.For<IAmqpConfigurationProvider>()
+                                       .Use<AmqpConfiguration>());
             assimilate
                 .Dependencies(x => x.For<IConnectionManager>()
-                                       .Use(ObjectFactory.GetInstance<ConnectionManager>()));
+                                       .Use(ServiceLocator.Current.GetInstance<ConnectionManager>()));
 
             return assimilate;
         }
@@ -45,14 +42,11 @@ namespace Symbiote.Jackalope
             configure(configuration);
             ConfigureStandardDependencies();
             assimilate
-                .Dependencies(x =>
-                {
-                    x.For<IAmqpConfigurationProvider>()
-                        .Use(configuration);
-                });
+                .Dependencies(x => x.For<IAmqpConfigurationProvider>()
+                                       .Use(configuration));
             assimilate
                 .Dependencies(x => x.For<IConnectionManager>()
-                                    .Use(ObjectFactory.GetInstance<ConnectionManager>()));
+                                    .Use(ServiceLocator.Current.GetInstance<ConnectionManager>()));
             return assimilate;
         }
 
@@ -70,7 +64,7 @@ namespace Symbiote.Jackalope
 
         public static void ConfigureStandardDependencies()
         {
-            ObjectFactory.Configure(x =>
+            Assimilate.Dependencies(x =>
                     {
                         x.For<IBus>()
                             .Use<Bus>();
@@ -87,15 +81,15 @@ namespace Symbiote.Jackalope
                         x.For<IConnectionManager>()
                             .Use<ConnectionManager>();
                         x.For<IRouteManager>()
-                            .Singleton()
-                            .Use<RouteManager>();
+                            .Use<RouteManager>()
+                            .AsSingleton();
                         x.For<ISubscription>()
                             .Use<Subscription>();
                         x.For<ISubscriptionManager>()
                             .Use(new SubscriptionManager());
                         x.For<IDispatchMessages>()
-                            .Singleton()
-                            .Use<DispatchingObserver>();
+                            .Use<DispatchingObserver>()
+                            .AsSingleton();
                         x.Scan(s =>
                                    {
                                        AppDomain
@@ -107,7 +101,7 @@ namespace Symbiote.Jackalope
                                            typeof (IMessageHandler<>));
                                    });
                         x.For<Action<IModel, BasicReturnEventArgs>>()
-                            .Use((m, e) =>
+                            .Use<Action<IModel, BasicReturnEventArgs>>((m, e) =>
                                      {
                                          var message = "Message delivery to exchange {0} with routing key {1} failed: \r\n\t Reason Code {2} : {3}"
                                              .AsFormat(e.Exchange, e.RoutingKey, e.ReplyText, e.ReplyCode, e.ReplyText);
@@ -115,9 +109,11 @@ namespace Symbiote.Jackalope
                                      });
                     });
             var handlers =
-                ObjectFactory.Container.Model.PluginTypes
-                    .Where(x => typeof(IMessageHandler).IsAssignableFrom(x.PluginType) || x.PluginType.IsAssignableFrom(typeof(IMessageHandler)))
-                    .Select(p => p.PluginType);
+                Assimilate
+                    .Assimilation
+                    .DependencyAdapter
+                    .RegisteredPluginTypes
+                    .Where(x => typeof (IMessageHandler).IsAssignableFrom(x) || x.IsAssignableFrom(typeof (IMessageHandler)));
 
             var dispatcherPairs = handlers
                 .Select(h =>
@@ -128,7 +124,7 @@ namespace Symbiote.Jackalope
                                  return Tuple.Create(dispatchInterface, dispatchType);
                              });
             var simpleInterface = typeof (IDispatch);
-            ObjectFactory.Configure(x => dispatcherPairs.ForEach(p =>
+            Assimilate.Dependencies(x => dispatcherPairs.ForEach(p =>
             {
                 x.For(p.Item1).Use(p.Item2);
                 x.For(simpleInterface).Add(p.Item2);

@@ -9,6 +9,8 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             get { return null; }
         }
 
+        public string QueueName { get; set; }
+
         public void Dispose()
         {
             
@@ -44,7 +46,7 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             get { return false; }
         }
 
-        public NullSubscription(string queueName)
+        public NullSubscription()
         {
         }
     }

@@ -11,18 +11,19 @@ namespace Symbiote.Lucene.Impl
 {
     public abstract class BaseSearchProvider : ILuceneSearchProvider
     {
-        protected IndexWriter indexWriter { get; set; }
         protected Searcher indexSearcher
         {
             get
             {
-                var dirSearcher = new IndexSearcher(indexWriter.GetDirectory(), true);
-                var readerSearcher = new IndexSearcher(indexWriter.GetReader());
+                var dirSearcher = new IndexSearcher(IndexWriter.GetDirectory(), true);
+                var readerSearcher = new IndexSearcher(IndexWriter.GetReader());
                 var searcher = new MultiSearcher(new Searchable[] {dirSearcher, readerSearcher});
                 return searcher;
             }
         }
-        protected Analyzer analyzer { get; set; }
+
+        public IndexWriter IndexWriter { get; set; }
+        public Analyzer Analyzer { get; set; }
 
         public abstract IEnumerable<Tuple<ScoreDoc, Document>> GetDocumentsForQuery(string queryText);
         
@@ -32,12 +33,6 @@ namespace Symbiote.Lucene.Impl
             ExpressionTreeProcessor.Process(predicate, "", builder);
             var query = builder.ToString();
             return GetDocumentsForQuery(query);
-        }
-
-        protected BaseSearchProvider(IndexWriter indexWriter, Analyzer analyzer)
-        {
-            this.indexWriter = indexWriter;
-            this.analyzer = analyzer;
         }
     }
 }

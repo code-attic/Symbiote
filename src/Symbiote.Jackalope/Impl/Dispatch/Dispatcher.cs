@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Reflection;
 using System.Linq;
 
@@ -43,7 +43,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         {
             try
             {
-                var handler = ObjectFactory.GetInstance<IMessageHandler<TMessage>>();
+                var handler = ServiceLocator.Current.GetInstance<IMessageHandler<TMessage>>();
                 handler.Process(envelope.Message as TMessage, envelope.MessageDelivery);
                 //return envelope.Message;
             }

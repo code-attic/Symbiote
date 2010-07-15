@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Jackalope.Impl.Subscriptions
@@ -64,10 +64,11 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
 
             if(!_subscriptions.TryGetValue(queueName, out subscription))
             {
-                subscription = ObjectFactory
-                    .With<string>(queueName)
+                subscription = ServiceLocator
+                    .Current
                     .GetInstance<ISubscription>();
-                    _subscriptions[queueName] = subscription;
+                subscription.QueueName = queueName;
+                _subscriptions[queueName] = subscription;
             }
             return subscription;
         }

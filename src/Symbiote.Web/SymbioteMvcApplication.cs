@@ -1,5 +1,5 @@
 ﻿using System.Web;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 using Enumerable = System.Linq.Enumerable;
 
@@ -15,7 +15,9 @@ namespace Symbiote.Web
 
         private void InitModules()
         {
-            ObjectFactory.GetAllInstances<IHttpModule>()
+            ServiceLocator
+                .Current
+                .GetAllInstances<IHttpModule>()
                 .ForEach(x => x.Init(this));
         }
     }

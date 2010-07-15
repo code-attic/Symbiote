@@ -10,7 +10,6 @@ using RabbitMQ.Client.Events;
 using RabbitMQ.Client.Impl;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Config;
-using StructureMap;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Dispatch;
 using Symbiote.Jackalope.Impl.Endpoint;

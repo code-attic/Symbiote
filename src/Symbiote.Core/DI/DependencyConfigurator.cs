@@ -8,35 +8,35 @@ namespace Symbiote.Core.DI
         IRequestPlugin,
         IScan
     {
-        public IList<DependencyExpression> Dependencies { get; set; }
+        public IList<IDependencyDefinition> Dependencies { get; set; }
         public IList<IScanInstruction> ScanInstructions { get; set; }
 
-        public ISupplyPlugin For(Type pluginType)
+        public ISupplyPlugin<object> For(Type pluginType)
         {
-            var expression = new DependencyExpression();
+            var expression = DependencyExpression.For(pluginType);
             Dependencies.Add(expression);
-            return expression.For(pluginType);
+            return expression;
         }
 
-        public ISupplyPlugin For<TPlugin>()
+        public ISupplyPlugin<TPlugin> For<TPlugin>()
         {
-            var expression = new DependencyExpression();
+            var expression = DependencyExpression.For<TPlugin>();
             Dependencies.Add(expression);
-            return expression.For<TPlugin>();
+            return expression;
         }
 
-        public ISupplyPlugin For(string name, Type pluginType)
+        public ISupplyPlugin<object> For(string name, Type pluginType)
         {
-            var expression = new DependencyExpression();
+            var expression = DependencyExpression.For(name, pluginType);
             Dependencies.Add(expression);
-            return expression.For(name, pluginType);
+            return expression;
         }
 
-        public ISupplyPlugin For<TPlugin>(string name)
+        public ISupplyPlugin<TPlugin> For<TPlugin>(string name)
         {
-            var expression = new DependencyExpression();
+            var expression = DependencyExpression.For<TPlugin>(name);
             Dependencies.Add(expression);
-            return expression.For<TPlugin>(name);
+            return expression;
         }
         
         public void Scan(Action<IScanInstruction> scanConfigurator)
@@ -57,7 +57,7 @@ namespace Symbiote.Core.DI
 
         public DependencyConfigurator()
         {
-            Dependencies = new List<DependencyExpression>();
+            Dependencies = new List<IDependencyDefinition>();
             ScanInstructions = new List<IScanInstruction>();
         }
     }

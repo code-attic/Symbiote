@@ -2,14 +2,16 @@
 
 namespace Symbiote.Core.DI
 {
-    public interface ISupplyPlugin
+    public interface ISupplyPlugin<TPlugin>
     {
-        IPluginConfiguration Add(Type concreteType);
-        IPluginConfiguration Add<TConcrete>();
-        IPluginConfiguration Add<TConcrete>(TConcrete instance);
-        IPluginConfiguration Use(Type concreteType);
-        IPluginConfiguration Use<TConcrete>();
-        IPluginConfiguration Use<TConcrete>(TConcrete instance);
+        IPluginConfiguration Add<TConcrete>()
+            where TConcrete : TPlugin;
+        IPluginConfiguration Add<TConcrete>(TConcrete instance)
+            where TConcrete : TPlugin;
+        IPluginConfiguration Use<TConcrete>()
+            where TConcrete : TPlugin;
+        IPluginConfiguration Use<TConcrete>(TConcrete instance)
+            where TConcrete : TPlugin;
         IPluginConfiguration UseFactory<TFactory>();
     }
 }

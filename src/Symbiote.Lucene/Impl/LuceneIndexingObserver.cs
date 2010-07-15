@@ -28,18 +28,16 @@ namespace Symbiote.Lucene.Impl
 
         public override void OnCompleted()
         {
-            indexWriter.AddDocument(document);
-            if(indexWriter.NumRamDocs() > 0)
+            IndexWriter.AddDocument(document);
+            if(IndexWriter.NumRamDocs() > 0)
             {
-                indexWriter.Optimize();
-                indexWriter.Commit();
+                IndexWriter.Optimize();
+                IndexWriter.Commit();
             }
         }
 
-        public LuceneIndexingObserver(IndexWriter indexWriter)
-            : base(indexWriter)
+        public LuceneIndexingObserver()
         {
-            this.indexWriter = indexWriter;
             document = new Document();
         }
     }

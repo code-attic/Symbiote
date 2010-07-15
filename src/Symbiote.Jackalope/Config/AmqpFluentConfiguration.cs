@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Jackalope.Impl;
-using StructureMap;
 using Symbiote.Jackalope.Impl.Serialization;
 
 namespace Symbiote.Jackalope.Config
@@ -26,7 +27,7 @@ namespace Symbiote.Jackalope.Config
 
         public AmqpFluentConfiguration SerializeMessagesAsBinary()
         {
-            ObjectFactory.Configure(c => c.For<IMessageSerializer>().Use<NetBinarySerializer>());
+            Assimilate.Dependencies(c => c.For<IMessageSerializer>().Use<NetBinarySerializer>());
             return this;
         }
 

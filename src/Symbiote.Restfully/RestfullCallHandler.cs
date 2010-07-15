@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Restfully.Config;
 using Symbiote.Restfully.Impl;
 using Symbiote.Restfully.Impl.Rpc;
@@ -17,7 +17,7 @@ namespace Symbiote.Restfully
         {
             get 
             { 
-                _configuration = _configuration ?? ObjectFactory.GetInstance<IHttpServiceHostConfiguration>();
+                _configuration = _configuration ?? ServiceLocator.Current.GetInstance<IHttpServiceHostConfiguration>();
                 return _configuration;
             }
         }

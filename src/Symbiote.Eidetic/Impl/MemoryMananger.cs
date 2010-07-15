@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using StructureMap;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Symbiote.Eidetic.Impl
 {
@@ -15,7 +15,7 @@ namespace Symbiote.Eidetic.Impl
             get
             {
                 _rememory = _rememory ??
-                            ObjectFactory.GetInstance<IRemember>();
+                            ServiceLocator.Current.GetInstance<IRemember>();
                 return _rememory;
             }
         }

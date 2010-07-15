@@ -11,6 +11,19 @@ namespace Symbiote.StructureMap
     public class StructureMapAdapter : 
         IDependencyAdapter
     {
+        public IEnumerable<Type> RegisteredPluginTypes
+        {
+            get
+            {
+                return ObjectFactory.Container.Model.PluginTypes.Select(x => x.PluginType);
+            }
+        }
+
+        public Type GetDefaultTypeFor<T>()
+        {
+            return ObjectFactory.Model.DefaultTypeFor<T>();
+        }
+
         public object GetInstance(Type serviceType)
         {
             return ObjectFactory.TryGetInstance(serviceType);
@@ -49,9 +62,13 @@ namespace Symbiote.StructureMap
         public void Register(IDependencyDefinition dependency)
         {
             if (dependency.IsAdd)
+            {
                 HandleAdd(dependency);
+            }
             else
+            {
                 HandleFor(dependency);
+            }
             
         }
 
@@ -105,6 +122,10 @@ namespace Symbiote.StructureMap
                             instance.Name = dependency.PluginName;
                     }
                 );
+        }
+
+        public StructureMapAdapter()
+        {
         }
     }
 }

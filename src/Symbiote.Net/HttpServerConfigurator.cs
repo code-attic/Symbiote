@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using StructureMap;
+using Symbiote.Core;
 
 namespace Symbiote.Net
 {
@@ -46,14 +46,14 @@ namespace Symbiote.Net
         public HttpServerConfigurator HostService<T>()
             where T : class
         {
-            ObjectFactory.Configure(x => x.Scan(s =>
-                                                    {
-                                                        //s.AssembliesFromApplicationBaseDirectory();
-                                                        s.TheCallingAssembly();
-                                                        s.SingleImplementationsOfInterface();
-                                                        s.AddAllTypesOf<T>();
-                                                    }));
-            _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), ObjectFactory.Model.DefaultTypeFor<T>()));
+            Assimilate.Dependencies(
+                x => x.Scan(s =>
+                    {
+                        s.AssembliesFromApplicationBaseDirectory();
+                        s.TheCallingAssembly();
+                        s.AddAllTypesOf<T>();
+                    }));
+            _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), Assimilate.Assimilation.DependencyAdapter.GetDefaultTypeFor<T>()));
             return this;
         }
 

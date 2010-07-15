@@ -1,5 +1,5 @@
 ﻿using System;
-using StructureMap;
+using Symbiote.Core;
 using Symbiote.Wcf.Client;
 
 namespace Symbiote.Wcf
@@ -10,11 +10,8 @@ namespace Symbiote.Wcf
             where TStrategy : IServiceClientConfigurationStrategy<TContract>
             where TContract : class
         {
-            ObjectFactory.Configure(x =>
-                                        {
-                                            x.For<IServiceClientConfigurationStrategy<TContract>>()
-                                                .Use<TStrategy>();
-                                        });
+            Assimilate.Dependencies(x => x.For<IServiceClientConfigurationStrategy<TContract>>()
+                                             .Use<TStrategy>());
 
             return this;
         }
@@ -22,10 +19,11 @@ namespace Symbiote.Wcf
         public WcfClientConfigurator RegisterService<TContract>(Action<IServiceConfiguration> configurationDelegate)
             where TContract : class
         {
-            ObjectFactory.Configure(x =>
+            Assimilate.Dependencies(x =>
                                         {
-                                            x.For<IServiceClientConfigurationStrategy<TContract>>()
-                                                .TheDefault.Is.ConstructedBy(f => new DelegateConfigurationStrategy<TContract>(configurationDelegate));
+                                            //x.For<IServiceClientConfigurationStrategy<TContract>>()
+                                            //    .UseFactory<>()
+                                            //    .TheDefault.Is.ConstructedBy(f => new DelegateConfigurationStrategy<TContract>(configurationDelegate));
                                         });
 
             return this;
