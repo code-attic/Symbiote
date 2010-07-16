@@ -102,30 +102,6 @@ namespace Symbiote.Core.DI
             return nullableType.GetGenericArguments()[0];
         }
 
-        public static string GetName(this Type type)
-        {
-            if (type.IsGenericType)
-            {
-                string[] parameters = Array.ConvertAll(type.GetGenericArguments(), t => t.GetName());
-                string parameterList = String.Join(", ", parameters);
-                return "{0}<{1}>".AsFormat(type.Name, parameterList);
-            }
-
-            return type.Name;
-        }
-
-        public static string GetFullName(this Type type)
-        {
-            if (type.IsGenericType)
-            {
-                string[] parameters = Array.ConvertAll(type.GetGenericArguments(), t => t.GetName());
-                string parameterList = String.Join(", ", parameters);
-                return "{0}<{1}>".AsFormat(type.Name, parameterList);
-            }
-
-            return type.FullName;
-        }
-
         public static bool CanBeCreated(this Type type)
         {
             return type.IsConcrete() && HasConstructors(type);
@@ -198,7 +174,7 @@ namespace Symbiote.Core.DI
                     string.Format("Could not Determine Whether Type '{0}' plugs into Type '{1}'",
                                   pluginType.Name,
                                   pluggedType.Name);
-                throw new ApplicationException(message, e);
+                throw new Exception(message, e);
             }
         }
 

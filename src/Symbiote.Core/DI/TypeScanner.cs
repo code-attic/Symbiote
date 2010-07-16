@@ -7,6 +7,11 @@ using System.Reflection;
 using System.Text;
 using Symbiote.Core.Extensions;
 
+#if SILVERLIGHT
+using System.Windows;
+#endif
+
+
 namespace Symbiote.Core.DI
 {
     public class TypeScanner
@@ -32,11 +37,6 @@ namespace Symbiote.Core.DI
             AddAssembly(GetAssemblyContaining<T>());
         }
 
-        public void AddAssemblyByName(string assemblyName)
-        {
-            AddAssembly(AppDomain.CurrentDomain.Load(assemblyName));
-        }
-
         public void AddAssemblyContaining(Type type)
         {
             AddAssembly(GetAssemblyContaining(type));
@@ -47,10 +47,13 @@ namespace Symbiote.Core.DI
             GetAssembliesFromBaseDirectory().ForEach(AddAssembly);
         }
 
+#if !SILVERLIGHT
         public void AddAssembliesFromPath(string path)
         {
             GetAssembliesFromPath(path).ForEach(AddAssembly);
         }
+#endif
+
 
         public void AddCallingAssembly()
         {
@@ -62,11 +65,6 @@ namespace Symbiote.Core.DI
             return GetAssemblyContaining(typeof(T));
         }
 
-        public Assembly GetAssemblyByName(string assemblyName)
-        {
-            return AppDomain.CurrentDomain.Load(assemblyName);
-        }
-
         public Assembly GetAssemblyContaining(Type type)
         {
             return type.Assembly;
@@ -74,13 +72,23 @@ namespace Symbiote.Core.DI
 
         public IEnumerable<Assembly> GetAssembliesFromBaseDirectory()
         {
+#if !SILVERLIGHT
             var basePath = AppDomain.CurrentDomain.BaseDirectory;
             var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
             var assembliesFromBase = GetAssembliesFromPath(basePath);
             var assembliesFromBin = GetAssembliesFromPath(binPath);
             return assembliesFromBase.Concat(assembliesFromBin);
+#endif
+#if SILVERLIGHT
+            return Deployment
+                .Current
+                .Parts
+                .Select(x => Application.GetResourceStream(new Uri(x.Source, UriKind.Relative)))
+                .Select(x => new AssemblyPart().Load(x.Stream));
+#endif
         }
 
+#if !SILVERLIGHT
         public IEnumerable<Assembly> GetAssembliesFromPath(string path)
         {
             if (!Directory.Exists(path))
@@ -89,14 +97,16 @@ namespace Symbiote.Core.DI
             return Directory.GetFiles(path)
                 .Where(x => x.ToLower().EndsWith(".dll") || x.ToLower().EndsWith(".exe"))
                 .Select(x =>
-                {
-                    Assembly assembly = null;
-                    try { assembly = Assembly.LoadFrom(x); }
-                    catch { }
-                    return assembly;
-                })
+                            {
+                                Assembly assembly = null;
+                                try { assembly = Assembly.LoadFrom(x); }
+                                catch { }
+                                return assembly;
+                            })
                 .Where(x => x != null);
         }
+#endif
+
 
         public Assembly GetCallingAssembly()
         {

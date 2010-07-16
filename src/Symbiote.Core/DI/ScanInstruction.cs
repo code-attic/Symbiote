@@ -29,11 +29,6 @@ namespace Symbiote.Core.DI
             scanner.AddAssembly(assembly);
         }
 
-        public void Assembly(string assemblyName)
-        {
-            scanner.AddAssemblyByName(assemblyName);
-        }
-
         public void TheCallingAssembly()
         {
             scanner.AddCallingAssembly();
@@ -49,6 +44,7 @@ namespace Symbiote.Core.DI
             scanner.AddAssemblyContaining(type);
         }
 
+#if !SILVERLIGHT
         public void AssembliesFromPath(string path)
         {
             scanner.AddAssembliesFromPath(path);
@@ -59,6 +55,8 @@ namespace Symbiote.Core.DI
             scanner.AddAssembliesFromPath(path);
             scanner.AssemblyFilters.Add(assemblyFilter);
         }
+#endif
+
 
         public void AssembliesFromApplicationBaseDirectory()
         {

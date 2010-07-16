@@ -94,7 +94,8 @@ namespace Symbiote.Core.Extensions
             else
                 return Type.GetType(typeToken);
         }
-        
+
+#if !SILVERLIGHT        
         public static XmlNode JsonToXml(this string json)
         {
             var scrubbedJson = Regex.Replace(json, @"[""][$]type[""][:][""][^""]+[""][,]", "");
@@ -113,5 +114,6 @@ namespace Symbiote.Core.Extensions
         {
             return JsonConvert.SerializeXmlNode(node);
         }
+#endif
     }
 }

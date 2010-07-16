@@ -73,6 +73,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lucene.Tests", "..\tests\Lu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.StructureMap", "Symbiote.StructureMap\Symbiote.StructureMap.csproj", "{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight", "Silverlight", "{9F557E31-430F-4EC5-A724-99E91E1755EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Core", "Silverlight\Symbiote.Core\Symbiote.Core.csproj", "{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -370,6 +374,16 @@ Global
 		{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}.Release|x86.ActiveCfg = Release|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -406,5 +420,6 @@ Global
 		{835853B7-9877-416F-A06D-E97F55DFE6A5} = {7B765B76-3DAA-455E-A35E-6327ECA7DF06}
 		{2F1486DA-85F6-401C-A9D8-360AF6FE9360} = {77E2030E-3FF1-4D4C-8814-6B7EF955036F}
 		{3B862239-2F67-4F50-B65C-D2051866AED6} = {77E2030E-3FF1-4D4C-8814-6B7EF955036F}
+		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B} = {9F557E31-430F-4EC5-A724-99E91E1755EF}
 	EndGlobalSection
 EndGlobal

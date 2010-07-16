@@ -30,7 +30,15 @@ namespace Symbiote.Core
     {
         public static IAssimilate Assimilation { get; set; }
         private static List<string> _assimilated = new List<string>();
+        
+#if !SILVERLIGHT
         private static ReaderWriterLockSlim _assimilationLock = new ReaderWriterLockSlim();
+#endif
+
+#if SILVERLIGHT
+        private static object _assimilationLock = new object();
+#endif
+
         private static bool Initialized { get; set; }
 
         static Assimilate()
@@ -101,7 +109,13 @@ namespace Symbiote.Core
 
         public static void Require(string prerequisite, Exception exception)
         {
+#if !SILVERLIGHT
             _assimilationLock.EnterReadLock();
+#endif
+#if SILVERLIGHT
+        lock(_assimilationLock)
+        {
+#endif
             try
             {
                 if(!_assimilated.Contains(prerequisite))
@@ -111,13 +125,24 @@ namespace Symbiote.Core
             }
             finally 
             {
+#if !SILVERLIGHT
                 _assimilationLock.ExitReadLock();
+#endif
             }
+#if SILVERLIGHT
+        }
+#endif
         }
 
         public static void RegisterSymbioteLibrary(string sliverName)
         {
+#if !SILVERLIGHT
             _assimilationLock.EnterWriteLock();
+#endif
+#if SILVERLIGHT
+        lock(_assimilationLock)
+        {
+#endif
             try
             {
                 if(!_assimilated.Contains(sliverName))
@@ -125,8 +150,13 @@ namespace Symbiote.Core
             }
             finally
             {
+#if !SILVERLIGHT
                 _assimilationLock.ExitWriteLock();
+#endif
             }
+#if SILVERLIGHT
+        }
+#endif
         }
     }
 }

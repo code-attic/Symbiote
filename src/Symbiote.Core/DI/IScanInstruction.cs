@@ -6,12 +6,9 @@ namespace Symbiote.Core.DI
     public interface IScanInstruction
     {
         void Assembly(Assembly assembly);
-        void Assembly(string assemblyName);
         void TheCallingAssembly();
         void AssemblyContainingType<T>();
         void AssemblyContainingType(Type type);
-        void AssembliesFromPath(string path);
-        void AssembliesFromPath(string path, Predicate<Assembly> assemblyFilter);
         void AssembliesFromApplicationBaseDirectory();
         void AssembliesFromApplicationBaseDirectory(Predicate<Assembly> assemblyFilter);
         void AddAllTypesOf<TPlugin>();
@@ -22,5 +19,10 @@ namespace Symbiote.Core.DI
         void ExcludeNamespaceContainingType<T>();
         void ExcludeType<T>();
         void Execute(IDependencyRegistry registry);
+
+#if !SILVERLIGHT
+        void AssembliesFromPath(string path);
+        void AssembliesFromPath(string path, Predicate<Assembly> assemblyFilter);
+#endif
     }
 }

@@ -64,7 +64,7 @@ namespace Symbiote.Core.Extensions
             return
                 permutations
                     .Take(total)
-                    .Select(x => x.ToList()).ToList();
+                    .Select(x => x).ToList();
         }
 
         public static T TakeRandomly<T>(this IEnumerable<T> enumerable)

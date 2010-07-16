@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,7 +12,7 @@ namespace Symbiote.Core.Utility
     public class HierarchyVisitor
         : IObservable<Tuple<object, string, object>>
     {
-        protected ConcurrentBag<IObserver<Tuple<object, string, object>>> Watchers { get; set; }
+        protected List<IObserver<Tuple<object, string, object>>> Watchers { get; set; }
         protected Predicate<object> MatchIdentifier { get; set; }
 
         public void Visit(object instance)
@@ -67,12 +66,12 @@ namespace Symbiote.Core.Utility
 
         protected bool IsCrawlableEnumerable(object value)
         {
-            return value.GetType().GetInterface("IEnumerable") != null && value.GetType().Name != "String";
+            return value.GetType().GetInterface("IEnumerable", false) != null && value.GetType().Name != "String";
         }
 
         protected void NotifyWatchers(object parent, string member, object instance)
         {
-            Watchers.AsParallel().ForAll(x => x.OnNext(Tuple.Create(parent, member, instance)));
+            Watchers.ForEach(x => x.OnNext(Tuple.Create(parent, member, instance)));
         }
 
         public IDisposable Subscribe(IObserver<Tuple<object, string, object>> observer)
@@ -85,7 +84,7 @@ namespace Symbiote.Core.Utility
         public HierarchyVisitor(Predicate<object> notifyOnMatches)
         {
             MatchIdentifier = notifyOnMatches;
-            Watchers = new ConcurrentBag<IObserver<Tuple<object, string, object>>>();
+            Watchers = new List<IObserver<Tuple<object, string, object>>>();
         }
     }
 }

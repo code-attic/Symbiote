@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -31,7 +30,7 @@ namespace Symbiote.Core.Reflection
     
         public static bool IsEnumerable(this Type type)
         {
-            return type.GetInterface("IEnumerable") != null;
+            return type.GetInterface("IEnumerable", false) != null;
         }
 
         public static Type DetermineElementType(this IEnumerable enumerable)
@@ -42,9 +41,9 @@ namespace Symbiote.Core.Reflection
 
     public class Reflector
     {
-        private static ConcurrentBag<Type> initializedTypes = new ConcurrentBag<Type>();
-        static ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>> memberCache =
-            new ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>>();
+        private static List<Type> initializedTypes = new List<Type>();
+        static Dictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>> memberCache =
+            new Dictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>>();
 
         static BindingFlags bindingFlags = BindingFlags.FlattenHierarchy |
                                                    BindingFlags.Public |
@@ -84,7 +83,7 @@ namespace Symbiote.Core.Reflection
                                      var setter = CanWrite(type, x.Name) ? BuildSet(type, x.Name) : null;
                                      var value = Tuple.Create(memberType, getter, setter);
 
-                                     memberCache.TryAdd(key, value);
+                                     memberCache.Add(key, value);
                                  }
                     );
                initializedTypes.Add(type);
