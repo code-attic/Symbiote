@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Symbiote.Restfully
+namespace Symbiote.JsonRpc
 {
     public interface IHttpServiceHost : IDisposable
     {

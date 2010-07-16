@@ -1,7 +1,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Symbiote.Restfully
+namespace Symbiote.JsonRpc
 {
     public interface IRemoteProxy<T> where T : class
     {

@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Web;
 
-namespace Symbiote.Restfully.Impl.Adapters
+namespace Symbiote.JsonRpc.Impl.Adapters
 {
     public class HttpResponseAdapter : IHttpResponseAdapter
     {

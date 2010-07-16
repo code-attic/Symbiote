@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{14E7F1FE-C49A-40E1-A70D-A93CEBB3A201}</ProjectGuid>
+    <ProjectGuid>{5A02B843-4047-4885-8839-FE9E4A9EBFE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Restfully.Tests</RootNamespace>
-    <AssemblyName>Restfully.Tests</AssemblyName>
+    <RootNamespace>Symbiote.JsonRpc</RootNamespace>
+    <AssemblyName>Symbiote.JsonRpc</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\bin\JsonRpc\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,27 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\lib\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Machine.Specifications.GallioAdapter">
-      <HintPath>..\..\lib\Machine.Specifications.GallioAdapter.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Moq">
-      <HintPath>..\..\lib\Moq.dll</HintPath>
+      <HintPath>..\..\lib\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml.Linq" />
@@ -61,37 +51,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="when_calling_action_natively.cs" />
-    <Compile Include="with_http_listener.cs" />
-    <Compile Include="ComplexArg.cs" />
-    <Compile Include="ComplexReturn.cs" />
-    <Compile Include="ITestService.cs" />
+    <Compile Include="Impl\ExpressionExtensions.cs" />
+    <Compile Include="HttpServiceHostAssimilation.cs" />
+    <Compile Include="HttpServiceClientAssimilation.cs" />
+    <Compile Include="Config\HttpServiceClientConfiguration.cs" />
+    <Compile Include="Config\HttpServiceClientConfigurator.cs" />
+    <Compile Include="Impl\Adapters\HttpContextAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpListenerRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpListenerResponseAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\HttpResponseAdapter.cs" />
+    <Compile Include="Impl\SimpleHttpServiceHost.cs" />
+    <Compile Include="Config\HttpServiceHostConfiguration.cs" />
+    <Compile Include="Config\HttpServiceHostConfigurator.cs" />
+    <Compile Include="Config\IHttpServiceClientConfiguration.cs" />
+    <Compile Include="Impl\Adapters\IHttpContextAdapter.cs" />
+    <Compile Include="Impl\Adapters\IHttpRequestAdapter.cs" />
+    <Compile Include="Impl\Adapters\IHttpResponseAdapter.cs" />
+    <Compile Include="IHttpServiceHost.cs" />
+    <Compile Include="Config\IHttpServiceHostConfiguration.cs" />
+    <Compile Include="Impl\Rpc\IRemoteProcedure.cs" />
+    <Compile Include="IRemoteProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestService.cs" />
-    <Compile Include="when_calling_simple_action.cs" />
-    <Compile Include="when_calling_simple_func.cs" />
-    <Compile Include="when_simple_get_request.cs" />
-    <Compile Include="with_client.cs" />
-    <Compile Include="with_configuration.cs" />
-    <Compile Include="with_server.cs" />
-    <Compile Include="with_web_request.cs" />
+    <Compile Include="Impl\Rpc\RemoteAction.cs" />
+    <Compile Include="Impl\Rpc\RemoteFunc.cs" />
+    <Compile Include="Impl\Rpc\RemoteProcedure.cs" />
+    <Compile Include="Impl\Rpc\RemoteProxy.cs" />
+    <Compile Include="Impl\Rpc\ResourceRequest.cs" />
+    <Compile Include="RestfullCallHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Restfully\Symbiote.JsonRpc.csproj">
-      <Project>{5A02B843-4047-4885-8839-FE9E4A9EBFE1}</Project>
-      <Name>Symbiote.JsonRpc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
-      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
-      <Name>Symbiote.StructureMap</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

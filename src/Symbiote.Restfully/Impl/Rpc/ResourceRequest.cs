@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Symbiote.Core.Extensions;
-using Symbiote.Restfully.Config;
-using Symbiote.Restfully.Impl.Adapters;
+using Symbiote.JsonRpc.Config;
+using Symbiote.JsonRpc.Impl.Adapters;
 
-namespace Symbiote.Restfully.Impl.Rpc
+namespace Symbiote.JsonRpc.Impl.Rpc
 {
     public class ResourceRequest
     {

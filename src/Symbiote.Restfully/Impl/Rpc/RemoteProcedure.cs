@@ -7,7 +7,7 @@ using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json.Linq;
 using Symbiote.Core.Extensions;
 
-namespace Symbiote.Restfully.Impl.Rpc
+namespace Symbiote.JsonRpc.Impl.Rpc
 {
     public abstract class RemoteProcedure<T> : IRemoteProcedure
         where T : class

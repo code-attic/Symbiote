@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace Symbiote.Restfully.Impl.Adapters
+namespace Symbiote.JsonRpc.Impl.Adapters
 {
     public class HttpListenerRequestAdapter : IHttpRequestAdapter
     {

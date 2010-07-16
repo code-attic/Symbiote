@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Net;
 
-namespace Symbiote.Restfully.Config
+namespace Symbiote.JsonRpc.Config
 {
     public interface IHttpServiceHostConfiguration
     {

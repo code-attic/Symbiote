@@ -1,9 +1,8 @@
 ﻿using System;
 using Symbiote.Core;
-using Symbiote.Restfully.Config;
-using Symbiote.Restfully.Impl;
+using Symbiote.JsonRpc.Config;
 
-namespace Symbiote.Restfully
+namespace Symbiote.JsonRpc
 {
     public static class HttpServiceClientAssimilation
     {

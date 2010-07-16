@@ -24,6 +24,11 @@ namespace Symbiote.StructureMap
             return ObjectFactory.Model.DefaultTypeFor<T>();
         }
 
+        public bool HasPluginFor<T>()
+        {
+            return ObjectFactory.Container.Model.HasDefaultImplementationFor<T>();
+        }
+
         public object GetInstance(Type serviceType)
         {
             return ObjectFactory.TryGetInstance(serviceType);

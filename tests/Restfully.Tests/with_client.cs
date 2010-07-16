@@ -1,7 +1,6 @@
 ﻿using Machine.Specifications;
 using Microsoft.Practices.ServiceLocation;
-using Symbiote.Restfully;
-using Symbiote.Restfully.Impl.Rpc;
+using Symbiote.JsonRpc.Impl.Rpc;
 
 namespace Restfully.Tests
 {

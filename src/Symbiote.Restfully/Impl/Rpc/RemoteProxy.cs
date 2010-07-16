@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Net.Security;
 using Symbiote.Core.Extensions;
-using Symbiote.Restfully.Config;
+using Symbiote.JsonRpc.Config;
 
-namespace Symbiote.Restfully.Impl.Rpc
+namespace Symbiote.JsonRpc.Impl.Rpc
 {
     public class RemoteProxy<T> : IRemoteProxy<T> where T : class
     {

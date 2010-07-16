@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Web.Hosting;
 using Symbiote.Core;
-using Symbiote.Restfully.Config;
-using Symbiote.Restfully.Impl;
+using Symbiote.JsonRpc.Config;
+using Symbiote.JsonRpc.Impl;
 
-namespace Symbiote.Restfully
+namespace Symbiote.JsonRpc
 {
     public static class HttpServiceHostAssimilation
     {

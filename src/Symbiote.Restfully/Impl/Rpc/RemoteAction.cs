@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-namespace Symbiote.Restfully.Impl.Rpc
+namespace Symbiote.JsonRpc.Impl.Rpc
 {
     public class RemoteAction<T> : RemoteProcedure<T>
         where T : class

@@ -1,4 +1,4 @@
-﻿namespace Symbiote.Restfully.Impl.Rpc
+﻿namespace Symbiote.JsonRpc.Impl.Rpc
 {
     public interface IRemoteProcedure
     {

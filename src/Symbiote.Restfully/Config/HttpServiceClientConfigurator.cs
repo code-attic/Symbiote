@@ -1,4 +1,4 @@
-﻿namespace Symbiote.Restfully.Config
+﻿namespace Symbiote.JsonRpc.Config
 {
     public class HttpServiceClientConfigurator
     {

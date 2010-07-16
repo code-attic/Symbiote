@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using Moq;
 using Symbiote.Core;
-using Symbiote.Restfully;
+using Symbiote.JsonRpc;
 using Symbiote.StructureMap;
 using Assimilate = Symbiote.Core.Assimilate;
 

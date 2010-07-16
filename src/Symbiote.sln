@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Jackalope", "..\3.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Core", "..\3.5\Symbiote.Core\Symbiote.Core.csproj", "{3B862239-2F67-4F50-B65C-D2051866AED6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Restfully", "Symbiote.Restfully\Symbiote.Restfully.csproj", "{5A02B843-4047-4885-8839-FE9E4A9EBFE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.JsonRpc", "Symbiote.Restfully\Symbiote.JsonRpc.csproj", "{5A02B843-4047-4885-8839-FE9E4A9EBFE1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restfully.Tests", "..\tests\Restfully.Tests\Restfully.Tests.csproj", "{14E7F1FE-C49A-40E1-A70D-A93CEBB3A201}"
 EndProject

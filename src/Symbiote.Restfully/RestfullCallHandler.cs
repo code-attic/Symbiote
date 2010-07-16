@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Web;
 using Microsoft.Practices.ServiceLocation;
-using Symbiote.Restfully.Config;
-using Symbiote.Restfully.Impl;
-using Symbiote.Restfully.Impl.Rpc;
+using Symbiote.JsonRpc.Config;
+using Symbiote.JsonRpc.Impl.Rpc;
 
-namespace Symbiote.Restfully
+namespace Symbiote.JsonRpc
 {
     public class RestfullCallHandler : IHttpHandler
     {

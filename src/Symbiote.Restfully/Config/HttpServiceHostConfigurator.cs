@@ -1,7 +1,7 @@
 ﻿using System;
 using Symbiote.Core;
 
-namespace Symbiote.Restfully.Config
+namespace Symbiote.JsonRpc.Config
 {
     public class HttpServiceHostConfigurator
     {

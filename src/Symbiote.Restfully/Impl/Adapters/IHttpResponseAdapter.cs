@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Symbiote.Restfully.Impl.Adapters
+namespace Symbiote.JsonRpc.Impl.Adapters
 {
     public interface IHttpResponseAdapter
     {

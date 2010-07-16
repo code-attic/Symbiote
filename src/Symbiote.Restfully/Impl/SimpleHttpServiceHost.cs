@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
-using System.Security.Authentication.ExtendedProtection;
 using Symbiote.Core.Extensions;
-using System.Linq;
-using Symbiote.Restfully.Config;
-using Symbiote.Restfully.Impl.Rpc;
+using Symbiote.JsonRpc.Config;
+using Symbiote.JsonRpc.Impl.Rpc;
 
-namespace Symbiote.Restfully.Impl
+namespace Symbiote.JsonRpc.Impl
 {
     public class SimpleHttpServiceHost : IHttpServiceHost
     {
