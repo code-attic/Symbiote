@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Practices.ServiceLocation;
 
 namespace Symbiote.Core.DI
 {
@@ -30,6 +31,7 @@ namespace Symbiote.Core.DI
         ISupplyPlugin<TPlugin>,
         IPluginConfiguration
     {
+        private object _concreteInstance { get; set; }
         public object ConcreteInstance { get; set; }
         public Type ConcreteType { get; set; }
         public Type FactoryType { get; set; }

@@ -11,12 +11,20 @@ namespace Symbiote.Core.DI
     {
         public static bool Closes(this Type type, Type openType)
         {
-            Type baseType = type.BaseType;
-            if (baseType == null) return false;
+            if(!openType.IsGenericType && !openType.IsGenericTypeDefinition)
+                return false;
 
-            bool closes = baseType.IsGenericType && baseType.GetGenericTypeDefinition() == openType;
+            bool closes;
+
+            if(openType.IsInterface)
+            {
+                closes = type.ImplementsInterfaceTemplate(openType) && type.IsGenericTypeDefinition == false;
+            }
+            else
+            {
+                closes = type.BaseType == openType;
+            }
             if (closes) return true;
-
             return type.BaseType == null ? false : type.BaseType.Closes(openType);
         }
 

@@ -113,7 +113,11 @@ namespace Symbiote.Core.DI
             return
                 CandidateAssemblies
                     .Where(x => AssemblyFilters.All(p => p(x)))
-                    .SelectMany(x => x.GetTypes())
+                    .SelectMany(x =>
+                                    {
+                                        try { return x.GetTypes(); }
+                                        catch { return new Type[]{}; }
+                                    })
                     .Where(x => !TypeFilters.Any(p => p(x)));
         }
     }

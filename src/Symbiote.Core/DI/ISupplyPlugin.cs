@@ -8,10 +8,12 @@ namespace Symbiote.Core.DI
             where TConcrete : TPlugin;
         IPluginConfiguration Add<TConcrete>(TConcrete instance)
             where TConcrete : TPlugin;
+        IPluginConfiguration Add(Type concreteType);
         IPluginConfiguration Use<TConcrete>()
             where TConcrete : TPlugin;
         IPluginConfiguration Use<TConcrete>(TConcrete instance)
             where TConcrete : TPlugin;
+        IPluginConfiguration Use(Type concreteType);
         IPluginConfiguration UseFactory<TFactory>();
     }
 }

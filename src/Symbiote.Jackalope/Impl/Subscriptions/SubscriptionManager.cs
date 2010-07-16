@@ -69,6 +69,7 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
                     .GetInstance<ISubscription>();
                 subscription.QueueName = queueName;
                 _subscriptions[queueName] = subscription;
+                subscription.Start();
             }
             return subscription;
         }

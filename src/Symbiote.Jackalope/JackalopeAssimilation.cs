@@ -31,7 +31,8 @@ namespace Symbiote.Jackalope
                                        .Use<AmqpConfiguration>());
             assimilate
                 .Dependencies(x => x.For<IConnectionManager>()
-                                       .Use(ServiceLocator.Current.GetInstance<ConnectionManager>()));
+                                       .Use<ConnectionManager>()
+                                       .AsSingleton());
 
             return assimilate;
         }
@@ -46,7 +47,8 @@ namespace Symbiote.Jackalope
                                        .Use(configuration));
             assimilate
                 .Dependencies(x => x.For<IConnectionManager>()
-                                    .Use(ServiceLocator.Current.GetInstance<ConnectionManager>()));
+                                       .Use<ConnectionManager>()
+                                       .AsSingleton());
             return assimilate;
         }
 

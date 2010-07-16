@@ -86,33 +86,77 @@ namespace Symbiote.Core.DI
             var filteredTypes = scanner.GetMatchingTypes();
 
             AutoWireupTypesOf
-                .ForEach(x =>
-                             {
-                                 var matches =
-                                     filteredTypes.Where(t => t.IsConcreteAndAssignableTo(x));
-
-                                 matches.ForEach(m =>
-                                                     {
-                                                         var dependencyExpression = DependencyExpression.For(m.Name, x);
-                                                         dependencyExpression.Add(m);
-                                                         registry.Register(dependencyExpression);
-                                                     });
-                             });
+                .ForEach(x => RegisterAllTypesOf(x, filteredTypes, registry));
 
             AutoWireupClosersOf
                 .Where(x => x.IsOpenGeneric())
-                .ForEach(x =>
-                {
-                    var match =
-                        filteredTypes.FirstOrDefault(t => t.Closes(x));
+                .ForEach(x => RegisterClosingTypes(x, filteredTypes, registry));
+        }
 
-                    if (match != null)
+        protected void RegisterClosingTypes(Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
+        {
+            var match =
+                filteredTypes.FirstOrDefault(t => t.Closes(type));
+
+            if (match != null)
+            {
+                if(type.IsInterface)
+                {
+                    RegisterTypeClosingInterface(type, match, registry);
+                }
+                else
+                {
+                    RegisterClosingType(type, match, registry);
+                }
+            }
+        }
+
+        protected void RegisterAllTypesOf(Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
+        {
+            filteredTypes
+                .Where(t => t.IsConcreteAndAssignableTo(type))
+                .ForEach(m =>
+                             {
+                                 var dependencyExpression = DependencyExpression.For(m.Name, type);
+                                 dependencyExpression.Add(m);
+                                 registry.Register(dependencyExpression);
+                             });
+        }
+
+        protected void RegisterClosingType(Type type, Type match, IDependencyRegistry registry)
+        {
+            Type pluginType = null;
+            Type baseType = type.BaseType;
+            while(pluginType == null)
+            {
+                if(baseType.IsGenericType)
+                {
+                    var genericTypeDefinition = baseType.GetGenericTypeDefinition();
+                    if(genericTypeDefinition.Equals(type))
                     {
-                        var dependencyExpression = DependencyExpression.For(x);
-                        dependencyExpression.Use(match);
-                        registry.Register(dependencyExpression);
+                        pluginType = baseType;
                     }
-                });
+                    else
+                    {
+                        baseType = baseType.BaseType;
+                    }
+                }
+            }
+            var dependencyExpression = DependencyExpression.For(pluginType);
+            dependencyExpression.Use(match);
+            registry.Register(dependencyExpression);
+        }
+
+        protected void RegisterTypeClosingInterface(Type type, Type match, IDependencyRegistry registry)
+        {
+            var pluginType = match
+                .GetInterfaces()
+                .Where(y => y.IsGenericType)
+                .First(y => y.GetGenericTypeDefinition().Equals(type));
+
+            var dependencyExpression = DependencyExpression.For(pluginType);
+            dependencyExpression.Use(match);
+            registry.Register(dependencyExpression);
         }
 
         public void Exclude(Predicate<Type> exclude)
