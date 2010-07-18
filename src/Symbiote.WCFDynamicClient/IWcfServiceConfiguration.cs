@@ -11,6 +11,7 @@ namespace Symbiote.Wcf
         bool EnableHttpMetadataExchange { get; set; }
         Type ServiceType { get; }
         Type ContractType { get; }
+        string MetadataExchangeUri { get; set; }
 
         void UseDefaults();
     }

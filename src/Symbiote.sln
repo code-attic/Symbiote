@@ -53,9 +53,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Jackalope", "..\3.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Core", "..\3.5\Symbiote.Core\Symbiote.Core.csproj", "{3B862239-2F67-4F50-B65C-D2051866AED6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.JsonRpc", "Symbiote.Restfully\Symbiote.JsonRpc.csproj", "{5A02B843-4047-4885-8839-FE9E4A9EBFE1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.JsonRpc.Client", "Symbiote.Restfully\Symbiote.JsonRpc.Client.csproj", "{5A02B843-4047-4885-8839-FE9E4A9EBFE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restfully.Tests", "..\tests\Restfully.Tests\Restfully.Tests.csproj", "{14E7F1FE-C49A-40E1-A70D-A93CEBB3A201}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonRpc.Tests", "..\tests\Restfully.Tests\JsonRpc.Tests.csproj", "{14E7F1FE-C49A-40E1-A70D-A93CEBB3A201}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Wcf", "Symbiote.WCFDynamicClient\Symbiote.Wcf.csproj", "{F6F5879C-61DD-4CFC-9F57-7356648DEE77}"
 EndProject
@@ -76,6 +76,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Silverlight", "Silverlight", "{9F557E31-430F-4EC5-A724-99E91E1755EF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Core", "Silverlight\Symbiote.Core\Symbiote.Core.csproj", "{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.JsonRpc.Host", "Symbiote.JsonRpc.Host\Symbiote.JsonRpc.Host.csproj", "{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -384,6 +386,16 @@ Global
 		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{71ED23EE-73DC-4DA8-852D-7CAF6415D64B}.Release|x86.ActiveCfg = Release|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -403,6 +415,7 @@ Global
 		{45719B4E-23EA-44AC-863A-7B4CD458F0C2} = {642B8572-9C4E-40A2-AAD9-5BA69ABCAB48}
 		{9D4DDDC6-21B0-4A9A-92A5-3136E53F02B4} = {642B8572-9C4E-40A2-AAD9-5BA69ABCAB48}
 		{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A} = {642B8572-9C4E-40A2-AAD9-5BA69ABCAB48}
+		{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10} = {642B8572-9C4E-40A2-AAD9-5BA69ABCAB48}
 		{58B24604-01F2-493B-942C-65E23F952C52} = {135E1771-770B-4CBE-8989-21B1177A5AFF}
 		{7B765B76-3DAA-455E-A35E-6327ECA7DF06} = {135E1771-770B-4CBE-8989-21B1177A5AFF}
 		{77AE9B47-C730-46E7-BD72-044582AA7746} = {135E1771-770B-4CBE-8989-21B1177A5AFF}

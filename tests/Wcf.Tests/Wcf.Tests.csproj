@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,9 +55,16 @@
     <Compile Include="TestService.cs" />
     <Compile Include="ITestService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="when_calling_wcf_service_via_dynamic_proxy.cs" />
-    <Compile Include="with_wcf_client.cs" />
-    <Compile Include="with_wcf_server.cs" />
+    <Compile Include="when_calling_via_http_mex_client.cs" />
+    <Compile Include="when_calling_via_nettcp_client.cs" />
+    <Compile Include="when_calling_via_nettcp_mex_client.cs" />
+    <Compile Include="when_calling_via_http_client.cs" />
+    <Compile Include="with_wcf_http_client.cs" />
+    <Compile Include="with_wcf_http_client_from_mex.cs" />
+    <Compile Include="with_wcf_http_server.cs" />
+    <Compile Include="with_wcf_nettcp_client.cs" />
+    <Compile Include="with_wcf_nettcp_client_from_mex.cs" />
+    <Compile Include="with_wcf_nettcp_server.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

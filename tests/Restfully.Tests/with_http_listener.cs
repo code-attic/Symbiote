@@ -2,9 +2,9 @@
 using System.IO;
 using System.Net;
 using Machine.Specifications;
-using Symbiote.JsonRpc.Impl.Rpc;
+using Symbiote.JsonRpc.Host.Impl.Rpc;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     public abstract class with_http_listener
     {
@@ -24,6 +24,8 @@ namespace Restfully.Tests
                                             listener.Start();
                                             listener.BeginGetContext(ProcessRequest, null);
                                         };
+
+        private Cleanup clean = () => listener.Stop();
 
         public static void ProcessRequest(IAsyncResult asyncResult)
         {

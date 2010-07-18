@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using Symbiote.Core;
-using Symbiote.JsonRpc;
+using Symbiote.JsonRpc.Host;
 using Symbiote.StructureMap;
 
 namespace IISHostedRestully
@@ -17,10 +17,9 @@ namespace IISHostedRestully
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .HttpServiceHost(x => x
+                .JsonRpcHost(x => x
                     .HostInIIS()
                     .HostService<SayHi>());
-
         }
 
         void Application_End(object sender, EventArgs e)

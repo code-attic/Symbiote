@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
 using Machine.Specifications;
 using Symbiote.Core.Extensions;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     class when_calling_action_natively : with_server
     {

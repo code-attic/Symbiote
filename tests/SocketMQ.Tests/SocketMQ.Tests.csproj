@@ -76,6 +76,10 @@
       <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>
       <Name>Symbiote.SocketMQ</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
+      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
+      <Name>Symbiote.StructureMap</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.WebSocket\Symbiote.WebSocket.csproj">
       <Project>{4DECABA0-8930-4EF5-9153-3CE3C5578875}</Project>
       <Name>Symbiote.WebSocket</Name>

@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Machine.Specifications;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     public abstract class with_web_request : with_http_listener
     {

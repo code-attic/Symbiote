@@ -34,14 +34,14 @@ namespace Symbiote.Core.DI
         private object _concreteInstance { get; set; }
         public object ConcreteInstance { get; set; }
         public Type ConcreteType { get; set; }
-        public Type FactoryType { get; set; }
-        public bool HasFactory { get; set; }
+        public bool HasDelegate { get; set; }
         public bool IsAdd { get; set; }
         public bool IsNamed { get; set; }
         public bool IsSingleton { get; set; }
         public bool HasSingleton { get; set; }
         public string PluginName { get; set; }
         public Type PluginType { get; set; }
+        public Delegate CreatorDelegate { get; set; }
 
         public virtual IPluginConfiguration Add(Type concreteType)
         {
@@ -88,10 +88,11 @@ namespace Symbiote.Core.DI
             return this;
         }
         
-        public virtual IPluginConfiguration UseFactory<TFactory>()
+        public virtual IPluginConfiguration CreateWithDelegate<TConcrete>(Func<TConcrete> factory)
+            where TConcrete : TPlugin
         {
-            HasFactory = true;
-            FactoryType = typeof (TFactory);
+            HasDelegate = true;
+            CreatorDelegate = factory;
             return this;
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Configuration;
 using System.ServiceModel.Description;
+using System.Text.RegularExpressions;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Wcf.Server
@@ -31,22 +32,27 @@ namespace Symbiote.Wcf.Server
 
         private ServiceHost BuildHost(IWcfServiceConfiguration configuration)
         {
-            //var serviceUri = "{0}/{1}".AsFormat(serverConfiguration.BaseAddress, configuration.Address);
             var serviceUri = configuration.Address;
             var host = new ServiceHost(configuration.ServiceType, new Uri(serverConfiguration.BaseAddress));
             host.AddServiceEndpoint(
                 configuration.ContractType, 
                 configuration.Binding,
                 serviceUri);
+            
+            if (configuration.EnableHttpMetadataExchange)
+            {
+                var mexUriString =
+                    "{0}/{1}".AsFormat(configuration.MetadataExchangeUri ?? serverConfiguration.BaseAddress, configuration.Address);
 
-            //host.Description.Behaviors.Add(
-            //    new ServiceMetadataBehavior()
-            //        {
-            //            HttpGetEnabled = true,
-            //            HttpGetUrl = new Uri("{0}/{1}".AsFormat(serverConfiguration.BaseAddress, configuration.Address))
-            //        });
+                host.Description.Behaviors.Add(
+                    new ServiceMetadataBehavior()
+                        {
+                            HttpGetEnabled = true,
+                            HttpGetUrl = new Uri(mexUriString)
+                        });
 
-            //host.AddServiceEndpoint(typeof (IMetadataExchange), configuration.Binding, "mex");
+                host.AddServiceEndpoint(typeof(IMetadataExchange), configuration.Binding, "mex");
+            }
 
             host.CloseTimeout = TimeSpan.FromMilliseconds(configuration.Timeout);
             return host;

@@ -2,7 +2,7 @@
 using System.Net;
 using Machine.Specifications;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     [Subject("simple request")]
     public class when_simple_get_request : with_web_request
@@ -14,12 +14,6 @@ namespace Restfully.Tests
                                  {
                                      request.Method = "GET";
                                      request.ContentType = "text/plain";
-                                     //using (var stream = request.GetRequestStream())
-                                     //using (var writer = new StringWriter())
-                                     //{
-                                     //    writer.WriteLine("Anyone home?");
-                                     //    writer.Flush();
-                                     //}
                                      response = request.GetResponse();
                                      using (var reader = new StreamReader(response.GetResponseStream()))
                                      {

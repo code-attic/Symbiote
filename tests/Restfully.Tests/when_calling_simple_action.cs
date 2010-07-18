@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     [Subject("Simple Action Call")]
     public class when_calling_simple_action : with_client

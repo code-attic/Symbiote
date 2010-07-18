@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Wcf.Tests
@@ -7,6 +8,13 @@ namespace Wcf.Tests
     public interface ITestService
     {
         [OperationContract]
-        bool TwoArgCall(DateTime date, Guid id);
+        Return TwoArgCall(DateTime date, Guid id);
+    }
+
+    [DataContract]
+    public class Return
+    {
+        [DataMember]
+        public DateTime datetime { get; set; }
     }
 }

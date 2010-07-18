@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     public class ComplexArg
     {

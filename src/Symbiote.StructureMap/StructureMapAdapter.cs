@@ -118,6 +118,10 @@ namespace Symbiote.StructureMap
                             else
                                 instance = forExpression.Singleton().Use(dependency.ConcreteType);
                         }
+                        else if(dependency.HasDelegate)
+                        {
+                            instance = forExpression.Use(f => dependency.CreatorDelegate.DynamicInvoke());
+                        }
                         else
                         {
                             instance = forExpression.Use(dependency.ConcreteType);

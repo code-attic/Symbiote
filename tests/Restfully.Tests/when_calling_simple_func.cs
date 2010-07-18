@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq.Expressions;
 using Machine.Specifications;
 
-namespace Restfully.Tests
+namespace JsonRpc.Tests
 {
     [Subject("Simple Function Call")]
     public class when_calling_simple_func : with_client
@@ -29,6 +28,8 @@ namespace Restfully.Tests
                                      result = proxy.Call(x => x.TwoArgCall(time,id));
                                      stopwatch.Stop();
                                  };
+
+        //private Cleanup clean = () => server.Stop();
         
         private It should_call_service_method = () => serviceMock.VerifyAll();
         private It should_take_less_than_half_a_second = () => stopwatch.ElapsedMilliseconds.ShouldBeLessThan(400);

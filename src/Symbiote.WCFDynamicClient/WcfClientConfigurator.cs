@@ -19,12 +19,8 @@ namespace Symbiote.Wcf
         public WcfClientConfigurator RegisterService<TContract>(Action<IServiceConfiguration> configurationDelegate)
             where TContract : class
         {
-            Assimilate.Dependencies(x =>
-                                        {
-                                            //x.For<IServiceClientConfigurationStrategy<TContract>>()
-                                            //    .UseFactory<>()
-                                            //    .TheDefault.Is.ConstructedBy(f => new DelegateConfigurationStrategy<TContract>(configurationDelegate));
-                                        });
+            Assimilate.Dependencies(x => x.For<IServiceClientConfigurationStrategy<TContract>>()
+                                             .CreateWithDelegate(() => new DelegateConfigurationStrategy<TContract>(configurationDelegate)));
 
             return this;
         }

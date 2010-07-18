@@ -13,6 +13,7 @@ namespace Symbiote.Wcf.Server
         public Binding Binding { get; set; }
         public int Timeout { get; set; }
         public bool EnableHttpMetadataExchange { get; set; }
+        public string MetadataExchangeUri { get; set; }
         public Type ServiceType
         {
             get { return typeof (TContract); }

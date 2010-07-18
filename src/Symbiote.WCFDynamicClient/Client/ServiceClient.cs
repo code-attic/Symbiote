@@ -86,8 +86,8 @@ namespace Symbiote.Wcf.Client
                 if (_clientShell == null)
                 {
                     _clientShell = _endpoint != null ?
-                                                         new ClientShell<TContract>(_binding, _endpoint) :
-                                                                                                             new ClientShell<TContract>(_configuration);
+                                            new ClientShell<TContract>(_binding, _endpoint) :
+                                            new ClientShell<TContract>(_configuration);
                 }
                 return _clientShell;
             }

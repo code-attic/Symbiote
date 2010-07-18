@@ -6,13 +6,13 @@ namespace Symbiote.Core.DI
     {
         object ConcreteInstance { get; set; }
         Type ConcreteType { get; set; }
-        Type FactoryType { get; set; }
-        bool HasFactory { get; set; }
+        bool HasDelegate { get; set; }
         bool IsAdd { get; set; }
         bool IsNamed { get; set; }
         bool IsSingleton { get; set; }
         string PluginName { get; set; }
         Type PluginType { get; set; }
         bool HasSingleton { get; set; }
+        Delegate CreatorDelegate { get; set; }
     }
 }

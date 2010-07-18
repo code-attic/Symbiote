@@ -1,5 +1,7 @@
 ﻿using Machine.Specifications;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.StructureMap;
 
 namespace SocketMQ.Tests
 {
@@ -9,6 +11,7 @@ namespace SocketMQ.Tests
         private Establish context = () =>
                                         {
                                             json = sourceMessage.ToJson(false);
+                                            Assimilate.Core<StructureMapAdapter>();
                                         };
     }
 }

@@ -8,9 +8,9 @@ namespace Wcf.Tests
 {
     public class TestService : ITestService
     {
-        public bool TwoArgCall(DateTime date, Guid id)
+        public Return TwoArgCall(DateTime date, Guid id)
         {
-            return true;
+            return new Return() { datetime = date};
         }
 
         public TestService()
