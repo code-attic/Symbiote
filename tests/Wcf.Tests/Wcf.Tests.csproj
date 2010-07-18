@@ -75,7 +75,7 @@
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
       <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.WCFDynamicClient\Symbiote.Wcf.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.WCF\Symbiote.Wcf.csproj">
       <Project>{F6F5879C-61DD-4CFC-9F57-7356648DEE77}</Project>
       <Name>Symbiote.Wcf</Name>
     </ProjectReference>

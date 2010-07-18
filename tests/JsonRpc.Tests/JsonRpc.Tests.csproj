@@ -8,8 +8,8 @@
     <ProjectGuid>{14E7F1FE-C49A-40E1-A70D-A93CEBB3A201}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Restfully.Tests</RootNamespace>
-    <AssemblyName>Restfully.Tests</AssemblyName>
+    <RootNamespace>JsonRpc.Tests</RootNamespace>
+    <AssemblyName>JsonRpc.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -81,9 +81,13 @@
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Restfully\Symbiote.JsonRpc.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.JsonRpc.Host\Symbiote.JsonRpc.Host.csproj">
+      <Project>{E90CEDFE-959F-44E8-A9CA-E22A60A9AE10}</Project>
+      <Name>Symbiote.JsonRpc.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.JsonRpc.Client\Symbiote.JsonRpc.Client.csproj">
       <Project>{5A02B843-4047-4885-8839-FE9E4A9EBFE1}</Project>
-      <Name>Symbiote.JsonRpc</Name>
+      <Name>Symbiote.JsonRpc.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
