@@ -31,6 +31,8 @@ namespace Symbiote.StructureMap
 
         public object GetInstance(Type serviceType)
         {
+            if (serviceType.IsConcrete())
+                return ObjectFactory.GetInstance(serviceType);
             return ObjectFactory.TryGetInstance(serviceType);
         }
 
@@ -46,6 +48,8 @@ namespace Symbiote.StructureMap
 
         public TService GetInstance<TService>()
         {
+            if (typeof(TService).IsConcrete())
+                return ObjectFactory.GetInstance<TService>();
             return ObjectFactory.TryGetInstance<TService>();
         }
 
