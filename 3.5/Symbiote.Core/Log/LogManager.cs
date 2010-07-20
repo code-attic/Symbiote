@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Symbiote.Core.Log.Impl;
-using StructureMap;
 
 namespace Symbiote.Core.Log
 {
@@ -43,7 +42,7 @@ namespace Symbiote.Core.Log
         {
             try
             {
-                _provider = ObjectFactory.GetInstance<ILogProvider>();
+                _provider = ServiceLocator.GetInstance<ILogProvider>();
             }
             catch (Exception e)
             {
