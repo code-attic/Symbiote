@@ -53,7 +53,12 @@
     <Reference Include="Newtonsoft.Json.Silverlight">
       <HintPath>..\..\..\lib\JSON.Net\Newtonsoft.Json.Silverlight.dll</HintPath>
     </Reference>
-    <Reference Include="System.Observable, Version=1.0.0.204, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.CoreEx">
+      <HintPath>..\..\..\lib\ReactiveExtensions\Silverlight\System.CoreEx.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Observable">
+      <HintPath>..\..\..\lib\ReactiveExtensions\Silverlight\System.Observable.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />

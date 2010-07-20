@@ -12,7 +12,11 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public void OnNext(Envelope message)
         {
-            dispatchers[message.MessageType].ForEach(x => x.Dispatch(message));
+            var dispatcherList = dispatchers[message.MessageType];
+            if (dispatcherList != null)
+            {
+                dispatcherList.ForEach(x => x.Dispatch(message));
+            }
         }
 
         public void OnError(Exception error)
