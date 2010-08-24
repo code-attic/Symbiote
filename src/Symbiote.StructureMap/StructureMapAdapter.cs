@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using StructureMap;
 using StructureMap.Pipeline;
+using StructureMap.TypeRules;
 using Symbiote.Core.DI;
 
 namespace Symbiote.StructureMap
@@ -24,6 +25,20 @@ namespace Symbiote.StructureMap
             return ObjectFactory.Model.DefaultTypeFor<T>();
         }
 
+        public IEnumerable<Type> GetTypesRegisteredFor<T>()
+        {
+            return ObjectFactory
+                .Container
+                .Model
+                .PluginTypes
+                .Where(x => x.PluginType.Equals(typeof(T)))
+                .SelectMany(x => x.Instances)
+                .Select(x =>
+                            {
+                                return x.ConcreteType;
+                            });
+        }
+
         public bool HasPluginFor<T>()
         {
             return ObjectFactory.Container.Model.HasDefaultImplementationFor<T>();
@@ -31,7 +46,7 @@ namespace Symbiote.StructureMap
 
         public object GetInstance(Type serviceType)
         {
-            if (serviceType.IsConcrete())
+            if (ScannerExtensions.IsConcrete(serviceType))
                 return ObjectFactory.GetInstance(serviceType);
             return ObjectFactory.TryGetInstance(serviceType);
         }
@@ -48,7 +63,7 @@ namespace Symbiote.StructureMap
 
         public TService GetInstance<TService>()
         {
-            if (typeof(TService).IsConcrete())
+            if (ScannerExtensions.IsConcrete(typeof(TService)))
                 return ObjectFactory.GetInstance<TService>();
             return ObjectFactory.TryGetInstance<TService>();
         }

@@ -19,8 +19,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public bool Running { get; protected set; }
 
-        public long SleepFor { get; set; }
-
         public virtual void Dispatch(Envelope message)
         {
             observers.ForEach(x => x.OnNext(message));
@@ -84,7 +82,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             this.messageSerializer = messageSerializer;
             this.proxyFactory = proxyFactory;
             observers = new ConcurrentBag<IObserver<Envelope>>();
-            SleepFor = 1;
             dispatchers = new ConcurrentStack<IAsyncResult>();
         }
 

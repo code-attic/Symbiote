@@ -18,7 +18,7 @@ namespace SubscribeDemo
 
         public void Stop()
         {
-            "Stop was called. S that D."
+            "Stop was called."
                 .ToInfo<Subscriber>();
         }
 

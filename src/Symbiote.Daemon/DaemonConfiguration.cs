@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core.DI;
 using Topshelf.Configuration;
 using Topshelf.Configuration.Dsl;
 using Symbiote.Core.Extensions;
@@ -18,6 +19,7 @@ namespace Symbiote.Daemon
         private string _runAs = "";
         private string _password = "";
         private List<Type> _daemons = new List<Type>();
+        protected IDependencyAdapter dependencyAdapter { get; set; }
 
         public string[] CommandLineArgs
         {
@@ -74,11 +76,10 @@ namespace Symbiote.Daemon
 
         protected void ConfigureServices(IRunnerConfigurator config)
         {
-            var concreteTypes = ServiceLocator.Current.GetAllInstances<IDaemon>();
+            var daemonTypes = dependencyAdapter
+                .GetTypesRegisteredFor<IDaemon>();
 
-            if (_daemons.Count > 0)
-                concreteTypes = concreteTypes.Where(x => _daemons.Contains(x.GetType()));
-
+           
             config.SetServiceName(_name);
             config.SetDisplayName(_displayName);
             config.SetDescription(_description);
@@ -86,7 +87,7 @@ namespace Symbiote.Daemon
             if(!_asLocalSystem)
                 config.RunAs(_runAs, _password);
 
-            concreteTypes.ForEach(x => ConfigureService(config, x.GetType()));
+            daemonTypes.ForEach(x => ConfigureService(config, x));
         }
 
         protected void ConfigureService(IRunnerConfigurator config, Type serviceType)
@@ -100,8 +101,9 @@ namespace Symbiote.Daemon
             });
         }
 
-        public DaemonConfiguration()
+        public DaemonConfiguration(IDependencyAdapter dependencyAdapter)
         {
+            this.dependencyAdapter = dependencyAdapter;
         }
     }
 }

@@ -35,20 +35,24 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net">
-      <HintPath>..\..\lib\log4net.dll</HintPath>
+      <HintPath>..\..\lib\log4net\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Magnum">
+      <HintPath>..\..\lib\TopShelf\Magnum.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\..\lib\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\lib\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="RabbitMQ.Client">
-      <HintPath>..\..\lib\RabbitMQ.Client.dll</HintPath>
+      <HintPath>..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap.dll</HintPath>
+    <Reference Include="StructureMap, Version=2.5.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -58,7 +62,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Topshelf">
-      <HintPath>..\..\lib\Topshelf.dll</HintPath>
+      <HintPath>..\..\lib\TopShelf\Topshelf.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -78,7 +82,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
-      <Name>Symbiote.Jackalope %28Framework\Symbiote.Jackalope%29</Name>
+      <Name>Symbiote.Jackalope</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
       <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>

@@ -65,7 +65,7 @@
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Jackalope\Symbiote.Jackalope.csproj">
       <Project>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</Project>
-      <Name>Symbiote.Jackalope %28Framework\Symbiote.Jackalope%29</Name>
+      <Name>Symbiote.Jackalope</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.SocketMQ\Symbiote.SocketMQ.csproj">
       <Project>{04A32975-6423-4611-889C-615C6D6FE75B}</Project>

@@ -13,8 +13,11 @@ namespace SubscribeDemo
         public void Process(Message message, IMessageDelivery messageDelivery)
         {
             ++total;
-            //"Received: {0}. {1} total."
-            //    .ToInfo<Subscriber>(message.Body, ++total);
+            "Received: {0} - {2}. Latency = {1} ms"
+                .ToInfo<Subscriber>(
+                message.Body, 
+                DateTime.Now.Subtract(message.Created).TotalMilliseconds,
+                messageDelivery.Details.MessageId);
             
             
             messageDelivery.Acknowledge();

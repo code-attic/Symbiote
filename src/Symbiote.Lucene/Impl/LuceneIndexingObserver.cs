@@ -29,11 +29,6 @@ namespace Symbiote.Lucene.Impl
         public override void OnCompleted()
         {
             IndexWriter.AddDocument(document);
-            if(IndexWriter.NumRamDocs() > 0)
-            {
-                IndexWriter.Optimize();
-                IndexWriter.Commit();
-            }
         }
 
         public LuceneIndexingObserver()

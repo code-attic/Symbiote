@@ -52,6 +52,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="concurrency\with_index_feeder.cs" />
+    <Compile Include="concurrency\with_index_on_disk.cs" />
+    <Compile Include="concurrency\with_lucene.cs" />
     <Compile Include="IndexFeeder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_searching.cs" />

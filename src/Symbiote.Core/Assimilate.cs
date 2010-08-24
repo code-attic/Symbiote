@@ -87,6 +87,7 @@ namespace Symbiote.Core
                                                 });
                                             s.AddAllTypesOf<IContractResolverStrategy>();
                                         });
+                             x.For<IDependencyAdapter>().Use(adapter);
                          });
             return Assimilation;
         }

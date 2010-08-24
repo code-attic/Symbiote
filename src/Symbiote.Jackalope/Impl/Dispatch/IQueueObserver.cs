@@ -6,7 +6,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         IObservable<Envelope>, 
         IDisposable
     {
-        long SleepFor { get; set; }
         void Start(string queueName);
         void Stop();
     }

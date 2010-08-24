@@ -38,6 +38,9 @@
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\lib\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -55,6 +58,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
     <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
     <Compile Include="Json\when_serializing_string.cs" />

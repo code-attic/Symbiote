@@ -16,7 +16,6 @@ namespace SubscribeDemo
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .AddColorConsoleLogger<IBus>(x => 
                     x.Info()
                     .MessageLayout(m => m.Message().Newline())
@@ -24,6 +23,7 @@ namespace SubscribeDemo
                         .Text.IsHighIntensity().BackGround.IsRed().ForAllOutput())
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .Daemon(x => x.Arguments(args).DisplayName("Subscriber Demo").Description("A subscriber").Name("Subscriber"))
+                .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
                 .RunDaemon();
         }
     }

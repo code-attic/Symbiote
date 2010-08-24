@@ -45,7 +45,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             {
                 var handler = ServiceLocator.Current.GetInstance<IMessageHandler<TMessage>>();
                 handler.Process(envelope.Message as TMessage, envelope.MessageDelivery);
-                //return envelope.Message;
             }
             catch (Exception e)
             {

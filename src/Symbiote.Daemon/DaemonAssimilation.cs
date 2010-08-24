@@ -21,7 +21,7 @@ namespace Symbiote.Daemon
                                                         s.AddAllTypesOf<IDaemon>();
                                                     }));
             
-            var daemonConfiguration = new DaemonConfiguration();
+            var daemonConfiguration = ServiceLocator.Current.GetInstance<DaemonConfiguration>();
             config(daemonConfiguration);
             assimilate.Dependencies(x =>
                                         {
