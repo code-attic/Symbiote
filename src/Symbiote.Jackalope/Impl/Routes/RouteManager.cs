@@ -8,11 +8,12 @@ namespace Symbiote.Jackalope.Impl.Routes
     public class RouteManager :
         IRouteManager
     {
-        protected ConcurrentBag<IRouteMessage> routes { get; set; }
+        protected ConcurrentDictionary<Type, IRouteMessage> routes { get; set; }
 
         public IEnumerable<Tuple<string, string>> GetRoutesForMessage(object message)
         {
             return routes
+                .Values
                 .Where(x => x.AppliesToMessage(message))
                 .Select(x => Tuple.Create<string, string>(x.GetExchange(message), x.GetRoutingKey(message)));
         }
@@ -21,13 +22,13 @@ namespace Symbiote.Jackalope.Impl.Routes
         {
             var routeBuilder = new RouteBuilder<TMessage>();
             routeDefinition(routeBuilder);
-            routes.Add(routeBuilder.Route);
+            routes[typeof(TMessage)] = routeBuilder.Route;
             return this;
         }
 
         public RouteManager()
         {
-            routes = new ConcurrentBag<IRouteMessage>();
+            routes = new ConcurrentDictionary<Type,IRouteMessage>();
         }
     }
 }

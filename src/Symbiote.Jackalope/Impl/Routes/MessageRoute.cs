@@ -34,7 +34,6 @@ namespace Symbiote.Jackalope.Impl.Routes
             return RoutingKeyBuilder((TMessage)message);
         }
 
-
         public Func<TMessage, string> RoutingKeyBuilder { get; set; }
         public Func<TMessage, string> ExchangeStrategy { get; set; }
 
