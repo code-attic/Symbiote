@@ -16,7 +16,11 @@ namespace Symbiote.StructureMap
         {
             get
             {
-                return ObjectFactory.Container.Model.PluginTypes.Select(x => x.PluginType);
+                return ObjectFactory
+                    .Container
+                    .Model
+                    .PluginTypes
+                    .SelectMany(x => x.Instances.Select(i => i.ConcreteType));
             }
         }
 
@@ -37,6 +41,20 @@ namespace Symbiote.StructureMap
                             {
                                 return x.ConcreteType;
                             });
+        }
+
+        public IEnumerable<Type> GetTypesRegisteredFor(Type type)
+        {
+            return ObjectFactory
+                .Container
+                .Model
+                .PluginTypes
+                .Where(x => x.PluginType.Equals(type))
+                .SelectMany(x => x.Instances)
+                .Select(x =>
+                {
+                    return x.ConcreteType;
+                });
         }
 
         public bool HasPluginFor<T>()

@@ -93,10 +93,10 @@ namespace Symbiote.Core.DI
 
         protected void RegisterClosingTypes(Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
         {
-            var match =
-                filteredTypes.FirstOrDefault(t => t.Closes(type));
+            var matches =
+                filteredTypes.Where(t => t.Closes(type));
 
-            if (match != null)
+            foreach(var match in matches)
             {
                 if(type.IsInterface)
                 {

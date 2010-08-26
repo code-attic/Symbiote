@@ -25,11 +25,9 @@ namespace SubscribeDemo
         public Subscriber(IBus bus)
         {
             _bus = bus;
-            _bus.AddEndPoint(x => x
-                                      .Exchange("publisher", ExchangeType.fanout)
-                                      .QueueName("subscriber")
-                                      .Durable()
-                                      .PersistentDelivery());
+            _bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
+            _bus.AddEndPoint(x => x.QueueName("subscriber"));
+            _bus.BindQueue("subscriber", "publisher");
 
             _bus
                 .QueueStreams["subscriber"]
