@@ -119,8 +119,9 @@ namespace Symbiote.Jackalope
 
             var dispatcherPairs = handlers
                 .Select(h =>
-                             {
-                                 var messageType = h.GetGenericArguments()[0];
+                            {
+                                var handler = h.GetInterface("IMessageHandler`1");
+                                 var messageType = handler.GetGenericArguments()[0];
                                  var dispatchInterface = typeof (IDispatch<>).MakeGenericType(messageType);
                                  var dispatchType = typeof (Dispatcher<>).MakeGenericType(messageType);
                                  return Tuple.Create(dispatchInterface, dispatchType);
