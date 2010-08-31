@@ -21,7 +21,10 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public virtual void Dispatch(Envelope message)
         {
-            observers.ForEach(x => x.OnNext(message));
+            observers.ForEach(x =>
+                                  {
+                                      x.OnNext(message);
+                                  });
         }
 
         public virtual void SendCompletion()
@@ -40,21 +43,26 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         protected void Dequeue()
         {
             Action<Envelope> dispatch = this.Dispatch;
-            dispatchers.ToObservable().DoWhile(() => dispatchers.Count > 3).Subscribe(x => x.AsyncWaitHandle.WaitOne());
+            dispatchers.ToObservable().DoWhile(() => dispatchers.Count > 1).Subscribe(x => x.AsyncWaitHandle.WaitOne());
             while (Running)
             {
                 var proxy = proxyFactory.GetProxyForQueue(QueueName);
-                Envelope envelope = null;
+                bool valid;
                 do
                 {
-                    envelope = proxy.Dequeue();
+                    valid = false;
+                    var envelope = proxy.Dequeue();
                     if (envelope != null)
+                    {
                         dispatchers.Push(dispatch.BeginInvoke(envelope, DisposeProxy, proxy));
+                        //Dispatch(envelope);
+                        valid = true;
+                    }
                     else
                     {
                         Thread.Sleep(TimeSpan.FromMilliseconds(50));
                     }
-                } while (envelope == null && Running);
+                } while (!valid && Running);
             }
         }
 

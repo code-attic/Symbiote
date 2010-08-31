@@ -9,6 +9,9 @@ namespace Symbiote.Eidetic
     {
         Add,
         Replace,
-        Set
+        Set,
+        Append,
+        Prepend,
+        CheckAndSet
     }
 }

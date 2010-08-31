@@ -83,6 +83,7 @@
     <Compile Include="EideticAssimilation.cs" />
     <Compile Include="Extensions\EideticExtensions.cs" />
     <Compile Include="Extensions\IRemembrance.cs" />
+    <Compile Include="Impl\CacheLockManager.cs" />
     <Compile Include="Impl\EideticCacheProvider.cs" />
     <Compile Include="Impl\JsonRemembrance.cs" />
     <Compile Include="Impl\MemcachedAdapter.cs" />

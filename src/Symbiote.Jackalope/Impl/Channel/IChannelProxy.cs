@@ -9,6 +9,7 @@ namespace Symbiote.Jackalope.Impl.Channel
         void Acknowledge(ulong tag, bool multiple);
         QueueingBasicConsumer GetConsumer();
         string QueueName { get; }
+        bool Closed { get; }
         Envelope Dequeue();
         void Send<T>(T body, string routingKey)
             where T : class;

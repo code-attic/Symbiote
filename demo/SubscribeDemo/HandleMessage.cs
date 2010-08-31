@@ -15,12 +15,12 @@ namespace SubscribeDemo
             ++total;
             "Received: {0} - {2}. Latency = {1} ms"
                 .ToInfo<Subscriber>(
-                message.Body, 
+                message.Body,
                 DateTime.Now.Subtract(message.Created).TotalMilliseconds,
                 messageDelivery.Details.MessageId);
-            
-            
-            messageDelivery.Acknowledge();
+
+
+            //messageDelivery.Acknowledge();
         }
     }
 }

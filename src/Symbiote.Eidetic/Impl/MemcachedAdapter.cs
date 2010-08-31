@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
+using Enyim.Caching.Memcached;
 
 namespace Symbiote.Eidetic.Impl
 {
@@ -29,11 +30,6 @@ namespace Symbiote.Eidetic.Impl
             _client.Dispose();
         }
 
-        public bool Remove(string key)
-        {
-            return _client.Remove(key);
-        }
-
         public object Get(string key)
         {
             return _client.Get(key);
@@ -44,24 +40,29 @@ namespace Symbiote.Eidetic.Impl
             return _client.Get<T>(key);
         }
 
-        public long Increment(string key, uint amount)
+        public bool TryGet(string key, out object value)
         {
-            return _client.Increment(key, amount);
+            return _client.TryGet(key, out value);
         }
 
-        public long Decrement(string key, uint amount)
+        public CasResult<object> GetWithCas(string key)
         {
-            return _client.Decrement(key, amount);
+            return _client.GetWithCas(key);
+        }
+
+        public CasResult<T> GetWithCas<T>(string key)
+        {
+            return _client.GetWithCas<T>(key);
+        }
+
+        public bool TryGetWithCas(string key, out CasResult<object> value)
+        {
+            return _client.TryGetWithCas(key, out value);
         }
 
         public bool Store(StoreMode mode, string key, object value)
         {
             return _client.Store(_modeLookup[mode], key, value);
-        }
-
-        public bool Store(StoreMode mode, string key, byte[] value, int offset, int length)
-        {
-            return _client.Store(_modeLookup[mode], key, value, offset, length);
         }
 
         public bool Store(StoreMode mode, string key, object value, TimeSpan validFor)
@@ -74,54 +75,104 @@ namespace Symbiote.Eidetic.Impl
             return _client.Store(_modeLookup[mode], key, value, expiresAt);
         }
 
-        public bool Store(StoreMode mode, string key, byte[] value, int offset, int length, TimeSpan validFor)
+        public CasResult<bool> CheckAndSet(StoreMode mode, string key, object value)
         {
-            return _client.Store(_modeLookup[mode], key, value, offset, length, validFor);
+            return _client.Cas(_modeLookup[mode], key, value);
         }
 
-        public bool Store(StoreMode mode, string key, byte[] value, int offset, int length, DateTime expiresAt)
+        public CasResult<bool> CheckAndSet(StoreMode mode, string key, object value, ulong cas)
         {
-            return _client.Store(_modeLookup[mode], key, value, offset, length, expiresAt);
+            return _client.Cas(_modeLookup[mode], key, value, cas);
         }
 
-        public bool Append(string key, byte[] data)
+        public CasResult<bool> CheckAndSet(StoreMode mode, string key, object value, TimeSpan validFor, ulong cas)
+        {
+            return _client.Cas(_modeLookup[mode], key, value, validFor, cas);
+        }
+
+        public CasResult<bool> CheckAndSet(StoreMode mode, string key, object value, DateTime expiresAt, ulong cas)
+        {
+            return _client.Cas(_modeLookup[mode], key, value, expiresAt, cas);
+        }
+
+        public ulong Increment(string key, ulong defaultValue, ulong delta)
+        {
+            return _client.Increment(key, defaultValue, delta);
+        }
+
+        public ulong Increment(string key, ulong defaultValue, ulong delta, TimeSpan validFor)
+        {
+            return _client.Increment(key, defaultValue, delta, validFor);
+        }
+
+        public ulong Increment(string key, ulong defaultValue, ulong delta, DateTime expiresAt)
+        {
+            return _client.Increment(key, defaultValue, delta, expiresAt);
+        }
+
+        public CasResult<ulong> Increment(string key, ulong defaultValue, ulong delta, ulong cas)
+        {
+            return _client.Increment(key, defaultValue, delta, cas);
+        }
+
+        public CasResult<ulong> Increment(string key, ulong defaultValue, ulong delta, TimeSpan validFor, ulong cas)
+        {
+            return _client.Increment(key, defaultValue, delta, validFor, cas);
+        }
+
+        public CasResult<ulong> Increment(string key, ulong defaultValue, ulong delta, DateTime expiresAt, ulong cas)
+        {
+            return _client.Increment(key, defaultValue, delta, expiresAt, cas);
+        }
+
+        public ulong Decrement(string key, ulong defaultValue, ulong delta)
+        {
+            return _client.Decrement(key, defaultValue, delta);
+        }
+
+        public ulong Decrement(string key, ulong defaultValue, ulong delta, TimeSpan validFor)
+        {
+            return _client.Decrement(key, defaultValue, delta, validFor);
+        }
+
+        public ulong Decrement(string key, ulong defaultValue, ulong delta, DateTime expiresAt)
+        {
+            return _client.Decrement(key, defaultValue, delta, expiresAt);
+        }
+
+        public CasResult<ulong> Decrement(string key, ulong defaultValue, ulong delta, ulong cas)
+        {
+            return _client.Decrement(key, defaultValue, delta, cas);
+        }
+
+        public CasResult<ulong> Decrement(string key, ulong defaultValue, ulong delta, TimeSpan validFor, ulong cas)
+        {
+            return _client.Decrement(key, defaultValue, delta, validFor, cas);
+        }
+
+        public CasResult<ulong> Decrement(string key, ulong defaultValue, ulong delta, DateTime expiresAt, ulong cas)
+        {
+            return _client.Decrement(key, defaultValue, delta, expiresAt, cas);
+        }
+
+        public bool Append(string key, ArraySegment<byte> data)
         {
             return _client.Append(key, data);
         }
 
-        public bool Prepend(string key, byte[] data)
+        public bool Prepend(string key, ArraySegment<byte> data)
         {
             return _client.Prepend(key, data);
         }
 
-        public bool CheckAndSet(string key, object value, ulong cas)
+        public CasResult<bool> Append(string key, ulong cas, ArraySegment<byte> data)
         {
-            return _client.CheckAndSet(key, value, cas);
+            return _client.Append(key, cas, data);
         }
 
-        public bool CheckAndSet(string key, byte[] value, int offset, int length, ulong cas)
+        public CasResult<bool> Prepend(string key, ulong cas, ArraySegment<byte> data)
         {
-            return _client.CheckAndSet(key, value, offset, length, cas);
-        }
-
-        public bool CheckAndSet(string key, object value, ulong cas, TimeSpan validFor)
-        {
-            return _client.CheckAndSet(key, value, cas, validFor);
-        }
-
-        public bool CheckAndSet(string key, object value, ulong cas, DateTime expiresAt)
-        {
-            return _client.CheckAndSet(key, value, cas, expiresAt);
-        }
-
-        public bool CheckAndSet(string key, byte[] value, int offset, int length, ulong cas, TimeSpan validFor)
-        {
-            return _client.CheckAndSet(key, value, offset, length, cas, validFor);
-        }
-
-        public bool CheckAndSet(string key, byte[] value, int offset, int length, ulong cas, DateTime expiresAt)
-        {
-            return _client.CheckAndSet(key, value, offset, length, cas, expiresAt);
+            return _client.Prepend(key, cas, data);
         }
 
         public void FlushAll()
@@ -129,14 +180,29 @@ namespace Symbiote.Eidetic.Impl
             _client.FlushAll();
         }
 
+        public ServerStats Stats()
+        {
+            return _client.Stats();
+        }
+
+        public bool Remove(string key)
+        {
+            return _client.Remove(key);
+        }
+
         public IDictionary<string, object> Get(IEnumerable<string> keys)
         {
             return _client.Get(keys);
         }
 
-        public IDictionary<string, object> Get(IEnumerable<string> keys, out IDictionary<string, ulong> casValues)
+        public IDictionary<string, CasResult<object>> GetWithCas(IEnumerable<string> keys)
         {
-            return _client.Get(keys, out casValues);
+            return _client.GetWithCas(keys);
+        }
+
+        public IDictionary<string, T> PerformMultiGet<T>(IEnumerable<string> keys, Func<IMultiGetOperation, KeyValuePair<string, CacheItem>, T> collector)
+        {
+            return _client.PerformMultiGet(keys, collector);
         }
     }
 }

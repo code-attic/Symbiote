@@ -15,7 +15,11 @@ namespace Symbiote.Jackalope.Impl.Channel
         private IMessageSerializer _messageSerializer;
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
-        
+        private bool _closed;
+
+        private const string CONTENT_TYPE = "text/plain";
+        private const string AMQP_08 = "AMQP_0_8";
+
         public IAmqpEndpointConfiguration EndpointConfiguration
         {
             get { return _configuration; }
@@ -31,6 +35,11 @@ namespace Symbiote.Jackalope.Impl.Channel
                 }
                 return _channel;
             }
+        }
+
+        public bool Closed
+        {
+            get { return _closed; }
         }
 
         public string QueueName
@@ -49,7 +58,8 @@ namespace Symbiote.Jackalope.Impl.Channel
 
         public void Acknowledge(ulong tag, bool multiple)
         {
-            _channel.BasicAck(tag, multiple);
+            Channel.BasicAck(tag, multiple);
+            Close();
         }
 
         public virtual Envelope Dequeue()
@@ -61,6 +71,7 @@ namespace Symbiote.Jackalope.Impl.Channel
                 if (result != null)
                 {
                     var message = Serializer.Deserialize(result.Body);
+                    SetMessageCorrelation(message, result);
                     return Envelope.Create(message, this, result);
                 }
             }
@@ -85,10 +96,9 @@ namespace Symbiote.Jackalope.Impl.Channel
         {
             if (body == default(T))
                 return;
-
-            var contentType = "text/plain";
             var stream = Serializer.Serialize(body);
-            IBasicProperties properties = CreatePublishingProperties(contentType);
+            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
+            GetMessageCorrelation(body, properties);
             properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
             Channel.BasicPublish(_configuration.ExchangeName, routingKey, properties, stream);
         }
@@ -97,10 +107,9 @@ namespace Symbiote.Jackalope.Impl.Channel
         {
             if (body == default(T))
                 return;
-
-            var contentType = "text/plain";
             var stream = Serializer.Serialize(body);
-            IBasicProperties properties = CreatePublishingProperties(contentType);
+            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
+            GetMessageCorrelation(body, properties);
             properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
             Channel.BasicPublish(_configuration.ExchangeName, routingKey, mandatory, immediate, properties, stream);
         }
@@ -108,16 +117,16 @@ namespace Symbiote.Jackalope.Impl.Channel
         public void Reject(ulong tag, bool requeue)
         {
             //This call is currently unimplemented for AMQP 0.8
-            if(_protocol != "AMQP_0_8")
+            if(_protocol != AMQP_08)
                 Channel.BasicReject(tag, requeue);
-            Channel.Dispose();
+            Close();
         }
 
         public void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
             where T : class
         {
             //This call is currently unimplemented for AMQP 0.8
-            if (_protocol != "AMQP_0_8")
+            if (_protocol != AMQP_08)
             {
                 var stream = Serializer.Serialize(response);
                 _channel.BasicPublish(address, properties, stream);
@@ -191,6 +200,7 @@ namespace Symbiote.Jackalope.Impl.Channel
 
         protected void Close()
         {
+            _closed = true;
             if (_channel != null)
             {
                 _channel.BasicReturn -= new BasicReturnEventHandler(_onReturn);

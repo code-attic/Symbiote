@@ -112,7 +112,11 @@
     <Compile Include="Reflection\Reflector.cs" />
     <Compile Include="DI\IDependencyContainer.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
+    <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />
+    <Compile Include="Utility\ILockManager.cs" />
+    <Compile Include="Utility\NullLockManager.cs" />
+    <Compile Include="Utility\SpinLockManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

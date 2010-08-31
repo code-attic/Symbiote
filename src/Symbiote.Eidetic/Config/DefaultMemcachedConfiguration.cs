@@ -47,14 +47,6 @@ namespace Symbiote.Eidetic.Config
             var section = 
                 ConfigurationManager.GetSection("memcached") as IMemcachedConfig ?? new MemcachedDefaults();
 
-            if (section == null)
-            {
-                SocketPool.MinPoolSize = 10;
-                SocketPool.MaxPoolSize = 100;
-                SocketPool.ConnectionTimeout = new TimeSpan(0, 0, 10);
-                SocketPool.DeadTimeout = new TimeSpan(0, 0, 30);
-            }
-
             MinPoolSize = section.MinPoolSize;
             MaxPoolSize = section.MaxPoolSize;
             TimeOut = TimeSpan.FromSeconds(section.Timeout);
@@ -78,8 +70,8 @@ namespace Symbiote.Eidetic.Config
         public DefaultMemcachedConfiguration()
         {
             NodeLocator = typeof(DefaultNodeLocator);
-            KeyTransformer = typeof(Base64KeyTransformer);
-            Transcoder = typeof(DefaultTranscoder);
+            KeyTransformer = new Base64KeyTransformer();
+            Transcoder = new DefaultTranscoder();
             Initialize();
         }
     }

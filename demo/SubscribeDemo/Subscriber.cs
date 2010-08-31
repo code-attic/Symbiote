@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Jackalope;
@@ -31,8 +32,12 @@ namespace SubscribeDemo
 
             _bus
                 .QueueStreams["subscriber"]
+                .Do(x => x.MessageDelivery.Acknowledge())
                 .BufferWithTime(TimeSpan.FromSeconds(1))
-                .Subscribe(x => "Processed {0} messages in 1 second".ToInfo<Subscriber>(x.Count));
+                .Subscribe(x =>
+                               {
+                                   "Processed {0} messages in 1 second".ToInfo<Subscriber>(x.Count);  
+                               });
         }
     }
 }

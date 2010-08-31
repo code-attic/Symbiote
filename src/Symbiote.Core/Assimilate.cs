@@ -8,6 +8,7 @@ using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Core
 {
@@ -68,6 +69,7 @@ namespace Symbiote.Core
                              x.For<ILogProvider>().Use<NullLogProvider>();
                              x.For<ILogger>().Use<NullLogger>();
                              x.For(typeof (ILogger<>)).Add(typeof (ProxyLogger<>));
+                             x.For<ILockManager>().Use<NullLockManager>();
                              x.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
                              x.Scan(s =>
                                         {
