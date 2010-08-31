@@ -166,8 +166,20 @@
     <Compile Include="..\..\Symbiote.Core\Reflection\Reflector.cs">
       <Link>Reflection\Reflector.cs</Link>
     </Compile>
+    <Compile Include="..\..\Symbiote.Core\Utility\DistributedLock.cs">
+      <Link>Utility\DistributedLock.cs</Link>
+    </Compile>
     <Compile Include="..\..\Symbiote.Core\Utility\HierarchyVisitor.cs">
       <Link>Utility\HierarchyVisitor.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Symbiote.Core\Utility\ILockManager.cs">
+      <Link>Utility\ILockManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Symbiote.Core\Utility\NullLockManager.cs">
+      <Link>Utility\NullLockManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\Symbiote.Core\Utility\SpinLockManager.cs">
+      <Link>Utility\SpinLockManager.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
