@@ -20,14 +20,14 @@ namespace Symbiote.Eidetic.Impl
                 {StoreMode.Set, Enyim.Caching.Memcached.StoreMode.Set},
             };
 
-        public MemcachedAdapter(IMemcachedClientConfiguration configuration)
+        public MemcachedAdapter(MemcachedClient client)
         {
-            _client = new MemcachedClient(configuration);
+            _client = client;
         }
 
         public void Dispose()
         {
-            _client.Dispose();
+            
         }
 
         public object Get(string key)

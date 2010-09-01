@@ -15,13 +15,26 @@ namespace Symbiote.Eidetic.Impl
 
         protected override bool Lock<T>(T lockId, Guid check)
         {
-            bool stored = Cache.Store(StoreMode.Add, FORMAT.AsFormat(lockId), check, TimeSpan.FromMinutes(1));
+            bool stored = false;
+            try
+            {
+                stored = Cache.Store(StoreMode.Add, FORMAT.AsFormat(lockId), check, TimeSpan.FromMinutes(1));
+            }
+            catch
+            {
+            }
             return stored;
         }
 
         protected override void Release<T>(T lockId)
         {
-            Cache.Remove(FORMAT.AsFormat(lockId));
+            try
+            {
+                Cache.Remove(FORMAT.AsFormat(lockId));
+            }
+            catch
+            {
+            }
         }
 
         public CacheLockManager(IRemember cache)
