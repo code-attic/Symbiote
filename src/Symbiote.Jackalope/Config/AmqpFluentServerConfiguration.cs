@@ -46,6 +46,11 @@ namespace Symbiote.Jackalope.Config
             return this;
         }
 
+        public AmqpFluentServerConfiguration AMQP091()
+        {
+            Server.Protocol = "AMQP_0_9_1";
+            return this;
+        }
 
         public AmqpFluentServerConfiguration()
         {

@@ -19,8 +19,7 @@ namespace SubscribeDemo
                 DateTime.Now.Subtract(message.Created).TotalMilliseconds,
                 messageDelivery.Details.MessageId);
 
-
-            //messageDelivery.Acknowledge();
+            messageDelivery.Acknowledge();
         }
     }
 }

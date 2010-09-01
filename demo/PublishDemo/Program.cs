@@ -22,7 +22,7 @@ namespace PublishDemo
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Jackalope(x => x.AddServer(s => s.AMQP08().Address("localhost")))
+                .Jackalope(x => x.AddServer(s => s.AMQP091().Address("localhost")))
                 .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .Dependencies(x => x.For<Publisher>().Use<Publisher>());
