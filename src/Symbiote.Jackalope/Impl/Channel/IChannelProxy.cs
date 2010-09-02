@@ -1,13 +1,16 @@
 using System;
 using RabbitMQ.Client;
+using Symbiote.Jackalope.Impl.Serialization;
 
 namespace Symbiote.Jackalope.Impl.Channel
 {
     public interface IChannelProxy : IDisposable
     {
         IModel Channel { get; }
+        IMessageSerializer Serializer { get; }
         void Acknowledge(ulong tag, bool multiple);
         QueueingBasicConsumer GetConsumer();
+        void InitConsumer(IBasicConsumer consumer);
         string QueueName { get; }
         bool Closed { get; }
         Envelope Dequeue();

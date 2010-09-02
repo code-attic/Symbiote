@@ -13,6 +13,7 @@ namespace Symbiote.Jackalope.Impl
         private IChannelProxyFactory _factory;
         private string _exchange = "";
         private ulong _deliveryTag;
+        private string _consumerTag = "";
         private bool _isReplyToPresent;
         private IBasicProperties _properties;
         private bool _redelivered;
@@ -99,6 +100,18 @@ namespace Symbiote.Jackalope.Impl
             _properties = result.BasicProperties;
             _redelivered = result.Redelivered;
             _key = result.RoutingKey;
+        }
+
+        public MessageDelivery(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties)
+        {
+            _proxy = proxy;
+            _exchange = exchange;
+            _deliveryTag = deliveryTag;
+            _redelivered = redelivered;
+            _consumerTag = consumerTag;
+            _key = routingKey;
+            _isReplyToPresent = properties.IsReplyToPresent();
+            _properties = properties;
         }
 
         public void Dispose()

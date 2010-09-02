@@ -53,6 +53,17 @@ namespace Symbiote.Jackalope
                        };
         }
 
+        public static Envelope Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, object body)
+        {
+            return new Envelope()
+                       {
+                           Message = body,
+                           MessageDelivery =
+                               new MessageDelivery(proxy, consumerTag, deliveryTag, redelivered, exchange, routingKey,
+                                                   properties)
+                       };
+        }
+
         public void Dispose()
         {
             (MessageDelivery as IDisposable).Dispose();

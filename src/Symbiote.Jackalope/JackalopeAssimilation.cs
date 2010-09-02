@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using Microsoft.Practices.ServiceLocation;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Symbiote.Core;
@@ -26,6 +24,7 @@ namespace Symbiote.Jackalope
         public static IAssimilate Jackalope(this IAssimilate assimilate)
         {
             ConfigureStandardDependencies();
+
             assimilate
                 .Dependencies(x => x.For<IAmqpConfigurationProvider>()
                                        .Use<AmqpConfiguration>());
@@ -42,6 +41,7 @@ namespace Symbiote.Jackalope
             var configuration = new AmqpFluentConfiguration();
             configure(configuration);
             ConfigureStandardDependencies();
+
             assimilate
                 .Dependencies(x => x.For<IAmqpConfigurationProvider>()
                                        .Use(configuration));
@@ -49,6 +49,10 @@ namespace Symbiote.Jackalope
                 .Dependencies(x => x.For<IConnectionManager>()
                                        .Use<ConnectionManager>()
                                        .AsSingleton());
+
+            if (configuration.Servers[0].Protocol == "AMQP_0_9_1")
+                assimilate.Dependencies(x => x.For<IQueueObserver>().Use<ObservableConsumer>());
+
             return assimilate;
         }
 

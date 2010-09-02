@@ -32,11 +32,12 @@ namespace SubscribeDemo
 
             _bus
                 .QueueStreams["subscriber"]
-                .Do(x => x.MessageDelivery.Acknowledge())
+                .Do(x =>
+                    x.MessageDelivery.Acknowledge())
                 .BufferWithTime(TimeSpan.FromSeconds(1))
                 .Subscribe(x =>
                                {
-                                   "Processed {0} messages in 1 second".ToInfo<Subscriber>(x.Count);  
+                                   "Processed {0} messages in 1 second".ToInfo<Subscriber>(x.Count);
                                });
         }
     }

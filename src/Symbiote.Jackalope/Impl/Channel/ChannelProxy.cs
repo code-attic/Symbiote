@@ -59,7 +59,6 @@ namespace Symbiote.Jackalope.Impl.Channel
         public void Acknowledge(ulong tag, bool multiple)
         {
             Channel.BasicAck(tag, multiple);
-            Close();
         }
 
         public virtual Envelope Dequeue()
@@ -117,9 +116,8 @@ namespace Symbiote.Jackalope.Impl.Channel
         public void Reject(ulong tag, bool requeue)
         {
             //This call is currently unimplemented for AMQP 0.8
-            if(_protocol != AMQP_08)
+            if (_protocol != AMQP_08)
                 Channel.BasicReject(tag, requeue);
-            Close();
         }
 
         public void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
@@ -144,7 +142,7 @@ namespace Symbiote.Jackalope.Impl.Channel
         protected void GetMessageCorrelation<T>(T body, IBasicProperties properties)
         {
             var correlated = body as ICorrelate;
-            if(correlated != null)
+            if (correlated != null)
             {
                 properties.CorrelationId = correlated.CorrelationId;
             }
@@ -153,7 +151,7 @@ namespace Symbiote.Jackalope.Impl.Channel
         protected void SetMessageCorrelation(object message, BasicGetResult result)
         {
             var correlated = message as ICorrelate;
-            if(correlated != null)
+            if (correlated != null)
             {
                 correlated.CorrelationId = result.BasicProperties.CorrelationId;
             }
@@ -171,6 +169,15 @@ namespace Symbiote.Jackalope.Impl.Channel
             return consumer;
         }
 
+        public void InitConsumer(IBasicConsumer consumer)
+        {
+            _channel.BasicConsume(
+                _configuration.QueueName,
+                _configuration.NoAck,
+                null,
+                consumer);
+        }
+
         public ChannelProxy(IModel channel, string protocol, IAmqpEndpointConfiguration endpointConfiguration)
         {
             _channel = channel;
@@ -185,8 +192,8 @@ namespace Symbiote.Jackalope.Impl.Channel
         {
             "A channel proxy shut down. \r\n\t Class {0} \r\n\t Method {1} \r\n\t Cause {2} \r\n\t ReplyCode {3} : {4}"
                 .ToInfo<IBus>(
-                    reason.ClassId, 
-                    reason.MethodId, 
+                    reason.ClassId,
+                    reason.MethodId,
                     reason.Cause,
                     reason.ReplyCode,
                     reason.ReplyText

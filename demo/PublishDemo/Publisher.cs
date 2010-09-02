@@ -30,7 +30,8 @@ namespace PublishDemo
             _bus.AddEndPoint(x => x.Exchange("secondary", ExchangeType.fanout));
             _bus.DefineRouteFor<Message>(x => x.SendTo("publisher"));
             var observable = Observable.Generate(0, x => x < 500000, x => new Message("Message"), x => x + 1);
-            _bus.AutoRouteFromSource(observable);
+            observable.ToEnumerable().AsParallel().ForAll(_bus.Send);
+            //_bus.AutoRouteFromSource(observable);
             send = bus.Send;
         }
     }

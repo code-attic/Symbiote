@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Serialization;
@@ -13,7 +15,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         protected ConcurrentBag<IObserver<Envelope>> observers { get; set; }
         protected IMessageSerializer messageSerializer { get; set; }
         protected IChannelProxyFactory proxyFactory { get; set; }
-        protected ConcurrentStack<IAsyncResult> dispatchers { get; set; }
+        protected ConcurrentQueue<IAsyncResult> dispatchers { get; set; }
 
         public string QueueName { get; protected set; }
 
@@ -43,7 +45,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         protected void Dequeue()
         {
             Action<Envelope> dispatch = this.Dispatch;
-            dispatchers.ToObservable().DoWhile(() => dispatchers.Count > 3).Subscribe(x => x.AsyncWaitHandle.WaitOne());
             while (Running)
             {
                 var proxy = proxyFactory.GetProxyForQueue(QueueName);
@@ -54,8 +55,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
                     var envelope = proxy.Dequeue();
                     if (envelope != null)
                     {
-                        dispatchers.Push(dispatch.BeginInvoke(envelope, DisposeProxy, proxy));
-                        //Dispatch(envelope);
+                        dispatchers.Enqueue(dispatch.BeginInvoke(envelope, DisposeProxy, proxy));
                         valid = true;
                     }
                     else
@@ -90,7 +90,10 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             this.messageSerializer = messageSerializer;
             this.proxyFactory = proxyFactory;
             observers = new ConcurrentBag<IObserver<Envelope>>();
-            dispatchers = new ConcurrentStack<IAsyncResult>();
+            dispatchers = new ConcurrentQueue<IAsyncResult>();
+            var observable = dispatchers.ToObservable();
+
+            observable.DoWhile(() => dispatchers.Count > 3).Subscribe(x => x.AsyncWaitHandle.WaitOne());
         }
 
         public void Dispose()

@@ -93,6 +93,7 @@
     <Compile Include="Impl\Dispatch\DispatchingObserver.cs" />
     <Compile Include="Impl\Dispatch\IDispatchMessages.cs" />
     <Compile Include="Impl\Dispatch\IQueueObserver.cs" />
+    <Compile Include="Impl\Dispatch\ObservableConsumer.cs" />
     <Compile Include="Impl\Dispatch\ObservableQueue.cs" />
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
