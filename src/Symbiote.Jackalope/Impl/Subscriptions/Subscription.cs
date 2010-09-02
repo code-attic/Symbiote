@@ -23,7 +23,6 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
         public bool Started { get; private set; }
         public bool Stopping { get; private set; }
         public bool Stopped { get; private set; }
-
         
         public void Dispose()
         {
@@ -32,6 +31,7 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
 
         public void Start()
         {
+            Stopped = Stopping = false;
             if(!Started || !Starting)
             {
                 Starting = true;
@@ -43,6 +43,8 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
 
         public void Stop()
         {
+            Started = Starting = false;
+            _observer.OnShutdown -= OnObserverShutdown;
             Stopping = true;
             _observer.Stop();
             _observer = null;
@@ -56,6 +58,15 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
             _dispatcher = ServiceLocator.Current.GetInstance<IDispatchMessages>();
             _observer.Subscribe(_dispatcher);
             _observer.Start(QueueName);
+            _observer.OnShutdown += OnObserverShutdown;
+        }
+
+        protected void OnObserverShutdown(IQueueObserver observer)
+        {
+            if(!Stopping && !Stopped)
+            {
+                observer.Start(QueueName);
+            }
         }
     }
 }

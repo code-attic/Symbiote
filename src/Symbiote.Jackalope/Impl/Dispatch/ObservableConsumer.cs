@@ -19,13 +19,9 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         protected IMessageSerializer Serializer { get; set; }
         protected ConcurrentBag<IObserver<Envelope>> Observers { get; set; }
         protected IChannelProxyFactory ProxyFactory { get; set; }
-        protected ConcurrentQueue<IAsyncResult> Dispatchers { get; set; }
         protected IChannelProxy Proxy { get; set; }
-        protected Action<Envelope> DispatchCall { get; set; }
-
+        
         public string QueueName { get; protected set; }
-
-        public bool Running { get; protected set; }
 
         public virtual void Dispatch(Envelope message)
         {
@@ -40,26 +36,41 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             Observers.ForEach(x => x.OnCompleted());
         }
 
+        public event ObserverShutdown OnShutdown;
+
         public void Start(string queueName)
         {
             QueueName = queueName;
-            Running = true;
             Proxy = ProxyFactory.GetProxyForQueue(queueName);
-            this.Model = Proxy.Channel;
+            Model = Proxy.Channel;
             Proxy.InitConsumer(this);
         }
 
-        public override void  HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
+        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
         {
             var message = Serializer.Deserialize(body);
             var envelope = Envelope.Create(Proxy, consumerTag, deliveryTag, redelivered, exchange, routingKey,
                                            properties, message);
-            Dispatchers.Enqueue(DispatchCall.BeginInvoke(envelope, null, null));
+            Dispatch(envelope);
+        }
+
+        public override void HandleBasicCancelOk(string consumerTag)
+        {
+            Stop();
+        }
+
+        public override void HandleModelShutdown(IModel model, ShutdownEventArgs reason)
+        {
+            base.HandleModelShutdown(model, reason);
+            Stop();
+            if (OnShutdown != null)
+                OnShutdown(this);
         }
 
         public void Stop()
         {
-            Running = false;
+            OnCancel();
+            Proxy.Channel.BasicCancel(ConsumerTag);
             SendCompletion();
         }
 
@@ -75,11 +86,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             ProxyFactory = proxyFactory;
             Serializer = serializer;
             Observers = new ConcurrentBag<IObserver<Envelope>>();
-            Dispatchers = new ConcurrentQueue<IAsyncResult>();
-            DispatchCall = this.Dispatch;
-            var observable = Dispatchers.ToObservable();
-
-            observable.DoWhile(() => Dispatchers.Count > 3).Subscribe(x => x.AsyncWaitHandle.WaitOne());
         }
 
         public void Dispose()

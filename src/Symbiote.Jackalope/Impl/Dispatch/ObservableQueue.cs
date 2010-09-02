@@ -21,6 +21,8 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public bool Running { get; protected set; }
 
+        public event ObserverShutdown OnShutdown;
+
         public virtual void Dispatch(Envelope message)
         {
             observers.ForEach(x =>
