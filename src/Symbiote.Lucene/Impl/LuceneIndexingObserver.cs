@@ -28,7 +28,7 @@ namespace Symbiote.Lucene.Impl
 
         public override void OnCompleted()
         {
-            IndexWriter.AddDocument(document);
+            DocumentQueue.PushDocument(document);
         }
 
         public LuceneIndexingObserver()

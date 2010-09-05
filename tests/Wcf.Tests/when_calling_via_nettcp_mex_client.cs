@@ -14,7 +14,6 @@ namespace Wcf.Tests
                                      dateTime = DateTime.Now;
                                      newGuid = Guid.NewGuid();
                                      result = service.Call(x => x.TwoArgCall(dateTime, newGuid));
-                                     result = service.Call(x => x.TwoArgCall(dateTime, newGuid));
                                      watch.Stop();
                                      host.Stop();
                                  };

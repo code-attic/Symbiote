@@ -37,12 +37,6 @@ namespace Symbiote.Wcf.Server
             return this;
         }
 
-        public WcfServiceConfigurator<TContract> UseDefaults()
-        {
-            configuration.UseDefaults();
-            return this;
-        }
-
         public WcfServiceConfigurator()
         {
             configuration = new WcfServiceConfiguration<TContract>();

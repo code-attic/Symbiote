@@ -31,5 +31,10 @@ namespace Symbiote.Wcf.Server
             Timeout = 600;
             EnableHttpMetadataExchange = true;
         }
+
+        public WcfServiceConfiguration()
+        {
+            UseDefaults();
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace Symbiote.Lucene.Impl
         protected ConcurrentDictionary<string, Analyzer> queryAnalyzers;
         protected ConcurrentDictionary<string, Directory> indices;
         protected ConcurrentDictionary<string, IndexWriter> indexWriters;
+        protected ConcurrentDictionary<string, IDocumentQueue> documentQueues;
         
         public virtual Directory GetIndex(string indexName)
         {
@@ -71,17 +72,30 @@ namespace Symbiote.Lucene.Impl
                 var index = GetIndex(indexName);
                 var analyzer = GetIndexingAnalyzer(indexName);
                 writer = new IndexWriter(index, analyzer, true, IndexWriter.MaxFieldLength.UNLIMITED);
-                writer.SetRAMBufferSizeMB(512);
+                writer.SetRAMBufferSizeMB(configuration.MemoryBufferLimit);
+                writer.SetWriteLockTimeout(configuration.WriterLockTimeout);
                 writer.MaybeMerge();
                 indexWriters.TryAdd(indexName, writer);
             }
             return writer;
         }
 
+        public virtual IDocumentQueue GetDocumentQueue(string indexName)
+        {
+            IDocumentQueue documentQueue;
+            if (!documentQueues.TryGetValue(indexName, out documentQueue))
+            {
+                var writer = GetIndexWriter(indexName);
+                documentQueue = new DocumentQueue(writer);
+                documentQueues.TryAdd(indexName, documentQueue);
+            }
+            return documentQueue;
+        }
+
         public ILuceneIndexer GetIndexingObserverForIndex(string indexName)
         {
             var indexer = ServiceLocator.Current.GetInstance<BaseIndexingObserver>();
-            indexer.IndexWriter = GetIndexWriter(indexName);
+            indexer.DocumentQueue = GetDocumentQueue(indexName);
             return indexer;
         }
 
@@ -100,6 +114,7 @@ namespace Symbiote.Lucene.Impl
             indexingAnalyzers = new ConcurrentDictionary<string, Analyzer>();
             indices = new ConcurrentDictionary<string, Directory>();
             indexWriters = new ConcurrentDictionary<string, IndexWriter>();
+            documentQueues = new ConcurrentDictionary<string, IDocumentQueue>();
         }
 
         public void Dispose()
@@ -115,6 +130,8 @@ namespace Symbiote.Lucene.Impl
 
             indices.ForEach(x => x.Value.Close());
             indices.Clear();
+
+            documentQueues.Clear();
         }
     }
 }

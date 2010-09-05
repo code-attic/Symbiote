@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.ServiceModel;
 using Machine.Specifications;
 using Symbiote.Core;

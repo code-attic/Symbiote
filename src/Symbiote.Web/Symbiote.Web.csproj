@@ -59,6 +59,7 @@
     <Compile Include="Impl\SymbioteControllerFactory.cs" />
     <Compile Include="SymbioteApplicationConfigurator.cs" />
     <Compile Include="SymbioteMvcApplication.cs" />
+    <Compile Include="TypeList.cs" />
     <Compile Include="WebAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

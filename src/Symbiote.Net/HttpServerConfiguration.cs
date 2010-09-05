@@ -39,6 +39,7 @@ namespace Symbiote.Net
         {
             HostedUrls = new List<string>();
             RegisteredServices = new List<Tuple<Type, Type>>();
+            UseDefaults();
         }
     }
 }

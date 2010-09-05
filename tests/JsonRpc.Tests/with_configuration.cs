@@ -15,8 +15,8 @@ namespace JsonRpc.Tests
                                             serviceMock = new Mock<ITestService>();
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
-                                                .JsonRpcHost(x => x.UseDefaults().HostService<ITestService>())
-                                                .JsonRpcClient(x => x.Server(@"http://localhost:8420/").Timeout(9000))
+                                                .JsonRpcHost(x => x.AddPort(8281).HostService<ITestService>())
+                                                .JsonRpcClient(x => x.Server(@"http://localhost:8281").Timeout(300))
                                                 .Dependencies(x => x.For<ITestService>().Use(serviceMock.Object));
                                         };
     }

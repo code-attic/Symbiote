@@ -6,8 +6,8 @@ namespace Symbiote.JsonRpc.Host.Config
 {
     public interface IJsonRpcHostConfiguration
     {
-        IList<string> HostedUrls { get; set; }
-        int Port { get; set; }
+        List<string> HostedUrls { get; }
+        List<int> Ports { get; set; }
         AuthenticationSchemes AuthSchemes { get; set; }
         string DefaultService { get; set; }
         string DefaultAction { get; set; }

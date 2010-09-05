@@ -1,14 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using Symbiote.Core;
+using Symbiote.Core.Extensions;
+using System.Linq;
 
 namespace Symbiote.JsonRpc.Host.Config
 {
     public class JsonRpcHostConfiguration : IJsonRpcHostConfiguration
     {
+        protected List<string> Uris { get; set; }
+
         public AuthenticationSchemes AuthSchemes { get; set; }
-        public IList<string> HostedUrls { get; set; }
-        public int Port { get; set; }
+        public List<string> HostedUrls
+        { 
+            get
+            {
+                Uris = Uris ?? BuildUrls();
+                return Uris;
+            }
+        }
+        public List<int> Ports { get; set; }
         public bool UseHttps { get; set; }
         public string DefaultService { get; set; }
         public string DefaultAction { get; set; }
@@ -19,16 +31,25 @@ namespace Symbiote.JsonRpc.Host.Config
         public void UseDefaults()
         {
             //set defaults
-            Port = 8420;
             SelfHosted = true;
             AuthSchemes = AuthenticationSchemes.Anonymous;
-            HostedUrls.Add(@"http://localhost:8420/");
+        }
+
+        public List<string> BuildUrls()
+        {
+            if(Ports.Count == 0)
+                throw new AssimilationException("JsonRpc Host can't start up without any assigned ports. Please us the AddPort call during configuration.");
+
+            return Ports.Select(x => @"{0}://localhost:{1}/"
+                .AsFormat(UseHttps ? "https" : "http", x))
+                .ToList();
         }
 
         public JsonRpcHostConfiguration()
         {
-            HostedUrls = new List<string>();
+            Ports = new List<int>();
             RegisteredServices = new List<Tuple<Type, Type>>();
+            UseDefaults();
         }
     }
 }

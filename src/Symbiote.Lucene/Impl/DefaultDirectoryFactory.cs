@@ -11,7 +11,7 @@ namespace Symbiote.Lucene.Impl
         {
             string indexDirectory = null;
             configuration.DirectoryPaths.TryGetValue(indexName, out indexDirectory);
-            indexDirectory = indexDirectory ?? System.IO.Path.Combine(configuration.DefaultIndexPath, indexName);
+            indexDirectory = indexDirectory ?? System.IO.Path.Combine(configuration.IndexPath, indexName);
             var directoryInfo = System.IO.Directory.CreateDirectory(indexDirectory);
             var qualifiedDirectoryPath = System.IO.Path.GetFullPath(directoryInfo.ToString());
 

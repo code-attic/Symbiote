@@ -14,7 +14,6 @@ namespace Wcf.Tests
                                         {
                                             wcfServerConfig = new WcfServerConfigurator(@"http://localhost:9000")
                                                 .AddService<TestService>(x => x
-                                                        .UseDefaults()
                                                         .Timeout(TimeSpan.FromSeconds(10))
                                                         .Binding(new WSHttpBinding(SecurityMode.None)));
                                             host = new WcfServiceHost(wcfServerConfig);

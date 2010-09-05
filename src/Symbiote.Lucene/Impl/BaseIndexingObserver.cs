@@ -7,7 +7,7 @@ namespace Symbiote.Lucene.Impl
     public abstract class BaseIndexingObserver : ILuceneIndexer
     {
         protected Document document { get; set; }
-        public IndexWriter IndexWriter { get; set; }
+        public IDocumentQueue DocumentQueue { get; set; }
 
         public abstract void OnNext(Tuple<string, string> value);
 

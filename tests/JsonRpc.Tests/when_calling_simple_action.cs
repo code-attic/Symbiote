@@ -22,6 +22,6 @@ namespace JsonRpc.Tests
                                  };
 
         private It should_call_service_method = () => serviceMock.VerifyAll();
-        private It should_take_less_than_half_a_second = () => stopwatch.ElapsedMilliseconds.ShouldBeLessThan(400);
+        private It should_take_less_than_half_a_second = () => stopwatch.ElapsedMilliseconds.ShouldBeLessThan(4);
     }
 }

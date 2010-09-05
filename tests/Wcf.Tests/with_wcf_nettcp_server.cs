@@ -14,7 +14,6 @@ namespace Wcf.Tests
                                             wcfServerConfig = new WcfServerConfigurator(@"net.tcp://localhost:8000")
                                                 .AddService<TestService>(x =>
                                                                              {
-                                                                                 x.UseDefaults();
                                                                                  x.Binding(new NetTcpBinding(SecurityMode.None));
                                                                                  x.MexAddress(@"http://localhost:8001");
                                                                              });

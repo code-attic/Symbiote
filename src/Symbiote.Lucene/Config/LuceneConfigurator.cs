@@ -4,8 +4,21 @@
     {
         protected ILuceneConfiguration configuration { get; set; }
 
-        public LuceneConfigurator UseDefaults()
+        public LuceneConfigurator RootIndexPath(string rootPath)
         {
+            configuration.IndexPath = rootPath;
+            return this;
+        }
+
+        public LuceneConfigurator LimitMemoryBuffer(int megabytes)
+        {
+            configuration.MemoryBufferLimit = megabytes;
+            return this;
+        }
+
+        public LuceneConfigurator WriterLockTimeout(long miliseconds)
+        {
+            configuration.WriterLockTimeout = miliseconds;
             return this;
         }
 

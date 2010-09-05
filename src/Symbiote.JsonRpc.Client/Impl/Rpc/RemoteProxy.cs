@@ -57,7 +57,7 @@ namespace Symbiote.JsonRpc.Client.Impl.Rpc
 
         protected string GetAddress(MethodCallExpression expression)
         {
-            return @"{0}\{1}\{2}".AsFormat(Configuration.ServerUrl, typeof(T).Name, expression.Method.Name);
+            return @"{0}/{1}/{2}".AsFormat(Configuration.ServerUrl, typeof(T).Name, expression.Method.Name);
         }
 
         public RemoteProxy(IJsonRpcClientConfiguration configuration)

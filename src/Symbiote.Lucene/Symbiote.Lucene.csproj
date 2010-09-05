@@ -63,12 +63,14 @@
     <Compile Include="Impl\CustomQueryParser.cs" />
     <Compile Include="Impl\DefaultAnalyzerFactory.cs" />
     <Compile Include="Impl\DefaultDirectoryFactory.cs" />
+    <Compile Include="Impl\DocumentQueue.cs" />
     <Compile Include="Impl\ExpressionTreeParser.cs" />
     <Compile Include="Impl\IAnalyzerFactory.cs" />
     <Compile Include="Impl\IDirectoryFactory.cs" />
     <Compile Include="ILuceneIndexer.cs" />
     <Compile Include="ILuceneSearchProvider.cs" />
     <Compile Include="ILuceneServiceFactory.cs" />
+    <Compile Include="Impl\IDocumentQueue.cs" />
     <Compile Include="LuceneAssimilation.cs" />
     <Compile Include="Config\LuceneConfiguration.cs" />
     <Compile Include="Config\ILuceneConfiguration.cs" />

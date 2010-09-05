@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using Machine.Specifications;
+using Symbiote.Wcf;
 
 namespace Wcf.Tests
 {
@@ -14,12 +16,11 @@ namespace Wcf.Tests
                                      dateTime = DateTime.Now;
                                      newGuid = Guid.NewGuid();
                                      result = service.Call(x => x.TwoArgCall(dateTime, newGuid));
-                                     result = service.Call(x => x.TwoArgCall(dateTime, newGuid));
                                      watch.Stop();
                                      host.Stop();
                                  };
 
-        private It should_run_in_time = () => watch.ElapsedMilliseconds.ShouldBeLessThan(800);
+        private It should_run_in_time = () => watch.ElapsedMilliseconds.ShouldBeLessThan(1);
         private It should_return_correct_results = () => result.datetime.ShouldEqual(dateTime);
     }
 }

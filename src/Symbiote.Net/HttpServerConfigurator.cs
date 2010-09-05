@@ -19,12 +19,6 @@ namespace Symbiote.Net
             return this;
         }
 
-        public HttpServerConfigurator UseDefaults()
-        {
-            _configuration.UseDefaults();
-            return this;
-        }
-
         public HttpServerConfigurator BaseUrl(string url)
         {
             _configuration.BaseUrl = url;

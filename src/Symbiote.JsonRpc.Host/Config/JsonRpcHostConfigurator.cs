@@ -7,15 +7,9 @@ namespace Symbiote.JsonRpc.Host.Config
     {
         private IJsonRpcHostConfiguration _configuration;
 
-        public JsonRpcHostConfigurator Port(int port)
+        public JsonRpcHostConfigurator AddPort(int port)
         {
-            _configuration.Port = port;
-            return this;
-        }
-
-        public JsonRpcHostConfigurator UseDefaults()
-        {
-            _configuration.UseDefaults();
+            _configuration.Ports.Add(port);
             return this;
         }
 
@@ -35,10 +29,11 @@ namespace Symbiote.JsonRpc.Host.Config
         {
             Assimilate.Dependencies(x => x.Scan(s =>
                                                     {
-                                                        //s.AssembliesFromApplicationBaseDirectory();
+                                                        s.AssembliesFromApplicationBaseDirectory();
                                                         s.TheCallingAssembly();
                                                         s.AddAllTypesOf<T>();
                                                     }));
+
             _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), Assimilate.Assimilation.DependencyAdapter.GetDefaultTypeFor<T>()));
             return this;
         }

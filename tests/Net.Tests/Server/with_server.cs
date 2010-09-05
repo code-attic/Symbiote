@@ -19,7 +19,7 @@ namespace Net.Tests.Server
                                         {
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
-                                                .HttpServer(x => x.UseDefaults().UseBasicAuth());
+                                                .HttpServer(x => x.UseBasicAuth());
                                         };
     }
 
