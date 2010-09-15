@@ -76,6 +76,12 @@
     <Compile Include="Reflection\POC\when_writing_dynamically.cs" />
     <Compile Include="Reflection\when_reading_dynamically.cs" />
     <Compile Include="Reflection\when_writing_dynamically.cs" />
+    <Compile Include="Utility\distributor\when_loading_tree.cs" />
+    <Compile Include="Utility\distributor\when_running_standards_test.cs" />
+    <Compile Include="Utility\distributor\when_testing_load_distribution.cs" />
+    <Compile Include="Utility\distributor\with_mod_wheel.cs" />
+    <Compile Include="Utility\distributor\with_simple_distributor_of_lists.cs" />
+    <Compile Include="Utility\distributor\with_value_list.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
@@ -87,9 +93,7 @@
       <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Utility\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

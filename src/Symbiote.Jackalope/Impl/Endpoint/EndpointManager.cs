@@ -43,6 +43,7 @@ namespace Symbiote.Jackalope.Impl.Endpoint
         public void BindQueue(string exchangeName, string queueName, params string[] routingKeys)
         {
             var channel = _connectionManager.GetConnection().CreateModel();
+
             BindQueue(channel, exchangeName, queueName, routingKeys);
         }
 
