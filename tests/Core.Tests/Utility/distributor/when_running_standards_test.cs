@@ -1,5 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core.Hashing;
+using Symbiote.Core.Hashing.Impl;
 
 namespace Core.Tests.Utility
 {

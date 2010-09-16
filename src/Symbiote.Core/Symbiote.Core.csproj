@@ -83,18 +83,22 @@
     <Compile Include="DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Hashing\Impl\AvlTreeBase.cs" />
     <Compile Include="Hashing\Distributor.cs" />
-    <Compile Include="Hashing\HashedRedBlackLeaf.cs" />
-    <Compile Include="Hashing\HashedRedBlackTree.cs" />
+    <Compile Include="Hashing\Impl\HashedAvlLeaf.cs" />
+    <Compile Include="Hashing\Impl\HashedAvlTree.cs" />
+    <Compile Include="Hashing\Impl\HashedRedBlackLeaf.cs" />
+    <Compile Include="Hashing\Impl\HashedRedBlackTree.cs" />
     <Compile Include="Hashing\HashMap.cs" />
+    <Compile Include="Hashing\Impl\IAvlLeaf.cs" />
     <Compile Include="Hashing\IHashingProvider.cs" />
-    <Compile Include="Hashing\IRedBlackLeaf.cs" />
+    <Compile Include="Hashing\Impl\IRedBlackLeaf.cs" />
     <Compile Include="Hashing\ITree.cs" />
-    <Compile Include="Hashing\LeafColor.cs" />
-    <Compile Include="Hashing\LeafExtensions.cs" />
+    <Compile Include="Hashing\Impl\LeafColor.cs" />
+    <Compile Include="Hashing\Impl\LeafExtensions.cs" />
     <Compile Include="Hashing\MD5HashProvider.cs" />
-    <Compile Include="Hashing\RedBlackLeaf.cs" />
-    <Compile Include="Hashing\RedBlackTreeBase.cs" />
+    <Compile Include="Hashing\Impl\RedBlackLeaf.cs" />
+    <Compile Include="Hashing\Impl\RedBlackTreeBase.cs" />
     <Compile Include="DI\DependencyConfigurator.cs" />
     <Compile Include="DI\DependencyExpression.cs" />
     <Compile Include="DI\IDependencyAdapter.cs" />

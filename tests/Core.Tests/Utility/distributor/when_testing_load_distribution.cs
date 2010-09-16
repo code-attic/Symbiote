@@ -34,7 +34,7 @@ namespace Core.Tests.Utility.distributor
                                                                       treeWatch.ElapsedMilliseconds.ShouldBeLessThan(
                                                                           1000);
 
-        private It average_fetch_should_be_2_ms = () => averageFetchTime.ShouldBeLessThan(1);
+        private It average_fetch_should_be_2_ms = () => totalFetchTime.ShouldBeLessThan(1);
 
     }
 }

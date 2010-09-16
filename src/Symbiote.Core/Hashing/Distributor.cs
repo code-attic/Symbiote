@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Hashing.Impl;
 
 namespace Symbiote.Core.Hashing
 {
