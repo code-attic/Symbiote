@@ -5,47 +5,49 @@ namespace Symbiote.Log4Net
 {
     public class Pattern
     {
-        private static readonly string _appDomain = "appdomain";
-        private static readonly string _date = "date";
-        private static readonly string _exception = "exception";
-        private static readonly string _file = "file";
-        private static readonly string _identity = "identity";
-        private static readonly string _location = "location";
-        private static readonly string _logger = "logger";
-        private static readonly string _level = "level";
-        private static readonly string _line = "line";
-        private static readonly string _message = "message";
-        private static readonly string _method = "method";
-        private static readonly string _newline = "newline";
-        private static readonly string _property = "property";
-        private static readonly string _timestamp = "timestamp";
-        private static readonly string _thread = "thread";
-        private static readonly string _type = "type";
-        private static readonly string _username = "username";
+        private const string _appDomain = "appdomain";
+        private const string _date = "date";
+        private const string _exception = "exception";
+        private const string _file = "file";
+        private const string _identity = "identity";
+        private const string _location = "location";
+        private const string _logger = "logger";
+        private const string _level = "level";
+        private const string _line = "line";
+        private const string _message = "message";
+        private const string _method = "method";
+        private const string _newline = "newline";
+        private const string _property = "property";
+        private const string _timestamp = "timestamp";
+        private const string _thread = "thread";
+        private const string _type = "type";
+        private const string _username = "username";
 
         #region utility
 
-        private static string GetArgument(string arg, int? min, int? max)
+        private static string GetArgument(string arg, bool? leftJustify, int? width, int? limit)
         {
-            if(min != null && max != null)
-                return "%{0}.{1}{2}".AsFormat(min, max, arg);
-            else if(min != null)
-                return "%.{0}{1}".AsFormat(min, arg);
-            else if(max != null)
-                return "%{0}{1}".AsFormat(max, arg);
-            return "%{0}".AsFormat(arg);
+            var toLeft = leftJustify ?? false;
+            var justifyChar = toLeft ? "-" : "";
+            var min = width ?? 0;
+            var minWidth = min == 0 ? "" : min.ToString();
+            var max = limit ?? 0;
+            var maxWidth = max == 0 ? "" : ".{0}".AsFormat(max.ToString());
+
+            return "%{0}{1}{2}{3}"
+                .AsFormat(justifyChar, minWidth, maxWidth, arg);
         }
         
         private DelimitedBuilder _builder = new DelimitedBuilder(" ");
         
         private Pattern Add(string argument)
         {
-            _builder.Append(GetArgument(argument, null, null));
+            _builder.Append(GetArgument(argument, null, null, null));
             return this;
         }
-        private Pattern Add(string argument, int min, int max)
+        private Pattern Add(string argument, bool? leftJustify, int? width, int? limit)
         {
-            _builder.Append(GetArgument(argument, min, max));
+            _builder.Append(GetArgument(argument, leftJustify, width, limit));
             return this;
         }
         public static Pattern New()
@@ -58,97 +60,97 @@ namespace Symbiote.Log4Net
         {
             return Add(_appDomain);
         }
-        public Pattern AppDomain (int min, int max)
+        public Pattern AppDomain(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_appDomain, min, max);
+            return Add(_appDomain, leftJustify, width, limit);
         }
         public Pattern Date()
         {
             return Add(_date);
         }
-        public Pattern Date(int min, int max)
+        public Pattern Date(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_date, min, max);
+            return Add(_date, leftJustify, width, limit);
         }
         public Pattern Exception()
         {
             return Add(_exception);
         }
-        public Pattern Exception(int min, int max)
+        public Pattern Exception(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_exception, min, max);
+            return Add(_exception, leftJustify, width, limit);
         }
 
         public Pattern File()
         {
             return Add(_file);
         }
-        public Pattern File(int min, int max)
+        public Pattern File(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_file, min, max);
+            return Add(_file, leftJustify, width, limit);
         }
 
         public Pattern Identity()
         {
             return Add(_identity);
         }
-        public Pattern Identity(int min, int max)
+        public Pattern Identity(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_identity, min, max);
+            return Add(_identity, leftJustify, width, limit);
         }
 
         public Pattern Location()
         {
             return Add(_location);
         }
-        public Pattern Location(int min, int max)
+        public Pattern Location(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_location, min, max);
+            return Add(_location, leftJustify, width, limit);
         }
 
         public Pattern Logger()
         {
             return Add(_logger);
         }
-        public Pattern Logger(int min, int max)
+        public Pattern Logger(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_logger, min, max);
+            return Add(_logger, leftJustify, width, limit);
         }
 
         public Pattern Level()
         {
             return Add(_level);
         }
-        public Pattern Level(int min, int max)
+        public Pattern Level(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_level, min, max);
+            return Add(_level, leftJustify, width, limit);
         }
 
         public Pattern Line()
         {
             return Add(_line);
         }
-        public Pattern Line(int min, int max)
+        public Pattern Line(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_line, min, max);
+            return Add(_line, leftJustify, width, limit);
         }
 
         public Pattern Message()
         {
             return Add(_message);
         }
-        public Pattern Message(int min, int max)
+        public Pattern Message(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_message, min, max);
+            return Add(_message, leftJustify, width, limit);
         }
 
         public Pattern Method()
         {
             return Add(_method);
         }
-        public Pattern Method(int min, int max)
+        public Pattern Method(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_method, min, max);
+            return Add(_method, leftJustify, width, limit);
         }
 
         public Pattern Newline()
@@ -160,45 +162,45 @@ namespace Symbiote.Log4Net
         {
             return Add(_property);
         }
-        public Pattern Property(int min, int max)
+        public Pattern Property(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_property, min, max);
+            return Add(_property, leftJustify, width, limit);
         }
 
         public Pattern TimeStamp()
         {
             return Add(_timestamp);
         }
-        public Pattern TimeStamp(int min, int max)
+        public Pattern TimeStamp(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_timestamp, min, max);
+            return Add(_timestamp, leftJustify, width, limit);
         }
 
         public Pattern Thread()
         {
             return Add(_thread);
         }
-        public Pattern Thread(int min, int max)
+        public Pattern Thread(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_thread, min, max);
+            return Add(_thread, leftJustify, width, limit);
         }
 
         public Pattern Type()
         {
             return Add(_type);
         }
-        public Pattern Type(int min, int max)
+        public Pattern Type(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_type, min, max);
+            return Add(_type, leftJustify, width, limit);
         }
         
         public Pattern UserName()
         {
             return Add(_username);
         }
-        public Pattern UserName(int min, int max)
+        public Pattern UserName(bool? leftJustify, int? width, int? limit)
         {
-            return Add(_username, min, max);
+            return Add(_username, leftJustify, width, limit);
         }
 
         public string ToString()

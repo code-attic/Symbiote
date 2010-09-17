@@ -13,6 +13,12 @@ namespace Symbiote.Log4Net
             return this;
         }
 
+        public RollingConfiguration OverwriteLogFiles()
+        {
+            _appender.AppendToFile = false;
+            return this;
+        }
+
         public RollingConfiguration RollOverWhenLogIs(int byteCount)
         {
             _appender.MaxFileSize = byteCount;
@@ -27,7 +33,7 @@ namespace Symbiote.Log4Net
 
         protected override void Initialize()
         {
-            _appender.AppendToFile = false;
+            _appender.AppendToFile = true;
             _appender.Encoding = Encoding.UTF8;
             _appender.File = "application.log";
             _appender.ImmediateFlush = true;

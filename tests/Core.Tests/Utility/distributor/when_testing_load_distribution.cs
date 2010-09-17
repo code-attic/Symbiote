@@ -18,7 +18,7 @@ namespace Core.Tests.Utility.distributor
                                  {
                                      HashProvider = new MD5HashProvider();
                                      var rnd = new Random();
-                                     for (int i = 0; i < 10000; i++)
+                                     for (int i = 0; i < 1000000; i++)
                                      {
                                          var bytes = Guid.NewGuid().ToByteArray();
                                          var newInt = BitConverter.ToInt64(bytes, 0) + BitConverter.ToInt64(bytes, 8);

@@ -21,7 +21,7 @@ namespace Core.Tests.Utility.distributor
                                         {
                                             listCount = 10;
                                             lists = new List<List<long>>(listCount);
-                                            distributor = new Distributor<List<long>>(500);
+                                            distributor = new Distributor<List<long>>(1000);
 
                                             treeWatch = Stopwatch.StartNew();
                                             for (int i = 0; i < listCount; i++)

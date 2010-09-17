@@ -13,9 +13,15 @@ namespace Symbiote.Log4Net
             return this;
         }
 
-        protected override void Initialize()
+        public FileConfigurator OverwriteLogFiles()
         {
             _appender.AppendToFile = false;
+            return this;
+        }
+
+        protected override void Initialize()
+        {
+            _appender.AppendToFile = true;
             _appender.Encoding = Encoding.UTF8;
             _appender.File = "application.log";
             _appender.ImmediateFlush = true;
