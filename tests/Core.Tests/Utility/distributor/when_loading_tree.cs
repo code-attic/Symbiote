@@ -14,6 +14,7 @@ namespace Core.Tests.Utility
                                  {
                                      tree = new HashedRedBlackTree<string, string>();
                                      wordList.ForEach(w => tree.Add(w, w));
+                                     var r = tree.Root;
                                  };
         
         private It tree_should_have_correct_node_count = () => wordList.Count.ShouldEqual(tree.Count);

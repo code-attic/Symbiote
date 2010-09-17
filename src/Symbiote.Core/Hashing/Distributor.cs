@@ -11,8 +11,8 @@ namespace Symbiote.Core.Hashing
     {
         protected IHashingProvider HashProvider { get; set; }
         protected ReaderWriterLockSlim MapLock { get; set; }
-        protected HashedRedBlackTree<string, string> Map { get; set; }
-        protected ConcurrentDictionary<string, List<string>> AliasLookup { get; set; }
+        protected RedBlackTree<long, string> Map { get; set; }
+        protected ConcurrentDictionary<string, List<long>> AliasLookup { get; set; }
         protected ConcurrentDictionary<string, TNode> Nodes { get; set; }
 
         protected int AliasCount { get; set; }
@@ -25,13 +25,13 @@ namespace Symbiote.Core.Hashing
 
         protected void BuildAliases(string name)
         {
-            var aliasList = new List<string>(AliasCount);
+            var aliasList = new List<long>(AliasCount);
+            
             for (int i = 0; i < AliasCount; i++)
             {
                 try
                 {
-                    var alias = "{0}_{1}".AsFormat(name, i);
-                    var hash = HashProvider.Hash(alias);
+                    var alias = HashProvider.Hash("{0}_{1}".AsFormat(name, i));
                     aliasList.Add(alias);
                     MapLock.EnterWriteLock();
                     Map.Add(alias, name);
@@ -46,7 +46,7 @@ namespace Symbiote.Core.Hashing
 
         protected void RemoveAliases(string name)
         {
-            var aliasList = new List<string>();
+            var aliasList = new List<long>();
             if(AliasLookup.TryRemove(name, out aliasList))
             {
                 foreach (var alias in aliasList)
@@ -90,8 +90,9 @@ namespace Symbiote.Core.Hashing
         public Distributor(int aliasCount)
         {
             AliasCount = aliasCount;
-            Map = new HashedRedBlackTree<string, string>();
-            AliasLookup = new ConcurrentDictionary<string, List<string>>(3, 10);
+            Map = new RedBlackTree<long, string>();
+            AliasLookup = new ConcurrentDictionary<string, List<long>>(3, 10);
+
             Nodes = new ConcurrentDictionary<string, TNode>(3, 10);
             MapLock = new ReaderWriterLockSlim();
             HashProvider = new MD5HashProvider();

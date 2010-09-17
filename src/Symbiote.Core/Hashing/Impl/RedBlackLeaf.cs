@@ -49,46 +49,6 @@ namespace Symbiote.Core.Hashing.Impl
             return 1 + left + right;
         }
 
-        public IRedBlackLeaf<TKey, TValue> Seek(TKey key)
-        {
-            if (key.Equals(Key))
-            {
-                return this;
-            }
-            else if (LessThan(key))
-            {
-                return Right.IsEmpty() ? null : Right.Seek(key);
-            }
-            else
-            {
-                return Left.IsEmpty() ? null : Left.Seek(key);
-            }
-        }
-
-        public TValue Get(TKey key)
-        {
-            var leaf = Seek(key);
-            return leaf.IsEmpty() ? default(TValue) : leaf.Value;
-        }
-
-        public TValue Nearest<T>(T key)
-        {
-            var cast = (TKey) Convert.ChangeType(key, typeof(TKey));
-            return NearestToKey(cast);
-        }
-
-        protected TValue NearestToKey(TKey key)
-        {
-            if (key.Equals(Key))
-                return Value;
-            else if (LessThan(key))
-                return Right.IsEmpty() ? Value : Right.Nearest(key);
-            else if (Comparer.Compare(key, Key) < 0)
-                return Left.IsEmpty() ? Value : Left.Nearest(key);
-            else
-                return default(TValue);
-        }
-
         public bool GreaterThan(TKey key)
         {
             return Comparer.Compare(Key, key) >= 1;
@@ -97,6 +57,16 @@ namespace Symbiote.Core.Hashing.Impl
         public bool LessThan(TKey key)
         {
             return Comparer.Compare(Key, key) < 0;
+        }
+
+        public bool GreaterThan(IRedBlackLeaf<TKey, TValue> leaf)
+        {
+            return GreaterThan(leaf.Key);
+        }
+
+        public bool LessThan(IRedBlackLeaf<TKey, TValue> leaf)
+        {
+            return LessThan(leaf.Key);
         }
 
         public RedBlackLeaf(TKey key, TValue value, RedBlackLeaf<TKey, TValue> parent)

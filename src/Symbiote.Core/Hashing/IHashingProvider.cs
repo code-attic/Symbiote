@@ -2,6 +2,6 @@
 {
     public interface IHashingProvider
     {
-        int Hash<T>(T value);
+        long Hash<T>(T value);
     }
 }

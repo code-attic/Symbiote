@@ -6,7 +6,7 @@
         protected HashedAvlLeaf<TKey, TValue>[] _children = new HashedAvlLeaf<TKey, TValue>[2];
         protected static IHashingProvider HashProvider = new MD5HashProvider();
         public int Balance { get; set; }
-        public int HashKey { get; set; }
+        public long HashKey { get; set; }
         public TKey Key { get; set; }
         public IAvlLeaf<TKey, TValue> Parent { get; set; }
         public TValue Value { get; set; }
@@ -57,12 +57,6 @@
             return HashKey < hashKey;
         }
 
-        public TValue Nearest<T>(T key)
-        {
-            var hashKey = HashProvider.Hash(key);
-            return Nearest(hashKey);
-        }
-
         public IAvlLeaf<TKey, TValue> Seek(TKey key)
         {
             var hashKey = HashProvider.Hash(key);
@@ -77,7 +71,7 @@
             return 1 + left + right;
         }
 
-        public IAvlLeaf<TKey, TValue> SeekByHash(int key)
+        public IAvlLeaf<TKey, TValue> SeekByHash(long key)
         {
             if (key.Equals(HashKey))
             {
@@ -93,22 +87,10 @@
             }
         }
 
-        protected TValue Get(int key)
+        protected TValue Get(long key)
         {
             var leaf = SeekByHash(key);
             return leaf.IsEmpty() ? default(TValue) : leaf.Value;
-        }
-
-        protected TValue Nearest(int key)
-        {
-            if (key.Equals(HashKey))
-                return Value;
-            else if (key > HashKey)
-                return Right.IsEmpty() ? Value : Right.Nearest(key);
-            else if (key < HashKey)
-                return Left.IsEmpty() ? Value : Left.Nearest(key);
-            else
-                return default(TValue);
         }
 
         public HashedAvlLeaf()

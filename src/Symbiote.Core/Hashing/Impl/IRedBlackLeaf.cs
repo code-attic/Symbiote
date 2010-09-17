@@ -10,12 +10,8 @@
         IRedBlackLeaf<TKey, TValue> Left { get; set; }
         bool IsRoot { get; }
         int Count { get; }
-
-        TValue Get(TKey key);
-        bool GreaterThan(TKey key);
-        bool LessThan(TKey key);
-        TValue Nearest<T>(T key);
-        IRedBlackLeaf<TKey, TValue> Seek(TKey key);
+        bool GreaterThan(IRedBlackLeaf<TKey, TValue> leaf);
+        bool LessThan(IRedBlackLeaf<TKey, TValue> leaf);
 
         IRedBlackLeaf<TKey, TValue> this[bool right] { get; set; }
     }

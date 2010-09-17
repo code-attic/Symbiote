@@ -13,7 +13,6 @@
         TValue Get(TKey key);
         bool GreaterThan(TKey key);
         bool LessThan(TKey key);
-        TValue Nearest<T>(T key);
         IAvlLeaf<TKey, TValue> Seek(TKey key);
 
         IAvlLeaf<TKey, TValue> this[bool right] { get; set; }

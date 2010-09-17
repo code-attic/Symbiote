@@ -34,12 +34,43 @@ namespace Symbiote.Core.Hashing.Impl
 
         public virtual TValue GetNearest<T>(T key)
         {
-            var nearest = Root.Nearest(key);
-            if(object.Equals(nearest, null))
+            IAvlLeaf<TKey, TValue> leaf = Root;
+            IAvlLeaf<TKey, TValue> last = null;
+            var compareKey = (TKey)Convert.ChangeType(key, typeof(TKey));
+
+            while (leaf != null)
             {
-                nearest = Root.Value;
+                if (leaf.GreaterThan(compareKey))
+                {
+                    leaf = leaf.Left;
+                }
+                else if (leaf.LessThan(compareKey))
+                {
+                    last = leaf;
+                    leaf = leaf.Right;
+                }
+                else
+                {
+                    return leaf.Value;
+                }
             }
-            return nearest;
+            if (last.IsEmpty())
+            {
+                return GetMaxLeaf().Value;
+            }
+            else
+                return last.Value;
+        }
+
+        protected IAvlLeaf<TKey, TValue> GetMaxLeaf()
+        {
+            IAvlLeaf<TKey, TValue> leaf;
+            leaf = this.Root;
+            while (leaf.Right != null)
+            {
+                leaf = leaf.Right;
+            }
+            return leaf;
         }
 
         protected virtual IAvlLeaf<TKey, TValue> Insert(IAvlLeaf<TKey, TValue> root, IAvlLeaf<TKey, TValue> leaf, ref bool done)

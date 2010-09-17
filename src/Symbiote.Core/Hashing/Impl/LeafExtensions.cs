@@ -4,7 +4,7 @@
     {
         public static bool IsEmpty<TKey,TValue>(this IRedBlackLeaf<TKey, TValue> leaf)
         {
-            return leaf == null || leaf.Value.Equals(default(TValue));
+            return leaf == null; // || leaf.Value.Equals(default(TValue));
         }
 
         public static bool IsEmpty<TKey, TValue>(this IAvlLeaf<TKey, TValue> leaf)

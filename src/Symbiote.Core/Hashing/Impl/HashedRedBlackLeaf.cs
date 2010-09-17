@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Core.Hashing.Impl
+﻿using System;
+
+namespace Symbiote.Core.Hashing.Impl
 {
     public class HashedRedBlackLeaf<TKey, TValue>
         : IRedBlackLeaf<TKey, TValue>
@@ -7,7 +9,7 @@
         protected static IHashingProvider HashProvider = new MD5HashProvider();
 
         public LeafColor Color { get; set; }
-        public int HashKey { get; set; }
+        public long HashKey { get; set; }
         public TKey Key { get; set; }
         public IRedBlackLeaf<TKey, TValue> Parent { get; set; }
         public TValue Value { get; set; }
@@ -40,12 +42,6 @@
         public bool IsRoot { get { return Parent.IsEmpty(); } }
         public int Count { get { return GetCount(); } }
 
-        public TValue Get(TKey key)
-        {
-            var hashKey = HashProvider.Hash(key);
-            return Get(hashKey);
-        }
-
         public bool GreaterThan(TKey key)
         {
             var hashKey = HashProvider.Hash(key);
@@ -58,16 +54,16 @@
             return HashKey < hashKey;
         }
 
-        public TValue Nearest<T>(T key)
+        public bool GreaterThan(IRedBlackLeaf<TKey, TValue> leaf)
         {
-            var hashKey = HashProvider.Hash(key);
-            return Nearest(hashKey);
+            var compare = leaf as HashedRedBlackLeaf<TKey, TValue>;
+            return compare == null ? true : HashKey > compare.HashKey;
         }
 
-        public IRedBlackLeaf<TKey, TValue> Seek(TKey key)
+        public bool LessThan(IRedBlackLeaf<TKey, TValue> leaf)
         {
-            var hashKey = HashProvider.Hash(key);
-            return SeekByHash(hashKey);
+            var compare = leaf as HashedRedBlackLeaf<TKey, TValue>;
+            return compare == null ? true : HashKey < compare.HashKey;
         }
 
         protected int GetCount()
@@ -76,40 +72,6 @@
             var right = Right.IsEmpty() ? 0 : Right.Count;
 
             return 1 + left + right;
-        }
-
-        public IRedBlackLeaf<TKey, TValue> SeekByHash(int key)
-        {
-            if (key.Equals(HashKey))
-            {
-                return this;
-            }
-            else if (key > HashKey)
-            {
-                return Right.IsEmpty() ? null : _children[1].SeekByHash(key);
-            }
-            else
-            {
-                return Left.IsEmpty() ? null : _children[0].SeekByHash(key);
-            }
-        }
-
-        protected TValue Get(int key)
-        {
-            var leaf = SeekByHash(key);
-            return leaf.IsEmpty() ? default(TValue) : leaf.Value;
-        }
-
-        protected TValue Nearest(int key)
-        {
-            if (key.Equals(HashKey))
-                return Value;
-            else if (key > HashKey)
-                return Right.IsEmpty() ? Value : Right.Nearest(key);
-            else if (key < HashKey)
-                return Left.IsEmpty() ? Value : Left.Nearest(key);
-            else
-                return default(TValue);
         }
 
         public HashedRedBlackLeaf()

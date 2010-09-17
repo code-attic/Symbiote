@@ -93,6 +93,7 @@
     <Compile Include="Hashing\Impl\IAvlLeaf.cs" />
     <Compile Include="Hashing\IHashingProvider.cs" />
     <Compile Include="Hashing\Impl\IRedBlackLeaf.cs" />
+    <Compile Include="Hashing\Impl\RedBlackTree.cs" />
     <Compile Include="Hashing\ITree.cs" />
     <Compile Include="Hashing\Impl\LeafColor.cs" />
     <Compile Include="Hashing\Impl\LeafExtensions.cs" />

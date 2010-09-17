@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Core.Hashing.Impl
+﻿using System;
+
+namespace Symbiote.Core.Hashing.Impl
 {
     public abstract class RedBlackTreeBase<TKey, TValue>
     {
@@ -19,7 +21,24 @@
 
         public virtual TValue Get(TKey key)
         {
-            return Root.Get(key);
+            IRedBlackLeaf<TKey, TValue> leaf = Root;
+            var compare = CreateLeaf(key, default(TValue));
+            while (leaf != null)
+            {
+                if (leaf.GreaterThan(compare))
+                {
+                    leaf = leaf.Left;
+                }
+                else if (leaf.LessThan(compare))
+                {
+                    leaf = leaf.Right;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return leaf.IsEmpty() ? default(TValue) : leaf.Value;
         }
 
         public virtual void Add(TKey key, TValue value)
@@ -33,12 +52,44 @@
 
         public virtual TValue GetNearest<T>(T key)
         {
-            var nearest = Root.Nearest(key);
-            if(object.Equals(nearest, null))
+            IRedBlackLeaf<TKey, TValue> leaf = Root;
+            IRedBlackLeaf<TKey, TValue> last = null;
+            var compareKey = (TKey) Convert.ChangeType(key, typeof (TKey));
+            var compare = CreateLeaf(compareKey, default(TValue));
+
+            while (leaf != null)
             {
-                nearest = Root.Value;
+                if (leaf.GreaterThan(compare))
+                {
+                    leaf = leaf.Left;
+                }
+                else if (leaf.LessThan(compare))
+                {
+                    last = leaf;
+                    leaf = leaf.Right;
+                }
+                else
+                {
+                    return leaf.Value;
+                }
             }
-            return nearest;
+            if (last.IsEmpty())
+            {
+                return GetMaxLeaf().Value;
+            }
+            else
+                return last.Value;
+        }
+
+        protected IRedBlackLeaf<TKey, TValue> GetMaxLeaf()
+        {
+            IRedBlackLeaf<TKey, TValue> leaf;
+            leaf = this.Root;
+            while (leaf.Right != null)
+            {
+                leaf = leaf.Right;
+            }
+            return leaf;
         }
 
         protected virtual IRedBlackLeaf<TKey, TValue> Insert(IRedBlackLeaf<TKey, TValue> root, IRedBlackLeaf<TKey, TValue> leaf)
@@ -50,7 +101,7 @@
             else
             {
                 leaf.Parent = root;
-                var direction = leaf.GreaterThan(root.Key);
+                var direction = leaf.GreaterThan(root);
                 root[direction] = Insert(root[direction], leaf);
                 root = BalancePostInsert(root, direction);
             }
@@ -96,7 +147,7 @@
                     }
                 }
 
-                direction = root.LessThan(key);
+                direction = root.LessThan(CreateLeaf(key, default(TValue)));
                 root[direction] = Remove(root[direction], key, ref done);
 
                 if (!done)

@@ -9,11 +9,11 @@ namespace Symbiote.Core.Hashing
     {
         protected MD5 Provider { get; set; }
 
-        public int Hash<T>(T value)
+        public long Hash<T>(T value)
         {
             var temp = value.ToString();
-            var hashBytes = Provider.ComputeHash(Encoding.UTF8.GetBytes(temp));
-            return BitConverter.ToInt32(hashBytes, 0);
+            var hashBytes = Provider.ComputeHash(Encoding.ASCII.GetBytes(temp));
+            return BitConverter.ToInt64(hashBytes, 0) + BitConverter.ToInt64(hashBytes, 8);
         }
 
         public MD5HashProvider()

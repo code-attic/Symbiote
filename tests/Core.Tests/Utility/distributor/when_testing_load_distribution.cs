@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using Machine.Specifications;
+using Symbiote.Core.Hashing;
 
 namespace Core.Tests.Utility.distributor
 {
@@ -11,13 +12,17 @@ namespace Core.Tests.Utility.distributor
         protected static double standardDeviation { get; set; }
         protected static double variance { get; set; }
         protected static double percentDeviation { get; set; }
+        protected static IHashingProvider HashProvider { get; set; }
 
         private Because of = () =>
                                  {
+                                     HashProvider = new MD5HashProvider();
                                      var rnd = new Random();
-                                     for (int i = 0; i < 100000; i++)
+                                     for (int i = 0; i < 10000; i++)
                                      {
-                                         Write(i);
+                                         var bytes = Guid.NewGuid().ToByteArray();
+                                         var newInt = BitConverter.ToInt64(bytes, 0) + BitConverter.ToInt64(bytes, 8);
+                                         Write(newInt);
                                      }
                                      averageFetchTime = totalFetchTime/totalFetched;
 
@@ -27,14 +32,14 @@ namespace Core.Tests.Utility.distributor
                                      percentDeviation = standardDeviation/average;
                                  };
         
-        private It percent_deviation_should_be_less_than_10_percent = () => 
-            percentDeviation.ShouldBeLessThan(.10);
+        private It percent_deviation_should_be_less_than_5_percent = () => 
+            percentDeviation.ShouldBeLessThan(.010);
 
-        private It should_not_take_more_than_1_second_to_build_tree = () =>
+        private It should_not_take_more_than_200_ms_to_build_tree = () =>
                                                                       treeWatch.ElapsedMilliseconds.ShouldBeLessThan(
-                                                                          1000);
-
-        private It average_fetch_should_be_2_ms = () => totalFetchTime.ShouldBeLessThan(1);
+                                                                          100);
+        
+        private It average_fetch_should_be_10_ms = () => totalFetchTime.ShouldBeLessThan(10);
 
     }
 }
