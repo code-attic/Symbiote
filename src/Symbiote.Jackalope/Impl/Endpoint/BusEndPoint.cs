@@ -58,9 +58,21 @@ namespace Symbiote.Jackalope.Impl.Endpoint
             return this;
         }
 
+        public IEndPoint Immediate()
+        {
+            _configuration.ImmediateDelivery = true;
+            return this;
+        }
+
         public IEndPoint Internal()
         {
             _configuration.Internal = true;
+            return this;
+        }
+
+        public IEndPoint Mandatory()
+        {
+            _configuration.MandatoryDelivery = true;
             return this;
         }
 

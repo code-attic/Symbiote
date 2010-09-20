@@ -99,18 +99,13 @@ namespace Symbiote.Jackalope.Impl.Channel
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
             GetMessageCorrelation(body, properties);
             properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
-            Channel.BasicPublish(_configuration.ExchangeName, routingKey, properties, stream);
-        }
-
-        public void Send<T>(T body, string routingKey, bool mandatory, bool immediate) where T : class
-        {
-            if (body == default(T))
-                return;
-            var stream = Serializer.Serialize(body);
-            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
-            GetMessageCorrelation(body, properties);
-            properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
-            Channel.BasicPublish(_configuration.ExchangeName, routingKey, mandatory, immediate, properties, stream);
+            Channel.BasicPublish(
+                _configuration.ExchangeName, 
+                routingKey, 
+                EndpointConfiguration.MandatoryDelivery, 
+                EndpointConfiguration.ImmediateDelivery,  
+                properties, 
+                stream);
         }
 
         public void Reject(ulong tag, bool requeue)
@@ -186,6 +181,16 @@ namespace Symbiote.Jackalope.Impl.Channel
             _onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
             _channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
             _channel.ModelShutdown += ChannelShutdown;
+        }
+
+        public void OnReturn()
+        {
+            Channel.BasicReturn += new BasicReturnEventHandler(Channel_BasicReturn);
+        }
+
+        void Channel_BasicReturn(IModel model, BasicReturnEventArgs args)
+        {
+            
         }
 
         private void ChannelShutdown(IModel model, ShutdownEventArgs reason)

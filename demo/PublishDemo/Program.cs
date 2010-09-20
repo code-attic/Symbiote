@@ -7,36 +7,30 @@ using Symbiote.Core;
 using Symbiote.Jackalope;
 using Symbiote.Log4Net;
 using Symbiote.StructureMap;
+using Symbiote.Daemon;
 
 namespace PublishDemo
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
-        {
-            Configure();
-            Publish();
-        }
-
-        static void Configure()
         {
             Assimilate
                 .Core<StructureMapAdapter>()
                 .Jackalope(x => x.AddServer(s => s.AMQP091().Address("localhost")))
+                .Daemon(x => x
+                    .Arguments(args)
+                    .Name("DemoPublisher")
+                    .DisplayName("Demo Publisher")
+                    .Description("Publishes messages"))
                 .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .Dependencies(x => x.Scan(y =>
-                                              {
-                                                  y.TheCallingAssembly();
-                                                  y.AddSingleImplementations();
-                                              }));
-            //.Dependencies(x => x.For<Publisher>().Use<Publisher>());
-        }
-
-        static void Publish()
-        {
-            var publisher = ServiceLocator.Current.GetInstance<IPublisher>();
-            publisher.Start();
+                {
+                    y.TheCallingAssembly();
+                    y.AddSingleImplementations();
+                }))
+                .RunDaemon();
         }
     }
 }

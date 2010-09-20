@@ -11,6 +11,8 @@ namespace Symbiote.Jackalope.Config
         string ExchangeName { get; set; }
         string ExchangeTypeName { get; }
         bool Durable { get; set; }
+        bool ImmediateDelivery { get; set; }
+        bool MandatoryDelivery { get; set; }
         bool Passive { get; set; }
         bool AutoDelete { get; set; }
         bool Internal { get; set; }

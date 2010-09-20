@@ -12,7 +12,9 @@ namespace Symbiote.Jackalope.Impl.Endpoint
         IEndPoint Exclusive();
         IEndPoint Passive();
         IEndPoint AutoDelete();
+        IEndPoint Immediate();
         IEndPoint Internal();
+        IEndPoint Mandatory();
         IEndPoint NoWait();
         IEndPoint NoAck();
         IEndPoint PersistentDelivery();

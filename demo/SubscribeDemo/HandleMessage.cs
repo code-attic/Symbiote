@@ -1,5 +1,5 @@
 using System;
-using PublishDemo;
+using Demo.Messages;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope;
 using Symbiote.Jackalope.Impl;

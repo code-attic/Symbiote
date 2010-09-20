@@ -51,7 +51,14 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             var message = Serializer.Deserialize(body);
             var envelope = Envelope.Create(Proxy, consumerTag, deliveryTag, redelivered, exchange, routingKey,
                                            properties, message);
-            Dispatch(envelope);
+            if(message == null)
+            {
+                
+            }
+            else
+            {
+                Dispatch(envelope);   
+            }
         }
 
         public override void HandleBasicCancelOk(string consumerTag)

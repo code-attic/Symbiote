@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Demo.Messages;
+using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Daemon;
 using Symbiote.Jackalope;
 using System.Linq;
+using Symbiote.Log4Net;
+using Symbiote.StructureMap;
 
 namespace PublishDemo
 {
-    public class Publisher : IPublisher
+    public class Publisher : BootstrappedDaemon<Publisher>
     {
-        private IBus _bus;
-        private Action<string, Message> send;
+        public IBus Bus { get; set; }
 
         protected readonly string messageBody = 
             @"
@@ -63,30 +68,44 @@ namespace PublishDemo
  Oportere intellegam est an.
         ";
 
-        public void Start()
+        public override void Start()
         {
-            //"Publisher is starting.".ToInfo<Publisher>();
-            //long i = 0;
-            //var message = new Message("Message");
-            //while(true)
-            //{
-            //    send.BeginInvoke("publisher", message, null, null);
-            //}
-        }
-
-        public Publisher(IBus bus)
-        {
-            _bus = bus;
-            _bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
-            _bus.AddEndPoint(x => x.Exchange("secondary", ExchangeType.fanout));
             var observable = Observable.Generate(0, x => x < 500000, x => x + 1, x => new Message("Hello"));
             observable.ToEnumerable().AsParallel().ForAll(m =>
-                                                              {
-                                                                  _bus.Send("publisher", m);
-                                                                  _bus.Send("secondary", m);
-                                                              });
-            //_bus.AutoRouteFromSource(observable);
-            send = bus.Send;
+            {
+                Bus.Send("publisher", m);
+                Bus.Send("secondary", m);
+            });
+        }
+
+        public override void Stop()
+        {
+            
+        }
+        
+        public override void Initialize()
+        {
+            Assimilate
+                .Core<StructureMapAdapter>()
+                .Jackalope(x => x.AddServer(s => s.AMQP091().Address("localhost")))
+                .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
+                .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
+                .Dependencies(x => x.Scan(y =>
+                {
+                    y.TheCallingAssembly();
+                    y.AddSingleImplementations();
+                }));
+        }
+
+        public Publisher()
+        {
+            Bus = ServiceLocator.Current.GetInstance<IBus>();
+            Bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
+            Bus.AddEndPoint(x => x.Exchange("secondary", ExchangeType.fanout));
+            Bus.AddEndPoint(x => x.QueueName("subscriber1"));
+            Bus.AddEndPoint(x => x.QueueName("subscriber2"));
+            Bus.BindQueue("subscriber1", "publisher");
+            Bus.BindQueue("subscriber2", "secondary");
         }
     }
 }
