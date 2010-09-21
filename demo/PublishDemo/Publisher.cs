@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace PublishDemo
 {
-    public class Publisher
+    public class Publisher : IPublisher
     {
         private IBus _bus;
         private Action<string, Message> send;
@@ -79,7 +79,7 @@ namespace PublishDemo
             _bus = bus;
             _bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
             _bus.AddEndPoint(x => x.Exchange("secondary", ExchangeType.fanout));
-            var observable = Observable.Generate(0, x => x < 500000, x => new Message("Ello"), x => x + 1);
+            var observable = Observable.Generate(0, x => x < 500000, x => x + 1, x => new Message("Hello"));
             observable.ToEnumerable().AsParallel().ForAll(m =>
                                                               {
                                                                   _bus.Send("publisher", m);

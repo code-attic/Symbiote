@@ -13,6 +13,7 @@ namespace Symbiote.Core.DI
         void AssembliesFromApplicationBaseDirectory(Predicate<Assembly> assemblyFilter);
         void AddAllTypesOf<TPlugin>();
         void AddAllTypesOf(Type pluginType);
+        void AddSingleImplementations();
         void ConnectImplementationsToTypesClosing(Type openGenericType);
         void Exclude(Predicate<Type> exclude);
         void ExcludeNamespace(string nameSpace);

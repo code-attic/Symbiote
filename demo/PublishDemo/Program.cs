@@ -25,12 +25,17 @@ namespace PublishDemo
                 .Jackalope(x => x.AddServer(s => s.AMQP091().Address("localhost")))
                 .AddConsoleLogger<IBus>(x => x.Info().MessageLayout(m => m.Message().Newline()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.Message().Newline()))
-                .Dependencies(x => x.For<Publisher>().Use<Publisher>());
+                .Dependencies(x => x.Scan(y =>
+                                              {
+                                                  y.TheCallingAssembly();
+                                                  y.AddSingleImplementations();
+                                              }));
+            //.Dependencies(x => x.For<Publisher>().Use<Publisher>());
         }
 
         static void Publish()
         {
-            var publisher = ServiceLocator.Current.GetInstance<Publisher>();
+            var publisher = ServiceLocator.Current.GetInstance<IPublisher>();
             publisher.Start();
         }
     }

@@ -13,7 +13,7 @@ namespace Symbiote.Core.DI
         IScanInstruction
     {
         protected TypeScanner scanner { get; set; }
-
+        protected bool ShouldAddSingleImplementations { get; set; }
         public IList<Type> AutoWireupTypesOf { get; set; }
         public IList<Type> AutoWireupClosersOf { get; set; }
 
@@ -79,6 +79,11 @@ namespace Symbiote.Core.DI
             AutoWireupTypesOf.Add(pluginType);
         }
 
+        public void AddSingleImplementations()
+        {
+            ShouldAddSingleImplementations = true;
+        }
+
         public void Execute(IDependencyRegistry registry)
         {
             var filteredTypes = scanner.GetMatchingTypes();
@@ -89,6 +94,11 @@ namespace Symbiote.Core.DI
             AutoWireupClosersOf
                 .Where(x => x.IsOpenGeneric())
                 .ForEach(x => RegisterClosingTypes(x, filteredTypes, registry));
+
+            if (ShouldAddSingleImplementations)
+            {
+                RegisterSingleImplementations(filteredTypes, registry);
+            }
         }
 
         protected void RegisterClosingTypes(Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
@@ -155,6 +165,24 @@ namespace Symbiote.Core.DI
             var dependencyExpression = DependencyExpression.For(pluginType);
             dependencyExpression.Use(match);
             registry.Register(dependencyExpression);
+        }
+
+        protected void RegisterSingleImplementations(IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
+        {
+            var interfaces = filteredTypes
+                .Where(t => t.IsInterface);
+            var lookups = interfaces.ToDictionary(
+                x => x,
+                x => filteredTypes.Where(f => f.IsConcreteAndAssignableTo(x)));
+            lookups
+                .Where(kp => kp.Value.Count() == 1)
+                .ForEach(kp =>
+                             {
+                                 var dependencyExpression = DependencyExpression.For(kp.Key);
+                                 dependencyExpression.Use(kp.Value.First());
+                                 registry.Register(dependencyExpression);
+                             });
+
         }
 
         public void Exclude(Predicate<Type> exclude)
