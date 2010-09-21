@@ -7,16 +7,16 @@ using System.Linq;
 
 namespace SubscribeDemo
 {
-    public class Subscriber : IDaemon
+    public class Subscriber : BootstrappedDaemon<Subscriber>
     {
         private IBus _bus;
 
-        public void Start()
+        public override void Start()
         {
             "Subscriber is starting.".ToInfo<Subscriber>();
         }
 
-        public void Stop()
+        public override void Stop()
         {
             "Stop was called."
                 .ToInfo<Subscriber>();

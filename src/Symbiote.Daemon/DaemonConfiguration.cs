@@ -29,6 +29,8 @@ namespace Symbiote.Daemon
 
         public string ServiceName { get { return _name; } }
 
+        public RunConfiguration RunConfig { get; set; }
+
         public DaemonConfiguration Name(string name)
         {
             _name = name;
@@ -70,8 +72,8 @@ namespace Symbiote.Daemon
 
         internal RunConfiguration GetTopShelfConfiguration()
         {
-            var config = RunnerConfigurator.New(ConfigureServices);
-            return config;
+            RunConfig = RunConfig ?? RunnerConfigurator.New(ConfigureServices);
+            return RunConfig;
         }
 
         protected void ConfigureServices(IRunnerConfigurator config)
