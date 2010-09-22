@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{29F73967-24AC-438D-957E-7FF3EDC6840E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Symbiote.Redis</RootNamespace>
+    <AssemblyName>Symbiote.Redis</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\..\lib\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
+    <Compile Include="Impl\Connection\ConnectionHandle.cs" />
+    <Compile Include="Impl\Command\DatabaseSizeCommand.cs" />
+    <Compile Include="Impl\Command\DecrementCommand.cs" />
+    <Compile Include="Impl\Command\ExpireCommand.cs" />
+    <Compile Include="Impl\Command\FlushCommand.cs" />
+    <Compile Include="Impl\Command\GetAndSetCommand.cs" />
+    <Compile Include="Impl\Command\GetCommand.cs" />
+    <Compile Include="IRedisClient.cs" />
+    <Compile Include="Impl\Serialization\ICacheSerializer.cs" />
+    <Compile Include="Impl\Command\IncrementCommand.cs" />
+    <Compile Include="Impl\Command\InfoCommand.cs" />
+    <Compile Include="Impl\Connection\IRedisConnection.cs" />
+    <Compile Include="Impl\Connection\IRedisConnectionFactory.cs" />
+    <Compile Include="Impl\Serialization\JsonCacheSerializer.cs" />
+    <Compile Include="Impl\Command\KeyListCommand.cs" />
+    <Compile Include="Impl\KeyType.cs" />
+    <Compile Include="Impl\Command\LastSaveCommand.cs" />
+    <Compile Include="Impl\RedisClient.cs" />
+    <Compile Include="Impl\Command\RedisCommand.cs" />
+    <Compile Include="Impl\Config\RedisConfiguration.cs" />
+    <Compile Include="Impl\Connection\RedisConnection.cs" />
+    <Compile Include="Impl\Connection\RedisConnectionFactory.cs" />
+    <Compile Include="Impl\Connection\RedisConnectionPool.cs" />
+    <Compile Include="Impl\Config\RedisHost.cs" />
+    <Compile Include="Impl\Command\RemoveCommand.cs" />
+    <Compile Include="Impl\Command\RenameCommand.cs" />
+    <Compile Include="Impl\UnImplementedCommands.cs" />
+    <Compile Include="RedisConfigurator.cs" />
+    <Compile Include="ResponseException.cs" />
+    <Compile Include="Impl\Command\SaveDatabaseCommand.cs" />
+    <Compile Include="Impl\Command\SetDatabaseCommand.cs" />
+    <Compile Include="Impl\Command\SetValueCommand.cs" />
+    <Compile Include="Impl\Command\ShutdownCommand.cs" />
+    <Compile Include="Impl\SortOptions.cs" />
+    <Compile Include="Impl\Command\TimeToLiveCommand.cs" />
+    <Compile Include="RedisAssimilation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -17,6 +17,8 @@ namespace Symbiote.Jackalope.Impl
         private bool _isReplyToPresent;
         private IBasicProperties _properties;
         private bool _redelivered;
+        private ushort _replyCode;
+        private string _replyText;
         private string _key;
         private bool _responded = false;
 
@@ -112,6 +114,17 @@ namespace Symbiote.Jackalope.Impl
             _key = routingKey;
             _isReplyToPresent = properties.IsReplyToPresent();
             _properties = properties;
+        }
+
+        public MessageDelivery(IChannelProxy proxy, BasicReturnEventArgs args)
+        {
+            _factory = ServiceLocator.Current.GetInstance<IChannelProxyFactory>();
+            _proxy = proxy;
+            _exchange = args.Exchange;
+            _properties = args.BasicProperties;
+            _replyCode = args.ReplyCode;
+            _replyText = args.ReplyText;
+            _key = args.RoutingKey;
         }
 
         public void Dispose()

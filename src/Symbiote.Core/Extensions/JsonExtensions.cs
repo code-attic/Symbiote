@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 

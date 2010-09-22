@@ -48,6 +48,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
         {
+            Action<Envelope> dispatch = Dispatch;
             var message = Serializer.Deserialize(body);
             var envelope = Envelope.Create(Proxy, consumerTag, deliveryTag, redelivered, exchange, routingKey,
                                            properties, message);
@@ -57,7 +58,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             }
             else
             {
-                Dispatch(envelope);   
+                Dispatch(envelope);
             }
         }
 
