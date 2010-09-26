@@ -10,6 +10,12 @@ namespace Symbiote.Jackalope.Config
             return this;
         }
 
+        public AmqpFluentServerConfiguration Broker(string brokerName)
+        {
+            Server.Broker = brokerName;
+            return this;
+        }
+
         public AmqpFluentServerConfiguration Port(int port)
         {
             Server.Port = port;

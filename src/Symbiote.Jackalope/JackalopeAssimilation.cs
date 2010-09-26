@@ -21,21 +21,6 @@ namespace Symbiote.Jackalope
 {
     public static class JackalopeAssimilation
     {
-        public static IAssimilate Jackalope(this IAssimilate assimilate)
-        {
-            ConfigureStandardDependencies();
-
-            assimilate
-                .Dependencies(x => x.For<IAmqpConfigurationProvider>()
-                                       .Use<AmqpConfiguration>());
-            assimilate
-                .Dependencies(x => x.For<IConnectionManager>()
-                                       .Use<ConnectionManager>()
-                                       .AsSingleton());
-
-            return assimilate;
-        }
-
         public static IAssimilate Jackalope(this IAssimilate assimilate, Action<AmqpFluentConfiguration> configure)
         {
             var configuration = new AmqpFluentConfiguration();
@@ -50,7 +35,7 @@ namespace Symbiote.Jackalope
                                        .Use<ConnectionManager>()
                                        .AsSingleton());
 
-            if (configuration.Servers[0].Protocol == "AMQP_0_9_1")
+            if (configuration.Brokers.Values.First().Protocol == "AMQP_0_9_1")
                 assimilate.Dependencies(x => x.For<IQueueObserver>().Use<ObservableConsumer>());
 
             return assimilate;

@@ -8,7 +8,7 @@ namespace Symbiote.Jackalope.Config
         public string QueueName { get; set; }
         public List<string> RoutingKeys { get; set; }
         public ExchangeType ExchangeType { get; set; }
-
+        public string Broker { get; set; }
         public string ExchangeName { get; set; }
         public string ExchangeTypeName { get { return ExchangeType.ToString(); } }
         public bool Durable { get; set; }
@@ -25,6 +25,7 @@ namespace Symbiote.Jackalope.Config
 
         public AmqpEndpointConfiguration()
         {
+            Broker = "default";
             ExchangeName = "";
             RoutingKeys = new List<string>();
             NoWait = false;

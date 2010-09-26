@@ -8,68 +8,38 @@ namespace Symbiote.Jackalope.Impl.Server
 {
     public class ConnectionManager : IConnectionManager
     {
-        private IAmqpConfigurationProvider _configurationProvider;
-        private ConnectionFactory _connectionFactory;
-        private IConnection _connection;
+        protected IAmqpConfigurationProvider Provider { get; set; }
 
-        public IConnection GetConnection()
-        {
-            if (_connection == null || !_connection.IsOpen)
-                OpenConnection();
-            return _connection;
-        }
+        protected IBroker DefaultBroker { get { return Provider.Brokers["default"]; } }
 
         public string Protocol
         {
-            get { return _configurationProvider.Servers[0].Protocol; }
+            get { return Provider.Brokers.Values.First().Protocol; }
         }
 
-        protected void OpenConnection()
+        public IConnection GetConnection()
         {
-            try
-            {
-                var serverConfiguration = _configurationProvider.Servers.First();
-                var protocol = Protocols.Lookup(serverConfiguration.Protocol);
-                var hostName = serverConfiguration.Address;
-                var port = serverConfiguration.Port;
-                _connectionFactory.UserName = serverConfiguration.User;
-                _connectionFactory.Password = serverConfiguration.Password;
-                _connectionFactory.VirtualHost = serverConfiguration.VirtualHost;
-                _connectionFactory.Protocol = protocol;
-                _connectionFactory.HostName = hostName;
-                _connectionFactory.Port = port;
-                _connection = _connectionFactory.CreateConnection();
-                _connection.ConnectionShutdown += ConnectionShutdown;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("An exception occurred trying to create a connection to a RabbitMQ node :(");
-            }
+            return DefaultBroker.GetConnection();
         }
 
-        void ConnectionShutdown(IConnection connection, ShutdownEventArgs reason)
+        public IConnection GetConnection(string brokerName)
         {
-            "The connection to the rabbitmq node is shutting down. \r\n\t Class: {0} \r\n\t Method: {1} \r\n\t Cause: {2} \r\n\t Reply {3}: {4}"
-                .ToError<IBus>
-                (
-                    reason.ClassId,
-                    reason.MethodId,
-                    reason.Cause,
-                    reason.ReplyCode,
-                    reason.ReplyText
-                );
-            connection.ConnectionShutdown -= ConnectionShutdown;
-            _connection = null;
-            connection.Dispose();
-            connection = null;
+            return Provider.Brokers[brokerName].GetConnection();
+        }
+
+        public IConnection GetConnection<T>(T id)
+        {
+            return DefaultBroker.GetBalancedConnection(id.ToString());
+        }
+
+        public IConnection GetConnection<T>(T id, string brokerName)
+        {
+            return Provider.Brokers[brokerName].GetBalancedConnection(id.ToString());
         }
 
         public ConnectionManager(IAmqpConfigurationProvider configurationProvider)
         {
-            _configurationProvider = configurationProvider;
-            _connectionFactory = new ConnectionFactory();
+            Provider = configurationProvider;
         }
-
-
     }
 }

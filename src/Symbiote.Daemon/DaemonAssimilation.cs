@@ -37,7 +37,6 @@ namespace Symbiote.Daemon
             var topshelfConfig = configuration.GetTopShelfConfiguration();
             if (configuration == null)
                 throw new Exception("Please configure your service first with the Daemon<> call before attempting to run this service.");
-
             Runner.Host(topshelfConfig, configuration.CommandLineArgs);
         }
     }

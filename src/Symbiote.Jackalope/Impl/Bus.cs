@@ -115,7 +115,12 @@ namespace Symbiote.Jackalope.Impl
         {
             if (body != default(T))
             {
-                using (var proxy = _channelFactory.GetProxyForExchange(exchangeName))
+                var correlated = body as ICorrelate;
+                var correlationId = correlated == null ? null : correlated.CorrelationId;
+
+                using (var proxy = correlationId == null 
+                    ? _channelFactory.GetProxyForExchange(exchangeName)
+                    : _channelFactory.GetProxyForExchange(exchangeName, correlationId))
                 {
                     proxy.Send(body, routingKey);
                 }

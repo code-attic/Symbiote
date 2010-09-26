@@ -80,12 +80,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Config\AmqpConfiguration.cs" />
     <Compile Include="Config\AmqpFluentConfiguration.cs" />
     <Compile Include="Config\AmqpFluentServerConfiguration.cs" />
     <Compile Include="Config\AmqpServer.cs" />
-    <Compile Include="Config\AmqpServerCollection.cs" />
-    <Compile Include="Config\AmqpServerConfiguration.cs" />
     <Compile Include="Config\IAmqpConfigurationProvider.cs" />
     <Compile Include="Config\IAmqpServerConfiguration.cs" />
     <Compile Include="Envelope.cs" />
@@ -97,12 +94,14 @@
     <Compile Include="Impl\Dispatch\ObservableQueue.cs" />
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
+    <Compile Include="Impl\Control\IRouteMessages.cs" />
     <Compile Include="Impl\Routes\IDefineRoute.cs" />
     <Compile Include="Impl\Routes\IRouteManager.cs" />
     <Compile Include="Impl\Routes\IRouteMessage.cs" />
     <Compile Include="Impl\Routes\MessageRoute.cs" />
     <Compile Include="Impl\Routes\RouteBuilder.cs" />
     <Compile Include="Impl\Routes\RouteManager.cs" />
+    <Compile Include="Config\IBroker.cs" />
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="IQueueStreamCollection.cs" />
     <Compile Include="JackalopeConfigurationException.cs" />

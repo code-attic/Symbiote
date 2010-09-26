@@ -1,6 +1,9 @@
-﻿namespace Symbiote.Redis.Impl.Connection
+﻿using System;
+
+namespace Symbiote.Redis.Impl.Connection
 {
-    public interface IRedisConnection
+    public interface IRedisConnection 
+        : IDisposable
     {
         bool InUse { get; set; }
         bool SendExpectSuccess(byte[] data, string command);

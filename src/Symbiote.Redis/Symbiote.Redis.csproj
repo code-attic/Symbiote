@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
+    <Compile Include="Impl\Command\SetManyCommand.cs" />
     <Compile Include="Impl\Connection\ConnectionHandle.cs" />
     <Compile Include="Impl\Command\DatabaseSizeCommand.cs" />
     <Compile Include="Impl\Command\DecrementCommand.cs" />

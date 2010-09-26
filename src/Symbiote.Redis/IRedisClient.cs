@@ -6,6 +6,8 @@ namespace Symbiote.Redis
     public interface IRedisClient
     {
         bool Set<T>(string key, T value);
+        bool Set<T>(IDictionary<string, T> pairs);
+        bool Set<T>(IEnumerable<T> values, Func<T, string> getKey);
         bool CheckAndSet<T>(string key, T value);
         T Get<T>(string key);
         T GetSet<T>(string key, T value);

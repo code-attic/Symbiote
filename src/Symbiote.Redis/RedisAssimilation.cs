@@ -5,6 +5,8 @@ using System.Text;
 using Symbiote.Core;
 using Symbiote.Redis.Impl;
 using Symbiote.Redis.Impl.Config;
+using Symbiote.Redis.Impl.Connection;
+using Symbiote.Redis.Impl.Serialization;
 
 namespace Symbiote.Redis
 {
@@ -19,7 +21,10 @@ namespace Symbiote.Redis
                 .Dependencies(x =>
                                   {
                                       x.For<RedisConfiguration>().Use(configurator.Configuration);
+                                      x.For<IRedisConnectionPool>().Use<LockingRedisConnectionPool>().AsSingleton();
                                       x.For<IRedisClient>().Use<RedisClient>();
+                                      x.For<ICacheSerializer>().Use<JsonCacheSerializer>();
+                                      x.For<IRedisConnectionFactory>().Use<RedisConnectionFactory>();
                                   });
             return assimilate;
         }

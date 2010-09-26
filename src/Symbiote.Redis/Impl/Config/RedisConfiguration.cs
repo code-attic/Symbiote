@@ -13,7 +13,7 @@ namespace Symbiote.Redis.Impl.Config
 
         public void Init()
         {
-            ConnectionLimit = 5;
+            ConnectionLimit = 10;
             SendTimeout = 30;
             RetryTimeout = 30;
             RetryCount = 5;
@@ -22,6 +22,7 @@ namespace Symbiote.Redis.Impl.Config
         public RedisConfiguration()
         {
             Hosts = new ConcurrentDictionary<string, RedisHost>();
+            Init();
         }
     }
 }

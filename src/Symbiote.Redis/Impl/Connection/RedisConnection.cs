@@ -62,7 +62,7 @@ namespace Symbiote.Redis.Impl.Connection
 
         public bool SendExpectSuccess(byte[] data, string command)
         {
-           SendCommand (null, command);
+           SendCommand (data, command);
            return ExpectSuccess();
         }
 
@@ -185,16 +185,33 @@ namespace Symbiote.Redis.Impl.Connection
                 Socket.Send (commandBytes);
                 if(data != null && data.Length > 0)
                 {
-                    Socket.Send (data);
+                    var sent = 0;
+                    var buffer = (1024 ^ 2) * 7;
+                    while(sent < data.Length)
+                    {
+                        var left = data.Length - sent;
+                        var send = left > buffer ? buffer : left;
+                        sent += Socket.Send(data, sent, send, SocketFlags.None);
+                    }
+                    //Socket.Send (data);
                     Socket.Send (end_data);
                 }
             } 
-            catch (SocketException)
+            catch (SocketException socketException)
             {
                 // timeout;
                 Socket.Close ();
                 Socket = null;
                 throw new Exception(UNABLE_TO_CONNECT);
+            }
+        }
+
+        public void Dispose()
+        {
+            if(Socket != null)
+            {
+                Socket.Close();
+                Socket = null;
             }
         }
 

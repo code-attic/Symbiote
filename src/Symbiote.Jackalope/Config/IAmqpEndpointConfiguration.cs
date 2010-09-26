@@ -5,6 +5,7 @@ namespace Symbiote.Jackalope.Config
 {
     public interface IAmqpEndpointConfiguration
     {
+        string Broker { get; set; }
         string QueueName { get; set; }
         List<string> RoutingKeys { get; set; }
         ExchangeType ExchangeType { get; set; }

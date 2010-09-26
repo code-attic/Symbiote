@@ -17,15 +17,32 @@ namespace Symbiote.Jackalope.Impl.Channel
             return CreateProxy(endpoint);
         }
 
+        public IChannelProxy GetProxyForQueue<T>(string queueName, T id)
+        {
+            var endpoint = _endpointManager.GetEndpointByQueue(queueName);
+            return CreateProxy(endpoint, id);
+        }
+
         public IChannelProxy GetProxyForExchange(string exchangeName)
         {
             var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
             return CreateProxy(endpoint);
         }
 
+        public IChannelProxy GetProxyForExchange<T>(string exchangeName, T id)
+        {
+            var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
+            return CreateProxy(endpoint, id);
+        }
+
         protected IChannelProxy CreateProxy(IEndPoint endpoint)
         {
             return new ChannelProxy(_connectionManager.GetConnection().CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
+        }
+
+        protected IChannelProxy CreateProxy<T>(IEndPoint endpoint, T id)
+        {
+            return new ChannelProxy(_connectionManager.GetConnection(id).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
         }
 
         public ChannelProxyFactory(

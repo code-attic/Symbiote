@@ -8,7 +8,6 @@ namespace Symbiote.Redis.Impl
     class UnimplementedCommands
     {
         protected const string QUIT = "QUIT\r\n";
-        protected const string SET_MANY = "*{0}\r\n$4\r\nMSET\r\n";
         protected const string KEY_TYPE = "TYPE {0}\r\n";
         protected const string RANDOM_KEY = "RANDOMKEY\r\n";
         protected const string GET_MANY = "MGET {0}\r\n";

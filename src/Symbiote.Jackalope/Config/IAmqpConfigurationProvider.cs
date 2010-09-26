@@ -4,6 +4,6 @@ namespace Symbiote.Jackalope.Config
 {
     public interface IAmqpConfigurationProvider
     {
-        IList<IAmqpServerConfiguration> Servers { get; set; }
+        IDictionary<string, IBroker> Brokers { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Symbiote.Core.Hashing
 
         protected int AliasCount { get; set; }
 
-        public void AddNode(string name, TNode node)
+        public virtual void AddNode(string name, TNode node)
         {
             Nodes[name] = node;
             BuildAliases(name);
@@ -64,7 +64,7 @@ namespace Symbiote.Core.Hashing
             }
         }
 
-        public void RemoveNode(string name)
+        public virtual void RemoveNode(string name)
         {
             TNode node = default(TNode);
             Nodes.TryRemove(name, out node);

@@ -22,10 +22,12 @@ namespace Symbiote.Redis.Impl.Command
 
         public TReturn Execute()
         {
+            TReturn value = default(TReturn);
             using(var handle = ConnectionHandle.Acquire())
             {
-                return Command(handle.Connection);
+                value = Command(handle.Connection);
             }
+            return value;
         }
 
         protected RedisCommand()

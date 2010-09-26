@@ -4,5 +4,7 @@ namespace Symbiote.Jackalope.Impl.Channel
     {
         IChannelProxy GetProxyForQueue(string queueName);
         IChannelProxy GetProxyForExchange(string exchangeName);
+        IChannelProxy GetProxyForQueue<T>(string queueName, T id);
+        IChannelProxy GetProxyForExchange<T>(string exchangeName, T id);
     }
 }

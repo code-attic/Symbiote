@@ -14,6 +14,13 @@ namespace Symbiote.Redis
             return this;
         }
 
+        public RedisConfigurator AddServer(string host)
+        {
+            var server = new RedisHost() { Host = host };
+            Configuration.Hosts[host] = server;
+            return this;
+        }
+
         public RedisConfigurator AddLocalServer()
         {
             var server = new RedisHost();

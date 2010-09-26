@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.ServiceLocation;
+﻿using System;
+using Microsoft.Practices.ServiceLocation;
 using Topshelf.Configuration.Dsl;
 using Topshelf.Shelving;
 
@@ -13,7 +14,8 @@ namespace Symbiote.Daemon
             cfg.WhenStarted(s =>
                                 {
                                     s.Initialize();
-                                    s.Start();
+                                    Action start = s.Start;
+                                    start.BeginInvoke(null, null);
                                 });
             cfg.WhenStopped(s => s.Stop());       
         }

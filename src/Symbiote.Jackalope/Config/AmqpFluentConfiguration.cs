@@ -9,19 +9,23 @@ namespace Symbiote.Jackalope.Config
 {
     public class AmqpFluentConfiguration : IAmqpConfigurationProvider
     {
-        public List<string> MessageSubscriptions { get; set; }
-
-        public IList<IAmqpServerConfiguration> Servers
-        {
-            get;
-            set;
-        }
+        public IDictionary<string, IBroker> Brokers { get; set; }
 
         public AmqpFluentConfiguration AddServer(Action<AmqpFluentServerConfiguration> configure)
         {
             var fluentServerConfiguration = new AmqpFluentServerConfiguration();
             configure(fluentServerConfiguration);
-            Servers.Add(fluentServerConfiguration.Server);
+
+            var amqpServer = fluentServerConfiguration.Server;
+
+            IBroker broker = null;
+            if(!Brokers.TryGetValue(amqpServer.Broker, out broker))
+            {
+                broker = new AmqpBroker(amqpServer.Broker);
+                Brokers[broker.Name] = broker;
+            }
+            broker.AddServer(amqpServer);
+
             return this;
         }
 
@@ -33,8 +37,7 @@ namespace Symbiote.Jackalope.Config
 
         public AmqpFluentConfiguration()
         {
-            Servers = new List<IAmqpServerConfiguration>();
-            MessageSubscriptions = new List<string>();
+            Brokers = new Dictionary<string, IBroker>();
         }
     }
 }

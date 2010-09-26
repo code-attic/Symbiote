@@ -6,17 +6,17 @@ namespace Symbiote.Redis.Impl.Connection
     public class ConnectionHandle
         : IDisposable
     {
-        protected RedisConnectionPool Pool { get; set; }
+        protected IRedisConnectionPool Pool { get; set; }
         public IRedisConnection Connection { get; set; }
 
         public static ConnectionHandle Acquire()
         {
-            var pool = ServiceLocator.Current.GetInstance<RedisConnectionPool>();
+            var pool = ServiceLocator.Current.GetInstance<IRedisConnectionPool>();
             var connection = pool.Acquire();
             return new ConnectionHandle(pool, connection);
         }
 
-        public ConnectionHandle(RedisConnectionPool pool, IRedisConnection connection)
+        public ConnectionHandle(IRedisConnectionPool pool, IRedisConnection connection)
         {
             Pool = pool;
             Connection = connection;

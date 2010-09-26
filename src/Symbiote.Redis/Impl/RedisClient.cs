@@ -77,7 +77,19 @@ namespace Symbiote.Redis.Impl
 	        return command.Execute();
 	    }
 
-	    public bool CheckAndSet<T>(string key, T value)
+        public bool Set<T>(IDictionary<string, T> pairs)
+        {
+            var set = new SetManyCommand<T>(pairs.Select(p => Tuple.Create(p.Key, p.Value)));
+            return set.Execute();
+        }
+
+        public bool Set<T>(IEnumerable<T> values, Func<T, string> getKey)
+        {
+            var set = new SetManyCommand<T>(values.Select(v => Tuple.Create(getKey(v), v)));
+            return set.Execute();
+        }
+
+        public bool CheckAndSet<T>(string key, T value)
 	    {
 		    if (key == null)
 			    throw new ArgumentNullException ("key");
