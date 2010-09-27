@@ -1,15 +1,52 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Symbiote.Core.Hashing;
+using Symbiote.Jackalope.Config;
 
 namespace Symbiote.Jackalope.Impl.Router
 {
-    public interface IRouteMessages<TMessageId> :
-        IMessageHandler<ICorrelate>
+    public abstract class BaseRouter : 
+        IMessageHandler<ICorrelate>,
+        IMessageHandler<SubscriberOnline>
     {
-        
+        protected ConcurrentDictionary<string, RoutingGroup> 
+
+        public void Process(ICorrelate message, IMessageDelivery messageDelivery)
+        {
+            
+        }
+
+        public void Process(SubscriberOnline message, IMessageDelivery messageDelivery)
+        {
+            
+        }
+    }
+
+    public class RoutingGroup
+    {
+        public string Alias { get; set; }
+        public Distributor<string> Exchanges { get; set; }
+
+
+    }
+
+    public class SubscriberOnline
+    {
+        public IAmqpEndpointConfiguration Configuration { get; set; }
+        public string ExchangeAlias { get; set; }
+
+        public SubscriberOnline()
+        {
+        }
+
+        public SubscriberOnline(IAmqpEndpointConfiguration configuration, string exchangeAlias)
+        {
+            Configuration = configuration;
+            ExchangeAlias = exchangeAlias;
+        }
     }
 
     public interface IMessageStore<TMessageId>

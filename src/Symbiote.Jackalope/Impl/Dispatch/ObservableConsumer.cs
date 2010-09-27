@@ -27,7 +27,9 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         {
             Observers.ForEach(x =>
             {
-                x.OnNext(message);
+                Action<Envelope> next = x.OnNext;
+                next.BeginInvoke(message, null, null);
+                //x.OnNext(message);
             });
         }
 
@@ -58,7 +60,8 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             }
             else
             {
-                Dispatch(envelope);
+                dispatch.BeginInvoke(envelope, null, null);
+                //Dispatch(envelope);
             }
         }
 

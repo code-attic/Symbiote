@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
+using Demo.Messages;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
@@ -17,25 +19,49 @@ namespace SubscribeDemo
         public override void Start()
         {
             "Subscriber is starting.".ToInfo<Subscriber>();
-
+            var latencyTotal1 = 0d;
+            var latencyTotal2 = 0d;
+            var count1 = 0d;
+            var count2 = 0d;
+            var watch = new Stopwatch();
             _bus
                 .QueueStreams["subscriber1"]
                 .Do(x =>
-                    x.MessageDelivery.Acknowledge())
+                        {
+                            if(count1 == 0)
+                                watch.Start();
+                            x.MessageDelivery.Acknowledge();
+                            count1++;
+                            latencyTotal1 += DateTime.Now.Subtract((x.Message as Message).Created).TotalMilliseconds;
+                        })
                 .BufferWithTime(TimeSpan.FromSeconds(1))
                 .Subscribe(x =>
                 {
-                    "Processed {0} queue 1 messages in 1 second".ToInfo<Subscriber>(x.Count);
+                    var avgLatency = latencyTotal1 / (count1 == 0 ? 1 : count1);
+                    var msgsPerSecond = count1 / watch.Elapsed.TotalSeconds;
+                    "Q1: {0} msgs total. {1} msgs/sec. {2} ms latency / msg."
+                        .ToInfo<Subscriber>(count1, msgsPerSecond, avgLatency);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(93));
                 });
 
             _bus
                 .QueueStreams["subscriber2"]
                 .Do(x =>
-                    x.MessageDelivery.Acknowledge())
+                        {
+                            if(count2 == 0)
+                                watch.Start();
+                            x.MessageDelivery.Acknowledge();
+                            count2++;
+                            latencyTotal2 += DateTime.Now.Subtract((x.Message as Message).Created).TotalMilliseconds; 
+                        })
                 .BufferWithTime(TimeSpan.FromSeconds(1))
                 .Subscribe(x =>
                 {
-                    "Processed {0} queue 2 messages in 1 second".ToInfo<Subscriber>(x.Count);
+                    var avgLatency = latencyTotal2 / (count2 == 0 ? 1 : count2);
+                    var msgsPerSecond = count2 / watch.Elapsed.TotalSeconds;
+                    "Q2: {0} msgs total. {1} msgs/sec. {2} ms latency / msg."
+                        .ToInfo<Subscriber>(count2, msgsPerSecond, avgLatency);
+                    Thread.Sleep(TimeSpan.FromMilliseconds(93));
                 });
         }
 
