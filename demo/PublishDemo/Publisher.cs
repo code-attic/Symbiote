@@ -9,6 +9,7 @@ using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Jackalope;
 using System.Linq;
+using Symbiote.Jackalope.Impl.Router;
 using Symbiote.Log4Net;
 using Symbiote.StructureMap;
 
@@ -130,11 +131,12 @@ namespace PublishDemo
         {
             Bus = ServiceLocator.Current.GetInstance<IBus>();
             Bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
-            Bus.AddEndPoint(x => x.Exchange("secondary", ExchangeType.fanout));
-            Bus.AddEndPoint(x => x.QueueName("subscriber1"));
-            Bus.AddEndPoint(x => x.QueueName("subscriber2"));
-            Bus.BindQueue("subscriber1", "publisher");
-            Bus.BindQueue("subscriber2", "secondary");
+            Bus.AddEndPoint(x => x.QueueName("subscriber").LoadBalanced());
+            Bus.BindQueue("subscriber", "publisher");
+            Bus.AddEndPoint(
+                x => x.Exchange("control", ExchangeType.fanout).QueueName("routing").RoutingKeys("subscriber").Broker("control"));
+            Bus.DefineRouteFor<SubscriberOnline>(x => x.SendTo("control").WithRoutingKey(s => s.SourceQueue));
+            Bus.Subscribe("routing");
         }
     }
 }

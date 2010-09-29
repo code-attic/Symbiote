@@ -95,6 +95,7 @@
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
     <Compile Include="Impl\Control\IRouteMessages.cs" />
+    <Compile Include="NoRouteDefinedException.cs" />
     <Compile Include="Impl\Routes\IDefineRoute.cs" />
     <Compile Include="Impl\Routes\IRouteManager.cs" />
     <Compile Include="Impl\Routes\IRouteMessage.cs" />

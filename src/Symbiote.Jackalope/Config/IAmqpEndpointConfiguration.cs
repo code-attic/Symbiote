@@ -38,5 +38,6 @@ namespace Symbiote.Jackalope.Config
         IDictionary Arguments { get; set; }
         bool Exclusive { get; set; }
         bool PersistentDelivery { get; set; }
+        bool LoadBalance { get; set; }
     }
 }

@@ -53,12 +53,12 @@ namespace Symbiote.Jackalope.Impl.Channel
 
         protected IChannelProxy CreateProxy(IEndPoint endpoint)
         {
-            return new ChannelProxy(_connectionManager.GetConnection().CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
+            return new ChannelProxy(_connectionManager.GetConnection(endpoint.EndpointConfiguration.Broker).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
         }
 
         protected IChannelProxy CreateProxy<T>(IEndPoint endpoint, T id)
         {
-            return new ChannelProxy(_connectionManager.GetConnection(id).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
+            return new ChannelProxy(_connectionManager.GetConnection(id, endpoint.EndpointConfiguration.Broker).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
         }
 
         public ChannelProxyFactory(

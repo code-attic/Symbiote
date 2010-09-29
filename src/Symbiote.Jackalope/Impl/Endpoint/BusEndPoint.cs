@@ -31,6 +31,12 @@ namespace Symbiote.Jackalope.Impl.Endpoint
 
         #region Fluently
 
+        public IEndPoint Broker(string broker)
+        {
+            _configuration.Broker = broker;
+            return this;
+        }
+
         public IEndPoint QueueName(string queueName)
         {
             _configuration.QueueName = queueName;
@@ -83,6 +89,12 @@ namespace Symbiote.Jackalope.Impl.Endpoint
         public IEndPoint Internal()
         {
             _configuration.Internal = true;
+            return this;
+        }
+
+        public IEndPoint LoadBalanced()
+        {
+            _configuration.LoadBalance = true;
             return this;
         }
 

@@ -49,6 +49,4 @@ namespace Symbiote.Jackalope.Impl.Endpoint
             }
         }
     }
-
-
 }

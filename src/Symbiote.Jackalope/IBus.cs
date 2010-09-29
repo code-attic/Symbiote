@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Impl;
+using Symbiote.Jackalope.Config;
 using Symbiote.Jackalope.Impl;
 using Symbiote.Jackalope.Impl.Endpoint;
 using Symbiote.Jackalope.Impl.Routes;
@@ -26,7 +27,7 @@ namespace Symbiote.Jackalope
     public interface IBus : IDisposable
     {
         IQueueStreamCollection QueueStreams { get; }
-        void AddEndPoint(Action<IEndPoint> endpointConfiguration);
+        IAmqpEndpointConfiguration AddEndPoint(Action<IEndPoint> endpointConfiguration);
         void AutoRouteFromSource<T>(IObservable<T> source)
             where T : class;
         void BindQueue(string queueName, string exchangeName, params string[] routingKeys);

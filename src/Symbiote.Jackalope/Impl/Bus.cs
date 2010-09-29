@@ -29,12 +29,15 @@ using Symbiote.Jackalope.Config;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Dispatch;
 using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Router;
 using Symbiote.Jackalope.Impl.Routes;
 using Symbiote.Jackalope.Impl.Subscriptions;
 
 namespace Symbiote.Jackalope.Impl
 {
-    public class Bus : IBus
+    public class Bus : 
+        IBus,
+        IQueueStreamCollection
     {
         private IChannelProxyFactory _channelFactory;
         private ISubscriptionManager _subscriptionManager;
@@ -42,14 +45,33 @@ namespace Symbiote.Jackalope.Impl
             = new ConcurrentDictionary<Type, IDispatch>();
         private IEndpointManager _endpointManager;
         private IRouteManager _routeManager;
+        private static string tempId = Guid.NewGuid().ToString();
 
-        public IQueueStreamCollection QueueStreams { get { return _subscriptionManager; } }
+        public IQueueStreamCollection QueueStreams { get { return this; } }
 
-        public void AddEndPoint(Action<IEndPoint> endpointConfiguration)
+        public IObservable<Envelope> this[string queueName]
+        {
+            get
+            {
+                var endpoint = _endpointManager.GetEndpointByQueue(queueName);
+                var effectiveQueue = queueName;
+                if (endpoint.EndpointConfiguration.LoadBalance)
+                {
+                    effectiveQueue = "{0}.{1}".AsFormat(queueName, GetClientId());
+                    _subscriptionManager.EnsureSubscriptionIsRunning(queueName);    
+                }
+                return _subscriptionManager
+                    .EnsureSubscriptionIsRunning(effectiveQueue)
+                    .MessageStream;
+            }
+        }
+
+        public IAmqpEndpointConfiguration AddEndPoint(Action<IEndPoint> endpointConfiguration)
         {
             var endpoint = new BusEndPoint();
             endpointConfiguration(endpoint);
             _endpointManager.AddEndpoint(endpoint);
+            return endpoint.EndpointConfiguration;
         }
 
         public void AutoRouteFromSource<T>(IObservable<T> source)
@@ -104,8 +126,13 @@ namespace Symbiote.Jackalope.Impl
         {
             if(body != default(T))
             {
-                _routeManager
-                    .GetRoutesForMessage(body)
+                var routesForMessage = _routeManager
+                    .GetRoutesForMessage(body);
+
+                if (routesForMessage.Count() == 0)
+                    throw new NoRouteDefinedException("No route has been defined for message type {0}.".AsFormat(typeof(T)));
+
+                routesForMessage
                     .ForEach(x =>
                                  {
                                      if(string.IsNullOrEmpty(x.Item2))
@@ -144,6 +171,37 @@ namespace Symbiote.Jackalope.Impl
         }
 
         public void Subscribe(string queueName)
+        {
+            var endpoint = _endpointManager.GetEndpointByQueue(queueName);
+            var subscribeTo = queueName;
+            if(endpoint.EndpointConfiguration.LoadBalance)
+            {
+                subscribeTo = LoadBalanceSubscription(queueName);
+            }
+            DirectSubscription(subscribeTo);
+        }
+
+        protected string LoadBalanceSubscription(string queueName)
+        {
+            var alias = "{0}.{1}".AsFormat(queueName, GetClientId());
+            var endpoint = AddEndPoint(x => x
+                .Exchange(alias, ExchangeType.direct)
+                .QueueName(alias)
+                .AutoDelete()
+                .Immediate()
+                .Exclusive()
+                .Mandatory()
+                .RoutingKeys(queueName));
+            Send(new SubscriberOnline(endpoint, queueName, alias));
+            return alias;
+        }
+
+        protected string GetClientId()
+        {
+            return tempId;
+        }
+
+        protected void DirectSubscription(string queueName)
         {
             _subscriptionManager.AddSubscription(queueName).Start();
         }

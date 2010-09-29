@@ -20,6 +20,11 @@ namespace Symbiote.Jackalope.Config
     {
         internal AmqpServer Server { get; set; }
 
+        public AmqpFluentServerConfiguration Defaults()
+        {
+            return this;
+        }
+
         public AmqpFluentServerConfiguration Address(string address)
         {
             Server.Address = address;

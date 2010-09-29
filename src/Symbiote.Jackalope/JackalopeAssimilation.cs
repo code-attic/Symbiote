@@ -123,14 +123,18 @@ namespace Symbiote.Jackalope
                     .Where(x => typeof (IMessageHandler).IsAssignableFrom(x) || x.IsAssignableFrom(typeof (IMessageHandler)));
 
             var dispatcherPairs = handlers
-                .Select(h =>
+                .SelectMany(h =>
                             {
-                                var handler = h.GetInterface("IMessageHandler`1");
-                                 var messageType = handler.GetGenericArguments()[0];
-                                 var dispatchInterface = typeof (IDispatch<>).MakeGenericType(messageType);
-                                 var dispatchType = typeof (Dispatcher<>).MakeGenericType(messageType);
-                                 return Tuple.Create(dispatchInterface, dispatchType);
-                             });
+                                var interfaces = h.GetInterfaces().Where(t => t.Name == "IMessageHandler`1");
+                                return interfaces
+                                    .Select(handler =>
+                                                {
+                                                    var messageType = handler.GetGenericArguments()[0];
+                                                    var dispatchInterface = typeof(IDispatch<>).MakeGenericType(messageType);
+                                                    var dispatchType = typeof(Dispatcher<>).MakeGenericType(messageType);
+                                                    return Tuple.Create(dispatchInterface, dispatchType);
+                                                });
+                            });
             var simpleInterface = typeof (IDispatch);
             Assimilate.Dependencies(x => dispatcherPairs.ForEach(p =>
             {

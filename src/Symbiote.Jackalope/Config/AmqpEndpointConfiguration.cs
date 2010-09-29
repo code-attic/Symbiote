@@ -37,6 +37,7 @@ namespace Symbiote.Jackalope.Config
         public bool Exclusive { get; set; }
         public bool PersistentDelivery { get; set; }
         public bool ImmediateDelivery { get; set; }
+        public bool LoadBalance { get; set; }
         public bool MandatoryDelivery { get; set; }
 
         public AmqpEndpointConfiguration()

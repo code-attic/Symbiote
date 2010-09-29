@@ -16,12 +16,13 @@ limitations under the License.
 
 namespace Symbiote.Jackalope.Impl.Subscriptions
 {
-    public interface ISubscriptionManager : IQueueStreamCollection
+    public interface ISubscriptionManager
     {
         void StartAllSubscriptions();
         void StopAllSubscriptions();
         void StartSubscription(string queueName);
         void StopSubscription(string queueName);
         ISubscription AddSubscription(string queueName);
+        ISubscription EnsureSubscriptionIsRunning(string queueName);
     }
 }

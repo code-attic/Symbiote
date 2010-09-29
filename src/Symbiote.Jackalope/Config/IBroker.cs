@@ -97,10 +97,12 @@ namespace Symbiote.Jackalope.Config
             {
                 var connection = server.GetConnection();
                 if(!LoadBalanced)
+                {
                     Connection = connection;
+                }
                 Distributor.AddNode(server.Address, connection);    
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 "An exception occurred attempting to connect to the amqp server at {0}:{1}"
                     .ToError<IBus>(server.Address, server.Port);

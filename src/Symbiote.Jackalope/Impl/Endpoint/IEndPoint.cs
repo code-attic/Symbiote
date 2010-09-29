@@ -21,6 +21,8 @@ namespace Symbiote.Jackalope.Impl.Endpoint
     public interface IEndPoint
     {
         IAmqpEndpointConfiguration EndpointConfiguration { get; }
+        IEndPoint Broker(string broker);
+        IEndPoint LoadBalanced();
         IEndPoint QueueName(string queueName);
         IEndPoint RoutingKeys(params string[] routingKeys);
         IEndPoint Exchange(string exchangeName, ExchangeType exchange);

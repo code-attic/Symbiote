@@ -147,6 +147,7 @@ namespace Symbiote.Jackalope.Impl.Channel
             var properties = Channel.CreateBasicProperties();
             properties.DeliveryMode = (byte)(_configuration.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
             properties.ContentType = contentType;
+            properties.MessageId = Guid.NewGuid().ToString();
             return properties;
         }
 
