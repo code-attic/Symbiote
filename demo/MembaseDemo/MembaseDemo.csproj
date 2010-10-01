@@ -38,23 +38,8 @@
     <OutputPath>bin\x86\Silverlight\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Enyim.Caching">
-      <HintPath>..\..\bin\Eidetic\Enyim.Caching.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\bin\Log4Net\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Magnum">
-      <HintPath>..\..\bin\Daemon\Magnum.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\..\bin\Core\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\bin\Core\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\bin\StructureMap\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Core">
       <HintPath>..\..\bin\Core\Symbiote.Core.dll</HintPath>
@@ -78,9 +63,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Topshelf">
-      <HintPath>..\..\bin\Daemon\Topshelf.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

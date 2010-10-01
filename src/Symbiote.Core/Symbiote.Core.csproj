@@ -59,10 +59,32 @@
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Microsoft\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+      <IlMerge>True</IlMerge>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+      <IlMerge>True</IlMerge>
+    </Reference>
+    <Reference Include="System.CoreEx, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+      <IlMerge>True</IlMerge>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Interactive, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
+      <IlMerge>True</IlMerge>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
+      <IlMerge>True</IlMerge>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -158,7 +180,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Ilmerge.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

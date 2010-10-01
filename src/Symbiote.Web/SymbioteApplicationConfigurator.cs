@@ -17,9 +17,6 @@ limitations under the License.
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Microsoft.Practices.ServiceLocation;
-using Spark;
-using Spark.Web.Mvc;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Hibernate;
