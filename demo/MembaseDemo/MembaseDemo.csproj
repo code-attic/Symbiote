@@ -55,24 +55,6 @@
     <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\..\bin\Core\Microsoft.Practices.ServiceLocation.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Core">
-      <HintPath>..\..\bin\Core\Symbiote.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Daemon">
-      <HintPath>..\..\bin\Daemon\Symbiote.Daemon.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Eidetic">
-      <HintPath>..\..\bin\Eidetic\Symbiote.Eidetic.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Log4Net">
-      <HintPath>..\..\bin\Log4Net\Symbiote.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.StructureMap">
-      <HintPath>..\..\bin\StructureMap\Symbiote.StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -87,6 +69,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
+      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
+      <Name>Symbiote.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Eidetic\Symbiote.Eidetic.csproj">
+      <Project>{5F7BC676-C3BA-4705-8A40-DBFF382F7DAA}</Project>
+      <Name>Symbiote.Eidetic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
+      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
+      <Name>Symbiote.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
+      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
+      <Name>Symbiote.StructureMap</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
