@@ -173,14 +173,16 @@ namespace Symbiote.Core.DI
 
         protected void RegisterTypeClosingInterface(Type type, Type match, IDependencyRegistry registry)
         {
-            var pluginType = match
+            var pluginTypes = match
                 .GetInterfaces()
-                .Where(y => y.IsGenericType)
-                .First(y => y.GetGenericTypeDefinition().Equals(type));
+                .Where(y => y.IsGenericType && y.GetGenericTypeDefinition().Equals(type));
 
-            var dependencyExpression = DependencyExpression.For(pluginType);
-            dependencyExpression.Use(match);
-            registry.Register(dependencyExpression);
+            foreach(var pluginType in pluginTypes)
+            {
+                var dependencyExpression = DependencyExpression.For(pluginType);
+                dependencyExpression.Use(match);
+                registry.Register(dependencyExpression);    
+            }
         }
 
         protected void RegisterSingleImplementations(IEnumerable<Type> filteredTypes, IDependencyRegistry registry)

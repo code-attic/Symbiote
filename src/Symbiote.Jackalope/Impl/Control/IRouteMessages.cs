@@ -26,39 +26,22 @@ using Symbiote.Core.Extensions;
 namespace Symbiote.Jackalope.Impl.Router
 {
     public abstract class BaseRouter : 
-        IMessageHandler<ICorrelate>,
-        IMessageHandler<SubscriberOnline>
+        IMessageHandler<SubscriberOnline>,
+        IMessageHandler<ICorrelate>
     {
         protected IBus Bus { get; set; }
-        protected ConcurrentDictionary<string, RoutingGroup> RoutingGroups { get; set; }
-        
+        protected IRouteGroupManager RouteGroupManager { get; set; }
+
         public void Process(ICorrelate message, IMessageDelivery messageDelivery)
         {
-            var group = GetRoutingGroup(messageDelivery.Queue);
-            var exchange = group.Exchanges.GetNode(message.CorrelationId);
-            Bus.Send(exchange, message);
-            group.RegisterSentMessage(exchange, messageDelivery);
-        }
-
-        protected virtual RoutingGroup GetRoutingGroup(string sourceQueue)
-        {
-            return RoutingGroups[sourceQueue];
+            RouteGroupManager.RouteMessage(message, messageDelivery);
         }
 
         public void Process(SubscriberOnline message, IMessageDelivery messageDelivery)
         {
             try
             {
-                RoutingGroup routing = null;
-                var clientExchange = message.ClientExchange;
-                var sourceQueue = message.SourceQueue;
-
-                if(!RoutingGroups.TryGetValue(clientExchange, out routing))
-                {
-                    routing = new RoutingGroup(sourceQueue);
-                    Bus.Subscribe(sourceQueue);
-                }
-                routing.Exchanges.AddNode(clientExchange, sourceQueue);
+                RouteGroupManager.RegisterSubscriber(message.SourceQueue, message.ClientExchange);
                 messageDelivery.Acknowledge();
             }
             catch (Exception)
@@ -67,7 +50,50 @@ namespace Symbiote.Jackalope.Impl.Router
             }
         }
 
-        protected BaseRouter(IBus bus)
+        protected BaseRouter(IBus bus, IRouteGroupManager routeGroupManager)
+        {
+            RouteGroupManager = routeGroupManager;
+            Bus = bus;
+        }
+    }
+
+    public interface IRouteGroupManager
+    {
+        void RegisterSubscriber(string sourceQueue, string clientExchange);
+        void RouteMessage(ICorrelate message, IMessageDelivery delivery);
+    }
+
+    public class RouteGroupManager : IRouteGroupManager
+    {
+        protected IBus Bus { get; set; }
+        protected ConcurrentDictionary<string, RoutingGroup> RoutingGroups { get; set; }
+
+        public void RegisterSubscriber(string sourceQueue, string clientExchange)
+        {
+            RoutingGroup routing = null;
+            if (!RoutingGroups.TryGetValue(clientExchange, out routing))
+            {
+                routing = new RoutingGroup(sourceQueue);
+                RoutingGroups[clientExchange] = routing;
+                Bus.Subscribe(sourceQueue);
+            }
+            routing.Exchanges.AddNode(clientExchange, sourceQueue);
+        }
+
+        public void RouteMessage(ICorrelate message, IMessageDelivery delivery)
+        {
+            var group = GetRoutingGroup(delivery.Queue);
+            var exchange = group.Exchanges.GetNode(message.CorrelationId);
+            Bus.Send(exchange, message);
+            group.RegisterSentMessage(exchange, delivery);
+        }
+
+        protected virtual RoutingGroup GetRoutingGroup(string sourceQueue)
+        {
+            return RoutingGroups[sourceQueue];
+        }
+
+        public RouteGroupManager(IBus bus)
         {
             Bus = bus;
             RoutingGroups = new ConcurrentDictionary<string, RoutingGroup>();

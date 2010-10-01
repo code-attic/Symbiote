@@ -25,6 +25,7 @@ namespace RouterDemo
                     .AddServer(s => s.Defaults())
                     .AddServer(s => s.VirtualHost("control").Broker("control"))
                 )
+                .Dependencies(x => x.For<Router>().Use<Router>().AsSingleton())
                 .RunDaemon();
         }
     }
@@ -42,7 +43,7 @@ namespace RouterDemo
         protected void ConfigureEndpoints()
         {
             Bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
-            Bus.AddEndPoint(x => x.QueueName("subscriber").LoadBalanced());
+            Bus.AddEndPoint(x => x.QueueName("subscriber"));
             Bus.BindQueue("subscriber", "publisher");
             Bus.AddEndPoint(
                 x => x.Exchange("control", ExchangeType.fanout).QueueName("routing").RoutingKeys("subscriber").Broker("control"));
@@ -64,7 +65,7 @@ namespace RouterDemo
     public class Router
         : BaseRouter
     {
-        public Router(IBus bus) : base(bus)
+        public Router(IBus bus, IRouteGroupManager routeGroupManager) : base(bus, routeGroupManager)
         {
         }
     }

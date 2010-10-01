@@ -17,7 +17,9 @@ namespace PublishDemo
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Jackalope(x => x.AddServer(s => s.AMQP091().Address("localhost")))
+                .Jackalope(x => x
+                    .AddServer(s => s.AMQP091().Address("localhost"))
+                    .AddServer(s => s.VirtualHost("control").Broker("control")))
                 .Daemon(x => x
                     .Arguments(args)
                     .Name("DemoPublisher")

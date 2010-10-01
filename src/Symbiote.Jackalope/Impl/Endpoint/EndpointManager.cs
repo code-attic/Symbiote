@@ -39,8 +39,12 @@ namespace Symbiote.Jackalope.Impl.Endpoint
             if (!endpoint.Initialized)
             {
                 var configuration = endpoint.EndpointConfiguration;
-                using(var channel = _connectionManager.GetConnection().CreateModel())
+
+                var connections = _connectionManager.GetBrokerConnections(endpoint.EndpointConfiguration.Broker);
+                foreach(var connection in connections)
                 {
+                    using(var channel = connection.CreateModel())
+                    {
                     
                         if (!string.IsNullOrEmpty(configuration.ExchangeName))
                             BuildExchange(channel, configuration);
@@ -52,15 +56,24 @@ namespace Symbiote.Jackalope.Impl.Endpoint
                             BindQueue(channel, configuration.ExchangeName, configuration.QueueName, configuration.RoutingKeys.ToArray());
 
                         endpoint.Initialized = true;
+                    }
                 }
             }
         }
 
         public void BindQueue(string exchangeName, string queueName, params string[] routingKeys)
         {
-            var channel = _connectionManager.GetConnection().CreateModel();
+            var endpoint = _endpointIndex.GetEndpointByExchange(exchangeName);
+            var configuration = endpoint.EndpointConfiguration;
 
-            BindQueue(channel, exchangeName, queueName, routingKeys);
+            var connections = _connectionManager.GetBrokerConnections(endpoint.EndpointConfiguration.Broker);
+            foreach (var connection in connections)
+            {
+                using (var channel = connection.CreateModel())
+                {
+                    BindQueue(channel, exchangeName, queueName, routingKeys);
+                }
+            }
         }
 
         public void BindQueue(IModel channel, string exchangeName, string queueName, params string[] routingKeys)

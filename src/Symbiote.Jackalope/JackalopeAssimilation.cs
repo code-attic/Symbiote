@@ -27,6 +27,7 @@ using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Dispatch;
 using Symbiote.Jackalope.Impl.Endpoint;
+using Symbiote.Jackalope.Impl.Router;
 using Symbiote.Jackalope.Impl.Routes;
 using Symbiote.Jackalope.Impl.Serialization;
 using Symbiote.Jackalope.Impl.Server;
@@ -81,22 +82,27 @@ namespace Symbiote.Jackalope
                             .Use<JsonMessageSerializer>();
                         x.For<IChannelProxyFactory>()
                             .Use<ChannelProxyFactory>();
-                        x.For<IEndpointIndex>()
-                            .Use(new EndpointIndex());
                         x.For<IEndpointManager>()
                             .Use<EndpointManager>();
                         x.For<IConnectionManager>()
                             .Use<ConnectionManager>();
+                        x.For<ISubscription>()
+                            .Use<Subscription>();
+
+                        x.For<ISubscriptionManager>()
+                            .Use(new SubscriptionManager());
+                        x.For<IEndpointIndex>()
+                            .Use(new EndpointIndex());
                         x.For<IRouteManager>()
                             .Use<RouteManager>()
                             .AsSingleton();
-                        x.For<ISubscription>()
-                            .Use<Subscription>();
-                        x.For<ISubscriptionManager>()
-                            .Use(new SubscriptionManager());
                         x.For<IDispatchMessages>()
                             .Use<DispatchingObserver>()
                             .AsSingleton();
+                        x.For<IRouteGroupManager>()
+                            .Use<RouteGroupManager>()
+                            .AsSingleton();
+
                         x.Scan(s =>
                                    {
                                        AppDomain

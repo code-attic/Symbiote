@@ -21,6 +21,7 @@ namespace Demo.Messages
         {
             Body = body;
             Created = DateTime.Now;
+            CorrelationId = Guid.NewGuid().ToString();
         }
     }
 }

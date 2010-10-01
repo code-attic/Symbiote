@@ -14,12 +14,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Generic;
 using RabbitMQ.Client;
 
 namespace Symbiote.Jackalope.Impl.Server
 {
     public interface IConnectionManager
     {
+        IEnumerable<IConnection> GetBrokerConnections(string brokerName);
         IConnection GetConnection();
         IConnection GetConnection(string brokerName);
         IConnection GetConnection<T>(T id);

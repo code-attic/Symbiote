@@ -29,6 +29,7 @@ namespace Symbiote.Jackalope.Config
         string Protocol { get; }
         void AddServer(IAmqpServerConfiguration server);
         IConnection GetConnection();
+        IEnumerable<IConnection> GetConnections();
         IConnection GetBalancedConnection(string id);
     }
 
@@ -78,11 +79,20 @@ namespace Symbiote.Jackalope.Config
     public class AmqpBroker
         : IBroker
     {
+        private IConnection _connection;
         private const string DEFAULT = "default";
         protected IDictionary<string, IAmqpServerConfiguration> Servers { get; set; }
         protected ConnectionFactory Factory { get; set; }
         protected ConnectionDistributor Distributor { get; set; }
-        protected IConnection Connection { get; set; }
+        protected IConnection Connection
+        {
+            get
+            {
+                _connection = _connection ?? Distributor.Connections.First();
+                return _connection;
+            }
+            set { _connection = value; }
+        }
         public string Name { get; set; }
         public string Protocol { get { return Servers.First().Value.Protocol; } }
         public bool LoadBalanced { get; set; }
@@ -119,6 +129,11 @@ namespace Symbiote.Jackalope.Config
             {
                 return Connection;
             }
+        }
+
+        public IEnumerable<IConnection> GetConnections()
+        {
+            return Distributor.Connections;
         }
 
         public IConnection GetBalancedConnection(string id)

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using RabbitMQ.Client;
 using Symbiote.Core.Extensions;
@@ -31,6 +32,11 @@ namespace Symbiote.Jackalope.Impl.Server
         public string Protocol
         {
             get { return Provider.Brokers.Values.First().Protocol; }
+        }
+
+        public IEnumerable<IConnection> GetBrokerConnections(string brokerName)
+        {
+            return Provider.Brokers[brokerName].GetConnections();
         }
 
         public IConnection GetConnection()

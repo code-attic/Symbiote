@@ -103,7 +103,7 @@ namespace PublishDemo
                             watch.Start();
                         sends += 2;
                         Bus.Send("publisher", new Message("Hello"));
-                        Bus.Send("secondary", new Message("Hello"));
+                        //Bus.Send("secondary", new Message("Hello"));
                     });
             watch.Stop();
         }
@@ -136,7 +136,6 @@ namespace PublishDemo
             Bus.AddEndPoint(
                 x => x.Exchange("control", ExchangeType.fanout).QueueName("routing").RoutingKeys("subscriber").Broker("control"));
             Bus.DefineRouteFor<SubscriberOnline>(x => x.SendTo("control").WithRoutingKey(s => s.SourceQueue));
-            Bus.Subscribe("routing");
         }
     }
 }

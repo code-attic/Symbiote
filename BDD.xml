@@ -101,4 +101,63 @@
     </Variables>
     <CustomProperties />
   </Template>
+  <Template uid="9b04f4b9-94ef-403a-b077-b88f1679700a" shortcut="because" description="" text="Because of = () =&gt; { $END$ };" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables />
+    <CustomProperties />
+  </Template>
+  <Template uid="b5f04808-1000-4b7e-9eb1-4e6d7316b351" shortcut="est" description="" text="Establish context = () =&gt; $END$;" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables />
+    <CustomProperties />
+  </Template>
+  <Template uid="97b310ce-a0e2-4b1b-ad2e-a48136477ad0" shortcut="pbvrt" description="public virtual property" text="public virtual $type$ $name$ { get; set; }" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="type" expression="" initialRange="0" />
+      <Variable name="name" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="d67d7761-fa74-4dee-bf2a-4fefcb4c3f60" shortcut="should" description="" text="It $condition$ = () =&gt; $END$;" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="condition" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="54241fa2-e159-4735-8294-91d654d64f93" shortcut="when" description="" text="[Subject(&quot;$subject$&quot;)]&#xD;&#xA;public class when_$condition$ : with_$context$&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="subject" expression="" initialRange="0" />
+      <Variable name="condition" expression="" initialRange="0" />
+      <Variable name="context" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
+  <Template uid="41794c32-47b4-48d0-8604-a0a9ab885294" shortcut="with" description="" text="public abstract class with_$context$&#xD;&#xA;{&#xD;&#xA;	$END$&#xD;&#xA;}" reformat="True" shortenQualifiedReferences="True">
+    <Context>
+      <CSharpContext context="Everywhere" minimumLanguageVersion="2.0" />
+    </Context>
+    <Categories />
+    <Variables>
+      <Variable name="context" expression="" initialRange="0" />
+    </Variables>
+    <CustomProperties />
+  </Template>
 </TemplatesExport>
