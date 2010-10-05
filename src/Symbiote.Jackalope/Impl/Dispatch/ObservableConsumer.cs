@@ -33,25 +33,21 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         IQueueObserver
     {
         protected IMessageSerializer Serializer { get; set; }
-        protected ConcurrentBag<IObserver<Envelope>> Observers { get; set; }
+        protected ConcurrentDictionary<string, IObserver<Envelope>> Observers { get; set; }
         protected IChannelProxyFactory ProxyFactory { get; set; }
         protected IChannelProxy Proxy { get; set; }
+        protected Hollywood.Agency<Envelope> Agency { get; set; }
         
         public string QueueName { get; protected set; }
 
-        public virtual void Dispatch(Envelope message)
+        public virtual void Dispatch(string id, Envelope message)
         {
-            Observers.ForEach(x =>
-            {
-                Action<Envelope> next = x.OnNext;
-                next.BeginInvoke(message, null, null);
-                //x.OnNext(message);
-            });
+            Observers[id].OnNext(message);
         }
 
         public virtual void SendCompletion()
         {
-            Observers.ForEach(x => x.OnCompleted());
+            Observers.Values.ForEach(x => x.OnCompleted());
         }
 
         public event ObserverShutdown OnShutdown;
@@ -66,7 +62,6 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
         {
-            Action<Envelope> dispatch = Dispatch;
             var message = Serializer.Deserialize(body);
             var envelope = Envelope.Create(Proxy, consumerTag, deliveryTag, redelivered, exchange, routingKey,
                                            properties, message);
@@ -76,8 +71,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             }
             else
             {
-                dispatch.BeginInvoke(envelope, null, null);
-                //Dispatch(envelope);
+                Observers.Keys.ForEach(x => Agency.SendTo(x, envelope));
             }
         }
 
@@ -104,7 +98,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         public virtual IDisposable Subscribe(IObserver<Envelope> observer)
         {
             var disposable = this as IDisposable;
-            Observers.Add(observer);
+            Observers.TryAdd((Observers.Count+1).ToString(), observer);
             return disposable;
         }
 
@@ -112,7 +106,8 @@ namespace Symbiote.Jackalope.Impl.Dispatch
         {
             ProxyFactory = proxyFactory;
             Serializer = serializer;
-            Observers = new ConcurrentBag<IObserver<Envelope>>();
+            Observers = new ConcurrentDictionary<string, IObserver<Envelope>>();
+            Agency = new Hollywood.Agency<Envelope>(Dispatch);
         }
 
         public void Dispose()
@@ -120,8 +115,7 @@ namespace Symbiote.Jackalope.Impl.Dispatch
             Proxy.Dispose();
             while (Observers.Count > 0)
             {
-                IObserver<Envelope> o;
-                Observers.TryTake(out o);
+                Observers.Clear();
             }
         }
     }

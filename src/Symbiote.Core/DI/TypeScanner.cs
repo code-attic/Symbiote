@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 
 #if SILVERLIGHT

@@ -13,11 +13,11 @@ using Symbiote.StructureMap;
 
 namespace SubscribeDemo
 {
-    public class Subscriber : BootstrappedDaemon<Subscriber>
+    public class Subscriber : IDaemon
     {
         private IBus Bus;
 
-        public override void Start()
+        public void Start()
         {
             "Subscriber is starting.".ToInfo<Subscriber>();
             var latencyTotal1 = 0d;
@@ -46,13 +46,13 @@ namespace SubscribeDemo
                 });
         }
 
-        public override void Stop()
+        public void Stop()
         {
             "Stop was called."
                 .ToInfo<Subscriber>();
         }
 
-        public override void Initialize()
+        public void Initialize()
         {
             Assimilate
                 .Core<StructureMapAdapter>()
@@ -73,11 +73,12 @@ namespace SubscribeDemo
         {
             Bus = bus;
             Bus.AddEndPoint(x => x.Exchange("publisher", ExchangeType.fanout));
-            Bus.AddEndPoint(x => x.QueueName("subscriber").LoadBalanced());
+            //Bus.AddEndPoint(x => x.QueueName("subscriber").LoadBalanced());
+            Bus.AddEndPoint(x => x.QueueName("subscriber"));
             Bus.BindQueue("subscriber", "publisher");
-            Bus.AddEndPoint(
-                x => x.Exchange("control", ExchangeType.fanout).QueueName("routing").RoutingKeys("subscriber").Broker("control"));
-            Bus.DefineRouteFor<SubscriberOnline>(x => x.SendTo("control").WithRoutingKey(s => s.SourceQueue));
+            //Bus.AddEndPoint(
+            //    x => x.Exchange("control", ExchangeType.fanout).QueueName("routing").RoutingKeys("subscriber").Broker("control"));
+            //Bus.DefineRouteFor<SubscriberOnline>(x => x.SendTo("control").WithRoutingKey(s => s.SourceQueue));
             Bus.Subscribe("subscriber");
         }
     }

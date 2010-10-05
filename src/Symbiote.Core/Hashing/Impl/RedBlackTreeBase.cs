@@ -15,11 +15,13 @@ limitations under the License.
 */
 
 using System;
+using System.Threading;
 
 namespace Symbiote.Core.Hashing.Impl
 {
     public abstract class RedBlackTreeBase<TKey, TValue>
     {
+        protected ReaderWriterLockSlim Lock { get; set; }
         public IRedBlackLeaf<TKey, TValue> Root { get; set; }
 
         public virtual int Count
@@ -29,14 +31,19 @@ namespace Symbiote.Core.Hashing.Impl
 
         public virtual void Delete(TKey key)
         {
+            Lock.EnterWriteLock();
+
             bool done = false;
             Root = Remove(Root, key, ref done);
             if (!Root.IsEmpty())
                 Root.Color = LeafColor.BLACK;
+
+            Lock.ExitWriteLock();
         }
 
         public virtual TValue Get(TKey key)
         {
+            Lock.EnterReadLock();
             IRedBlackLeaf<TKey, TValue> leaf = Root;
             var compare = CreateLeaf(key, default(TValue));
             while (leaf != null)
@@ -54,14 +61,17 @@ namespace Symbiote.Core.Hashing.Impl
                     break;
                 }
             }
+            Lock.ExitReadLock();
             return leaf.IsEmpty() ? default(TValue) : leaf.Value;
         }
 
         public virtual void Add(TKey key, TValue value)
         {
+            Lock.EnterWriteLock();
             var leaf = CreateLeaf(key, value);
             Root = Insert(Root, leaf);
             Root.Color = LeafColor.BLACK;
+            Lock.ExitWriteLock();
         }
 
         protected abstract IRedBlackLeaf<TKey, TValue> CreateLeaf(TKey key, TValue value);
@@ -254,6 +264,11 @@ namespace Symbiote.Core.Hashing.Impl
             working.Color = LeafColor.BLACK;
 
             return working;
+        }
+
+        protected RedBlackTreeBase()
+        {
+            Lock = new ReaderWriterLockSlim();
         }
     }
 }

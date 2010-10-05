@@ -17,8 +17,6 @@ limitations under the License.
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
-using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using Symbiote.Core.Extensions;
 using Symbiote.Jackalope.Impl.Channel;
 using Symbiote.Jackalope.Impl.Serialization;

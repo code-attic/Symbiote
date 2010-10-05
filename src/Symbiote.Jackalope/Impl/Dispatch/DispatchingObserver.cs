@@ -24,12 +24,18 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 {
     public class DispatchingObserver : IDispatchMessages
     {
-        private static ConcurrentDictionary<Type, List<IDispatch>> dispatchers { get; set; }
+        private static ConcurrentDictionary<Type, List<IDispatch>> Dispatchers { get; set; }
+        private static Hollywood.Agency<Envelope> Agency { get; set; }
 
         public void OnNext(Envelope message)
         {
+            Agency.SendTo(message.CorrelationId ,message);
+        }
+
+        public void DispatchToHandlers(string id, Envelope message)
+        {
             List<IDispatch> dispatchersList;
-            if (dispatchers.TryGetValue(message.MessageType, out dispatchersList))
+            if (Dispatchers.TryGetValue(message.MessageType, out dispatchersList))
             {
                 dispatchersList.ForEach(x => x.Dispatch(message));
             }
@@ -47,20 +53,20 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         private static void WireUpDispatchers()
         {
-            if (dispatchers.Count == 0)
+            if (Dispatchers.Count == 0)
             {
                 ServiceLocator.Current.GetAllInstances<IDispatch>()
                     .ForEach(x => x.Handles.ForEach(y =>
                             {
                                 List<IDispatch> dispatchersForType = null;
-                                if (dispatchers.TryGetValue(y, out dispatchersForType))
+                                if (Dispatchers.TryGetValue(y, out dispatchersForType))
                                 {
                                     dispatchersForType.Add(x);
                                 }
                                 else
                                 {
                                     dispatchersForType = new List<IDispatch>() { x };
-                                    dispatchers.TryAdd(y, dispatchersForType);
+                                    Dispatchers.TryAdd(y, dispatchersForType);
                                 }
                             }));
             }
@@ -68,7 +74,8 @@ namespace Symbiote.Jackalope.Impl.Dispatch
 
         public DispatchingObserver()
         {
-            dispatchers = new ConcurrentDictionary<Type, List<IDispatch>>();
+            Dispatchers = new ConcurrentDictionary<Type, List<IDispatch>>();
+            Agency = new Hollywood.Agency<Envelope>(DispatchToHandlers);
             WireUpDispatchers();
         }
     }

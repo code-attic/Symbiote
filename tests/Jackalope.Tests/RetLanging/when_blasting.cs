@@ -18,7 +18,7 @@ namespace Jackalope.Tests.RetLanging
                                  {
                                      var queues = new List<IFiber>();
                                      var reset = new AutoResetEvent(false);
-                                     var channel = new QueueChannel<int>();
+                                     var channel = new Channel<int>();
 
 
                                      var updateLock = new object();
@@ -35,16 +35,14 @@ namespace Jackalope.Tests.RetLanging
                                              }
                                          //}
                                      };
-                                     for (var i = 0; i < fiberz; i++)
+                                     using (var fiber = new PoolFiber())
                                      {
-                                         var fiber = new PoolFiber();
                                          fiber.Start();
-                                         queues.Add(fiber);
                                          channel.Subscribe(fiber, onReceive);
-                                     }
-                                     for (var i = 0; i < messageCount; i++)
-                                     {
-                                         channel.Publish(i);
+                                         for (var i = 0; i < messageCount; i++)
+                                         {
+                                             channel.Publish(i);
+                                         }
                                      }
                                      reset.WaitOne(1000, false);
                                      queues.ForEach(delegate(IFiber q) { q.Dispose(); });
