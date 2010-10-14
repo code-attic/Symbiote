@@ -28,7 +28,7 @@ namespace SubscribeDemo
                 .AddFileLogger<Subscriber>(x => x.Debug().MessageLayout(m => m.Message().Newline()).FileName(@"C:\git\Symbiote\demo\TopShelfHost\Services\SubscribeDemo\subscriber.log"))
                 .Daemon(x => x.Arguments(args).DisplayName("Subscriber Demo").Description("A subscriber").Name("Subscriber"))
                 .Jackalope(x => x
-                    .AddServer(s => s.AMQP091().Address("localhost"))
+                    .AddServer(s => s.AMQP091().Address("bootcamp3-pc"))
                     .AddServer(s => s.VirtualHost("control").Broker("control")))
                 .RunDaemon();
         }

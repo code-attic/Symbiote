@@ -34,8 +34,7 @@ namespace Symbiote.Jackalope.Impl
     {
         private IChannelProxyFactory _channelFactory;
         private ISubscriptionManager _subscriptionManager;
-        private ConcurrentDictionary<Type, IDispatch> _functionalDispatchers 
-            = new ConcurrentDictionary<Type, IDispatch>();
+        private ConcurrentDictionary<string, IChannelProxy> SendProxies { get; set; }
         private IEndpointManager _endpointManager;
         private IRouteManager _routeManager;
         private static string tempId = Guid.NewGuid().ToString();
@@ -53,9 +52,10 @@ namespace Symbiote.Jackalope.Impl
                     effectiveQueue = "{0}.{1}".AsFormat(queueName, GetClientId());
                     _subscriptionManager.EnsureSubscriptionIsRunning(queueName);    
                 }
-                return _subscriptionManager
-                    .EnsureSubscriptionIsRunning(effectiveQueue)
-                    .MessageStream;
+
+                return Observable.Merge(_subscriptionManager
+                                     .EnsureSubscriptionIsRunning(queueName)
+                                     .Select(x => x.MessageStream));
             }
         }
 
@@ -196,7 +196,7 @@ namespace Symbiote.Jackalope.Impl
 
         protected void DirectSubscription(string queueName)
         {
-            _subscriptionManager.AddSubscription(queueName).Start();
+            _subscriptionManager.AddSubscription(queueName);
         }
 
         public void Unsubscribe(string queueName)

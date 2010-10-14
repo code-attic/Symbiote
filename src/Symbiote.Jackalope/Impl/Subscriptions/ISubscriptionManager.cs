@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Generic;
+
 namespace Symbiote.Jackalope.Impl.Subscriptions
 {
     public interface ISubscriptionManager
@@ -22,7 +24,7 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
         void StopAllSubscriptions();
         void StartSubscription(string queueName);
         void StopSubscription(string queueName);
-        ISubscription AddSubscription(string queueName);
-        ISubscription EnsureSubscriptionIsRunning(string queueName);
+        IEnumerable<ISubscription> AddSubscription(string queueName);
+        IEnumerable<ISubscription> EnsureSubscriptionIsRunning(string queueName);
     }
 }

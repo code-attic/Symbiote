@@ -16,6 +16,8 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Extensions;
 
@@ -23,74 +25,92 @@ namespace Symbiote.Jackalope.Impl.Subscriptions
 {
     public class SubscriptionManager : ISubscriptionManager
     {
-        private ConcurrentDictionary<string, ISubscription> _subscriptions = new ConcurrentDictionary<string, ISubscription>();
+        private ConcurrentDictionary<string, List<ISubscription>> _subscriptions = new ConcurrentDictionary<string, List<ISubscription>>();
+        private int ActualSubscribers { get; set; }
 
         public void StartAllSubscriptions()
         {
             _subscriptions
+                .SelectMany(x => x.Value)
                 .ForEach(x =>
-                             {
-                                 if (x.Value.Stopped || x.Value.Stopping)
-                                     x.Value.Start();
-                             });
+                {
+                    if (x.Stopped || x.Stopping)
+                        x.Start();
+                });
         }
 
         public void StopAllSubscriptions()
         {
             _subscriptions
+                .SelectMany(x => x.Value)
                 .ForEach(x =>
-                             {
-                                 if (x.Value.Started || x.Value.Starting)
-                                 {
-                                     x.Value.Stop();
-                                 }
-                             });
+                {
+                    if (x.Started || x.Starting)
+                        x.Stop();
+                });
         }
 
         public void StartSubscription(string queueName)
         {
-            ISubscription subscription = null; 
-            if(_subscriptions.TryGetValue(queueName, out subscription))
-                if(subscription.Stopped || subscription.Stopping)
-                    subscription.Start();
+            ApplyCommand(queueName, x => x.Stopped || x.Stopping, x => x.Start());
         }
 
         public void StopSubscription(string queueName)
         {
-            ISubscription subscription = null;
-            if (_subscriptions.TryRemove(queueName, out subscription))
-                if (subscription.Started || subscription.Starting)
+            ApplyCommand(queueName, x => x.Started || x.Starting, x => x.Stop());
+        }
+
+        public void ApplyCommand(string queueName, Predicate<ISubscription> precondition, Action<ISubscription> command)
+        {
+            List<ISubscription> subscriptions = null;
+            if (_subscriptions.TryGetValue(queueName, out subscriptions))
+            {
+                subscriptions
+                    .Where(x => precondition(x))
+                    .ForEach(command);
+            }
+        }
+
+        public IEnumerable<ISubscription> AddSubscription(string queueName)
+        {
+            List<ISubscription> subscriptions = null;
+
+            if(!_subscriptions.TryGetValue(queueName, out subscriptions))
+            {
+                subscriptions = new List<ISubscription>();
+                for (int i = 0; i < ActualSubscribers; i++ )
                 {
-                    subscription.Dispose();
+                    var subscription = ServiceLocator
+                        .Current
+                        .GetInstance<ISubscription>();
+                    subscription.QueueName = queueName;
+                    subscription.Start();
+                    subscriptions.Add(subscription);
                 }
+                _subscriptions[queueName] = subscriptions;
+            }
+            return subscriptions;
         }
 
-        public ISubscription AddSubscription(string queueName)
+        public IEnumerable<ISubscription> EnsureSubscriptionIsRunning(string queueName)
         {
-            ISubscription subscription = null;
-
-            if(!_subscriptions.TryGetValue(queueName, out subscription))
+            List<ISubscription> subscriptions = null;
+            if(!_subscriptions.TryGetValue(queueName, out subscriptions))
             {
-                subscription = ServiceLocator
-                    .Current
-                    .GetInstance<ISubscription>();
-                subscription.QueueName = queueName;
-                _subscriptions[queueName] = subscription;
-                subscription.Start();
+                subscriptions = AddSubscription(queueName).ToList();
             }
-            return subscription;
+            return subscriptions
+                .Where(x => x.Stopped || x.Stopping)
+                .Select(x =>
+                            {
+                                x.Start();
+                                return x;
+                            });
         }
 
-        public ISubscription EnsureSubscriptionIsRunning(string queueName)
+        public SubscriptionManager()
         {
-            ISubscription subscription = null;
-            if(!_subscriptions.TryGetValue(queueName, out subscription))
-            {
-                subscription = AddSubscription(queueName);
-            }
-            if (subscription.Stopped || subscription.Stopping)
-                subscription.Start();
-            return subscription;
+            ActualSubscribers = 1;
         }
     }
 }

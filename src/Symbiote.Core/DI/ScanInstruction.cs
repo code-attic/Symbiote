@@ -196,9 +196,16 @@ namespace Symbiote.Core.DI
                 .Where(kp => kp.Value.Count() == 1)
                 .ForEach(kp =>
                              {
-                                 var dependencyExpression = DependencyExpression.For(kp.Key);
-                                 dependencyExpression.Use(kp.Value.First());
-                                 registry.Register(dependencyExpression);
+                                 try
+                                 {
+                                     var dependencyExpression = DependencyExpression.For(kp.Key);
+                                     dependencyExpression.Use(kp.Value.First());
+                                     registry.Register(dependencyExpression);
+                                 }
+                                 catch (Exception e)
+                                 {
+                                     
+                                 }
                              });
 
         }

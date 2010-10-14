@@ -9715,3 +9715,2245 @@ Q1: 11729 msgs total. 980.059011935906 msgs/sec. 212370.555740822 ms latency / m
 Q1: 11729 msgs total. 904.544182726285 msgs/sec. 212370.555740822 ms latency / msg. 
 Q1: 11729 msgs total. 839.794141961511 msgs/sec. 212370.555740822 ms latency / msg. 
 Q1: 11729 msgs total. 782.96740882974 msgs/sec. 212370.555740822 ms latency / msg. 
+Subscriber is starting. 
+Q1: 1375 msgs total. 1327.28836338781 msgs/sec. 9663678.62444219 ms latency / msg. 
+Q1: 2804 msgs total. 1410.32415626754 msgs/sec. 9665777.58565934 ms latency / msg. 
+Q1: 4014 msgs total. 1340.03153247094 msgs/sec. 9666998.36973935 ms latency / msg. 
+Q1: 5503 msgs total. 1381.14547934369 msgs/sec. 9667534.37617717 ms latency / msg. 
+Q1: 6629 msgs total. 1324.71611727285 msgs/sec. 8362743.8548895 ms latency / msg. 
+Q1: 7924 msgs total. 1322.47749101253 msgs/sec. 7050639.78446711 ms latency / msg. 
+Subscriber is starting. 
+Q1: 9066 msgs total. 1295.13760258458 msgs/sec. 6204076.8817867 ms latency / msg. 
+Q1: 968 msgs total. 854.874311397859 msgs/sec. 327741.330173245 ms latency / msg. 
+Q1: 10195 msgs total. 1271.81023568347 msgs/sec. 5552860.78046982 ms latency / msg. 
+Q1: 1919 msgs total. 965.350312498837 msgs/sec. 323697.384953987 ms latency / msg. 
+Q1: 11335 msgs total. 1258.32809770043 msgs/sec. 5025958.48569678 ms latency / msg. 
+Q1: 2884 msgs total. 975.867909984645 msgs/sec. 319593.197514702 ms latency / msg. 
+Q1: 12516 msgs total. 1251.07546159122 msgs/sec. 4580845.77317877 ms latency / msg. 
+Q1: 3889 msgs total. 976.580720448382 msgs/sec. 316438.382408461 ms latency / msg. 
+Q1: 13675 msgs total. 1243.28457000024 msgs/sec. 4218479.68208308 ms latency / msg. 
+Q1: 4878 msgs total. 981.532243464988 msgs/sec. 313887.009749181 ms latency / msg. 
+Q1: 14967 msgs total. 1246.22098494755 msgs/sec. 3880344.58395079 ms latency / msg. 
+Q1: 5965 msgs total. 995.189887736241 msgs/sec. 311303.023634737 ms latency / msg. 
+Q1: 16128 msgs total. 1237.64256716904 msgs/sec. 3622430.75587939 ms latency / msg. 
+Q1: 6859 msgs total. 977.771458558891 msgs/sec. 309359.846195641 ms latency / msg. 
+Q1: 17194 msgs total. 1228.12820732781 msgs/sec. 3416102.01924861 ms latency / msg. 
+Q1: 7804 msgs total. 977.12707536363 msgs/sec. 307422.080276319 ms latency / msg. 
+Q1: 18560 msgs total. 1237.12046613846 msgs/sec. 3186123.33703741 ms latency / msg. 
+Q1: 8609 msgs total. 961.285228412603 msgs/sec. 305812.540146301 ms latency / msg. 
+Q1: 19635 msgs total. 1226.27042599773 msgs/sec. 3027446.68048672 ms latency / msg. 
+Q1: 9409 msgs total. 943.291233844884 msgs/sec. 304177.699197714 ms latency / msg. 
+Q1: 20707 msgs total. 1218.30826856414 msgs/sec. 2885366.25353716 ms latency / msg. 
+Q1: 10272 msgs total. 936.44818804113 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 1166.05612670902 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 859.476446140869 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 1104.73758187077 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 793.118755898107 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 1049.28899958401 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 736.215419842754 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 999.467496747433 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 686.985984823803 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 953.909694355098 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 643.914777177153 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 912.54722960214 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 605.969929379373 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 874.452452640589 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 572.216288777284 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 839.539133778427 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 542.017080154939 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 807.21837153165 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 515.174556331115 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 777.320692650183 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 490.576787395535 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 749.585695589059 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 468.214063093814 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 723.736493401752 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 447.805250751977 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 699.607302190802 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 429.115107458139 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 677.054957206091 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 411.921586571491 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 655.900130765303 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 396.04072168428 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 636.019740159252 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 381.33760066146 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 617.546824884044 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 367.70071000709 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 599.894149710598 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 354.994509404431 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 583.238909833852 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 342.850641740668 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 567.289066864898 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 331.770679008519 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 552.245237387419 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 321.3124613071 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 538.099967297614 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 311.567065623765 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 524.648808219872 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 302.406455897375 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 511.845712615492 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 293.877576523803 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 499.677893825226 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 285.611993848598 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 488.050816315163 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 277.950947670265 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 476.966307922262 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 270.587105740468 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 466.234139328058 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 263.675137383615 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 456.23191304428 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 257.057163842566 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 446.420036333533 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 250.804715181385 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 437.236345540915 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 244.815492130262 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 428.311341728615 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 239.122208630863 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 419.649295322712 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 233.676658836353 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 411.493712903693 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 228.474359506153 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 403.527570455482 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 223.502932124784 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 395.966375977562 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 218.743222103803 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 388.598301060893 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 214.191569369785 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 381.567879854047 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 209.803978133425 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 374.734589410513 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 205.620378420766 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 368.180223396574 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 201.581493556652 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 361.813918696477 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 197.701499121273 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 355.681258335925 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 193.975599421851 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 349.754468679957 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 190.377041062615 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 344.038145163363 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 186.909561415932 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 338.46802023125 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 183.575103370771 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 333.115735918968 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 180.34622482689 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 327.881564523217 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 177.234654173616 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 322.910243936602 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 174.265995554158 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 318.021242643116 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 171.361349276843 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 313.275148225218 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 168.549905842677 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 308.649777128889 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 165.818324813594 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 304.107462428061 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 163.143437849909 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 299.766907126376 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 160.595217657339 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 295.546712778131 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 158.123216334099 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 291.44583329695 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 155.728384246471 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 20987 msgs total. 287.457848104739 msgs/sec. 2850605.35346981 ms latency / msg. 
+Q1: 10272 msgs total. 153.373688321812 msgs/sec. 302272.916050797 ms latency / msg. 
+Q1: 10321 msgs total. 151.868596821526 msgs/sec. 347026.006689825 ms latency / msg. 
+Subscriber is starting. 
+Q1: 1124 msgs total. 1084.93590625304 msgs/sec. 9471414.18443549 ms latency / msg. 
+Q1: 2376 msgs total. 1201.02900282848 msgs/sec. 9500711.99825736 ms latency / msg. 
+Q1: 3623 msgs total. 1215.29605222331 msgs/sec. 9547411.82794897 ms latency / msg. 
+Q1: 5006 msgs total. 1251.87036584774 msgs/sec. 9532738.04136209 ms latency / msg. 
+Q1: 6493 msgs total. 1303.75475545652 msgs/sec. 9496224.11035328 ms latency / msg. 
+Q1: 8069 msgs total. 1349.65204100373 msgs/sec. 9463162.66302129 ms latency / msg. 
+Q1: 9179 msgs total. 1315.3344263931 msgs/sec. 9466969.74225394 ms latency / msg. 
+Q1: 10432 msgs total. 1307.28392991404 msgs/sec. 9261065.16226244 ms latency / msg. 
+Q1: 11869 msgs total. 1322.18528431061 msgs/sec. 8971216.59933987 ms latency / msg. 
+Q1: 13244 msgs total. 1327.51464140195 msgs/sec. 8750463.4495948 ms latency / msg. 
+Q1: 14643 msgs total. 1334.09714791021 msgs/sec. 8572242.8762988 ms latency / msg. 
+Q1: 14672 msgs total. 1225.32210304024 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 1130.86484006252 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 1050.02459742735 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 979.942411552249 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 918.599430881572 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 864.515746147914 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 815.847113987543 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 773.420298134232 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 734.231112023495 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 699.68756079555 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 667.869569315578 msgs/sec. 8568712.36387198 ms latency / msg. 
+Q1: 14672 msgs total. 638.818599395097 msgs/sec. 8568712.36387198 ms latency / msg. 
+Subscriber is starting. 
+Q1: 1 msgs total. 0.0186339551112717 msgs/sec. 6898653.4422 ms latency / msg. 
+Q1: 2 msgs total. 0.0332845842873916 msgs/sec. 6893867.6077 ms latency / msg. 
+Q1: 2 msgs total. 0.0332315768603379 msgs/sec. 6893867.6077 ms latency / msg. 
+Q1: 2 msgs total. 0.0298075470804505 msgs/sec. 6893867.6077 ms latency / msg. 
+Q1: 4 msgs total. 0.0595290795304618 msgs/sec. 9232962.6996 ms latency / msg. 
+Q1: 6 msgs total. 0.089166201985674 msgs/sec. 10006248.0679 ms latency / msg. 
+Q1: 11 msgs total. 0.163241648621811 msgs/sec. 8581357.6414 ms latency / msg. 
+Q1: 11 msgs total. 0.163013298571548 msgs/sec. 8581357.6414 ms latency / msg. 
+Q1: 13 msgs total. 0.17758262052878 msgs/sec. 8439112.09971667 ms latency / msg. 
+Q1: 14 msgs total. 0.206890292936069 msgs/sec. 8884867.91798571 ms latency / msg. 
+Q1: 16 msgs total. 0.236106168703961 msgs/sec. 8636244.334575 ms latency / msg. 
+Q1: 17 msgs total. 0.250503261420581 msgs/sec. 8532165.08161177 ms latency / msg. 
+Q1: 17 msgs total. 0.25015568512639 msgs/sec. 8532165.08161177 ms latency / msg. 
+Q1: 19 msgs total. 0.279199282965692 msgs/sec. 8361881.65593684 ms latency / msg. 
+Q1: 20 msgs total. 0.293485557718045 msgs/sec. 8288560.6523 ms latency / msg. 
+Q1: 21 msgs total. 0.307729820971978 msgs/sec. 8222725.10505714 ms latency / msg. 
+Q1: 23 msgs total. 0.336496436903603 msgs/sec. 8105880.00554783 ms latency / msg. 
+Q1: 27 msgs total. 0.39446977222842 msgs/sec. 7924223.04027408 ms latency / msg. 
+Q1: 50 msgs total. 0.729461778939724 msgs/sec. 8193618.917052 ms latency / msg. 
+Q1: 129 msgs total. 1.87913969558584 msgs/sec. 8331904.41510155 ms latency / msg. 
+Q1: 129 msgs total. 1.87619710647297 msgs/sec. 8331904.41510155 ms latency / msg. 
+Q1: 130 msgs total. 1.88801253091926 msgs/sec. 8320888.06534077 ms latency / msg. 
+Q1: 131 msgs total. 1.89988265251522 msgs/sec. 8310183.30684351 ms latency / msg. 
+Q1: 137 msgs total. 1.98405954713603 msgs/sec. 8383844.94742774 ms latency / msg. 
+Q1: 392 msgs total. 5.66658148243135 msgs/sec. 8317988.77419695 ms latency / msg. 
+Q1: 412 msgs total. 5.94702384518825 msgs/sec. 8338668.25295195 ms latency / msg. 
+Q1: 413 msgs total. 5.95283202199867 msgs/sec. 8335146.72895255 ms latency / msg. 
+Q1: 536 msgs total. 7.71291698727315 msgs/sec. 8474174.20064758 ms latency / msg. 
+Q1: 541 msgs total. 7.75963954370595 msgs/sec. 8496765.60172278 ms latency / msg. 
+Q1: 542 msgs total. 7.77783303578961 msgs/sec. 8490877.72729281 ms latency / msg. 
+Q1: 543 msgs total. 7.78159620082353 msgs/sec. 8487874.32752836 ms latency / msg. 
+Q1: 545 msgs total. 7.79956335754544 msgs/sec. 8481959.70055468 ms latency / msg. 
+Q1: 547 msgs total. 7.81742756075789 msgs/sec. 8493277.67529488 ms latency / msg. 
+Q1: 566 msgs total. 8.07767636305847 msgs/sec. 8488893.07081661 ms latency / msg. 
+Q1: 567 msgs total. 8.08085359490269 msgs/sec. 8486013.87390547 ms latency / msg. 
+Q1: 723 msgs total. 10.2881006859844 msgs/sec. 8555512.54340927 ms latency / msg. 
+Q1: 725 msgs total. 10.2883612366408 msgs/sec. 8566087.40280843 ms latency / msg. 
+Q1: 726 msgs total. 10.3028949213225 msgs/sec. 8561495.20599546 ms latency / msg. 
+Q1: 728 msgs total. 10.3032290040505 msgs/sec. 8572251.79533989 ms latency / msg. 
+Q1: 748 msgs total. 10.5859009298054 msgs/sec. 8574623.89435013 ms latency / msg. 
+Q1: 750 msgs total. 10.5989730963044 msgs/sec. 8560897.69146813 ms latency / msg. 
+Q1: 750 msgs total. 10.5848331444444 msgs/sec. 8570101.14450173 ms latency / msg. 
+Q1: 752 msgs total. 10.5988825581206 msgs/sec. 8565615.62184534 ms latency / msg. 
+Q1: 753 msgs total. 10.5986730720299 msgs/sec. 8563372.72840491 ms latency / msg. 
+Q1: 755 msgs total. 10.6126742380774 msgs/sec. 8558919.3043792 ms latency / msg. 
+Q1: 756 msgs total. 10.6125345945992 msgs/sec. 8556738.09510251 ms latency / msg. 
+Q1: 757 msgs total. 10.6123705973161 msgs/sec. 8567071.16525825 ms latency / msg. 
+Q1: 758 msgs total. 10.6120044018594 msgs/sec. 8564826.02866583 ms latency / msg. 
+Q1: 763 msgs total. 10.6678468353223 msgs/sec. 8557040.20332437 ms latency / msg. 
+Q1: 766 msgs total. 10.6950239502216 msgs/sec. 8571633.4644765 ms latency / msg. 
+Q1: 767 msgs total. 10.6947478899053 msgs/sec. 8581701.54846701 ms latency / msg. 
+Q1: 768 msgs total. 10.6943971791389 msgs/sec. 8579539.32597187 ms latency / msg. 
+Q1: 769 msgs total. 10.693938707942 msgs/sec. 8577324.99500858 ms latency / msg. 
+Q1: 770 msgs total. 10.6937448061905 msgs/sec. 8575142.46465818 ms latency / msg. 
+Q1: 772 msgs total. 10.7074459319647 msgs/sec. 8570843.45075414 ms latency / msg. 
+Q1: 773 msgs total. 10.7069587836951 msgs/sec. 8568635.42343389 ms latency / msg. 
+Q1: 774 msgs total. 10.7067428110111 msgs/sec. 8566426.08210542 ms latency / msg. 
+Q1: 777 msgs total. 10.7339915436288 msgs/sec. 8572112.73292715 ms latency / msg. 
+Q1: 778 msgs total. 10.7336027600072 msgs/sec. 8569952.91499948 ms latency / msg. 
+Q1: 779 msgs total. 10.7332572533238 msgs/sec. 8567774.85053247 ms latency / msg. 
+Q1: 780 msgs total. 10.7330328580421 msgs/sec. 8577675.37296666 ms latency / msg. 
+Q1: 782 msgs total. 10.7462652815105 msgs/sec. 8585271.88007506 ms latency / msg. 
+Q1: 784 msgs total. 10.759616032507 msgs/sec. 8580920.87939553 ms latency / msg. 
+Q1: 785 msgs total. 10.7593444930908 msgs/sec. 8578807.58550993 ms latency / msg. 
+Q1: 786 msgs total. 10.7589357228479 msgs/sec. 8576627.6829561 ms latency / msg. 
+Q1: 788 msgs total. 10.7723423020474 msgs/sec. 8584210.98907398 ms latency / msg. 
+Q1: 789 msgs total. 10.7720444394208 msgs/sec. 8593940.3684455 ms latency / msg. 
+Q1: 791 msgs total. 10.7852934411099 msgs/sec. 8589644.0240517 ms latency / msg. 
+Q1: 792 msgs total. 10.7849730127702 msgs/sec. 8599297.43476856 ms latency / msg. 
+Q1: 793 msgs total. 10.7845299174093 msgs/sec. 8597119.80079432 ms latency / msg. 
+Q1: 794 msgs total. 10.78422189289 msgs/sec. 8586292.19399231 ms latency / msg. 
+Q1: 795 msgs total. 10.7837913772007 msgs/sec. 8592784.29453497 ms latency / msg. 
+Q1: 798 msgs total. 10.8104730448556 msgs/sec. 8586341.23362268 ms latency / msg. 
+Q1: 1540 msgs total. 20.8218138732514 msgs/sec. 8631304.0260654 ms latency / msg. 
+Q1: 8470 msgs total. 113.010599584354 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 111.527843244059 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 110.079006991392 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 108.667580645268 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 107.272625402304 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 105.950201333903 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 104.623350964756 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 103.365615814514 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 102.119340053512 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 100.904007100526 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 99.7160289987116 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 98.5570074221944 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 97.4233966158604 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 96.3165325054885 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 95.2334083644789 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 94.1706367891617 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 93.1271059995469 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 92.1153701051851 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 91.1225091754907 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 90.1543263781293 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 89.2057432890306 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 88.2758953279504 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 87.3662852686154 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 86.4743509499643 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 85.6014626688575 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 84.7449632198805 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 83.9062338544581 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 83.0832197361581 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 82.276916825342 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 81.4853988165802 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 80.7097467622971 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 79.947923489505 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 79.2001813252151 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 78.4673565448717 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 77.7463801627315 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 77.0399220876258 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 76.3454475167732 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 75.66407549576 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 74.9940786995229 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 74.3283534219939 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 73.6898049255296 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 73.0468627007641 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 72.4302150292062 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 71.8077640807948 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 71.2129285556731 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 70.619151484665 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 70.0357934997523 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 69.4486725298264 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 68.8827262785685 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 68.3270472033114 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 67.7808379985876 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 67.2427249026157 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 66.713609523413 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 66.1922492328774 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 65.6794704172644 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 65.1741077812768 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 64.6763885363165 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 64.1868198693143 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 63.7040606637208 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 63.2288675042008 msgs/sec. 8704215.46126937 ms latency / msg. 
+Q1: 8470 msgs total. 62.7604443124988 msgs/sec. 8704215.46126937 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2705.47471747404 msgs/sec. 9151910.1661021 ms latency / msg. 
+2000 msgs total. 2660.31772972741 msgs/sec. 9228857.2262058 ms latency / msg. 
+3000 msgs total. 2761.50535179737 msgs/sec. 9245159.76040039 ms latency / msg. 
+4000 msgs total. 2815.73704169656 msgs/sec. 9313684.46148339 ms latency / msg. 
+5000 msgs total. 2868.50656885136 msgs/sec. 9298131.80094394 ms latency / msg. 
+6000 msgs total. 2896.40290895399 msgs/sec. 9271295.80789523 ms latency / msg. 
+7000 msgs total. 2913.22481293455 msgs/sec. 9280990.40213846 ms latency / msg. 
+8000 msgs total. 2874.43876583097 msgs/sec. 9272929.03618627 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 3128.16629081749 msgs/sec. 6200491.1828298 ms latency / msg. 
+2000 msgs total. 2860.37876277463 msgs/sec. 6212621.2660724 ms latency / msg. 
+3000 msgs total. 2874.16007462086 msgs/sec. 6212267.96609504 ms latency / msg. 
+4000 msgs total. 2894.81431647789 msgs/sec. 6221311.46538599 ms latency / msg. 
+5000 msgs total. 2874.68732026018 msgs/sec. 6227884.86211566 ms latency / msg. 
+6000 msgs total. 2875.6432394562 msgs/sec. 6230105.75097879 ms latency / msg. 
+7000 msgs total. 2870.3862334308 msgs/sec. 6228958.03245189 ms latency / msg. 
+8000 msgs total. 2894.37338878374 msgs/sec. 6224926.87043878 ms latency / msg. 
+9000 msgs total. 2887.13246442836 msgs/sec. 6221747.21697323 ms latency / msg. 
+10000 msgs total. 2899.1011336935 msgs/sec. 6142269.82444338 ms latency / msg. 
+11000 msgs total. 2900.18384529048 msgs/sec. 6148255.82428898 ms latency / msg. 
+12000 msgs total. 2896.70208295329 msgs/sec. 6154260.55323651 ms latency / msg. 
+13000 msgs total. 2888.04416805911 msgs/sec. 6160277.52071233 ms latency / msg. 
+14000 msgs total. 2861.12086617083 msgs/sec. 6164964.13984481 ms latency / msg. 
+15000 msgs total. 2878.5222173556 msgs/sec. 6161078.3543279 ms latency / msg. 
+16000 msgs total. 2878.61547807074 msgs/sec. 6162736.26177104 ms latency / msg. 
+17000 msgs total. 2892.2231420248 msgs/sec. 6167116.85017063 ms latency / msg. 
+18000 msgs total. 2886.12782660144 msgs/sec. 6166136.1787078 ms latency / msg. 
+19000 msgs total. 2879.29515824394 msgs/sec. 6168535.03657542 ms latency / msg. 
+20000 msgs total. 2871.78098121117 msgs/sec. 6170366.17384242 ms latency / msg. 
+21000 msgs total. 2860.26307337719 msgs/sec. 6170525.39567286 ms latency / msg. 
+23000 msgs total. 2845.11192144572 msgs/sec. 6175373.57555582 ms latency / msg. 
+24000 msgs total. 2858.79101823132 msgs/sec. 6177346.2689828 ms latency / msg. 
+25000 msgs total. 2868.05822786881 msgs/sec. 6179144.03828814 ms latency / msg. 
+26000 msgs total. 2870.65426969468 msgs/sec. 6179828.84496305 ms latency / msg. 
+27000 msgs total. 2869.16477901305 msgs/sec. 6180912.6416363 ms latency / msg. 
+28000 msgs total. 2875.34398998115 msgs/sec. 6182351.46636079 ms latency / msg. 
+29000 msgs total. 2875.85774936563 msgs/sec. 6184107.59982759 ms latency / msg. 
+30000 msgs total. 2874.88087212386 msgs/sec. 6184901.37175275 ms latency / msg. 
+31000 msgs total. 2870.51644776293 msgs/sec. 6185227.29139789 ms latency / msg. 
+32000 msgs total. 2869.53376012746 msgs/sec. 6186302.68122313 ms latency / msg. 
+33000 msgs total. 2871.40201580775 msgs/sec. 6186352.17429779 ms latency / msg. 
+34000 msgs total. 2863.58223542397 msgs/sec. 6186572.65206035 ms latency / msg. 
+35000 msgs total. 2864.21205984508 msgs/sec. 6178031.12305378 ms latency / msg. 
+36000 msgs total. 2867.05104423614 msgs/sec. 6178801.35759595 ms latency / msg. 
+37000 msgs total. 2860.65746753448 msgs/sec. 6178172.95391148 ms latency / msg. 
+38000 msgs total. 2860.9717623367 msgs/sec. 6178884.94959869 ms latency / msg. 
+39000 msgs total. 2861.20600023657 msgs/sec. 6178913.16799841 ms latency / msg. 
+40000 msgs total. 2862.73178886234 msgs/sec. 6179401.22714881 ms latency / msg. 
+41000 msgs total. 2867.37057816926 msgs/sec. 6180771.21726545 ms latency / msg. 
+42000 msgs total. 2861.56886712274 msgs/sec. 6179838.9072587 ms latency / msg. 
+43000 msgs total. 2865.60354685481 msgs/sec. 6179959.71830766 ms latency / msg. 
+44000 msgs total. 2868.58938564295 msgs/sec. 6178223.17180805 ms latency / msg. 
+45000 msgs total. 2863.72112457489 msgs/sec. 6178498.34249443 ms latency / msg. 
+46000 msgs total. 2871.49516068793 msgs/sec. 6176720.59326751 ms latency / msg. 
+47000 msgs total. 2878.38860212007 msgs/sec. 6177531.53962299 ms latency / msg. 
+48000 msgs total. 2871.25943835318 msgs/sec. 6177521.96831149 ms latency / msg. 
+49000 msgs total. 2854.20259576212 msgs/sec. 6177507.19644291 ms latency / msg. 
+50000 msgs total. 2853.75707820935 msgs/sec. 6177610.05286575 ms latency / msg. 
+51000 msgs total. 2854.46308400132 msgs/sec. 6176967.10390685 ms latency / msg. 
+52000 msgs total. 2856.01725680322 msgs/sec. 6177542.12311133 ms latency / msg. 
+53000 msgs total. 2860.99590144523 msgs/sec. 6177617.88326571 ms latency / msg. 
+54000 msgs total. 2866.00668795398 msgs/sec. 6178029.51910466 ms latency / msg. 
+55000 msgs total. 2870.64132846558 msgs/sec. 6178079.18701644 ms latency / msg. 
+56000 msgs total. 2864.88566376886 msgs/sec. 6178343.37229533 ms latency / msg. 
+57000 msgs total. 2861.32370286069 msgs/sec. 6178157.06505925 ms latency / msg. 
+58000 msgs total. 2861.44035997788 msgs/sec. 6178722.14200015 ms latency / msg. 
+59000 msgs total. 2860.96206832234 msgs/sec. 6179051.88231845 ms latency / msg. 
+1000 msgs total. 2767.21776730909 msgs/sec. 6237243.03283751 ms latency / msg. 
+2000 msgs total. 2614.88428744795 msgs/sec. 6262390.88308 ms latency / msg. 
+3000 msgs total. 2703.18172598694 msgs/sec. 6266495.51046681 ms latency / msg. 
+4000 msgs total. 2722.93391772941 msgs/sec. 6270046.35620584 ms latency / msg. 
+5000 msgs total. 2757.13525926584 msgs/sec. 6259479.16752726 ms latency / msg. 
+6000 msgs total. 2780.08949942126 msgs/sec. 6263963.19512647 ms latency / msg. 
+7000 msgs total. 2711.86640292345 msgs/sec. 6261715.74544406 ms latency / msg. 
+8000 msgs total. 2725.5340223983 msgs/sec. 6256061.37591516 ms latency / msg. 
+9000 msgs total. 2751.42978048543 msgs/sec. 6256545.44179666 ms latency / msg. 
+10000 msgs total. 2689.33727790982 msgs/sec. 6251216.7219976 ms latency / msg. 
+11000 msgs total. 2667.14067414017 msgs/sec. 6254855.67288963 ms latency / msg. 
+12000 msgs total. 2637.87165963014 msgs/sec. 6254702.79256614 ms latency / msg. 
+13000 msgs total. 2631.39853144077 msgs/sec. 6255523.25586082 ms latency / msg. 
+14000 msgs total. 2611.15125341695 msgs/sec. 6254853.38211258 ms latency / msg. 
+15000 msgs total. 2468.20052714181 msgs/sec. 6254269.98700474 ms latency / msg. 
+16000 msgs total. 2438.72876873218 msgs/sec. 6255722.85196982 ms latency / msg. 
+17000 msgs total. 2417.25972356588 msgs/sec. 6257737.1552899 ms latency / msg. 
+18000 msgs total. 2348.16831717461 msgs/sec. 6257759.37540751 ms latency / msg. 
+19000 msgs total. 2322.20354138484 msgs/sec. 6258765.04936049 ms latency / msg. 
+20000 msgs total. 2298.96887912266 msgs/sec. 6259976.48653382 ms latency / msg. 
+21000 msgs total. 2283.55959965503 msgs/sec. 6260759.53935449 ms latency / msg. 
+22000 msgs total. 2267.34041855228 msgs/sec. 6262324.49770842 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2189.85231198038 msgs/sec. 6301612.17895754 ms latency / msg. 
+2000 msgs total. 2055.00192091305 msgs/sec. 6311063.59050076 ms latency / msg. 
+3000 msgs total. 2021.93325800509 msgs/sec. 6318396.47795617 ms latency / msg. 
+4000 msgs total. 1999.15865408043 msgs/sec. 6318879.07326713 ms latency / msg. 
+5000 msgs total. 1984.25005487444 msgs/sec. 6319142.71689649 ms latency / msg. 
+6000 msgs total. 1957.8423676501 msgs/sec. 6319307.04011157 ms latency / msg. 
+7000 msgs total. 1955.09034584208 msgs/sec. 6319413.02662247 ms latency / msg. 
+8000 msgs total. 1877.98329383621 msgs/sec. 6313952.58776708 ms latency / msg. 
+9000 msgs total. 1881.09639828981 msgs/sec. 6311099.22666645 ms latency / msg. 
+10000 msgs total. 1877.402429753 msgs/sec. 6309440.53358511 ms latency / msg. 
+1000 msgs total. 2180.2343010594 msgs/sec. 6753960.38605141 ms latency / msg. 
+2000 msgs total. 2086.79981214628 msgs/sec. 6760683.41720294 ms latency / msg. 
+3000 msgs total. 2144.57801352886 msgs/sec. 6771941.63613422 ms latency / msg. 
+4000 msgs total. 2010.29118313929 msgs/sec. 6772418.27740403 ms latency / msg. 
+5000 msgs total. 2011.16000732706 msgs/sec. 6774026.58438074 ms latency / msg. 
+6000 msgs total. 1896.89592898629 msgs/sec. 6769399.455113 ms latency / msg. 
+7000 msgs total. 1892.91258105147 msgs/sec. 6757336.73658297 ms latency / msg. 
+8000 msgs total. 1840.14275091404 msgs/sec. 6758484.07127075 ms latency / msg. 
+9000 msgs total. 1832.20820481156 msgs/sec. 6762393.5310277 ms latency / msg. 
+10000 msgs total. 1793.83214495541 msgs/sec. 6763473.11490126 ms latency / msg. 
+11000 msgs total. 1796.2993001079 msgs/sec. 6763726.55523676 ms latency / msg. 
+12000 msgs total. 1800.42707030321 msgs/sec. 6766187.05369135 ms latency / msg. 
+13000 msgs total. 1798.81168562866 msgs/sec. 6767728.02343682 ms latency / msg. 
+14000 msgs total. 1812.82661065792 msgs/sec. 6770006.54083581 ms latency / msg. 
+15000 msgs total. 1819.49185231549 msgs/sec. 6772417.29990859 ms latency / msg. 
+16000 msgs total. 1831.39034645304 msgs/sec. 6774088.71566131 ms latency / msg. 
+17000 msgs total. 1849.23369550503 msgs/sec. 6775556.81398635 ms latency / msg. 
+18000 msgs total. 1852.4411072695 msgs/sec. 6776098.73814132 ms latency / msg. 
+19000 msgs total. 1861.13324716874 msgs/sec. 6777292.58126431 ms latency / msg. 
+20000 msgs total. 1872.46991280235 msgs/sec. 6778361.90210005 ms latency / msg. 
+21000 msgs total. 1882.64410658972 msgs/sec. 6779323.55019376 ms latency / msg. 
+22000 msgs total. 1885.97538553516 msgs/sec. 6780499.32768832 ms latency / msg. 
+23000 msgs total. 1882.19666590138 msgs/sec. 6780976.35821722 ms latency / msg. 
+24000 msgs total. 1886.74291099589 msgs/sec. 6781693.40040414 ms latency / msg. 
+25000 msgs total. 1894.97949363101 msgs/sec. 6782348.50597886 ms latency / msg. 
+26000 msgs total. 1901.07437756083 msgs/sec. 6782425.29705482 ms latency / msg. 
+27000 msgs total. 1905.02488555175 msgs/sec. 6782743.33609173 ms latency / msg. 
+28000 msgs total. 1898.70079973752 msgs/sec. 6783276.22799119 ms latency / msg. 
+29000 msgs total. 1903.95236547534 msgs/sec. 6783999.33137704 ms latency / msg. 
+30000 msgs total. 1907.47069481241 msgs/sec. 6784442.60654338 ms latency / msg. 
+31000 msgs total. 1912.04981627453 msgs/sec. 6784412.85419074 ms latency / msg. 
+32000 msgs total. 1906.35147281766 msgs/sec. 6784590.07234975 ms latency / msg. 
+33000 msgs total. 1905.02519958675 msgs/sec. 6784750.10420996 ms latency / msg. 
+34000 msgs total. 1905.83443577914 msgs/sec. 6765682.59896739 ms latency / msg. 
+35000 msgs total. 1911.61015059528 msgs/sec. 6747388.84241686 ms latency / msg. 
+36000 msgs total. 1902.32928860256 msgs/sec. 6729079.04663351 ms latency / msg. 
+37000 msgs total. 1901.38430232742 msgs/sec. 6710423.30362343 ms latency / msg. 
+38000 msgs total. 1904.17872020148 msgs/sec. 6695321.32807876 ms latency / msg. 
+39000 msgs total. 1900.23542796301 msgs/sec. 6680667.03818069 ms latency / msg. 
+40000 msgs total. 1903.29356815389 msgs/sec. 6666583.06271986 ms latency / msg. 
+41000 msgs total. 1905.09674155599 msgs/sec. 6653630.50941787 ms latency / msg. 
+42000 msgs total. 1904.98596739712 msgs/sec. 6639506.3069943 ms latency / msg. 
+43000 msgs total. 1898.66914905442 msgs/sec. 6625595.82235875 ms latency / msg. 
+44000 msgs total. 1892.91939947046 msgs/sec. 6612441.76644002 ms latency / msg. 
+45000 msgs total. 1884.93411327997 msgs/sec. 6598116.07001208 ms latency / msg. 
+46000 msgs total. 1881.74693203662 msgs/sec. 6585985.36193679 ms latency / msg. 
+47000 msgs total. 1876.89723361481 msgs/sec. 6574366.47597546 ms latency / msg. 
+48000 msgs total. 1870.86680213353 msgs/sec. 6562848.07027636 ms latency / msg. 
+49000 msgs total. 1866.66508800134 msgs/sec. 6552041.2033549 ms latency / msg. 
+50000 msgs total. 1864.76653421354 msgs/sec. 6538857.58911421 ms latency / msg. 
+51000 msgs total. 1863.75162172429 msgs/sec. 6524940.49813344 ms latency / msg. 
+52000 msgs total. 1861.00396848002 msgs/sec. 6511776.17904551 ms latency / msg. 
+53000 msgs total. 1858.00520543646 msgs/sec. 6498772.09564249 ms latency / msg. 
+54000 msgs total. 1853.83951620281 msgs/sec. 6485920.32200741 ms latency / msg. 
+55000 msgs total. 1850.87637768174 msgs/sec. 6473955.28827901 ms latency / msg. 
+56000 msgs total. 1855.25773449164 msgs/sec. 6462305.31204674 ms latency / msg. 
+57000 msgs total. 1856.84839682104 msgs/sec. 6450239.38682552 ms latency / msg. 
+58000 msgs total. 1862.88966942467 msgs/sec. 6439088.63958575 ms latency / msg. 
+59000 msgs total. 1868.06530425751 msgs/sec. 6428706.43073268 ms latency / msg. 
+60000 msgs total. 1872.80819989094 msgs/sec. 6418762.30091893 ms latency / msg. 
+61000 msgs total. 1876.61030661391 msgs/sec. 6408850.97197522 ms latency / msg. 
+62000 msgs total. 1878.94852319283 msgs/sec. 6399629.43837252 ms latency / msg. 
+63000 msgs total. 1881.52774210964 msgs/sec. 6390325.62012867 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 960.309542336639 msgs/sec. 6809617.100906 ms latency / msg. 
+2000 msgs total. 1022.32815813781 msgs/sec. 6816671.66874141 ms latency / msg. 
+3000 msgs total. 1059.55927490686 msgs/sec. 6812210.13964784 ms latency / msg. 
+4000 msgs total. 1107.01006930824 msgs/sec. 6815151.05626328 ms latency / msg. 
+5000 msgs total. 1152.27708041841 msgs/sec. 6814138.50499099 ms latency / msg. 
+5000 msgs total. 1152.27708041841 msgs/sec. 6814138.50460019 ms latency / msg. 
+6000 msgs total. 1172.45181423337 msgs/sec. 6805423.61196459 ms latency / msg. 
+7000 msgs total. 1186.99077777689 msgs/sec. 6795264.48033657 ms latency / msg. 
+8000 msgs total. 1183.52836820597 msgs/sec. 6791927.15668549 ms latency / msg. 
+9000 msgs total. 1206.24440562273 msgs/sec. 6793145.98975444 ms latency / msg. 
+10000 msgs total. 1217.91982436232 msgs/sec. 6796184.95873377 ms latency / msg. 
+11000 msgs total. 1239.00885103995 msgs/sec. 6799928.45016813 ms latency / msg. 
+12000 msgs total. 1248.05787893375 msgs/sec. 6801907.85019159 ms latency / msg. 
+13000 msgs total. 1286.22924384661 msgs/sec. 6804106.05320275 ms latency / msg. 
+14000 msgs total. 1287.82709221355 msgs/sec. 6805001.91667476 ms latency / msg. 
+15000 msgs total. 1307.59581449738 msgs/sec. 6803490.04048826 ms latency / msg. 
+16000 msgs total. 1311.74063949258 msgs/sec. 6804746.55985083 ms latency / msg. 
+17000 msgs total. 1321.81204632009 msgs/sec. 6807878.52744733 ms latency / msg. 
+18000 msgs total. 1321.44653025399 msgs/sec. 6807231.6699323 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 1895.90459959727 msgs/sec. 7176263.4024324 ms latency / msg. 
+2000 msgs total. 1624.04641069909 msgs/sec. 7179898.45268616 ms latency / msg. 
+3000 msgs total. 1468.21368753956 msgs/sec. 7168950.26822873 ms latency / msg. 
+4000 msgs total. 1336.96041781617 msgs/sec. 7150712.87561489 ms latency / msg. 
+5000 msgs total. 1306.01389097271 msgs/sec. 7161681.65995814 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 1542.65137960856 msgs/sec. 7180806.6002334 ms latency / msg. 
+2000 msgs total. 1472.19986114211 msgs/sec. 7195485.79410315 ms latency / msg. 
+3000 msgs total. 1440.14283912736 msgs/sec. 7205274.45774228 ms latency / msg. 
+4000 msgs total. 1407.44764998466 msgs/sec. 7206532.46543607 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 582.114836005735 msgs/sec. 7348613.8466399 ms latency / msg. 
+2000 msgs total. 560.112537811097 msgs/sec. 7349181.38481505 ms latency / msg. 
+3000 msgs total. 544.337406743208 msgs/sec. 7349789.0499717 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 1780.0606858289 msgs/sec. 7238482.0439045 ms latency / msg. 
+2000 msgs total. 1632.13117895282 msgs/sec. 7279129.91499599 ms latency / msg. 
+3000 msgs total. 1587.86985988001 msgs/sec. 7297600.97667932 ms latency / msg. 
+4000 msgs total. 1524.94280320781 msgs/sec. 7295746.35039561 ms latency / msg. 
+5000 msgs total. 1494.3492230176 msgs/sec. 7293104.0231487 ms latency / msg. 
+6000 msgs total. 1472.51983484218 msgs/sec. 7288846.78038142 ms latency / msg. 
+7000 msgs total. 1497.93829123374 msgs/sec. 7295296.73284587 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2758.74473803926 msgs/sec. 7379682.527668 ms latency / msg. 
+2000 msgs total. 2472.55861725621 msgs/sec. 7372165.17548474 ms latency / msg. 
+3000 msgs total. 2449.63749447811 msgs/sec. 7369558.10972215 ms latency / msg. 
+4000 msgs total. 2418.93308602161 msgs/sec. 7373735.08890987 ms latency / msg. 
+5000 msgs total. 2426.78392886611 msgs/sec. 7376140.11580539 ms latency / msg. 
+6000 msgs total. 2355.90360977441 msgs/sec. 7371472.53574839 ms latency / msg. 
+7000 msgs total. 2299.39457597784 msgs/sec. 6972503.19590687 ms latency / msg. 
+8000 msgs total. 2283.77216586444 msgs/sec. 6374171.48774113 ms latency / msg. 
+9000 msgs total. 2296.74244087834 msgs/sec. 5918143.04029588 ms latency / msg. 
+10000 msgs total. 2300.04792149844 msgs/sec. 5554186.08329401 ms latency / msg. 
+11000 msgs total. 2312.73432729328 msgs/sec. 5255116.40619507 ms latency / msg. 
+12000 msgs total. 2336.85094962904 msgs/sec. 5006802.13168095 ms latency / msg. 
+13000 msgs total. 2379.6956749983 msgs/sec. 4795083.20760755 ms latency / msg. 
+14000 msgs total. 2389.97698281453 msgs/sec. 4615547.19364216 ms latency / msg. 
+15000 msgs total. 2415.93644450757 msgs/sec. 4458711.84581803 ms latency / msg. 
+16000 msgs total. 2418.35771715556 msgs/sec. 4322320.96037491 ms latency / msg. 
+17000 msgs total. 2422.41910694755 msgs/sec. 4201557.42987111 ms latency / msg. 
+18000 msgs total. 2443.72813643953 msgs/sec. 4094577.06599946 ms latency / msg. 
+19000 msgs total. 2446.25380820562 msgs/sec. 3999202.96264503 ms latency / msg. 
+20000 msgs total. 2460.62323083497 msgs/sec. 3912779.73434921 ms latency / msg. 
+21000 msgs total. 2465.0179327707 msgs/sec. 3834899.74746628 ms latency / msg. 
+22000 msgs total. 2460.97580330557 msgs/sec. 3763974.86361311 ms latency / msg. 
+23000 msgs total. 2469.21413341669 msgs/sec. 3699002.21825084 ms latency / msg. 
+24000 msgs total. 2465.3051443769 msgs/sec. 3638668.27539079 ms latency / msg. 
+25000 msgs total. 2459.26582750287 msgs/sec. 3583606.85393168 ms latency / msg. 
+26000 msgs total. 2434.36089922782 msgs/sec. 3532157.03479508 ms latency / msg. 
+27000 msgs total. 2421.79358050511 msgs/sec. 3485100.75524876 ms latency / msg. 
+28000 msgs total. 2417.84804305165 msgs/sec. 3440338.23139261 ms latency / msg. 
+29000 msgs total. 2439.85763548483 msgs/sec. 3399437.98534261 ms latency / msg. 
+30000 msgs total. 2455.88739160348 msgs/sec. 3361479.64421031 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 3254.70296441601 msgs/sec. 165271.4781955 ms latency / msg. 
+2000 msgs total. 3021.94871571713 msgs/sec. 165879.1303806 ms latency / msg. 
+3000 msgs total. 3066.07577254378 msgs/sec. 166121.465132399 ms latency / msg. 
+4000 msgs total. 3118.43326170812 msgs/sec. 166146.536571999 ms latency / msg. 
+5000 msgs total. 3104.68314752529 msgs/sec. 165990.134971599 ms latency / msg. 
+6000 msgs total. 3115.13863924514 msgs/sec. 165987.484433866 ms latency / msg. 
+7000 msgs total. 3092.84873283336 msgs/sec. 166097.674292356 ms latency / msg. 
+8000 msgs total. 3068.27326057 msgs/sec. 166184.08567215 ms latency / msg. 
+9000 msgs total. 3081.8967841948 msgs/sec. 165352.754683755 ms latency / msg. 
+10000 msgs total. 3111.33249970365 msgs/sec. 165568.94344601 ms latency / msg. 
+10000 msgs total. 3111.02136645368 msgs/sec. 165568.624070607 ms latency / msg. 
+11000 msgs total. 3117.4494842109 msgs/sec. 165741.602080391 ms latency / msg. 
+12000 msgs total. 3116.3054267057 msgs/sec. 165968.520788475 ms latency / msg. 
+13000 msgs total. 3121.65892447228 msgs/sec. 166158.158387015 ms latency / msg. 
+14000 msgs total. 3126.46916135681 msgs/sec. 166290.773619993 ms latency / msg. 
+15000 msgs total. 3124.09960845868 msgs/sec. 166457.544540967 ms latency / msg. 
+16000 msgs total. 3132.39060644609 msgs/sec. 166426.210829407 ms latency / msg. 
+17000 msgs total. 3138.53962532742 msgs/sec. 166499.211395354 ms latency / msg. 
+18000 msgs total. 3124.03382745482 msgs/sec. 166620.254457045 ms latency / msg. 
+19000 msgs total. 3122.35129091231 msgs/sec. 166719.867443432 ms latency / msg. 
+20000 msgs total. 3109.91235738292 msgs/sec. 166816.087829156 ms latency / msg. 
+21000 msgs total. 3107.39526483568 msgs/sec. 166933.514406563 ms latency / msg. 
+22000 msgs total. 3108.95127555466 msgs/sec. 167067.174102069 ms latency / msg. 
+22000 msgs total. 3108.81132149409 msgs/sec. 167067.046130752 ms latency / msg. 
+23000 msgs total. 3111.56109996661 msgs/sec. 167101.352584418 ms latency / msg. 
+24000 msgs total. 3097.79446714547 msgs/sec. 167146.228714013 ms latency / msg. 
+25000 msgs total. 3074.44116098228 msgs/sec. 167142.426081665 ms latency / msg. 
+25000 msgs total. 3074.3609707071 msgs/sec. 167087.970273093 ms latency / msg. 
+26000 msgs total. 3062.49957375306 msgs/sec. 167121.018428982 ms latency / msg. 
+27000 msgs total. 3034.17451439048 msgs/sec. 167202.195852405 ms latency / msg. 
+28000 msgs total. 3007.46349325993 msgs/sec. 167228.299293808 ms latency / msg. 
+29000 msgs total. 2981.62392275727 msgs/sec. 167329.679371784 ms latency / msg. 
+30000 msgs total. 2945.2611435428 msgs/sec. 167433.387335707 ms latency / msg. 
+31000 msgs total. 2937.48972589279 msgs/sec. 167574.493618994 ms latency / msg. 
+32000 msgs total. 2932.23920492701 msgs/sec. 167689.873277766 ms latency / msg. 
+33000 msgs total. 2910.40777961524 msgs/sec. 167795.636248061 ms latency / msg. 
+34000 msgs total. 2910.73247504051 msgs/sec. 167870.127416797 ms latency / msg. 
+35000 msgs total. 2909.01201366275 msgs/sec. 167865.268658395 ms latency / msg. 
+36000 msgs total. 2897.11299149482 msgs/sec. 167955.211924981 ms latency / msg. 
+37000 msgs total. 2898.62386578513 msgs/sec. 168062.437149714 ms latency / msg. 
+38000 msgs total. 2884.33662136323 msgs/sec. 168170.261527214 ms latency / msg. 
+40000 msgs total. 2890.14329778443 msgs/sec. 168262.528054483 ms latency / msg. 
+41000 msgs total. 2874.21924463079 msgs/sec. 168298.645211184 ms latency / msg. 
+41000 msgs total. 2874.17807543398 msgs/sec. 168298.505954129 ms latency / msg. 
+42000 msgs total. 2864.43428435666 msgs/sec. 168411.892480529 ms latency / msg. 
+43002 msgs total. 2862.18271398329 msgs/sec. 168500.047059045 ms latency / msg. 
+44000 msgs total. 2864.55845494154 msgs/sec. 168558.532715525 ms latency / msg. 
+45000 msgs total. 2865.01462580416 msgs/sec. 168639.512542756 ms latency / msg. 
+46000 msgs total. 2864.96460199214 msgs/sec. 168701.136467409 ms latency / msg. 
+47000 msgs total. 2863.77513403671 msgs/sec. 168810.81652556 ms latency / msg. 
+48000 msgs total. 2861.61851366545 msgs/sec. 168912.564809021 ms latency / msg. 
+49000 msgs total. 2861.73118839689 msgs/sec. 169020.52960936 ms latency / msg. 
+50000 msgs total. 2860.72680838242 msgs/sec. 169119.543043627 ms latency / msg. 
+51000 msgs total. 2858.8139580235 msgs/sec. 169224.192552905 ms latency / msg. 
+52000 msgs total. 2862.19781300786 msgs/sec. 169318.911626513 ms latency / msg. 
+53000 msgs total. 2851.75634292488 msgs/sec. 169396.014546066 ms latency / msg. 
+54000 msgs total. 2849.45000549205 msgs/sec. 169470.407543033 ms latency / msg. 
+55000 msgs total. 2850.46582234729 msgs/sec. 169593.824388267 ms latency / msg. 
+57000 msgs total. 2852.64381602547 msgs/sec. 169765.208435475 ms latency / msg. 
+58000 msgs total. 2852.95262864489 msgs/sec. 169878.541257433 ms latency / msg. 
+59000 msgs total. 2854.8779366212 msgs/sec. 169934.593121409 ms latency / msg. 
+60000 msgs total. 2853.08298798151 msgs/sec. 170019.108922569 ms latency / msg. 
+61000 msgs total. 2848.52016645575 msgs/sec. 170103.609718757 ms latency / msg. 
+62000 msgs total. 2839.39846171192 msgs/sec. 170211.039725713 ms latency / msg. 
+63000 msgs total. 2838.39458510004 msgs/sec. 170316.919929478 ms latency / msg. 
+64000 msgs total. 2833.87777069835 msgs/sec. 170429.236631299 ms latency / msg. 
+65000 msgs total. 2832.65881117502 msgs/sec. 170531.997287125 ms latency / msg. 
+66000 msgs total. 2835.2600013324 msgs/sec. 170606.130028503 ms latency / msg. 
+67000 msgs total. 2835.95653245614 msgs/sec. 170715.374255944 ms latency / msg. 
+68000 msgs total. 2832.76806626891 msgs/sec. 170792.925063459 ms latency / msg. 
+69000 msgs total. 2822.16370972487 msgs/sec. 170877.762720205 ms latency / msg. 
+70000 msgs total. 2825.38595720698 msgs/sec. 170982.504383088 ms latency / msg. 
+71000 msgs total. 2813.58752588124 msgs/sec. 171067.864349412 ms latency / msg. 
+72000 msgs total. 2813.55365386248 msgs/sec. 171176.101110823 ms latency / msg. 
+72000 msgs total. 2813.55543498255 msgs/sec. 171176.101124392 ms latency / msg. 
+73000 msgs total. 2816.351027276 msgs/sec. 171268.02638055 ms latency / msg. 
+74000 msgs total. 2816.60173574985 msgs/sec. 171363.825486354 ms latency / msg. 
+75000 msgs total. 2817.49079048664 msgs/sec. 171472.246654189 ms latency / msg. 
+76000 msgs total. 2813.78934492022 msgs/sec. 171570.748095292 ms latency / msg. 
+77000 msgs total. 2815.9266044017 msgs/sec. 171661.050506548 ms latency / msg. 
+77000 msgs total. 2815.8583098716 msgs/sec. 171623.520269834 ms latency / msg. 
+78000 msgs total. 2815.80563397654 msgs/sec. 171726.189938233 ms latency / msg. 
+79000 msgs total. 2816.1393287143 msgs/sec. 171833.259590116 ms latency / msg. 
+80000 msgs total. 2816.06494791968 msgs/sec. 171934.067802227 ms latency / msg. 
+81000 msgs total. 2817.19297396246 msgs/sec. 172030.731945014 ms latency / msg. 
+82000 msgs total. 2817.15335544643 msgs/sec. 172147.568593782 ms latency / msg. 
+83000 msgs total. 2812.13269375407 msgs/sec. 172251.270851182 ms latency / msg. 
+84000 msgs total. 2808.29064500315 msgs/sec. 172345.883436573 ms latency / msg. 
+85000 msgs total. 2805.21309184105 msgs/sec. 172441.161062342 ms latency / msg. 
+86000 msgs total. 2802.81700969285 msgs/sec. 172541.496319489 ms latency / msg. 
+87000 msgs total. 2800.88701838285 msgs/sec. 172650.016774886 ms latency / msg. 
+88000 msgs total. 2797.5507837089 msgs/sec. 172743.32027358 ms latency / msg. 
+89000 msgs total. 2792.99423527559 msgs/sec. 172828.812811068 ms latency / msg. 
+90000 msgs total. 2790.45554940267 msgs/sec. 172898.991858145 ms latency / msg. 
+91000 msgs total. 2793.23587422327 msgs/sec. 173017.727200187 ms latency / msg. 
+92000 msgs total. 2794.55515798655 msgs/sec. 173098.09443462 ms latency / msg. 
+93000 msgs total. 2796.56628450125 msgs/sec. 173202.758793419 ms latency / msg. 
+94000 msgs total. 2800.28919837745 msgs/sec. 173309.748665606 ms latency / msg. 
+95000 msgs total. 2803.82827747707 msgs/sec. 173412.054232757 ms latency / msg. 
+96000 msgs total. 2805.0183859313 msgs/sec. 173523.20916076 ms latency / msg. 
+97000 msgs total. 2805.43277320333 msgs/sec. 173625.677145134 ms latency / msg. 
+98000 msgs total. 2807.07111640487 msgs/sec. 173724.274211082 ms latency / msg. 
+99000 msgs total. 2807.7288232201 msgs/sec. 173807.686660546 ms latency / msg. 
+100000 msgs total. 2806.67747302983 msgs/sec. 173900.909213841 ms latency / msg. 
+101000 msgs total. 2804.31713016203 msgs/sec. 174020.049523447 ms latency / msg. 
+102000 msgs total. 2803.97900675212 msgs/sec. 174129.292027187 ms latency / msg. 
+103000 msgs total. 2804.41426785783 msgs/sec. 174230.445042477 ms latency / msg. 
+104000 msgs total. 2802.05964532057 msgs/sec. 174339.635182828 ms latency / msg. 
+105000 msgs total. 2795.98330529552 msgs/sec. 174453.917174801 ms latency / msg. 
+106000 msgs total. 2794.43238241181 msgs/sec. 174564.194252878 ms latency / msg. 
+107000 msgs total. 2794.60605823947 msgs/sec. 174651.552597337 ms latency / msg. 
+108000 msgs total. 2792.35146802552 msgs/sec. 174763.593283696 ms latency / msg. 
+109000 msgs total. 2790.18807784939 msgs/sec. 174873.803299955 ms latency / msg. 
+110000 msgs total. 2784.85885103676 msgs/sec. 174974.669243473 ms latency / msg. 
+111000 msgs total. 2783.42846494183 msgs/sec. 175070.839232586 ms latency / msg. 
+112000 msgs total. 2784.97821046724 msgs/sec. 175185.823878152 ms latency / msg. 
+113000 msgs total. 2787.26353858197 msgs/sec. 175294.181454071 ms latency / msg. 
+114000 msgs total. 2788.31965753447 msgs/sec. 175406.11065964 ms latency / msg. 
+115000 msgs total. 2789.61193150498 msgs/sec. 175512.807984661 ms latency / msg. 
+116000 msgs total. 2791.98459348242 msgs/sec. 175622.610339716 ms latency / msg. 
+117000 msgs total. 2792.81365126358 msgs/sec. 175700.20434912 ms latency / msg. 
+118000 msgs total. 2792.54354239795 msgs/sec. 175818.369894754 ms latency / msg. 
+119000 msgs total. 2793.75915617881 msgs/sec. 175921.628648109 ms latency / msg. 
+120000 msgs total. 2796.70983960853 msgs/sec. 176037.202549692 ms latency / msg. 
+121000 msgs total. 2799.66887460123 msgs/sec. 176146.472957438 ms latency / msg. 
+122000 msgs total. 2801.87217516022 msgs/sec. 176255.130893623 ms latency / msg. 
+123000 msgs total. 2803.24356605929 msgs/sec. 176353.507591338 ms latency / msg. 
+123000 msgs total. 2803.26601184409 msgs/sec. 176353.626593699 ms latency / msg. 
+124000 msgs total. 2804.07442416042 msgs/sec. 176455.978167186 ms latency / msg. 
+124000 msgs total. 2804.04148863369 msgs/sec. 176455.474074374 ms latency / msg. 
+125000 msgs total. 2803.67716300744 msgs/sec. 176518.414162368 ms latency / msg. 
+126000 msgs total. 2805.60174549577 msgs/sec. 176628.065421825 ms latency / msg. 
+127000 msgs total. 2804.94835294979 msgs/sec. 176741.269243905 ms latency / msg. 
+128000 msgs total. 2804.19523205051 msgs/sec. 176841.177442407 ms latency / msg. 
+129000 msgs total. 2806.12266817324 msgs/sec. 176925.508047257 ms latency / msg. 
+130000 msgs total. 2807.8869717671 msgs/sec. 177020.813896231 ms latency / msg. 
+131000 msgs total. 2809.7237107949 msgs/sec. 177107.557399497 ms latency / msg. 
+132000 msgs total. 2811.75069639716 msgs/sec. 177223.005442834 ms latency / msg. 
+133000 msgs total. 2813.91073656083 msgs/sec. 177334.419323038 ms latency / msg. 
+134000 msgs total. 2816.68878012593 msgs/sec. 177446.26193527 ms latency / msg. 
+135000 msgs total. 2818.24607495145 msgs/sec. 177553.044823 ms latency / msg. 
+136000 msgs total. 2819.84652437909 msgs/sec. 177656.853252743 ms latency / msg. 
+137000 msgs total. 2817.96052357361 msgs/sec. 177760.881596913 ms latency / msg. 
+138000 msgs total. 2819.09751361054 msgs/sec. 177855.136063957 ms latency / msg. 
+139000 msgs total. 2819.83505981386 msgs/sec. 177943.869597461 ms latency / msg. 
+140000 msgs total. 2819.34570743359 msgs/sec. 178030.848139587 ms latency / msg. 
+141000 msgs total. 2821.07771375036 msgs/sec. 178139.474823887 ms latency / msg. 
+142000 msgs total. 2823.40377286992 msgs/sec. 178247.107095374 ms latency / msg. 
+143000 msgs total. 2825.51653722271 msgs/sec. 178338.934505001 ms latency / msg. 
+144000 msgs total. 2824.73438806771 msgs/sec. 178433.896338765 ms latency / msg. 
+145000 msgs total. 2825.71132586101 msgs/sec. 178534.281561863 ms latency / msg. 
+146000 msgs total. 2824.64413788543 msgs/sec. 178645.797164563 ms latency / msg. 
+147000 msgs total. 2824.57399822996 msgs/sec. 178750.432170443 ms latency / msg. 
+148000 msgs total. 2823.88264940463 msgs/sec. 178854.210291014 ms latency / msg. 
+149000 msgs total. 2824.75372716396 msgs/sec. 178941.493134336 ms latency / msg. 
+150000 msgs total. 2824.43957512317 msgs/sec. 179049.696366434 ms latency / msg. 
+151000 msgs total. 2825.07181865772 msgs/sec. 179156.837910199 ms latency / msg. 
+152000 msgs total. 2825.69649351979 msgs/sec. 179256.844393277 ms latency / msg. 
+153000 msgs total. 2825.99356341732 msgs/sec. 179311.000588661 ms latency / msg. 
+154000 msgs total. 2828.23896850349 msgs/sec. 179417.531874502 ms latency / msg. 
+155000 msgs total. 2829.04345215082 msgs/sec. 179523.843307795 ms latency / msg. 
+156000 msgs total. 2828.67293752027 msgs/sec. 179628.500552828 ms latency / msg. 
+157000 msgs total. 2828.69538066459 msgs/sec. 179738.048846205 ms latency / msg. 
+158000 msgs total. 2829.61113986529 msgs/sec. 179842.7562379 ms latency / msg. 
+159000 msgs total. 2829.50062406861 msgs/sec. 179946.014820247 ms latency / msg. 
+160000 msgs total. 2827.79754466192 msgs/sec. 180039.988086945 ms latency / msg. 
+161000 msgs total. 2824.72428603129 msgs/sec. 180127.725398958 ms latency / msg. 
+162000 msgs total. 2822.93675495108 msgs/sec. 180230.501059446 ms latency / msg. 
+163000 msgs total. 2822.91051242228 msgs/sec. 180327.545822007 ms latency / msg. 
+164000 msgs total. 2822.73727959693 msgs/sec. 180419.584950842 ms latency / msg. 
+165000 msgs total. 2821.21546713222 msgs/sec. 180516.554875928 ms latency / msg. 
+166000 msgs total. 2820.32297757685 msgs/sec. 180616.305563862 ms latency / msg. 
+167000 msgs total. 2820.16119321986 msgs/sec. 180721.951721755 ms latency / msg. 
+168000 msgs total. 2820.48378227198 msgs/sec. 180822.417450894 ms latency / msg. 
+169000 msgs total. 2819.27958438307 msgs/sec. 180928.310335937 ms latency / msg. 
+170000 msgs total. 2817.90847930076 msgs/sec. 181027.910990743 ms latency / msg. 
+170000 msgs total. 2817.92441540351 msgs/sec. 181028.018526419 ms latency / msg. 
+171000 msgs total. 2815.07847297935 msgs/sec. 181128.417073493 ms latency / msg. 
+172000 msgs total. 2815.83621441127 msgs/sec. 181236.634567734 ms latency / msg. 
+173000 msgs total. 2816.30039440106 msgs/sec. 181337.622181915 ms latency / msg. 
+174000 msgs total. 2817.38159025264 msgs/sec. 181440.974242657 ms latency / msg. 
+175000 msgs total. 2818.43284845541 msgs/sec. 181542.999000121 ms latency / msg. 
+176000 msgs total. 2820.15164676466 msgs/sec. 181644.925301888 ms latency / msg. 
+178000 msgs total. 2822.30313765318 msgs/sec. 181841.491413248 ms latency / msg. 
+179000 msgs total. 2822.62584201886 msgs/sec. 181938.335700833 ms latency / msg. 
+180000 msgs total. 2824.68819855863 msgs/sec. 182030.968633806 ms latency / msg. 
+181000 msgs total. 2825.45612711963 msgs/sec. 182131.099878226 ms latency / msg. 
+182000 msgs total. 2826.49814177781 msgs/sec. 182224.194715226 ms latency / msg. 
+183000 msgs total. 2826.15161825303 msgs/sec. 182308.148821159 ms latency / msg. 
+184000 msgs total. 2826.36993378815 msgs/sec. 182405.267715201 ms latency / msg. 
+185000 msgs total. 2827.40589618698 msgs/sec. 182507.536590486 ms latency / msg. 
+186000 msgs total. 2828.75424000794 msgs/sec. 182602.904353473 ms latency / msg. 
+188000 msgs total. 2827.37404172342 msgs/sec. 182805.094257777 ms latency / msg. 
+189000 msgs total. 2825.73860639581 msgs/sec. 182907.999962487 ms latency / msg. 
+190000 msgs total. 2824.18654104086 msgs/sec. 183008.240532006 ms latency / msg. 
+191000 msgs total. 2823.9825806937 msgs/sec. 183109.343451038 ms latency / msg. 
+192000 msgs total. 2820.91648808674 msgs/sec. 183203.396984069 ms latency / msg. 
+194000 msgs total. 2819.562015457 msgs/sec. 183402.335363459 ms latency / msg. 
+195000 msgs total. 2819.88722602887 msgs/sec. 183498.106841041 ms latency / msg. 
+196000 msgs total. 2820.39616222708 msgs/sec. 183600.763675464 ms latency / msg. 
+197000 msgs total. 2819.87415296724 msgs/sec. 183659.263993082 ms latency / msg. 
+198000 msgs total. 2820.03229825719 msgs/sec. 183757.621400526 ms latency / msg. 
+199000 msgs total. 2820.72999491547 msgs/sec. 183860.065261332 ms latency / msg. 
+200000 msgs total. 2822.05924638801 msgs/sec. 183957.018357346 ms latency / msg. 
+201000 msgs total. 2823.42957886437 msgs/sec. 184057.896383035 ms latency / msg. 
+202000 msgs total. 2824.69567777541 msgs/sec. 184159.512906165 ms latency / msg. 
+203000 msgs total. 2826.06980005666 msgs/sec. 184258.635646701 ms latency / msg. 
+204000 msgs total. 2827.26774844666 msgs/sec. 184359.396416457 ms latency / msg. 
+205000 msgs total. 2827.74146355407 msgs/sec. 184464.451236324 ms latency / msg. 
+206000 msgs total. 2829.6430671477 msgs/sec. 184570.639694302 ms latency / msg. 
+207000 msgs total. 2830.17750789928 msgs/sec. 184667.393874146 ms latency / msg. 
+208000 msgs total. 2828.17421057119 msgs/sec. 184763.31880729 ms latency / msg. 
+209000 msgs total. 2829.16679885802 msgs/sec. 184862.052660796 ms latency / msg. 
+210000 msgs total. 2830.05017460641 msgs/sec. 184965.510568045 ms latency / msg. 
+211000 msgs total. 2828.63287298884 msgs/sec. 185070.380907448 ms latency / msg. 
+212000 msgs total. 2828.62561059003 msgs/sec. 185171.165141253 ms latency / msg. 
+213000 msgs total. 2828.48943208557 msgs/sec. 185262.591037561 ms latency / msg. 
+214000 msgs total. 2828.52702311406 msgs/sec. 185359.814107651 ms latency / msg. 
+215000 msgs total. 2828.38870210736 msgs/sec. 185463.350562243 ms latency / msg. 
+216000 msgs total. 2828.40106825094 msgs/sec. 185567.707146334 ms latency / msg. 
+217000 msgs total. 2829.22911277279 msgs/sec. 185664.561191771 ms latency / msg. 
+218000 msgs total. 2829.91716983027 msgs/sec. 185764.040784592 ms latency / msg. 
+219000 msgs total. 2831.01081385891 msgs/sec. 185865.249912872 ms latency / msg. 
+220000 msgs total. 2832.35759837133 msgs/sec. 185967.330074504 ms latency / msg. 
+221000 msgs total. 2833.32847308526 msgs/sec. 186066.487071805 ms latency / msg. 
+222000 msgs total. 2833.69751133005 msgs/sec. 186170.633222604 ms latency / msg. 
+223000 msgs total. 2834.68012185001 msgs/sec. 186272.323568658 ms latency / msg. 
+224000 msgs total. 2835.727238866 msgs/sec. 186370.389586797 ms latency / msg. 
+225000 msgs total. 2836.30713244995 msgs/sec. 186468.674608087 ms latency / msg. 
+226000 msgs total. 2836.51717094518 msgs/sec. 186561.198097914 ms latency / msg. 
+227000 msgs total. 2836.9265897592 msgs/sec. 186657.443397121 ms latency / msg. 
+228000 msgs total. 2837.03534072402 msgs/sec. 186754.212984924 ms latency / msg. 
+229000 msgs total. 2836.7410298136 msgs/sec. 186850.632634482 ms latency / msg. 
+230000 msgs total. 2835.98040847028 msgs/sec. 186947.537997384 ms latency / msg. 
+231000 msgs total. 2836.5834825012 msgs/sec. 187048.844304114 ms latency / msg. 
+232000 msgs total. 2836.38863472816 msgs/sec. 187152.495889196 ms latency / msg. 
+233000 msgs total. 2834.67102777114 msgs/sec. 187247.444134448 ms latency / msg. 
+234000 msgs total. 2833.69436496746 msgs/sec. 187341.59262616 ms latency / msg. 
+235000 msgs total. 2832.59952391765 msgs/sec. 187436.129432661 ms latency / msg. 
+235000 msgs total. 2832.59951367473 msgs/sec. 187436.129440976 ms latency / msg. 
+236000 msgs total. 2831.60235241845 msgs/sec. 187535.803000128 ms latency / msg. 
+237000 msgs total. 2831.62556521935 msgs/sec. 187628.819503744 ms latency / msg. 
+238000 msgs total. 2831.00702408647 msgs/sec. 187717.977622993 ms latency / msg. 
+239000 msgs total. 2831.01721497504 msgs/sec. 187816.184552441 ms latency / msg. 
+240000 msgs total. 2829.41303303188 msgs/sec. 187914.536262189 ms latency / msg. 
+241000 msgs total. 2827.51529043422 msgs/sec. 188011.381968595 ms latency / msg. 
+242000 msgs total. 2826.75822653371 msgs/sec. 188099.123826787 ms latency / msg. 
+243000 msgs total. 2824.82565922924 msgs/sec. 188192.852431932 ms latency / msg. 
+244000 msgs total. 2823.10908702931 msgs/sec. 188292.811573375 ms latency / msg. 
+245000 msgs total. 2822.39829807125 msgs/sec. 188384.916988096 ms latency / msg. 
+246000 msgs total. 2823.32599619003 msgs/sec. 188483.235461843 ms latency / msg. 
+247000 msgs total. 2823.7624636931 msgs/sec. 188583.311404054 ms latency / msg. 
+248000 msgs total. 2822.39314306323 msgs/sec. 188661.083804356 ms latency / msg. 
+249000 msgs total. 2823.53633393117 msgs/sec. 188754.527906307 ms latency / msg. 
+250000 msgs total. 2823.84956109087 msgs/sec. 188855.541816629 ms latency / msg. 
+251000 msgs total. 2824.56355974826 msgs/sec. 188953.790739694 ms latency / msg. 
+252000 msgs total. 2824.43902037332 msgs/sec. 189047.893202314 ms latency / msg. 
+253000 msgs total. 2824.25830338695 msgs/sec. 189133.606488242 ms latency / msg. 
+254000 msgs total. 2824.73625318053 msgs/sec. 189233.737308486 ms latency / msg. 
+255000 msgs total. 2825.12129899263 msgs/sec. 189330.762210916 ms latency / msg. 
+256000 msgs total. 2824.90109130222 msgs/sec. 189418.745417205 ms latency / msg. 
+257000 msgs total. 2825.35989835652 msgs/sec. 189512.955827894 ms latency / msg. 
+258000 msgs total. 2824.65566650938 msgs/sec. 189615.349774135 ms latency / msg. 
+259000 msgs total. 2822.30010065739 msgs/sec. 189715.482395811 ms latency / msg. 
+260000 msgs total. 2822.97807213998 msgs/sec. 189806.819519476 ms latency / msg. 
+261000 msgs total. 2822.77396645251 msgs/sec. 189901.338239278 ms latency / msg. 
+262000 msgs total. 2823.17823729565 msgs/sec. 189998.906818731 ms latency / msg. 
+263000 msgs total. 2823.51789691435 msgs/sec. 190098.782793667 ms latency / msg. 
+264000 msgs total. 2824.18786436911 msgs/sec. 190168.95887765 ms latency / msg. 
+265000 msgs total. 2823.68151875587 msgs/sec. 190261.008113994 ms latency / msg. 
+266000 msgs total. 2823.0146057724 msgs/sec. 190349.388210625 ms latency / msg. 
+267000 msgs total. 2823.25661464097 msgs/sec. 190432.364793309 ms latency / msg. 
+268000 msgs total. 2822.68452058019 msgs/sec. 190519.09555336 ms latency / msg. 
+269000 msgs total. 2823.38566346413 msgs/sec. 190622.168882693 ms latency / msg. 
+271000 msgs total. 2824.02001422791 msgs/sec. 190806.443338045 ms latency / msg. 
+272000 msgs total. 2824.2027300353 msgs/sec. 190903.420180773 ms latency / msg. 
+273000 msgs total. 2824.50627100141 msgs/sec. 190981.134618137 ms latency / msg. 
+274000 msgs total. 2825.06812945643 msgs/sec. 191076.089269118 ms latency / msg. 
+275000 msgs total. 2825.73885207721 msgs/sec. 191176.820885387 ms latency / msg. 
+276000 msgs total. 2826.1883909964 msgs/sec. 191269.967831321 ms latency / msg. 
+277000 msgs total. 2826.99020008028 msgs/sec. 191364.507554158 ms latency / msg. 
+278000 msgs total. 2827.66456161484 msgs/sec. 191459.614858999 ms latency / msg. 
+279000 msgs total. 2827.57099329952 msgs/sec. 191557.122770009 ms latency / msg. 
+280000 msgs total. 2827.27547003286 msgs/sec. 191658.690566887 ms latency / msg. 
+281000 msgs total. 2826.22913469457 msgs/sec. 191753.788003254 ms latency / msg. 
+282000 msgs total. 2826.35985232883 msgs/sec. 191847.622568962 ms latency / msg. 
+283000 msgs total. 2825.75026657584 msgs/sec. 191945.984617782 ms latency / msg. 
+285000 msgs total. 2825.45804878459 msgs/sec. 192136.630034632 ms latency / msg. 
+286000 msgs total. 2825.22256962636 msgs/sec. 192236.542729252 ms latency / msg. 
+287000 msgs total. 2825.15496481935 msgs/sec. 192338.899719347 ms latency / msg. 
+288000 msgs total. 2825.27806499531 msgs/sec. 192435.401422103 ms latency / msg. 
+289000 msgs total. 2825.07190355413 msgs/sec. 192531.526550563 ms latency / msg. 
+290000 msgs total. 2825.31629537708 msgs/sec. 192624.093852329 ms latency / msg. 
+291000 msgs total. 2825.12105447125 msgs/sec. 192725.401654782 ms latency / msg. 
+292000 msgs total. 2824.81994065626 msgs/sec. 192829.655953822 ms latency / msg. 
+293000 msgs total. 2825.39924998398 msgs/sec. 192927.171983276 ms latency / msg. 
+294000 msgs total. 2825.24529142385 msgs/sec. 193027.758376785 ms latency / msg. 
+295000 msgs total. 2825.45486229209 msgs/sec. 193122.428211698 ms latency / msg. 
+296000 msgs total. 2825.59255792683 msgs/sec. 193220.048279625 ms latency / msg. 
+297000 msgs total. 2825.81671747633 msgs/sec. 193318.327189738 ms latency / msg. 
+298000 msgs total. 2825.53045667298 msgs/sec. 193412.47474037 ms latency / msg. 
+299000 msgs total. 2825.02645013686 msgs/sec. 193512.368917268 ms latency / msg. 
+300000 msgs total. 2825.16820874942 msgs/sec. 193609.92273085 ms latency / msg. 
+301000 msgs total. 2824.7164820571 msgs/sec. 193708.496276848 ms latency / msg. 
+302000 msgs total. 2824.49771868219 msgs/sec. 193802.094698732 ms latency / msg. 
+303000 msgs total. 2824.4032087521 msgs/sec. 193900.316424136 ms latency / msg. 
+304000 msgs total. 2823.8554717775 msgs/sec. 193997.501626412 ms latency / msg. 
+305000 msgs total. 2823.88454435641 msgs/sec. 194090.873308873 ms latency / msg. 
+306000 msgs total. 2824.1965944957 msgs/sec. 194187.601198393 ms latency / msg. 
+307000 msgs total. 2824.33196579701 msgs/sec. 194287.508140876 ms latency / msg. 
+308000 msgs total. 2824.20270082557 msgs/sec. 194388.854947266 ms latency / msg. 
+309000 msgs total. 2824.27974950481 msgs/sec. 194485.517777541 ms latency / msg. 
+310000 msgs total. 2824.21651931379 msgs/sec. 194580.302858498 ms latency / msg. 
+311000 msgs total. 2823.95480629172 msgs/sec. 194682.39376975 ms latency / msg. 
+312000 msgs total. 2821.84424213518 msgs/sec. 194765.376519591 ms latency / msg. 
+313000 msgs total. 2820.22149304189 msgs/sec. 194861.198608301 ms latency / msg. 
+314000 msgs total. 2820.99933831484 msgs/sec. 194962.98967302 ms latency / msg. 
+315000 msgs total. 2822.09819786507 msgs/sec. 195058.883969731 ms latency / msg. 
+316000 msgs total. 2822.6076477284 msgs/sec. 195159.96204115 ms latency / msg. 
+317000 msgs total. 2823.45715557186 msgs/sec. 195250.088616975 ms latency / msg. 
+318000 msgs total. 2824.05013526614 msgs/sec. 195344.469780227 ms latency / msg. 
+319000 msgs total. 2825.01072715907 msgs/sec. 195441.784773213 ms latency / msg. 
+320000 msgs total. 2824.37199918694 msgs/sec. 195538.663682678 ms latency / msg. 
+321000 msgs total. 2824.54797326712 msgs/sec. 195631.223715984 ms latency / msg. 
+322000 msgs total. 2825.29826112193 msgs/sec. 195730.250654699 ms latency / msg. 
+323000 msgs total. 2826.03932583336 msgs/sec. 195825.144419567 ms latency / msg. 
+324000 msgs total. 2827.09487237046 msgs/sec. 195914.993347244 ms latency / msg. 
+325000 msgs total. 2827.62249568862 msgs/sec. 196002.127035001 ms latency / msg. 
+326000 msgs total. 2828.62663411637 msgs/sec. 196087.522415347 ms latency / msg. 
+327000 msgs total. 2829.15321014982 msgs/sec. 196185.260608847 ms latency / msg. 
+328000 msgs total. 2829.79442721992 msgs/sec. 196283.163384586 ms latency / msg. 
+329000 msgs total. 2830.29558024139 msgs/sec. 196367.684066362 ms latency / msg. 
+330000 msgs total. 2827.96811066269 msgs/sec. 196459.304335191 ms latency / msg. 
+331000 msgs total. 2827.56243416318 msgs/sec. 196553.393458562 ms latency / msg. 
+332000 msgs total. 2828.10837698377 msgs/sec. 196652.546160338 ms latency / msg. 
+333000 msgs total. 2828.23577114775 msgs/sec. 196739.904383778 ms latency / msg. 
+334000 msgs total. 2828.76993175432 msgs/sec. 196830.943766159 ms latency / msg. 
+335000 msgs total. 2826.4184519369 msgs/sec. 196928.300348385 ms latency / msg. 
+336000 msgs total. 2825.48751260069 msgs/sec. 197026.015800743 ms latency / msg. 
+337000 msgs total. 2826.04072991872 msgs/sec. 197122.600189682 ms latency / msg. 
+338000 msgs total. 2826.05593843118 msgs/sec. 197216.66061402 ms latency / msg. 
+339000 msgs total. 2825.83693283413 msgs/sec. 197312.733607961 ms latency / msg. 
+340000 msgs total. 2825.44699277788 msgs/sec. 197393.165635452 ms latency / msg. 
+341000 msgs total. 2822.89746840279 msgs/sec. 197484.249698996 ms latency / msg. 
+342000 msgs total. 2821.88904678816 msgs/sec. 197566.745148037 ms latency / msg. 
+343000 msgs total. 2821.22759118768 msgs/sec. 197657.221934999 ms latency / msg. 
+344000 msgs total. 2820.75090420995 msgs/sec. 197750.475084752 ms latency / msg. 
+345000 msgs total. 2819.89379524726 msgs/sec. 197835.440935611 ms latency / msg. 
+346000 msgs total. 2819.3952752411 msgs/sec. 197928.251632949 ms latency / msg. 
+347000 msgs total. 2819.4042319355 msgs/sec. 198025.711743217 ms latency / msg. 
+348000 msgs total. 2819.49386847504 msgs/sec. 198125.10320301 ms latency / msg. 
+349000 msgs total. 2819.44897556869 msgs/sec. 198220.339135921 ms latency / msg. 
+350000 msgs total. 2819.55078771845 msgs/sec. 198306.927848853 ms latency / msg. 
+351000 msgs total. 2819.36904703931 msgs/sec. 198405.318367474 ms latency / msg. 
+352000 msgs total. 2819.44818738873 msgs/sec. 198492.407742435 ms latency / msg. 
+353000 msgs total. 2819.50773696845 msgs/sec. 198588.141236476 ms latency / msg. 
+354000 msgs total. 2819.55725997703 msgs/sec. 198685.854343923 ms latency / msg. 
+355000 msgs total. 2818.84914206079 msgs/sec. 198775.562134032 ms latency / msg. 
+356000 msgs total. 2818.79584534893 msgs/sec. 198870.919475237 ms latency / msg. 
+357000 msgs total. 2818.48772544214 msgs/sec. 198969.694960709 ms latency / msg. 
+358000 msgs total. 2818.99183873594 msgs/sec. 199051.530902027 ms latency / msg. 
+359000 msgs total. 2818.48973672242 msgs/sec. 199148.44263648 ms latency / msg. 
+360000 msgs total. 2818.4672522607 msgs/sec. 199240.869465065 ms latency / msg. 
+361000 msgs total. 2817.79803572142 msgs/sec. 199335.245488793 ms latency / msg. 
+362000 msgs total. 2817.1587166925 msgs/sec. 199431.448676482 ms latency / msg. 
+362000 msgs total. 2817.14746904108 msgs/sec. 199431.257622568 ms latency / msg. 
+363000 msgs total. 2814.1336867325 msgs/sec. 199528.999618436 ms latency / msg. 
+364000 msgs total. 2813.75878045312 msgs/sec. 199623.694550876 ms latency / msg. 
+365000 msgs total. 2813.2318446817 msgs/sec. 199722.607421482 ms latency / msg. 
+366000 msgs total. 2812.13136444164 msgs/sec. 199819.695638235 ms latency / msg. 
+367000 msgs total. 2811.24909205942 msgs/sec. 199914.184362471 ms latency / msg. 
+368000 msgs total. 2810.72807797115 msgs/sec. 200014.679952813 ms latency / msg. 
+369000 msgs total. 2809.9780190269 msgs/sec. 200108.566848277 ms latency / msg. 
+370000 msgs total. 2809.89331845113 msgs/sec. 200208.574867201 ms latency / msg. 
+371000 msgs total. 2809.9160708138 msgs/sec. 200307.369173756 ms latency / msg. 
+372000 msgs total. 2810.53671331994 msgs/sec. 200403.91255075 ms latency / msg. 
+373000 msgs total. 2809.73335354021 msgs/sec. 200497.690590048 ms latency / msg. 
+374000 msgs total. 2809.65881398756 msgs/sec. 200602.777721899 ms latency / msg. 
+375000 msgs total. 2809.76192844472 msgs/sec. 200691.403146139 ms latency / msg. 
+376000 msgs total. 2809.7908084364 msgs/sec. 200792.894697381 ms latency / msg. 
+377000 msgs total. 2809.70414664209 msgs/sec. 200891.000628455 ms latency / msg. 
+378000 msgs total. 2810.3299359909 msgs/sec. 200991.035783079 ms latency / msg. 
+379000 msgs total. 2811.10061682171 msgs/sec. 201083.880364017 ms latency / msg. 
+380000 msgs total. 2811.73863320454 msgs/sec. 201180.641677378 ms latency / msg. 
+382000 msgs total. 2812.82028436808 msgs/sec. 201374.153144571 ms latency / msg. 
+383000 msgs total. 2812.19021370596 msgs/sec. 201466.426041204 ms latency / msg. 
+384000 msgs total. 2812.69523648278 msgs/sec. 201551.02672664 ms latency / msg. 
+385000 msgs total. 2811.38763705708 msgs/sec. 201651.370732629 ms latency / msg. 
+386000 msgs total. 2811.26947944554 msgs/sec. 201750.324010765 ms latency / msg. 
+387000 msgs total. 2810.95751157969 msgs/sec. 201850.602912368 ms latency / msg. 
+388000 msgs total. 2809.84028226931 msgs/sec. 201944.461598939 ms latency / msg. 
+389000 msgs total. 2809.5430829756 msgs/sec. 202042.785006772 ms latency / msg. 
+390000 msgs total. 2809.03587467613 msgs/sec. 202137.534472086 ms latency / msg. 
+391000 msgs total. 2808.67248471415 msgs/sec. 202225.464000158 ms latency / msg. 
+392000 msgs total. 2807.84525602639 msgs/sec. 202315.867026281 ms latency / msg. 
+393000 msgs total. 2807.34381683949 msgs/sec. 202411.177728158 ms latency / msg. 
+394000 msgs total. 2806.93392927495 msgs/sec. 202505.519391132 ms latency / msg. 
+395000 msgs total. 2807.21269195979 msgs/sec. 202601.458240825 ms latency / msg. 
+396000 msgs total. 2807.5638958933 msgs/sec. 202697.632118415 ms latency / msg. 
+397000 msgs total. 2807.6880042209 msgs/sec. 202799.729670138 ms latency / msg. 
+398000 msgs total. 2807.26080910788 msgs/sec. 202892.238099482 ms latency / msg. 
+399000 msgs total. 2806.71696808073 msgs/sec. 202982.144830204 ms latency / msg. 
+400000 msgs total. 2805.63957121186 msgs/sec. 203078.106353897 ms latency / msg. 
+400000 msgs total. 2805.66382736752 msgs/sec. 203077.996833254 ms latency / msg. 
+402000 msgs total. 2800.65256821136 msgs/sec. 203243.927242888 ms latency / msg. 
+403000 msgs total. 2798.90002367869 msgs/sec. 203343.961665644 ms latency / msg. 
+404000 msgs total. 2798.21005982836 msgs/sec. 203434.486972916 ms latency / msg. 
+405000 msgs total. 2797.47027815788 msgs/sec. 203536.670175503 ms latency / msg. 
+406000 msgs total. 2796.64363995938 msgs/sec. 203632.659052858 ms latency / msg. 
+407000 msgs total. 2794.2927439887 msgs/sec. 203722.484978358 ms latency / msg. 
+408000 msgs total. 2792.11663878928 msgs/sec. 203821.032892613 ms latency / msg. 
+409000 msgs total. 2790.83375830999 msgs/sec. 203921.054844777 ms latency / msg. 
+410000 msgs total. 2786.04648249057 msgs/sec. 204015.731768318 ms latency / msg. 
+411000 msgs total. 2782.07837341812 msgs/sec. 204116.365855768 ms latency / msg. 
+412000 msgs total. 2779.82487927762 msgs/sec. 204215.235096447 ms latency / msg. 
+413000 msgs total. 2778.37504058286 msgs/sec. 204317.572811314 ms latency / msg. 
+414000 msgs total. 2777.27324166898 msgs/sec. 204419.443026925 ms latency / msg. 
+415000 msgs total. 2776.59304975565 msgs/sec. 204516.544506145 ms latency / msg. 
+416000 msgs total. 2775.10637654837 msgs/sec. 204618.971218568 ms latency / msg. 
+417000 msgs total. 2774.8382237375 msgs/sec. 204716.079351146 ms latency / msg. 
+418000 msgs total. 2774.02985660594 msgs/sec. 204812.600647896 ms latency / msg. 
+419000 msgs total. 2773.69769678386 msgs/sec. 204911.124990807 ms latency / msg. 
+420000 msgs total. 2772.78849514703 msgs/sec. 205016.329612249 ms latency / msg. 
+421000 msgs total. 2772.09478775547 msgs/sec. 205121.116766677 ms latency / msg. 
+422000 msgs total. 2772.2877939235 msgs/sec. 205223.317625468 ms latency / msg. 
+423000 msgs total. 2769.50575622228 msgs/sec. 205313.988944841 ms latency / msg. 
+423000 msgs total. 2769.50576166211 msgs/sec. 205313.98894946 ms latency / msg. 
+424000 msgs total. 2769.07493481652 msgs/sec. 205413.793058173 ms latency / msg. 
+425000 msgs total. 2768.23598676899 msgs/sec. 205519.002335072 ms latency / msg. 
+426000 msgs total. 2767.19052055937 msgs/sec. 205625.55479563 ms latency / msg. 
+427000 msgs total. 2767.19546750284 msgs/sec. 205727.492227239 ms latency / msg. 
+428000 msgs total. 2766.82170791295 msgs/sec. 205834.00642053 ms latency / msg. 
+429000 msgs total. 2766.0882198265 msgs/sec. 205937.499487568 ms latency / msg. 
+430000 msgs total. 2764.84738137938 msgs/sec. 206040.967025611 ms latency / msg. 
+431000 msgs total. 2764.13156877365 msgs/sec. 206143.10678165 ms latency / msg. 
+432000 msgs total. 2763.04489619845 msgs/sec. 206246.480001243 ms latency / msg. 
+433000 msgs total. 2761.38266166984 msgs/sec. 206349.312738899 ms latency / msg. 
+434000 msgs total. 2760.92871550134 msgs/sec. 206454.032841114 ms latency / msg. 
+435000 msgs total. 2760.72699019684 msgs/sec. 206559.346706003 ms latency / msg. 
+436000 msgs total. 2760.25481464521 msgs/sec. 206656.948117612 ms latency / msg. 
+437000 msgs total. 2759.560752872 msgs/sec. 206758.744459685 ms latency / msg. 
+438000 msgs total. 2759.19141782109 msgs/sec. 206862.084499413 ms latency / msg. 
+439000 msgs total. 2758.22091986165 msgs/sec. 206963.327427558 ms latency / msg. 
+440000 msgs total. 2757.10995934263 msgs/sec. 207067.288269881 ms latency / msg. 
+441000 msgs total. 2757.26491647323 msgs/sec. 207169.202948644 ms latency / msg. 
+442000 msgs total. 2757.00473299681 msgs/sec. 207271.29550582 ms latency / msg. 
+443000 msgs total. 2756.65950162118 msgs/sec. 207375.799378435 ms latency / msg. 
+444000 msgs total. 2756.62000867104 msgs/sec. 207478.881058614 ms latency / msg. 
+445000 msgs total. 2756.36531856297 msgs/sec. 207579.489620554 ms latency / msg. 
+446000 msgs total. 2756.52153904212 msgs/sec. 207680.058397635 ms latency / msg. 
+447000 msgs total. 2755.61077106357 msgs/sec. 207783.490525952 ms latency / msg. 
+448000 msgs total. 2755.83129627062 msgs/sec. 207892.089749147 ms latency / msg. 
+449000 msgs total. 2755.4539385601 msgs/sec. 207996.895287118 ms latency / msg. 
+450000 msgs total. 2755.40778198847 msgs/sec. 208099.922638749 ms latency / msg. 
+451000 msgs total. 2755.68963710747 msgs/sec. 208199.941661864 ms latency / msg. 
+452000 msgs total. 2755.39963672897 msgs/sec. 208301.533159945 ms latency / msg. 
+453000 msgs total. 2755.34907411585 msgs/sec. 208402.525111441 ms latency / msg. 
+454000 msgs total. 2754.78052142362 msgs/sec. 208504.959065431 ms latency / msg. 
+455000 msgs total. 2754.06378045032 msgs/sec. 208596.288514243 ms latency / msg. 
+456000 msgs total. 2753.56255515787 msgs/sec. 208699.79716025 ms latency / msg. 
+457000 msgs total. 2752.85101138364 msgs/sec. 208804.173498134 ms latency / msg. 
+458000 msgs total. 2752.51864967058 msgs/sec. 208908.845924937 ms latency / msg. 
+459000 msgs total. 2750.89708986582 msgs/sec. 209014.555136134 ms latency / msg. 
+460000 msgs total. 2750.72527341762 msgs/sec. 209115.317544503 ms latency / msg. 
+461000 msgs total. 2750.36534576511 msgs/sec. 209218.309685169 ms latency / msg. 
+462000 msgs total. 2750.50441958968 msgs/sec. 209325.500347615 ms latency / msg. 
+463000 msgs total. 2749.90499449452 msgs/sec. 209423.931805588 ms latency / msg. 
+464000 msgs total. 2749.91630946525 msgs/sec. 209516.89886226 ms latency / msg. 
+464000 msgs total. 2749.92213497687 msgs/sec. 209517.000074726 ms latency / msg. 
+464000 msgs total. 2749.91630946525 msgs/sec. 209516.894384091 ms latency / msg. 
+465000 msgs total. 2749.80398406681 msgs/sec. 209614.146287428 ms latency / msg. 
+466000 msgs total. 2747.75637407512 msgs/sec. 209715.041572415 ms latency / msg. 
+467000 msgs total. 2747.47086658375 msgs/sec. 209807.948443766 ms latency / msg. 
+468000 msgs total. 2748.32752349031 msgs/sec. 209912.956444889 ms latency / msg. 
+468000 msgs total. 2748.31786790099 msgs/sec. 209912.846082141 ms latency / msg. 
+469000 msgs total. 2748.46866563027 msgs/sec. 210012.598674731 ms latency / msg. 
+470000 msgs total. 2747.58540134241 msgs/sec. 210115.929199887 ms latency / msg. 
+471000 msgs total. 2747.21794313378 msgs/sec. 210217.378552559 ms latency / msg. 
+472000 msgs total. 2747.72369603989 msgs/sec. 210317.184003651 ms latency / msg. 
+473000 msgs total. 2748.18888281043 msgs/sec. 210414.893103175 ms latency / msg. 
+474000 msgs total. 2747.90948800072 msgs/sec. 210521.039678311 ms latency / msg. 
+475000 msgs total. 2747.25989267076 msgs/sec. 210627.037931238 ms latency / msg. 
+476000 msgs total. 2746.65309947751 msgs/sec. 210731.534527488 ms latency / msg. 
+477000 msgs total. 2746.7548137025 msgs/sec. 210836.64612073 ms latency / msg. 
+478000 msgs total. 2747.04094855154 msgs/sec. 210938.739107597 ms latency / msg. 
+479000 msgs total. 2747.25975579355 msgs/sec. 211041.538556173 ms latency / msg. 
+480000 msgs total. 2747.40402429988 msgs/sec. 211136.8394918 ms latency / msg. 
+481000 msgs total. 2748.05877742134 msgs/sec. 211240.547167628 ms latency / msg. 
+482000 msgs total. 2748.05372829082 msgs/sec. 211343.181590045 ms latency / msg. 
+483000 msgs total. 2745.3012133493 msgs/sec. 211449.338747093 ms latency / msg. 
+484000 msgs total. 2745.37139118718 msgs/sec. 211555.211473137 ms latency / msg. 
+485000 msgs total. 2745.33354854484 msgs/sec. 211659.549773865 ms latency / msg. 
+486000 msgs total. 2745.57546982206 msgs/sec. 211760.988465025 ms latency / msg. 
+487000 msgs total. 2746.13428016615 msgs/sec. 211867.841990719 ms latency / msg. 
+488000 msgs total. 2746.63115712342 msgs/sec. 211969.690442607 ms latency / msg. 
+489000 msgs total. 2747.41306086391 msgs/sec. 212071.836797303 ms latency / msg. 
+490000 msgs total. 2748.22492180344 msgs/sec. 212168.163341692 ms latency / msg. 
+491000 msgs total. 2749.18000667071 msgs/sec. 212275.616455514 ms latency / msg. 
+492000 msgs total. 2749.91571005315 msgs/sec. 212375.819009106 ms latency / msg. 
+493000 msgs total. 2749.85111076183 msgs/sec. 212477.281061662 ms latency / msg. 
+494000 msgs total. 2748.51112929575 msgs/sec. 212579.624616952 ms latency / msg. 
+495000 msgs total. 2747.96953294536 msgs/sec. 212679.351163728 ms latency / msg. 
+496000 msgs total. 2747.76235197289 msgs/sec. 212781.941261097 ms latency / msg. 
+497000 msgs total. 2748.13624689758 msgs/sec. 212889.3038348 ms latency / msg. 
+498000 msgs total. 2748.35927904159 msgs/sec. 212991.344003025 ms latency / msg. 
+499000 msgs total. 2748.7923000623 msgs/sec. 213091.22433002 ms latency / msg. 
+500000 msgs total. 2748.64928762789 msgs/sec. 213196.143741535 ms latency / msg. 
+501000 msgs total. 2748.67227964127 msgs/sec. 213303.536480251 ms latency / msg. 
+502000 msgs total. 2748.92924989232 msgs/sec. 213409.912337995 ms latency / msg. 
+503000 msgs total. 2748.96483151359 msgs/sec. 213508.510046538 ms latency / msg. 
+503000 msgs total. 2748.963551113 msgs/sec. 213508.62327966 ms latency / msg. 
+504000 msgs total. 2749.26432618634 msgs/sec. 213612.597735997 ms latency / msg. 
+505000 msgs total. 2749.25480659077 msgs/sec. 213706.0981814 ms latency / msg. 
+506000 msgs total. 2749.35110831206 msgs/sec. 213810.851196006 ms latency / msg. 
+507000 msgs total. 2749.03519749554 msgs/sec. 213910.045116878 ms latency / msg. 
+508000 msgs total. 2749.29818007799 msgs/sec. 213995.861944772 ms latency / msg. 
+509000 msgs total. 2749.36256650068 msgs/sec. 214098.238712292 ms latency / msg. 
+510000 msgs total. 2749.53583656863 msgs/sec. 214203.404593732 ms latency / msg. 
+511000 msgs total. 2749.53352347791 msgs/sec. 214307.31030973 ms latency / msg. 
+512000 msgs total. 2749.92879886502 msgs/sec. 214411.809224322 ms latency / msg. 
+513000 msgs total. 2750.51981513695 msgs/sec. 214517.714030172 ms latency / msg. 
+514000 msgs total. 2750.72069658232 msgs/sec. 214622.506265696 ms latency / msg. 
+515000 msgs total. 2751.1417486661 msgs/sec. 214725.842762429 ms latency / msg. 
+516000 msgs total. 2751.50389871092 msgs/sec. 214829.34865435 ms latency / msg. 
+517000 msgs total. 2751.41580832605 msgs/sec. 214936.217461761 ms latency / msg. 
+518000 msgs total. 2751.72882928248 msgs/sec. 215043.578228679 ms latency / msg. 
+519000 msgs total. 2752.0482885613 msgs/sec. 215146.167408885 ms latency / msg. 
+520000 msgs total. 2752.31852123244 msgs/sec. 215252.362018444 ms latency / msg. 
+521000 msgs total. 2752.64060535895 msgs/sec. 215358.228337974 ms latency / msg. 
+522000 msgs total. 2752.76920645546 msgs/sec. 215462.724349302 ms latency / msg. 
+523000 msgs total. 2752.75058759935 msgs/sec. 215568.043699562 ms latency / msg. 
+524000 msgs total. 2752.90182343617 msgs/sec. 215674.206783289 ms latency / msg. 
+525000 msgs total. 2752.98910498374 msgs/sec. 215781.741002248 ms latency / msg. 
+526000 msgs total. 2753.13278312044 msgs/sec. 215887.918464686 ms latency / msg. 
+527000 msgs total. 2753.32946313084 msgs/sec. 215990.674149771 ms latency / msg. 
+528000 msgs total. 2753.24245492169 msgs/sec. 216091.777993112 ms latency / msg. 
+529000 msgs total. 2753.63805258942 msgs/sec. 216195.864095499 ms latency / msg. 
+530000 msgs total. 2753.48519219096 msgs/sec. 216301.216762239 ms latency / msg. 
+531000 msgs total. 2753.3914309123 msgs/sec. 216405.856723891 ms latency / msg. 
+532000 msgs total. 2753.96854204786 msgs/sec. 216511.118219148 ms latency / msg. 
+533000 msgs total. 2754.29203666379 msgs/sec. 216614.883089142 ms latency / msg. 
+534000 msgs total. 2754.5955407456 msgs/sec. 216713.235582693 ms latency / msg. 
+535000 msgs total. 2754.85660558139 msgs/sec. 216813.575735206 ms latency / msg. 
+537000 msgs total. 2755.4437771047 msgs/sec. 217015.370889551 ms latency / msg. 
+538000 msgs total. 2755.89647909673 msgs/sec. 217119.990011126 ms latency / msg. 
+539000 msgs total. 2756.33264330958 msgs/sec. 217224.368289866 ms latency / msg. 
+540000 msgs total. 2756.39168054225 msgs/sec. 217327.651384746 ms latency / msg. 
+541000 msgs total. 2756.84888682605 msgs/sec. 217432.850902676 ms latency / msg. 
+542000 msgs total. 2756.89099260289 msgs/sec. 217535.843306894 ms latency / msg. 
+543000 msgs total. 2756.91471706094 msgs/sec. 217636.304919809 ms latency / msg. 
+544000 msgs total. 2756.98085785265 msgs/sec. 217737.678387677 ms latency / msg. 
+545000 msgs total. 2757.08897836299 msgs/sec. 217841.257623274 ms latency / msg. 
+546000 msgs total. 2757.26620570461 msgs/sec. 217938.166584948 ms latency / msg. 
+547000 msgs total. 2757.63701899162 msgs/sec. 218040.777891109 ms latency / msg. 
+548000 msgs total. 2757.77456443697 msgs/sec. 218142.907047282 ms latency / msg. 
+549000 msgs total. 2757.8697259381 msgs/sec. 218244.844007543 ms latency / msg. 
+550000 msgs total. 2758.05614271102 msgs/sec. 218337.925435885 ms latency / msg. 
+551000 msgs total. 2757.35398618626 msgs/sec. 218433.930257798 ms latency / msg. 
+552000 msgs total. 2757.1634123598 msgs/sec. 218536.045312064 ms latency / msg. 
+553000 msgs total. 2757.33276749341 msgs/sec. 218635.345727676 ms latency / msg. 
+554000 msgs total. 2757.10903606739 msgs/sec. 218737.697842512 ms latency / msg. 
+555000 msgs total. 2757.20363602429 msgs/sec. 218842.772415377 ms latency / msg. 
+556000 msgs total. 2757.42852285532 msgs/sec. 218944.556678895 ms latency / msg. 
+557000 msgs total. 2757.03126190076 msgs/sec. 219047.50499675 ms latency / msg. 
+558000 msgs total. 2756.72108906395 msgs/sec. 219152.23601796 ms latency / msg. 
+559000 msgs total. 2756.53105445161 msgs/sec. 219231.937527657 ms latency / msg. 
+560000 msgs total. 2756.56635247038 msgs/sec. 219336.195889329 ms latency / msg. 
+561000 msgs total. 2756.29884544783 msgs/sec. 219442.42308067 ms latency / msg. 
+562000 msgs total. 2756.30227853887 msgs/sec. 219545.696232945 ms latency / msg. 
+563000 msgs total. 2756.01212713086 msgs/sec. 219649.939004232 ms latency / msg. 
+564000 msgs total. 2756.09401401229 msgs/sec. 219753.887288701 ms latency / msg. 
+565000 msgs total. 2756.1384674483 msgs/sec. 219857.447650696 ms latency / msg. 
+566000 msgs total. 2756.08379092493 msgs/sec. 219963.160203186 ms latency / msg. 
+568000 msgs total. 2756.7529687662 msgs/sec. 220167.327480782 ms latency / msg. 
+569000 msgs total. 2756.52944786287 msgs/sec. 220269.779125049 ms latency / msg. 
+570000 msgs total. 2755.06153549326 msgs/sec. 220349.03745999 ms latency / msg. 
+571000 msgs total. 2754.71372404697 msgs/sec. 220449.318335903 ms latency / msg. 
+571000 msgs total. 2754.71372404697 msgs/sec. 220449.318334192 ms latency / msg. 
+572000 msgs total. 2754.77193381621 msgs/sec. 220551.18873913 ms latency / msg. 
+573000 msgs total. 2754.68842886679 msgs/sec. 220653.221624569 ms latency / msg. 
+573000 msgs total. 2754.66962880051 msgs/sec. 220652.566008339 ms latency / msg. 
+574000 msgs total. 2754.44189253401 msgs/sec. 220756.022401349 ms latency / msg. 
+575000 msgs total. 2754.27139665099 msgs/sec. 220856.289755669 ms latency / msg. 
+576000 msgs total. 2753.97062213027 msgs/sec. 220959.344800958 ms latency / msg. 
+577000 msgs total. 2754.00764505076 msgs/sec. 221061.218906266 ms latency / msg. 
+578000 msgs total. 2753.79094973436 msgs/sec. 221163.348257969 ms latency / msg. 
+579000 msgs total. 2753.99603766751 msgs/sec. 221263.05101175 ms latency / msg. 
+580000 msgs total. 2753.73120774417 msgs/sec. 221366.359202506 ms latency / msg. 
+581000 msgs total. 2753.56342078314 msgs/sec. 221468.357474349 ms latency / msg. 
+582000 msgs total. 2753.62155644721 msgs/sec. 221572.923852878 ms latency / msg. 
+583000 msgs total. 2753.48219255363 msgs/sec. 221678.7883321 ms latency / msg. 
+584000 msgs total. 2753.16718566202 msgs/sec. 221781.780508124 ms latency / msg. 
+585000 msgs total. 2753.3054173987 msgs/sec. 221885.086973163 ms latency / msg. 
+586000 msgs total. 2752.78919941673 msgs/sec. 221987.842041809 ms latency / msg. 
+587000 msgs total. 2752.5699474822 msgs/sec. 222091.505938524 ms latency / msg. 
+588000 msgs total. 2752.55743259183 msgs/sec. 222196.44315442 ms latency / msg. 
+589000 msgs total. 2751.7745040975 msgs/sec. 222297.753027714 ms latency / msg. 
+590000 msgs total. 2751.01673533611 msgs/sec. 222401.184524125 ms latency / msg. 
+591000 msgs total. 2750.45308897858 msgs/sec. 222504.348162535 ms latency / msg. 
+593000 msgs total. 2749.7366632146 msgs/sec. 222707.355259198 ms latency / msg. 
+594000 msgs total. 2749.91307983074 msgs/sec. 222795.016311564 ms latency / msg. 
+596000 msgs total. 2750.04763857691 msgs/sec. 222993.509792836 ms latency / msg. 
+597000 msgs total. 2749.73592551777 msgs/sec. 223095.965514714 ms latency / msg. 
+599000 msgs total. 2749.67643779276 msgs/sec. 223306.502334051 ms latency / msg. 
+600000 msgs total. 2749.57706647132 msgs/sec. 223406.305500835 ms latency / msg. 
+601000 msgs total. 2749.79043840206 msgs/sec. 223508.400466297 ms latency / msg. 
+602000 msgs total. 2750.03384209005 msgs/sec. 223610.590042373 ms latency / msg. 
+603000 msgs total. 2750.34011593007 msgs/sec. 223716.526572528 ms latency / msg. 
+604000 msgs total. 2750.66628162014 msgs/sec. 223822.039142423 ms latency / msg. 
+604000 msgs total. 2750.66104608227 msgs/sec. 223821.927556604 ms latency / msg. 
+605000 msgs total. 2750.2579241886 msgs/sec. 223925.328010129 ms latency / msg. 
+606000 msgs total. 2750.13063358763 msgs/sec. 224026.506659183 ms latency / msg. 
+607000 msgs total. 2750.11819720314 msgs/sec. 224130.450442019 ms latency / msg. 
+608000 msgs total. 2749.86077111183 msgs/sec. 224233.618388128 ms latency / msg. 
+609000 msgs total. 2750.1059170103 msgs/sec. 224335.383768164 ms latency / msg. 
+610000 msgs total. 2749.8748601825 msgs/sec. 224439.279676844 ms latency / msg. 
+611000 msgs total. 2749.94676996449 msgs/sec. 224541.604941571 ms latency / msg. 
+612000 msgs total. 2750.22965159074 msgs/sec. 224642.704913829 ms latency / msg. 
+613000 msgs total. 2750.41745055359 msgs/sec. 224743.827064199 ms latency / msg. 
+614000 msgs total. 2750.78373367855 msgs/sec. 224847.018653134 ms latency / msg. 
+615000 msgs total. 2750.82999608155 msgs/sec. 224951.707718357 ms latency / msg. 
+616000 msgs total. 2751.26081316905 msgs/sec. 225054.494119267 ms latency / msg. 
+617000 msgs total. 2751.03288064551 msgs/sec. 225157.922736195 ms latency / msg. 
+618000 msgs total. 2750.98990476713 msgs/sec. 225261.332155607 ms latency / msg. 
+620000 msgs total. 2751.23023278907 msgs/sec. 225469.409208409 ms latency / msg. 
+621000 msgs total. 2751.0827662599 msgs/sec. 225572.410436985 ms latency / msg. 
+622000 msgs total. 2751.14136639464 msgs/sec. 225670.460317274 ms latency / msg. 
+623000 msgs total. 2751.36630024026 msgs/sec. 225775.121010091 ms latency / msg. 
+624000 msgs total. 2751.46781482032 msgs/sec. 225875.241446506 ms latency / msg. 
+625000 msgs total. 2751.66568604199 msgs/sec. 225964.705338644 ms latency / msg. 
+626000 msgs total. 2751.7806100867 msgs/sec. 226066.751203529 ms latency / msg. 
+627000 msgs total. 2751.76927781625 msgs/sec. 226166.438463081 ms latency / msg. 
+628000 msgs total. 2752.03359539578 msgs/sec. 226267.936062544 ms latency / msg. 
+629000 msgs total. 2752.01862337992 msgs/sec. 226370.297518582 ms latency / msg. 
+630000 msgs total. 2752.49685991554 msgs/sec. 226462.018349556 ms latency / msg. 
+631000 msgs total. 2752.664261751 msgs/sec. 226563.433690836 ms latency / msg. 
+632000 msgs total. 2753.01371398492 msgs/sec. 226664.567211113 ms latency / msg. 
+633000 msgs total. 2752.88804332152 msgs/sec. 226766.419492626 ms latency / msg. 
+634000 msgs total. 2753.05108014969 msgs/sec. 226867.878833906 ms latency / msg. 
+635000 msgs total. 2753.22447016429 msgs/sec. 226969.309033496 ms latency / msg. 
+636000 msgs total. 2753.08332497661 msgs/sec. 227070.914400348 ms latency / msg. 
+637000 msgs total. 2753.16902926827 msgs/sec. 227172.18964899 ms latency / msg. 
+638000 msgs total. 2753.23920728871 msgs/sec. 227274.281495883 ms latency / msg. 
+639000 msgs total. 2753.44335909721 msgs/sec. 227377.820786305 ms latency / msg. 
+640000 msgs total. 2751.94078161927 msgs/sec. 227446.64998183 ms latency / msg. 
+641000 msgs total. 2751.93267458963 msgs/sec. 227547.004720211 ms latency / msg. 
+642000 msgs total. 2752.10793634951 msgs/sec. 227648.076655937 ms latency / msg. 
+643000 msgs total. 2751.98982956321 msgs/sec. 227749.304726738 ms latency / msg. 
+644000 msgs total. 2752.39687246101 msgs/sec. 227846.497071822 ms latency / msg. 
+645000 msgs total. 2752.75279024048 msgs/sec. 227946.094298241 ms latency / msg. 
+647000 msgs total. 2752.85283926255 msgs/sec. 228149.917451529 ms latency / msg. 
+648000 msgs total. 2752.89578211878 msgs/sec. 228248.552265967 ms latency / msg. 
+649000 msgs total. 2751.82503018249 msgs/sec. 228346.474338444 ms latency / msg. 
+650000 msgs total. 2751.53603874976 msgs/sec. 228449.140182446 ms latency / msg. 
+651000 msgs total. 2750.96083962874 msgs/sec. 228542.811604988 ms latency / msg. 
+652000 msgs total. 2750.66976667768 msgs/sec. 228645.647140261 ms latency / msg. 
+653000 msgs total. 2750.31816853565 msgs/sec. 228742.708527692 ms latency / msg. 
+654000 msgs total. 2748.85402492857 msgs/sec. 228837.373954572 ms latency / msg. 
+655000 msgs total. 2748.64438883507 msgs/sec. 228935.585654804 ms latency / msg. 
+656000 msgs total. 2748.66082583895 msgs/sec. 229034.421427192 ms latency / msg. 
+657000 msgs total. 2748.8968714511 msgs/sec. 229133.990192683 ms latency / msg. 
+658000 msgs total. 2748.86253707925 msgs/sec. 229236.69471717 ms latency / msg. 
+659000 msgs total. 2748.66519031146 msgs/sec. 229339.841926907 ms latency / msg. 
+660000 msgs total. 2748.45565650889 msgs/sec. 229442.150932475 ms latency / msg. 
+661000 msgs total. 2748.11628103672 msgs/sec. 229546.067831351 ms latency / msg. 
+662000 msgs total. 2747.91278890737 msgs/sec. 229649.789910771 ms latency / msg. 
+663000 msgs total. 2747.84290860606 msgs/sec. 229752.510103373 ms latency / msg. 
+665000 msgs total. 2747.81147724442 msgs/sec. 229947.464419651 ms latency / msg. 
+666000 msgs total. 2747.81896294795 msgs/sec. 230044.522661649 ms latency / msg. 
+667000 msgs total. 2747.46092975965 msgs/sec. 230145.24696159 ms latency / msg. 
+668000 msgs total. 2747.64546013471 msgs/sec. 230247.430503177 ms latency / msg. 
+669000 msgs total. 2747.77522466744 msgs/sec. 230346.404884388 ms latency / msg. 
+670000 msgs total. 2748.1395665271 msgs/sec. 230449.240775053 ms latency / msg. 
+671000 msgs total. 2748.05874652388 msgs/sec. 230547.960400791 ms latency / msg. 
+672000 msgs total. 2748.03811557819 msgs/sec. 230651.675271332 ms latency / msg. 
+673000 msgs total. 2747.91328650535 msgs/sec. 230755.584725404 ms latency / msg. 
+674000 msgs total. 2747.87617048288 msgs/sec. 230853.485933853 ms latency / msg. 
+675000 msgs total. 2747.71218441241 msgs/sec. 230949.813130682 ms latency / msg. 
+676000 msgs total. 2747.57777820922 msgs/sec. 231045.912246573 ms latency / msg. 
+677000 msgs total. 2747.41565584091 msgs/sec. 231144.090509878 ms latency / msg. 
+678000 msgs total. 2747.13441293963 msgs/sec. 231246.890597367 ms latency / msg. 
+679000 msgs total. 2747.16241821026 msgs/sec. 231347.650754628 ms latency / msg. 
+680000 msgs total. 2747.02640057879 msgs/sec. 231448.408782219 ms latency / msg. 
+681000 msgs total. 2746.64442652075 msgs/sec. 231550.404654409 ms latency / msg. 
+682000 msgs total. 2746.38221949498 msgs/sec. 231653.167652105 ms latency / msg. 
+683000 msgs total. 2746.70134650446 msgs/sec. 231753.076567226 ms latency / msg. 
+684000 msgs total. 2746.63871945172 msgs/sec. 231854.993723246 ms latency / msg. 
+685000 msgs total. 2746.52756439843 msgs/sec. 231957.670140862 ms latency / msg. 
+686000 msgs total. 2746.37100360612 msgs/sec. 232060.291475689 ms latency / msg. 
+687000 msgs total. 2745.63697412775 msgs/sec. 232158.706447469 ms latency / msg. 
+688000 msgs total. 2744.62405559471 msgs/sec. 232257.525593791 ms latency / msg. 
+689000 msgs total. 2743.82250852391 msgs/sec. 232355.030433938 ms latency / msg. 
+690000 msgs total. 2743.16041849465 msgs/sec. 232457.448816872 ms latency / msg. 
+691000 msgs total. 2743.22666915741 msgs/sec. 232557.87008658 ms latency / msg. 
+692000 msgs total. 2743.35250741424 msgs/sec. 232659.493123048 ms latency / msg. 
+693000 msgs total. 2743.61358179211 msgs/sec. 232759.248521985 ms latency / msg. 
+694000 msgs total. 2743.58706162341 msgs/sec. 232858.649908762 ms latency / msg. 
+695000 msgs total. 2742.75343468738 msgs/sec. 232960.835422479 ms latency / msg. 
+696000 msgs total. 2742.68069904708 msgs/sec. 233061.906912789 ms latency / msg. 
+697000 msgs total. 2742.70433445959 msgs/sec. 233162.855284361 ms latency / msg. 
+698000 msgs total. 2742.86902133254 msgs/sec. 233265.300176489 ms latency / msg. 
+699000 msgs total. 2742.89825881796 msgs/sec. 233366.651793416 ms latency / msg. 
+700000 msgs total. 2743.03155541729 msgs/sec. 233469.290597481 ms latency / msg. 
+701000 msgs total. 2743.09749378627 msgs/sec. 233571.979145776 ms latency / msg. 
+702000 msgs total. 2742.74709540445 msgs/sec. 233672.773427922 ms latency / msg. 
+703000 msgs total. 2742.92223224007 msgs/sec. 233774.789515172 ms latency / msg. 
+704000 msgs total. 2742.90895783224 msgs/sec. 233871.652661603 ms latency / msg. 
+705000 msgs total. 2742.78393863743 msgs/sec. 233972.629337806 ms latency / msg. 
+706000 msgs total. 2742.89729203568 msgs/sec. 234073.603238156 ms latency / msg. 
+707000 msgs total. 2743.12578343401 msgs/sec. 234174.666226602 ms latency / msg. 
+708000 msgs total. 2743.24068430422 msgs/sec. 234274.971681673 ms latency / msg. 
+709000 msgs total. 2743.59281765199 msgs/sec. 234376.42797826 ms latency / msg. 
+710000 msgs total. 2743.77130447603 msgs/sec. 234477.13680054 ms latency / msg. 
+711000 msgs total. 2744.06529853738 msgs/sec. 234576.685306535 ms latency / msg. 
+712000 msgs total. 2744.31908383306 msgs/sec. 234679.153255879 ms latency / msg. 
+713000 msgs total. 2744.17357307513 msgs/sec. 234774.078795883 ms latency / msg. 
+714000 msgs total. 2744.43627659892 msgs/sec. 234874.870768095 ms latency / msg. 
+715000 msgs total. 2744.86182874409 msgs/sec. 234975.03333715 ms latency / msg. 
+716000 msgs total. 2745.17862636378 msgs/sec. 235074.967685541 ms latency / msg. 
+716000 msgs total. 2745.1824604175 msgs/sec. 235075.07165749 ms latency / msg. 
+717000 msgs total. 2745.48079349017 msgs/sec. 235174.748640566 ms latency / msg. 
+718000 msgs total. 2745.81438123074 msgs/sec. 235274.88322424 ms latency / msg. 
+719000 msgs total. 2746.16026619883 msgs/sec. 235372.205789165 ms latency / msg. 
+720000 msgs total. 2746.51545435923 msgs/sec. 235470.513095797 ms latency / msg. 
+721000 msgs total. 2746.64263223571 msgs/sec. 235571.412005001 ms latency / msg. 
+722000 msgs total. 2746.80468262997 msgs/sec. 235669.506670566 ms latency / msg. 
+723000 msgs total. 2746.8686373803 msgs/sec. 235743.548389934 ms latency / msg. 
+724000 msgs total. 2746.63276840285 msgs/sec. 235841.842106821 ms latency / msg. 
+725000 msgs total. 2746.57837327672 msgs/sec. 235940.652158999 ms latency / msg. 
+726000 msgs total. 2746.85863419923 msgs/sec. 236042.255252591 ms latency / msg. 
+727000 msgs total. 2746.00393952377 msgs/sec. 236140.06599811 ms latency / msg. 
+728000 msgs total. 2746.13526755349 msgs/sec. 236237.837109328 ms latency / msg. 
+729000 msgs total. 2746.76724654631 msgs/sec. 236339.269664447 ms latency / msg. 
+730000 msgs total. 2747.35529953714 msgs/sec. 236436.006149973 ms latency / msg. 
+731000 msgs total. 2747.91218462673 msgs/sec. 236536.575672529 ms latency / msg. 
+732000 msgs total. 2748.44705522951 msgs/sec. 236636.321435555 ms latency / msg. 
+733000 msgs total. 2748.60342934783 msgs/sec. 236731.037633512 ms latency / msg. 
+734000 msgs total. 2748.9629440855 msgs/sec. 236824.016920617 ms latency / msg. 
+735000 msgs total. 2748.99151058461 msgs/sec. 236922.387754118 ms latency / msg. 
+736000 msgs total. 2749.31425985509 msgs/sec. 237017.202333557 ms latency / msg. 
+737000 msgs total. 2749.21934377991 msgs/sec. 237114.562451149 ms latency / msg. 
+738000 msgs total. 2749.54078254019 msgs/sec. 237212.398680069 ms latency / msg. 
+739000 msgs total. 2749.77520773724 msgs/sec. 237310.913391237 ms latency / msg. 
+740000 msgs total. 2750.17773934172 msgs/sec. 237410.309952264 ms latency / msg. 
+741000 msgs total. 2750.26958264931 msgs/sec. 237509.211824657 ms latency / msg. 
+742000 msgs total. 2750.34949630691 msgs/sec. 237608.261469705 ms latency / msg. 
+743000 msgs total. 2750.5687563511 msgs/sec. 237705.677006511 ms latency / msg. 
+744000 msgs total. 2750.93542675142 msgs/sec. 237804.00795761 ms latency / msg. 
+745000 msgs total. 2751.07372880806 msgs/sec. 237901.970520096 ms latency / msg. 
+745000 msgs total. 2751.0773483849 msgs/sec. 237902.069161393 ms latency / msg. 
+746000 msgs total. 2751.30271786443 msgs/sec. 237999.951701572 ms latency / msg. 
+747000 msgs total. 2751.57289520619 msgs/sec. 238096.718988595 ms latency / msg. 
+748000 msgs total. 2751.32611491098 msgs/sec. 238191.259336252 ms latency / msg. 
+749000 msgs total. 2751.38188788982 msgs/sec. 238286.685404345 ms latency / msg. 
+750000 msgs total. 2751.74010156103 msgs/sec. 238385.302032066 ms latency / msg. 
+751000 msgs total. 2751.84444499185 msgs/sec. 238478.930812609 ms latency / msg. 
+752000 msgs total. 2751.57124487624 msgs/sec. 238575.193471029 ms latency / msg. 
+753000 msgs total. 2751.40688157605 msgs/sec. 238672.514374145 ms latency / msg. 
+754000 msgs total. 2751.30031524924 msgs/sec. 238767.336822711 ms latency / msg. 
+755000 msgs total. 2751.45842985562 msgs/sec. 238856.38765706 ms latency / msg. 
+756000 msgs total. 2751.26754089044 msgs/sec. 238952.520744471 ms latency / msg. 
+757000 msgs total. 2751.41062969326 msgs/sec. 239049.655028371 ms latency / msg. 
+758000 msgs total. 2751.5010176746 msgs/sec. 239145.43125442 ms latency / msg. 
+759000 msgs total. 2751.50513811049 msgs/sec. 239241.199501978 ms latency / msg. 
+760000 msgs total. 2751.62974431638 msgs/sec. 239338.531336301 ms latency / msg. 
+761000 msgs total. 2751.71799092296 msgs/sec. 239435.634667754 ms latency / msg. 
+762000 msgs total. 2751.91982838465 msgs/sec. 239533.642252904 ms latency / msg. 
+763000 msgs total. 2751.92632732983 msgs/sec. 239630.27548141 ms latency / msg. 
+764000 msgs total. 2752.12225972596 msgs/sec. 239724.093012224 ms latency / msg. 
+765000 msgs total. 2752.3726357885 msgs/sec. 239820.580345005 ms latency / msg. 
+766000 msgs total. 2752.40874868758 msgs/sec. 239915.515182134 ms latency / msg. 
+767000 msgs total. 2752.78789509279 msgs/sec. 240008.997560841 ms latency / msg. 
+768000 msgs total. 2752.68849466994 msgs/sec. 240103.066383121 ms latency / msg. 
+769000 msgs total. 2752.80876712274 msgs/sec. 240196.445303617 ms latency / msg. 
+770000 msgs total. 2752.67470519417 msgs/sec. 240289.541933853 ms latency / msg. 
+771000 msgs total. 2752.58058017385 msgs/sec. 240387.250720172 ms latency / msg. 
+772000 msgs total. 2752.79050069964 msgs/sec. 240484.38523116 ms latency / msg. 
+773000 msgs total. 2752.82242066242 msgs/sec. 240581.235298574 ms latency / msg. 
+774000 msgs total. 2753.01103975603 msgs/sec. 240680.82787445 ms latency / msg. 
+775000 msgs total. 2753.36143535754 msgs/sec. 240778.646124628 ms latency / msg. 
+776000 msgs total. 2753.56213270129 msgs/sec. 240881.582237486 ms latency / msg. 
+776000 msgs total. 2753.55864976044 msgs/sec. 240881.477479059 ms latency / msg. 
+777000 msgs total. 2753.62390186316 msgs/sec. 240982.493486443 ms latency / msg. 
+778000 msgs total. 2753.76451953978 msgs/sec. 241084.310493301 ms latency / msg. 
+779000 msgs total. 2753.55764808844 msgs/sec. 241183.832751757 ms latency / msg. 
+780000 msgs total. 2753.44483854406 msgs/sec. 241279.958580876 ms latency / msg. 
+781000 msgs total. 2753.5020532209 msgs/sec. 241377.568821157 ms latency / msg. 
+782000 msgs total. 2753.46996263491 msgs/sec. 241472.990921028 ms latency / msg. 
+783000 msgs total. 2597.09811520649 msgs/sec. 241232.567354643 ms latency / msg. 
+783000 msgs total. 2597.12246928945 msgs/sec. 241233.491538534 ms latency / msg. 
+784000 msgs total. 2594.89917822092 msgs/sec. 240924.952404525 ms latency / msg. 
+785000 msgs total. 2593.70096967635 msgs/sec. 240618.05764788 ms latency / msg. 
+786000 msgs total. 2592.31860581934 msgs/sec. 240311.973621579 ms latency / msg. 
+787000 msgs total. 2590.8451516071 msgs/sec. 240006.822369765 ms latency / msg. 
+788000 msgs total. 2589.745635164 msgs/sec. 239702.540507532 ms latency / msg. 
+789000 msgs total. 2589.46021617765 msgs/sec. 239398.850072473 ms latency / msg. 
+790000 msgs total. 2588.94809649328 msgs/sec. 239095.861422636 ms latency / msg. 
+791000 msgs total. 2588.15258671556 msgs/sec. 238793.617230859 ms latency / msg. 
+792000 msgs total. 2587.85101515596 msgs/sec. 238492.136441139 ms latency / msg. 
+793000 msgs total. 2587.38303383023 msgs/sec. 238191.409717574 ms latency / msg. 
+794000 msgs total. 2586.58454030977 msgs/sec. 237891.45033689 ms latency / msg. 
+795000 msgs total. 2585.6682658511 msgs/sec. 237592.287569093 ms latency / msg. 
+796000 msgs total. 2585.80627972658 msgs/sec. 237293.951428279 ms latency / msg. 
+796000 msgs total. 2585.80608064677 msgs/sec. 237293.951288342 ms latency / msg. 
+797000 msgs total. 2584.29916261632 msgs/sec. 236996.337963021 ms latency / msg. 
+797000 msgs total. 2584.08204029917 msgs/sec. 237026.051179225 ms latency / msg. 
+798000 msgs total. 2583.44530939258 msgs/sec. 236699.584939719 ms latency / msg. 
+799000 msgs total. 2583.25583641263 msgs/sec. 236403.477520102 ms latency / msg. 
+800000 msgs total. 2583.16155478514 msgs/sec. 236108.100991318 ms latency / msg. 
+801000 msgs total. 2582.40106255803 msgs/sec. 235813.355185292 ms latency / msg. 
+802000 msgs total. 2582.08250906024 msgs/sec. 235519.429722151 ms latency / msg. 
+803000 msgs total. 2582.11404924495 msgs/sec. 235226.275277561 ms latency / msg. 
+804000 msgs total. 2581.94458923593 msgs/sec. 234933.940680679 ms latency / msg. 
+805000 msgs total. 2578.82583856836 msgs/sec. 234642.649844971 ms latency / msg. 
+806000 msgs total. 2578.51087584712 msgs/sec. 234352.545091633 ms latency / msg. 
+807000 msgs total. 2577.6026229117 msgs/sec. 234063.398388723 ms latency / msg. 
+808000 msgs total. 2577.08394816228 msgs/sec. 233775.288677562 ms latency / msg. 
+808000 msgs total. 2577.08078171654 msgs/sec. 233775.576436541 ms latency / msg. 
+809000 msgs total. 2574.89471900809 msgs/sec. 233488.064023467 ms latency / msg. 
+810000 msgs total. 2574.02263630399 msgs/sec. 233201.956525805 ms latency / msg. 
+811000 msgs total. 2573.39689113417 msgs/sec. 232916.789881259 ms latency / msg. 
+812000 msgs total. 2573.03252747742 msgs/sec. 232632.26976648 ms latency / msg. 
+813000 msgs total. 2571.14741395141 msgs/sec. 232348.951665763 ms latency / msg. 
+813000 msgs total. 2571.07530077845 msgs/sec. 232357.426897216 ms latency / msg. 
+814000 msgs total. 2569.89555683679 msgs/sec. 232066.574553501 ms latency / msg. 
+815000 msgs total. 2567.91322129041 msgs/sec. 231785.145877081 ms latency / msg. 
+816000 msgs total. 2566.81977480295 msgs/sec. 231505.033184173 ms latency / msg. 
+816000 msgs total. 2566.81746719286 msgs/sec. 231505.022976113 ms latency / msg. 
+817000 msgs total. 2566.23942736879 msgs/sec. 231225.813278682 ms latency / msg. 
+818000 msgs total. 2565.91872253258 msgs/sec. 230947.277655908 ms latency / msg. 
+820000 msgs total. 2562.74506970501 msgs/sec. 230392.348140245 ms latency / msg. 
+820000 msgs total. 2562.74506970501 msgs/sec. 230392.348140245 ms latency / msg. 
+821000 msgs total. 2561.58042940371 msgs/sec. 230116.324773138 ms latency / msg. 
+822000 msgs total. 2561.38886137127 msgs/sec. 229841.369196705 ms latency / msg. 
+823000 msgs total. 2560.45895371185 msgs/sec. 229567.115532175 ms latency / msg. 
+824000 msgs total. 2560.36280112199 msgs/sec. 229293.682971412 ms latency / msg. 
+825000 msgs total. 2560.31022940778 msgs/sec. 229020.979171904 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2881.36027866212 msgs/sec. 104042.6196619 ms latency / msg. 
+2000 msgs total. 2715.21175664969 msgs/sec. 103871.3847883 ms latency / msg. 
+3000 msgs total. 2827.55958233552 msgs/sec. 103612.967257234 ms latency / msg. 
+4000 msgs total. 2888.03597164324 msgs/sec. 103762.52304155 ms latency / msg. 
+5000 msgs total. 2918.44640824758 msgs/sec. 103854.01372512 ms latency / msg. 
+6000 msgs total. 2911.95627406459 msgs/sec. 103916.284977717 ms latency / msg. 
+7000 msgs total. 2933.95229108562 msgs/sec. 103999.943339557 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 1376.96380857174 msgs/sec. 807.8855541 ms latency / msg. 
+2000 msgs total. 1439.19619165661 msgs/sec. 1134.8871987 ms latency / msg. 
+2000 msgs total. 1439.19619165661 msgs/sec. 1134.88964095 ms latency / msg. 
+3000 msgs total. 1578.63463259173 msgs/sec. 1317.41249723334 ms latency / msg. 
+4000 msgs total. 1571.54226128587 msgs/sec. 1416.12938195 ms latency / msg. 
+5000 msgs total. 1727.0060712553 msgs/sec. 1434.97544368 ms latency / msg. 
+6000 msgs total. 1807.25972617485 msgs/sec. 1446.79932026667 ms latency / msg. 
+7000 msgs total. 1795.95083523646 msgs/sec. 1484.69622108872 ms latency / msg. 
+7000 msgs total. 1796.20319594842 msgs/sec. 1484.65214842857 ms latency / msg. 
+8000 msgs total. 1858.52386648978 msgs/sec. 1539.848638225 ms latency / msg. 
+9000 msgs total. 1894.82097215643 msgs/sec. 1564.01700854444 ms latency / msg. 
+10000 msgs total. 1925.35928840877 msgs/sec. 1603.09172772 ms latency / msg. 
+11000 msgs total. 1946.20136790002 msgs/sec. 1638.0082829 ms latency / msg. 
+12000 msgs total. 1952.97623813811 msgs/sec. 1677.954945025 ms latency / msg. 
+13000 msgs total. 1967.62434576112 msgs/sec. 1719.88257248461 ms latency / msg. 
+14000 msgs total. 1972.85539802759 msgs/sec. 1760.64823912142 ms latency / msg. 
+15000 msgs total. 2002.44169730803 msgs/sec. 1799.19215890665 ms latency / msg. 
+16000 msgs total. 2044.39318014968 msgs/sec. 1828.37470998748 ms latency / msg. 
+17000 msgs total. 2070.00259273913 msgs/sec. 1850.49173317057 ms latency / msg. 
+18000 msgs total. 2114.57942601151 msgs/sec. 1864.56555794998 ms latency / msg. 
+19000 msgs total. 2063.55824561491 msgs/sec. 1889.24326022104 ms latency / msg. 
+20000 msgs total. 2076.67329066607 msgs/sec. 1907.06857199499 ms latency / msg. 
+20000 msgs total. 2076.56993136084 msgs/sec. 1907.02437304864 ms latency / msg. 
+21000 msgs total. 2053.10077267763 msgs/sec. 1933.3182215619 ms latency / msg. 
+22000 msgs total. 2024.02378227944 msgs/sec. 1959.86370710908 ms latency / msg. 
+23000 msgs total. 2003.69364370966 msgs/sec. 1989.53678590433 ms latency / msg. 
+24000 msgs total. 1985.86193726806 msgs/sec. 2027.99453739582 ms latency / msg. 
+25000 msgs total. 1979.9910342838 msgs/sec. 2078.50527075198 ms latency / msg. 
+26000 msgs total. 1981.12127059731 msgs/sec. 2132.61226444998 ms latency / msg. 
+27000 msgs total. 1978.58692619376 msgs/sec. 2186.35108118147 ms latency / msg. 
+28000 msgs total. 1966.95605156333 msgs/sec. 2255.23167088213 ms latency / msg. 
+29000 msgs total. 1970.73694511648 msgs/sec. 2328.16365030172 ms latency / msg. 
+29000 msgs total. 1970.80400655212 msgs/sec. 2328.24081812757 ms latency / msg. 
+30000 msgs total. 1959.52641303458 msgs/sec. 2403.06914606666 ms latency / msg. 
+31000 msgs total. 1964.6207794543 msgs/sec. 2484.29848610967 ms latency / msg. 
+32000 msgs total. 1963.19966281064 msgs/sec. 2561.98692342498 ms latency / msg. 
+33000 msgs total. 1974.04120265457 msgs/sec. 2643.90729297271 ms latency / msg. 
+34000 msgs total. 1964.81673180602 msgs/sec. 2727.29597325881 ms latency / msg. 
+35000 msgs total. 1980.47217093412 msgs/sec. 2814.24961239998 ms latency / msg. 
+36000 msgs total. 1987.89376013236 msgs/sec. 2903.20520377221 ms latency / msg. 
+37000 msgs total. 1990.41326595594 msgs/sec. 2982.69521207026 ms latency / msg. 
+38000 msgs total. 1992.82255588586 msgs/sec. 3077.97561873946 ms latency / msg. 
+38000 msgs total. 1992.77574608944 msgs/sec. 3077.87064442484 ms latency / msg. 
+39000 msgs total. 1997.05212575394 msgs/sec. 3167.00497111537 ms latency / msg. 
+40000 msgs total. 2003.26677721527 msgs/sec. 3258.91541842748 ms latency / msg. 
+41000 msgs total. 1992.96186973966 msgs/sec. 3342.78841943168 ms latency / msg. 
+42000 msgs total. 1993.16383717998 msgs/sec. 3431.76054624521 ms latency / msg. 
+43000 msgs total. 1998.80842198022 msgs/sec. 3523.06850993251 ms latency / msg. 
+44000 msgs total. 1999.43772175923 msgs/sec. 3616.76834432722 ms latency / msg. 
+45000 msgs total. 2003.67773871197 msgs/sec. 3712.62472780946 ms latency / msg. 
+45000 msgs total. 2003.72189114923 msgs/sec. 3712.71242272662 ms latency / msg. 
+46000 msgs total. 2006.19487682463 msgs/sec. 3809.16171583691 ms latency / msg. 
+47000 msgs total. 2004.86662176903 msgs/sec. 3905.8130420489 ms latency / msg. 
+48000 msgs total. 2015.44468009332 msgs/sec. 4001.71481057705 ms latency / msg. 
+48000 msgs total. 2015.40505266359 msgs/sec. 4001.61509021643 ms latency / msg. 
+49000 msgs total. 2022.44793383211 msgs/sec. 4081.42872872038 ms latency / msg. 
+50000 msgs total. 2025.19055959689 msgs/sec. 4173.61293746597 ms latency / msg. 
+51000 msgs total. 2039.05166969325 msgs/sec. 4257.53046449997 ms latency / msg. 
+52000 msgs total. 2031.06045287 msgs/sec. 4350.96741763074 ms latency / msg. 
+53000 msgs total. 2031.22078323643 msgs/sec. 4443.22295270563 ms latency / msg. 
+54000 msgs total. 2040.94438306367 msgs/sec. 4534.92404165553 ms latency / msg. 
+55000 msgs total. 2014.89237728956 msgs/sec. 4621.3121276727 ms latency / msg. 
+56000 msgs total. 2009.29286468242 msgs/sec. 4719.81037762319 ms latency / msg. 
+56000 msgs total. 2009.18279968215 msgs/sec. 4716.68459286555 ms latency / msg. 
+57000 msgs total. 2001.61832597461 msgs/sec. 4820.6990894649 ms latency / msg. 
+58000 msgs total. 1986.11190703024 msgs/sec. 4921.9138551793 ms latency / msg. 
+59000 msgs total. 1986.9425142776 msgs/sec. 5028.21190801864 ms latency / msg. 
+60000 msgs total. 1996.01465733443 msgs/sec. 5124.91904644499 ms latency / msg. 
+61000 msgs total. 1967.84082265915 msgs/sec. 5223.56054624425 ms latency / msg. 
+62000 msgs total. 1961.53222077525 msgs/sec. 5321.00022272256 ms latency / msg. 
+63000 msgs total. 1965.9260455319 msgs/sec. 5422.10120387774 ms latency / msg. 
+64000 msgs total. 1959.74905707287 msgs/sec. 5524.73360894683 ms latency / msg. 
+65000 msgs total. 1967.26183338561 msgs/sec. 5629.10037900149 ms latency / msg. 
+66000 msgs total. 1959.9115184285 msgs/sec. 5733.23111964086 ms latency / msg. 
+67000 msgs total. 1953.56040524237 msgs/sec. 5842.98609112682 ms latency / msg. 
+68000 msgs total. 1941.94341963933 msgs/sec. 5952.89302048378 ms latency / msg. 
+69000 msgs total. 1935.40231262569 msgs/sec. 6058.98780815792 ms latency / msg. 
+70000 msgs total. 1923.81997740232 msgs/sec. 6176.35814228566 ms latency / msg. 
+71000 msgs total. 1926.00426175372 msgs/sec. 6286.0785871619 ms latency / msg. 
+72000 msgs total. 1925.08373546082 msgs/sec. 6393.51288470132 ms latency / msg. 
+73000 msgs total. 1928.81264074685 msgs/sec. 6505.13090467392 ms latency / msg. 
+74000 msgs total. 1924.32460854524 msgs/sec. 6608.02107918507 ms latency / msg. 
+75000 msgs total. 1925.12195050769 msgs/sec. 6717.89663213861 ms latency / msg. 
+76000 msgs total. 1927.9145299275 msgs/sec. 6830.80150840916 ms latency / msg. 
+77000 msgs total. 1928.93553000445 msgs/sec. 6946.23213677528 ms latency / msg. 
+78000 msgs total. 1937.34821528725 msgs/sec. 7047.10180444097 ms latency / msg. 
+79000 msgs total. 1929.47495022632 msgs/sec. 7158.01541740121 ms latency / msg. 
+80000 msgs total. 1930.44075174133 msgs/sec. 7259.79117366496 ms latency / msg. 
+81000 msgs total. 1927.53562599846 msgs/sec. 7370.07208981971 ms latency / msg. 
+82000 msgs total. 1934.27694455037 msgs/sec. 7480.39049406336 ms latency / msg. 
+83000 msgs total. 1935.56315307883 msgs/sec. 7587.75815376982 ms latency / msg. 
+84000 msgs total. 1920.5905541584 msgs/sec. 7703.94711581185 ms latency / msg. 
+85000 msgs total. 1913.61125797765 msgs/sec. 7819.2435959729 ms latency / msg. 
+86000 msgs total. 1915.48147364137 msgs/sec. 7934.25213356392 ms latency / msg. 
+87000 msgs total. 1914.11554941337 msgs/sec. 8046.93400850917 ms latency / msg. 
+88000 msgs total. 1912.3110007896 msgs/sec. 8164.01403431704 ms latency / msg. 
+89000 msgs total. 1915.15455190717 msgs/sec. 8279.49748662135 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2596.34922143276 msgs/sec. 89349.3674967001 ms latency / msg. 
+2000 msgs total. 2577.1126879891 msgs/sec. 90830.6263132001 ms latency / msg. 
+3000 msgs total. 2789.76965429918 msgs/sec. 90696.3826690001 ms latency / msg. 
+4000 msgs total. 2797.50700163549 msgs/sec. 91178.675024075 ms latency / msg. 
+5000 msgs total. 2751.35604709815 msgs/sec. 91489.9175620998 ms latency / msg. 
+6000 msgs total. 2760.94445283465 msgs/sec. 91677.3052175665 ms latency / msg. 
+7000 msgs total. 2753.9186787485 msgs/sec. 91897.5537887142 ms latency / msg. 
+8000 msgs total. 2742.13685401768 msgs/sec. 91619.9369685874 ms latency / msg. 
+9000 msgs total. 2744.90625458914 msgs/sec. 91572.1150135442 ms latency / msg. 
+10000 msgs total. 2719.96181608804 msgs/sec. 91715.7938401597 ms latency / msg. 
+11000 msgs total. 2728.00139673672 msgs/sec. 91899.7457620091 ms latency / msg. 
+12000 msgs total. 2722.24949638951 msgs/sec. 92017.8323682999 ms latency / msg. 
+14000 msgs total. 2706.66054059164 msgs/sec. 92122.3329662068 ms latency / msg. 
+15000 msgs total. 2716.94010525462 msgs/sec. 92202.8526694329 ms latency / msg. 
+16000 msgs total. 2735.96183114369 msgs/sec. 92300.9130162932 ms latency / msg. 
+17000 msgs total. 2745.42066255915 msgs/sec. 92334.84411857 ms latency / msg. 
+18000 msgs total. 2747.76753428699 msgs/sec. 92353.6810906605 ms latency / msg. 
+19000 msgs total. 2739.00286744769 msgs/sec. 92406.3828261626 ms latency / msg. 
+20000 msgs total. 2736.97484278098 msgs/sec. 92471.8334063046 ms latency / msg. 
+21000 msgs total. 2743.87943393767 msgs/sec. 92535.6982228709 ms latency / msg. 
+22000 msgs total. 2752.28467150582 msgs/sec. 92601.5092925677 ms latency / msg. 
+23000 msgs total. 2766.00099405265 msgs/sec. 92673.6598271168 ms latency / msg. 
+25000 msgs total. 2775.58987280071 msgs/sec. 92734.1212775358 ms latency / msg. 
+26000 msgs total. 2775.27312343423 msgs/sec. 92768.7469930538 ms latency / msg. 
+27000 msgs total. 2776.68607165726 msgs/sec. 92837.7367954628 ms latency / msg. 
+28000 msgs total. 2777.54727993059 msgs/sec. 92918.5540900822 ms latency / msg. 
+29000 msgs total. 2784.32357849408 msgs/sec. 92962.1702701278 ms latency / msg. 
+30000 msgs total. 2785.15733581245 msgs/sec. 93031.2127450003 ms latency / msg. 
+31000 msgs total. 2778.74301748939 msgs/sec. 93090.7228144038 ms latency / msg. 
+32000 msgs total. 2791.30199941573 msgs/sec. 93128.2275849882 ms latency / msg. 
+33000 msgs total. 2797.44653488393 msgs/sec. 93165.7098503462 ms latency / msg. 
+34000 msgs total. 2804.4698696583 msgs/sec. 93204.5647992949 ms latency / msg. 
+36000 msgs total. 2806.47454300733 msgs/sec. 93303.3517127371 ms latency / msg. 
+38000 msgs total. 2826.54419855634 msgs/sec. 93390.6938209352 ms latency / msg. 
+39000 msgs total. 2836.19086592951 msgs/sec. 93445.1812839343 ms latency / msg. 
+40000 msgs total. 2846.21943290188 msgs/sec. 93474.9730624185 ms latency / msg. 
+41000 msgs total. 2854.39817924484 msgs/sec. 93459.7705785718 ms latency / msg. 
+42000 msgs total. 2863.01345649726 msgs/sec. 93499.1091876726 ms latency / msg. 
+43000 msgs total. 2863.76910508614 msgs/sec. 93535.4565372057 ms latency / msg. 
+44000 msgs total. 2864.98864715692 msgs/sec. 93571.1582523192 ms latency / msg. 
+45000 msgs total. 2866.24013956067 msgs/sec. 93620.0444952609 ms latency / msg. 
+46000 msgs total. 2872.39952694577 msgs/sec. 93672.0104061857 ms latency / msg. 
+47000 msgs total. 2868.96589174352 msgs/sec. 93685.7335209946 ms latency / msg. 
+48000 msgs total. 2863.18834298677 msgs/sec. 93717.0679401095 ms latency / msg. 
+49000 msgs total. 2861.34701846706 msgs/sec. 93731.6582788725 ms latency / msg. 
+50000 msgs total. 2858.76362909843 msgs/sec. 93772.535986707 ms latency / msg. 
+51000 msgs total. 2857.89059980214 msgs/sec. 93806.6619436125 ms latency / msg. 
+52000 msgs total. 2856.50428717897 msgs/sec. 93816.0530965951 ms latency / msg. 
+53000 msgs total. 2844.46555717697 msgs/sec. 93842.3669327726 ms latency / msg. 
+54000 msgs total. 2843.343838699 msgs/sec. 93874.1649929563 ms latency / msg. 
+55000 msgs total. 2841.73501418274 msgs/sec. 93885.2130945041 ms latency / msg. 
+56000 msgs total. 2839.55717531785 msgs/sec. 93925.2055621382 ms latency / msg. 
+57000 msgs total. 2839.21027694897 msgs/sec. 93954.1194134464 ms latency / msg. 
+58000 msgs total. 2838.38215779665 msgs/sec. 93994.7155889303 ms latency / msg. 
+59000 msgs total. 2844.50699231406 msgs/sec. 94059.0357272043 ms latency / msg. 
+60000 msgs total. 2851.65555215696 msgs/sec. 94090.4502567688 ms latency / msg. 
+61000 msgs total. 2852.55273237165 msgs/sec. 94109.4032140462 ms latency / msg. 
+62000 msgs total. 2841.58551690427 msgs/sec. 94130.814441752 ms latency / msg. 
+63000 msgs total. 2837.78939089283 msgs/sec. 94177.3139493702 ms latency / msg. 
+63000 msgs total. 2837.78945480592 msgs/sec. 94177.3138563321 ms latency / msg. 
+65000 msgs total. 2840.87602599276 msgs/sec. 94275.7719979314 ms latency / msg. 
+66000 msgs total. 2842.07359239523 msgs/sec. 94306.8988385263 ms latency / msg. 
+67000 msgs total. 2843.80792043545 msgs/sec. 94319.0419642216 ms latency / msg. 
+68000 msgs total. 2840.27100295407 msgs/sec. 94365.1053776287 ms latency / msg. 
+69000 msgs total. 2844.9168534705 msgs/sec. 94389.8618477164 ms latency / msg. 
+70000 msgs total. 2845.12474827454 msgs/sec. 94456.7744453433 ms latency / msg. 
+71000 msgs total. 2846.07582544076 msgs/sec. 94485.0132965933 ms latency / msg. 
+72000 msgs total. 2841.64502135662 msgs/sec. 94527.9490223781 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 1267.85102547594 msgs/sec. 892.114332 ms latency / msg. 
+2000 msgs total. 1593.58651545337 msgs/sec. 1078.1766545 ms latency / msg. 
+3000 msgs total. 1691.71294676377 msgs/sec. 1178.24278566667 ms latency / msg. 
+4000 msgs total. 1748.60727801824 msgs/sec. 1243.5534445 ms latency / msg. 
+5000 msgs total. 1746.66417708799 msgs/sec. 1303.296506 ms latency / msg. 
+6000 msgs total. 1798.45338404332 msgs/sec. 1350.97394316667 ms latency / msg. 
+7000 msgs total. 1833.60726552734 msgs/sec. 1387.71237657143 ms latency / msg. 
+8000 msgs total. 1874.9308179824 msgs/sec. 1421.87328624999 ms latency / msg. 
+9000 msgs total. 1867.25726215769 msgs/sec. 1458.19377688888 ms latency / msg. 
+10000 msgs total. 1880.72236815896 msgs/sec. 1493.10835909999 ms latency / msg. 
+11000 msgs total. 1899.70635030039 msgs/sec. 1521.97219872726 ms latency / msg. 
+12000 msgs total. 1909.62961126418 msgs/sec. 1550.92252949999 ms latency / msg. 
+13000 msgs total. 1928.63744731482 msgs/sec. 1582.63688892307 ms latency / msg. 
+14000 msgs total. 1929.27232533264 msgs/sec. 1614.95057342857 ms latency / msg. 
+15000 msgs total. 1939.39095547444 msgs/sec. 1649.3803884 ms latency / msg. 
+16000 msgs total. 1927.11355426285 msgs/sec. 1684.9663799375 ms latency / msg. 
+17000 msgs total. 1939.29586425878 msgs/sec. 1725.69492735293 ms latency / msg. 
+19000 msgs total. 1946.02823830365 msgs/sec. 1815.20630015788 ms latency / msg. 
+20000 msgs total. 1949.44384462765 msgs/sec. 1858.38403869999 ms latency / msg. 
+21000 msgs total. 1951.40069058527 msgs/sec. 1917.15036458878 ms latency / msg. 
+21000 msgs total. 1951.49229500661 msgs/sec. 1917.21376338094 ms latency / msg. 
+22000 msgs total. 1944.48079543265 msgs/sec. 1976.97579813635 ms latency / msg. 
+24000 msgs total. 1954.00091334888 msgs/sec. 2104.61761737499 ms latency / msg. 
+25000 msgs total. 1958.10774169852 msgs/sec. 2177.69982108 ms latency / msg. 
+26000 msgs total. 1949.28995651367 msgs/sec. 2251.49762730769 ms latency / msg. 
+27000 msgs total. 1943.76889676328 msgs/sec. 2331.79135355555 ms latency / msg. 
+28000 msgs total. 1941.27019804977 msgs/sec. 2413.42050221428 ms latency / msg. 
+29000 msgs total. 1943.1724705476 msgs/sec. 2500.05203793103 ms latency / msg. 
+30000 msgs total. 1940.37780423562 msgs/sec. 2588.44031943334 ms latency / msg. 
+31000 msgs total. 1928.63999661157 msgs/sec. 2682.11230706451 ms latency / msg. 
+32000 msgs total. 1915.55122422819 msgs/sec. 2779.88411262501 ms latency / msg. 
+33000 msgs total. 1912.05542777521 msgs/sec. 2879.40723533334 ms latency / msg. 
+34000 msgs total. 1928.05991103659 msgs/sec. 2978.99940655883 ms latency / msg. 
+35000 msgs total. 1943.31927338137 msgs/sec. 3077.47630628572 ms latency / msg. 
+36000 msgs total. 1963.94993145324 msgs/sec. 3170.21272369444 ms latency / msg. 
+37000 msgs total. 1981.30083612984 msgs/sec. 3260.04488621621 ms latency / msg. 
+38000 msgs total. 1997.37817832803 msgs/sec. 3346.78662073684 ms latency / msg. 
+39000 msgs total. 2013.59156753699 msgs/sec. 3428.90830958974 ms latency / msg. 
+40000 msgs total. 2025.41615744751 msgs/sec. 3507.71692047499 ms latency / msg. 
+41000 msgs total. 2036.85840345107 msgs/sec. 3586.27685482927 ms latency / msg. 
+42000 msgs total. 2053.96575943227 msgs/sec. 3661.92640623809 ms latency / msg. 
+43000 msgs total. 2068.7332683379 msgs/sec. 3733.5731908372 ms latency / msg. 
+44000 msgs total. 2080.50798969209 msgs/sec. 3803.5348745227 ms latency / msg. 
+45000 msgs total. 2093.15763653422 msgs/sec. 3872.97018606665 ms latency / msg. 
+47000 msgs total. 2120.9786645025 msgs/sec. 4003.73471253189 ms latency / msg. 
+48000 msgs total. 2133.10563141753 msgs/sec. 4065.2671200833 ms latency / msg. 
+49000 msgs total. 2143.5794822714 msgs/sec. 4126.13656455099 ms latency / msg. 
+50000 msgs total. 2151.44737740221 msgs/sec. 4186.21622567997 ms latency / msg. 
+51000 msgs total. 2161.66399197482 msgs/sec. 4247.25662172547 ms latency / msg. 
+51000 msgs total. 2161.82357751964 msgs/sec. 4247.20053399085 ms latency / msg. 
+52000 msgs total. 2169.65337534227 msgs/sec. 4304.51238748076 ms latency / msg. 
+53000 msgs total. 2179.63111528204 msgs/sec. 4358.67996132074 ms latency / msg. 
+Subscriber is starting. 
+Subscriber is starting. 
+Subscriber is starting. 
+Subscriber is starting. 
+1000 msgs total. 2894.34427762087 msgs/sec. 149500.3575421 ms latency / msg. 
+2000 msgs total. 2977.06587532286 msgs/sec. 149499.9839919 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2074.35182210027 msgs/sec. 679.887461 ms latency / msg. 
+2000 msgs total. 2117.24229191478 msgs/sec. 784.012213 ms latency / msg. 
+3000 msgs total. 2100.08618753714 msgs/sec. 843.807218333332 ms latency / msg. 
+4000 msgs total. 1880.92795016143 msgs/sec. 897.966562 ms latency / msg. 
+5000 msgs total. 1837.04330965544 msgs/sec. 955.936661600002 ms latency / msg. 
+6000 msgs total. 1729.83505330833 msgs/sec. 1044.6636005 ms latency / msg. 
+7000 msgs total. 1674.9828368098 msgs/sec. 1151.83861628572 ms latency / msg. 
+8000 msgs total. 1637.73642798098 msgs/sec. 1273.226033625 ms latency / msg. 
+9000 msgs total. 1619.80796204725 msgs/sec. 1408.984458 ms latency / msg. 
+10000 msgs total. 1644.46247652365 msgs/sec. 1553.4906717 ms latency / msg. 
+11000 msgs total. 1645.62330847689 msgs/sec. 1671.15787827272 ms latency / msg. 
+12000 msgs total. 1671.83207048712 msgs/sec. 1779.17073499998 ms latency / msg. 
+13000 msgs total. 1682.55048250047 msgs/sec. 1877.11543592306 ms latency / msg. 
+15000 msgs total. 1640.33403806093 msgs/sec. 2072.21726053332 ms latency / msg. 
+16000 msgs total. 1623.79066033974 msgs/sec. 2188.22042331248 ms latency / msg. 
+17000 msgs total. 1586.30810815729 msgs/sec. 2327.32991817645 ms latency / msg. 
+18000 msgs total. 1533.10635864039 msgs/sec. 2490.9537722222 ms latency / msg. 
+19000 msgs total. 1548.65280247471 msgs/sec. 2656.13303110525 ms latency / msg. 
+20000 msgs total. 1527.35595706434 msgs/sec. 2811.22956999998 ms latency / msg. 
+21000 msgs total. 1537.11629706986 msgs/sec. 2974.85585514285 ms latency / msg. 
+22000 msgs total. 1547.01857420116 msgs/sec. 3126.5196380909 ms latency / msg. 
+23000 msgs total. 1543.66939369512 msgs/sec. 3277.05947439131 ms latency / msg. 
+24000 msgs total. 1546.33913519992 msgs/sec. 3419.07305099999 ms latency / msg. 
+25000 msgs total. 1542.38066603872 msgs/sec. 3570.18044336 ms latency / msg. 
+26000 msgs total. 1558.63494128388 msgs/sec. 3727.01059969231 ms latency / msg. 
+27000 msgs total. 1561.83397000338 msgs/sec. 3885.32249114814 ms latency / msg. 
+28000 msgs total. 1565.99385288129 msgs/sec. 4041.66392828571 ms latency / msg. 
+29000 msgs total. 1560.62651663636 msgs/sec. 4202.98618272413 ms latency / msg. 
+30000 msgs total. 1554.56833326894 msgs/sec. 4360.82836219999 ms latency / msg. 
+31000 msgs total. 1543.19056361471 msgs/sec. 4529.54975096773 ms latency / msg. 
+31000 msgs total. 1543.57229747848 msgs/sec. 4526.5896437516 ms latency / msg. 
+32000 msgs total. 1552.58698982368 msgs/sec. 4704.15879603123 ms latency / msg. 
+33000 msgs total. 1556.21535104205 msgs/sec. 4868.33338660606 ms latency / msg. 
+34000 msgs total. 1548.00061947342 msgs/sec. 5016.73178352942 ms latency / msg. 
+34000 msgs total. 1548.23671275248 msgs/sec. 5038.57233117648 ms latency / msg. 
+35000 msgs total. 1542.23169501076 msgs/sec. 5200.85089654287 ms latency / msg. 
+36000 msgs total. 1542.96053443833 msgs/sec. 5383.69230825001 ms latency / msg. 
+37000 msgs total. 1534.38550238927 msgs/sec. 5570.01766159461 ms latency / msg. 
+38000 msgs total. 1534.33693639388 msgs/sec. 5759.05016763159 ms latency / msg. 
+39000 msgs total. 1533.04083909945 msgs/sec. 5949.11868917948 ms latency / msg. 
+40000 msgs total. 1522.97278225665 msgs/sec. 6144.85058609999 ms latency / msg. 
+41000 msgs total. 1523.43452889626 msgs/sec. 6343.52767524389 ms latency / msg. 
+42000 msgs total. 1519.89468316811 msgs/sec. 6530.99551607143 ms latency / msg. 
+43000 msgs total. 1510.94918108663 msgs/sec. 6731.12384065119 ms latency / msg. 
+44000 msgs total. 1500.32275181725 msgs/sec. 6935.65230072733 ms latency / msg. 
+45000 msgs total. 1494.29564591537 msgs/sec. 7138.73619651115 ms latency / msg. 
+46000 msgs total. 1480.1463656248 msgs/sec. 7351.31456615224 ms latency / msg. 
+47000 msgs total. 1463.2699124237 msgs/sec. 7564.49325974474 ms latency / msg. 
+48000 msgs total. 1464.50700456309 msgs/sec. 7783.84318483338 ms latency / msg. 
+49000 msgs total. 1457.65319929175 msgs/sec. 8009.30902061231 ms latency / msg. 
+50000 msgs total. 1456.99414990914 msgs/sec. 8230.21925666003 ms latency / msg. 
+51000 msgs total. 1452.89732097443 msgs/sec. 8458.6707149412 ms latency / msg. 
+52000 msgs total. 1449.55409848236 msgs/sec. 8686.72098178848 ms latency / msg. 
+53000 msgs total. 1446.68636733226 msgs/sec. 8899.35581445284 ms latency / msg. 
+54000 msgs total. 1440.35211039738 msgs/sec. 9131.61412396298 ms latency / msg. 
+55000 msgs total. 1442.04231366408 msgs/sec. 9367.51198912728 ms latency / msg. 
+56000 msgs total. 1443.60672146899 msgs/sec. 9598.52437473218 ms latency / msg. 
+57000 msgs total. 1434.32452581326 msgs/sec. 9834.80447856141 ms latency / msg. 
+58000 msgs total. 1431.76369384033 msgs/sec. 10069.6321714656 ms latency / msg. 
+59000 msgs total. 1428.5228207477 msgs/sec. 10295.1698237966 ms latency / msg. 
+60000 msgs total. 1433.71797429787 msgs/sec. 10480.1994233501 ms latency / msg. 
+61000 msgs total. 1427.72457056596 msgs/sec. 10720.6514952131 ms latency / msg. 
+Subscriber is starting. 
+62000 msgs total. 1429.82179455268 msgs/sec. 10961.8140930644 ms latency / msg. 
+63000 msgs total. 1431.25328891499 msgs/sec. 11197.4858759841 ms latency / msg. 
+64000 msgs total. 1437.8556658151 msgs/sec. 11430.2617289531 ms latency / msg. 
+65000 msgs total. 1438.38381106013 msgs/sec. 11659.3259368307 ms latency / msg. 
+66000 msgs total. 1440.00563749116 msgs/sec. 11887.2838783636 ms latency / msg. 
+1000 msgs total. 1098.2632613916 msgs/sec. 26702.3039550001 ms latency / msg. 
+67000 msgs total. 1446.44041732069 msgs/sec. 12109.7561572984 ms latency / msg. 
+68000 msgs total. 1441.87417485437 msgs/sec. 12328.5052156764 ms latency / msg. 
+2000 msgs total. 870.269908990654 msgs/sec. 27036.5747350001 ms latency / msg. 
+69000 msgs total. 1445.18256340991 msgs/sec. 12549.584950623 ms latency / msg. 
+70000 msgs total. 1449.90101712172 msgs/sec. 12764.3273813998 ms latency / msg. 
+3000 msgs total. 840.451749538991 msgs/sec. 27424.5274313334 ms latency / msg. 
+71000 msgs total. 1444.08271325032 msgs/sec. 12977.2222286759 ms latency / msg. 
+72000 msgs total. 1444.78065493605 msgs/sec. 13189.8531312221 ms latency / msg. 
+4000 msgs total. 864.917994205871 msgs/sec. 27616.6137730001 ms latency / msg. 
+73000 msgs total. 1449.04770331735 msgs/sec. 13399.7305521779 ms latency / msg. 
+5000 msgs total. 948.247568323418 msgs/sec. 27814.1604374001 ms latency / msg. 
+74000 msgs total. 1455.70229937444 msgs/sec. 13607.3909821485 ms latency / msg. 
+6000 msgs total. 1042.54109801262 msgs/sec. 27949.8655420001 ms latency / msg. 
+75000 msgs total. 1460.36247941385 msgs/sec. 13800.2148970265 ms latency / msg. 
+76000 msgs total. 1464.8408579256 msgs/sec. 13994.2085310657 ms latency / msg. 
+77000 msgs total. 1471.47275454108 msgs/sec. 14183.6674252857 ms latency / msg. 
+9000 msgs total. 1210.51417100519 msgs/sec. 28105.6730512223 ms latency / msg. 
+79000 msgs total. 1482.91052335083 msgs/sec. 14551.4049675061 ms latency / msg. 
+10000 msgs total. 1258.69069282313 msgs/sec. 28143.3133983001 ms latency / msg. 
+11000 msgs total. 1279.73744813442 msgs/sec. 28201.7623433636 ms latency / msg. 
+80000 msgs total. 1482.19114911408 msgs/sec. 14707.8349021125 ms latency / msg. 
+12000 msgs total. 1301.91244319851 msgs/sec. 28179.3454188334 ms latency / msg. 
+81000 msgs total. 1481.15974676513 msgs/sec. 14868.0602158146 ms latency / msg. 
+13000 msgs total. 1322.28090934357 msgs/sec. 28242.2562400001 ms latency / msg. 
+82000 msgs total. 1478.80959182231 msgs/sec. 15043.0976299144 ms latency / msg. 
+14000 msgs total. 1353.10067804552 msgs/sec. 28276.1201067858 ms latency / msg. 
+83000 msgs total. 1482.77290323629 msgs/sec. 15213.8879532288 ms latency / msg. 
+15000 msgs total. 1372.78117036239 msgs/sec. 28301.1442636668 ms latency / msg. 
+16000 msgs total. 1386.33831520939 msgs/sec. 28258.8498522502 ms latency / msg. 
+84000 msgs total. 1473.98883488553 msgs/sec. 15376.8526117856 ms latency / msg. 
+17000 msgs total. 1413.42229712584 msgs/sec. 28323.6242482355 ms latency / msg. 
+85000 msgs total. 1475.38929500435 msgs/sec. 15541.6173621883 ms latency / msg. 
+18000 msgs total. 1435.465685444 msgs/sec. 28345.643411278 ms latency / msg. 
+86000 msgs total. 1479.13190147724 msgs/sec. 15698.6304457211 ms latency / msg. 
+19000 msgs total. 1434.12685861992 msgs/sec. 28401.8043508423 ms latency / msg. 
+87000 msgs total. 1478.47852480458 msgs/sec. 15839.8914278853 ms latency / msg. 
+20000 msgs total. 1442.67113792771 msgs/sec. 28448.9440583497 ms latency / msg. 
+88000 msgs total. 1481.73214865346 msgs/sec. 15993.4629659662 ms latency / msg. 
+21000 msgs total. 1472.93626899351 msgs/sec. 28487.1293333808 ms latency / msg. 
+89000 msgs total. 1483.75871211851 msgs/sec. 16145.3569327979 ms latency / msg. 
+22000 msgs total. 1472.85506359704 msgs/sec. 28435.8753179545 ms latency / msg. 
+90000 msgs total. 1482.38596141096 msgs/sec. 16286.070363198 ms latency / msg. 
+23000 msgs total. 1453.59149404773 msgs/sec. 28474.0838457956 ms latency / msg. 
+91000 msgs total. 1482.15404281051 msgs/sec. 16422.5672057705 ms latency / msg. 
+92000 msgs total. 1482.68336945153 msgs/sec. 16568.2598483665 ms latency / msg. 
+93000 msgs total. 1484.48693909443 msgs/sec. 16704.6801278981 ms latency / msg. 
+25001 msgs total. 1438.51622000402 msgs/sec. 28564.1969151599 ms latency / msg. 
+94000 msgs total. 1485.99909672754 msgs/sec. 16843.6792012375 ms latency / msg. 
+26000 msgs total. 1436.14708074963 msgs/sec. 28610.4977516 ms latency / msg. 
+95000 msgs total. 1487.25809862484 msgs/sec. 16980.8002467876 ms latency / msg. 
+27000 msgs total. 1451.2827832082 msgs/sec. 28650.1322848482 ms latency / msg. 
+28000 msgs total. 1461.02553159858 msgs/sec. 28679.8260696893 ms latency / msg. 
+96000 msgs total. 1484.291297591 msgs/sec. 17105.6014561919 ms latency / msg. 
+29000 msgs total. 1456.79831687752 msgs/sec. 28730.958002307 ms latency / msg. 
+97000 msgs total. 1481.77568665791 msgs/sec. 17237.5275062053 ms latency / msg. 
+30000 msgs total. 1457.63317037464 msgs/sec. 28774.9834694133 ms latency / msg. 
+98000 msgs total. 1476.81025585289 msgs/sec. 17368.3149181778 ms latency / msg. 
+31000 msgs total. 1467.35602168996 msgs/sec. 28794.4708737484 ms latency / msg. 
+99000 msgs total. 1475.64945866619 msgs/sec. 17493.7602671123 ms latency / msg. 
+32000 msgs total. 1456.10123915171 msgs/sec. 28808.0735715625 ms latency / msg. 
+100000 msgs total. 1477.49887341819 msgs/sec. 17624.0723853963 ms latency / msg. 
+100000 msgs total. 1477.28858582706 msgs/sec. 17619.4982346317 ms latency / msg. 
+33000 msgs total. 1457.27831627229 msgs/sec. 28824.8100924878 ms latency / msg. 
+101000 msgs total. 1477.12309842558 msgs/sec. 17751.8190392202 ms latency / msg. 
+34000 msgs total. 1453.14413869632 msgs/sec. 28807.6454009205 ms latency / msg. 
+102000 msgs total. 1474.19652683287 msgs/sec. 17873.405858716 ms latency / msg. 
+103000 msgs total. 1473.40947153413 msgs/sec. 17973.8350257198 ms latency / msg. 
+104000 msgs total. 1474.28526409408 msgs/sec. 18090.2191588205 ms latency / msg. 
+105000 msgs total. 1466.45206206826 msgs/sec. 18209.8376748004 ms latency / msg. 
+106000 msgs total. 1464.2347444124 msgs/sec. 18331.5642851512 ms latency / msg. 
+107000 msgs total. 1463.83560950992 msgs/sec. 18450.3088485367 ms latency / msg. 
+108000 msgs total. 1461.49808140824 msgs/sec. 18575.5302298059 ms latency / msg. 
+109000 msgs total. 1463.776606547 msgs/sec. 18705.4150126316 ms latency / msg. 
+110000 msgs total. 1465.71345067259 msgs/sec. 18831.7302985795 ms latency / msg. 
+111000 msgs total. 1471.47834127649 msgs/sec. 18957.8547418157 ms latency / msg. 
+112000 msgs total. 1476.91385578707 msgs/sec. 19083.3420237701 ms latency / msg. 
+113000 msgs total. 1483.78986555844 msgs/sec. 19207.2142557155 ms latency / msg. 
+114000 msgs total. 1490.787410463 msgs/sec. 19328.7459297048 ms latency / msg. 
+115000 msgs total. 1497.75604756318 msgs/sec. 19447.0824729431 ms latency / msg. 
+116000 msgs total. 1504.77134454589 msgs/sec. 19559.3663393616 ms latency / msg. 
+117000 msgs total. 1511.452892839 msgs/sec. 19654.3626547637 ms latency / msg. 
+118000 msgs total. 1518.17265924968 msgs/sec. 19743.0726746165 ms latency / msg. 
+119000 msgs total. 1524.58490267783 msgs/sec. 19824.4941201777 ms latency / msg. 
+120000 msgs total. 1529.41731933967 msgs/sec. 19908.666499258 ms latency / msg. 
+121000 msgs total. 1534.88011185273 msgs/sec. 19997.2933520046 ms latency / msg. 
+122000 msgs total. 1540.05809124367 msgs/sec. 20088.4993703874 ms latency / msg. 
+123000 msgs total. 1544.46828761661 msgs/sec. 20188.8840214688 ms latency / msg. 
+123000 msgs total. 1544.47137367281 msgs/sec. 20188.7867426594 ms latency / msg. 
+124000 msgs total. 1550.20617160755 msgs/sec. 20284.7555472191 ms latency / msg. 
+125000 msgs total. 1555.69113466022 msgs/sec. 20375.0881628286 ms latency / msg. 
+126000 msgs total. 1560.2265212646 msgs/sec. 20460.9710684506 ms latency / msg. 
+127000 msgs total. 1564.94678698502 msgs/sec. 20549.7244978841 ms latency / msg. 
+128000 msgs total. 1570.24410195338 msgs/sec. 20629.4812583318 ms latency / msg. 
+129000 msgs total. 1575.88050050766 msgs/sec. 20700.2004571866 ms latency / msg. 
+130000 msgs total. 1581.21821223054 msgs/sec. 20775.329955019 ms latency / msg. 
+131000 msgs total. 1586.88619921692 msgs/sec. 20849.2162403005 ms latency / msg. 
+132000 msgs total. 1592.58091835781 msgs/sec. 20918.9129701952 ms latency / msg. 
+133000 msgs total. 1598.39361873965 msgs/sec. 20985.9497868426 ms latency / msg. 
+134000 msgs total. 1603.34194276905 msgs/sec. 21044.8403282721 ms latency / msg. 
+135000 msgs total. 1608.51367654064 msgs/sec. 21107.8857677863 ms latency / msg. 
+136000 msgs total. 1614.12677486754 msgs/sec. 21156.1538195394 ms latency / msg. 
+137000 msgs total. 1619.75426192608 msgs/sec. 21201.4160606698 ms latency / msg. 
+138000 msgs total. 1624.66451516583 msgs/sec. 21245.5774948939 ms latency / msg. 
+139000 msgs total. 1630.3871663279 msgs/sec. 21294.8559040832 ms latency / msg. 
+140000 msgs total. 1635.78518639455 msgs/sec. 21341.1761404083 ms latency / msg. 
+141000 msgs total. 1640.62197653624 msgs/sec. 21387.0485120452 ms latency / msg. 
+141000 msgs total. 1640.63358550973 msgs/sec. 21387.1053801253 ms latency / msg. 
+142000 msgs total. 1645.00350926166 msgs/sec. 21420.8742584877 ms latency / msg. 
+143000 msgs total. 1648.70299832528 msgs/sec. 21449.7701760808 ms latency / msg. 
+144000 msgs total. 1653.27718424374 msgs/sec. 21488.7366945213 ms latency / msg. 
+145000 msgs total. 1657.94848557617 msgs/sec. 21526.7771676508 ms latency / msg. 
+146000 msgs total. 1661.43250185115 msgs/sec. 21558.2879796894 ms latency / msg. 
+146000 msgs total. 1661.43248672591 msgs/sec. 21558.2879930744 ms latency / msg. 
+147000 msgs total. 1665.37293246669 msgs/sec. 21594.5620728405 ms latency / msg. 
+148000 msgs total. 1669.96930365107 msgs/sec. 21631.7066827098 ms latency / msg. 
+149000 msgs total. 1674.29243382002 msgs/sec. 21674.2810541083 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 3018.87156995812 msgs/sec. 33380.5475094 ms latency / msg. 
+2000 msgs total. 2980.29192555469 msgs/sec. 33907.4581042001 ms latency / msg. 
+3000 msgs total. 2940.68116762294 msgs/sec. 33746.1364747669 ms latency / msg. 
+4000 msgs total. 2895.07788989932 msgs/sec. 34192.1640665252 ms latency / msg. 
+5000 msgs total. 2882.99974047236 msgs/sec. 34262.4559813202 ms latency / msg. 
+6000 msgs total. 2871.20258932706 msgs/sec. 34258.2879761334 ms latency / msg. 
+7000 msgs total. 2882.82518185685 msgs/sec. 34205.7460694857 ms latency / msg. 
+8000 msgs total. 2853.05605812931 msgs/sec. 34196.5249455249 ms latency / msg. 
+9000 msgs total. 2865.96447777144 msgs/sec. 34152.8211454224 ms latency / msg. 
+10000 msgs total. 2859.21022952224 msgs/sec. 34096.9767943702 ms latency / msg. 
+11000 msgs total. 2866.31304875726 msgs/sec. 34075.5114684728 ms latency / msg. 
+12000 msgs total. 2891.22099057279 msgs/sec. 34033.3718306168 ms latency / msg. 
+13000 msgs total. 2915.6216405871 msgs/sec. 33925.8507115539 ms latency / msg. 
+14000 msgs total. 2933.27861790951 msgs/sec. 34154.3605737215 ms latency / msg. 
+15000 msgs total. 2938.04779533888 msgs/sec. 34219.6502648068 ms latency / msg. 
+16000 msgs total. 2944.7892506358 msgs/sec. 34483.0064392064 ms latency / msg. 
+17000 msgs total. 2944.9390633209 msgs/sec. 34470.6576914001 ms latency / msg. 
+18000 msgs total. 2939.02353979881 msgs/sec. 34420.1827046723 ms latency / msg. 
+19000 msgs total. 2936.162087521 msgs/sec. 34395.5252150896 ms latency / msg. 
+20000 msgs total. 2944.86686514579 msgs/sec. 34433.4308405002 ms latency / msg. 
+21000 msgs total. 2948.05150010127 msgs/sec. 34413.8445990764 ms latency / msg. 
+22000 msgs total. 2952.15018113991 msgs/sec. 34396.3065172139 ms latency / msg. 
+23000 msgs total. 2950.9863492247 msgs/sec. 34594.5957686306 ms latency / msg. 
+24000 msgs total. 2948.47992039104 msgs/sec. 34590.9606331086 ms latency / msg. 
+25000 msgs total. 2942.89605668762 msgs/sec. 34593.3800649922 ms latency / msg. 
+26000 msgs total. 2937.80630161712 msgs/sec. 34603.7646555772 ms latency / msg. 
+26000 msgs total. 2937.6956326311 msgs/sec. 34603.7579194433 ms latency / msg. 
+27000 msgs total. 2938.52414844862 msgs/sec. 34611.558992341 ms latency / msg. 
+28000 msgs total. 2940.21611323486 msgs/sec. 34619.3219913933 ms latency / msg. 
+29000 msgs total. 2936.61340223776 msgs/sec. 34634.4464323211 ms latency / msg. 
+30000 msgs total. 2935.55669265975 msgs/sec. 34649.8407542671 ms latency / msg. 
+31000 msgs total. 2944.71085000751 msgs/sec. 34657.6637102392 ms latency / msg. 
+32000 msgs total. 2946.77824728448 msgs/sec. 34675.4759686568 ms latency / msg. 
+33000 msgs total. 2945.09528472039 msgs/sec. 34698.4565105339 ms latency / msg. 
+34000 msgs total. 2946.65023025168 msgs/sec. 34726.065481427 ms latency / msg. 
+35000 msgs total. 2947.64144091123 msgs/sec. 34748.5331177206 ms latency / msg. 
+36000 msgs total. 2946.2100849606 msgs/sec. 34796.8635757228 ms latency / msg. 
+37000 msgs total. 2947.30414550595 msgs/sec. 34815.0035628303 ms latency / msg. 
+38000 msgs total. 2946.32942287447 msgs/sec. 34930.8649342557 ms latency / msg. 
+Subscriber is starting. 
+Subscriber is starting. 
+Subscriber is starting. 
+Subscriber is starting. 
+Subscriber is starting. 
+1000 msgs total. 3193.1997617873 msgs/sec. 896390.0198562 ms latency / msg. 
+2000 msgs total. 3126.69525508362 msgs/sec. 895373.501608298 ms latency / msg. 
+3000 msgs total. 3072.03114302292 msgs/sec. 895490.010344931 ms latency / msg. 
+4000 msgs total. 3120.47092899072 msgs/sec. 895727.719966972 ms latency / msg. 
+5000 msgs total. 3124.80372326613 msgs/sec. 895613.478847218 ms latency / msg. 
+6000 msgs total. 3121.35744089476 msgs/sec. 895769.371742346 ms latency / msg. 
+7000 msgs total. 3120.44595987169 msgs/sec. 895848.99517701 ms latency / msg. 
+8000 msgs total. 3098.44391498923 msgs/sec. 895564.062606547 ms latency / msg. 
+9000 msgs total. 3115.9070691103 msgs/sec. 895515.067907279 ms latency / msg. 
+10000 msgs total. 3103.92021087537 msgs/sec. 895460.766457763 ms latency / msg. 
+11000 msgs total. 3101.80991736609 msgs/sec. 895390.911485247 ms latency / msg. 
+12000 msgs total. 3082.05778519321 msgs/sec. 895099.426605008 ms latency / msg. 
+13000 msgs total. 3082.57633952881 msgs/sec. 894987.946147176 ms latency / msg. 
+14000 msgs total. 3085.36137074672 msgs/sec. 894941.412692813 ms latency / msg. 
+15000 msgs total. 3093.83949317464 msgs/sec. 894835.442354039 ms latency / msg. 
+16000 msgs total. 3101.33457598641 msgs/sec. 894837.258209036 ms latency / msg. 
+17000 msgs total. 3106.47592417202 msgs/sec. 894673.746302169 ms latency / msg. 
+18000 msgs total. 3108.04045922748 msgs/sec. 894578.675904616 ms latency / msg. 
+19000 msgs total. 3116.95625350258 msgs/sec. 894599.037960165 ms latency / msg. 
+20000 msgs total. 3122.27844647789 msgs/sec. 894436.116570625 ms latency / msg. 
+21000 msgs total. 3123.66788579953 msgs/sec. 894318.986713132 ms latency / msg. 
+22000 msgs total. 3128.05941094802 msgs/sec. 894333.668420899 ms latency / msg. 
+23000 msgs total. 3126.66095366802 msgs/sec. 894268.636579605 ms latency / msg. 
+24000 msgs total. 3129.20874501714 msgs/sec. 894247.626165581 ms latency / msg. 
+25000 msgs total. 3133.77044416997 msgs/sec. 894223.843379599 ms latency / msg. 
+26000 msgs total. 3136.13614806538 msgs/sec. 894201.778435234 ms latency / msg. 
+27000 msgs total. 3138.78650212528 msgs/sec. 894174.334699527 ms latency / msg. 
+28000 msgs total. 3138.15735514484 msgs/sec. 894140.902742476 ms latency / msg. 
+29000 msgs total. 3140.95238268532 msgs/sec. 894142.807613839 ms latency / msg. 
+30000 msgs total. 3140.56940554224 msgs/sec. 894116.147154781 ms latency / msg. 
+31000 msgs total. 3144.06813938064 msgs/sec. 894122.815970818 ms latency / msg. 
+32000 msgs total. 3137.29744002313 msgs/sec. 894046.994346896 ms latency / msg. 
+33000 msgs total. 3127.15883528647 msgs/sec. 893969.439588635 ms latency / msg. 
+34000 msgs total. 3115.97261492642 msgs/sec. 893927.396527091 ms latency / msg. 
+35000 msgs total. 3107.30335253173 msgs/sec. 893859.91355984 ms latency / msg. 
+36000 msgs total. 3091.91104966988 msgs/sec. 893792.788913546 ms latency / msg. 
+37000 msgs total. 3082.80583956414 msgs/sec. 893730.598954728 ms latency / msg. 
+38000 msgs total. 3075.32146942291 msgs/sec. 893448.809820532 ms latency / msg. 
+39000 msgs total. 3071.94763662032 msgs/sec. 893425.654504554 ms latency / msg. 
+40000 msgs total. 3069.15622296745 msgs/sec. 893399.158162469 ms latency / msg. 
+41000 msgs total. 3061.52995703329 msgs/sec. 893313.787073936 ms latency / msg. 
+42000 msgs total. 3056.20380629809 msgs/sec. 893335.108654437 ms latency / msg. 
+43000 msgs total. 3057.63162026843 msgs/sec. 893338.993702127 ms latency / msg. 
+44000 msgs total. 3055.36090360466 msgs/sec. 893278.074768153 ms latency / msg. 
+45000 msgs total. 3053.17540555125 msgs/sec. 893217.579572293 ms latency / msg. 
+46000 msgs total. 3054.89978331529 msgs/sec. 893195.583822033 ms latency / msg. 
+47000 msgs total. 3056.8036257125 msgs/sec. 893157.643651275 ms latency / msg. 
+48000 msgs total. 3035.77246118871 msgs/sec. 893183.134439583 ms latency / msg. 
+49000 msgs total. 3037.18980653646 msgs/sec. 893180.979998268 ms latency / msg. 
+50000 msgs total. 3038.74647283581 msgs/sec. 893165.793536067 ms latency / msg. 
+51000 msgs total. 3041.28198599005 msgs/sec. 893022.822983224 ms latency / msg. 
+52000 msgs total. 3042.96878495117 msgs/sec. 892944.416841635 ms latency / msg. 
+53000 msgs total. 3045.67428197295 msgs/sec. 892848.835967412 ms latency / msg. 
+54000 msgs total. 3044.25000030443 msgs/sec. 892665.748922745 ms latency / msg. 
+55000 msgs total. 3038.32910725693 msgs/sec. 892633.038652849 ms latency / msg. 
+56000 msgs total. 3032.94188668873 msgs/sec. 892594.865568305 ms latency / msg. 
+57000 msgs total. 3020.20888527651 msgs/sec. 892248.947633782 ms latency / msg. 
+58000 msgs total. 3020.31476731091 msgs/sec. 892228.660160585 ms latency / msg. 
+59000 msgs total. 3019.26160457164 msgs/sec. 892248.917406356 ms latency / msg. 
+60000 msgs total. 3020.86753364457 msgs/sec. 892227.012983158 ms latency / msg. 
+61000 msgs total. 3020.78638269908 msgs/sec. 892210.648232769 ms latency / msg. 
+62000 msgs total. 3017.95087891637 msgs/sec. 892185.841036298 ms latency / msg. 
+63000 msgs total. 3014.46417425601 msgs/sec. 892145.494698605 ms latency / msg. 
+64000 msgs total. 3011.78405216579 msgs/sec. 892106.353922399 ms latency / msg. 
+65000 msgs total. 3008.85455439181 msgs/sec. 892082.080605801 ms latency / msg. 
+66000 msgs total. 3009.9267658367 msgs/sec. 892042.347624993 ms latency / msg. 
+67000 msgs total. 3011.36773792209 msgs/sec. 892016.473057744 ms latency / msg. 
+68000 msgs total. 3012.65682257717 msgs/sec. 892009.834254841 ms latency / msg. 
+69000 msgs total. 3013.20764897783 msgs/sec. 892015.216597917 ms latency / msg. 
+70000 msgs total. 3015.26028831686 msgs/sec. 892035.004491432 ms latency / msg. 
+71000 msgs total. 3018.14037544323 msgs/sec. 892058.207654145 ms latency / msg. 
+72000 msgs total. 3019.60996360737 msgs/sec. 892078.899902465 ms latency / msg. 
+73000 msgs total. 3021.97337278822 msgs/sec. 892111.735963897 ms latency / msg. 
+74000 msgs total. 3024.48798769828 msgs/sec. 892141.937014872 ms latency / msg. 
+75000 msgs total. 3026.419370004 msgs/sec. 892172.20685895 ms latency / msg. 
+76000 msgs total. 3027.80168944323 msgs/sec. 892198.092751307 ms latency / msg. 
+77000 msgs total. 3029.28371984522 msgs/sec. 892214.598388848 ms latency / msg. 
+78000 msgs total. 3029.90748259076 msgs/sec. 892240.888232428 ms latency / msg. 
+79000 msgs total. 3030.31080658968 msgs/sec. 892256.431842101 ms latency / msg. 
+80000 msgs total. 3029.37655744746 msgs/sec. 892283.767481595 ms latency / msg. 
+81000 msgs total. 3031.48867920868 msgs/sec. 892288.654080056 ms latency / msg. 
+82000 msgs total. 3033.34151706679 msgs/sec. 892317.647651408 ms latency / msg. 
+83000 msgs total. 3034.24568860557 msgs/sec. 892344.726205719 ms latency / msg. 
+84000 msgs total. 3035.30401120773 msgs/sec. 892337.440759061 ms latency / msg. 
+85000 msgs total. 3037.03300883291 msgs/sec. 892331.391950283 ms latency / msg. 
+86000 msgs total. 3038.21059965827 msgs/sec. 892356.253591325 ms latency / msg. 
+87000 msgs total. 3039.31897791015 msgs/sec. 892319.416169222 ms latency / msg. 
+88000 msgs total. 3039.84179005229 msgs/sec. 892330.374818719 ms latency / msg. 
+89000 msgs total. 3040.02883504923 msgs/sec. 892344.631981713 ms latency / msg. 
+90000 msgs total. 3039.97226086111 msgs/sec. 892353.067206019 ms latency / msg. 
+91000 msgs total. 3041.31954446287 msgs/sec. 892372.318527027 ms latency / msg. 
+92000 msgs total. 3043.03239766096 msgs/sec. 892406.192424498 ms latency / msg. 
+93000 msgs total. 3043.88083154177 msgs/sec. 892434.463996508 ms latency / msg. 
+94000 msgs total. 3038.71277075387 msgs/sec. 892449.340197787 ms latency / msg. 
+95000 msgs total. 3038.55007196918 msgs/sec. 892473.565423548 ms latency / msg. 
+96000 msgs total. 3039.769061145 msgs/sec. 892490.376262333 ms latency / msg. 
+97000 msgs total. 3035.55396018244 msgs/sec. 892515.610963372 ms latency / msg. 
+98000 msgs total. 3034.37267388629 msgs/sec. 892538.792256703 ms latency / msg. 
+99000 msgs total. 3034.78983749307 msgs/sec. 892563.505003431 ms latency / msg. 
+100000 msgs total. 3035.47312171116 msgs/sec. 892584.761855273 ms latency / msg. 
+101000 msgs total. 3035.88145564636 msgs/sec. 892613.485182356 ms latency / msg. 
+102000 msgs total. 3036.95616578353 msgs/sec. 892629.659020105 ms latency / msg. 
+103000 msgs total. 3036.98508548124 msgs/sec. 892657.301905927 ms latency / msg. 
+104000 msgs total. 3036.69780977411 msgs/sec. 892653.114886807 ms latency / msg. 
+105000 msgs total. 3037.99735260809 msgs/sec. 892658.098821088 ms latency / msg. 
+106000 msgs total. 3039.91218576991 msgs/sec. 892676.830369528 ms latency / msg. 
+107000 msgs total. 3034.8602541586 msgs/sec. 892658.304776052 ms latency / msg. 
+108000 msgs total. 3034.51869538309 msgs/sec. 892641.440024 ms latency / msg. 
+109000 msgs total. 3026.97297293034 msgs/sec. 892629.045476633 ms latency / msg. 
+110000 msgs total. 3029.69357781062 msgs/sec. 892612.771422019 ms latency / msg. 
+111000 msgs total. 3029.85158820644 msgs/sec. 892537.232927758 ms latency / msg. 
+112000 msgs total. 3030.48028388197 msgs/sec. 892556.651434054 ms latency / msg. 
+113000 msgs total. 3031.92178708597 msgs/sec. 892569.163850266 ms latency / msg. 
+114000 msgs total. 3030.85967886175 msgs/sec. 892566.269344193 ms latency / msg. 
+115000 msgs total. 3031.64509445118 msgs/sec. 892584.277186806 ms latency / msg. 
+116000 msgs total. 3028.64367694094 msgs/sec. 892601.435852986 ms latency / msg. 
+117000 msgs total. 3014.20169725936 msgs/sec. 892578.777561922 ms latency / msg. 
+118000 msgs total. 3008.6761193253 msgs/sec. 892561.618864528 ms latency / msg. 
+119000 msgs total. 3003.94306654474 msgs/sec. 892546.746931872 ms latency / msg. 
+120000 msgs total. 3005.17050102799 msgs/sec. 892571.392266832 ms latency / msg. 
+121000 msgs total. 3006.48127045033 msgs/sec. 892595.987373975 ms latency / msg. 
+122000 msgs total. 3007.35327209046 msgs/sec. 892616.691313958 ms latency / msg. 
+123000 msgs total. 3008.18581654768 msgs/sec. 892644.547552344 ms latency / msg. 
+124000 msgs total. 3008.78315729388 msgs/sec. 892675.464404612 ms latency / msg. 
+125000 msgs total. 3007.93679255417 msgs/sec. 892707.673363599 ms latency / msg. 
+126000 msgs total. 3007.41379055036 msgs/sec. 892707.50897691 ms latency / msg. 
+127000 msgs total. 3006.60717077183 msgs/sec. 892720.100261647 ms latency / msg. 
+128000 msgs total. 3006.73138801618 msgs/sec. 892743.240869797 ms latency / msg. 
+129000 msgs total. 3007.54835885966 msgs/sec. 892752.590956849 ms latency / msg. 
+130000 msgs total. 3006.51102979737 msgs/sec. 892771.403640591 ms latency / msg. 
+131000 msgs total. 3006.21070970092 msgs/sec. 892766.776787267 ms latency / msg. 
+132000 msgs total. 3004.93421808583 msgs/sec. 892787.53477136 ms latency / msg. 
+133000 msgs total. 3004.63687988494 msgs/sec. 892768.862642843 ms latency / msg. 
+134000 msgs total. 3004.27488137654 msgs/sec. 892769.758729581 ms latency / msg. 
+135000 msgs total. 3003.9206304269 msgs/sec. 892741.291462237 ms latency / msg. 
+136000 msgs total. 3004.41339491203 msgs/sec. 892742.899548295 ms latency / msg. 
+137000 msgs total. 3004.88461760698 msgs/sec. 892754.860672474 ms latency / msg. 
+138000 msgs total. 3005.81727579278 msgs/sec. 892783.488838483 ms latency / msg. 
+139000 msgs total. 3006.08549568831 msgs/sec. 892794.747802855 ms latency / msg. 
+140000 msgs total. 3006.51394963094 msgs/sec. 892803.837251928 ms latency / msg. 
+141000 msgs total. 3005.34722248229 msgs/sec. 892769.582306343 ms latency / msg. 
+142000 msgs total. 3004.92258588292 msgs/sec. 892765.353824163 ms latency / msg. 
+143000 msgs total. 2991.7999596015 msgs/sec. 892746.77942086 ms latency / msg. 
+144000 msgs total. 2985.65158670515 msgs/sec. 892757.893056377 ms latency / msg. 
+145000 msgs total. 2982.85218552726 msgs/sec. 892772.689932233 ms latency / msg. 
+146000 msgs total. 2979.55366804413 msgs/sec. 892777.847591651 ms latency / msg. 
+147000 msgs total. 2965.74140161762 msgs/sec. 892773.352607432 ms latency / msg. 
+148000 msgs total. 2967.2438850206 msgs/sec. 892773.794773098 ms latency / msg. 
+149000 msgs total. 2961.2928438532 msgs/sec. 892743.308321628 ms latency / msg. 
+150000 msgs total. 2947.69252987879 msgs/sec. 892753.756772321 ms latency / msg. 
+151000 msgs total. 2945.88543460129 msgs/sec. 892751.597845354 ms latency / msg. 
+152000 msgs total. 2936.20156904778 msgs/sec. 892666.24866347 ms latency / msg. 
+Subscriber is starting. 
+153000 msgs total. 2930.85909161628 msgs/sec. 892672.476978606 ms latency / msg. 
+154000 msgs total. 2923.26751544638 msgs/sec. 892689.780118427 ms latency / msg. 
+155000 msgs total. 2916.83067017566 msgs/sec. 892710.781628289 ms latency / msg. 
+156000 msgs total. 2919.6719308389 msgs/sec. 892754.893780775 ms latency / msg. 
+157000 msgs total. 2917.59335796529 msgs/sec. 892770.376134503 ms latency / msg. 
+158000 msgs total. 2913.7792221074 msgs/sec. 892762.729119568 ms latency / msg. 
+1000 msgs total. 22.7195791032573 msgs/sec. 727480.042054796 ms latency / msg. 
+159000 msgs total. 1608.42873630596 msgs/sec. 889522.896438007 ms latency / msg. 
+2000 msgs total. 43.7648283033902 msgs/sec. 363746.513680885 ms latency / msg. 
+160000 msgs total. 1593.59115167437 msgs/sec. 883963.454645067 ms latency / msg. 
+3000 msgs total. 63.5079578201991 msgs/sec. 242502.341287915 ms latency / msg. 
+3000 msgs total. 63.5079578201991 msgs/sec. 242502.342590582 ms latency / msg. 
+161000 msgs total. 1580.12020037176 msgs/sec. 878473.087688264 ms latency / msg. 
+4000 msgs total. 82.1643930098174 msgs/sec. 181880.18963243 ms latency / msg. 
+162000 msgs total. 1568.53682592702 msgs/sec. 873050.493848535 ms latency / msg. 
+5000 msgs total. 100.219895881029 msgs/sec. 145506.610619539 ms latency / msg. 
+5000 msgs total. 100.219895881029 msgs/sec. 145506.611401139 ms latency / msg. 
+163000 msgs total. 1560.32953704168 msgs/sec. 867694.432522978 ms latency / msg. 
+163000 msgs total. 1560.32953256077 msgs/sec. 867694.432534966 ms latency / msg. 
+6000 msgs total. 117.476765425755 msgs/sec. 121257.753507111 ms latency / msg. 
+164000 msgs total. 1552.0264828714 msgs/sec. 862403.69969993 ms latency / msg. 
+7000 msgs total. 134.041019106285 msgs/sec. 103937.259919663 ms latency / msg. 
+165000 msgs total. 1545.53036491659 msgs/sec. 857177.094295322 ms latency / msg. 
+165000 msgs total. 1545.53038518404 msgs/sec. 857177.094295322 ms latency / msg. 
+8000 msgs total. 150.216790524948 msgs/sec. 90946.8831343267 ms latency / msg. 
+166000 msgs total. 1540.68503253996 msgs/sec. 852013.461140765 ms latency / msg. 
+9000 msgs total. 166.085991287727 msgs/sec. 80843.2588082873 ms latency / msg. 
+167000 msgs total. 1536.47044403546 msgs/sec. 846911.669372652 ms latency / msg. 
+10000 msgs total. 181.023016495464 msgs/sec. 72760.6075054557 ms latency / msg. 
+11000 msgs total. 195.646054638035 msgs/sec. 66147.5633617753 ms latency / msg. 
+169000 msgs total. 1526.21474811601 msgs/sec. 836889.243611224 ms latency / msg. 
+169000 msgs total. 1526.21559439429 msgs/sec. 836889.243611224 ms latency / msg. 
+170000 msgs total. 1521.86623175931 msgs/sec. 831966.466700685 ms latency / msg. 
+13000 msgs total. 223.400520965547 msgs/sec. 55973.7149790359 ms latency / msg. 
+171000 msgs total. 1516.01432960149 msgs/sec. 827101.287005227 ms latency / msg. 
+172000 msgs total. 1516.24022959699 msgs/sec. 822292.701274156 ms latency / msg. 
+173000 msgs total. 1519.0870735565 msgs/sec. 817539.674255654 ms latency / msg. 
+174000 msgs total. 1521.54491731632 msgs/sec. 812841.284779449 ms latency / msg. 
+175000 msgs total. 1524.31053361502 msgs/sec. 808196.590686103 ms latency / msg. 
+176000 msgs total. 1527.14481602093 msgs/sec. 803604.673882323 ms latency / msg. 
+177000 msgs total. 1530.03546492544 msgs/sec. 799064.644722779 ms latency / msg. 
+178000 msgs total. 1533.48955445154 msgs/sec. 794575.613761681 ms latency / msg. 
+179000 msgs total. 1536.18080046805 msgs/sec. 790136.751573465 ms latency / msg. 
+180000 msgs total. 1539.32417836242 msgs/sec. 785747.207991964 ms latency / msg. 
+181000 msgs total. 1542.57992660991 msgs/sec. 781406.165095901 ms latency / msg. 
+182000 msgs total. 1545.4746122304 msgs/sec. 777112.840112951 ms latency / msg. 
+183000 msgs total. 1548.7046475649 msgs/sec. 772866.422443913 ms latency / msg. 
+184000 msgs total. 1551.46762256005 msgs/sec. 768666.167807309 ms latency / msg. 
+185000 msgs total. 1554.68765906004 msgs/sec. 764511.315091981 ms latency / msg. 
+186000 msgs total. 1556.97110066514 msgs/sec. 760401.15358692 ms latency / msg. 
+187000 msgs total. 1559.14501253327 msgs/sec. 756334.969492167 ms latency / msg. 
+188000 msgs total. 1560.84144121899 msgs/sec. 752312.063509027 ms latency / msg. 
+189000 msgs total. 1562.74277033232 msgs/sec. 748331.712746279 ms latency / msg. 
+189000 msgs total. 1562.74160868964 msgs/sec. 748331.712782465 ms latency / msg. 
+190000 msgs total. 1565.22834747297 msgs/sec. 744393.241114294 ms latency / msg. 
+191000 msgs total. 1567.72044495702 msgs/sec. 740496.119835711 ms latency / msg. 
+192000 msgs total. 1571.46740070433 msgs/sec. 736639.571404758 ms latency / msg. 
+193000 msgs total. 1574.09888757869 msgs/sec. 732822.985555983 ms latency / msg. 
+194000 msgs total. 1576.99651762589 msgs/sec. 729045.696675002 ms latency / msg. 
+196000 msgs total. 1582.42784026917 msgs/sec. 721606.72897052 ms latency / msg. 
+Subscriber is starting. 
+1000 msgs total. 2977.75557033846 msgs/sec. 12230.850991 ms latency / msg. 
+2000 msgs total. 1867.71846609512 msgs/sec. 12388.5412335 ms latency / msg. 
+2000 msgs total. 1866.78757050065 msgs/sec. 12388.2808234117 ms latency / msg. 
+3000 msgs total. 1984.24955615645 msgs/sec. 12549.31098 ms latency / msg. 
+4000 msgs total. 2133.30568569165 msgs/sec. 12653.9129965 ms latency / msg. 
+5000 msgs total. 2145.31625758847 msgs/sec. 12752.8939412 ms latency / msg. 
+6000 msgs total. 2154.39724866236 msgs/sec. 12846.844606 ms latency / msg. 
+7000 msgs total. 2199.59571430771 msgs/sec. 12948.0167244285 ms latency / msg. 
+8000 msgs total. 2215.60979632979 msgs/sec. 13047.165877125 ms latency / msg. 
+9000 msgs total. 2185.31770986571 msgs/sec. 13113.9597712222 ms latency / msg. 
+10000 msgs total. 2177.64970100434 msgs/sec. 13208.232021 ms latency / msg. 
+11000 msgs total. 2213.46739969999 msgs/sec. 13304.9566197272 ms latency / msg. 
+12000 msgs total. 2213.87198905107 msgs/sec. 13395.8687789999 ms latency / msg. 
+13000 msgs total. 2236.52889614258 msgs/sec. 13487.8277015384 ms latency / msg. 
+14000 msgs total. 2221.74969485458 msgs/sec. 13577.1521757856 ms latency / msg. 
+15000 msgs total. 2186.51491125913 msgs/sec. 13668.5408813999 ms latency / msg. 
+16000 msgs total. 2174.5823184603 msgs/sec. 13745.2776244374 ms latency / msg. 
+17000 msgs total. 2158.49791805892 msgs/sec. 13850.6914740587 ms latency / msg. 
+18000 msgs total. 2153.81117006199 msgs/sec. 13955.4609981666 ms latency / msg. 
+19000 msgs total. 2119.04190799069 msgs/sec. 14069.2125511052 ms latency / msg. 
+20000 msgs total. 2129.24488789329 msgs/sec. 14179.6639514498 ms latency / msg. 
+22000 msgs total. 2105.53804646477 msgs/sec. 14384.8534159544 ms latency / msg. 
+23000 msgs total. 2088.62660178363 msgs/sec. 14492.5624507824 ms latency / msg. 
+24000 msgs total. 2075.70648140387 msgs/sec. 14603.1765412082 ms latency / msg. 
+25000 msgs total. 2075.56521916582 msgs/sec. 14711.3474589199 ms latency / msg. 
+27000 msgs total. 2084.78206383232 msgs/sec. 14906.5458379628 ms latency / msg. 
+28000 msgs total. 2091.24457067163 msgs/sec. 15006.1775556426 ms latency / msg. 
+29000 msgs total. 2091.82121348352 msgs/sec. 15109.0813006895 ms latency / msg. 
+30000 msgs total. 2069.78443816012 msgs/sec. 15212.3327763999 ms latency / msg. 
+31000 msgs total. 2073.34295538358 msgs/sec. 15313.8027294514 ms latency / msg. 
+32000 msgs total. 2081.40623031099 msgs/sec. 15416.6129003748 ms latency / msg. 
+33000 msgs total. 2079.42642714564 msgs/sec. 15518.2137246059 ms latency / msg. 
+34000 msgs total. 2080.30271977799 msgs/sec. 15615.4150801763 ms latency / msg. 
+35000 msgs total. 2071.21958368179 msgs/sec. 15712.0049109713 ms latency / msg. 
+36000 msgs total. 2069.38448434836 msgs/sec. 15808.8698739333 ms latency / msg. 
+37000 msgs total. 2057.24904868495 msgs/sec. 15906.8628899837 ms latency / msg. 
+38000 msgs total. 2068.40349709987 msgs/sec. 15990.2801816631 ms latency / msg. 
+39000 msgs total. 2079.82497302267 msgs/sec. 16083.9293159846 ms latency / msg. 
+40000 msgs total. 2083.82822082924 msgs/sec. 16176.0410542849 ms latency / msg. 
+41000 msgs total. 2089.70599156781 msgs/sec. 16264.4346040536 ms latency / msg. 
+42000 msgs total. 2092.25274377278 msgs/sec. 16344.4686317238 ms latency / msg. 
+43000 msgs total. 2100.65776528734 msgs/sec. 16421.406819186 ms latency / msg. 
+43000 msgs total. 2100.65776528734 msgs/sec. 16421.4300854186 ms latency / msg. 
+43000 msgs total. 2100.65776528734 msgs/sec. 16421.4067055814 ms latency / msg. 
+44000 msgs total. 2098.07220113986 msgs/sec. 16494.4664190636 ms latency / msg. 
+45000 msgs total. 2103.31870740035 msgs/sec. 16566.7052473199 ms latency / msg. 
+45000 msgs total. 2103.2140824301 msgs/sec. 16566.49093544 ms latency / msg. 
+46000 msgs total. 2097.93067415452 msgs/sec. 16625.786759413 ms latency / msg. 
+47000 msgs total. 2097.6372856295 msgs/sec. 16683.8655653106 ms latency / msg. 
+48000 msgs total. 2097.05763808791 msgs/sec. 16750.0329287749 ms latency / msg. 
+49000 msgs total. 2098.61955503895 msgs/sec. 16814.4996752775 ms latency / msg. 
+50000 msgs total. 2099.75402221531 msgs/sec. 16877.4426876159 ms latency / msg. 
+51000 msgs total. 2100.4720180719 msgs/sec. 16935.9827469803 ms latency / msg. 
+52000 msgs total. 2103.95905252234 msgs/sec. 16997.8174530692 ms latency / msg. 
+53000 msgs total. 2106.94552565093 msgs/sec. 17059.0185666754 ms latency / msg. 
+54000 msgs total. 2115.96528132003 msgs/sec. 17118.8677697666 ms latency / msg. 
+55000 msgs total. 2117.60672600255 msgs/sec. 17175.4235792727 ms latency / msg. 
+56000 msgs total. 2122.03848640406 msgs/sec. 17233.0863553392 ms latency / msg. 
+57000 msgs total. 2125.9293821981 msgs/sec. 17288.4854387438 ms latency / msg. 
+58000 msgs total. 2123.2620775 msgs/sec. 17342.1139577655 ms latency / msg. 
+59000 msgs total. 2122.16431552953 msgs/sec. 17397.7860011831 ms latency / msg. 
+59000 msgs total. 2122.19975068469 msgs/sec. 17397.852136322 ms latency / msg. 
+60000 msgs total. 2118.62023331899 msgs/sec. 17452.5104324367 ms latency / msg. 
+61000 msgs total. 2114.13057671039 msgs/sec. 17502.5493506983 ms latency / msg. 
+62000 msgs total. 2114.20175884673 msgs/sec. 17554.4489282129 ms latency / msg. 
+63000 msgs total. 2108.19343757665 msgs/sec. 17606.436589235 ms latency / msg. 
+64000 msgs total. 2100.41870107397 msgs/sec. 17654.4970784564 ms latency / msg. 
+65000 msgs total. 2099.49171467087 msgs/sec. 17708.0662569448 ms latency / msg. 
+66000 msgs total. 2099.52472486206 msgs/sec. 17757.5173798062 ms latency / msg. 
+67000 msgs total. 2099.26257167047 msgs/sec. 17806.1203310986 ms latency / msg. 
+68000 msgs total. 2094.69769081112 msgs/sec. 17855.9325162177 ms latency / msg. 
+69000 msgs total. 2094.93681643236 msgs/sec. 17903.9779043449 ms latency / msg. 
+70000 msgs total. 2093.27838680915 msgs/sec. 17951.1984583971 ms latency / msg. 
+71000 msgs total. 2091.74486055784 msgs/sec. 18002.236155169 ms latency / msg. 
+72000 msgs total. 2091.18761861717 msgs/sec. 18052.6796106166 ms latency / msg. 
+73000 msgs total. 2092.27723933373 msgs/sec. 18101.4953234192 ms latency / msg. 
+75000 msgs total. 2092.70788570893 msgs/sec. 18200.7155262453 ms latency / msg. 
+76000 msgs total. 2094.75147449556 msgs/sec. 18247.6048770816 ms latency / msg. 
+76000 msgs total. 2094.70215762481 msgs/sec. 18247.4836671703 ms latency / msg. 
+77000 msgs total. 2091.90702787087 msgs/sec. 18293.470449304 ms latency / msg. 
+78000 msgs total. 2092.67211741217 msgs/sec. 18341.9278563181 ms latency / msg. 
+79000 msgs total. 2090.56460291051 msgs/sec. 18389.4248011646 ms latency / msg. 
+80000 msgs total. 2087.59259849681 msgs/sec. 18437.4134886626 ms latency / msg. 
+81000 msgs total. 2082.67011432049 msgs/sec. 18485.3200460964 ms latency / msg. 
+82000 msgs total. 2083.64982470724 msgs/sec. 18536.1980381196 ms latency / msg. 
+83000 msgs total. 2082.13010880851 msgs/sec. 18582.9759244387 ms latency / msg. 
+84000 msgs total. 2082.68930092406 msgs/sec. 18632.1632702454 ms latency / msg. 
+85000 msgs total. 2084.13825000148 msgs/sec. 18679.2238643531 ms latency / msg. 
+86000 msgs total. 2084.08115900581 msgs/sec. 18727.095688642 ms latency / msg. 
+87000 msgs total. 2082.09635071738 msgs/sec. 18773.0780626255 ms latency / msg. 
+88000 msgs total. 2082.26841374508 msgs/sec. 18818.9527617547 ms latency / msg. 
+90000 msgs total. 2082.98537929605 msgs/sec. 18914.1767922756 ms latency / msg. 
+90000 msgs total. 2083.00844187775 msgs/sec. 18914.2291866802 ms latency / msg. 
+91000 msgs total. 2083.58580592843 msgs/sec. 18960.9712464222 ms latency / msg. 
+92000 msgs total. 2083.05320607406 msgs/sec. 19007.380343448 ms latency / msg. 
+93000 msgs total. 2084.27129743878 msgs/sec. 19053.3272267099 ms latency / msg. 
+94000 msgs total. 2084.64225488638 msgs/sec. 19100.4434874853 ms latency / msg. 
+95000 msgs total. 2087.54435435704 msgs/sec. 19147.0035656044 ms latency / msg. 
+96000 msgs total. 2088.8034644668 msgs/sec. 19193.5531405251 ms latency / msg. 
+97000 msgs total. 2090.16365686225 msgs/sec. 19238.4947949403 ms latency / msg. 
+98000 msgs total. 2090.77600700381 msgs/sec. 19284.5882643919 ms latency / msg. 
+99000 msgs total. 2092.26818586246 msgs/sec. 19328.9664730264 ms latency / msg. 
+100000 msgs total. 2090.73801304003 msgs/sec. 19375.1145151681 ms latency / msg. 
+101000 msgs total. 2091.69509156037 msgs/sec. 19419.7841646496 ms latency / msg. 
+102000 msgs total. 2090.09278989481 msgs/sec. 19466.3790153883 ms latency / msg. 
+103000 msgs total. 2092.23450466344 msgs/sec. 19509.8391698059 ms latency / msg. 
+104000 msgs total. 2093.81475115172 msgs/sec. 19555.1631461726 ms latency / msg. 
+104000 msgs total. 2093.76063458019 msgs/sec. 19555.2009053346 ms latency / msg. 
+105000 msgs total. 2093.36985387836 msgs/sec. 19595.4986580457 ms latency / msg. 
+106000 msgs total. 2093.36284124429 msgs/sec. 19642.8622401283 ms latency / msg. 
+107000 msgs total. 2091.10872374678 msgs/sec. 19689.0415714729 ms latency / msg. 
+108000 msgs total. 2087.48454036493 msgs/sec. 19736.9320200815 ms latency / msg. 
+109000 msgs total. 2085.30616768384 msgs/sec. 19780.6395268478 ms latency / msg. 
+110000 msgs total. 2091.44897530056 msgs/sec. 19824.4630221201 ms latency / msg. 
+111000 msgs total. 2097.22769907778 msgs/sec. 19872.6178466343 ms latency / msg. 
+112000 msgs total. 2103.46121124185 msgs/sec. 19920.3714106429 ms latency / msg. 
+113000 msgs total. 2108.44704059166 msgs/sec. 19963.5806357911 ms latency / msg. 
+114000 msgs total. 2113.63563751656 msgs/sec. 20004.9812029226 ms latency / msg. 
+115000 msgs total. 2117.39977555599 msgs/sec. 20044.1833840521 ms latency / msg. 
+116000 msgs total. 2121.88592364823 msgs/sec. 20087.3118394517 ms latency / msg. 
+117000 msgs total. 2127.33909638465 msgs/sec. 20129.0336074802 ms latency / msg. 
+118000 msgs total. 2132.8542243844 msgs/sec. 20165.4021046541 ms latency / msg. 
+119000 msgs total. 2138.05543610144 msgs/sec. 20206.0486184402 ms latency / msg. 
+120000 msgs total. 2143.59175557962 msgs/sec. 20242.5081986799 ms latency / msg. 
+121000 msgs total. 2149.40026874147 msgs/sec. 20281.7573012428 ms latency / msg. 
+122000 msgs total. 2154.91709220553 msgs/sec. 20315.4297338817 ms latency / msg. 
+123000 msgs total. 2160.07587155861 msgs/sec. 20352.2308736908 ms latency / msg. 
+123000 msgs total. 2160.07587155861 msgs/sec. 20352.2308736908 ms latency / msg. 
+124000 msgs total. 2165.49167263146 msgs/sec. 20384.8082196545 ms latency / msg. 
+125000 msgs total. 2168.97501162584 msgs/sec. 20418.6831161756 ms latency / msg. 
+126000 msgs total. 2173.35545931083 msgs/sec. 20453.0952204155 ms latency / msg. 
+127000 msgs total. 2176.485219075 msgs/sec. 20486.4120988028 ms latency / msg. 
+128000 msgs total. 2180.20266898299 msgs/sec. 20519.6359412339 ms latency / msg. 
+129000 msgs total. 2185.48052599115 msgs/sec. 20552.8609044895 ms latency / msg. 
+130000 msgs total. 2190.29892982449 msgs/sec. 20585.978410818 ms latency / msg. 
+131000 msgs total. 2194.78667395631 msgs/sec. 20615.6331648912 ms latency / msg. 
+132000 msgs total. 2200.23714155912 msgs/sec. 20647.0982758663 ms latency / msg. 
+133000 msgs total. 2205.1291223803 msgs/sec. 20675.2614536989 ms latency / msg. 
+134000 msgs total. 2210.35051756652 msgs/sec. 20706.3365230086 ms latency / msg. 
+135000 msgs total. 2214.86701527459 msgs/sec. 20735.9576473923 ms latency / msg. 
+136000 msgs total. 2219.21308531582 msgs/sec. 20763.1241496555 ms latency / msg. 
+137000 msgs total. 2222.64121442663 msgs/sec. 20788.1115337193 ms latency / msg. 
+138000 msgs total. 2227.36095556393 msgs/sec. 20816.6023158981 ms latency / msg. 
+139000 msgs total. 2231.34349066361 msgs/sec. 20844.5728265578 ms latency / msg. 
+140000 msgs total. 2235.95988522505 msgs/sec. 20869.5909421538 ms latency / msg. 
+141000 msgs total. 2239.97744136194 msgs/sec. 20898.2815577953 ms latency / msg. 
+142000 msgs total. 2243.94755000157 msgs/sec. 20924.7341304812 ms latency / msg. 
+143000 msgs total. 2246.76356654171 msgs/sec. 20951.1371015436 ms latency / msg. 
+144000 msgs total. 2251.135078585 msgs/sec. 20976.941062519 ms latency / msg. 
+145000 msgs total. 2254.53947870128 msgs/sec. 21003.2404434314 ms latency / msg. 
+146000 msgs total. 2258.32569354126 msgs/sec. 21031.5132329285 ms latency / msg. 
+147000 msgs total. 2261.50130333243 msgs/sec. 21056.5896085467 ms latency / msg. 
+148000 msgs total. 2265.18597744702 msgs/sec. 21078.7048112295 ms latency / msg. 
+149000 msgs total. 2268.85024163902 msgs/sec. 21099.6574844052 ms latency / msg. 
+150000 msgs total. 2273.24632374924 msgs/sec. 21123.3068837786 ms latency / msg. 
+151000 msgs total. 2276.98630295175 msgs/sec. 21146.8820847257 ms latency / msg. 
+152000 msgs total. 2280.81845231466 msgs/sec. 21168.7449258104 ms latency / msg. 
+154000 msgs total. 2289.36966917206 msgs/sec. 21210.9161006493 ms latency / msg. 
+155000 msgs total. 2293.49692190888 msgs/sec. 21232.6199047148 ms latency / msg. 
+156000 msgs total. 2297.22105757696 msgs/sec. 21249.4031597923 ms latency / msg. 
+157000 msgs total. 2301.38149453834 msgs/sec. 21266.2638459389 ms latency / msg. 
+158000 msgs total. 2305.43717820629 msgs/sec. 21285.9310680608 ms latency / msg. 
+159000 msgs total. 2308.72862191713 msgs/sec. 21303.6050837007 ms latency / msg. 
+160000 msgs total. 2312.7037866947 msgs/sec. 21322.3548941151 ms latency / msg. 
+161000 msgs total. 2316.53282006218 msgs/sec. 21342.1329279604 ms latency / msg. 
+162000 msgs total. 2320.39287562957 msgs/sec. 21359.7296765433 ms latency / msg. 
+163000 msgs total. 2324.36741827354 msgs/sec. 21379.92773374 ms latency / msg. 
+164000 msgs total. 2328.03397848492 msgs/sec. 21397.2407471562 ms latency / msg. 
+165000 msgs total. 2331.6702721025 msgs/sec. 21414.7866663006 ms latency / msg. 
+166000 msgs total. 2334.9203144373 msgs/sec. 21430.9968613614 ms latency / msg. 
+167000 msgs total. 2338.68306851855 msgs/sec. 21451.0057966587 ms latency / msg. 
+168000 msgs total. 2342.12348542159 msgs/sec. 21469.5600559452 ms latency / msg. 
+169000 msgs total. 2345.84785838256 msgs/sec. 21489.5263268284 ms latency / msg. 
+170000 msgs total. 2349.5043475263 msgs/sec. 21506.5367272448 ms latency / msg. 
+171000 msgs total. 2353.11817110658 msgs/sec. 21521.3154738878 ms latency / msg. 
+172000 msgs total. 2356.14946235758 msgs/sec. 21537.8097171303 ms latency / msg. 
+173000 msgs total. 2358.5549896496 msgs/sec. 21552.1377159931 ms latency / msg. 
+174000 msgs total. 2361.48648755939 msgs/sec. 21567.1233165495 ms latency / msg. 
+175000 msgs total. 2362.14885334492 msgs/sec. 21578.4305325555 ms latency / msg. 
+176000 msgs total. 2365.61859928376 msgs/sec. 21595.1837337365 ms latency / msg. 
+177000 msgs total. 2369.01841721495 msgs/sec. 21614.0254808882 ms latency / msg. 
+178000 msgs total. 2372.19755677245 msgs/sec. 21637.15190569 ms latency / msg. 
+179000 msgs total. 2375.23853896981 msgs/sec. 21659.5392123353 ms latency / msg. 
+180000 msgs total. 2377.91173326659 msgs/sec. 21677.8974729291 ms latency / msg. 

@@ -102,9 +102,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\AmqpBroker.cs" />
     <Compile Include="Config\AmqpFluentConfiguration.cs" />
     <Compile Include="Config\AmqpFluentServerConfiguration.cs" />
     <Compile Include="Config\AmqpServer.cs" />
+    <Compile Include="Config\ConnectionDistributor.cs" />
     <Compile Include="Config\IAmqpConfigurationProvider.cs" />
     <Compile Include="Config\IAmqpServerConfiguration.cs" />
     <Compile Include="Envelope.cs" />
@@ -163,7 +165,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
+      <Name>Symbiote.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

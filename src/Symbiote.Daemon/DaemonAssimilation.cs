@@ -32,6 +32,7 @@ namespace Symbiote.Daemon
                                                         s.TheCallingAssembly();
                                                         s.AssembliesFromApplicationBaseDirectory();
                                                         s.AddAllTypesOf<IDaemon>();
+                                                        
                                                     }));
 
             var daemonConfiguration = new DaemonConfigurator();

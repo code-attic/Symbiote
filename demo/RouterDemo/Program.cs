@@ -22,7 +22,7 @@ namespace RouterDemo
                     .Description("Message Routing Demo")
                     .DisplayName("Message Router"))
                 .Jackalope(x => x
-                    .AddServer(s => s.Defaults())
+                    .AddServer(s => s.Address("bootcamp3-pc"))
                     .AddServer(s => s.VirtualHost("control").Broker("control"))
                 )
                 .Dependencies(x => x.For<Router>().Use<Router>().AsSingleton())

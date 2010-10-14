@@ -42,6 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\Symbiote.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -175,6 +176,8 @@
     <Compile Include="Log\Impl\ILogProvider.cs" />
     <Compile Include="Log\Impl\NullLogProvider.cs" />
     <Compile Include="Log\Impl\ProxyLogger.cs" />
+    <Compile Include="Log\Impl\TestLogger.cs" />
+    <Compile Include="Log\Impl\TestLogProvider.cs" />
     <Compile Include="Log\LogLevel.cs" />
     <Compile Include="Log\Impl\NullLogger.cs" />
     <Compile Include="Log\LogManager.cs" />
@@ -189,14 +192,12 @@
     <Compile Include="Utility\SpinLockManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Hollywood\Symbiote.Hollywood.fsproj">
-      <Project>{255598B8-A742-4DEB-BCEF-CE95428A84D8}</Project>
-      <Name>Symbiote.Hollywood</Name>
-	  <Private>True</Private>
+    <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
+      <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
+      <Name>Symbiote.Fibers</Name>
 	  <IlMerge>True</IlMerge>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
@@ -206,7 +207,7 @@
       <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
     </CreateItem>
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
   </Target>
   <Target Name="_CopyFilesMarkedCopyLocal" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
