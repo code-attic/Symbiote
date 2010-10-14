@@ -16,6 +16,8 @@ limitations under the License.
 
 using System;
 using RabbitMQ.Client;
+using Symbiote.Messaging.Impl.Serialization;
+using Symbiote.Rabbit.Impl.Adapter;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
@@ -28,7 +30,6 @@ namespace Symbiote.Rabbit.Impl.Channels
         void InitConsumer(IBasicConsumer consumer);
         string QueueName { get; }
         bool Closed { get; }
-        Envelope Dequeue();
         void Send<T>(T body, string routingKey)
             where T : class;
         void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)

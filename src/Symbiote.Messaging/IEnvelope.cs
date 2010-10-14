@@ -22,7 +22,6 @@ namespace Symbiote.Messaging
     {
         Guid MessageId { get; set; }
         string CorrelationId { get; set; }
-        string ReturnTo { get; set; }
         Type MessageType { get; }
     }
 

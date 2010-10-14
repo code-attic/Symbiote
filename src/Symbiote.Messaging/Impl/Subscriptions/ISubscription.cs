@@ -19,7 +19,6 @@ using System;
 namespace Symbiote.Messaging.Impl.Subscriptions
 {
     public interface ISubscription :
-        IObservable<IEnvelope>,
         IDisposable
     {
         string Name { get; set; }

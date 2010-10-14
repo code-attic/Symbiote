@@ -20,7 +20,5 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         IChannelProxy GetProxyForQueue(string queueName);
         IChannelProxy GetProxyForExchange(string exchangeName);
-        IChannelProxy GetProxyForQueue<T>(string queueName, T id);
-        IChannelProxy GetProxyForExchange<T>(string exchangeName, T id);
     }
 }

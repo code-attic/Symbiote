@@ -14,6 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Symbiote.Rabbit.Impl.Endpoint;
+using Symbiote.Rabbit.Impl.Server;
+
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public class ChannelProxyFactory : IChannelProxyFactory
@@ -27,32 +30,15 @@ namespace Symbiote.Rabbit.Impl.Channels
             return CreateProxy(endpoint);
         }
 
-        public IChannelProxy GetProxyForQueue<T>(string queueName, T id)
-        {
-            var endpoint = _endpointManager.GetEndpointByQueue(queueName);
-            return CreateProxy(endpoint, id);
-        }
-
         public IChannelProxy GetProxyForExchange(string exchangeName)
         {
             var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
             return CreateProxy(endpoint);
         }
 
-        public IChannelProxy GetProxyForExchange<T>(string exchangeName, T id)
+        protected IChannelProxy CreateProxy(RabbitEndpoint endpoint)
         {
-            var endpoint = _endpointManager.GetEndpointByExchange(exchangeName);
-            return CreateProxy(endpoint, id);
-        }
-
-        protected IChannelProxy CreateProxy(IEndPoint endpoint)
-        {
-            return new ChannelProxy(_connectionManager.GetConnection(endpoint.EndpointConfiguration.Broker).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
-        }
-
-        protected IChannelProxy CreateProxy<T>(IEndPoint endpoint, T id)
-        {
-            return new ChannelProxy(_connectionManager.GetConnection(id, endpoint.EndpointConfiguration.Broker).CreateModel(), _connectionManager.Protocol, endpoint.EndpointConfiguration);
+            return new ChannelProxy(_connectionManager.GetConnection(endpoint.Broker).CreateModel(), _connectionManager.Protocol, endpoint);
         }
 
         public ChannelProxyFactory(

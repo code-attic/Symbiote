@@ -21,13 +21,21 @@ using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Serialization;
 using Microsoft.Practices.ServiceLocation;
+using Symbiote.Rabbit.Impl.Adapter;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
+    public enum DeliveryMode
+    {
+        Volatile = 1,
+        Persistent = 2
+    }
+
     public class ChannelProxy : IChannelProxy
     {
         private IModel _channel;
-        private IAmqpEndpointConfiguration _configuration;
+        private RabbitEndpoint _configuration;
         private IMessageSerializer _messageSerializer;
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
@@ -36,7 +44,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         private const string CONTENT_TYPE = "text/plain";
         private const string AMQP_08 = "AMQP_0_8";
 
-        public IAmqpEndpointConfiguration EndpointConfiguration
+        public RabbitEndpoint EndpointConfiguration
         {
             get { return _configuration; }
         }
@@ -75,36 +83,6 @@ namespace Symbiote.Rabbit.Impl.Channels
         public void Acknowledge(ulong tag, bool multiple)
         {
             Channel.BasicAck(tag, multiple);
-        }
-
-        public virtual Envelope Dequeue()
-        {
-            BasicGetResult result = null;
-            try
-            {
-                result = Channel.BasicGet(QueueName, _configuration.NoAck);
-                if (result != null)
-                {
-                    var message = Serializer.Deserialize(result.Body);
-                    SetMessageCorrelation(message, result);
-                    return Envelope.Create(message, this, result);
-                }
-            }
-            catch (Exception e)
-            {
-                if (result != null)
-                {
-                    "An exception occurred attempting dequeue a message from the exchange named {0} with routing key {1} \r\n\t {2}"
-                        .ToError<IBus>(result.Exchange, result.RoutingKey, e);
-                    Reject(result.DeliveryTag, true);
-                }
-                else
-                {
-                    "An exception occurred attempting to dequeue a message from queue {0}"
-                        .ToError<IBus>(QueueName);
-                }
-            }
-            return null;
         }
 
         public void Send<T>(T body, string routingKey) where T : class
@@ -190,7 +168,7 @@ namespace Symbiote.Rabbit.Impl.Channels
                 consumer);
         }
 
-        public ChannelProxy(IModel channel, string protocol, IAmqpEndpointConfiguration endpointConfiguration)
+        public ChannelProxy(IModel channel, string protocol, RabbitEndpoint endpointConfiguration)
         {
             _channel = channel;
             _protocol = protocol;

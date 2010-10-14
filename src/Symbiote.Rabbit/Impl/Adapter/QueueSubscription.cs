@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RabbitMQ.Client;
-using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Adapter
 {
-    public class QueueSubscription : 
-        DefaultBasicConsumer,
+    public class QueueSubscription :
         ISubscription
     {
-        protected IChannelProxy Proxy { get; set; }
-        protected IObserver<IEnvelope> Observer { get; set; }
+        protected IChannelProxyFactory ProxyFactory { get; set; }
+        protected IChannelProxy CurrentProxy { get; set; }
+        protected RabbitQueueListener Listener { get; set; }
+        protected IDispatcher Dispatcher { get; set; }
         public string Name { get; set; }
         public bool Started { get; private set; }
         public bool Starting { get; private set; }
@@ -24,41 +23,28 @@ namespace Symbiote.Rabbit.Impl.Adapter
 
         public void Dispose()
         {
-            
+            CurrentProxy.Dispose();
+            Listener = null;
+            ProxyFactory = null;
         }
 
         public void Start()
         {
-            
+            CurrentProxy = ProxyFactory.GetProxyForQueue(Name);
+            Listener = new RabbitQueueListener(CurrentProxy, Dispatcher);
         }
 
         
         public void Stop()
         {
-            
+            CurrentProxy.Dispose();
+            Listener = null;
         }
 
-        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
+        public QueueSubscription(IChannelProxyFactory proxyFactory, IDispatcher dispatcher)
         {
-            
-            if(Observer != null)
-                Observer.OnNext()
+            ProxyFactory = proxyFactory;
+            Dispatcher = dispatcher;
         }
-
-        public IDisposable Subscribe(IObserver<IEnvelope> observer)
-        {
-            Observer = observer;
-            return new ObserverToken();
-        }
-
-        public QueueSubscription(IChannelProxy proxy)
-        {
-            Proxy = proxy;
-        }
-    }
-
-    public class RabbitEnvelope
-    {
-        
     }
 }

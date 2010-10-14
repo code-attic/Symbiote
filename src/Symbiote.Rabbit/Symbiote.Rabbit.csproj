@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Adapter\QueueSubscription.cs" />
+    <Compile Include="Impl\Adapter\RabbitEnvelope.cs" />
+    <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />
     <Compile Include="Config\RabbitConfigurator.cs" />
     <Compile Include="Config\RabbitBrokerFluentConfigurator.cs" />
@@ -80,7 +83,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Impl\Adapter\" />
     <Folder Include="Impl\Connection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

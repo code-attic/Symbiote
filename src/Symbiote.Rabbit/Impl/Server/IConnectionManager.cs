@@ -22,7 +22,7 @@ namespace Symbiote.Rabbit.Impl.Server
 {
     public interface IConnectionManager
     {
-        IEndpointManager Endpoints { get; }
+        string Protocol { get; }
         IConnection GetConnection();
         IConnection GetConnection(string brokerName);
     }

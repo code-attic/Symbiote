@@ -22,32 +22,17 @@ using Symbiote.Messaging.Impl.Dispatch;
 namespace Symbiote.Messaging.Impl.Subscriptions
 {
     public class SubscriptionManager :
-        ISubscriptionManager,
-        IObserver<IEnvelope>
+        ISubscriptionManager
     {
-        protected ReaderWriterLockSlim ObserverLock { get; set; }
-        protected HashSet<IObserver<IEnvelope>> Observers { get; set; }
         protected Dictionary<string, ISubscription> Subscriptions { get; set; }
-        protected IDispatcher Dispatcher { get; set; }
-
-        public IDisposable Subscribe(IObserver<IEnvelope> observer)
-        {
-            ObserverLock.EnterWriteLock();
-            Observers.Add(observer);
-            ObserverLock.ExitWriteLock();
-            return new ObserverToken();
-        }
-
+        
         public void Dispose()
         {
-            Observers.Clear();
-            Observers = null;
-            ObserverLock.Dispose();
+            
         }
 
         public void AddSubscription(ISubscription subscription)
         {
-            subscription.Subscribe(this);
             Subscriptions[subscription.Name] = subscription;
             subscription.Start();
         }
@@ -64,27 +49,9 @@ namespace Symbiote.Messaging.Impl.Subscriptions
             subscription.Stop();
         }
 
-        public void OnNext(IEnvelope value)
+        public SubscriptionManager()
         {
-            Dispatcher.Send(value);
-        }
-
-        public void OnError(Exception error)
-        {
-            
-        }
-
-        public void OnCompleted()
-        {
-            
-        }
-
-        public SubscriptionManager(IDispatcher dispatcher)
-        {
-            ObserverLock = new ReaderWriterLockSlim();
-            Observers = new HashSet<IObserver<IEnvelope>>();
             Subscriptions = new Dictionary<string,ISubscription>();
-            Dispatcher = dispatcher;
         }
     }
 }

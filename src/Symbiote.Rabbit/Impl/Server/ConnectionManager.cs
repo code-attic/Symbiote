@@ -17,6 +17,8 @@ limitations under the License.
 using System.Collections.Generic;
 using RabbitMQ.Client;
 using Symbiote.Rabbit.Config;
+using Symbiote.Rabbit.Impl.Endpoint;
+using System.Linq;
 
 namespace Symbiote.Rabbit.Impl.Server
 {
@@ -35,6 +37,10 @@ namespace Symbiote.Rabbit.Impl.Server
         {
             return Configuration.Brokers[brokerName].GetConnection();
         }
+
+        public string Protocol { get { return Configuration.Brokers.First().Value.Protocol; } }
+
+
 
         public ConnectionManager(RabbitConfiguration configuration)
         {

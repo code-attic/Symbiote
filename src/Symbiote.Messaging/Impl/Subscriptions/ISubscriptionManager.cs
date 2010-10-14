@@ -22,7 +22,6 @@ using System.Text;
 namespace Symbiote.Messaging.Impl.Subscriptions
 {
     public interface ISubscriptionManager :
-        IObservable<IEnvelope>,
         IDisposable
     {
         void AddSubscription(ISubscription subscription);
