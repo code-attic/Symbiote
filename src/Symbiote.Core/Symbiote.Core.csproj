@@ -129,6 +129,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assimilate.cs" />
+    <Compile Include="Assimilation.cs" />
     <Compile Include="AssimilationException.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
     <Compile Include="Config\FromConfig.cs" />
@@ -171,6 +172,7 @@
     <Compile Include="Extensions\JsonExtensions.cs" />
     <Compile Include="Extensions\JsonSerializerFactory.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="IAssimilate.cs" />
     <Compile Include="Log\ILogger.cs" />
     <Compile Include="Log\Impl\ILogger.cs" />
     <Compile Include="Log\Impl\ILogProvider.cs" />
@@ -195,7 +197,7 @@
     <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
       <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
       <Name>Symbiote.Fibers</Name>
-	  <IlMerge>True</IlMerge>
+      <IlMerge>True</IlMerge>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

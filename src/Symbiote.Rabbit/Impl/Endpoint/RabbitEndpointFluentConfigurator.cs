@@ -126,5 +126,10 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             Endpoint.PersistentDelivery = true;
             return this;
         }
+
+        public RabbitEndpointFluentConfigurator()
+        {
+            Endpoint = new RabbitEndpoint();
+        }
     }
 }

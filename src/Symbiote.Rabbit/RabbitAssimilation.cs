@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Messaging;
+using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Config;
+using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
@@ -38,10 +40,8 @@ namespace Symbiote.Rabbit
                                                 .Use<ConnectionManager>();
                                             x.For<IEndpointIndex>()
                                                 .Use(new EndpointIndex());
-                                            //x.For<ISubscription>()
-                                            //    .Use<Subscription>();
-                                            //x.For<ISubscriptionManager>()
-                                            //    .Use(new SubscriptionManager());
+                                            x.For<ISubscription>()
+                                                .Use<QueueSubscription>();
                                         });
         }
     }

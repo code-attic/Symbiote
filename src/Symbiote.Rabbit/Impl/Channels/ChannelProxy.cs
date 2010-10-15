@@ -17,10 +17,10 @@ limitations under the License.
 using System;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Serialization;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Endpoint;
 
@@ -75,7 +75,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             get
             {
-                _messageSerializer = _messageSerializer ?? ServiceLocator.Current.GetInstance<IMessageSerializer>();
+                _messageSerializer = _messageSerializer ?? Assimilate.GetInstanceOf<IMessageSerializer>();
                 return _messageSerializer;
             }
         }
@@ -173,9 +173,9 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channel = channel;
             _protocol = protocol;
             _configuration = endpointConfiguration;
-            _onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
-            _channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
-            _channel.ModelShutdown += ChannelShutdown;
+            //_onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
+            //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
+            //_channel.ModelShutdown += ChannelShutdown;
         }
 
         public void OnReturn()

@@ -40,8 +40,6 @@ namespace Symbiote.Rabbit.Impl.Server
 
         public string Protocol { get { return Configuration.Brokers.First().Value.Protocol; } }
 
-
-
         public ConnectionManager(RabbitConfiguration configuration)
         {
             Configuration = configuration;

@@ -28,6 +28,8 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         public string Name { get; set; }
         public string Exchange { get; set; }
+        public Type ChannelType { get { return typeof(RabbitChannel); } }
+        public Type FactoryType { get { return typeof (RabbitChannelFactory); } }
 
         public RabbitChannelDefinition(string name, string exchange)
         {

@@ -1,6 +1,8 @@
 ﻿using System;
 using RabbitMQ.Client;
+using Symbiote.Core;
 using Symbiote.Messaging;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Adapter

@@ -14,12 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
+
 namespace Symbiote.Messaging.Impl.Channels
 {
     public class NameOnlyChannelDefinition
         : IChannelDefinition
     {
         public string Name { get; set; }
+
+        public Type ChannelType { get { return typeof (LocalChannel); } }
+        public Type FactoryType { get { return typeof (ChannelFactory<>); } }
 
         public NameOnlyChannelDefinition(string name)
         {

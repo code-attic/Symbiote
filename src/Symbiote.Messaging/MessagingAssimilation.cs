@@ -23,6 +23,7 @@ using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -47,20 +48,23 @@ namespace Symbiote.Messaging
                                                             typeof (IHandle<>));
                                                         s.ConnectImplementationsToTypesClosing(
                                                             typeof (IHandle<,>));
+                                                        s.ConnectImplementationsToTypesClosing(
+                                                            typeof (IActorFactory<>));
                                                     });
                                             x.For<IBus>().Use<Bus>();
                                             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
-                                            x.For<IKeyAccessor>().Use<DefaultKeyAccessor>();
                                             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
-                                            x.For<IAgency>().Use<Agency>().AsSingleton();
                                             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
+                                            x.For<IAgency>().Use<Agency>().AsSingleton();
+                                            x.For<IActorCache>().Use<InMemoryActorCache>().AsSingleton();
+
+                                            x.For<IKeyAccessor>().Use<DefaultKeyAccessor>();
+                                            x.For<IMessageSerializer>().Use<JsonMessageSerializer>();
                                             x.For(typeof (IAgent<>)).Use(typeof (DefaultAgent<>));
                                             x.For(typeof (IActorStore<>)).Use(typeof (NullActorStore<>));
                                             x.For(typeof (IActorFactory<>)).Use(typeof (DefaultActorFactory<>));
                                             x.For(typeof (IChannelFactory<>)).Use(typeof (ChannelFactory<>));
-                                            x.For<IActorCache>().Use<InMemoryActorCache>();
-                                            x.For(typeof(IChannel)).Use(
-                                                typeof(LocalChannel));
+                                            x.For(typeof(IChannel)).Use(typeof(LocalChannel));
                                         });
 
             var handlers =

@@ -39,7 +39,10 @@ type Director<'TMessage>(callback: Action<string, 'TMessage>) =
     let setupActor (callback: Action<string, 'TMessage>) (id: string) (message: 'TMessage) =
         let actor = spawnActor id callback
         actor.Post message
-        cast.TryAdd(id, actor)
+        match cast.TryAdd(id, actor) with
+        | false -> printfn "Dis some bad SHIT!"
+        | true -> printfn "nertz"
+        
 
     new() = 
         let callback id message = 

@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Microsoft.Practices.ServiceLocation;
 
@@ -32,6 +33,13 @@ namespace Symbiote.Messaging.Impl.Channels
         public void AddDefinition(IChannelDefinition definition)
         {
             Definitions.AddOrUpdate(definition.Name, definition, (x, y) => definition);
+            ChannelTypes.GetOrAdd(definition.Name, definition.ChannelType);
+            var factoryType = definition.FactoryType.IsGenericTypeDefinition
+                                  ? definition.FactoryType.MakeGenericType(definition.ChannelType)
+                                  : definition.FactoryType;
+
+            ChannelFactories.GetOrAdd(definition.ChannelType,
+                                      Assimilate.GetInstanceOf(factoryType) as IChannelFactory);
         }
 
         public IChannel GetChannel(string channelName)
@@ -66,8 +74,7 @@ namespace Symbiote.Messaging.Impl.Channels
             if (!ChannelFactories.TryGetValue(channelType, out factory))
             {
                 var factoryType = typeof(IChannelFactory<>).MakeGenericType(channelType);
-                factory = ServiceLocator.Current.GetInstance(factoryType) as IChannelFactory;
-                //factory = factory ?? ServiceLocator.Current.GetInstance(typeof (ChannelFactory<>)) as IChannelFactory;
+                factory = Assimilate.GetInstanceOf(factoryType) as IChannelFactory;
                 ChannelFactories.TryAdd(factoryType, factory);
             }
             return factory;

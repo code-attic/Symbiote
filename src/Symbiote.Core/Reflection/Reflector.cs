@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -58,8 +59,8 @@ namespace Symbiote.Core.Reflection
     public class Reflector
     {
         private static List<Type> initializedTypes = new List<Type>();
-        static Dictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>> memberCache =
-            new Dictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>>();
+        static ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>> memberCache =
+            new ConcurrentDictionary<Tuple<Type, string>, Tuple<Type, Func<object, object>, Action<object, object>>>();
 
         static BindingFlags bindingFlags = BindingFlags.FlattenHierarchy |
                                                    BindingFlags.Public |
@@ -99,7 +100,7 @@ namespace Symbiote.Core.Reflection
                                      var setter = CanWrite(type, x.Name) ? BuildSet(type, x.Name) : null;
                                      var value = Tuple.Create(memberType, getter, setter);
 
-                                     memberCache.Add(key, value);
+                                     memberCache.TryAdd(key, value);
                                  }
                     );
                initializedTypes.Add(type);

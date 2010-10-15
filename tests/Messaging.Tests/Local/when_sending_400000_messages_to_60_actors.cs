@@ -17,7 +17,7 @@ namespace Messaging.Tests.Local
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
         protected static int MessagesToSend = 1000000;
-        protected static int actorCount = 1000;
+        protected static int actorCount = 50;
         private Because of = () =>
                                  {
                                      Actor.Created = 0;

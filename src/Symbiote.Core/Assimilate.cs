@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,21 +29,6 @@ using Symbiote.Core.Utility;
 
 namespace Symbiote.Core
 {
-    public interface IAssimilate
-    {
-        IDependencyAdapter DependencyAdapter { get; set; }
-    }
-
-    public class Assimilation : IAssimilate
-    {
-        public IDependencyAdapter DependencyAdapter { get; set; }
-
-        public Assimilation()
-        {
-
-        }
-    }
-
     public static class Assimilate 
     {
         public static IAssimilate Assimilation { get; set; }
@@ -108,6 +94,36 @@ namespace Symbiote.Core
                              x.For<IDependencyAdapter>().Use(adapter);
                          });
             return Assimilation;
+        }
+
+        public static IEnumerable<T> GetAllInstancesOf<T>()
+        {
+            return Assimilation.DependencyAdapter.GetAllInstances<T>();
+        }
+
+        public static IEnumerable GetAllInstancesOf(Type type)
+        {
+            return Assimilation.DependencyAdapter.GetAllInstances(type);
+        }
+
+        public static T GetInstanceOf<T>()
+        {
+            return Assimilation.DependencyAdapter.GetInstance<T>();
+        }
+
+        public static T GetInstanceOf<T>(string name)
+        {
+            return Assimilation.DependencyAdapter.GetInstance<T>(name);
+        }
+
+        public static object GetInstanceOf(Type type)
+        {
+            return Assimilation.DependencyAdapter.GetInstance(type);
+        }
+
+        public static object GetInstanceOf(Type type, string name)
+        {
+            return Assimilation.DependencyAdapter.GetInstance(type, name);
         }
 
         public static IAssimilate Dependencies(this IAssimilate assimilate, Action<DependencyConfigurator> configurator)

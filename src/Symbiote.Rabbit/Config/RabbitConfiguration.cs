@@ -15,6 +15,13 @@ namespace Symbiote.Rabbit.Config
             Brokers.GetOrAdd(broker.Name, broker);
         }
 
+        public void AddBroker(Action<RabbitBrokerFluentConfigurator> configurate)
+        {
+            var configurator = new RabbitBrokerFluentConfigurator();
+            configurate(configurator);
+            AddBroker(configurator.RabbitBroker);
+        }
+
         public RabbitConfiguration()
         {
             Brokers = new ConcurrentDictionary<string, IRabbitBroker>();

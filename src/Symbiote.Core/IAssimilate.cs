@@ -14,17 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Symbiote.Core.DI;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Core
 {
-    public interface IChannelDefinition
+    public interface IAssimilate
     {
-        string Name { get; set; }
-        Type ChannelType { get; }
-        Type FactoryType { get; }
+        IDependencyAdapter DependencyAdapter { get; set; }
     }
 }
