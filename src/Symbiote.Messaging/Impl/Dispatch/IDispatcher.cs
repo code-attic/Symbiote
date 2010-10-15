@@ -18,7 +18,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
 {
     public interface IDispatcher
     {
-        void Send<TMessage>(IEnvelope<TMessage> envelope);
+        void Send<TMessage>(IEnvelope<TMessage> envelope) where TMessage : class;
         void Send(IEnvelope envelope);
     }
 }

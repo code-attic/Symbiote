@@ -60,19 +60,33 @@ namespace Symbiote.Rabbit.Impl.Adapter
 
         public static RabbitEnvelope Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, object body)
         {
-            return new RabbitEnvelope()
-                       {
-                           ConsumerTag = consumerTag,
-                           DeliveryTag = deliveryTag,
-                           Exchange = exchange,
-                           Message = body,
-                           Proxy = proxy,
-                           Redelivered = redelivered,
-                           ReplyToExchange = properties.ReplyToAddress.ExchangeName,
-                           ReplyToKey = properties.ReplyToAddress.RoutingKey,
-                           RoutingKey = routingKey,
-                           TimeStamp = DateTime.FromFileTimeUtc(properties.Timestamp.UnixTime),
-                       };
+            var envelopeType = typeof(RabbitEnvelope<>).MakeGenericType(body.GetType());
+            var envelope = Assimilate.GetInstanceOf(envelopeType) as RabbitEnvelope;
+
+            envelope.ConsumerTag = consumerTag;
+            envelope.DeliveryTag = deliveryTag;
+            envelope.Exchange = exchange;
+            envelope.Message = body;
+            envelope.Proxy = proxy;
+            envelope.Redelivered = redelivered;
+            envelope.ReplyToExchange = properties.ReplyToAddress.ExchangeName;
+            envelope.ReplyToKey = properties.ReplyToAddress.RoutingKey;
+            envelope.RoutingKey = routingKey;
+            envelope.TimeStamp = DateTime.FromFileTimeUtc(properties.Timestamp.UnixTime);
+
+            return envelope;
+        }
+    }
+
+    public class RabbitEnvelope<TMessage> :
+        RabbitEnvelope,
+        IEnvelope<TMessage>
+        where TMessage : class
+    {
+        public new TMessage Message 
+        {
+            get { return base.Message as TMessage; }
+            set { base.Message = value; }
         }
     }
 }

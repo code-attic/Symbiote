@@ -16,8 +16,8 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 1000000;
-        protected static int actorCount = 50;
+        protected static int MessagesToSend = 400000;
+        protected static int actorCount = 60;
         private Because of = () =>
                                  {
                                      Actor.Created = 0;
@@ -46,7 +46,7 @@ namespace Messaging.Tests.Local
                                          cast.Add(actor);
                                      }
 
-                                     Thread.Sleep(TimeSpan.FromSeconds(2));
+                                     //Thread.Sleep(TimeSpan.FromSeconds(2));
                                  };
         
         private It should_complete_in_1_second = () =>

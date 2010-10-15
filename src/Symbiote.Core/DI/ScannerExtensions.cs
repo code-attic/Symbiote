@@ -30,7 +30,7 @@ namespace Symbiote.Core.DI
             if(!openType.IsGenericType && !openType.IsGenericTypeDefinition)
                 return false;
 
-            bool closes;
+            bool closes = false;
 
             if(openType.IsInterface)
             {
@@ -38,7 +38,11 @@ namespace Symbiote.Core.DI
             }
             else
             {
-                closes = type.BaseType == openType;
+                if (type.BaseType != null)
+                    if (type.BaseType.IsGenericType)
+                        closes = type.BaseType.GetGenericTypeDefinition() == openType;
+                    else
+                        closes = type.BaseType == openType;
             }
             if (closes) return true;
             return type.BaseType == null ? false : type.BaseType.Closes(openType);
@@ -61,9 +65,7 @@ namespace Symbiote.Core.DI
             foreach (Type interfaceType in pluggedType.GetInterfaces())
             {
                 if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == templateType)
-                {
                     return true;
-                }
             }
 
             return false;

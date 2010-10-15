@@ -20,6 +20,7 @@ namespace Symbiote.Messaging.Impl
 {
     public class SimpleEnvelope<TMessage>
         : IEnvelope<TMessage>
+         where TMessage : class
     {
         public string CorrelationId { get; set; }
         public string ReturnTo { get; set; }

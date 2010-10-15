@@ -120,7 +120,7 @@ namespace Symbiote.Core.DI
         protected void RegisterClosingTypes(Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry)
         {
             var matches =
-                filteredTypes.Where(t => t.Closes(type));
+                filteredTypes.Where(t => t.Closes(type) && !t.IsAbstract && !t.IsInterface);
 
             foreach(var match in matches)
             {
@@ -150,10 +150,10 @@ namespace Symbiote.Core.DI
         protected void RegisterClosingType(Type type, Type match, IDependencyRegistry registry)
         {
             Type pluginType = null;
-            Type baseType = type.BaseType;
-            while(pluginType == null)
+            Type baseType = match.BaseType;
+            while(pluginType == null && baseType != typeof(object))
             {
-                if(baseType.IsGenericType)
+                if(baseType != null && baseType.IsGenericType)
                 {
                     var genericTypeDefinition = baseType.GetGenericTypeDefinition();
                     if(genericTypeDefinition.Equals(type))
@@ -166,9 +166,13 @@ namespace Symbiote.Core.DI
                     }
                 }
             }
-            var dependencyExpression = DependencyExpression.For(pluginType);
-            dependencyExpression.Use(match);
-            registry.Register(dependencyExpression);
+            if(pluginType != null)
+            {
+                var dependencyExpression = DependencyExpression.For(pluginType);
+                dependencyExpression.Use(match);
+                registry.Register(dependencyExpression);    
+            }
+            
         }
 
         protected void RegisterTypeClosingInterface(Type type, Type match, IDependencyRegistry registry)

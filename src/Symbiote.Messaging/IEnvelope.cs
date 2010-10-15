@@ -27,6 +27,7 @@ namespace Symbiote.Messaging
 
     public interface IEnvelope<TMessage>
         : IEnvelope
+        where TMessage : class
     {
         TMessage Message { get; set; }
     }
