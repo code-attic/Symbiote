@@ -88,39 +88,20 @@
     <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Antlr3.Runtime, Version=3.1.0.39271, Culture=neutral, PublicKeyToken=3a9cab8f8d22bfb7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\lib\NHibernate\Antlr3.Runtime.dll</HintPath>
-      <IlMerge>True</IlMerge>
     </Reference>
-    <Reference Include="FluentNHibernate, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8aa435e3cb308880, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\NHibernate\FluentNHibernate.dll</HintPath>
-      <IlMerge>True</IlMerge>
     </Reference>
-    <Reference Include="Iesi.Collections, Version=1.0.1.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Iesi.Collections">
       <HintPath>..\..\lib\NHibernate\Iesi.Collections.dll</HintPath>
-      <IlMerge>True</IlMerge>
     </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\lib\log4net\log4net.dll</HintPath>
-      <IlMerge>False</IlMerge>
-    </Reference>
-    <Reference Include="NHibernate, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="NHibernate">
       <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
-      <IlMerge>True</IlMerge>
     </Reference>
-    <Reference Include="NHibernate.ByteCode.Castle, Version=2.1.2.4000, Culture=neutral, PublicKeyToken=aa95f207798dfdb4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
-      <IlMerge>True</IlMerge>
-    </Reference>
-    <Reference Include="NHibernate.Linq, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\NHibernate\NHibernate.Linq.dll</HintPath>
-      <IlMerge>True</IlMerge>
+    <Reference Include="Remotion.Data.Linq">
+      <HintPath>..\..\lib\NHibernate\Remotion.Data.Linq.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -153,13 +134,6 @@
     <Compile Include="Impl\SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
-      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
-      <IlMerge>False</IlMerge>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -176,16 +150,22 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
       <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
     </CreateItem>
-    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='false'">
+    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'==''">
       <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
     </CreateItem>
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /ndebug /log /targetplatform:v4,&quot;C:\Windows\Microsoft.NET\Framework\v4.0.30319&quot; /out:@(MainAssembly) @(MainAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
   </Target>
   <Target Name="_CopyFilesMarkedCopyLocal" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

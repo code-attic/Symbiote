@@ -16,7 +16,6 @@ using Symbiote.Rabbit;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Dispatch;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Rabbit.Tests
 {

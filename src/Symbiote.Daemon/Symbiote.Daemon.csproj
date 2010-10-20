@@ -123,7 +123,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Target Name="AfterBuild">
+<Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
       <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
     </CreateItem>
@@ -131,7 +131,7 @@
       <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
     </CreateItem>
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
   </Target>
   <Target Name="_CopyFilesMarkedCopyLocal" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -20,8 +20,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using NHibernate;
-using Symbiote.Core.Extensions;
 using NHibernate.Linq;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Hibernate.Impl
 {
@@ -37,7 +37,7 @@ namespace Symbiote.Hibernate.Impl
         protected IQueryable<TEntity> CreateQuery<TEntity>() where TEntity : T
         {
             var session = GetCurrentSession();
-            IQueryable<TEntity> queryable = session.Linq<TEntity>();
+            IQueryable<TEntity> queryable = session.Query<TEntity>();
 
             return from entity in queryable
                    select entity;
@@ -72,7 +72,7 @@ namespace Symbiote.Hibernate.Impl
         public void Delete<TEntity>(ISearchCriteria<TEntity> criteria) where TEntity : T
         {
             var session = GetCurrentSession();
-            FindAll(criteria).ForEach(session.Delete);
+            IEnumerableExtenders.ForEach(FindAll(criteria), session.Delete);
         }
 
         public IList<T> FindAll<TEntity>(ISearchCriteria<TEntity> criteria) where TEntity : T
@@ -123,7 +123,7 @@ namespace Symbiote.Hibernate.Impl
 
         public void Insert<TEntity>(IEnumerable<TEntity> list) where TEntity : T
         {
-            list.ForEach(Insert);
+            IEnumerableExtenders.ForEach(list, Insert);
         }
 
         private Expression<Func<TEntity, bool>> GetIdEqualityPredicate<TEntity>(object id)
@@ -137,7 +137,7 @@ namespace Symbiote.Hibernate.Impl
             return Expression.Lambda<Func<TEntity, bool>>(equalityExpr, parameter);
         }
 
-        private Tuple<string, Type> GetIdFor<TEntity>()
+        private System.Tuple<string, Type> GetIdFor<TEntity>()
         {
             var metadata = GetCurrentSession().SessionFactory.GetClassMetadata(typeof(TEntity));
             return Tuple.Create(metadata.IdentifierPropertyName, metadata.IdentifierType.ReturnedClass);

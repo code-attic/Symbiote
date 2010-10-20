@@ -133,13 +133,6 @@
     <Compile Include="Server\WcfServiceHostFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
-      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
-      <IlMerge>False</IlMerge>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
       <Visible>False</Visible>
       <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
@@ -156,16 +149,22 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
       <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
     </CreateItem>
-    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='false'">
+    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'==''">
       <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
     </CreateItem>
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /ndebug /log /targetplatform:v4,&quot;C:\Windows\Microsoft.NET\Framework\v4.0.30319&quot; /out:@(MainAssembly) @(MainAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
   </Target>
   <Target Name="_CopyFilesMarkedCopyLocal" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
