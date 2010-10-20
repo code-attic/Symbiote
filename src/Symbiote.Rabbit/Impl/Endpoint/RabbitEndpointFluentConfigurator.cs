@@ -29,6 +29,12 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return this;
         }
 
+        public RabbitEndpointFluentConfigurator CreateResponseChannel()
+        {
+            Endpoint.NeedsResponseChannel = true;
+            return this;
+        }
+
         public RabbitEndpointFluentConfigurator QueueName(string queueName)
         {
             Endpoint.QueueName = queueName;
@@ -139,7 +145,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             Endpoint.UseTransactions = true;
             return this;
         }
-
+        
         public RabbitEndpointFluentConfigurator()
         {
             Endpoint = new RabbitEndpoint();

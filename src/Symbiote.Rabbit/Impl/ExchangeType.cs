@@ -1,4 +1,4 @@
-﻿/* 
+/* 
 Copyright 2008-2010 Alex Robson
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,20 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Messaging.Impl.Subscriptions;
-
-namespace Symbiote.Messaging
+namespace Symbiote.Rabbit.Impl
 {
-    public interface IBus
+    public enum ExchangeType
     {
-        void AddSubscription(ISubscription subscription);
-        bool HasChannelFor<T>();
-        bool HasChannelFor<T>(string channelName);
-        void Send<TMessage>(TMessage message)
-            where TMessage : class;
-        void Send<TMessage>(string channelName, TMessage message)
-            where TMessage : class;
-        void StartSubscription(string subscription);
-        void StopSubscription(string subscription);
+        direct,
+        fanout,
+        topic
     }
 }

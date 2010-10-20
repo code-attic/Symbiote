@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Subscriptions;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Messaging.Impl
 {
@@ -31,6 +32,16 @@ namespace Symbiote.Messaging.Impl
             Subscriptions.AddSubscription(subscription);
         }
 
+        public bool HasChannelFor<T>()
+        {
+            return Channels.HasChannelFor<T>();
+        }
+
+        public bool HasChannelFor<T>(string channelName)
+        {
+            return Channels.HasChannelFor<T>(channelName);
+        }
+
         public void Send<TMessage>(string channelName, TMessage message)
             where TMessage : class
         {
@@ -41,8 +52,24 @@ namespace Symbiote.Messaging.Impl
         public void Send<TMessage>(TMessage message)
             where TMessage : class
         {
-            var channel = Channels.GetChannelFor<TMessage>();
+            Channels
+                .GetChannelsFor<TMessage>()
+                .ForEach(x => x.Send(message));
+        }
+
+        public TReply Query<TMessage, TReply>(string channelName, TMessage message)
+            where TMessage : class
+        {
+            var channel = Channels.GetChannelFor<TMessage>(channelName);
             channel.Send(message);
+        }
+
+        public void Query<TMessage>(TMessage message)
+            where TMessage : class
+        {
+            Channels
+                .GetChannelsFor<TMessage>()
+                .ForEach(x => x.Send(message));
         }
 
         public void StartSubscription(string subscription)

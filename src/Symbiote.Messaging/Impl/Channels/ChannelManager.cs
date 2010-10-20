@@ -59,6 +59,13 @@ namespace Symbiote.Messaging.Impl.Channels
             return GetChannelFor<TMessage>(channelName);
         }
 
+        public IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>()
+            where TMessage : class
+        {
+            return MessageChannels[typeof (TMessage)]
+                .Select(GetChannelFor<TMessage>);
+        }
+
         public IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
             where TMessage : class
         {
@@ -85,6 +92,17 @@ namespace Symbiote.Messaging.Impl.Channels
                 ChannelFactories.TryAdd(factoryType, factory);
             }
             return factory;
+        }
+
+        public bool HasChannelFor<TMessage>()
+        {
+            return MessageChannels.ContainsKey(typeof (TMessage));
+        }
+
+        public bool HasChannelFor<TMessage>(string channelName)
+        {
+            return MessageChannels.ContainsKey(typeof(TMessage)) &&
+                MessageChannels[typeof(TMessage)].Contains(channelName);
         }
 
         public void AddChannelForMessageType(Type messageType, string channelName)

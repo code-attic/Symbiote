@@ -20,6 +20,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public bool Internal { get; set; }
         public bool ImmediateDelivery { get; set; }
         public bool LoadBalance { get; set; }
+        public bool NeedsResponseChannel { get; set; }
         public bool NoAck { get; set; }
         public bool NoWait { get; set; }
         public bool MandatoryDelivery { get; set; }

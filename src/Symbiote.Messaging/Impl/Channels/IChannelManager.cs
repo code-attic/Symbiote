@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Generic;
+
 namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannelManager
@@ -21,7 +23,12 @@ namespace Symbiote.Messaging.Impl.Channels
         void AddDefinition(IChannelDefinition definition);
         IChannel<TMessage> GetChannelFor<TMessage>()
             where TMessage : class;
+        IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>()
+            where TMessage : class;
         IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
             where TMessage : class;
+
+        bool HasChannelFor<TMessage>();
+        bool HasChannelFor<TMessage>(string channelName);
     }
 }

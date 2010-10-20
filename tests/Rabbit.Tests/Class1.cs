@@ -137,17 +137,30 @@ namespace Rabbit.Tests
         }
     }
 
+    //public class MessageHandler
+    //    : IHandle<Actor, Message>
+    //{
+    //    public void Handle(Actor actor, IEnvelope<Message> envelope)
+    //    {
+    //        actor.Received(envelope.Message.Id);
+    //        var rabbitEnvelope = envelope as RabbitEnvelope<Message>;
+    //        if(Actor.MessageIds.Count % 5000 == 0)
+    //        {
+    //            rabbitEnvelope.Proxy.Acknowledge(rabbitEnvelope.DeliveryTag, true);
+    //            rabbitEnvelope.Proxy.Channel.TxCommit();
+    //        }
+    //    }
+    //}
+
     public class MessageHandler
-        : IHandle<Actor, Message>
+        : RabbitActorHandler<Actor, Message>
     {
-        public void Handle(Actor actor, IEnvelope<Message> envelope)
+        public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
         {
             actor.Received(envelope.Message.Id);
-            var rabbitEnvelope = envelope as RabbitEnvelope<Message>;
             if(Actor.MessageIds.Count % 5000 == 0)
             {
-                rabbitEnvelope.Proxy.Acknowledge(rabbitEnvelope.DeliveryTag, true);
-                rabbitEnvelope.Proxy.Channel.TxCommit();
+                envelope.AcknowledgeAll();
             }
         }
     }

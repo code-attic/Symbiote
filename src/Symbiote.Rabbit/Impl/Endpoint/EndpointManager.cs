@@ -38,6 +38,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             ChannelManager.AddDefinition(new RabbitChannelDefinition<TMessage>(endpoint.ExchangeName));
             EndpointIndex.AddEndpoint<TMessage>(endpoint);
             CreateOnBroker(endpoint);
+
+            if (endpoint.NeedsResponseChannel)
+                CreateResponseChannel(endpoint);
         }
 
         public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> configurate)
@@ -80,6 +83,11 @@ namespace Symbiote.Rabbit.Impl.Endpoint
                     endpoint.CreatedOnBroker = true;
                 }
             }
+        }
+
+        private void CreateResponseChannel(RabbitEndpoint endpoint)
+        {
+            
         }
 
         public void BindQueue(string exchangeName, string queueName, params string[] routingKeys)

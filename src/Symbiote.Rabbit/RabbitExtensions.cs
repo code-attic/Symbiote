@@ -30,5 +30,21 @@ namespace Symbiote.Rabbit
             var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
             channel.Proxy.Channel.TxCommit();
         }
+
+        public static void ReplyTo<TReply, TMessage>(this IBus bus, RabbitEnvelope<TMessage> message, TReply reply)
+            where TMessage : class
+            where TReply : class, IRouteByKey
+        {
+            reply.RoutingKey = message.ReplyToKey;
+            bus.Send(message.ReplyToExchange, reply);
+        }
+
+        public static void RollbackChannelOf<TMessage>(this IBus bus)
+            where TMessage : class
+        {
+            var channels = Assimilate.GetInstanceOf<IChannelManager>();
+            var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
+            channel.Proxy.Channel.TxRollback();
+        }
     }
 }

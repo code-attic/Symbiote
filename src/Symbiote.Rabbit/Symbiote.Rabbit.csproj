@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="Impl\Adapter\QueueSubscription.cs" />
     <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
-    <Compile Include="Impl\Adapter\RabbitEnvelope.cs" />
+    <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />
     <Compile Include="Config\RabbitConfigurator.cs" />
@@ -55,7 +55,7 @@
     <Compile Include="Config\RabbitBroker.cs" />
     <Compile Include="Config\IRabbitBroker.cs" />
     <Compile Include="Config\RabbitConfiguration.cs" />
-    <Compile Include="ExchangeType.cs" />
+    <Compile Include="Impl\ExchangeType.cs" />
     <Compile Include="Impl\Channels\ChannelProxy.cs" />
     <Compile Include="Impl\Channels\ChannelProxyFactory.cs" />
     <Compile Include="Impl\Channels\IChannelProxy.cs" />
@@ -74,6 +74,7 @@
     <Compile Include="Impl\Server\IConnectionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitExtensions.cs" />
+    <Compile Include="RabbitMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
@@ -89,7 +90,7 @@
     <Folder Include="Impl\Connection\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-<Target Name="AfterBuild">
+  <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
       <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
     </CreateItem>
