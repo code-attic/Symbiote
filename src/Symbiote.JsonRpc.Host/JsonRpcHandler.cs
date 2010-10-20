@@ -50,7 +50,7 @@ namespace Symbiote.JsonRpc.Host
             }
             catch (Exception ex)
             {
-                throw new HttpException(400, "Symbiote Restfully could not process the request because it was invalid.", ex);
+                throw new HttpException(400, "Symbiote JSON RPC could not process the request because it was invalid.", ex);
             }
         }
 

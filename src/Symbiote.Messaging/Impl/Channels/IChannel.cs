@@ -18,6 +18,13 @@ namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannel
     {
-        void Send<TMessage>(TMessage message) where TMessage : class;
+        //void Send<TMessage>(TMessage message) where TMessage : class;
+    }
+
+    public interface IChannel<in TMessage>
+        : IChannel
+        where TMessage : class
+    {
+        void Send(TMessage message);
     }
 }

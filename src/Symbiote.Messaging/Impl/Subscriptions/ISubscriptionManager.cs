@@ -25,6 +25,7 @@ namespace Symbiote.Messaging.Impl.Subscriptions
         IDisposable
     {
         void AddSubscription(ISubscription subscription);
+        void AddAndStartSubscription(ISubscription subscription);
         void StartSubscription(string subscriptionName);
         void StopSubscription(string subscriptionName);
     }

@@ -20,6 +20,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
     {
         RabbitEndpoint GetEndpointByExchange(string exchangeName);
         RabbitEndpoint GetEndpointByQueue(string queueName);
-        void AddEndpoint(RabbitEndpoint endpoint);
+        void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
+            where TMessage : class;
     }
 }

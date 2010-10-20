@@ -34,6 +34,11 @@ namespace Symbiote.Messaging.Impl.Subscriptions
         public void AddSubscription(ISubscription subscription)
         {
             Subscriptions[subscription.Name] = subscription;
+        }
+
+        public void AddAndStartSubscription(ISubscription subscription)
+        {
+            Subscriptions[subscription.Name] = subscription;
             subscription.Start();
         }
 

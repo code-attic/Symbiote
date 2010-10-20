@@ -25,6 +25,7 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         string Name { get; set; }
         Type ChannelType { get; }
+        Type MessageType { get; }
         Type FactoryType { get; }
     }
 }

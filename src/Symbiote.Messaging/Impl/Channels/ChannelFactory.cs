@@ -14,18 +14,30 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Microsoft.Practices.ServiceLocation;
+using System;
+using Symbiote.Core;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
-    public class ChannelFactory<TChannel>
-        : IChannelFactory<TChannel>
-        where TChannel : class, IChannel
+    //public class ChannelFactory<TChannel>
+    //    : IChannelFactory<TChannel>
+    //    where TChannel : class, IChannel
+    //{
+    //    public IChannel GetChannel(IChannelDefinition definition)
+    //    {
+    //        var channel = Assimilate.GetInstanceOf<TChannel>();
+    //        return channel;
+    //    }
+    //}
+
+    public class ChannelFactory
+        : IChannelFactory
     {
         public IChannel GetChannel(IChannelDefinition definition)
         {
-            var channel = ServiceLocator.Current.GetInstance<TChannel>();
-            return channel;
+            var channel = Assimilate.GetInstanceOf(definition.ChannelType);
+            channel = channel ?? Activator.CreateInstance(definition.ChannelType);
+            return channel as IChannel;
         }
     }
 }

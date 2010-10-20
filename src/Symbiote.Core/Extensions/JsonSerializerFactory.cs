@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
@@ -38,6 +39,7 @@ namespace Symbiote.Core.Extensions
         private readonly string _resolverFormat = "CustomJsonResolver-{0}";
 
         protected List<IContractResolverStrategy> ContractResolverStrategies { get; set; }
+        protected ConcurrentDictionary<Type, JsonSerializer> Serializers { get; set; }
 
         protected JsonSerializerSettings GetDefaultSettings()
         {
@@ -74,12 +76,15 @@ namespace Symbiote.Core.Extensions
         public JsonSerializer GetSerializerFor(Type type, bool includeTypeSpec, SerializerAction action)
         {
             JsonSerializer serializer = null;
-            if (includeTypeSpec)
-                serializer = JsonSerializer.Create(GetDefaultSettings());
-            else
-                serializer = JsonSerializer.Create(GetSettingsWithoutTypeHandling());
+            if(!Serializers.TryGetValue(type, out serializer))
+            {
+                if (includeTypeSpec)
+                    serializer = JsonSerializer.Create(GetDefaultSettings());
+                else
+                    serializer = JsonSerializer.Create(GetSettingsWithoutTypeHandling());
 
-            SetContractResolver(serializer, type, action);
+                SetContractResolver(serializer, type, action);    
+            }
             return serializer;
         }
 
@@ -122,6 +127,7 @@ namespace Symbiote.Core.Extensions
         public JsonSerializerFactory()
         {
             ContractResolverStrategies = ServiceLocator.Current.GetAllInstances<IContractResolverStrategy>().ToList();
+            Serializers = new ConcurrentDictionary<Type, JsonSerializer>();
         }
     }
 }

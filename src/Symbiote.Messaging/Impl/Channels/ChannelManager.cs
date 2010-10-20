@@ -16,76 +16,95 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Microsoft.Practices.ServiceLocation;
+using System.Linq;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
     public class ChannelManager
         : IChannelManager
     {
-        protected ConcurrentDictionary<string, Type> ChannelTypes { get; set; }
-        protected ConcurrentDictionary<string, IChannel> Channels { get; set; }
-        protected ConcurrentDictionary<string, IChannelDefinition> Definitions { get; set; }
+        protected ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
+        protected ConcurrentDictionary<Tuple<string, Type>, IChannel> Channels { get; set; }
+        protected ConcurrentDictionary<Tuple<string, Type>, IChannelDefinition> Definitions { get; set; }
         protected ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
 
         public void AddDefinition(IChannelDefinition definition)
         {
-            Definitions.AddOrUpdate(definition.Name, definition, (x, y) => definition);
-            ChannelTypes.GetOrAdd(definition.Name, definition.ChannelType);
-            var factoryType = definition.FactoryType.IsGenericTypeDefinition
-                                  ? definition.FactoryType.MakeGenericType(definition.ChannelType)
-                                  : definition.FactoryType;
-
-            ChannelFactories.GetOrAdd(definition.ChannelType,
-                                      Assimilate.GetInstanceOf(factoryType) as IChannelFactory);
+            Definitions.AddOrUpdate(Tuple.Create(definition.Name, definition.MessageType), definition, (x, y) => definition);
+            ChannelFactories.GetOrAdd(definition.ChannelType, Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
+            AddChannelForMessageType(definition.MessageType, definition.Name);
         }
 
-        public IChannel GetChannel(string channelName)
+        public IChannelDefinition GetDefinitionFor<TMessage>(string name)
+            where TMessage : class
+        {
+            IChannelDefinition definition = null;
+            var messageType = typeof(TMessage);
+            if(!Definitions.TryGetValue(Tuple.Create(name, messageType), out definition))
+            {
+                throw new MessagingException(
+                        "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
+                            .AsFormat(name, messageType));
+            }
+            return definition;
+        }
+
+        public IChannel<TMessage> GetChannelFor<TMessage>()
+            where TMessage : class
+        {
+            var channelName = MessageChannels[typeof (TMessage)].First();
+            return GetChannelFor<TMessage>(channelName);
+        }
+
+        public IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
+            where TMessage : class
         {
             IChannel channel = null;
-            if(!Channels.TryGetValue(channelName, out channel))
+            var messageType = typeof(TMessage);
+            var key = Tuple.Create(channelName, messageType);
+            if (!Channels.TryGetValue(key, out channel))
             {
-                var factory = GetChannelFactory(channelName);
-                IChannelDefinition definition = null;
-                if(!Definitions.TryGetValue(channelName, out definition))
-                {
-                    throw new MessagingException(
-                        "There was no definition provided for a channel named {0}. Please check that you have defined a channel before attempting to use it."
-                            .AsFormat(channelName));
-                }
+                var definition = GetDefinitionFor<TMessage>(channelName);
+                var factory = GetChannelFactory(definition);
                 channel = factory.GetChannel(definition);
-                Channels.TryAdd(channelName, channel);
+                Channels.TryAdd(key, channel);
             }
-            return channel;
+            return channel as IChannel<TMessage>;
         }
 
-        public IChannelFactory GetChannelFactory(string channelName)
+        public IChannelFactory GetChannelFactory(IChannelDefinition definition)
         {
-            Type channelType = null;
-            if(!ChannelTypes.TryGetValue(channelName, out channelType))
-            {
-                channelType = typeof (LocalChannel);
-                ChannelTypes.TryAdd(channelName, channelType);
-            }
-
             IChannelFactory factory = null;
-            if (!ChannelFactories.TryGetValue(channelType, out factory))
+            if (!ChannelFactories.TryGetValue(definition.ChannelType, out factory))
             {
-                var factoryType = typeof(IChannelFactory<>).MakeGenericType(channelType);
+                var factoryType = typeof(IChannelFactory<>).MakeGenericType(definition.ChannelType);
                 factory = Assimilate.GetInstanceOf(factoryType) as IChannelFactory;
                 ChannelFactories.TryAdd(factoryType, factory);
             }
             return factory;
         }
 
+        public void AddChannelForMessageType(Type messageType, string channelName)
+        {
+            List<string> channels = null;
+            if (!MessageChannels.TryGetValue(messageType, out channels))
+            {
+                channels = new List<string>();
+                MessageChannels.TryAdd(messageType, channels);
+            }
+            if (!channels.Contains(channelName))
+                channels.Add(channelName);
+        }
+
         public ChannelManager()
         {
-            ChannelTypes = new ConcurrentDictionary<string, Type>();
-            Channels = new ConcurrentDictionary<string, IChannel>();
+            Channels = new ConcurrentDictionary<Tuple<string, Type>, IChannel>();
             ChannelFactories = new ConcurrentDictionary<Type, IChannelFactory>();
-            Definitions = new ConcurrentDictionary<string, IChannelDefinition>();
+            Definitions = new ConcurrentDictionary<Tuple<string, Type>, IChannelDefinition>();
+            MessageChannels = new ConcurrentDictionary<Type, List<string>>();
         }
     }
 }

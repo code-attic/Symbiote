@@ -21,7 +21,11 @@ namespace Symbiote.Messaging
     public interface IBus
     {
         void AddSubscription(ISubscription subscription);
+        void Send<TMessage>(TMessage message)
+            where TMessage : class;
         void Send<TMessage>(string channelName, TMessage message)
             where TMessage : class;
+        void StartSubscription(string subscription);
+        void StopSubscription(string subscription);
     }
 }

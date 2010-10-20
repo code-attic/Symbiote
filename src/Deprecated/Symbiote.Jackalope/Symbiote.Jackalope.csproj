@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C1118B7F-17E7-4091-9878-E0D3CD09E9B6}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Symbiote.Jackalope</RootNamespace>
+    <AssemblyName>Symbiote.Jackalope</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Silverlight|AnyCPU'">
+    <OutputPath>bin\Silverlight\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Demo|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Demo\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\bin\Symbiote.Jackalope.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Unmerged|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Unmerged\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>..\..\bin\Symbiote.Jackalope.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="RabbitMQ.Client, Version=1.8.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
+      <IlMerge>True</IlMerge>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\AmqpBroker.cs" />
+    <Compile Include="Config\AmqpFluentConfiguration.cs" />
+    <Compile Include="Config\AmqpFluentServerConfiguration.cs" />
+    <Compile Include="Config\AmqpServer.cs" />
+    <Compile Include="Config\ConnectionDistributor.cs" />
+    <Compile Include="Config\IAmqpConfigurationProvider.cs" />
+    <Compile Include="Config\IAmqpServerConfiguration.cs" />
+    <Compile Include="Envelope.cs" />
+    <Compile Include="ICorrelate.cs" />
+    <Compile Include="Impl\Dispatch\Dispatcher.cs" />
+    <Compile Include="Impl\Dispatch\DispatchingObserver.cs" />
+    <Compile Include="Impl\Dispatch\IDispatchMessages.cs" />
+    <Compile Include="Impl\Dispatch\IQueueObserver.cs" />
+    <Compile Include="Impl\Dispatch\ObservableConsumer.cs" />
+    <Compile Include="Impl\Dispatch\ObservableQueue.cs" />
+    <Compile Include="Impl\Endpoint\EndpointManager.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
+    <Compile Include="Impl\Control\IRouteMessages.cs" />
+    <Compile Include="NoRouteDefinedException.cs" />
+    <Compile Include="Impl\Routes\IDefineRoute.cs" />
+    <Compile Include="Impl\Routes\IRouteManager.cs" />
+    <Compile Include="Impl\Routes\IRouteMessage.cs" />
+    <Compile Include="Impl\Routes\MessageRoute.cs" />
+    <Compile Include="Impl\Routes\RouteBuilder.cs" />
+    <Compile Include="Impl\Routes\RouteManager.cs" />
+    <Compile Include="Config\IBroker.cs" />
+    <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
+    <Compile Include="IQueueStreamCollection.cs" />
+    <Compile Include="JackalopeConfigurationException.cs" />
+    <Compile Include="Impl\Subscriptions\NullSubscription.cs" />
+    <Compile Include="Impl\Subscriptions\SubscriptionManager.cs" />
+    <Compile Include="DeliveryMode.cs" />
+    <Compile Include="ExchangeType.cs" />
+    <Compile Include="IBus.cs" />
+    <Compile Include="Impl\Channel\IChannelProxy.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
+    <Compile Include="Config\AmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\Bus.cs" />
+    <Compile Include="Impl\Endpoint\BusEndPoint.cs" />
+    <Compile Include="Impl\Channel\ChannelProxy.cs" />
+    <Compile Include="Impl\Channel\ChannelProxyFactory.cs" />
+    <Compile Include="Impl\Server\ConnectionManager.cs" />
+    <Compile Include="Impl\Endpoint\EndpointIndex.cs" />
+    <Compile Include="Config\IAmqpEndpointConfiguration.cs" />
+    <Compile Include="Impl\Channel\IChannelProxyFactory.cs" />
+    <Compile Include="Impl\Server\IConnectionManager.cs" />
+    <Compile Include="Impl\Server\IConnectionProvider.cs" />
+    <Compile Include="Impl\Dispatch\IDispatch.cs" />
+    <Compile Include="Impl\Endpoint\IEndPoint.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
+    <Compile Include="IMessageDelivery.cs" />
+    <Compile Include="Impl\Subscriptions\ISubscription.cs" />
+    <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
+    <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
+    <Compile Include="Impl\MessageDelivery.cs" />
+    <Compile Include="Impl\Subscriptions\Subscription.cs" />
+    <Compile Include="JackalopeAssimilation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
+      <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
+    </CreateItem>
+    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'==''">
+      <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
+    </CreateItem>
+    <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
+    <Exec Command="&quot;$(ProgramFiles)\Microsoft\Ilmerge\Ilmerge.exe&quot; /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+  </Target>
+  <Target Name="_CopyFilesMarkedCopyLocal" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

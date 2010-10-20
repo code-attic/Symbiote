@@ -4,32 +4,31 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Messaging;
+using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Adapter;
+using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit
 {
     public static class RabbitExtensions
     {
-        public static IBus AddRabbitChannel(this IBus bus, string channelName, Action<RabbitEndpointFluentConfigurator> configurate)
+        public static IBus AddRabbitChannel<TMessage>(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+            where TMessage : class
         {
-            IEndpointManager endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            endpoints.ConfigureEndpoint(configurate);
+            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
+            endpoints.ConfigureEndpoint<TMessage>(configurate);
             return bus;
         }
 
-        public static IBus AddRabbitQueue(this IBus bus, string subscription, Action<RabbitEndpointFluentConfigurator> configurate)
+        public static void CommitChannelOf<TMessage>(this IBus bus)
+            where TMessage : class
         {
-            IEndpointManager endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            ISubscriptionManager subscriptions = Assimilate.GetInstanceOf<ISubscriptionManager>();
-            endpoints.ConfigureEndpoint(configurate);
-            var queueSubscription = Assimilate.GetInstanceOf<QueueSubscription>();
-            queueSubscription.Name = subscription;
-            subscriptions.AddSubscription(queueSubscription);
-            return bus;
+            var channels = Assimilate.GetInstanceOf<IChannelManager>();
+            var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
+            channel.Proxy.Channel.TxCommit();
         }
     }
 }

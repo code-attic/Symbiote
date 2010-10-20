@@ -29,11 +29,16 @@ namespace Symbiote.Core.Extensions
 {
     public static class JsonExtensions
     {
+        private static IJsonSerializerFactory SerializerFactory { get; set; }
         public static IJsonSerializerFactory JsonSerializerFactory
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<IJsonSerializerFactory>() ?? new JsonSerializerFactory();
+                SerializerFactory = 
+                    SerializerFactory ?? 
+                    ServiceLocator.Current.GetInstance<IJsonSerializerFactory>() ?? 
+                    new JsonSerializerFactory();
+                return SerializerFactory;
             }
         }
 

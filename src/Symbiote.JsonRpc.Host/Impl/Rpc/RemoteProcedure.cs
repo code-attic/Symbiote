@@ -37,6 +37,7 @@ namespace Symbiote.JsonRpc.Host.Impl.Rpc
         {
             return ServiceLocator.Current.GetInstance<T>();
         }
+
         protected Tuple<Expression, bool, List<ParameterExpression>> RebuildExpressionComponents()
         {
             var stopWatch = Stopwatch.StartNew();

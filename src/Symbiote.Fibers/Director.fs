@@ -21,41 +21,39 @@ open System.Collections.Concurrent
 
 type Actor<'a> = MailboxProcessor<'a>
 
-type Director<'TMessage>(callback: Action<string, 'TMessage>) =
+type Director<'TMessage>(call: Action<string, 'TMessage>) =
     
     let cast = new ConcurrentDictionary<string, Actor<'TMessage>>()
-    let spawnActor id (callback: Action<string, 'TMessage>) =
+    let spawnActor id (call: Action<string, 'TMessage>) =
         let actor = 
             Actor<'TMessage>.Start ( fun channel ->
                 let rec loop() =
                     async {
                         let! message = channel.Receive()
-                        callback.Invoke(id, message)
+                        call.Invoke(id, message)
                         return! loop()
                     }
                 loop() )
         actor
     
-    let setupActor (callback: Action<string, 'TMessage>) (id: string) (message: 'TMessage) =
-        let actor = spawnActor id callback
+    let setupActor (call: Action<string, 'TMessage>) (id: string) (message: 'TMessage) =
+        let actor = spawnActor id call
         actor.Post message
-        match cast.TryAdd(id, actor) with
-        | false -> printfn "Dis some bad SHIT!"
-        | true -> printfn "nertz"
+        cast.TryAdd(id, actor)
         
 
     new() = 
-        let callback id message = 
+        let call id message = 
                     let line = message.ToString()
                     printfn "Actor %s says: '%s'" id line
-        let act = new Action<string, 'TMessage>(callback)
+        let act = new Action<string, 'TMessage>(call)
         Director(act)
 
-    member x.Callback = callback
+    member x.call = call
     member x.Actors with get () = cast.Count
 
     member x.SendTo (id: string) (message: 'TMessage) = 
         let actor = cast.TryGetValue id
         match actor with
         | (true, channel) -> channel.Post message
-        | (false, _) -> setupActor x.Callback id message |> ignore
+        | (false, _) -> setupActor x.call id message |> ignore

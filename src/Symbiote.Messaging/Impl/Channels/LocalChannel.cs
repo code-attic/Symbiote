@@ -19,13 +19,13 @@ using Symbiote.Messaging.Impl.Dispatch;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
-    public class LocalChannel
-        : IChannel
+    public class LocalChannel<TMessage>
+        : IChannel<TMessage>
+        where TMessage : class
     {
         protected IDispatcher messageDirector { get; set; }
 
-        public void Send<TMessage>(TMessage message)
-            where TMessage : class
+        public void Send(TMessage message)
         {
             var correlate = (message as ICorrelate);
             var correlationId = correlate == null ? null : correlate.CorrelationId;

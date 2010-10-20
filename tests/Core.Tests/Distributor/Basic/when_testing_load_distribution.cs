@@ -6,7 +6,7 @@ using Symbiote.Core.Hashing;
 
 namespace Core.Tests.Utility.distributor
 {
-    public class when_testing_load_distribution
+    public class when_testing_distribution_under_million_record_load
         : with_simple_distributor_of_lists
     {
         protected static double standardDeviation { get; set; }
@@ -33,13 +33,13 @@ namespace Core.Tests.Utility.distributor
                                  };
         
         private It percent_deviation_should_be_less_than_5_percent = () => 
-            percentDeviation.ShouldBeLessThan(.010);
+            percentDeviation.ShouldBeLessThan(.050);
 
         private It should_not_take_more_than_200_ms_to_build_tree = () =>
                                                                       treeWatch.ElapsedMilliseconds.ShouldBeLessThan(
-                                                                          100);
+                                                                          200);
         
-        private It average_fetch_should_be_10_ms = () => totalFetchTime.ShouldBeLessThan(10);
+        private It average_fetch_should_be_under_1_ms = () => averageFetchTime.ShouldBeLessThan(1);
 
     }
 }

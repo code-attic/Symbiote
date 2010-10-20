@@ -19,12 +19,13 @@ using Symbiote.Messaging.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public class RabbitChannel
-        : IChannel
+    public class RabbitChannel<TMessage>
+        : IChannel<TMessage>
+        where TMessage : class
     {
         public IChannelProxy Proxy { get; set; }
 
-        public void Send<TMessage>(TMessage message) where TMessage : class
+        public void Send(TMessage message)
         {
             Proxy.Send(message, message.GetRoutingKey());
         }

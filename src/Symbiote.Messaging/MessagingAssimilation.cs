@@ -59,12 +59,12 @@ namespace Symbiote.Messaging
                                             x.For<IActorCache>().Use<InMemoryActorCache>().AsSingleton();
 
                                             x.For<IKeyAccessor>().Use<DefaultKeyAccessor>();
-                                            x.For<IMessageSerializer>().Use<JsonMessageSerializer>();
+                                            //x.For<IMessageSerializer>().Use<JsonMessageSerializer>();
+                                            //x.For<IMessageSerializer>().Use<NetBinarySerializer>();
+                                            x.For<IMessageSerializer>().Use<ProtobufMessageSerializer>();
                                             x.For(typeof (IAgent<>)).Use(typeof (DefaultAgent<>));
                                             x.For(typeof (IActorStore<>)).Use(typeof (NullActorStore<>));
                                             x.For(typeof (IActorFactory<>)).Use(typeof (DefaultActorFactory<>));
-                                            x.For(typeof (IChannelFactory<>)).Use(typeof (ChannelFactory<>));
-                                            x.For(typeof(IChannel)).Use(typeof(LocalChannel));
                                         });
 
             var handlers =

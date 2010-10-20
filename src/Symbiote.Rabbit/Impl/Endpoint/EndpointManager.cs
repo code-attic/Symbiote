@@ -17,8 +17,11 @@ limitations under the License.
 using System;
 using System.Collections;
 using RabbitMQ.Client;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Subscriptions;
+using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Server;
 
@@ -30,19 +33,31 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         protected IEndpointIndex EndpointIndex { get; set; }
         protected IChannelManager ChannelManager { get; set; }
 
-        public void AddEndpoint(RabbitEndpoint endpoint)
+        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint) where TMessage : class
         {
-            ChannelManager.AddDefinition(new RabbitChannelDefinition(endpoint.ExchangeName, endpoint.ExchangeName));
-            EndpointIndex.AddEndpoint(endpoint);
+            ChannelManager.AddDefinition(new RabbitChannelDefinition<TMessage>(endpoint.ExchangeName));
+            EndpointIndex.AddEndpoint<TMessage>(endpoint);
             CreateOnBroker(endpoint);
         }
 
-        public void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> configurate)
+        public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> configurate)
+            where TMessage : class
         {
             var configurator = new RabbitEndpointFluentConfigurator();
             configurate(configurator);
             var endpoint = configurator.Endpoint;
-            AddEndpoint(endpoint);
+            AddEndpoint<TMessage>(endpoint);
+
+            if (!string.IsNullOrEmpty(endpoint.QueueName))
+            {
+                var subscriptions = Assimilate.GetInstanceOf<ISubscriptionManager>();
+                var queueSubscription = Assimilate.GetInstanceOf<QueueSubscription<TMessage>>();
+                queueSubscription.Name = endpoint.QueueName;
+                if(configurator.Subscribe) 
+                    subscriptions.AddAndStartSubscription(queueSubscription);
+                else
+                    subscriptions.AddSubscription(queueSubscription);
+            }
         }
 
         public void CreateOnBroker(RabbitEndpoint endpoint)

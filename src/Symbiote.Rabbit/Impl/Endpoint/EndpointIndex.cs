@@ -37,7 +37,8 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return endpoint;
         }
 
-        public void AddEndpoint(RabbitEndpoint endpoint)
+        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
+            where TMessage : class
         {
             if(!string.IsNullOrEmpty(endpoint.ExchangeName))
             {

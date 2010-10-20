@@ -28,11 +28,11 @@ namespace Messaging.Tests.Local
                                                           {CorrelationId = names[x], Target = "Terminator"})
                                          .ToList();
 
-                                     bus.AddLocalEndpoint("");
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>();
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
-                                         bus.Send("", message[i % actorCount]);
+                                         bus.Send(message[i % actorCount]);
                                      }
                                      watch.Stop();
 

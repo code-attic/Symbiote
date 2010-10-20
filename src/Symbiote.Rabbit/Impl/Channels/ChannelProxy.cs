@@ -82,6 +82,12 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public void Acknowledge(ulong tag, bool multiple)
         {
+            Action<ulong, bool> call = ActualAck;
+            call.BeginInvoke(tag, multiple, null, null);
+        }
+
+        protected void ActualAck(ulong tag, bool multiple)
+        {
             Channel.BasicAck(tag, multiple);
         }
 
@@ -173,6 +179,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channel = channel;
             _protocol = protocol;
             _configuration = endpointConfiguration;
+            if (_configuration.UseTransactions)
+                channel.TxSelect();
             //_onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
             //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
             //_channel.ModelShutdown += ChannelShutdown;

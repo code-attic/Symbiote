@@ -33,6 +33,8 @@
   <ItemGroup>
     <Reference Include="RabbitMQ.Client">
       <HintPath>..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
+	  <Private>True</Private>
+	  <IlMerge>True</IlMerge>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Adapter\QueueSubscription.cs" />
+    <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
     <Compile Include="Impl\Adapter\RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />

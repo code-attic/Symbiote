@@ -23,15 +23,15 @@ using Symbiote.Messaging.Impl.Channels;
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannelFactory
-        : IChannelFactory<RabbitChannel>
+        : IChannelFactory
     {
         public IChannelProxyFactory ProxyFactory { get; set; }
 
         public IChannel GetChannel(IChannelDefinition definition)
         {
-            var rabbitDef = definition as RabbitChannelDefinition;
+            var rabbitDef = definition as IRabbitChannelDefinition;
             var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Exchange);
-            return new RabbitChannel(proxy);
+            return Activator.CreateInstance(rabbitDef.ChannelType, proxy) as IChannel;
         }
 
         public RabbitChannelFactory(IChannelProxyFactory proxyFactory)

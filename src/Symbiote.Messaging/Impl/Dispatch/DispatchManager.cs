@@ -26,6 +26,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
     {
         public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
         public Director<IEnvelope> Fibers { get; set; }
+        public int Count { get; set; }
 
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
              where TMessage : class

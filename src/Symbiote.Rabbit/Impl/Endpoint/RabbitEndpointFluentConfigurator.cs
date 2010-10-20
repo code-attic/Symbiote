@@ -21,6 +21,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
     public class RabbitEndpointFluentConfigurator
     {
         public RabbitEndpoint Endpoint { get; set; }
+        public bool Subscribe { get; set; }
 
         public RabbitEndpointFluentConfigurator Broker(string broker)
         {
@@ -124,6 +125,18 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public RabbitEndpointFluentConfigurator PersistentDelivery()
         {
             Endpoint.PersistentDelivery = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator StartSubscription()
+        {
+            Subscribe = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator UseTransactions()
+        {
+            Endpoint.UseTransactions = true;
             return this;
         }
 

@@ -27,6 +27,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public bool PersistentDelivery { get; set; }
         public string QueueName { get; set; }
         public List<string> RoutingKeys { get; set; }
+        public bool UseTransactions { get; set; }
 
         public RabbitEndpoint()
         {

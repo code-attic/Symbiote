@@ -23,18 +23,25 @@ using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public class RabbitChannelDefinition
+    public interface IRabbitChannelDefinition
         : IChannelDefinition
+    {
+        string Exchange { get; set; }
+    }
+
+    public class RabbitChannelDefinition<TMessage>
+        : IRabbitChannelDefinition
+        where TMessage : class
     {
         public string Name { get; set; }
         public string Exchange { get; set; }
-        public Type ChannelType { get { return typeof(RabbitChannel); } }
+        public Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
+        public Type MessageType { get { return typeof (TMessage); } }
         public Type FactoryType { get { return typeof (RabbitChannelFactory); } }
 
-        public RabbitChannelDefinition(string name, string exchange)
+        public RabbitChannelDefinition(string name)
         {
-            Name = name;
-            Exchange = exchange;
+            Exchange = Name = name;
         }
     }
 }

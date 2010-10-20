@@ -44,6 +44,27 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Config\IQpidBroker.cs" />
+    <Compile Include="Config\QpidBroker.cs" />
+    <Compile Include="Config\QpidBrokerFluentConfigurator.cs" />
+    <Compile Include="Config\QpidConfiguration.cs" />
+    <Compile Include="Config\QpidConfigurator.cs" />
+    <Compile Include="ExchangeType.cs" />
+    <Compile Include="Impl\Adapter\QpidEnvelope.cs" />
+    <Compile Include="Impl\Adapter\QueueSubscription.cs" />
+    <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
+    <Compile Include="Impl\Channel\QpidChannel.cs" />
+    <Compile Include="Impl\Channel\QpidChannelDefinition.cs" />
+    <Compile Include="Impl\Channel\QpidChannelFactory.cs" />
+    <Compile Include="Impl\Connection\ConnectionManager.cs" />
+    <Compile Include="Impl\Connection\IConnectionManager.cs" />
+    <Compile Include="Impl\Endpoint\EndpointIndex.cs" />
+    <Compile Include="Impl\Endpoint\EndpointManager.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
+    <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
+    <Compile Include="Impl\Endpoint\QpidConfigurationException.cs" />
+    <Compile Include="Impl\Endpoint\QpidEndpoint.cs" />
+    <Compile Include="Impl\Endpoint\QpidEndpointFluentConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,12 +77,7 @@
       <Name>Symbiote.Messaging</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Config\" />
-    <Folder Include="Impl\Adapter\" />
-    <Folder Include="Impl\Channel\" />
-    <Folder Include="Impl\Connection\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

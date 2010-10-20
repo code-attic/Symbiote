@@ -45,8 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MessagingExtensions.cs" />
+    <Compile Include="Impl\Channels\ChannelDefinition.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
-    <Compile Include="Impl\Channels\NameOnlyChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
+    <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Subscriptions\ISubscription.cs" />
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="Impl\Subscriptions\ObserverToken.cs" />

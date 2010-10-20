@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Config;
+using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.StructureMap;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
@@ -25,7 +28,7 @@ namespace Rabbit.Tests
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
                                                 .Messaging()
-                                                .Rabbit(x => x.AddBroker(r => r.Defaults()));
+                                                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("localhost")));
                                             Bus = Assimilate.GetInstanceOf<IBus>();
                                         };
     }
@@ -35,10 +38,10 @@ namespace Rabbit.Tests
     {
         private Because of = () =>
                                  {
-                                     Bus.AddRabbitQueue("test", x => x.Direct("test").QueueName("test").NoAck());
-                                     Bus.Send("test", new Message() {Id = 1, CorrelationId = "1"});
-                                     Bus.Send("test", new Message() {Id = 2, CorrelationId = "1"});
-                                     Bus.Send("test", new Message() {Id = 3, CorrelationId = "1"});
+                                     Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").NoAck().StartSubscription());
+                                     Bus.Send(new Message() {Id = 1, CorrelationId = "1"});
+                                     Bus.Send(new Message() {Id = 2, CorrelationId = "1"});
+                                     Bus.Send(new Message() {Id = 3, CorrelationId = "1"});
 
                                      Thread.Sleep(1000);
                                  };
@@ -50,55 +53,66 @@ namespace Rabbit.Tests
         : with_rabbit_configuration
     {
         protected static List<Actor> cast { get; set; }
-        protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 400000;
+        protected static Stopwatch receiveWatch { get; set; }
+        protected static Stopwatch sendWatch { get; set; }
+        protected static int MessagesToSend = 60000;
         protected static int actorCount = 60;
+        protected static IDispatcher dispatcher;
+
         private Because of = () =>
         {
             Actor.Created = 0;
-            
-            Bus.AddRabbitQueue("test", x => x.Direct("test").QueueName("test").NoAck());
+
+            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").PersistentDelivery().UseTransactions());
             
             var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
             var message = Enumerable.Range(0, actorCount)
                 .Select(x => new Message() { CorrelationId = names[x] })
                 .ToList();
 
-            watch = Stopwatch.StartNew();
+            sendWatch = Stopwatch.StartNew();
             for (int i = 0; i < MessagesToSend; i++)
             {
                 message[i % actorCount].Id = i;
-                Bus.Send("test", message[i % actorCount]);
+                Bus.Send(message[i % actorCount]);
+                if(i % 5000 == 0)
+                    Bus.CommitChannelOf<Message>();
             }
-            watch.Stop();
+            
+            
+            sendWatch.Stop();
 
-            cast = new List<Actor>();
-            var manager = ServiceLocator.Current.GetInstance<IDispatcher>();
-            var agency = ServiceLocator.Current.GetInstance<IAgency>();
-            var agent = agency.GetAgentFor<Actor>();
-            for (int i = 0; i < actorCount; i++)
-            {
-                var actor = agent.GetActor("Extra " + i);
-                cast.Add(actor);
-            }
+            Bus.StartSubscription("test");
+            receiveWatch = Stopwatch.StartNew();
+            Thread.Sleep(TimeSpan.FromSeconds(6));
+            receiveWatch.Stop(); 
 
-            //Thread.Sleep(TimeSpan.FromSeconds(2));
+            dispatcher = Assimilate.GetInstanceOf<IDispatcher>();
         };
+        
+        private It should_receive_in_1_second = () =>
+                                                 receiveWatch.ElapsedMilliseconds.ShouldBeLessThan(10);
 
-        private It should_complete_in_1_second = () =>
-                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
+        private It should_send_in_1_second = () =>
+                                                 sendWatch.ElapsedMilliseconds.ShouldBeLessThan(10);
 
         private It should_only_have_created_the_actor_60_times = () =>
                                                                   Actor.Created.ShouldEqual(actorCount);
 
         private It should_have_sent_all_messages_to_actor = () =>
                                                             Actor.MessageIds.Count.ShouldEqual(MessagesToSend);
+
+        private It should_have_all_teh_dispatchers = () => dispatcher.Count.ShouldEqual(MessagesToSend);
     }
 
+    [Serializable]
+    [DataContract]
     public class Message
         : ICorrelate
     {
-        public int Id {get;set; }
+        [DataMember(Order = 1)]
+        public int Id { get;set; }
+        [DataMember(Order = 2)]
         public string CorrelationId { get; set; }
     }
 
@@ -130,6 +144,12 @@ namespace Rabbit.Tests
         public void Handle(Actor actor, IEnvelope<Message> envelope)
         {
             actor.Received(envelope.Message.Id);
+            var rabbitEnvelope = envelope as RabbitEnvelope<Message>;
+            if(Actor.MessageIds.Count % 5000 == 0)
+            {
+                rabbitEnvelope.Proxy.Acknowledge(rabbitEnvelope.DeliveryTag, true);
+                rabbitEnvelope.Proxy.Channel.TxCommit();
+            }
         }
     }
 }

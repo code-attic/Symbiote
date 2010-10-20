@@ -34,8 +34,25 @@ namespace Symbiote.Messaging.Impl
         public void Send<TMessage>(string channelName, TMessage message)
             where TMessage : class
         {
-            var channel = Channels.GetChannel(channelName);
+            var channel = Channels.GetChannelFor<TMessage>(channelName);
             channel.Send(message);
+        }
+
+        public void Send<TMessage>(TMessage message)
+            where TMessage : class
+        {
+            var channel = Channels.GetChannelFor<TMessage>();
+            channel.Send(message);
+        }
+
+        public void StartSubscription(string subscription)
+        {
+            Subscriptions.StartSubscription(subscription);
+        }
+
+        public void StopSubscription(string subscription)
+        {
+            Subscriptions.StopSubscription(subscription);
         }
 
         public Bus(IChannelManager channels, ISubscriptionManager subscriptions)
