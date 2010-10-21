@@ -23,6 +23,16 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
+        public static IBus AddRabbitChannel<TMessage, TReply>(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+            where TMessage : class
+            where TReply : class, IRouteByKey
+        {
+            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
+            endpoints.ConfigureEndpoint<TMessage>(configurate);
+            endpoints.ConfigureEndpointForReply<TReply>(configurate);
+            return bus;
+        }
+
         public static void CommitChannelOf<TMessage>(this IBus bus)
             where TMessage : class
         {

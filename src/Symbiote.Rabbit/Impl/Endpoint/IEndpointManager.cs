@@ -15,12 +15,15 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Messaging;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {
     public interface IEndpointManager : IEndpointIndex
     {
         void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> endpoint) where TMessage : class;
+        void ConfigureEndpointForReply<TReply>(Action<RabbitEndpointFluentConfigurator> endpoint)
+            where TReply: class, IRouteByKey;
         void BindQueue(string exchangeName, string queueName, params string[] routingKeys);
     }
 }

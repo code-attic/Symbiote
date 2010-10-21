@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using Symbiote.Messaging.Extensions;
 using Symbiote.Messaging.Impl.Channels;
 
@@ -28,6 +29,11 @@ namespace Symbiote.Rabbit.Impl.Channels
         public void Send(TMessage message)
         {
             Proxy.Send(message, message.GetRoutingKey());
+        }
+
+        public TReply Query<TReply>(TMessage message)
+        {
+            return default(TReply);
         }
 
         public RabbitChannel(IChannelProxy proxy)

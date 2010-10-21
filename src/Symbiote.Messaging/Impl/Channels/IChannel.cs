@@ -26,5 +26,6 @@ namespace Symbiote.Messaging.Impl.Channels
         where TMessage : class
     {
         void Send(TMessage message);
+        TReply Query<TReply>(TMessage message);
     }
 }

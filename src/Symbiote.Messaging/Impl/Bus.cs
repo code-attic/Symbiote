@@ -64,14 +64,6 @@ namespace Symbiote.Messaging.Impl
             channel.Send(message);
         }
 
-        public void Query<TMessage>(TMessage message)
-            where TMessage : class
-        {
-            Channels
-                .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send(message));
-        }
-
         public void StartSubscription(string subscription)
         {
             Subscriptions.StartSubscription(subscription);

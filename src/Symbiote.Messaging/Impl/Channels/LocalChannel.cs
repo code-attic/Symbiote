@@ -36,6 +36,15 @@ namespace Symbiote.Messaging.Impl.Channels
                                      message));
         }
 
+        public TReply Query<TReply>(TMessage message)
+        {
+            var correlate = (message as ICorrelate);
+            var correlationId = correlate == null ? null : correlate.CorrelationId;
+            var requestId = Guid.NewGuid();
+            messageDirector.Send(new SimpleEnvelope<TMessage>(requestId, correlationId, "response", message));
+            return default(TReply);
+        }
+
         public LocalChannel(IDispatcher messageDirector)
         {
             this.messageDirector = messageDirector;
