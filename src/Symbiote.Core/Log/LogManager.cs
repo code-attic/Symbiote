@@ -59,7 +59,7 @@ namespace Symbiote.Core.Log
         {
             try
             {
-                _provider = ServiceLocator.Current.GetInstance<ILogProvider>();
+                _provider = Assimilate.GetInstanceOf<ILogProvider>();
             }
             catch (Exception e)
             {

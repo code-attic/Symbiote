@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿/* 
+Copyright 2008-2010 Alex Robson
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+using System;
 using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Messaging.Impl.Subscriptions;
-using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
-using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit
 {
@@ -23,30 +33,12 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
-        public static IBus AddRabbitChannel<TMessage, TReply>(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
-            where TMessage : class
-            where TReply : class, IRouteByKey
-        {
-            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            endpoints.ConfigureEndpoint<TMessage>(configurate);
-            endpoints.ConfigureEndpointForReply<TReply>(configurate);
-            return bus;
-        }
-
         public static void CommitChannelOf<TMessage>(this IBus bus)
             where TMessage : class
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
             var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
             channel.Proxy.Channel.TxCommit();
-        }
-
-        public static void ReplyTo<TReply, TMessage>(this IBus bus, RabbitEnvelope<TMessage> message, TReply reply)
-            where TMessage : class
-            where TReply : class, IRouteByKey
-        {
-            reply.RoutingKey = message.ReplyToKey;
-            bus.Send(message.ReplyToExchange, reply);
         }
 
         public static void RollbackChannelOf<TMessage>(this IBus bus)

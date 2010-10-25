@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 using Symbiote.Core;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.Reflection;
 
 namespace Symbiote.Messaging.Impl.Actors
@@ -24,17 +23,16 @@ namespace Symbiote.Messaging.Impl.Actors
         : IActorFactory<TActor>
         where TActor : class
     {
-        protected IKeyAccessor KeyAccessor { get; set; }
+        protected IKeyAccessor<TActor> KeyAccessor { get; set; }
 
         public TActor CreateInstance<TKey>(TKey id)
         {
-            var actor = ServiceLocator.Current.GetInstance<TActor>();
-            //KeyAccessor.SetId(actor, id);
-            Reflector.WriteMember(actor, "Id", id);
+            var actor = Assimilate.GetInstanceOf<TActor>();
+            KeyAccessor.SetId(actor, id);
             return actor;
         }
 
-        public DefaultActorFactory(IKeyAccessor keyAccessor)
+        public DefaultActorFactory(IKeyAccessor<TActor> keyAccessor)
         {
             KeyAccessor = keyAccessor;
         }

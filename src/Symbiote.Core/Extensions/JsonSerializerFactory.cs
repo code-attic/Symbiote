@@ -121,7 +121,7 @@ namespace Symbiote.Core.Extensions
 
         protected IContractResolver GetTypeSpecificContractResolver(Type type)
         {
-            return ServiceLocator.Current.GetInstance<IContractResolver>(_resolverFormat.AsFormat(type.FullName));
+            return Assimilate.GetInstanceOf<IContractResolver>(_resolverFormat.AsFormat(type.FullName));
         }
 
         public JsonSerializerFactory()

@@ -16,7 +16,7 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
@@ -30,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Actors
             var actorType = typeof (TActor);
             if(!Agents.TryGetValue(actorType, out agent))
             {
-                agent = ServiceLocator.Current.GetInstance<IAgent<TActor>>();
+                agent = Assimilate.GetInstanceOf<IAgent<TActor>>();
                 Agents.TryAdd(actorType, agent);
             }
             return agent as IAgent<TActor>;

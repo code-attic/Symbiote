@@ -18,7 +18,7 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 
@@ -185,7 +185,7 @@ namespace Symbiote.Wcf.Client
         {
             _logger = logger;
             _logger.Log(LogLevel.Info, "{0} proxy instantiated", typeof(TContract).AssemblyQualifiedName);
-            var configurationStrategy = ServiceLocator.Current.GetInstance<IServiceClientConfigurationStrategy<TContract>>();
+            var configurationStrategy = Assimilate.GetInstanceOf<IServiceClientConfigurationStrategy<TContract>>();
             configurationStrategy.ConfigureServiceClient(this);
         }
 
@@ -251,7 +251,7 @@ namespace Symbiote.Wcf.Client
 
         private void ReadServiceInfoFromMetadataExchange(string mexAddress)
         {
-            var cache = ServiceLocator.Current.GetInstance<IServiceMetadataCache>();
+            var cache = Assimilate.GetInstanceOf<IServiceMetadataCache>();
             var serviceEndPoint = cache.GetEndPoint<TContract>(mexAddress);
 
             _endpoint = serviceEndPoint.Address;

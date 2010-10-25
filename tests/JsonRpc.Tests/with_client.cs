@@ -1,7 +1,6 @@
 ﻿using Machine.Specifications;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.JsonRpc.Client;
-using Symbiote.JsonRpc.Client.Impl.Rpc;
 
 namespace JsonRpc.Tests
 {
@@ -11,7 +10,7 @@ namespace JsonRpc.Tests
         
         private Establish context = () =>
                                         {
-                                            proxy = ServiceLocator.Current.GetInstance<IRemoteProxy<ITestService>>();
+                                            proxy = Assimilate.GetInstanceOf<IRemoteProxy<ITestService>>();
                                         };
     }
 }

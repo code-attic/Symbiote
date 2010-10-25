@@ -14,13 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 using System.Collections.Concurrent;
 using System.Threading;
 using RabbitMQ.Client;
-using RabbitMQ.Util;
 using Symbiote.Core;
-using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Channels;
@@ -38,7 +35,14 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected ConcurrentQueue<RabbitDelivery> DeliveryQueue { get; set; }
         protected bool Running { get; set; }
 
-        public override void HandleBasicDeliver(string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
+        public override void HandleBasicDeliver(
+            string consumerTag, 
+            ulong deliveryTag, 
+            bool redelivered, 
+            string exchange, 
+            string routingKey, 
+            IBasicProperties properties, 
+            byte[] body)
         {
             Dispatch.Count++;
             //Queue.Enqueue(new RabbitDelivery(

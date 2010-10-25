@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Wcf.Client;
 
 namespace Symbiote.Wcf
@@ -25,7 +25,7 @@ namespace Symbiote.Wcf
         public static IService<TContract> GetClient<TContract>()
             where TContract : class
         {
-            return ServiceLocator.Current.GetInstance<IService<TContract>>();
+            return Assimilate.GetInstanceOf<IService<TContract>>();
         }
 
         public static IService<TContract> GetClient<TContract>(Action<IServiceConfiguration> configure)

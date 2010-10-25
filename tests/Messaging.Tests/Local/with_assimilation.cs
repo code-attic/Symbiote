@@ -13,11 +13,7 @@ namespace Messaging.Tests.Local
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
                                                 .Messaging()
-                                                .Dependencies(x =>
-                                                    {
-                                                        x.For(typeof (ILogger)).Use<TestLogger>().AsSingleton();
-                                                        x.For(typeof(ILogProvider)).Use<TestLogProvider>().AsSingleton();
-                                                    });
+                                                .UseTestLogAdapter();
                                         };    
     }
 }

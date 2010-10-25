@@ -18,15 +18,16 @@ using Symbiote.Core.Reflection;
 
 namespace Symbiote.Messaging.Impl
 {
-    public class DefaultKeyAccessor
-        : IKeyAccessor
+    public class DefaultKeyAccessor<TActor>
+        : IKeyAccessor<TActor>
+        where TActor : class
     {
-        public string GetIdAsString<TActor>(TActor actor) where TActor : class
+        public string GetId(TActor actor)
         {
             return Reflector.ReadMember(actor, "Id").ToString();
         }
 
-        public void SetId<TActor, TKey>(TActor actor, TKey id) where TActor : class
+        public void SetId<TKey>(TActor actor, TKey id)
         {
             Reflector.WriteMember(actor, "Id", id);
         }

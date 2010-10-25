@@ -16,7 +16,7 @@ limitations under the License.
 
 using System;
 using System.Web;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.JsonRpc.Host.Config;
 using Symbiote.JsonRpc.Host.Impl.Rpc;
 
@@ -29,7 +29,7 @@ namespace Symbiote.JsonRpc.Host
         {
             get 
             { 
-                _configuration = _configuration ?? ServiceLocator.Current.GetInstance<IJsonRpcHostConfiguration>();
+                _configuration = _configuration ?? Assimilate.GetInstanceOf<IJsonRpcHostConfiguration>();
                 return _configuration;
             }
         }

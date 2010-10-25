@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
+using Symbiote.Core;
 using Symbiote.Messaging.Impl.Actors;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Messaging.Tests.Local
 {
@@ -20,7 +20,7 @@ namespace Messaging.Tests.Local
                                          bus.Send("", new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });   
                                      }
                                      watch.Stop();
-                                     actor = ServiceLocator.Current.GetInstance<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
+                                     actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
                                  };
 
         private It should_complete_in_1_second = () =>

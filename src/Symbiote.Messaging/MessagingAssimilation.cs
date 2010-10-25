@@ -50,15 +50,18 @@ namespace Symbiote.Messaging
                                                             typeof (IHandle<,>));
                                                         s.ConnectImplementationsToTypesClosing(
                                                             typeof (IActorFactory<>));
+                                                        s.ConnectImplementationsToTypesClosing(
+                                                            typeof(IKeyAccessor<>));
                                                     });
                                             x.For<IBus>().Use<Bus>();
                                             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
                                             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
                                             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
                                             x.For<IAgency>().Use<Agency>().AsSingleton();
-                                            x.For<IActorCache>().Use<InMemoryActorCache>().AsSingleton();
+                                            x.For(typeof (IActorCache<>)).Use(typeof (InMemoryActorCache<>));
 
-                                            x.For<IKeyAccessor>().Use<DefaultKeyAccessor>();
+                                            x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
+                                            x.For(typeof (IKeyAccessor<>)).Use(typeof (DefaultKeyAccessor<>));
                                             //x.For<IMessageSerializer>().Use<JsonMessageSerializer>();
                                             //x.For<IMessageSerializer>().Use<NetBinarySerializer>();
                                             x.For<IMessageSerializer>().Use<ProtobufMessageSerializer>();

@@ -14,7 +14,7 @@ namespace Lucene.Tests.concurrency
         private Establish context = () =>
                                         {
                                             Assimilate.Core<StructureMapAdapter>().Lucene();
-                                            factory = ServiceLocator.Current.GetInstance<ILuceneServiceFactory>();
+                                            factory = Assimilate.GetInstanceOf<ILuceneServiceFactory>();
                                             searchProvider = factory.GetSearchProviderForIndex("default");
                                         };
     }

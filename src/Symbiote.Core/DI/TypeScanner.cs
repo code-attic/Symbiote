@@ -28,7 +28,6 @@ using Symbiote.Core.Extensions;
 using System.Windows;
 #endif
 
-
 namespace Symbiote.Core.DI
 {
     public class TypeScanner

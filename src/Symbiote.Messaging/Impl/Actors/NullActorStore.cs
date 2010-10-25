@@ -27,6 +27,11 @@ namespace Symbiote.Messaging.Impl.Actors
             return createWith(id);
         }
 
+        public TActor GetOrCreate<TKey>(TKey id)
+        {
+            return null;
+        }
+
         public void Store(TActor actor)
         {
             //do nothing

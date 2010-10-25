@@ -18,9 +18,10 @@ using System;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
-    public interface IActorCache
+    public interface IActorCache<TActor>
+        where TActor : class
     {
-        TActor GetOrAdd<TActor, TKey>(TKey id, Func<TKey, TActor> createWith) where TActor : class;
-        void Store<TActor>(TActor actor) where TActor : class;
+        TActor Get<TKey>(TKey id);
+        void Store(TActor actor);
     }
 }

@@ -27,7 +27,7 @@ namespace Symbiote.Core.Utility
 
         public static DistributedLock Create<T>(T lockId)
         {
-            var manager = ServiceLocator.Current.GetInstance<ILockManager>();
+            var manager = Assimilate.GetInstanceOf<ILockManager>();
             var lockInstance = new DistributedLock(manager, lockId);
             manager.AcquireLock(lockId);
             return lockInstance;

@@ -14,13 +14,54 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
+using Symbiote.Core.Extensions;
+
 namespace Symbiote.Messaging
 {
     public interface IKeyAccessor
     {
-        string GetIdAsString<TActor>(TActor actor)
-            where TActor : class;
-        void SetId<TActor, TKey>(TActor actor, TKey id)
-            where TActor : class;
+        string GetId<TActor>(TActor actor) where TActor : class;
+        void SetId<TActor, TKey>(TActor actor, TKey id) where TActor : class;
+    }
+
+    public interface IKeyAccessor<in TActor>
+        where TActor : class
+    {
+        string GetId(TActor actor);
+        void SetId<TKey>(TActor actor, TKey id);
+    }
+
+    public class KeyAccessAdapter<T>
+        : IKeyAccessor
+        where T : class
+    {
+        public IKeyAccessor<T> Accessor { get; set; }
+
+        public string GetId<TActor>(TActor actor) where TActor : class
+        {
+            if (typeof (T).IsAssignableFrom(typeof (TActor)))
+            {
+                return Accessor.GetId(actor as T);
+            }
+            throw new InvalidCastException("Key accessor cannot access an actor of {0} as type {1}".AsFormat(typeof(TActor), typeof(T)));
+        }
+
+        public void SetId<TActor, TKey>(TActor actor, TKey id) where TActor : class
+        {
+            if (typeof(T).IsAssignableFrom(typeof(TActor)))
+            {
+                Accessor.SetId(actor as T, id);
+            }
+            else
+            {
+                throw new InvalidCastException("Key accessor cannot access an actor of {0} as type {1}".AsFormat(typeof(TActor), typeof(T)));
+            }
+        }
+
+        public KeyAccessAdapter(IKeyAccessor<T> accessor)
+        {
+            Accessor = accessor;
+        }
     }
 }

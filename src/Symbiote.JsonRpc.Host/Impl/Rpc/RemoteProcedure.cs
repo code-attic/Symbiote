@@ -19,9 +19,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.Practices.ServiceLocation;
-using Newtonsoft.Json.Linq;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace Symbiote.JsonRpc.Host.Impl.Rpc
 {
@@ -35,7 +35,7 @@ namespace Symbiote.JsonRpc.Host.Impl.Rpc
 
         protected T GetInstance()
         {
-            return ServiceLocator.Current.GetInstance<T>();
+            return Assimilate.GetInstanceOf<T>();
         }
 
         protected Tuple<Expression, bool, List<ParameterExpression>> RebuildExpressionComponents()

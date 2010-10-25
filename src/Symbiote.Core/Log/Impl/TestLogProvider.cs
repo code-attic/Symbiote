@@ -18,9 +18,11 @@ namespace Symbiote.Core.Log.Impl
 {
     public class TestLogProvider : ILogProvider
     {
+        public ILogger Logger { get; set; }
         public ILogger GetLoggerForType<T>()
         {
-            return new TestLogger();
+            Logger = Logger ?? new TestLogger();
+            return Logger;
         }
     }
 }

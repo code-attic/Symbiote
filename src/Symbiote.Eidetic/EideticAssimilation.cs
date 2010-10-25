@@ -56,7 +56,7 @@ namespace Symbiote.Eidetic
             assimilate.Dependencies(x => x.For<IMemcachedClientConfiguration>()
                                              .Use(config.Configuration));
 
-            var clientConfig = ServiceLocator.Current.GetInstance<IMemcachedClientConfiguration>();
+            var clientConfig = Assimilate.GetInstanceOf<IMemcachedClientConfiguration>();
             assimilate.Dependencies(x => x.For<MemcachedClient>().Use(new MemcachedClient(clientConfig)).AsSingleton());
             return assimilate;
         }

@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.JsonRpc.Host;
 
 namespace JsonRpc.Tests
@@ -10,7 +10,7 @@ namespace JsonRpc.Tests
 
         private Establish context = () =>
                                         {
-                                            server = ServiceLocator.Current.GetInstance<IJsonRpcHost>();
+                                            server = Assimilate.GetInstanceOf<IJsonRpcHost>();
                                             server.Start();
                                         };
 

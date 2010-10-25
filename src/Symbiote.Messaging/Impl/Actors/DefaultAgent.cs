@@ -14,32 +14,58 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Concurrent;
+using System.Threading;
+using Symbiote.Core.Extensions;
+
 namespace Symbiote.Messaging.Impl.Actors
 {
     public class DefaultAgent<TActor>
         : IAgent<TActor>
         where TActor : class
     {
-        protected IActorCache Cache { get; set; }
+        protected IActorCache<TActor> Cache { get; set; }
         protected IActorStore<TActor> Store { get; set; }
         protected IActorFactory<TActor> Factory { get; set; }
+        protected ConcurrentDictionary<string, TActor> Actors { get; set; }
+        protected ReaderWriterLockSlim SlimLock { get; set; }
 
         public TActor GetActor<TKey>(TKey key)
         {
-            return Cache.GetOrAdd(key, k => Store.GetOrCreate(k, Factory.CreateInstance));
+            var stringKey = key.ToString();
+            var actor = Actors.GetOrDefault(stringKey) 
+                        ?? Cache.Get(key)
+                        ?? Store.GetOrCreate(key);
+            if (actor == null)
+            {
+                SlimLock.EnterUpgradeableReadLock();
+                if (!Actors.TryGetValue(stringKey, out actor))
+                {
+                    SlimLock.EnterWriteLock();
+                    "Creating actor for key {0}"
+                        .ToInfo<IBus>(key);
+                    actor = Factory.CreateInstance(key);
+                    Actors.TryAdd(stringKey, actor);
+                    SlimLock.ExitWriteLock();
+                }
+                SlimLock.ExitUpgradeableReadLock();
+            }
+            return actor;
         }
 
         public void Memoize(TActor actor)
         {
             Cache.Store(actor);
-            Store.Store(actor);
+            //Store.Store(actor);
         }
 
-        public DefaultAgent(IActorCache cache, IActorStore<TActor> store, IActorFactory<TActor> factory)
+        public DefaultAgent(IActorCache<TActor> cache, IActorStore<TActor> store, IActorFactory<TActor> factory)
         {
             Cache = cache;
             Store = store;
             Factory = factory;
+            Actors = new ConcurrentDictionary<string, TActor>();
+            SlimLock = new ReaderWriterLockSlim();
         }
     }
 }

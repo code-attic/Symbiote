@@ -14,11 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 
 namespace Symbiote.Eidetic.Impl
 {
@@ -31,7 +27,7 @@ namespace Symbiote.Eidetic.Impl
             get
             {
                 _rememory = _rememory ??
-                            ServiceLocator.Current.GetInstance<IRemember>();
+                            Assimilate.GetInstanceOf<IRemember>();
                 return _rememory;
             }
         }

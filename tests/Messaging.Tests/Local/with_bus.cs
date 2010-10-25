@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
+using Symbiote.Core;
 using Symbiote.Messaging;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Messaging.Tests.Local
 {
@@ -11,7 +11,7 @@ namespace Messaging.Tests.Local
 
         private Establish context = () =>
                                         {
-                                            bus = ServiceLocator.Current.GetInstance<IBus>();
+                                            bus = Assimilate.GetInstanceOf<IBus>();
                                         };
     }
 }

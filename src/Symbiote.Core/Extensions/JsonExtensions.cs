@@ -36,7 +36,7 @@ namespace Symbiote.Core.Extensions
             {
                 SerializerFactory = 
                     SerializerFactory ?? 
-                    ServiceLocator.Current.GetInstance<IJsonSerializerFactory>() ?? 
+                    Assimilate.GetInstanceOf<IJsonSerializerFactory>() ?? 
                     new JsonSerializerFactory();
                 return SerializerFactory;
             }

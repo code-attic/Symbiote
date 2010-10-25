@@ -27,13 +27,13 @@ namespace Symbiote.Messaging.Impl.Channels
         : IChannelManager
     {
         protected ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
-        protected ConcurrentDictionary<Tuple<string, Type>, IChannel> Channels { get; set; }
-        protected ConcurrentDictionary<Tuple<string, Type>, IChannelDefinition> Definitions { get; set; }
+        protected ConcurrentDictionary<int, IChannel> Channels { get; set; }
+        protected ConcurrentDictionary<int, IChannelDefinition> Definitions { get; set; }
         protected ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
 
         public void AddDefinition(IChannelDefinition definition)
         {
-            Definitions.AddOrUpdate(Tuple.Create(definition.Name, definition.MessageType), definition, (x, y) => definition);
+            Definitions.AddOrUpdate(GetChannelKey(definition.MessageType, definition.Name), definition, (x, y) => definition);
             ChannelFactories.GetOrAdd(definition.ChannelType, Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
             AddChannelForMessageType(definition.MessageType, definition.Name);
         }
@@ -43,13 +43,18 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             IChannelDefinition definition = null;
             var messageType = typeof(TMessage);
-            if(!Definitions.TryGetValue(Tuple.Create(name, messageType), out definition))
+            if (!Definitions.TryGetValue(GetChannelKey(messageType, name), out definition))
             {
                 throw new MessagingException(
-                        "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                            .AsFormat(name, messageType));
+                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
+                        .AsFormat(name, messageType));
             }
             return definition;
+        }
+
+        protected int GetChannelKey(Type messageType, string name)
+        {
+            return (name.GetHashCode() * 397) ^ messageType.GetHashCode();
         }
 
         public IChannel<TMessage> GetChannelFor<TMessage>()
@@ -70,8 +75,7 @@ namespace Symbiote.Messaging.Impl.Channels
             where TMessage : class
         {
             IChannel channel = null;
-            var messageType = typeof(TMessage);
-            var key = Tuple.Create(channelName, messageType);
+            var key = GetChannelKey(typeof(TMessage), channelName);
             if (!Channels.TryGetValue(key, out channel))
             {
                 var definition = GetDefinitionFor<TMessage>(channelName);
@@ -119,9 +123,9 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public ChannelManager()
         {
-            Channels = new ConcurrentDictionary<Tuple<string, Type>, IChannel>();
+            Channels = new ConcurrentDictionary<int, IChannel>();
             ChannelFactories = new ConcurrentDictionary<Type, IChannelFactory>();
-            Definitions = new ConcurrentDictionary<Tuple<string, Type>, IChannelDefinition>();
+            Definitions = new ConcurrentDictionary<int, IChannelDefinition>();
             MessageChannels = new ConcurrentDictionary<Type, List<string>>();
         }
     }

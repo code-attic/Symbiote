@@ -181,7 +181,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             _configuration = endpointConfiguration;
             if (_configuration.UseTransactions)
                 channel.TxSelect();
-            //_onReturn = ServiceLocator.Current.GetInstance<Action<IModel, BasicReturnEventArgs>>();
+            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
             //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
             //_channel.ModelShutdown += ChannelShutdown;
         }

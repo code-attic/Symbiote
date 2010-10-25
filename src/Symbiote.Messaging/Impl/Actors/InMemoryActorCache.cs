@@ -20,35 +20,31 @@ using System.Threading;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
-    public class InMemoryActorCache
-        : IActorCache
+    public class InMemoryActorCache<TActor>
+        : IActorCache<TActor>
+        where TActor : class
     {
         protected ReaderWriterLockSlim SlimLock { get; set; }
         protected ConcurrentDictionary<string, object> Actors { get; set; }
-        protected IKeyAccessor KeyAccessor { get; set; }
+        protected IKeyAccessor<TActor> KeyAccessor { get; set; }
         
-        public TActor GetOrAdd<TActor, TKey>(TKey id, Func<TKey, TActor> createWith)
-            where TActor : class
+        public TActor Get<TKey>(TKey id)
         {
             object actor = null;
-            if(!Actors.TryGetValue(id.ToString(), out actor))
-            {
-                actor = createWith(id);
-                if(!Actors.TryAdd(id.ToString(), actor))
-                {
-                }
-            }
+            Actors.TryGetValue(id.ToString(), out actor);
             return actor as TActor;
         }
 
-        public void Store<TActor>(TActor actor)
-            where TActor : class
+        public void Store(TActor actor)
         {
-            var key = KeyAccessor.GetIdAsString(actor);
-            Actors.TryAdd(key, actor);
+            if(actor != null)
+            {
+                var key = KeyAccessor.GetId(actor);
+                Actors.AddOrUpdate(key, actor, (x, y) => actor);
+            }
         }
 
-        public InMemoryActorCache(IKeyAccessor keyAccessor)
+        public InMemoryActorCache(IKeyAccessor<TActor> keyAccessor)
         {
             KeyAccessor = keyAccessor;
             Actors = new ConcurrentDictionary<string, object>();

@@ -139,7 +139,7 @@ namespace Symbiote.Daemon.Host
 
         protected IServiceController CreateController(Type type)
         {
-            return ServiceLocator.Current.GetInstance(type) as IServiceController;
+            return Assimilate.GetInstanceOf(type) as IServiceController;
         }
     }
 }

@@ -38,6 +38,7 @@ namespace Symbiote.Hibernate.Impl
         {
             var session = GetCurrentSession();
             IQueryable<TEntity> queryable = session.Query<TEntity>();
+            //IQueryable<TEntity> queryable = new NHibernateLinqQuery<TEntity>(session);
 
             return from entity in queryable
                    select entity;

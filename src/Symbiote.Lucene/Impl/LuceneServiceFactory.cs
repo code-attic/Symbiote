@@ -14,13 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using Lucene.Net.Analysis;
 using Lucene.Net.Index;
 using Lucene.Net.Store;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Lucene.Config;
 
@@ -110,14 +108,14 @@ namespace Symbiote.Lucene.Impl
 
         public ILuceneIndexer GetIndexingObserverForIndex(string indexName)
         {
-            var indexer = ServiceLocator.Current.GetInstance<BaseIndexingObserver>();
+            var indexer = Assimilate.GetInstanceOf<BaseIndexingObserver>();
             indexer.DocumentQueue = GetDocumentQueue(indexName);
             return indexer;
         }
 
         public ILuceneSearchProvider GetSearchProviderForIndex(string indexName)
         {
-            var searchProvider = ServiceLocator.Current.GetInstance<BaseSearchProvider>();
+            var searchProvider = Assimilate.GetInstanceOf<BaseSearchProvider>();
             searchProvider.IndexWriter = GetIndexWriter(indexName);
             searchProvider.Analyzer = GetQueryAnalyzer(indexName);
             return searchProvider;

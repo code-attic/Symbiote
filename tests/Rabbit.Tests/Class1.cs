@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.Messaging.Impl.Serialization;
-using Symbiote.Rabbit.Config;
-using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.StructureMap;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
-using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Dispatch;
 
 namespace Rabbit.Tests
@@ -136,21 +130,6 @@ namespace Rabbit.Tests
             ArmyOfMehself.Add(this);
         }
     }
-
-    //public class MessageHandler
-    //    : IHandle<Actor, Message>
-    //{
-    //    public void Handle(Actor actor, IEnvelope<Message> envelope)
-    //    {
-    //        actor.Received(envelope.Message.Id);
-    //        var rabbitEnvelope = envelope as RabbitEnvelope<Message>;
-    //        if(Actor.MessageIds.Count % 5000 == 0)
-    //        {
-    //            rabbitEnvelope.Proxy.Acknowledge(rabbitEnvelope.DeliveryTag, true);
-    //            rabbitEnvelope.Proxy.Channel.TxCommit();
-    //        }
-    //    }
-    //}
 
     public class MessageHandler
         : RabbitActorHandler<Actor, Message>

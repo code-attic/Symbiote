@@ -19,7 +19,6 @@ using System.Collections;
 using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Adapter;
@@ -59,34 +58,6 @@ namespace Symbiote.Rabbit.Impl.Endpoint
                 else
                     subscriptions.AddSubscription(queueSubscription);
             }
-        }
-
-        public void ConfigureEndpointForReply<TReply>(Action<RabbitEndpointFluentConfigurator> configurate)
-            where TReply : class, IRouteByKey
-        {
-            var configurator = new RabbitEndpointFluentConfigurator();
-            configurate(configurator);
-            var endpoint = configurator.Endpoint;
-
-            var exchangeName = endpoint.ExchangeName + ".response";
-            var replyConfigurate =
-                new Action<RabbitEndpointFluentConfigurator>(
-                    x => x.Direct(exchangeName).QueueName(exchangeName).NoAck().StartSubscription());
-
-            var replyConfigurator = new RabbitEndpointFluentConfigurator();
-            replyConfigurate(replyConfigurator);
-            AddEndpoint<TReply>(replyConfigurator.Endpoint);
-
-            //if (!string.IsNullOrEmpty(endpoint.QueueName))
-            //{
-            //    var subscriptions = Assimilate.GetInstanceOf<ISubscriptionManager>();
-            //    var queueSubscription = Assimilate.GetInstanceOf<QueueSubscription<TMessage>>();
-            //    queueSubscription.Name = endpoint.QueueName;
-            //    if (configurator.Subscribe)
-            //        subscriptions.AddAndStartSubscription(queueSubscription);
-            //    else
-            //        subscriptions.AddSubscription(queueSubscription);
-            //}
         }
 
         public void CreateOnBroker(RabbitEndpoint endpoint)

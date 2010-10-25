@@ -15,20 +15,9 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IRabbitChannelDefinition
-        : IChannelDefinition
-    {
-        string Exchange { get; set; }
-    }
-
     public class RabbitChannelDefinition<TMessage>
         : IRabbitChannelDefinition
         where TMessage : class

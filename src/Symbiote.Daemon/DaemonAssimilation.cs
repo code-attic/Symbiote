@@ -57,7 +57,7 @@ namespace Symbiote.Daemon
             {
                 "Waking the Daemon..."
                     .ToInfo<IHost>();
-                var host = ServiceLocator.Current.GetInstance<IHost>();
+                var host = Assimilate.GetInstanceOf<IHost>();
                 HostRunner.Start(host);
             }
             catch (Exception e)

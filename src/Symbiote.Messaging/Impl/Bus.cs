@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Core.Extensions;
@@ -55,13 +54,6 @@ namespace Symbiote.Messaging.Impl
             Channels
                 .GetChannelsFor<TMessage>()
                 .ForEach(x => x.Send(message));
-        }
-
-        public TReply Query<TMessage, TReply>(string channelName, TMessage message)
-            where TMessage : class
-        {
-            var channel = Channels.GetChannelFor<TMessage>(channelName);
-            channel.Send(message);
         }
 
         public void StartSubscription(string subscription)

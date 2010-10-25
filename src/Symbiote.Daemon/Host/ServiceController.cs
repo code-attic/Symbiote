@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.ServiceLocation;
 using System.Diagnostics;
+using Symbiote.Core;
 
 namespace Symbiote.Daemon.Host
 {
@@ -64,7 +65,7 @@ namespace Symbiote.Daemon.Host
 
             try
             {
-                ServiceInstance = ServiceLocator.Current.GetInstance<TService>();
+                ServiceInstance = Assimilate.GetInstanceOf<TService>();
             }
             catch (Exception ex)
             {

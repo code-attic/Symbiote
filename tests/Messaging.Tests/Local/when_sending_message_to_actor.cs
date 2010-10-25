@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Machine.Specifications;
+using Symbiote.Core;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Messaging.Impl.Actors;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Messaging.Tests.Local
 {
@@ -15,7 +15,7 @@ namespace Messaging.Tests.Local
         private Because of = () =>
                                  {
                                      bus.Send("", new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator"});
-                                     actor = ServiceLocator.Current.GetInstance<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
+                                     actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
                                  };
 
         private It should_have_routed_message_to_actor_instance = () => 

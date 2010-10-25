@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 
 namespace Symbiote.Redis.Impl.Connection
 {
@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Connection
 
         public static ConnectionHandle Acquire()
         {
-            var pool = ServiceLocator.Current.GetInstance<IRedisConnectionPool>();
+            var pool = Assimilate.GetInstanceOf<IRedisConnectionPool>();
             var connection = pool.Acquire();
             return new ConnectionHandle(pool, connection);
         }

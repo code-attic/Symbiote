@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Impl\Adapter\QueueSubscription.cs" />
     <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
+    <Compile Include="Impl\Channels\IRabbitChannelDefinition.cs" />
+    <Compile Include="RabbitActorHandler.cs" />
     <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />

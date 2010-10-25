@@ -17,8 +17,8 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core;
 using Symbiote.Core.Reflection;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -72,7 +72,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             var typedEnvelope = envelope as IEnvelope<TMessage>;
             try
             {
-                var handler = ServiceLocator.Current.GetInstance<IHandle<TMessage>>();
+                var handler = Assimilate.GetInstanceOf<IHandle<TMessage>>();
                 handler.Handle(typedEnvelope);
             }
             catch (Exception e)

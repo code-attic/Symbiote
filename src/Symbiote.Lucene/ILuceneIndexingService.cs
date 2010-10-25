@@ -15,11 +15,8 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Lucene.Net.Index;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 
 namespace Symbiote.Lucene
 {
@@ -49,7 +46,7 @@ namespace Symbiote.Lucene
 
         protected void IndexEvent<T>(ILuceneIndexer indexer, T newEvent)
         {
-            var visitor = ServiceLocator.Current.GetInstance<IVisit<T>>();
+            var visitor = Assimilate.GetInstanceOf<IVisit<T>>();
             visitor.Subscribe(indexer);
             visitor.Accept(newEvent);
         }

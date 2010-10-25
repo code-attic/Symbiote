@@ -17,8 +17,8 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core;
 using Symbiote.Core.Reflection;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Messaging.Impl.Actors;
 
 namespace Symbiote.Messaging.Impl.Dispatch
@@ -30,6 +30,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
     {
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
         protected IAgency Agency { get; set; }
+        protected IAgent<TActor> Agent { get; set; }
         protected IHandle<TActor, TMessage> Handler { get; set; }
         
         public Type ActorType
@@ -75,11 +76,10 @@ namespace Symbiote.Messaging.Impl.Dispatch
             var typedEnvelope = envelope as IEnvelope<TMessage>;
             try
             {
-                var agent = Agency.GetAgentFor<TActor>();
-                var actor = agent.GetActor(typedEnvelope.CorrelationId);
-                Handler = Handler ?? ServiceLocator.Current.GetInstance<IHandle<TActor, TMessage>>() as IHandle<TActor, TMessage>;
+                var actor = Agent.GetActor(typedEnvelope.CorrelationId);
+                Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
                 Handler.Handle(actor, typedEnvelope);
-                agent.Memoize(actor);
+                Agent.Memoize(actor);
             }
             catch (Exception e)
             {
@@ -91,6 +91,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public ActorMessageDispatcher(IAgency agency)
         {
             Agency = agency;
+            Agent = Agency.GetAgentFor<TActor>();
         }
     }
 }

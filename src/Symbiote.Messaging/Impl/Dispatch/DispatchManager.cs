@@ -16,8 +16,8 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Microsoft.Practices.ServiceLocation;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -31,6 +31,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
              where TMessage : class
         {
+            Count++;
             Fibers.SendTo(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId) 
@@ -41,6 +42,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Send(IEnvelope envelope)
         {
+            Count++;
             Fibers.SendTo(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId)
@@ -62,7 +64,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         {
             if (Dispatchers.Count == 0)
             {
-                var dispatchers = ServiceLocator.Current.GetAllInstances<IDispatchMessage>();
+                var dispatchers = Assimilate.GetAllInstancesOf<IDispatchMessage>();
                 dispatchers
                     .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate((Type) y, (IDispatchMessage) x, (t, m) => x)));
             }

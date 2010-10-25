@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System;
-using Microsoft.Practices.ServiceLocation;
+using Symbiote.Core;
 using Symbiote.Redis.Impl.Connection;
 using Symbiote.Redis.Impl.Serialization;
 
@@ -48,7 +48,7 @@ namespace Symbiote.Redis.Impl.Command
 
         protected RedisCommand()
         {
-            Serializer = ServiceLocator.Current.GetInstance<ICacheSerializer>();
+            Serializer = Assimilate.GetInstanceOf<ICacheSerializer>();
         }
     }
 }

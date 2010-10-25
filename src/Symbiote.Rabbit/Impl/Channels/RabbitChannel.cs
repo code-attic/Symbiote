@@ -31,11 +31,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             Proxy.Send(message, message.GetRoutingKey());
         }
 
-        public TReply Query<TReply>(TMessage message)
-        {
-            return default(TReply);
-        }
-
         public RabbitChannel(IChannelProxy proxy)
         {
             Proxy = proxy;
