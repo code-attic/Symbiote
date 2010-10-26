@@ -24,6 +24,7 @@ namespace Symbiote.Messaging.Impl.Channels
         : IChannel
         where TMessage : class
     {
-        void Send(TMessage message);
+        void Send(TMessage message); 
+        void Send(string correlationId, TMessage message);
     }
 }

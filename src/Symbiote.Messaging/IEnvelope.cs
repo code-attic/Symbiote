@@ -20,8 +20,13 @@ namespace Symbiote.Messaging
 {
     public interface IEnvelope
     {
-        Guid MessageId { get; set; }
         string CorrelationId { get; set; }
+
+        long Sequence { get; set; }
+        long Position { get; set; }
+        bool SequenceEnd { get; set; }
+
+        Guid MessageId { get; set; }
         Type MessageType { get; }
     }
 
@@ -30,5 +35,33 @@ namespace Symbiote.Messaging
         where TMessage : class
     {
         TMessage Message { get; set; }
+    }
+
+    public abstract class BaseEnvelope<TMessage>
+        : IEnvelope<TMessage>
+        where TMessage : class
+    {
+        public string CorrelationId { get; set; }
+        public long Sequence { get; set; }
+        public long Position { get; set; }
+        public bool SequenceEnd { get; set; }
+        public Guid MessageId { get; set; }
+        public Type MessageType { get; protected set; }
+        public TMessage Message { get; set; }
+    }
+
+    public class LocalEnvelope<TMessage>
+        : BaseEnvelope<TMessage>
+        where TMessage : class
+    {
+        public string ReturnTo { get; set; }
+
+        public LocalEnvelope(Guid id, string correlationId, string returnTo, TMessage message)
+        {
+            MessageId = id;
+            CorrelationId = correlationId;
+            ReturnTo = returnTo;
+            Message = message;
+        }
     }
 }

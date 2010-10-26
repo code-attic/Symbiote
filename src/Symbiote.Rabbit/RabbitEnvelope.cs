@@ -59,6 +59,10 @@ namespace Symbiote.Rabbit
         public string RoutingKey { get; set; }
         public DateTime TimeStamp { get; set; }
 
+        public long Sequence { get; set; }
+        public long Position { get; set; }
+        public bool SequenceEnd { get; set; }
+
         public void Acknowledge()
         {
             AckMessage(false);

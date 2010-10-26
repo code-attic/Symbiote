@@ -14,9 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
+using System.Linq;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Core.Extensions;
+using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl
 {
@@ -25,6 +29,7 @@ namespace Symbiote.Messaging.Impl
     {
         protected IChannelManager Channels { get; set; }
         protected ISubscriptionManager Subscriptions { get; set; }
+        protected IDispatcher Dispatcher { get; set; }
 
         public void AddSubscription(ISubscription subscription)
         {
@@ -56,6 +61,27 @@ namespace Symbiote.Messaging.Impl
                 .ForEach(x => x.Send(message));
         }
 
+        public void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse)
+            where TMessage : class
+            where TResponse : class
+        {
+            var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
+            Dispatcher.ExpectResponse(correlationId, onResponse);
+            Channels
+                .GetChannelsFor<TMessage>()
+                .ForEach(x => x.Send(correlationId, message));
+        }
+
+        public void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse)
+            where TMessage : class
+            where TResponse : class
+        {
+            var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
+            Dispatcher.ExpectResponse(correlationId, onResponse);
+            var channel = Channels.GetChannelFor<TMessage>(channelName);
+            channel.Send(correlationId, message);
+        }
+
         public void StartSubscription(string subscription)
         {
             Subscriptions.StartSubscription(subscription);
@@ -66,10 +92,14 @@ namespace Symbiote.Messaging.Impl
             Subscriptions.StopSubscription(subscription);
         }
 
-        public Bus(IChannelManager channels, ISubscriptionManager subscriptions)
+        public Bus(
+                    IChannelManager channels, 
+                    ISubscriptionManager subscriptions,
+                    IDispatcher dispatcher)
         {
             Channels = channels;
             Subscriptions = subscriptions;
+            Dispatcher = dispatcher;
         }
     }
 }

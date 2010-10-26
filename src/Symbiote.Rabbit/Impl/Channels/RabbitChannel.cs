@@ -31,6 +31,11 @@ namespace Symbiote.Rabbit.Impl.Channels
             Proxy.Send(message, message.GetRoutingKey());
         }
 
+        public void Send(string correlationId, TMessage message)
+        {
+            Proxy.Send(message, message.GetRoutingKey(), correlationId);
+        }
+
         public RabbitChannel(IChannelProxy proxy)
         {
             Proxy = proxy;

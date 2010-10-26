@@ -56,6 +56,7 @@
     <Compile Include="Impl\Channels\ChannelDefinition.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
+    <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Subscriptions\ISubscription.cs" />
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
@@ -97,7 +98,6 @@
     <Compile Include="MessagingException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\Actors\InMemoryActorCache.cs" />
-    <Compile Include="Impl\SimpleEnvelope.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

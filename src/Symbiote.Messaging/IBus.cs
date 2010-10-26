@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -29,5 +30,13 @@ namespace Symbiote.Messaging
             where TMessage : class;
         void StartSubscription(string subscription);
         void StopSubscription(string subscription);
+
+        void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse)
+            where TMessage : class
+            where TResponse : class;
+
+        void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse)
+            where TMessage : class
+            where TResponse : class;
     }
 }

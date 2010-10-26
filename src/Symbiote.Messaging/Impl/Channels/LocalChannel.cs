@@ -29,10 +29,15 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             var correlate = (message as ICorrelate);
             var correlationId = correlate == null ? null : correlate.CorrelationId;
-            messageDirector.Send(new SimpleEnvelope<TMessage>(
+            Send(correlationId, message);
+        }
+
+        public void Send(string correlationId, TMessage message)
+        {
+            messageDirector.Send(new LocalEnvelope<TMessage>(
                                      Guid.NewGuid(),
-                                     correlationId, 
-                                     "NA", 
+                                     correlationId,
+                                     "NA",
                                      message));
         }
 

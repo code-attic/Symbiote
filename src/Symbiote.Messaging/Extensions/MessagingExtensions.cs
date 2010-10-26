@@ -12,5 +12,11 @@ namespace Symbiote.Messaging.Extensions
             var routedByKey = message as IRouteByKey;
             return routedByKey == null ? "" : routedByKey.RoutingKey;
         }
+
+        public static string GetCorrelationId(this object message)
+        {
+            var correlates = message as ICorrelate;
+            return correlates == null ? null : correlates.CorrelationId;
+        }
     }
 }

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
@@ -28,7 +29,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
     {
         protected IHandle<TMessage> Handler { get; set; }
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
-
+        
         public Type ActorType
         {
             get { return null; }

@@ -27,6 +27,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
         public Director<IEnvelope> Fibers { get; set; }
         public int Count { get; set; }
+        public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
 
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
              where TMessage : class
@@ -51,12 +52,25 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 envelope);
         }
 
+        public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
+            where TResponse : class
+        {
+            ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
+        }
+
         public void SendToHandler(string id, IEnvelope envelope)
         {
             IDispatchMessage dispatcher = null;
             if (Dispatchers.TryGetValue(envelope.MessageType, out dispatcher))
             {
                 dispatcher.Dispatch(envelope);
+            }
+            else // message is a response to a request message
+            {
+                if(ResponseDispatchers.TryRemove(envelope.CorrelationId, out dispatcher))
+                {
+                    dispatcher.Dispatch(envelope);
+                }
             }
         }
 
@@ -73,6 +87,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public DispatchManager()
         {
             Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
+            ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
             WireupDispatchers();
             Fibers = new Director<IEnvelope>(SendToHandler);
         }

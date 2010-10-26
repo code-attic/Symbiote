@@ -93,18 +93,25 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public void Send<T>(T body, string routingKey) where T : class
         {
+            var correlate = (body as ICorrelate);
+            var correlationId = correlate == null ? "" : correlate.CorrelationId;
+            Send(body, routingKey, correlationId);
+        }
+
+        public void Send<T>(T body, string routingKey, string correlationId) where T : class
+        {
             if (body == default(T))
                 return;
             var stream = Serializer.Serialize(body);
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
-            GetMessageCorrelation(body, properties);
+            properties.CorrelationId = correlationId;
             properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
             Channel.BasicPublish(
-                _configuration.ExchangeName, 
-                routingKey, 
-                EndpointConfiguration.MandatoryDelivery, 
-                EndpointConfiguration.ImmediateDelivery,  
-                properties, 
+                _configuration.ExchangeName,
+                routingKey,
+                EndpointConfiguration.MandatoryDelivery,
+                EndpointConfiguration.ImmediateDelivery,
+                properties,
                 stream);
         }
 
