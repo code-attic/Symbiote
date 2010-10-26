@@ -26,7 +26,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
 {
     public class RabbitQueueListener<TMessage>
         : QueueingBasicConsumer
-        where TMessage : class
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }

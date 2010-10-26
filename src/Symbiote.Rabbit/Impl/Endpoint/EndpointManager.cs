@@ -33,7 +33,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         protected IEndpointIndex EndpointIndex { get; set; }
         protected IChannelManager ChannelManager { get; set; }
 
-        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint) where TMessage : class
+        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
         {
             ChannelManager.AddDefinition(new RabbitChannelDefinition<TMessage>(endpoint.ExchangeName));
             EndpointIndex.AddEndpoint<TMessage>(endpoint);
@@ -41,7 +41,6 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         }
 
         public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> configurate)
-            where TMessage : class
         {
             var configurator = new RabbitEndpointFluentConfigurator();
             configurate(configurator);

@@ -22,6 +22,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Newtonsoft.Json;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.JsonRpc.Client.Impl.Rpc;
 
 namespace Symbiote.JsonRpc.Client.Impl

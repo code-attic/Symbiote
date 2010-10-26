@@ -175,11 +175,11 @@
     <Compile Include="DI\ScanInstruction.cs" />
     <Compile Include="DI\ScannerExtensions.cs" />
     <Compile Include="DI\TypeScanner.cs" />
-    <Compile Include="Extensions\IContractResolverStrategy.cs" />
+    <Compile Include="Serialization\IContractResolverStrategy.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
-    <Compile Include="Extensions\IJsonSerializerFactory.cs" />
-    <Compile Include="Extensions\JsonExtensions.cs" />
-    <Compile Include="Extensions\JsonSerializerFactory.cs" />
+    <Compile Include="Serialization\IJsonSerializerFactory.cs" />
+    <Compile Include="Serialization\JsonExtensions.cs" />
+    <Compile Include="Serialization\JsonSerializerFactory.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IAssimilate.cs" />
     <Compile Include="Log\ILogger.cs" />
@@ -195,6 +195,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflector.cs" />
     <Compile Include="DI\IDependencyContainer.cs" />
+    <Compile Include="Serialization\ProtobufExtensions.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
     <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />

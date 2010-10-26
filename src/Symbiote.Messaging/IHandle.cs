@@ -21,7 +21,6 @@ namespace Symbiote.Messaging
 
     public interface IHandle<TMessage>
         : IHandle
-         where TMessage : class
     {
         void Handle(IEnvelope<TMessage> envelope);
     }
@@ -29,7 +28,6 @@ namespace Symbiote.Messaging
     public interface IHandle<in TActor, TMessage>
         : IHandle
         where TActor : class
-        where TMessage : class, ICorrelate
     {
         void Handle(TActor actor, IEnvelope<TMessage> envelope);
     }

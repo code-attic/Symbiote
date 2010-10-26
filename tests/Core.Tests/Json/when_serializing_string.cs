@@ -3,6 +3,7 @@ using System.Text;
 using Machine.Specifications;
 using Newtonsoft.Json.Serialization;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 
 namespace Core.Tests
 {

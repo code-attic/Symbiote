@@ -22,7 +22,6 @@ namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannel<TMessage>
         : IChannel<TMessage>
-        where TMessage : class
     {
         public IChannelProxy Proxy { get; set; }
 

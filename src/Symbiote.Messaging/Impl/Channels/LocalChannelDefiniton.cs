@@ -20,7 +20,6 @@ namespace Symbiote.Messaging.Impl.Channels
 {
     public class LocalChannelDefiniton<TMessage>
         : IChannelDefinition
-        where TMessage : class
     {
         public string Name { get; set; }
         public Type ChannelType { get { return typeof(LocalChannel<>).MakeGenericType(MessageType); } }

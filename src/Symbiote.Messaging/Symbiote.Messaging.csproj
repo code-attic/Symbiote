@@ -45,6 +45,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseEnvelope.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelDefinition.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
     <Compile Include="LocalChannelExtension.cs" />
+    <Compile Include="LocalEnvelope.cs" />
     <Compile Include="MessagingAssimilation.cs" />
     <Compile Include="Impl\Actors\IActorCache.cs" />
     <Compile Include="Impl\Actors\IActorFactory.cs" />

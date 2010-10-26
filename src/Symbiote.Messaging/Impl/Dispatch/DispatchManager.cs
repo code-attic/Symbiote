@@ -30,7 +30,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
 
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
-             where TMessage : class
         {
             Count++;
             Fibers.SendTo(
@@ -53,7 +52,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
         }
 
         public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
-            where TResponse : class
         {
             ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
         }

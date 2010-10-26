@@ -26,7 +26,6 @@ namespace Symbiote.Rabbit
     public static class RabbitExtensions
     {
         public static IBus AddRabbitChannel<TMessage>(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
-            where TMessage : class
         {
             var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             endpoints.ConfigureEndpoint<TMessage>(configurate);
@@ -34,7 +33,6 @@ namespace Symbiote.Rabbit
         }
 
         public static void CommitChannelOf<TMessage>(this IBus bus)
-            where TMessage : class
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
             var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
@@ -42,7 +40,6 @@ namespace Symbiote.Rabbit
         }
 
         public static void RollbackChannelOf<TMessage>(this IBus bus)
-            where TMessage : class
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
             var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;

@@ -21,7 +21,6 @@ namespace Symbiote.Messaging.Impl.Channels
 {
     public class LocalChannel<TMessage>
         : IChannel<TMessage>
-        where TMessage : class
     {
         protected IDispatcher messageDirector { get; set; }
 

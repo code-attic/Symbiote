@@ -20,12 +20,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
 using Symbiote.Core.Reflection;
+using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
     public class MessageDispatcher<TMessage>
         : IDispatchMessage<TMessage>
-        where TMessage : class
     {
         protected IHandle<TMessage> Handler { get; set; }
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
@@ -37,7 +37,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public bool CanHandle(object payload)
         {
-            return payload as TMessage != null;
+            return payload.IsOfType<TMessage>();
         }
 
         public bool DispatchForActor

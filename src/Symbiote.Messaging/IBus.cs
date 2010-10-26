@@ -24,19 +24,12 @@ namespace Symbiote.Messaging
         void AddSubscription(ISubscription subscription);
         bool HasChannelFor<T>();
         bool HasChannelFor<T>(string channelName);
-        void Send<TMessage>(TMessage message)
-            where TMessage : class;
-        void Send<TMessage>(string channelName, TMessage message)
-            where TMessage : class;
+        void Send<TMessage>(TMessage message);
+        void Send<TMessage>(string channelName, TMessage message);
         void StartSubscription(string subscription);
         void StopSubscription(string subscription);
 
-        void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse)
-            where TMessage : class
-            where TResponse : class;
-
-        void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse)
-            where TMessage : class
-            where TResponse : class;
+        void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse);
+        void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse);
     }
 }

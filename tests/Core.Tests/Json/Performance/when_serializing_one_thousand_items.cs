@@ -8,6 +8,7 @@ using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.StructureMap;
 
 namespace Core.Tests.Json.Performance

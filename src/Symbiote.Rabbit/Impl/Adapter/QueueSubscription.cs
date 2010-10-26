@@ -22,7 +22,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
 {
     public class QueueSubscription<TMessage> :
         ISubscription
-        where TMessage : class
     {
         protected IChannelProxyFactory ProxyFactory { get; set; }
         protected IChannelProxy CurrentProxy { get; set; }

@@ -20,7 +20,6 @@ namespace Symbiote.Rabbit
 {
     public abstract class RabbitActorHandler<TActor, TMessage> :
         IHandle<TActor, TMessage>
-        where TMessage : class, ICorrelate
         where TActor : class
     {
         public void Handle(TActor actor, IEnvelope<TMessage> envelope)

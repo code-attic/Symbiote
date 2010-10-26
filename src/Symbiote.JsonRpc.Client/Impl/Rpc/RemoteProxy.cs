@@ -20,6 +20,7 @@ using System.Linq.Expressions;
 using System.Net;
 using System.Net.Security;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.JsonRpc.Client.Config;
 
 namespace Symbiote.JsonRpc.Client.Impl.Rpc

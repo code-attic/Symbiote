@@ -77,6 +77,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -102,6 +103,7 @@
     <Compile Include="Json\with_core_assimilation.cs" />
     <Compile Include="Extensions\Permutations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoBuf\when_serializing_to_protobuf.cs" />
     <Compile Include="Reflection\TestClass.cs" />
     <Compile Include="Reflection\POC\when_reading_dynamically.cs" />
     <Compile Include="Reflection\POC\with_precompiled_read_cache.cs" />

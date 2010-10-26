@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using ProtoBuf;
+using Symbiote.Core.Serialization;
 
 namespace Symbiote.Messaging.Impl.Serialization
 {
@@ -12,8 +13,7 @@ namespace Symbiote.Messaging.Impl.Serialization
     {
         public T Deserialize<T>(byte[] message) where T : class
         {
-            var stream = new MemoryStream(message);
-            return Serializer.Deserialize<T>(stream);
+            return message.FromProtocolBuffer<T>();
         }
 
         public object Deserialize(byte[] message)
@@ -24,10 +24,7 @@ namespace Symbiote.Messaging.Impl.Serialization
 
         public byte[] Serialize<T>(T body) where T : class
         {
-            var stream = new MemoryStream();
-            Serializer.Serialize<T>(stream, body);
-            stream.Position = 0;
-            return stream.ToArray();
+            return body.ToProtocolBuffer<T>();
         }
     }
 }

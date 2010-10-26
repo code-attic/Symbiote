@@ -20,7 +20,6 @@ namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannelDefinition<TMessage>
         : IRabbitChannelDefinition
-        where TMessage : class
     {
         public string Name { get; set; }
         public string Exchange { get; set; }

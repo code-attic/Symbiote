@@ -30,14 +30,12 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
     public interface IDispatchMessage<TMessage>
         : IDispatchMessage
-        where TMessage : class
     {
     }
 
     public interface IDispatchMessage<TActor, TMessage>
         : IDispatchMessage
         where TActor : class
-        where TMessage : class, ICorrelate
     {
     }
 }

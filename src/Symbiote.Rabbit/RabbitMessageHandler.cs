@@ -21,7 +21,6 @@ namespace Symbiote.Rabbit
 {
     public abstract class RabbitMessageHandler<TMessage> :
         IHandle<TMessage>
-        where TMessage : class
     {
         public void Handle(IEnvelope<TMessage> envelope)
         {

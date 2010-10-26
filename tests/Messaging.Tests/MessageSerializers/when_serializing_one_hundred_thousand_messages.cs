@@ -7,6 +7,7 @@ using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.StructureMap;
 

@@ -23,7 +23,6 @@ namespace Symbiote.Rabbit
 {
     public class RabbitEnvelope<TMessage> :
         IEnvelope<TMessage>
-        where TMessage : class
     {
         protected Type _messageType;
         protected string _correlationId;

@@ -21,12 +21,9 @@ namespace Symbiote.Messaging.Impl.Channels
     public interface IChannelManager
     {
         void AddDefinition(IChannelDefinition definition);
-        IChannel<TMessage> GetChannelFor<TMessage>()
-            where TMessage : class;
-        IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>()
-            where TMessage : class;
-        IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
-            where TMessage : class;
+        IChannel<TMessage> GetChannelFor<TMessage>();
+        IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>();
+        IChannel<TMessage> GetChannelFor<TMessage>(string channelName);
 
         bool HasChannelFor<TMessage>();
         bool HasChannelFor<TMessage>(string channelName);

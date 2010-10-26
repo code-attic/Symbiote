@@ -1,5 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 
 namespace Core.Tests
 {

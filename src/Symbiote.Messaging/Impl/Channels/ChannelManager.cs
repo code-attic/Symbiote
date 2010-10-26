@@ -39,7 +39,6 @@ namespace Symbiote.Messaging.Impl.Channels
         }
 
         public IChannelDefinition GetDefinitionFor<TMessage>(string name)
-            where TMessage : class
         {
             IChannelDefinition definition = null;
             var messageType = typeof(TMessage);
@@ -58,21 +57,18 @@ namespace Symbiote.Messaging.Impl.Channels
         }
 
         public IChannel<TMessage> GetChannelFor<TMessage>()
-            where TMessage : class
         {
             var channelName = MessageChannels[typeof (TMessage)].First();
             return GetChannelFor<TMessage>(channelName);
         }
 
         public IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>()
-            where TMessage : class
         {
             return MessageChannels[typeof (TMessage)]
                 .Select(GetChannelFor<TMessage>);
         }
 
         public IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
-            where TMessage : class
         {
             IChannel channel = null;
             var key = GetChannelKey(typeof(TMessage), channelName);

@@ -21,7 +21,6 @@ namespace Symbiote.Messaging.Impl.Channels
     public class ChannelDefinition<TChannel, TMessage>
         : IChannelDefinition
         where TChannel : IChannel<TMessage>
-        where TMessage : class
     {
         public string Name { get; set; }
         public Type ChannelType { get { return typeof(TChannel); } }

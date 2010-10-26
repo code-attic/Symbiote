@@ -47,14 +47,12 @@ namespace Symbiote.Messaging.Impl
         }
 
         public void Send<TMessage>(string channelName, TMessage message)
-            where TMessage : class
         {
             var channel = Channels.GetChannelFor<TMessage>(channelName);
             channel.Send(message);
         }
 
         public void Send<TMessage>(TMessage message)
-            where TMessage : class
         {
             Channels
                 .GetChannelsFor<TMessage>()
@@ -62,8 +60,6 @@ namespace Symbiote.Messaging.Impl
         }
 
         public void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse)
-            where TMessage : class
-            where TResponse : class
         {
             var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
             Dispatcher.ExpectResponse(correlationId, onResponse);
@@ -73,8 +69,6 @@ namespace Symbiote.Messaging.Impl
         }
 
         public void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse)
-            where TMessage : class
-            where TResponse : class
         {
             var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
             Dispatcher.ExpectResponse(correlationId, onResponse);

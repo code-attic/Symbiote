@@ -21,9 +21,8 @@ namespace Symbiote.Messaging.Impl.Dispatch
     public interface IDispatcher
     {
         int Count { get; set; }
-        void Send<TMessage>(IEnvelope<TMessage> envelope) where TMessage : class;
-        void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
-            where TResponse : class;
+        void Send<TMessage>(IEnvelope<TMessage> envelope);
+        void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse);
         void Send(IEnvelope envelope);
     }
 }

@@ -20,13 +20,13 @@ using System.Linq;
 using Symbiote.Core;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Actors;
+using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
     public class ActorMessageDispatcher<TActor, TMessage>
         : IDispatchMessage<TActor, TMessage>
         where TActor : class
-        where TMessage : class, ICorrelate
     {
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
         protected IAgency Agency { get; set; }
@@ -40,7 +40,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         
         public bool CanHandle(object payload)
         {
-            return payload as TMessage != null;
+            return payload.IsOfType<TMessage>();
         }
 
         public bool DispatchForActor

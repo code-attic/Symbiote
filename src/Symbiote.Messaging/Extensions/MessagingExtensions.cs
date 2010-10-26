@@ -7,7 +7,14 @@ namespace Symbiote.Messaging.Extensions
 {
     public static class MessagingExtensions
     {
-        public static string GetRoutingKey(this object  message)
+        public static bool IsOfType<T>(this object message)
+        {
+            var messageType = typeof(T);
+            var compareTo = message.GetType();
+            return compareTo.IsAssignableFrom(messageType) || messageType.IsAssignableFrom(compareTo);
+        }
+
+        public static string GetRoutingKey(this object message)
         {
             var routedByKey = message as IRouteByKey;
             return routedByKey == null ? "" : routedByKey.RoutingKey;
