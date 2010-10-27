@@ -31,11 +31,6 @@ namespace Symbiote.Messaging.Impl
         protected ISubscriptionManager Subscriptions { get; set; }
         protected IDispatcher Dispatcher { get; set; }
 
-        public void AddSubscription(ISubscription subscription)
-        {
-            Subscriptions.AddSubscription(subscription);
-        }
-
         public bool HasChannelFor<T>()
         {
             return Channels.HasChannelFor<T>();
@@ -46,34 +41,19 @@ namespace Symbiote.Messaging.Impl
             return Channels.HasChannelFor<T>(channelName);
         }
 
-        public void Send<TMessage>(string channelName, TMessage message)
-        {
-            var channel = Channels.GetChannelFor<TMessage>(channelName);
-            channel.Send(message);
-        }
-
-        public void Send<TMessage>(TMessage message)
+        public void Publish<TMessage>(TMessage message)
         {
             Channels
                 .GetChannelsFor<TMessage>()
                 .ForEach(x => x.Send(message));
         }
 
-        public void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse)
+        public void Publish<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
         {
-            var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
-            Dispatcher.ExpectResponse(correlationId, onResponse);
             Channels
                 .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send(correlationId, message));
-        }
-
-        public void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse)
-        {
-            var correlationId = message.GetCorrelationId() ?? Guid.NewGuid().ToString();
-            Dispatcher.ExpectResponse(correlationId, onResponse);
-            var channel = Channels.GetChannelFor<TMessage>(channelName);
-            channel.Send(correlationId, message);
+                .ForEach(x => x.Send(message,
+                                       modifyEnvelope));
         }
 
         public void StartSubscription(string subscription)
@@ -87,9 +67,9 @@ namespace Symbiote.Messaging.Impl
         }
 
         public Bus(
-                    IChannelManager channels, 
-                    ISubscriptionManager subscriptions,
-                    IDispatcher dispatcher)
+            IChannelManager channels,
+            ISubscriptionManager subscriptions,
+            IDispatcher dispatcher)
         {
             Channels = channels;
             Subscriptions = subscriptions;

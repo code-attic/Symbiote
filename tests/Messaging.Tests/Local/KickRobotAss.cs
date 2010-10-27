@@ -3,7 +3,6 @@
 namespace Messaging.Tests.Local
 {
     public class KickRobotAss
-        : ICorrelate
     {
         public string CorrelationId { get; set; }
         public string Target { get; set; }

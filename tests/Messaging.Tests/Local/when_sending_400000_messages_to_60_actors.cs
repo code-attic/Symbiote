@@ -17,12 +17,14 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 800000;
-        protected static int actorCount = 80;
+        protected static int MessagesToSend = 1000;
+        protected static int actorCount = 10;
         protected static IDispatcher dispatcher;
         private Because of = () =>
                                  {
                                      Actor.Created = 0;
+
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateByMessageProperty(m => m.CorrelationId));
 
                                      var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
                                      var message = Enumerable.Range(0, actorCount)
@@ -34,7 +36,7 @@ namespace Messaging.Tests.Local
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
-                                         bus.Send(message[i % actorCount]);
+                                         bus.Publish(message[i % actorCount]);
                                      }
                                      watch.Stop();
 

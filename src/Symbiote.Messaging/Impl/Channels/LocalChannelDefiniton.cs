@@ -18,44 +18,17 @@ using System;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
-    public class LocalChannelDefiniton<TMessage>
-        : IChannelDefinition
+    public class LocalChannelDefinition<TMessage>
+        : BaseChannelDefintion<TMessage>
     {
-        public string Name { get; set; }
-        public Type ChannelType { get { return typeof(LocalChannel<>).MakeGenericType(MessageType); } }
-        public Type MessageType { get { return typeof (TMessage); } }
-        public Type FactoryType { get { return typeof (ChannelFactory); } }
-
-        public LocalChannelDefiniton() : this("default")
+        public override Type ChannelType
         {
-            
+            get { return typeof(LocalChannel<TMessage>); }
         }
 
-        public LocalChannelDefiniton(string name)
+        public override Type FactoryType
         {
-            Name = name;
-        }
-    }
-
-    public class LocalChannelDefiniton
-        : IChannelDefinition
-    {
-        public string Name { get; set; }
-
-        public Type ChannelType { get { return typeof(LocalChannel<>).MakeGenericType(MessageType); } }
-        public Type MessageType { get; private set; }
-        public Type FactoryType { get { return typeof(ChannelFactory); } }
-
-        public LocalChannelDefiniton(Type messageType)
-            : this(messageType, "default")
-        {
-
-        }
-
-        public LocalChannelDefiniton(Type messageType, string name)
-        {
-            MessageType = messageType;
-            Name = name;
+            get { return typeof(LocalChannelFactory<TMessage>); }
         }
     }
 }

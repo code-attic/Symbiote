@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Actors;
 
 namespace Messaging.Tests.Local
@@ -14,10 +15,13 @@ namespace Messaging.Tests.Local
         private Because of = () =>
                                  {
                                      Actor.Created = 0;
+
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>( x => x.CorrelateByMessageProperty( m => m.CorrelationId ) );
+
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
-                                         bus.Send("", new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });   
+                                         bus.Publish(new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });
                                      }
                                      watch.Stop();
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");

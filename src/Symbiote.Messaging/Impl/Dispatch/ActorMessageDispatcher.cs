@@ -83,8 +83,8 @@ namespace Symbiote.Messaging.Impl.Dispatch
             }
             catch (Exception e)
             {
-                //envelope.Reject();
-                //throw;
+                var cor = envelope.CorrelationId;
+                throw;
             }
         }
 

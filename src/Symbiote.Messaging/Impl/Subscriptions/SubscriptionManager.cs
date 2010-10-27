@@ -25,11 +25,8 @@ namespace Symbiote.Messaging.Impl.Subscriptions
         ISubscriptionManager
     {
         protected Dictionary<string, ISubscription> Subscriptions { get; set; }
-        
-        public void Dispose()
-        {
-            
-        }
+
+        public void Dispose() { }
 
         public void AddSubscription(ISubscription subscription)
         {
@@ -56,7 +53,7 @@ namespace Symbiote.Messaging.Impl.Subscriptions
 
         public SubscriptionManager()
         {
-            Subscriptions = new Dictionary<string,ISubscription>();
+            Subscriptions = new Dictionary<string, ISubscription>();
         }
     }
 }

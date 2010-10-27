@@ -21,15 +21,11 @@ namespace Symbiote.Messaging
 {
     public interface IBus
     {
-        void AddSubscription(ISubscription subscription);
         bool HasChannelFor<T>();
         bool HasChannelFor<T>(string channelName);
-        void Send<TMessage>(TMessage message);
-        void Send<TMessage>(string channelName, TMessage message);
+        void Publish<TMessage>(TMessage message);
+        void Publish<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
         void StartSubscription(string subscription);
         void StopSubscription(string subscription);
-
-        void SendRequest<TMessage, TResponse>(TMessage message, Action<TResponse> onResponse);
-        void SendRequest<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onResponse);
     }
 }

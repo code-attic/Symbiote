@@ -16,33 +16,46 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Envelope;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
     public class LocalChannel<TMessage>
         : IChannel<TMessage>
     {
-        protected IDispatcher messageDirector { get; set; }
+        protected IDispatcher messageDispatcher { get; set; }
+
+        public string Name { get; set; }
+        public Func<TMessage, string> RoutingMethod { get; set; }
+        public Func<TMessage, string> CorrelationMethod { get; set; }
 
         public void Send(TMessage message)
         {
-            var correlate = (message as ICorrelate);
-            var correlationId = correlate == null ? null : correlate.CorrelationId;
-            Send(correlationId, message);
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = CorrelationMethod(message),
+                RoutingKey = RoutingMethod(message),
+            };
+
+            messageDispatcher.Send(envelope);
         }
 
-        public void Send(string correlationId, TMessage message)
+        public void Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
         {
-            messageDirector.Send(new LocalEnvelope<TMessage>(
-                                     Guid.NewGuid(),
-                                     correlationId,
-                                     "NA",
-                                     message));
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = CorrelationMethod(message),
+                RoutingKey = RoutingMethod(message),
+            };
+
+            modifyEnvelope(envelope);
+
+            messageDispatcher.Send(envelope);
         }
 
         public LocalChannel(IDispatcher messageDirector)
         {
-            this.messageDirector = messageDirector;
+            messageDispatcher = messageDirector;
         }
     }
 }

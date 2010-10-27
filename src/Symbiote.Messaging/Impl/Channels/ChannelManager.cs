@@ -33,20 +33,27 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public void AddDefinition(IChannelDefinition definition)
         {
-            Definitions.AddOrUpdate(GetChannelKey(definition.MessageType, definition.Name), definition, (x, y) => definition);
-            ChannelFactories.GetOrAdd(definition.ChannelType, Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
-            AddChannelForMessageType(definition.MessageType, definition.Name);
+            Definitions.AddOrUpdate(
+                GetChannelKey(definition.MessageType, definition.Name),
+                definition,
+                (x, y) => definition);
+            ChannelFactories.GetOrAdd(definition.ChannelType,
+                                       Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
+            AddChannelForMessageType(definition.MessageType,
+                                      definition.Name);
         }
 
         public IChannelDefinition GetDefinitionFor<TMessage>(string name)
         {
             IChannelDefinition definition = null;
             var messageType = typeof(TMessage);
-            if (!Definitions.TryGetValue(GetChannelKey(messageType, name), out definition))
+            if (!Definitions.TryGetValue(GetChannelKey(messageType,
+                                                          name),
+                                           out definition))
             {
-                throw new MessagingException(
-                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                        .AsFormat(name, messageType));
+                //throw new MessagingException(
+                //    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
+                //        .AsFormat(name, messageType));
             }
             return definition;
         }
@@ -58,26 +65,29 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IChannel<TMessage> GetChannelFor<TMessage>()
         {
-            var channelName = MessageChannels[typeof (TMessage)].First();
+            var channelName = MessageChannels[typeof(TMessage)].First();
             return GetChannelFor<TMessage>(channelName);
         }
 
         public IEnumerable<IChannel<TMessage>> GetChannelsFor<TMessage>()
         {
-            return MessageChannels[typeof (TMessage)]
+            return MessageChannels[typeof(TMessage)]
                 .Select(GetChannelFor<TMessage>);
         }
 
         public IChannel<TMessage> GetChannelFor<TMessage>(string channelName)
         {
             IChannel channel = null;
-            var key = GetChannelKey(typeof(TMessage), channelName);
-            if (!Channels.TryGetValue(key, out channel))
+            var key = GetChannelKey(typeof(TMessage),
+                                     channelName);
+            if (!Channels.TryGetValue(key,
+                                        out channel))
             {
                 var definition = GetDefinitionFor<TMessage>(channelName);
                 var factory = GetChannelFactory(definition);
-                channel = factory.GetChannel(definition);
-                Channels.TryAdd(key, channel);
+                channel = factory.CreateChannel(definition);
+                Channels.TryAdd(key,
+                                 channel);
             }
             return channel as IChannel<TMessage>;
         }
@@ -85,33 +95,37 @@ namespace Symbiote.Messaging.Impl.Channels
         public IChannelFactory GetChannelFactory(IChannelDefinition definition)
         {
             IChannelFactory factory = null;
-            if (!ChannelFactories.TryGetValue(definition.ChannelType, out factory))
+            if (!ChannelFactories.TryGetValue(definition.ChannelType,
+                                                out factory))
             {
                 var factoryType = typeof(IChannelFactory<>).MakeGenericType(definition.ChannelType);
                 factory = Assimilate.GetInstanceOf(factoryType) as IChannelFactory;
-                ChannelFactories.TryAdd(factoryType, factory);
+                ChannelFactories.TryAdd(factoryType,
+                                         factory);
             }
             return factory;
         }
 
         public bool HasChannelFor<TMessage>()
         {
-            return MessageChannels.ContainsKey(typeof (TMessage));
+            return MessageChannels.ContainsKey(typeof(TMessage));
         }
 
         public bool HasChannelFor<TMessage>(string channelName)
         {
             return MessageChannels.ContainsKey(typeof(TMessage)) &&
-                MessageChannels[typeof(TMessage)].Contains(channelName);
+                   MessageChannels[typeof(TMessage)].Contains(channelName);
         }
 
         public void AddChannelForMessageType(Type messageType, string channelName)
         {
             List<string> channels = null;
-            if (!MessageChannels.TryGetValue(messageType, out channels))
+            if (!MessageChannels.TryGetValue(messageType,
+                                               out channels))
             {
                 channels = new List<string>();
-                MessageChannels.TryAdd(messageType, channels);
+                MessageChannels.TryAdd(messageType,
+                                        channels);
             }
             if (!channels.Contains(channelName))
                 channels.Add(channelName);

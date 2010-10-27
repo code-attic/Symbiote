@@ -2,6 +2,7 @@
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Log.Impl;
+using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Actors;
 
 namespace Messaging.Tests.Local
@@ -14,11 +15,12 @@ namespace Messaging.Tests.Local
 
         private Because of = () =>
                                  {
-                                     bus.Send("", new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator"});
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateByMessageProperty(m => m.CorrelationId));
+                                     bus.Publish(new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator"});
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
                                  };
 
         private It should_have_routed_message_to_actor_instance = () => 
-                                                                  ShouldExtensionMethods.ShouldEqual(actor.FacesIveDrivenOver.First(), "Terminator");
+                                                                  actor.FacesIveDrivenOver.First().ShouldEqual("Terminator");
     }
 }

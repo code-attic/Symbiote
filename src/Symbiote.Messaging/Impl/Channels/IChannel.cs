@@ -14,16 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
+
 namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannel
     {
+        string Name { get; set; }
     }
 
-    public interface IChannel<in TMessage>
+    public interface IChannel<TMessage>
         : IChannel
     {
-        void Send(TMessage message); 
-        void Send(string correlationId, TMessage message);
+        Func<TMessage, string> RoutingMethod { get; set; }
+        Func<TMessage, string> CorrelationMethod { get; set; }
+        void Send(TMessage message);
+        void Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
     }
 }

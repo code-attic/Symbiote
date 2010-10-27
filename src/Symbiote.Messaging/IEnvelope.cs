@@ -21,6 +21,7 @@ namespace Symbiote.Messaging
     public interface IEnvelope
     {
         string CorrelationId { get; set; }
+        string RoutingKey { get; set; }
 
         long Sequence { get; set; }
         long Position { get; set; }

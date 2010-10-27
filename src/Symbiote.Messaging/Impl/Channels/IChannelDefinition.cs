@@ -28,4 +28,12 @@ namespace Symbiote.Messaging.Impl.Channels
         Type MessageType { get; }
         Type FactoryType { get; }
     }
+
+    public interface IChannelDefinition<TMessage> :
+        IChannelDefinition,
+        IConfigureChannel<TMessage>
+    {
+        Func<TMessage, string> RoutingMethod { get; set; }
+        Func<TMessage, string> CorrelationMethod { get; set; }
+    }
 }
