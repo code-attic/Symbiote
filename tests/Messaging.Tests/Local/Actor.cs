@@ -11,6 +11,7 @@ namespace Messaging.Tests.Local
         public string Id { get; set; }
         public List<string> FacesIveDrivenOver { get; set; }
         public static int Created { get; set; }
+        public TimeSpan Lag { get; set; }
 
         public void KickTheCrapOutOf(string target)
         {

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Log.Impl;
@@ -16,9 +18,13 @@ namespace Messaging.Tests.Local
         private Because of = () =>
                                  {
                                      bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateByMessageProperty(m => m.CorrelationId));
-                                     bus.Publish(new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator"});
+                                     bus.Publish(new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator", Created = DateTime.Now});
+                                     Thread.Sleep( 1000 );
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
                                  };
+
+        private It should_have_instantiated_actor_once = () =>
+                                                         Actor.Created.ShouldEqual( 1 );
 
         private It should_have_routed_message_to_actor_instance = () => 
                                                                   actor.FacesIveDrivenOver.First().ShouldEqual("Terminator");

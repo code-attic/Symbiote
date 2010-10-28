@@ -1,4 +1,5 @@
-﻿using Symbiote.Messaging;
+﻿using System;
+using Symbiote.Messaging;
 
 namespace Messaging.Tests.Local
 {
@@ -6,6 +7,7 @@ namespace Messaging.Tests.Local
     {
         public string CorrelationId { get; set; }
         public string Target { get; set; }
+        public DateTime Created { get; set; }
 
         public KickRobotAss()
         {
@@ -15,6 +17,7 @@ namespace Messaging.Tests.Local
         {
             CorrelationId = correlationId;
             Target = target;
+            Created = DateTime.Now;
         }
     }
 }

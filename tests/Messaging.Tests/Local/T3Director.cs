@@ -1,4 +1,5 @@
-﻿using Symbiote.Messaging;
+﻿using System;
+using Symbiote.Messaging;
 
 namespace Messaging.Tests.Local
 {
@@ -8,6 +9,7 @@ namespace Messaging.Tests.Local
         public void Handle(Actor samWorthington, IEnvelope<KickRobotAss> envelope)
         {
             samWorthington.KickTheCrapOutOf(envelope.Message.Target);
+            samWorthington.Lag = DateTime.Now.Subtract( envelope.Message.Created );
         }
 
         public T3Director()

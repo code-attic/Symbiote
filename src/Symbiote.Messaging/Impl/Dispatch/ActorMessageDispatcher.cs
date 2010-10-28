@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Actors;
@@ -74,18 +75,18 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Dispatch(IEnvelope envelope)
         {
             var typedEnvelope = envelope as IEnvelope<TMessage>;
-            try
-            {
+            //try
+            //{
                 var actor = Agent.GetActor(typedEnvelope.CorrelationId);
                 Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
                 Handler.Handle(actor, typedEnvelope);
                 Agent.Memoize(actor);
-            }
-            catch (Exception e)
-            {
-                var cor = envelope.CorrelationId;
-                throw;
-            }
+            //}
+            //catch (ThreadAbortException e)
+            //{
+            //    var cor = envelope.CorrelationId;
+            //    throw;
+            //}
         }
 
         public ActorMessageDispatcher(IAgency agency)
