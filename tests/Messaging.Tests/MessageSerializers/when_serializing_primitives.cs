@@ -1,24 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Messaging.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace Messaging.Tests.MessageSerializers
 {
-    public class when_serializing_primitives
+
+    [Serializable]
+    [DataContract]
+    public class Message
     {
-        protected static decimal original = 10.5m;
-        protected static decimal result;
+        [DataMember(IsRequired=false,Order=1)]
+        public string Text { get; set; }
+        public Message() {}
+    }
+    public class when_detecting_serialization_options_for_message
+    {
+        protected static Message message;
 
         private Because of = () =>
         {
-            var serializer = new ProtobufMessageSerializer();
-            var temp = serializer.Serialize( original );
-            result = serializer.Deserialize<decimal>( temp );
+            
         };
-        
-        private It should_get_value_back = () => original.ShouldEqual( result );
+
+        private It should_have_default_constructor = () => typeof(Message).HasDefaultConstructor().ShouldBeTrue();
+        private It should_be_binary_serializable = () => typeof(Message).IsBinarySerializable().ShouldBeTrue();
+        private It should_be_protobuf_serializable = () => typeof(Message).IsProtobufSerializable().ShouldBeTrue();
+        private It should_be_json_serializable = () => typeof(Message).IsJsonSerializable().ShouldBeTrue();
     }
 }

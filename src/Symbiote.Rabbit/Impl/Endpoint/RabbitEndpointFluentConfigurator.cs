@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
@@ -181,6 +182,24 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public RabbitEndpointFluentConfigurator<TMessage> RouteBy(Func<TMessage, string> messageProperty)
         {
             ChannelDefinition.RoutingMethod = messageProperty;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithProtobuf()
+        {
+            ChannelDefinition.MessageSerializerType = typeof(ProtobufMessageSerializer);
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithBinary()
+        {
+            ChannelDefinition.MessageSerializerType = typeof(NetBinarySerializer);
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithJson()
+        {
+            ChannelDefinition.MessageSerializerType = typeof(JsonMessageSerializer);
             return this;
         }
 

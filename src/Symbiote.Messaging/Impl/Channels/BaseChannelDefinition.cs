@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -12,6 +13,7 @@ namespace Symbiote.Messaging.Impl.Channels
         public Type MessageType { get; private set; }
         public Func<TMessage, string> RoutingMethod { get; set; }
         public Func<TMessage, string> CorrelationMethod { get; set; }
+        public Type MessageSerializerType { get; set; }
         public abstract Type ChannelType { get; }
         public abstract Type FactoryType { get; }
 
@@ -45,12 +47,31 @@ namespace Symbiote.Messaging.Impl.Channels
             return this;
         }
 
+        public IConfigureChannel<TMessage> SerializeWithProtobuf()
+        {
+            MessageSerializerType = typeof(ProtobufMessageSerializer);
+            return this;
+        }
+
+        public IConfigureChannel<TMessage> SerializeWithBinary()
+        {
+            MessageSerializerType = typeof(NetBinarySerializer);
+            return this;
+        }
+
+        public IConfigureChannel<TMessage> SerializeWithJson()
+        {
+            MessageSerializerType = typeof(JsonMessageSerializer);
+            return this;
+        }
+
         protected BaseChannelDefinition()
         {
             Name = "default";
             MessageType = typeof(TMessage);
             RoutingMethod = x => "";
             CorrelationMethod = x => "";
+            MessageSerializerType = MessageSerializer.GetBestMessageSerializerFor<TMessage>();
         }
     }
 }

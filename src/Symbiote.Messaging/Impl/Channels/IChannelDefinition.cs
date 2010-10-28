@@ -27,6 +27,7 @@ namespace Symbiote.Messaging.Impl.Channels
         Type ChannelType { get; }
         Type MessageType { get; }
         Type FactoryType { get; }
+        Type MessageSerializerType { get; set; }
     }
 
     public interface IChannelDefinition<TMessage> :

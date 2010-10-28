@@ -62,6 +62,7 @@
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
+    <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
     <Compile Include="Impl\Subscriptions\ISubscription.cs" />
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="Impl\Subscriptions\ObserverToken.cs" />

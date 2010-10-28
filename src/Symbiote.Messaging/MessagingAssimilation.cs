@@ -62,9 +62,6 @@ namespace Symbiote.Messaging
 
                                             x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
                                             x.For(typeof (IKeyAccessor<>)).Use(typeof (DefaultKeyAccessor<>));
-                                            //x.For<IMessageSerializer>().Use<JsonMessageSerializer>();
-                                            //x.For<IMessageSerializer>().Use<NetBinarySerializer>();
-                                            x.For<IMessageSerializer>().Use<ProtobufMessageSerializer>();
                                             x.For(typeof (IAgent<>)).Use(typeof (DefaultAgent<>));
                                             x.For(typeof (IActorStore<>)).Use(typeof (NullActorStore<>));
                                             x.For(typeof (IActorFactory<>)).Use(typeof (DefaultActorFactory<>));

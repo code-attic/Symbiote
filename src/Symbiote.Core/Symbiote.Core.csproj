@@ -133,6 +133,7 @@
       <Private>True</Private>
       <IlMerge>True</IlMerge>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +197,7 @@
     <Compile Include="Reflection\Reflector.cs" />
     <Compile Include="DI\IDependencyContainer.cs" />
     <Compile Include="Serialization\ProtobufExtensions.cs" />
+    <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
     <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />

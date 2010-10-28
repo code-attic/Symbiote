@@ -78,6 +78,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageSerializers\when_serializing_primitives.cs" />
+    <Compile Include="Pipes\when_creating_pipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestResponse\when_making_request.cs" />
   </ItemGroup>
