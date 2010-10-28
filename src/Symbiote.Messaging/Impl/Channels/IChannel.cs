@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Messaging.Impl.Dispatch;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -28,6 +29,7 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         Func<TMessage, string> RoutingMethod { get; set; }
         Func<TMessage, string> CorrelationMethod { get; set; }
+        void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply );
         IEnvelope<TMessage> Send(TMessage message);
         IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
     }

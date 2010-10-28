@@ -29,6 +29,20 @@ namespace Symbiote.Messaging.Impl.Channels
         public Func<TMessage, string> RoutingMethod { get; set; }
         public Func<TMessage, string> CorrelationMethod { get; set; }
 
+        public void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
+        {
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = CorrelationMethod(message),
+                RoutingKey = RoutingMethod(message),
+            };
+
+            modifyEnvelope(envelope);
+            dispatcher.ExpectResponse<TReply>(envelope.MessageId.ToString(), onReply);
+
+            messageDispatcher.Send(envelope);
+        }
+
         public IEnvelope<TMessage> Send(TMessage message)
         {
             var envelope = new Envelope<TMessage>(message)

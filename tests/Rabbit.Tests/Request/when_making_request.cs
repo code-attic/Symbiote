@@ -14,15 +14,17 @@ namespace Rabbit.Tests.Request
         : with_rabbit_configuration
     {
         public static string Reply { get; set; }
+
         public static void OnReply(Reply reply)
         {
             Reply = reply.Text;
         }
+
         private Because of = () =>
         {
             Bus.AddRabbitChannel<Request>(x => x.Direct("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
             Bus.Request<Request, Reply>(new Request(), OnReply);
-            Thread.Sleep(500);
+            Thread.Sleep(100);
         };
 
         private It should_have_response = () => Reply.ShouldEqual("I have an answer!");

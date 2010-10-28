@@ -58,14 +58,12 @@ namespace Symbiote.Messaging.Impl
 
         public void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply)
         {
-            var envelope = Channels.GetChannelFor<TMessage>().Send( message );
-            Dispatcher.ExpectResponse<TResponse>( envelope.MessageId.ToString(), onReply );
+            Channels.GetChannelFor<TMessage>().ExpectReply(message, x => { }, Dispatcher, onReply);
         }
 
         public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, Action<TResponse> onReply)
         {
-            var envelope = Channels.GetChannelFor<TMessage>().Send(message, modifyEnvelope);
-            Dispatcher.ExpectResponse<TResponse>(envelope.MessageId.ToString(), onReply);
+            Channels.GetChannelFor<TMessage>().ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
         }
 
         public void StartSubscription(string subscription)

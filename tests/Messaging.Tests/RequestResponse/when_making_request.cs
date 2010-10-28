@@ -23,7 +23,7 @@ namespace Messaging.Tests.RequestResponse
         {
             bus.AddLocalChannelForMessageOf<Request>();
             bus.Request<Request, Reply>( new Request(), OnReply );
-            Thread.Sleep( 100 );
+            Thread.Sleep( 60 );
         };
 
         private It should_have_response = () => Reply.ShouldEqual( "I have an answer!" );

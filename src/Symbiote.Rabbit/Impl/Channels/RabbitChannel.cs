@@ -15,10 +15,15 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Core;
+using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Extensions;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Rabbit.Config;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
@@ -31,11 +36,41 @@ namespace Symbiote.Rabbit.Impl.Channels
         public Func<TMessage, string> RoutingMethod { get; set; }
         public Func<TMessage, string> CorrelationMethod { get; set; }
 
+        public void ExpectReply<TReply>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
+        {
+            var envelope = new RabbitEnvelope<TMessage>(message)
+            {
+                CorrelationId = CorrelationMethod(message),
+                RoutingKey = RoutingMethod(message),
+                ReplyToExchange = RabbitBroker.ResponseId,
+                ReplyToKey = ConfigureResponseChannel<TReply>()
+            };
+
+            modifyEnvelope( envelope );
+            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            Proxy.Send(envelope);
+        }
+
+        public string ConfigureResponseChannel<TReply>()
+        {
+            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
+            var baseName = RabbitBroker.ResponseId;
+            var messageType = typeof(TReply).Name;
+            Action<RabbitEndpointFluentConfigurator<TReply>> configurate = x => x
+                .AutoDelete()
+                .Direct(baseName)
+                .QueueName("{0}.{1}.{2}".AsFormat(baseName, "response", messageType))
+                .RoutingKeys(messageType)
+                .NoAck()
+                .StartSubscription();
+            endpoints.ConfigureEndpoint(configurate);
+            return messageType;
+        }
+
         public IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
         {
-            var envelope = new RabbitEnvelope<TMessage>()
+            var envelope = new RabbitEnvelope<TMessage>(message)
             {
-                Message = message,
                 CorrelationId = CorrelationMethod( message ),
                 RoutingKey = RoutingMethod( message ),
                 ReplyToExchange = RabbitBroker.ResponseId
@@ -49,9 +84,8 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public IEnvelope<TMessage> Send(TMessage message)
         {
-            var envelope = new RabbitEnvelope<TMessage>()
+            var envelope = new RabbitEnvelope<TMessage>(message)
             {
-                Message = message,
                 CorrelationId = CorrelationMethod(message),
                 RoutingKey = RoutingMethod(message),
                 ReplyToExchange = RabbitBroker.ResponseId

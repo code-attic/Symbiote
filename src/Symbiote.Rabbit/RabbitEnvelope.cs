@@ -80,20 +80,30 @@ namespace Symbiote.Rabbit
             {
                 bus.AddRabbitChannel<TResponse>( x => x.AutoDelete().Direct( ReplyToExchange ).NoAck() );
             }
-            bus.Publish(response, x => x.CorrelationId = CorrelationId);
+            bus.Publish(response, x =>
+            {
+                x.CorrelationId = MessageId.ToString();
+                x.RoutingKey = ReplyToKey;
+            } );
         }
 
         public TMessage Message { get; set; }
 
+        public RabbitEnvelope( TMessage message )
+        {
+            Message = message;
+            _messageType = typeof(TMessage);
+            MessageId = Guid.NewGuid();
+        }
+
         public static RabbitEnvelope<TMessage> Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, TMessage body)
         {
-            var envelope = new RabbitEnvelope<TMessage>();
+            var envelope = new RabbitEnvelope<TMessage>(body);
 
             envelope.ConsumerTag = consumerTag;
             envelope.CorrelationId = properties.CorrelationId;
             envelope.DeliveryTag = deliveryTag;
             envelope.Exchange = exchange;
-            envelope.Message = body;
             envelope.MessageId = Guid.Parse( properties.MessageId );
             envelope.Proxy = proxy;
             envelope.Redelivered = redelivered;

@@ -34,6 +34,9 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
