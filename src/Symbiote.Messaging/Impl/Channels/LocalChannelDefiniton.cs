@@ -30,5 +30,7 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             get { return typeof(LocalChannelFactory<TMessage>); }
         }
+
+        public LocalChannelDefinition() : base() {}
     }
 }

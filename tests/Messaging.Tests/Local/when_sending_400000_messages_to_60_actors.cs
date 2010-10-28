@@ -17,8 +17,8 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 100;
-        protected static int actorCount = 5;
+        protected static int MessagesToSend = 800000;
+        protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
         private Because of = () =>
                                  {
@@ -32,7 +32,6 @@ namespace Messaging.Tests.Local
                                                           {CorrelationId = names[x], Target = "Terminator"})
                                          .ToList();
 
-                                     bus.AddLocalChannelForMessageOf<KickRobotAss>();
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
@@ -52,10 +51,11 @@ namespace Messaging.Tests.Local
                                          var actor = agent.GetActor("Extra " + i);
                                          cast.Add(actor);
                                      }
+                                     int count = cast.Count;
                                  };
         
         private It should_complete_in_1_second = () =>
-                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(2001);
+                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
 
         private It should_create_the_correct_number_of_actors = () =>
                                                                   Actor.Created.ShouldEqual(actorCount);
