@@ -31,14 +31,14 @@ namespace Rabbit.Tests
     {
         private Because of = () =>
                                  {
-                                     Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").NoAck().StartSubscription());
-                                     Bus.Send(new Message() {Id = 1, CorrelationId = "1"});
-                                     Bus.Send(new Message() {Id = 2, CorrelationId = "1"});
-                                     Bus.Send(new Message() {Id = 3, CorrelationId = "1"});
+                                     Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").NoAck().CorrelateBy(m => m.CorrelationId).StartSubscription());
+                                     Bus.Publish(new Message() {Id = 1, CorrelationId = "1"});
+                                     Bus.Publish(new Message() { Id = 2, CorrelationId = "1" });
+                                     Bus.Publish(new Message() { Id = 3, CorrelationId = "1" });
 
-                                     Thread.Sleep(1000);
+                                     Thread.Sleep(100);
                                  };
-
+        
         private It actor_should_have_received_three_messages = () => Actor.MessageIds.ShouldContain(1, 2, 3);
     }
 
@@ -48,7 +48,7 @@ namespace Rabbit.Tests
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch receiveWatch { get; set; }
         protected static Stopwatch sendWatch { get; set; }
-        protected static int MessagesToSend = 60000;
+        protected static int MessagesToSend = 400000;
         protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
 
@@ -56,7 +56,7 @@ namespace Rabbit.Tests
         {
             Actor.Created = 0;
 
-            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").PersistentDelivery().UseTransactions());
+            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").PersistentDelivery().CorrelateBy(m => m.CorrelationId).UseTransactions());
             
             var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
             var message = Enumerable.Range(0, actorCount)
@@ -67,8 +67,8 @@ namespace Rabbit.Tests
             for (int i = 0; i < MessagesToSend; i++)
             {
                 message[i % actorCount].Id = i;
-                Bus.Send(message[i % actorCount]);
-                if(i % 5000 == 0)
+                Bus.Publish(message[i % actorCount]);
+                if(i % 10000 == 0)
                     Bus.CommitChannelOf<Message>();
             }
             
@@ -101,7 +101,6 @@ namespace Rabbit.Tests
     [Serializable]
     [DataContract]
     public class Message
-        : ICorrelate
     {
         [DataMember(Order = 1)]
         public int Id { get;set; }
@@ -111,6 +110,7 @@ namespace Rabbit.Tests
 
     public class Actor
     {
+        public string Id { get; set; }
         public static int Created { get; set; }
         public static List<Actor> ArmyOfMehself = new List<Actor>();
         protected static List<int> _messages = new List<int>();
@@ -141,6 +141,19 @@ namespace Rabbit.Tests
             {
                 envelope.AcknowledgeAll();
             }
+        }
+    }
+
+    public class ActorKeyAccessor : IKeyAccessor<Actor>
+    {
+        public string GetId( Actor actor )
+        {
+            return actor.Id;
+        }
+
+        public void SetId<TKey>( Actor actor, TKey id )
+        {
+            actor.Id = id.ToString();
         }
     }
 }

@@ -14,7 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using RabbitMQ.Client;
+using Symbiote.Core;
+using Symbiote.Messaging;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Config
 {
@@ -29,6 +33,7 @@ namespace Symbiote.Rabbit.Config
         public string Password { get; set; }
         public string VirtualHost { get; set; }
         public int BalanceGroup { get; set; }
+        public static string ResponseId { get; set; }
         protected ConnectionFactory Factory
         {
             get
@@ -42,6 +47,7 @@ namespace Symbiote.Rabbit.Config
                                                VirtualHost = VirtualHost,
                                                Protocol = Protocols.Lookup(Protocol)
                                            };
+
                 return _factory;
             }
         }
@@ -55,16 +61,17 @@ namespace Symbiote.Rabbit.Config
             VirtualHost = "/";
             Address = "localhost";
             Port = 5672;
+            ResponseId = ResponseId ?? Name + AppDomain.CurrentDomain.Id;
         }
 
         public IConnection GetConnection()
         {
-            return Factory.CreateConnection();
+            var connection = Factory.CreateConnection();
+            return connection;
         }
 
-        public RabbitBroker(string address, int port)
+        public RabbitBroker(string address, int port) : this()
         {
-            SetDefaults();
             Address = address;
             Port = port;
         }

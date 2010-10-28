@@ -22,11 +22,10 @@ namespace Symbiote.Messaging.Impl.Serialization
     public class NetBinarySerializer : IMessageSerializer
     {
         public T Deserialize<T>(byte[] message)
-            where T : class
         {
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream(message);
-            var body = formatter.Deserialize(stream) as T;
+            var body = (T) formatter.Deserialize(stream);
             return body;
         }
 
@@ -39,7 +38,6 @@ namespace Symbiote.Messaging.Impl.Serialization
         }
 
         public byte[] Serialize<T>(T body)
-            where T : class
         {
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream();

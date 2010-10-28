@@ -18,20 +18,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Core;
 using Symbiote.Messaging.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public class RabbitChannelFactory
-        : IChannelFactory
+    public class RabbitChannelFactory<TMessage>
+        : IChannelFactory<TMessage>
     {
         public IChannelProxyFactory ProxyFactory { get; set; }
 
-        public IChannel GetChannel(IChannelDefinition definition)
+        public IChannel CreateChannel(IChannelDefinition definition)
         {
-            var rabbitDef = definition as IRabbitChannelDefinition;
-            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Exchange);
-            return Activator.CreateInstance(rabbitDef.ChannelType, proxy) as IChannel;
+            var rabbitDef = definition as RabbitChannelDefinition<TMessage>;
+            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Name);
+            var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy) as IChannel<TMessage>;
+            channel.Name = definition.Name;
+            channel.CorrelationMethod = rabbitDef.CorrelationMethod;
+            channel.RoutingMethod = rabbitDef.RoutingMethod;
+            return channel;
         }
 
         public RabbitChannelFactory(IChannelProxyFactory proxyFactory)

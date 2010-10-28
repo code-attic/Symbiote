@@ -15,8 +15,10 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Messaging;
 using Symbiote.Messaging.Extensions;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Rabbit.Config;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
@@ -25,14 +27,38 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         public IChannelProxy Proxy { get; set; }
 
-        public void Send(TMessage message)
+        public string Name { get; set; }
+        public Func<TMessage, string> RoutingMethod { get; set; }
+        public Func<TMessage, string> CorrelationMethod { get; set; }
+
+        public IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
         {
-            Proxy.Send(message, message.GetRoutingKey());
+            var envelope = new RabbitEnvelope<TMessage>()
+            {
+                Message = message,
+                CorrelationId = CorrelationMethod( message ),
+                RoutingKey = RoutingMethod( message ),
+                ReplyToExchange = RabbitBroker.ResponseId
+            };
+
+            modifyEnvelope( envelope );
+
+            Proxy.Send(envelope);
+            return envelope;
         }
 
-        public void Send(string correlationId, TMessage message)
+        public IEnvelope<TMessage> Send(TMessage message)
         {
-            Proxy.Send(message, message.GetRoutingKey(), correlationId);
+            var envelope = new RabbitEnvelope<TMessage>()
+            {
+                Message = message,
+                CorrelationId = CorrelationMethod(message),
+                RoutingKey = RoutingMethod(message),
+                ReplyToExchange = RabbitBroker.ResponseId
+            };
+
+            Proxy.Send(envelope);
+            return envelope;
         }
 
         public RabbitChannel(IChannelProxy proxy)

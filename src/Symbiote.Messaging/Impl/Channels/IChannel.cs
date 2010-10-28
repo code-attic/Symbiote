@@ -28,7 +28,7 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         Func<TMessage, string> RoutingMethod { get; set; }
         Func<TMessage, string> CorrelationMethod { get; set; }
-        void Send(TMessage message);
-        void Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
+        IEnvelope<TMessage> Send(TMessage message);
+        IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
     }
 }

@@ -30,12 +30,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         void InitConsumer(IBasicConsumer consumer);
         string QueueName { get; }
         bool Closed { get; }
-        void Send<T>(T body, string routingKey)
-            where T : class;
-        void Send<T>(T body, string routingKey, string correlationId)
-            where T : class;
-        void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
-            where T : class;
+        void Send<T>( RabbitEnvelope<T> envelope );
+        void Reply<T>( PublicationAddress address, IBasicProperties properties, T response );
         void Reject(ulong tag, bool requeue);
     }
 }

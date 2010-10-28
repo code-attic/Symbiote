@@ -29,7 +29,7 @@ namespace Symbiote.Messaging.Impl.Channels
         public Func<TMessage, string> RoutingMethod { get; set; }
         public Func<TMessage, string> CorrelationMethod { get; set; }
 
-        public void Send(TMessage message)
+        public IEnvelope<TMessage> Send(TMessage message)
         {
             var envelope = new Envelope<TMessage>(message)
             {
@@ -38,9 +38,10 @@ namespace Symbiote.Messaging.Impl.Channels
             };
 
             messageDispatcher.Send(envelope);
+            return envelope;
         }
 
-        public void Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
+        public IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
         {
             var envelope = new Envelope<TMessage>(message)
             {
@@ -51,6 +52,7 @@ namespace Symbiote.Messaging.Impl.Channels
             modifyEnvelope(envelope);
 
             messageDispatcher.Send(envelope);
+            return envelope;
         }
 
         public LocalChannel(IDispatcher messageDirector)

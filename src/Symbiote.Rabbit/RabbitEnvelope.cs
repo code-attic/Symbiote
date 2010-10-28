@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using RabbitMQ.Client;
+using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.Rabbit.Impl.Channels;
 
@@ -24,21 +25,11 @@ namespace Symbiote.Rabbit
     public class RabbitEnvelope<TMessage> :
         IEnvelope<TMessage>
     {
+        private static readonly long EPOCH = 621355968000000000L;
         protected Type _messageType;
         protected string _correlationId;
         public string ConsumerTag { get; set; }
-        public string CorrelationId
-        {
-            get
-            {
-                _correlationId = _correlationId ?? GetCorrelationFromMessage();
-                return _correlationId;
-            }
-            set
-            {
-                _correlationId = value;
-            }
-        }
+        public string CorrelationId { get; set; }
         public ulong DeliveryTag { get; set; }
         public bool Empty { get { return Message == null; } }
         public string Exchange { get; set; }
@@ -82,13 +73,16 @@ namespace Symbiote.Rabbit
             Proxy.Reject(DeliveryTag, true);
         }
 
-        protected string GetCorrelationFromMessage()
+        public void Reply<TResponse>( TResponse response )
         {
-            var correlate = Message as ICorrelate;
-            if (correlate == null)
-                return "";
-            return correlate.CorrelationId;
+            var bus = Assimilate.GetInstanceOf<IBus>();
+            if (!bus.HasChannelFor<TResponse>())
+            {
+                bus.AddRabbitChannel<TResponse>( x => x.AutoDelete().Direct( ReplyToExchange ).NoAck() );
+            }
+            bus.Publish(response, x => x.CorrelationId = CorrelationId);
         }
+
         public TMessage Message { get; set; }
 
         public static RabbitEnvelope<TMessage> Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, TMessage body)
@@ -96,15 +90,20 @@ namespace Symbiote.Rabbit
             var envelope = new RabbitEnvelope<TMessage>();
 
             envelope.ConsumerTag = consumerTag;
+            envelope.CorrelationId = properties.CorrelationId;
             envelope.DeliveryTag = deliveryTag;
             envelope.Exchange = exchange;
             envelope.Message = body;
+            envelope.MessageId = Guid.Parse( properties.MessageId );
             envelope.Proxy = proxy;
             envelope.Redelivered = redelivered;
             envelope.ReplyToExchange = properties.ReplyToAddress.ExchangeName;
             envelope.ReplyToKey = properties.ReplyToAddress.RoutingKey;
             envelope.RoutingKey = routingKey;
-            envelope.TimeStamp = DateTime.FromFileTimeUtc(properties.Timestamp.UnixTime);
+            envelope.Position = (long) properties.Headers["Position"];
+            envelope.Sequence = (long) properties.Headers["Sequence"];
+            envelope.SequenceEnd = (bool) properties.Headers["SequenceEnd"];
+            envelope.TimeStamp = new DateTime(EPOCH).AddTicks(properties.Timestamp.UnixTime);
 
             return envelope;
         }

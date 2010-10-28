@@ -18,12 +18,10 @@ namespace Symbiote.Messaging.Impl.Serialization
 {
     public interface IMessageSerializer
     {
-        T Deserialize<T>(byte[] message)
-            where T : class;
+        T Deserialize<T>(byte[] message);
 
         object Deserialize(byte[] message);
 
-        byte[] Serialize<T>(T body)
-            where T : class;
+        byte[] Serialize<T>(T body);
     }
 }

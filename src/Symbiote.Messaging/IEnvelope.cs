@@ -35,5 +35,7 @@ namespace Symbiote.Messaging
         : IEnvelope
     {
         TMessage Message { get; set; }
+
+        void Reply<TResponse>( TResponse response );
     }
 }

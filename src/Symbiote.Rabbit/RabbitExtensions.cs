@@ -25,10 +25,10 @@ namespace Symbiote.Rabbit
 {
     public static class RabbitExtensions
     {
-        public static IBus AddRabbitChannel<TMessage>(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+        public static IBus AddRabbitChannel<TMessage>(this IBus bus, Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
         {
             var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            endpoints.ConfigureEndpoint<TMessage>(configurate);
+            endpoints.ConfigureEndpoint(configurate);
             return bus;
         }
 

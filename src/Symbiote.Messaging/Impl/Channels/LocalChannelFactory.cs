@@ -9,11 +9,11 @@ namespace Symbiote.Messaging.Impl.Channels
     public class LocalChannelFactory<TMessage>
         : IChannelFactory<TMessage>
     {
-        public IChannel CreateChannel( IChannelDefinition definiton )
+        public IChannel CreateChannel( IChannelDefinition definition )
         {
-            var typedDef = definiton as LocalChannelDefinition<TMessage>;
+            var typedDef = definition as LocalChannelDefinition<TMessage>;
             var channel = Assimilate.GetInstanceOf( typedDef.ChannelType ) as IChannel<TMessage>;
-            channel.Name = definiton.Name;
+            channel.Name = definition.Name;
             channel.CorrelationMethod = typedDef.CorrelationMethod;
             channel.RoutingMethod = typedDef.RoutingMethod;
             return channel;

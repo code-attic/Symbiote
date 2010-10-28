@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 
@@ -21,31 +22,22 @@ namespace Symbiote.Messaging.Impl.Serialization
 {
     public class JsonMessageSerializer : IMessageSerializer
     {
-        private NetBinarySerializer _netBinarySerializer;
-
         public T Deserialize<T>(byte[] message)
-            where T : class
         {
-            var json = _netBinarySerializer.Deserialize<string>(message);
+            var json = Encoding.UTF8.GetString(message);
             return json.FromJson<T>();
         }
 
         public object Deserialize(byte[] message)
         {
-            var json = _netBinarySerializer.Deserialize<string>(message);
+            var json = Encoding.UTF8.GetString(message);
             return json.FromJson();
         }
 
         public byte[] Serialize<T>(T body)
-            where T : class
         {
             var json = body.ToJson();
-            return _netBinarySerializer.Serialize(json);
-        }
-
-        public JsonMessageSerializer()
-        {
-            _netBinarySerializer = new NetBinarySerializer();
+            return Encoding.UTF8.GetBytes( json );
         }
     }
 

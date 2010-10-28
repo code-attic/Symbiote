@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using Symbiote.Core;
@@ -40,6 +41,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
         private bool _closed;
+        private readonly long EPOCH = 621355968000000000L;
 
         private const string CONTENT_TYPE = "text/plain";
         private const string AMQP_08 = "AMQP_0_8";
@@ -91,24 +93,13 @@ namespace Symbiote.Rabbit.Impl.Channels
             Channel.BasicAck(tag, multiple);
         }
 
-        public void Send<T>(T body, string routingKey) where T : class
+        public void Send<T>(RabbitEnvelope<T> envelope)
         {
-            var correlate = (body as ICorrelate);
-            var correlationId = correlate == null ? "" : correlate.CorrelationId;
-            Send(body, routingKey, correlationId);
-        }
-
-        public void Send<T>(T body, string routingKey, string correlationId) where T : class
-        {
-            if (body == default(T))
-                return;
-            var stream = Serializer.Serialize(body);
-            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE);
-            properties.CorrelationId = correlationId;
-            properties.ReplyToAddress = new PublicationAddress(EndpointConfiguration.ExchangeType.ToString(), EndpointConfiguration.ExchangeName, routingKey);
+            var stream = Serializer.Serialize(envelope.Message);
+            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
             Channel.BasicPublish(
                 _configuration.ExchangeName,
-                routingKey,
+                envelope.RoutingKey,
                 EndpointConfiguration.MandatoryDelivery,
                 EndpointConfiguration.ImmediateDelivery,
                 properties,
@@ -123,7 +114,6 @@ namespace Symbiote.Rabbit.Impl.Channels
         }
 
         public void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
-            where T : class
         {
             //This call is currently unimplemented for AMQP 0.8
             if (_protocol != AMQP_08)
@@ -133,31 +123,25 @@ namespace Symbiote.Rabbit.Impl.Channels
             }
         }
 
-        protected IBasicProperties CreatePublishingProperties(string contentType)
+        protected IBasicProperties CreatePublishingProperties<T>(string contentType, RabbitEnvelope<T> envelope)
         {
             var properties = Channel.CreateBasicProperties();
             properties.DeliveryMode = (byte)(_configuration.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
             properties.ContentType = contentType;
-            properties.MessageId = Guid.NewGuid().ToString();
+            properties.CorrelationId = envelope.CorrelationId;
+            properties.MessageId = envelope.MessageId.ToString();
+            properties.Headers = new Dictionary<object, object>();
+            properties.Headers.Add("Sequence", envelope.Sequence);
+            properties.Headers.Add("SequenceEnd", envelope.SequenceEnd);
+            properties.Headers.Add("Position", envelope.Position);
+            properties.ReplyToAddress = new PublicationAddress(ExchangeType.direct.ToString(), envelope.ReplyToExchange, envelope.ReplyToKey);
+            properties.Timestamp = new AmqpTimestamp( DateTime.Now.Ticks + EPOCH );
             return properties;
         }
 
-        protected void GetMessageCorrelation<T>(T body, IBasicProperties properties)
+        protected void SetMessageCorrelation(IEnvelope envelope, BasicGetResult result)
         {
-            var correlated = body as ICorrelate;
-            if (correlated != null)
-            {
-                properties.CorrelationId = correlated.CorrelationId;
-            }
-        }
-
-        protected void SetMessageCorrelation(object message, BasicGetResult result)
-        {
-            var correlated = message as ICorrelate;
-            if (correlated != null)
-            {
-                correlated.CorrelationId = result.BasicProperties.CorrelationId;
-            }
+            envelope.CorrelationId = result.BasicProperties.CorrelationId;
         }
 
         public QueueingBasicConsumer GetConsumer()

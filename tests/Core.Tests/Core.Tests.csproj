@@ -103,7 +103,6 @@
     <Compile Include="Json\with_core_assimilation.cs" />
     <Compile Include="Extensions\Permutations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProtoBuf\when_serializing_to_protobuf.cs" />
     <Compile Include="Reflection\TestClass.cs" />
     <Compile Include="Reflection\POC\when_reading_dynamically.cs" />
     <Compile Include="Reflection\POC\with_precompiled_read_cache.cs" />
@@ -128,6 +127,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ProtoBuf\" />
     <Folder Include="Utility\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

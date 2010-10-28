@@ -19,13 +19,9 @@ using Symbiote.Messaging.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IRabbitChannelDefinition
-        : IChannelDefinition
+    public interface IRabbitChannelDefinition<TMessage>
+        : IChannelDefinition<TMessage>
     {
-        string Name { get; }
         string Exchange { get; set; }
-        Type ChannelType { get; }
-        Type MessageType { get; }
-        Type FactoryType { get; }
     }
 }

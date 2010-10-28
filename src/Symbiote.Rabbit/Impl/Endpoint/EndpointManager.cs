@@ -35,17 +35,17 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 
         public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
         {
-            ChannelManager.AddDefinition(new RabbitChannelDefinition<TMessage>(endpoint.ExchangeName));
             EndpointIndex.AddEndpoint<TMessage>(endpoint);
             CreateOnBroker(endpoint);
         }
 
-        public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> configurate)
+        public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
         {
-            var configurator = new RabbitEndpointFluentConfigurator();
+            var configurator = new RabbitEndpointFluentConfigurator<TMessage>();
             configurate(configurator);
             var endpoint = configurator.Endpoint;
             AddEndpoint<TMessage>(endpoint);
+            ChannelManager.AddDefinition( configurator.ChannelDefinition );
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Core;
 
 namespace Symbiote.Messaging.Impl.Envelope
 {
@@ -16,6 +17,21 @@ namespace Symbiote.Messaging.Impl.Envelope
         public Guid MessageId { get; set; }
         public Type MessageType { get; private set; }
         public TMessage Message { get; set; }
+
+        public void Reply<TResponse>( TResponse response )
+        {
+            var bus = Assimilate.GetInstanceOf<IBus>();
+            if(!bus.HasChannelFor<TResponse>())
+            {
+                bus.AddLocalChannelForMessageOf<TResponse>();
+            }
+            bus.Publish( 
+                response, 
+                x => 
+                {
+                    x.CorrelationId = MessageId.ToString();
+                } );
+        }
 
         public Envelope( TMessage message )
         {

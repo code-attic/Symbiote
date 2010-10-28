@@ -15,21 +15,19 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Messaging.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannelDefinition<TMessage>
-        : IRabbitChannelDefinition
+        : BaseChannelDefinition<TMessage>
     {
-        public string Name { get; set; }
         public string Exchange { get; set; }
-        public Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
-        public Type MessageType { get { return typeof (TMessage); } }
-        public Type FactoryType { get { return typeof (RabbitChannelFactory); } }
+        public override Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
+        public override Type FactoryType { get { return typeof (RabbitChannelFactory<TMessage>); } }
 
-        public RabbitChannelDefinition(string name)
+        public RabbitChannelDefinition() : base()
         {
-            Exchange = Name = name;
         }
     }
 }

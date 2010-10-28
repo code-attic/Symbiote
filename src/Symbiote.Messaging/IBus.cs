@@ -27,5 +27,7 @@ namespace Symbiote.Messaging
         void Publish<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
         void StartSubscription(string subscription);
         void StopSubscription(string subscription);
+        void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply);
+        void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, Action<TResponse> onReply);
     }
 }

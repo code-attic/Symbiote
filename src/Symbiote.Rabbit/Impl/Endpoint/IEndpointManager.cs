@@ -21,7 +21,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 {
     public interface IEndpointManager : IEndpointIndex
     {
-        void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator> endpoint);
+        void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator<TMessage>> endpoint);
         void BindQueue(string exchangeName, string queueName, params string[] routingKeys);
     }
 }

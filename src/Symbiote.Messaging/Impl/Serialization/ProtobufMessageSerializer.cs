@@ -10,7 +10,7 @@ namespace Symbiote.Messaging.Impl.Serialization
     public class ProtobufMessageSerializer
         : IMessageSerializer
     {
-        public T Deserialize<T>(byte[] message) where T : class
+        public T Deserialize<T>(byte[] message)
         {
             return message.FromProtocolBuffer<T>();
         }
@@ -21,7 +21,7 @@ namespace Symbiote.Messaging.Impl.Serialization
                 "Protobuf cannot deserialize messages of unknown type. You must call Deserialize<T> where T is a known message type.");
         }
 
-        public byte[] Serialize<T>(T body) where T : class
+        public byte[] Serialize<T>(T body)
         {
             return body.ToProtocolBuffer<T>();
         }
