@@ -24,7 +24,7 @@ namespace Messaging.Tests.Local
                                  {
                                      Actor.Created = 0;
 
-                                     bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateByMessageProperty(m => m.CorrelationId));
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateBy(m => m.CorrelationId));
 
                                      var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
                                      var message = Enumerable.Range(0, actorCount)
@@ -39,6 +39,8 @@ namespace Messaging.Tests.Local
                                          bus.Publish(message[i % actorCount]);
                                      }
                                      watch.Stop();
+
+
 
                                      cast = new List<Actor>();
                                      dispatcher = Assimilate.GetInstanceOf<IDispatcher>();

@@ -38,17 +38,17 @@ namespace Symbiote.Messaging.Impl.Actors
                         ?? Store.GetOrCreate(key);
             if (actor == null)
             {
-                //SlimLock.EnterUpgradeableReadLock();
+                SlimLock.EnterUpgradeableReadLock();
                 if (!Actors.TryGetValue(stringKey, out actor))
                 {
-                    //SlimLock.EnterWriteLock();
+                    SlimLock.EnterWriteLock();
                     "Creating actor for key {0}"
                         .ToInfo<IBus>(key);
                     actor = Factory.CreateInstance(key);
                     Actors.TryAdd(stringKey, actor);
-                    //SlimLock.ExitWriteLock();
+                    SlimLock.ExitWriteLock();
                 }
-                //SlimLock.ExitUpgradeableReadLock();
+                SlimLock.ExitUpgradeableReadLock();
             }
             return actor;
         }

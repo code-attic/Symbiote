@@ -15,20 +15,14 @@ limitations under the License.
 */
 
 using System;
+using Newtonsoft.Json;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Core.Extensions
 {
-    public class LocalChannelDefinition<TMessage>
-        : BaseChannelDefinition<TMessage>
+    public interface IJsonSerializerFactory
     {
-        public override Type ChannelType
-        {
-            get { return typeof(LocalChannel<TMessage>); }
-        }
-
-        public override Type FactoryType
-        {
-            get { return typeof(LocalChannelFactory<TMessage>); }
-        }
+        JsonSerializer GetSerializerFor(string json, bool includeTypeSpec, SerializerAction action);
+        JsonSerializer GetSerializerFor<T>(bool includeTypeSpec, SerializerAction action);
+        JsonSerializer GetSerializerFor(Type type, bool includeTypeSpec, SerializerAction action);
     }
 }

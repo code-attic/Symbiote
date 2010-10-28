@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using ProtoBuf;
 using Symbiote.Core.Serialization;
 
 namespace Symbiote.Messaging.Impl.Serialization

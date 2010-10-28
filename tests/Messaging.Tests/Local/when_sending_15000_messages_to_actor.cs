@@ -16,7 +16,7 @@ namespace Messaging.Tests.Local
                                  {
                                      Actor.Created = 0;
 
-                                     bus.AddLocalChannelForMessageOf<KickRobotAss>( x => x.CorrelateByMessageProperty( m => m.CorrelationId ) );
+                                     bus.AddLocalChannelForMessageOf<KickRobotAss>( x => x.CorrelateBy( m => m.CorrelationId ) );
 
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)

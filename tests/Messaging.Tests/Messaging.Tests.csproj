@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Channels\when_configuring_channel.cs" />
     <Compile Include="Local\Actor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -92,6 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Channels\" />
     <Folder Include="MessageSerializers\" />
     <Folder Include="RequestResponse\" />
   </ItemGroup>
