@@ -4,47 +4,68 @@ using System.Linq;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
+using Symbiote.Core.Extensions;
+using Symbiote.Messaging;
+using Symbiote.Messaging.Impl.Transform;
 using Symbiote.StructureMap;
 
 namespace Messaging.Tests.Pipes
 {
-    public interface IPipeline<TIn, TOut>
+    public interface IPipe<TIn, TOut>
     {
-        IPipe<TIn, TOut> Pipe { get; set; }
+        TOut Process(TIn input);
+    }
 
+    public interface IPipeline<TIn, TOut>
+        : IPipe<TIn, TOut>
+    {
         IPipeline<TIn, TNewOut> Then<TPipe, TNewOut>()
             where TPipe : IPipe<TOut, TNewOut>;
+
+        IPipeline<TIn, TNewOut> Then<TNewOut>( IPipe<TOut, TNewOut> pipe );
+    }
+
+    public class Pipeline
+    {
+        public static IPipeline<TIn, TOut> New<TPipe, TIn, TOut>()
+            where TPipe : IPipe<TIn, TOut>
+        {
+            return new Pipeline<TIn, TOut>(
+                Assimilate.GetInstanceOf<TPipe>()
+            );
+        }    
     }
 
     public class Pipeline<TIn, TOut>
         : IPipeline<TIn, TOut>
     {
-        public IPipe<TIn, TOut> Pipe { get; set; }
+        protected IPipe<TIn, TOut> Pipe { get; set; }
 
         public IPipeline<TIn, TNewOut> Then<TPipe, TNewOut>() where TPipe : IPipe<TOut, TNewOut>
         {
-            return new Pipeline<TIn, TNewOut>()
-            {
-                Pipe = Pipe.Combine<TPipe, TIn, TOut, TOut, TNewOut>()
-            };
+            return new Pipeline<TIn, TNewOut>(
+                Pipe.Combine<TPipe, TIn, TOut, TOut, TNewOut>()
+            );
         }
 
-        public static IPipeline<TIn, TOut> New<TPipe>()
-            where TPipe : IPipe<TIn, TOut>
+        public IPipeline<TIn, TNewOut> Then<TNewOut>(IPipe<TOut, TNewOut> pipe)
         {
-            return new Pipeline<TIn, TOut>()
-            {
-                Pipe = Assimilate.GetInstanceOf<TPipe>()
-            };
+            return new Pipeline<TIn, TNewOut>( Pipe.Combine<TIn, TOut, TOut, TNewOut>( pipe ) );
+        }
+
+
+        public TOut Process( TIn input )
+        {
+            return Pipe.Process( input );
+        }
+
+        public Pipeline( IPipe<TIn, TOut> pipe )
+        {
+            Pipe = pipe;
         }
     }
 
-    public interface IPipe<TIn, TOut>
-    {
-        TOut Process( TIn input );
-    }
-
-    public class Fitting<TIn, TOut>
+    public class FuncPipe<TIn, TOut>
         : IPipe<TIn, TOut>
     {
         protected Func<TIn, TOut> Call { get; set; }
@@ -54,7 +75,7 @@ namespace Messaging.Tests.Pipes
             return Call( input );
         }
 
-        public Fitting( Func<TIn, TOut> call )
+        public FuncPipe(Func<TIn, TOut> call)
         {
             Call = call;
         }
@@ -67,15 +88,38 @@ namespace Messaging.Tests.Pipes
             where X2 : Y1
         {
             var pipe2 = Assimilate.GetInstanceOf<P2>();
-            return new Fitting<X1, Y2>(x => pipe2.Process(begin.Process(x)));
+            return new FuncPipe<X1, Y2>(x => pipe2.Process(begin.Process(x)));
         }
 
-        public static Func<X1, Y2> Collapse<X1, X2, Y1, Y2>(this Func<X1, X2> func1, Func<Y1, Y2> func2)
+        public static IPipe<X1, Y2> Combine<X1, X2, Y1, Y2>(this IPipe<X1, X2> begin, IPipe<X2, Y2> end)
             where X2 : Y1
         {
-            Func<X1, Y2> combined = input => func2(func1(input));
-            return combined;
+            return new FuncPipe<X1, Y2>(x => end.Process(begin.Process(x)));
         }
+
+        public static IPipeline<TIn, TOut> WireUp<TIn, TOut, TMid>( this IPipe<TMid, TOut> pipe, IPipeline<TIn, TMid> heads )
+        {
+            return heads.Then( pipe );
+        }
+
+        public static IPipeline<TIn, TOut> WireUp<TIn, TOut, TMid>( this IPipe<TMid, TOut> tails, IPipe<TIn, TMid> heads )
+        {
+            return new Pipeline<TIn, TOut>( heads.Combine<TIn, TMid, TMid, TOut>( tails ) );
+        }
+
+        public static B Pipe<TPipe, A, B>(this A value, TPipe pipe) 
+            where TPipe : IPipe<A, B>
+        {
+            return pipe.Process( value );
+        }
+
+    }
+
+    public abstract class Pipe<TIn, TOut>
+        : IPipe<TIn, TOut>
+    {
+        public abstract TOut Process( TIn input );
+
     }
 
     public class IntToString
@@ -114,9 +158,39 @@ namespace Messaging.Tests.Pipes
         }
     }
 
+    public class TransformIntToString
+        : BaseTransform<int, string>
+    {
+        public override string Transform( int origin )
+        {
+            return origin.ToString();
+        }
+
+        public override int Reverse( string transformed )
+        {
+            return int.Parse( transformed );
+        }
+    }
+
+    public class TransformStringToBytes
+        : BaseTransform<string, byte[]>
+    {
+        public override byte[] Transform( string origin )
+        {
+            return Encoding.UTF8.GetBytes( origin );
+        }
+
+        public override string Reverse( byte[] transformed )
+        {
+            return Encoding.UTF8.GetString( transformed );
+        }
+    }
+
     public class when_combining_delegates
     {
-        protected static int test;
+        protected static int test1;
+        protected static int test2;
+        protected static int test3;
 
         private Establish context = () =>
         {
@@ -125,14 +199,29 @@ namespace Messaging.Tests.Pipes
 
         private Because of = () =>
         {
-            test = Pipeline<int, string>
-                .New<IntToString>()
-                .Then<StringToBytes, byte[]>()
+            test1 = Pipeline
+                .New<IntToString, int, string>()
+                .Then(new StringToBytes())
                 .Then<BytesToString, string>()
                 .Then<StringToInt, int>()
-                .Pipe.Process( 10 );
+                .Process( 10 );
+
+            test2 = new StringToInt()
+                .WireUp( new BytesToString() )
+                .WireUp( new StringToBytes() )
+                .WireUp( new IntToString() )
+                .Process( 10 );
+
+            var transformer = new Transformer()
+                .Then<TransformIntToString>()
+                .Then<TransformStringToBytes>();
+
+            var temp = transformer.Transform<int, byte[]>( 10 );
+            test3 = transformer.Reverse<byte[], int>( temp );
         };
 
-        private It should_get_10 = () => test.ShouldEqual( 10 );
+        private It should_get_10_for_test1 = () => test1.ShouldEqual( 10 );
+        private It should_get_10_for_test2 = () => test2.ShouldEqual( 10 );
+        private It should_get_10_for_test3 = () => test3.ShouldEqual( 10 );
     }
 }

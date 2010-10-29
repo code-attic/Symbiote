@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Serialization;
+using Symbiote.Messaging.Impl.Transform;
 using Symbiote.Rabbit.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
@@ -185,21 +186,15 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return this;
         }
 
-        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithProtobuf()
+        public RabbitEndpointFluentConfigurator<TMessage> IncomingTransform(Func<Transformer, Transformer> incomingConfig)
         {
-            ChannelDefinition.MessageSerializerType = typeof(ProtobufMessageSerializer);
+            ChannelDefinition.IncomingTransform = incomingConfig( new Transformer() );
             return this;
         }
 
-        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithBinary()
+        public RabbitEndpointFluentConfigurator<TMessage> OutgoingTransform(Func<Transformer, Transformer> outgoingConfig)
         {
-            ChannelDefinition.MessageSerializerType = typeof(NetBinarySerializer);
-            return this;
-        }
-
-        public RabbitEndpointFluentConfigurator<TMessage> SerializeWithJson()
-        {
-            ChannelDefinition.MessageSerializerType = typeof(JsonMessageSerializer);
+            ChannelDefinition.IncomingTransform = outgoingConfig(new Transformer());
             return this;
         }
 

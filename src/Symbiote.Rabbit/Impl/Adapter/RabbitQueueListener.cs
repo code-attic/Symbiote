@@ -29,9 +29,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }
-        protected IMessageSerializer MessageSerializer { get; set; }
+        protected RabbitChannelDefinition<TMessage> Definition { get; set; }
         protected int TotalReceived { get; set; }
-        protected ConcurrentQueue<RabbitDelivery> DeliveryQueue { get; set; }
         protected bool Running { get; set; }
 
         public override void HandleBasicDeliver(
@@ -44,16 +43,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
             byte[] body)
         {
             Dispatch.Count++;
-            //Queue.Enqueue(new RabbitDelivery(
-            //            consumerTag,
-            //            deliveryTag,
-            //            redelivered,
-            //            exchange,
-            //            routingKey,
-            //            properties,
-            //            body
-            //            ));
-
             Dispatch.Send(
                     RabbitEnvelope<TMessage>.Create(
                         Proxy,
@@ -63,7 +52,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
                         exchange,
                         routingKey,
                         properties,
-                        MessageSerializer.Deserialize<TMessage>(body)));
+                        Definition.IncomingTransform.Reverse<byte[], TMessage>(body)));
         }
 
         public override void HandleBasicCancelOk(string consumerTag)
@@ -76,42 +65,13 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Running = false;
         }
 
-        public void Dequeue()
-        {
-            while (Running)
-            {
-                object item = null;
-                if (Queue.Dequeue(500, out item))
-                {
-                    var delivery = item as RabbitDelivery;
-                    Dispatch.Send(
-                    RabbitEnvelope<TMessage>.Create(
-                        Proxy,
-                        delivery.ConsumerTag,
-                        delivery.DeliveryTag,
-                        delivery.Redelivered,
-                        delivery.Exchange,
-                        delivery.RoutingKey,
-                        delivery.Properties,
-                        MessageSerializer.Deserialize<TMessage>(delivery.Body)));
-                }
-                else
-                {
-                    Thread.Sleep(1);
-                }
-            }
-        }
-
-        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch)
+        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch, RabbitChannelDefinition<TMessage> definition)
         {
             Proxy = proxy;
             Dispatch = dispatch;
-            MessageSerializer = Assimilate.GetInstanceOf<IMessageSerializer>();
+            Definition = definition;
             proxy.InitConsumer(this);
-            //DeliveryQueue = new ConcurrentQueue<RabbitDelivery>();
             Running = true;
-            //Action dequeue = Dequeue;
-            //dequeue.BeginInvoke(null, null);
         }
     }
 }

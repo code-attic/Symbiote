@@ -12,8 +12,5 @@ namespace Symbiote.Messaging.Impl.Channels
         IConfigureChannel<TMessage> CorrelateBy( Func<TMessage, string> messageProperty );
         IConfigureChannel<TMessage> RouteBy(string routingKey);
         IConfigureChannel<TMessage> RouteBy(Func<TMessage, string> messageProperty);
-        IConfigureChannel<TMessage> SerializeWithProtobuf();
-        IConfigureChannel<TMessage> SerializeWithBinary();
-        IConfigureChannel<TMessage> SerializeWithJson();
     }
 }

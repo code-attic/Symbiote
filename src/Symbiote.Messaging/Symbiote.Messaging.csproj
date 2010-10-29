@@ -78,6 +78,10 @@
     <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
+    <Compile Include="Impl\Transform\BaseTransform.cs" />
+    <Compile Include="Impl\Transform\ITransform.cs" />
+    <Compile Include="Impl\Transform\SerializerTransform.cs" />
+    <Compile Include="Impl\Transform\Transformer.cs" />
     <Compile Include="LocalChannelExtension.cs" />
     <Compile Include="Impl\Envelope\Envelope.cs" />
     <Compile Include="MessagingAssimilation.cs" />

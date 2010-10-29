@@ -32,10 +32,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var rabbitDef = definition as RabbitChannelDefinition<TMessage>;
             var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Name);
-            var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy) as IChannel<TMessage>;
-            channel.Name = definition.Name;
-            channel.CorrelationMethod = rabbitDef.CorrelationMethod;
-            channel.RoutingMethod = rabbitDef.RoutingMethod;
+            var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IChannel<TMessage>;
             return channel;
         }
 

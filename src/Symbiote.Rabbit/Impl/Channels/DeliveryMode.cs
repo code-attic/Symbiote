@@ -1,4 +1,4 @@
-/* 
+﻿/* 
 Copyright 2008-2010 Alex Robson
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,22 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using RabbitMQ.Client;
-using Symbiote.Messaging.Impl.Serialization;
-using Symbiote.Rabbit.Impl.Adapter;
-
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IChannelProxy : IDisposable
+    public enum DeliveryMode
     {
-        IModel Channel { get; }
-        void Acknowledge(ulong tag, bool multiple);
-        QueueingBasicConsumer GetConsumer();
-        void InitConsumer(IBasicConsumer consumer);
-        string QueueName { get; }
-        bool Closed { get; }
-        void Send<T>( RabbitEnvelope<T> envelope, byte[] stream );
-        void Reject(ulong tag, bool requeue);
+        Volatile = 1,
+        Persistent = 2
     }
 }

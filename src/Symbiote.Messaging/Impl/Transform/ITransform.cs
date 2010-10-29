@@ -1,4 +1,4 @@
-﻿/* 
+/* 
 Copyright 2008-2010 Alex Robson
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,26 +15,21 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Messaging.Impl.Transform;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging.Impl.Transform
 {
-    public interface IChannelDefinition
+    public interface ITransform
     {
-        string Name { get; set; }
-        Type ChannelType { get; }
-        Type MessageType { get; }
-        Type FactoryType { get; }
-        Transformer OutgoingTransform { get; set; }
-        Transformer IncomingTransform { get; set; }
+        Type FromType { get; }
+        Type ToType { get; }
+        object To( object value );
+        object From( object value );
     }
 
-    public interface IChannelDefinition<TMessage> :
-        IChannelDefinition,
-        IConfigureChannel<TMessage>
+    public interface ITransform<T1, T2>
+        : ITransform
     {
+        T2 Transform( T1 origin );
+        T1 Reverse( T2 origin );
     }
 }

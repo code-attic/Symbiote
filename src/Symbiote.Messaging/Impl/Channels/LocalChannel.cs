@@ -17,41 +17,42 @@ limitations under the License.
 using System;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
+using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
     public class LocalChannel<TMessage>
         : IChannel<TMessage>
     {
-        protected IDispatcher messageDispatcher { get; set; }
+        protected IDispatcher MessageDispatcher { get; set; }
 
-        public string Name { get; set; }
-        public Func<TMessage, string> RoutingMethod { get; set; }
-        public Func<TMessage, string> CorrelationMethod { get; set; }
+        public string Name { get { return Definition.Name; } }
+
+        public LocalChannelDefinition<TMessage> Definition { get; set; }
 
         public void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
         {
             var envelope = new Envelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod(message),
-                RoutingKey = RoutingMethod(message),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
             };
 
             modifyEnvelope(envelope);
             dispatcher.ExpectResponse<TReply>(envelope.MessageId.ToString(), onReply);
 
-            messageDispatcher.Send(envelope);
+            MessageDispatcher.Send(envelope);
         }
 
         public IEnvelope<TMessage> Send(TMessage message)
         {
             var envelope = new Envelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod(message),
-                RoutingKey = RoutingMethod(message),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
             };
 
-            messageDispatcher.Send(envelope);
+            MessageDispatcher.Send(envelope);
             return envelope;
         }
 
@@ -59,19 +60,20 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             var envelope = new Envelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod(message),
-                RoutingKey = RoutingMethod(message),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
             };
 
             modifyEnvelope(envelope);
 
-            messageDispatcher.Send(envelope);
+            MessageDispatcher.Send(envelope);
             return envelope;
         }
 
-        public LocalChannel(IDispatcher messageDirector)
+        public LocalChannel(IDispatcher dispatcher, LocalChannelDefinition<TMessage> definition)
         {
-            messageDispatcher = messageDirector;
+            MessageDispatcher = dispatcher;
+            Definition = definition;
         }
     }
 }

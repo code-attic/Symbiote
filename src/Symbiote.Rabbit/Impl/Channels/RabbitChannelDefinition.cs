@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
@@ -23,11 +24,14 @@ namespace Symbiote.Rabbit.Impl.Channels
         : BaseChannelDefinition<TMessage>
     {
         public string Exchange { get; set; }
+        public string Queue { get; set; }
         public override Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
         public override Type FactoryType { get { return typeof (RabbitChannelFactory<TMessage>); } }
 
         public RabbitChannelDefinition() : base()
         {
+            OutgoingTransform = new Transformer().Then<SerializerTransform<TMessage>>();
+            IncomingTransform = new Transformer().Then<SerializerTransform<TMessage>>();
         }
     }
 }

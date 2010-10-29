@@ -26,6 +26,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IChannelProxyFactory ProxyFactory { get; set; }
         protected IChannelProxy CurrentProxy { get; set; }
         protected RabbitQueueListener<TMessage> Listener { get; set; }
+        protected RabbitChannelDefinition<TMessage> Definition { get; set; }
         protected IDispatcher Dispatcher { get; set; }
         public string Name { get; set; }
         public bool Started { get; private set; }
@@ -43,7 +44,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         public void Start()
         {
             CurrentProxy = ProxyFactory.GetProxyForQueue(Name);
-            Listener = new RabbitQueueListener<TMessage>(CurrentProxy, Dispatcher);
+            Listener = new RabbitQueueListener<TMessage>(CurrentProxy, Dispatcher, Definition);
         }
 
         public void Stop()
@@ -52,10 +53,14 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Listener = null;
         }
 
-        public QueueSubscription(IChannelProxyFactory proxyFactory, IDispatcher dispatcher)
+        public QueueSubscription(
+            IChannelProxyFactory proxyFactory, 
+            IDispatcher dispatcher,
+            RabbitChannelDefinition<TMessage> definition)
         {
             ProxyFactory = proxyFactory;
             Dispatcher = dispatcher;
+            Definition = definition;
         }
     }
 }

@@ -16,19 +16,18 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannel
     {
-        string Name { get; set; }
+        string Name { get; }
     }
 
     public interface IChannel<TMessage>
         : IChannel
     {
-        Func<TMessage, string> RoutingMethod { get; set; }
-        Func<TMessage, string> CorrelationMethod { get; set; }
         void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply );
         IEnvelope<TMessage> Send(TMessage message);
         IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);

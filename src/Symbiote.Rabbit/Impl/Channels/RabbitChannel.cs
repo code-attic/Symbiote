@@ -18,10 +18,8 @@ using System;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
-using Symbiote.Messaging.Extensions;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Rabbit.Config;
 using Symbiote.Rabbit.Impl.Endpoint;
 
@@ -30,25 +28,24 @@ namespace Symbiote.Rabbit.Impl.Channels
     public class RabbitChannel<TMessage>
         : IChannel<TMessage>
     {
-        public IChannelProxy Proxy { get; set; }
-
         public string Name { get; set; }
-        public Func<TMessage, string> RoutingMethod { get; set; }
-        public Func<TMessage, string> CorrelationMethod { get; set; }
+        public IChannelProxy Proxy { get; set; }
+        public RabbitChannelDefinition<TMessage> Definition { get; set; }
 
         public void ExpectReply<TReply>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
         {
             var envelope = new RabbitEnvelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod(message),
-                RoutingKey = RoutingMethod(message),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
                 ReplyToExchange = RabbitBroker.ResponseId,
                 ReplyToKey = ConfigureResponseChannel<TReply>()
             };
 
             modifyEnvelope( envelope );
             dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            Proxy.Send(envelope);
+            var stream = Definition.OutgoingTransform.Transform<TMessage, byte[]>(message);
+            Proxy.Send(envelope, stream);
         }
 
         public string ConfigureResponseChannel<TReply>()
@@ -71,14 +68,14 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var envelope = new RabbitEnvelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod( message ),
-                RoutingKey = RoutingMethod( message ),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
                 ReplyToExchange = RabbitBroker.ResponseId
             };
 
             modifyEnvelope( envelope );
-
-            Proxy.Send(envelope);
+            var stream = Definition.OutgoingTransform.Transform<TMessage, byte[]>(message);
+            Proxy.Send(envelope, stream);
             return envelope;
         }
 
@@ -86,17 +83,19 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var envelope = new RabbitEnvelope<TMessage>(message)
             {
-                CorrelationId = CorrelationMethod(message),
-                RoutingKey = RoutingMethod(message),
+                CorrelationId = Definition.CorrelationMethod(message),
+                RoutingKey = Definition.RoutingMethod(message),
                 ReplyToExchange = RabbitBroker.ResponseId
             };
 
-            Proxy.Send(envelope);
+            var stream = Definition.OutgoingTransform.Transform<TMessage, byte[]>(message);
+            Proxy.Send(envelope, stream);
             return envelope;
         }
 
-        public RabbitChannel(IChannelProxy proxy)
+        public RabbitChannel(IChannelProxy proxy, RabbitChannelDefinition<TMessage> definition)
         {
+            Definition = definition;
             Proxy = proxy;
         }
     }

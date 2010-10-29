@@ -27,12 +27,6 @@ using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public enum DeliveryMode
-    {
-        Volatile = 1,
-        Persistent = 2
-    }
-
     public class ChannelProxy : IChannelProxy
     {
         private IModel _channel;
@@ -73,15 +67,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             get { return _configuration.QueueName ?? ""; }
         }
 
-        public IMessageSerializer Serializer
-        {
-            get
-            {
-                _messageSerializer = _messageSerializer ?? Assimilate.GetInstanceOf<IMessageSerializer>();
-                return _messageSerializer;
-            }
-        }
-
         public void Acknowledge(ulong tag, bool multiple)
         {
             Action<ulong, bool> call = ActualAck;
@@ -93,9 +78,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             Channel.BasicAck(tag, multiple);
         }
 
-        public void Send<T>(RabbitEnvelope<T> envelope)
+        public void Send<T>(RabbitEnvelope<T> envelope, byte[] stream)
         {
-            var stream = Serializer.Serialize(envelope.Message);
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
             Channel.BasicPublish(
                 _configuration.ExchangeName,
@@ -111,16 +95,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             //This call is currently unimplemented for AMQP 0.8
             if (_protocol != AMQP_08)
                 Channel.BasicReject(tag, requeue);
-        }
-
-        public void Reply<T>(PublicationAddress address, IBasicProperties properties, T response)
-        {
-            //This call is currently unimplemented for AMQP 0.8
-            if (_protocol != AMQP_08)
-            {
-                var stream = Serializer.Serialize(response);
-                _channel.BasicPublish(address, properties, stream);
-            }
         }
 
         protected IBasicProperties CreatePublishingProperties<T>(string contentType, RabbitEnvelope<T> envelope)

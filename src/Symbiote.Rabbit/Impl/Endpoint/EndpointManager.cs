@@ -20,6 +20,7 @@ using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
@@ -32,6 +33,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         protected IConnectionManager ConnectionManager { get; set; }
         protected IEndpointIndex EndpointIndex { get; set; }
         protected IChannelManager ChannelManager { get; set; }
+        protected ISubscriptionManager Subscriptions { get; set; }
+        protected IDispatcher Dispatcher { get; set; }
+        protected IChannelProxyFactory ProxyFactory { get; set; }
 
         public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
         {
@@ -49,13 +53,12 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
             {
-                var subscriptions = Assimilate.GetInstanceOf<ISubscriptionManager>();
-                var queueSubscription = Assimilate.GetInstanceOf<QueueSubscription<TMessage>>();
+                var queueSubscription = new QueueSubscription<TMessage>(ProxyFactory, Dispatcher, configurator.ChannelDefinition);
                 queueSubscription.Name = endpoint.QueueName;
                 if(configurator.Subscribe) 
-                    subscriptions.AddAndStartSubscription(queueSubscription);
+                    Subscriptions.AddAndStartSubscription(queueSubscription);
                 else
-                    subscriptions.AddSubscription(queueSubscription);
+                    Subscriptions.AddSubscription(queueSubscription);
             }
         }
 
@@ -157,11 +160,20 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return endpoint;
         }
 
-        public EndpointManager(IChannelManager channelManager, IConnectionManager connectionManager, IEndpointIndex endpointIndex)
+        public EndpointManager(
+            IChannelManager channelManager, 
+            IConnectionManager connectionManager, 
+            IEndpointIndex endpointIndex,
+            ISubscriptionManager subscriptions,
+            IDispatcher dispatcher,
+            IChannelProxyFactory proxyFactory)
         {
             ConnectionManager = connectionManager;
             EndpointIndex = endpointIndex;
             ChannelManager = channelManager;
+            Subscriptions = subscriptions;
+            Dispatcher = dispatcher;
+            ProxyFactory = proxyFactory;
         }
     }
 }

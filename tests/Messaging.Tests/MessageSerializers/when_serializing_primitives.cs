@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using Machine.Specifications;
-using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Core.Serialization;
 
 namespace Messaging.Tests.MessageSerializers
