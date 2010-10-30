@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System.Collections.Concurrent;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {
@@ -27,6 +28,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         {
             RabbitEndpoint endpoint = null;
             _endpointsByExchange.TryGetValue(exchangeName, out endpoint);
+            if (endpoint == null)
+                throw new RabbitConfigurationException(
+                    "There was no endpoint configured for exchange {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(exchangeName));
             return endpoint;
         }
 
@@ -34,6 +38,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         {
             RabbitEndpoint endpoint = null;
             _endpointsByQueue.TryGetValue(queueName, out endpoint);
+            if (endpoint == null)
+                throw new RabbitConfigurationException(
+                    "There was no endpoint configured for queue {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(queueName));
             return endpoint;
         }
 

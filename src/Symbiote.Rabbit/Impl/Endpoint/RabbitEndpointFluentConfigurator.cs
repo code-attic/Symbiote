@@ -44,6 +44,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public RabbitEndpointFluentConfigurator<TMessage> QueueName(string queueName)
         {
             Endpoint.QueueName = queueName;
+            ChannelDefinition.Queue = queueName;
             return this;
         }
 

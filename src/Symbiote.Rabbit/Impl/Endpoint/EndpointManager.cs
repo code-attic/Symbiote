@@ -25,22 +25,19 @@ using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Server;
+using Symbiote.Rabbit.Impl.Subscription;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {
     public class EndpointManager : IEndpointManager
     {
-        protected IConnectionManager ConnectionManager { get; set; }
         protected IEndpointIndex EndpointIndex { get; set; }
         protected IChannelManager ChannelManager { get; set; }
-        protected ISubscriptionManager Subscriptions { get; set; }
-        protected IDispatcher Dispatcher { get; set; }
-        protected IChannelProxyFactory ProxyFactory { get; set; }
+        protected QueueSubscriptionFactory SubscriptionFactory { get; set; }
 
         public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
         {
             EndpointIndex.AddEndpoint<TMessage>(endpoint);
-            CreateOnBroker(endpoint);
         }
 
         public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
@@ -53,127 +50,18 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
             {
-                var queueSubscription = new QueueSubscription<TMessage>(ProxyFactory, Dispatcher, configurator.ChannelDefinition);
-                queueSubscription.Name = endpoint.QueueName;
-                if(configurator.Subscribe) 
-                    Subscriptions.AddAndStartSubscription(queueSubscription);
-                else
-                    Subscriptions.AddSubscription(queueSubscription);
+                SubscriptionFactory.CreateSubscription<TMessage>( configurator.ChannelDefinition, configurator.Subscribe );
             }
-        }
-
-        public void CreateOnBroker(RabbitEndpoint endpoint)
-        {
-            if (!endpoint.CreatedOnBroker)
-            {
-                var connection = ConnectionManager.GetConnection(endpoint.Broker);
-                using (var channel = connection.CreateModel())
-                {
-
-                    if (!string.IsNullOrEmpty(endpoint.ExchangeName))
-                        BuildExchange(channel, endpoint);
-
-                    if (!string.IsNullOrEmpty(endpoint.QueueName))
-                        BuildQueue(channel, endpoint);
-
-                    if (!string.IsNullOrEmpty(endpoint.ExchangeName) && !string.IsNullOrEmpty(endpoint.QueueName))
-                        BindQueue(channel, endpoint.ExchangeName, endpoint.QueueName, endpoint.RoutingKeys.ToArray());
-
-                    endpoint.CreatedOnBroker = true;
-                }
-            }
-        }
-
-        public void BindQueue(string exchangeName, string queueName, params string[] routingKeys)
-        {
-            var endpoint = EndpointIndex.GetEndpointByExchange(exchangeName);
-            var connection = ConnectionManager.GetConnection(endpoint.Broker);
-            using (var channel = connection.CreateModel())
-            {
-                BindQueue(channel, exchangeName, queueName, routingKeys);
-            }
-        }
-
-        public void BindQueue(IModel channel, string exchangeName, string queueName, params string[] routingKeys)
-        {
-            if(routingKeys.Length == 0)
-                routingKeys = new [] {""};
-            try
-            {
-                routingKeys
-                    .ForEach(x => Bind(channel, exchangeName, queueName, x, false, null));
-            }
-            catch (Exception x)
-            {
-                
-                throw;
-            }
-        }
-
-        protected void Bind(IModel channel, string exchangeName, string queueName, string routingKey, bool noWait, IDictionary args)
-        {
-            channel.QueueBind(queueName, exchangeName, routingKey, noWait, args);
-        }
-
-        public void BuildExchange(IModel channel, RabbitEndpoint endpointConfiguration)
-        {
-            channel.ExchangeDeclare(
-                endpointConfiguration.ExchangeName,
-                endpointConfiguration.ExchangeTypeName,
-                endpointConfiguration.Passive,
-                endpointConfiguration.Durable,
-                endpointConfiguration.AutoDelete,
-                endpointConfiguration.Internal,
-                endpointConfiguration.NoWait,
-                endpointConfiguration.Arguments);
-        }
-
-        public void BuildQueue(IModel channel, RabbitEndpoint endpoint)
-        {
-            channel.QueueDeclare(
-                endpoint.QueueName,
-                endpoint.Passive,
-                endpoint.Durable,
-                endpoint.Exclusive,
-                endpoint.AutoDelete,
-                endpoint.NoWait,
-                endpoint.Arguments);
-        }
-
-        public RabbitEndpoint GetEndpointByExchange(string exchangeName)
-        {
-            var endpoint = EndpointIndex.GetEndpointByExchange(exchangeName);
-            if (endpoint == null)
-                throw new RabbitConfigurationException(
-                    "There was no endpoint configured for exchange {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(exchangeName));
-            CreateOnBroker(endpoint);
-            return endpoint;
-        }
-
-        public RabbitEndpoint GetEndpointByQueue(string queueName)
-        {
-            var endpoint = EndpointIndex.GetEndpointByQueue(queueName);
-            if (endpoint == null)
-                throw new RabbitConfigurationException(
-                    "There was no endpoint configured for exchange {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(queueName));
-            CreateOnBroker(endpoint);
-            return endpoint;
         }
 
         public EndpointManager(
             IChannelManager channelManager, 
-            IConnectionManager connectionManager, 
             IEndpointIndex endpointIndex,
-            ISubscriptionManager subscriptions,
-            IDispatcher dispatcher,
-            IChannelProxyFactory proxyFactory)
+            QueueSubscriptionFactory subscriptionFactory)
         {
-            ConnectionManager = connectionManager;
             EndpointIndex = endpointIndex;
             ChannelManager = channelManager;
-            Subscriptions = subscriptions;
-            Dispatcher = dispatcher;
-            ProxyFactory = proxyFactory;
+            SubscriptionFactory = subscriptionFactory;
         }
     }
 }

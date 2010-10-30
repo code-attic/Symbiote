@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RabbitMQ.Client;
+using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {
@@ -29,6 +31,67 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public string QueueName { get; set; }
         public List<string> RoutingKeys { get; set; }
         public bool UseTransactions { get; set; }
+
+        public void BindQueue(IModel channel)
+        {
+            if (RoutingKeys.Count == 0)
+                RoutingKeys = new List<string>(new[] { "" });
+            try
+            {
+                RoutingKeys
+                    .ForEach( x => channel.QueueBind( QueueName, ExchangeName, x, false, null ) );
+            }
+            catch (Exception x)
+            {
+                throw;
+            }
+        }
+
+        public void BuildExchange(IModel channel)
+        {
+            channel.ExchangeDeclare(
+                ExchangeName,
+                ExchangeTypeName,
+                Passive,
+                Durable,
+                AutoDelete,
+                Internal,
+                NoWait,
+                Arguments);
+        }
+
+        public void BuildQueue(IModel channel)
+        {
+            channel.QueueDeclare(
+                QueueName,
+                Passive,
+                Durable,
+                Exclusive,
+                AutoDelete,
+                NoWait,
+                Arguments);
+        }
+
+        public void CreateOnBroker(IConnectionManager manager)
+        {
+            if (!CreatedOnBroker)
+            {
+                var connection = manager.GetConnection(Broker);
+                using (var channel = connection.CreateModel())
+                {
+                    if (!string.IsNullOrEmpty(ExchangeName))
+                        BuildExchange(channel);
+
+                    if (!string.IsNullOrEmpty(QueueName))
+                        BuildQueue(channel);
+
+                    if (!string.IsNullOrEmpty(ExchangeName) && !string.IsNullOrEmpty(QueueName))
+                        BindQueue(channel);
+
+                    CreatedOnBroker = true;
+                }
+            }
+        }
 
         public RabbitEndpoint()
         {

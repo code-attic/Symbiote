@@ -49,6 +49,7 @@
     <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
     <Compile Include="Impl\Channels\DeliveryMode.cs" />
     <Compile Include="Impl\Channels\IRabbitChannelDefinition.cs" />
+    <Compile Include="Impl\Subscription\QueueSubscriptionFactory.cs" />
     <Compile Include="RabbitActorHandler.cs" />
     <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
