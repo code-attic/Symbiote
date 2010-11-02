@@ -9,6 +9,7 @@ using Symbiote.Core.Log.Impl;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Core.Extensions;
 
 namespace Messaging.Tests.Local
 {
@@ -17,8 +18,8 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 800000;
-        protected static int actorCount = 60;
+        protected static int MessagesToSend = 400000;
+        protected static int actorCount = 4;
         protected static IDispatcher dispatcher;
         private Because of = () =>
                                  {
@@ -38,8 +39,6 @@ namespace Messaging.Tests.Local
                                          bus.Publish(message[i % actorCount]);
                                      }
                                      watch.Stop();
-
-
 
                                      cast = new List<Actor>();
                                      dispatcher = Assimilate.GetInstanceOf<IDispatcher>();

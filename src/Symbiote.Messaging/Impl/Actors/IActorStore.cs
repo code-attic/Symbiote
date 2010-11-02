@@ -21,8 +21,7 @@ namespace Symbiote.Messaging.Impl.Actors
     public interface IActorStore<TActor>
         where TActor : class
     {
-        //TActor GetOrCreate<TKey>(TKey id, Func<TKey, TActor> createWith);
-        TActor GetOrCreate<TKey>(TKey id);
+        TActor Get<TKey>(TKey id);
         void Store(TActor actor);
     }
 }

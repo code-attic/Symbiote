@@ -75,18 +75,10 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Dispatch(IEnvelope envelope)
         {
             var typedEnvelope = envelope as IEnvelope<TMessage>;
-            //try
-            //{
-                var actor = Agent.GetActor(typedEnvelope.CorrelationId);
-                Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
-                Handler.Handle(actor, typedEnvelope);
-                Agent.Memoize(actor);
-            //}
-            //catch (ThreadAbortException e)
-            //{
-            //    var cor = envelope.CorrelationId;
-            //    throw;
-            //}
+            var actor = Agent.GetActor(typedEnvelope.CorrelationId);
+            Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
+            Handler.Handle(actor, typedEnvelope);
+            Agent.Memoize(actor);
         }
 
         public ActorMessageDispatcher(IAgency agency)

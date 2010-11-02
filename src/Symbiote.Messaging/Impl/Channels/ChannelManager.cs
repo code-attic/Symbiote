@@ -26,17 +26,20 @@ namespace Symbiote.Messaging.Impl.Channels
     public class ChannelManager
         : IChannelManager
     {
-        protected ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
-        protected ConcurrentDictionary<int, IChannel> Channels { get; set; }
-        protected ConcurrentDictionary<int, IChannelDefinition> Definitions { get; set; }
-        protected ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
+        public ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
+        public ConcurrentDictionary<int, IChannel> Channels { get; set; }
+        public ConcurrentDictionary<int, IChannelDefinition> Definitions { get; set; }
+        public ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
 
         public void AddDefinition(IChannelDefinition definition)
         {
+            ValidateChannelDefinition( definition );
+
             Definitions.AddOrUpdate(
                 GetChannelKey(definition.MessageType, definition.Name),
                 definition,
                 (x, y) => definition);
+
             ChannelFactories.GetOrAdd(definition.ChannelType,
                                        Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
             AddChannelForMessageType(definition.MessageType,
@@ -51,9 +54,9 @@ namespace Symbiote.Messaging.Impl.Channels
                                                           name),
                                            out definition))
             {
-                //throw new MessagingException(
-                //    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                //        .AsFormat(name, messageType));
+                throw new MissingChannelDefinitionException(
+                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
+                        .AsFormat(name, messageType));
             }
             return definition;
         }
@@ -65,7 +68,15 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IChannel<TMessage> GetChannelFor<TMessage>()
         {
-            var channelName = MessageChannels[typeof(TMessage)].First();
+            var messageType = typeof(TMessage);
+            var channelName = MessageChannels[messageType].FirstOrDefault();
+
+            if(string.IsNullOrEmpty(channelName))
+                throw new MissingChannelDefinitionException(
+                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
+                        .AsFormat("<nothing>", messageType));
+
+
             return GetChannelFor<TMessage>(channelName);
         }
 
@@ -129,6 +140,30 @@ namespace Symbiote.Messaging.Impl.Channels
             }
             if (!channels.Contains(channelName))
                 channels.Add(channelName);
+        }
+
+        public void ValidateChannelDefinition(IChannelDefinition definition)
+        {
+            var violations = GetDefinitionViolations( definition ).ToList();
+            if(violations.Count > 0)
+                throw new InvalidChannelDefinitionException() { Violations = violations };
+        }
+
+        public IEnumerable<string> GetDefinitionViolations(IChannelDefinition definition)
+        {
+            if (definition.FactoryType == null)
+                yield return "Channel definition must specify a channel factory type";
+
+            if(definition.ChannelType == null)
+                yield return "Channel definition must specify a channel type";
+
+            if(definition.MessageType == null)
+                yield return "Channel definition must specify a message type";
+
+            if (string.IsNullOrWhiteSpace(definition.Name))
+                yield return "Channel definition must specify a channel name";
+
+            yield break;
         }
 
         public ChannelManager()

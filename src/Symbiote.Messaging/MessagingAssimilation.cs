@@ -58,8 +58,9 @@ namespace Symbiote.Messaging
                                             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
                                             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
                                             x.For<IAgency>().Use<Agency>().AsSingleton();
-                                            x.For(typeof (IActorCache<>)).Use(typeof (InMemoryActorCache<>));
 
+                                            x.For(typeof (IActorCache<>)).Use(typeof (InMemoryActorCache<>));
+                                            x.For( typeof(IAgentFactory) ).Use<DefaultAgentFactory>();
                                             x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
                                             x.For(typeof (IKeyAccessor<>)).Use(typeof (DefaultKeyAccessor<>));
                                             x.For(typeof (IAgent<>)).Use(typeof (DefaultAgent<>));

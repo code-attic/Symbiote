@@ -22,12 +22,7 @@ namespace Symbiote.Messaging.Impl.Actors
         : IActorStore<TActor>
         where TActor : class
     {
-        public TActor GetOrCreate<TKey>(TKey id, Func<TKey, TActor> createWith)
-        {
-            return createWith(id);
-        }
-
-        public TActor GetOrCreate<TKey>(TKey id)
+        public TActor Get<TKey>(TKey id)
         {
             return null;
         }

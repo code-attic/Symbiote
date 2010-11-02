@@ -1,10 +1,9 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.Core.Log.Impl;
 using Symbiote.Messaging;
 using Symbiote.StructureMap;
 
-namespace Messaging.Tests.Local
+namespace Messaging.Tests
 {
     public class with_assimilation
     {

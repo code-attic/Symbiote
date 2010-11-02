@@ -18,7 +18,7 @@ namespace Symbiote.Core.Extensions
         public static TValue GetOrDefault<TKey, TValue>(this ConcurrentDictionary<TKey, TValue> dictionary, TKey key)
         {
             TValue value = default(TValue);
-            var found = dictionary.TryGetValue(key, out value);
+            dictionary.TryGetValue(key, out value);
             return value;
         }
     }

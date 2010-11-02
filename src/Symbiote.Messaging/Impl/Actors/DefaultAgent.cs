@@ -17,6 +17,7 @@ limitations under the License.
 using System.Collections.Concurrent;
 using System.Threading;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
@@ -27,36 +28,24 @@ namespace Symbiote.Messaging.Impl.Actors
         protected IActorCache<TActor> Cache { get; set; }
         protected IActorStore<TActor> Store { get; set; }
         protected IActorFactory<TActor> Factory { get; set; }
-        protected ConcurrentDictionary<string, TActor> Actors { get; set; }
-        protected ReaderWriterLockSlim SlimLock { get; set; }
+        public ExclusiveConcurrentDictionary<string, TActor> Actors { get; set; }
 
         public TActor GetActor<TKey>(TKey key)
         {
-            var stringKey = key.ToString();
-            var actor = Actors.GetOrDefault(stringKey) 
-                        ?? Cache.Get(key)
-                        ?? Store.GetOrCreate(key);
-            if (actor == null)
-            {
-                SlimLock.EnterUpgradeableReadLock();
-                if (!Actors.TryGetValue(stringKey, out actor))
-                {
-                    SlimLock.EnterWriteLock();
-                    "Creating actor for key {0}"
-                        .ToInfo<IBus>(key);
-                    actor = Factory.CreateInstance(key);
-                    Actors.TryAdd(stringKey, actor);
-                    SlimLock.ExitWriteLock();
-                }
-                SlimLock.ExitUpgradeableReadLock();
-            }
-            return actor;
+            return Actors.ReadOrWrite( key.ToString(), 
+                    () =>
+                    {
+                        return Cache.Get( key )
+                               ?? Store.Get( key )
+                               ?? Factory.CreateInstance( key );
+                    }
+                );
         }
 
         public void Memoize(TActor actor)
         {
             Cache.Store(actor);
-            //Store.Store(actor);
+            Store.Store(actor);
         }
 
         public DefaultAgent(IActorCache<TActor> cache, IActorStore<TActor> store, IActorFactory<TActor> factory)
@@ -64,8 +53,7 @@ namespace Symbiote.Messaging.Impl.Actors
             Cache = cache;
             Store = store;
             Factory = factory;
-            Actors = new ConcurrentDictionary<string, TActor>();
-            SlimLock = new ReaderWriterLockSlim();
+            Actors = new ExclusiveConcurrentDictionary<string, TActor>();
         }
     }
 }

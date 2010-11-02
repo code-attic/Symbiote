@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
@@ -24,15 +25,12 @@ namespace Symbiote.Messaging.Impl.Actors
         : IActorCache<TActor>
         where TActor : class
     {
-        protected ReaderWriterLockSlim SlimLock { get; set; }
-        protected ConcurrentDictionary<string, object> Actors { get; set; }
+        public ExclusiveConcurrentDictionary<string, TActor> Actors { get; set; }
         protected IKeyAccessor<TActor> KeyAccessor { get; set; }
         
         public TActor Get<TKey>(TKey id)
         {
-            object actor = null;
-            Actors.TryGetValue(id.ToString(), out actor);
-            return actor as TActor;
+            return Actors.GetOrDefault(id.ToString());
         }
 
         public void Store(TActor actor)
@@ -40,15 +38,14 @@ namespace Symbiote.Messaging.Impl.Actors
             if(actor != null)
             {
                 var key = KeyAccessor.GetId(actor);
-                Actors.AddOrUpdate(key, actor, (x, y) => actor);
+                Actors[key] = actor;
             }
         }
 
         public InMemoryActorCache(IKeyAccessor<TActor> keyAccessor)
         {
             KeyAccessor = keyAccessor;
-            Actors = new ConcurrentDictionary<string, object>();
-            SlimLock = new ReaderWriterLockSlim();
+            Actors = new ExclusiveConcurrentDictionary<string, TActor>();
         }
     }
 }

@@ -16,29 +16,27 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
-using Symbiote.Core;
+using System.Threading;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
     public class Agency : IAgency
     {
-        protected ConcurrentDictionary<Type, IAgent> Agents { get; set; }
+        public IAgentFactory AgentFactory { get; set; }
+        public ExclusiveConcurrentDictionary<Type, IAgent> Agents { get; set; }
 
         public IAgent<TActor> GetAgentFor<TActor>() where TActor : class
         {
-            IAgent agent = null;
             var actorType = typeof (TActor);
-            if(!Agents.TryGetValue(actorType, out agent))
-            {
-                agent = Assimilate.GetInstanceOf<IAgent<TActor>>();
-                Agents.TryAdd(actorType, agent);
-            }
-            return agent as IAgent<TActor>;
+            return Agents.ReadOrWrite(actorType, () => AgentFactory.GetAgentFor<TActor>()) as IAgent<TActor>;
+            
         }
 
-        public Agency()
+        public Agency( IAgentFactory agentFactory )
         {
-            Agents = new ConcurrentDictionary<Type,IAgent>();
+            AgentFactory = agentFactory;
+            Agents = new ExclusiveConcurrentDictionary<Type, IAgent>();
         }
     }
 }
