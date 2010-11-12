@@ -15,15 +15,12 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Concurrent;
 using System.Text;
-using System.Threading;
 using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Messaging.Impl.Transform;
 using Symbiote.Rabbit.Impl.Channels;
 
@@ -94,7 +91,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Definition = definition;
             proxy.InitConsumer(this);
             Running = true;
-            RingBuffer = new VolatileRingBuffer(1000000);
+            RingBuffer = new VolatileRingBuffer(100000);
             definition.IncomingTransform.Phases.ForEach(x =>
             {
                 var transform = Assimilate.GetInstanceOf(x) as ITransform;
@@ -124,7 +121,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
             IBasicProperties properties, 
             byte[] body)
         {
-            Dispatch.Count++;
             var envelope = 
                     RabbitEnvelope<TMessage>.Create(
                         Proxy,

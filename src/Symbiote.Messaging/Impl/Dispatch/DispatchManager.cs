@@ -28,17 +28,20 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public int Count { get; set; }
         public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
+        public VolatileRingBufferArray RingBuffer { get; set; }
 
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
         {
             Count++;
-            SendToHandler( envelope );
+            //SendToHandler( envelope );
+            RingBuffer.Write( envelope.CorrelationId, envelope );
         }
 
         public void Send(IEnvelope envelope)
         {
             Count++;
-            SendToHandler( envelope );
+            RingBuffer.Write(envelope.CorrelationId, envelope);
+            //SendToHandler( envelope );
         }
 
         public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
@@ -74,6 +77,13 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public HyperDispatchManager()
         {
+            RingBuffer = new VolatileRingBufferArray( 10000, 10000 );
+            RingBuffer.AddTransform( o =>
+            {
+                SendToHandler( o as IEnvelope );
+                return null;
+            } );
+            RingBuffer.Start();
             Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
             ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
             WireupDispatchers();

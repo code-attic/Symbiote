@@ -77,6 +77,8 @@ namespace Symbiote.Core.Utility
                 () =>
                 {
                     var index = ActorIndex.Count;
+                    //Action<int> transform = TransformsForActor;
+                    //transform.BeginInvoke( index, null, null );
                     return index;
                 } );
 
@@ -84,7 +86,7 @@ namespace Symbiote.Core.Utility
             while (current == WriteIndex[actorIndex, LastStep]
                 && Iteration[actorIndex, 0] > Iteration[actorIndex, LastStep])
             {
-                Thread.Sleep( 1 );
+                Thread.Sleep( 10 );
             }
             Started = true;
             Ring[actorIndex, current] = value;

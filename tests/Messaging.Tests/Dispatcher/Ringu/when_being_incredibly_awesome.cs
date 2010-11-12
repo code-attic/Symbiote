@@ -394,7 +394,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
     {
         protected static List<Account> accounts { get; set; }
         protected static Stopwatch watch;
-        protected static int TotalAccounts = 40;
+        protected static int TotalAccounts = 60;
         protected static int Transactions = 10000;
         protected static IBus bus;
 
@@ -421,7 +421,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
                 }
             });
 
-            Thread.Sleep(100);
+            Thread.Sleep(150);
 
             watch.Stop();
 

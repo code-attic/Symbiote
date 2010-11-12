@@ -48,7 +48,7 @@ namespace Rabbit.Tests
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch receiveWatch { get; set; }
         protected static Stopwatch sendWatch { get; set; }
-        protected static int MessagesToSend = 60000;
+        protected static int MessagesToSend = 10000;
         protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
 
@@ -56,27 +56,27 @@ namespace Rabbit.Tests
         {
             Actor.Created = 0;
 
-            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").PersistentDelivery().CorrelateBy(m => m.CorrelationId).UseTransactions());
+            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").CorrelateBy(m => m.CorrelationId).AutoDelete().NoAck());
             
             var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
             var message = Enumerable.Range(0, actorCount)
                 .Select(x => new Message() { CorrelationId = names[x] })
                 .ToList();
 
+            
             sendWatch = Stopwatch.StartNew();
             for (int i = 0; i < MessagesToSend; i++)
             {
                 message[i % actorCount].Id = i;
                 Bus.Publish(message[i % actorCount]);
-                if(i % 10000 == 0)
-                    Bus.CommitChannelOf<Message>();
+                //if(i % 1000 == 0)
+                //    Bus.CommitChannelOf<Message>();
             }
-            
             sendWatch.Stop();
 
-            Bus.StartSubscription("test");
             receiveWatch = Stopwatch.StartNew();
-            Thread.Sleep(TimeSpan.FromSeconds(3));
+            Bus.StartSubscription("test");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
             receiveWatch.Stop(); 
 
             dispatcher = Assimilate.GetInstanceOf<IDispatcher>();
@@ -93,7 +93,7 @@ namespace Rabbit.Tests
 
         private It should_have_sent_all_messages_to_actor = () =>
                                                             Actor.MessageIds.Count.ShouldEqual(MessagesToSend);
-
+        
         private It should_have_all_teh_dispatchers = () => dispatcher.Count.ShouldEqual(MessagesToSend);
     }
 
@@ -120,6 +120,8 @@ namespace Rabbit.Tests
 
         public void Received(int messageid)
         {
+            if(_messages.Contains( messageid ))
+                throw new Exception("This is crap!");
             _messages.Add(messageid);
         }
 
@@ -136,10 +138,11 @@ namespace Rabbit.Tests
         public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
         {
             actor.Received(envelope.Message.Id);
-            if(Actor.MessageIds.Count % 5000 == 0)
-            {
-                envelope.AcknowledgeAll();
-            }
+            //envelope.Acknowledge();
+            //if (Actor.MessageIds.Count % 100 == 0)
+            //{
+            //    envelope.AcknowledgeAll();
+            //}
         }
     }
 

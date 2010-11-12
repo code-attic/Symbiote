@@ -19,7 +19,7 @@ namespace Messaging.Tests.Local
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
         protected static int MessagesToSend = 400000;
-        protected static int actorCount = 4;
+        protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
         private Because of = () =>
                                  {
@@ -53,6 +53,20 @@ namespace Messaging.Tests.Local
                                      int count = cast.Count;
                                  };
         
+        //Ring buffer speeds:
+        // 355987 / 2442 ms
+        // 341588 / 1784 ms
+        // 361558 / 1836 ms
+        // 359202 / 1749 ms
+
+
+        //Mailbox Processor speeds:
+        // 400000 / 2498 ms
+        // 400000 / 2484 ms
+        // 400000 / 2565 ms
+        // 400000 / 2358 ms
+
+
         private It should_complete_in_1_second = () =>
                                                  watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
 
