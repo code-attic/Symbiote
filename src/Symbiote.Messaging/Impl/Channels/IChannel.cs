@@ -25,11 +25,46 @@ namespace Symbiote.Messaging.Impl.Channels
         string Name { get; }
     }
 
+    public interface IChannelAdapter
+    {
+        IChannel UnderlyingChannel { get; }
+        void ExpectReply<TReply>(object message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
+        void Send<TMessage>(object message);
+        void Send<TMessage>(object message, Action<IEnvelope> modifyEnvelope);
+    }
+
     public interface IChannel<TMessage>
         : IChannel
     {
-        void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply );
-        IEnvelope<TMessage> Send(TMessage message);
-        IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
+        void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
+        void Send(TMessage message);
+        void Send(TMessage message, Action<IEnvelope> modifyEnvelope);
     }
+
+    public interface IOpenChannel
+        : IChannel
+    {
+        void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
+        void Send<TMessage>(TMessage message);
+        void Send<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);
+    }
+
+    //public interface IChannel<TMessage>
+    //    : IChannel
+    //{
+    //    void ExpectReply<T, TReply>( T message, Action<IEnvelope<T>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
+    //        where T : TMessage;
+    //    IEnvelope<T> Send<T>(T message)
+    //        where T : TMessage;
+    //    IEnvelope<T> Send<T>(T message, Action<IEnvelope<T>> modifyEnvelope)
+    //        where T : TMessage;
+    //}
+
+    //public interface IOpenChannel
+    //    : IChannel
+    //{
+    //    void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
+    //    IEnvelope<TMessage> Send<TMessage>(TMessage message);
+    //    IEnvelope<TMessage> Send<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
+    //}
 }

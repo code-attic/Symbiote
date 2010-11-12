@@ -66,8 +66,10 @@
     <Compile Include="Actor\Agent\with_cached_actor.cs" />
     <Compile Include="Actor\Agent\with_no_actor.cs" />
     <Compile Include="Actor\Agent\with_stored_actor.cs" />
+    <Compile Include="Actor\Cache\when_caching_actor.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Channels\Manager\when_adding_definition.cs" />
+    <Compile Include="Dispatcher\Ringu\when_being_incredibly_awesome.cs" />
     <Compile Include="Local\Actor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -145,7 +147,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Actor\Cache\" />
     <Folder Include="Actor\Store\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

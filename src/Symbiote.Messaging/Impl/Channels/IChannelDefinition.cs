@@ -32,6 +32,12 @@ namespace Symbiote.Messaging.Impl.Channels
         Transformer IncomingTransform { get; set; }
     }
 
+    public interface IOpenChannelDefinition
+        : IChannelDefinition,
+        IConfigureChannel
+    {
+    }
+
     public interface IChannelDefinition<TMessage> :
         IChannelDefinition,
         IConfigureChannel<TMessage>

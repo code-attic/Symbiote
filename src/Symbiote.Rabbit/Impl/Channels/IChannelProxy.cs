@@ -29,7 +29,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         void InitConsumer(IBasicConsumer consumer);
         string QueueName { get; }
         bool Closed { get; }
-        void Send<T>( RabbitEnvelope<T> envelope, byte[] stream );
+        void Send<T>( RabbitEnvelope<T> envelope );
         void Reject(ulong tag, bool requeue);
     }
 }

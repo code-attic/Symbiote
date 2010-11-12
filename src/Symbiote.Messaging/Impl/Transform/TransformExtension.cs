@@ -1,4 +1,4 @@
-/* 
+﻿/* 
 Copyright 2008-2010 Alex Robson
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,12 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-namespace Symbiote.Rabbit.Impl.Endpoint
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace Symbiote.Messaging.Impl.Transform
 {
-    public interface IEndpointIndex
+    public static class TransformExtension
     {
-        RabbitEndpoint GetEndpointByExchange(string exchangeName);
-        RabbitEndpoint GetEndpointByQueue(string queueName);
-        void AddEndpoint(RabbitEndpoint endpoint);
+        public static IEnumerable<ITransform> GetStepsFromTransform(this ITransform transform)
+        {
+            while(transform != null)
+            {
+                yield return transform;
+                //transform = transform.NextTransform;
+            }
+        }
     }
 }

@@ -78,7 +78,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             Channel.BasicAck(tag, multiple);
         }
 
-        public void Send<T>(RabbitEnvelope<T> envelope, byte[] stream)
+        public void Send<T>(RabbitEnvelope<T> envelope)
         {
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
             Channel.BasicPublish(
@@ -87,7 +87,7 @@ namespace Symbiote.Rabbit.Impl.Channels
                 EndpointConfiguration.MandatoryDelivery,
                 EndpointConfiguration.ImmediateDelivery,
                 properties,
-                stream);
+                envelope.ByteStream);
         }
 
         public void Reject(ulong tag, bool requeue)
@@ -108,6 +108,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             properties.Headers.Add("Sequence", envelope.Sequence);
             properties.Headers.Add("SequenceEnd", envelope.SequenceEnd);
             properties.Headers.Add("Position", envelope.Position);
+            properties.Headers.Add("MessageType", envelope.MessageType.AssemblyQualifiedName);
             properties.ReplyToAddress = new PublicationAddress(ExchangeType.direct.ToString(), envelope.ReplyToExchange, envelope.ReplyToKey);
             properties.Timestamp = new AmqpTimestamp( DateTime.Now.Ticks + EPOCH );
             return properties;

@@ -53,6 +53,7 @@ namespace Symbiote.Messaging
                                                         s.ConnectImplementationsToTypesClosing(
                                                             typeof(IKeyAccessor<>));
                                                     });
+
                                             x.For<IBus>().Use<Bus>();
                                             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
                                             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();

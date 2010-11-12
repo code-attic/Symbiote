@@ -205,6 +205,8 @@
     <Compile Include="Utility\ILockManager.cs" />
     <Compile Include="Utility\NullLockManager.cs" />
     <Compile Include="Utility\SpinLockManager.cs" />
+    <Compile Include="Utility\VolatileRingBuffer.cs" />
+    <Compile Include="Utility\VolatileRingBufferArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">

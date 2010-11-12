@@ -23,12 +23,21 @@ namespace Messaging.Tests.Local
                                      {
                                          bus.Publish(new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });
                                      }
-                                     watch.Stop();
+
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
+                                     while(actor.FacesIveDrivenOver.Count < .8 * MessagesToSend)
+                                     {
+                                         
+                                     }
+                                     watch.Stop();
                                  };
 
+        // performance is currently close to a factor of 100. Messages dispatched = 100 * ms run to send
+        // fastest: 115ms = 15000 > 100 msg/ms
+        // slowest: 198ms = 15000 ~ 75 msg/ms
+
         private It should_complete_in_1_second = () =>
-                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
+                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(11);
 
         private It should_only_have_created_the_actor_once = () =>
                                                              Actor.Created.ShouldEqual(1);

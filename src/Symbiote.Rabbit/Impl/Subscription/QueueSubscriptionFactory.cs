@@ -27,6 +27,16 @@ namespace Symbiote.Rabbit.Impl.Subscription
         protected IDispatcher Dispatcher { get; set; }
         protected IChannelProxyFactory ProxyFactory { get; set; }
         
+        public void CreateSubscription(RabbitChannelDefinition definition, bool start)
+        {
+            var queueSubscription = new QueueSubscription(ProxyFactory, Dispatcher, definition);
+            queueSubscription.Name = definition.Queue;
+            if (start)
+                Subscriptions.AddAndStartSubscription(queueSubscription);
+            else
+                Subscriptions.AddSubscription(queueSubscription);
+        }
+
         public void CreateSubscription<TMessage>(RabbitChannelDefinition<TMessage> definition, bool start)
         {
             var queueSubscription = new QueueSubscription<TMessage>(ProxyFactory, Dispatcher, definition);

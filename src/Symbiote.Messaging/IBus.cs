@@ -24,10 +24,10 @@ namespace Symbiote.Messaging
         bool HasChannelFor<T>();
         bool HasChannelFor<T>(string channelName);
         void Publish<TMessage>(TMessage message);
-        void Publish<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
+        void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);
         void StartSubscription(string subscription);
         void StopSubscription(string subscription);
         void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply);
-        void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, Action<TResponse> onReply);
+        void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply);
     }
 }

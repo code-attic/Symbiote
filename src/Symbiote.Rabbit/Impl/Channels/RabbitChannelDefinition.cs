@@ -15,23 +15,41 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Transform;
+using Symbiote.Rabbit.Impl.Transform;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
+    public class RabbitChannelDefinition
+        : BaseChannelDefinition
+    {
+        public string Exchange { get; set; }
+        public string Queue { get; set; }
+        public override Type ChannelType { get { return typeof(RabbitChannel); } }
+        public override Type FactoryType { get { return typeof(RabbitChannelFactory); } }
+        
+        public RabbitChannelDefinition() : base()
+        {
+            OutgoingTransform = new Transformer().Then<RabbitSerializerTransform>();
+            IncomingTransform = new Transformer().Then<RabbitSerializerTransform>();
+        }
+    }
+
     public class RabbitChannelDefinition<TMessage>
         : BaseChannelDefinition<TMessage>
     {
         public string Exchange { get; set; }
         public string Queue { get; set; }
         public override Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
-        public override Type FactoryType { get { return typeof (RabbitChannelFactory<TMessage>); } }
+        public override Type FactoryType { get { return typeof(RabbitChannelFactory<TMessage>); } }
 
-        public RabbitChannelDefinition() : base()
+        public RabbitChannelDefinition()
+            : base()
         {
-            OutgoingTransform = new Transformer().Then<SerializerTransform<TMessage>>();
-            IncomingTransform = new Transformer().Then<SerializerTransform<TMessage>>();
+            OutgoingTransform = new Transformer().Then<RabbitSerializerTransform>();
+            IncomingTransform = new Transformer().Then<RabbitSerializerTransform>();
         }
     }
 }

@@ -16,22 +16,43 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.Utility
 {
     public class ExclusiveConcurrentDictionary<TKey, TValue>
-        where TValue : class
     {
         protected ReaderWriterLockSlim SlimLock { get; set; }
         protected ConcurrentDictionary<TKey, TValue> Dictionary { get; set; }
         public int MostWaiting { get; set; } // for diagnostic purposes
 
+        public int Count
+        {
+            get { return Dictionary.Count; }
+        }
+
+        public IEnumerable<TValue> Values
+        {
+            get { return Dictionary.Values; }
+        }
+
         public TValue this[TKey key]
         {
             get { return GetOrDefault( key ); }
-            set { Dictionary.AddOrUpdate( key, value, ( x, y ) => value ); }
+            set
+            {
+                try
+                {
+                    Dictionary[key] = value;
+                    //Dictionary.AddOrUpdate( key, value, ( x, y ) => value );
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine( e );
+                }
+            }
         }
 
         public TValue GetOrDefault(TKey key)
@@ -41,7 +62,7 @@ namespace Symbiote.Core.Utility
 
         public TValue ReadOrWrite(TKey key, Func<TValue> valueProvider)
         {
-            TValue value = null;
+            TValue value = default(TValue);
             if (!Dictionary.TryGetValue( key, out value))
             {
                 try

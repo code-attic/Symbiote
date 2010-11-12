@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
+
 namespace Symbiote.Messaging.Impl.Serialization
 {
     public interface IMessageSerializer
@@ -21,6 +23,8 @@ namespace Symbiote.Messaging.Impl.Serialization
         T Deserialize<T>(byte[] message);
 
         object Deserialize(byte[] message);
+        
+        object Deserialize(Type messageType, byte[] message);
 
         byte[] Serialize<T>(T body);
     }

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Text;
 using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Messaging;
@@ -22,26 +23,17 @@ using Symbiote.Rabbit.Impl.Channels;
 
 namespace Symbiote.Rabbit
 {
-    public class RabbitEnvelope<TMessage> :
-        IEnvelope<TMessage>
+    public class RabbitEnvelope
     {
-        private static readonly long EPOCH = 621355968000000000L;
-        protected Type _messageType;
+        public byte[] ByteStream { get; set; }
+        protected static readonly long EPOCH = 621355968000000000L;
         protected string _correlationId;
         public string ConsumerTag { get; set; }
         public string CorrelationId { get; set; }
         public ulong DeliveryTag { get; set; }
-        public bool Empty { get { return Message == null; } }
         public string Exchange { get; set; }
         public Guid MessageId { get; set; }
-        public Type MessageType
-        {
-            get
-            {
-                _messageType = _messageType ?? Message.GetType();
-                return _messageType;
-            }
-        }
+
         public IChannelProxy Proxy { get; set; }
         public bool Redelivered { get; set; }
         public string ReplyToExchange { get; set; }
@@ -53,6 +45,56 @@ namespace Symbiote.Rabbit
         public long Position { get; set; }
         public bool SequenceEnd { get; set; }
 
+        protected Type _messageType;
+        public virtual object Message { get; set; }
+        public bool Empty { get { return Message == null; } }
+        public Type MessageType
+        {
+            get
+            {
+                _messageType = _messageType ?? Message.GetType();
+                return _messageType;
+            }
+            protected set { _messageType = value; }
+        }
+
+        public RabbitEnvelope() {}
+
+        public void Initialize(string consumerTag, IBasicProperties properties, ulong deliveryTag, string exchange, IChannelProxy proxy, bool redelivered, string routingKey)
+        {
+            ConsumerTag = consumerTag;
+            CorrelationId = properties.CorrelationId;
+            DeliveryTag = deliveryTag;
+            Exchange = exchange;
+            MessageId = Guid.Parse(properties.MessageId);
+            Proxy = proxy;
+            Redelivered = redelivered;
+            ReplyToExchange = properties.ReplyToAddress.ExchangeName;
+            ReplyToKey = properties.ReplyToAddress.RoutingKey;
+            RoutingKey = routingKey;
+            Position = (long)properties.Headers["Position"];
+            Sequence = (long)properties.Headers["Sequence"];
+            SequenceEnd = (bool)properties.Headers["SequenceEnd"];
+            TimeStamp = new DateTime(EPOCH).AddTicks(properties.Timestamp.UnixTime);
+        }
+
+        public RabbitEnvelope(string consumerTag, IBasicProperties properties, ulong deliveryTag, string exchange, IChannelProxy proxy, bool redelivered, string routingKey, byte[] body)
+        {
+            ByteStream = body;
+            Initialize(consumerTag, properties, deliveryTag, exchange, proxy, redelivered, routingKey);
+        }
+    }
+
+    public class RabbitEnvelope<TMessage> :
+        RabbitEnvelope,
+        IEnvelope<TMessage>
+    {
+        public new TMessage Message
+        {
+            get { return (TMessage) base.Message; }
+            set { base.Message = value; }
+        }
+        
         public void Acknowledge()
         {
             AckMessage(false);
@@ -73,48 +115,43 @@ namespace Symbiote.Rabbit
             Proxy.Reject(DeliveryTag, true);
         }
 
-        public void Reply<TResponse>( TResponse response )
+        public void Reply<TResponse>(TResponse response)
         {
             var bus = Assimilate.GetInstanceOf<IBus>();
             if (!bus.HasChannelFor<TResponse>())
             {
-                bus.AddRabbitChannel<TResponse>( x => x.AutoDelete().Direct( ReplyToExchange ).NoAck() );
+                bus.AddRabbitChannel<TResponse>(x => x.AutoDelete().Direct(ReplyToExchange).NoAck());
             }
             bus.Publish(response, x =>
             {
                 x.CorrelationId = MessageId.ToString();
                 x.RoutingKey = ReplyToKey;
-            } );
+            });
         }
 
-        public TMessage Message { get; set; }
+        public RabbitEnvelope()
+        {
+            MessageId = Guid.NewGuid();
+            _messageType = typeof(TMessage);
+        }
 
-        public RabbitEnvelope( TMessage message )
+        public RabbitEnvelope( TMessage message ) : this()
         {
             Message = message;
-            _messageType = typeof(TMessage);
-            MessageId = Guid.NewGuid();
         }
 
         public static RabbitEnvelope<TMessage> Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, TMessage body)
         {
             var envelope = new RabbitEnvelope<TMessage>(body);
+            envelope.Initialize(consumerTag, properties, deliveryTag, exchange, proxy, redelivered, routingKey);
+            return envelope;
+        }
 
-            envelope.ConsumerTag = consumerTag;
-            envelope.CorrelationId = properties.CorrelationId;
-            envelope.DeliveryTag = deliveryTag;
-            envelope.Exchange = exchange;
-            envelope.MessageId = Guid.Parse( properties.MessageId );
-            envelope.Proxy = proxy;
-            envelope.Redelivered = redelivered;
-            envelope.ReplyToExchange = properties.ReplyToAddress.ExchangeName;
-            envelope.ReplyToKey = properties.ReplyToAddress.RoutingKey;
-            envelope.RoutingKey = routingKey;
-            envelope.Position = (long) properties.Headers["Position"];
-            envelope.Sequence = (long) properties.Headers["Sequence"];
-            envelope.SequenceEnd = (bool) properties.Headers["SequenceEnd"];
-            envelope.TimeStamp = new DateTime(EPOCH).AddTicks(properties.Timestamp.UnixTime);
-
+        public static RabbitEnvelope<TMessage> Create(IChannelProxy proxy, string consumerTag, ulong deliveryTag, bool redelivered, string exchange, string routingKey, IBasicProperties properties, byte[] body)
+        {
+            var envelope = new RabbitEnvelope<TMessage>();
+            envelope.ByteStream = body;
+            envelope.Initialize(consumerTag, properties, deliveryTag, exchange, proxy, redelivered, routingKey);
             return envelope;
         }
     }

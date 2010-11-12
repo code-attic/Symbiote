@@ -21,6 +21,11 @@ namespace Symbiote.Messaging.Impl.Serialization
                 "Protobuf cannot deserialize messages of unknown type. You must call Deserialize<T> where T is a known message type.");
         }
 
+        public object Deserialize( Type messageType, byte[] message )
+        {
+            return message.FromProtocolBuffer( messageType );
+        }
+
         public byte[] Serialize<T>(T body)
         {
             return body.ToProtocolBuffer<T>();

@@ -17,7 +17,6 @@ limitations under the License.
 using System;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
-using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -30,7 +29,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public LocalChannelDefinition<TMessage> Definition { get; set; }
 
-        public void ExpectReply<TReply>( TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
+        public void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
         {
             var envelope = new Envelope<TMessage>(message)
             {
@@ -39,12 +38,12 @@ namespace Symbiote.Messaging.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            dispatcher.ExpectResponse<TReply>(envelope.MessageId.ToString(), onReply);
+            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
 
             MessageDispatcher.Send(envelope);
         }
 
-        public IEnvelope<TMessage> Send(TMessage message)
+        public void Send(TMessage message)
         {
             var envelope = new Envelope<TMessage>(message)
             {
@@ -53,10 +52,9 @@ namespace Symbiote.Messaging.Impl.Channels
             };
 
             MessageDispatcher.Send(envelope);
-            return envelope;
         }
 
-        public IEnvelope<TMessage> Send(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
+        public void Send(TMessage message, Action<IEnvelope> modifyEnvelope)
         {
             var envelope = new Envelope<TMessage>(message)
             {
@@ -67,13 +65,95 @@ namespace Symbiote.Messaging.Impl.Channels
             modifyEnvelope(envelope);
 
             MessageDispatcher.Send(envelope);
-            return envelope;
         }
 
         public LocalChannel(IDispatcher dispatcher, LocalChannelDefinition<TMessage> definition)
         {
             MessageDispatcher = dispatcher;
             Definition = definition;
+        }
+    }
+
+    public class LocalChannel
+        : IOpenChannel
+    {
+        private IDispatcher Dispatcher;
+        private IChannelDefinition definition;
+
+        public string Name { get { return Definition.Name; } }
+
+        public LocalChannelDefinition Definition { get; set; }
+
+        protected IDispatcher MessageDispatcher { get; set; }
+
+        public void ExpectReply<TMessage, TReply>( TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
+        {
+            Func<object, string> correlate;
+            Func<object, string> route;
+            Definition.CorrelationMethods.TryGetValue( typeof(TMessage), out correlate );
+            Definition.RoutingMethods.TryGetValue( typeof(TMessage), out route );
+
+            var empty = new Func<object, string>(x => "");
+            correlate = correlate ?? empty;
+            route = route ?? empty;
+
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = correlate(message),
+                RoutingKey = route(message),
+            };
+
+            modifyEnvelope(envelope);
+
+            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            MessageDispatcher.Send(envelope);
+        }
+
+        public void Send<TMessage>( TMessage message )
+        {
+            Func<object, string> correlate;
+            Func<object, string> route;
+            Definition.CorrelationMethods.TryGetValue(typeof(TMessage), out correlate);
+            Definition.RoutingMethods.TryGetValue(typeof(TMessage), out route);
+
+            var empty = new Func<object, string>(x => "");
+            correlate = correlate ?? empty;
+            route = route ?? empty;
+
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = correlate(message),
+                RoutingKey = route(message),
+            };
+            MessageDispatcher.Send(envelope);
+        }
+
+        public void Send<TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
+        {
+            Func<object, string> correlate;
+            Func<object, string> route;
+            Definition.CorrelationMethods.TryGetValue(typeof(TMessage), out correlate);
+            Definition.RoutingMethods.TryGetValue(typeof(TMessage), out route);
+
+            var empty = new Func<object, string>(x => "");
+            correlate = correlate ?? empty;
+            route = route ?? empty;
+
+            var envelope = new Envelope<TMessage>(message)
+            {
+                CorrelationId = correlate(message),
+                RoutingKey = route(message),
+            };
+
+            modifyEnvelope(envelope);
+
+            MessageDispatcher.Send(envelope);
+        }
+
+        public LocalChannel( IDispatcher messageDispatcher, LocalChannelDefinition definition )
+        {
+            Definition = definition;
+            MessageDispatcher = messageDispatcher;
         }
     }
 }

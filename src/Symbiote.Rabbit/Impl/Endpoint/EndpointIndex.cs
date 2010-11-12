@@ -44,13 +44,13 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return endpoint;
         }
 
-        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
+        public void AddEndpoint(RabbitEndpoint endpoint)
         {
-            if(!string.IsNullOrEmpty(endpoint.ExchangeName))
+            if (!string.IsNullOrEmpty(endpoint.ExchangeName))
             {
                 _endpointsByExchange[endpoint.ExchangeName] = endpoint;
             }
-            if(!string.IsNullOrEmpty(endpoint.QueueName))
+            if (!string.IsNullOrEmpty(endpoint.QueueName))
             {
                 _endpointsByQueue[endpoint.QueueName] = endpoint;
             }

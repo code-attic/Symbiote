@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
@@ -32,6 +33,12 @@ namespace Symbiote.Messaging.Impl.Serialization
         {
             var json = Encoding.UTF8.GetString(message);
             return json.FromJson();
+        }
+
+        public object Deserialize( Type messageType, byte[] message )
+        {
+            var json = Encoding.UTF8.GetString( message );
+            return json.FromJson( messageType );
         }
 
         public byte[] Serialize<T>(T body)

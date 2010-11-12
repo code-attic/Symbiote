@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,20 +12,20 @@ namespace Symbiote.Messaging.Impl.Transform
     {
         protected IMessageSerializer SerializationProvider { get; set; }
 
-        public override byte[] Transform( TMessage origin )
+        public override byte[] Transform(TMessage origin)
         {
-            return SerializationProvider.Serialize( origin );
+            return SerializationProvider.Serialize(origin);
         }
 
-        public override TMessage Reverse( byte[] transformed )
+        public override TMessage Reverse(byte[] transformed)
         {
-            return SerializationProvider.Deserialize<TMessage>( transformed );
+            return SerializationProvider.Deserialize<TMessage>(transformed);
         }
 
         public SerializerTransform()
         {
             var serializerType = MessageSerializer.GetBestMessageSerializerFor<TMessage>();
-            SerializationProvider = Activator.CreateInstance( serializerType ) as IMessageSerializer;
+            SerializationProvider = Activator.CreateInstance(serializerType) as IMessageSerializer;
         }
     }
 }

@@ -32,17 +32,24 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
+        public static IBus AddRabbitChannel(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+        {
+            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
+            endpoints.ConfigureEndpoint(configurate);
+            return bus;
+        }
+
         public static void CommitChannelOf<TMessage>(this IBus bus)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
+            var channel = channels.GetChannelFor<TMessage>().UnderlyingChannel as IHaveChannelProxy;
             channel.Proxy.Channel.TxCommit();
         }
 
         public static void RollbackChannelOf<TMessage>(this IBus bus)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>() as RabbitChannel<TMessage>;
+            var channel = channels.GetChannelFor<TMessage>().UnderlyingChannel as IHaveChannelProxy;
             channel.Proxy.Channel.TxRollback();
         }
     }

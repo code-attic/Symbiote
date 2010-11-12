@@ -35,9 +35,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         protected IChannelManager ChannelManager { get; set; }
         protected QueueSubscriptionFactory SubscriptionFactory { get; set; }
 
-        public void AddEndpoint<TMessage>(RabbitEndpoint endpoint)
+        public void AddEndpoint(RabbitEndpoint endpoint)
         {
-            EndpointIndex.AddEndpoint<TMessage>(endpoint);
+            EndpointIndex.AddEndpoint(endpoint);
         }
 
         public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
@@ -45,12 +45,26 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             var configurator = new RabbitEndpointFluentConfigurator<TMessage>();
             configurate(configurator);
             var endpoint = configurator.Endpoint;
-            AddEndpoint<TMessage>(endpoint);
+            AddEndpoint(endpoint);
             ChannelManager.AddDefinition( configurator.ChannelDefinition );
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
             {
-                SubscriptionFactory.CreateSubscription<TMessage>( configurator.ChannelDefinition, configurator.Subscribe );
+                SubscriptionFactory.CreateSubscription( configurator.ChannelDefinition, configurator.Subscribe );
+            }
+        }
+
+        public void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> configurate)
+        {
+            var configurator = new RabbitEndpointFluentConfigurator();
+            configurate(configurator);
+            var endpoint = configurator.Endpoint;
+            AddEndpoint(endpoint);
+            ChannelManager.AddDefinition( configurator.ChannelDefinition );
+
+            if (!string.IsNullOrEmpty(endpoint.QueueName))
+            {
+                SubscriptionFactory.CreateSubscription( configurator.ChannelDefinition, configurator.Subscribe );
             }
         }
 

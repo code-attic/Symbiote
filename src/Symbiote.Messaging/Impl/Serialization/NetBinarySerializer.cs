@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -30,6 +31,14 @@ namespace Symbiote.Messaging.Impl.Serialization
         }
 
         public object Deserialize(byte[] message)
+        {
+            var formatter = new BinaryFormatter();
+            var stream = new MemoryStream(message);
+            var body = formatter.Deserialize(stream);
+            return body;
+        }
+
+        public object Deserialize(Type messageType, byte[] message)
         {
             var formatter = new BinaryFormatter();
             var stream = new MemoryStream(message);

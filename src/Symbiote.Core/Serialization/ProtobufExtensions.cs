@@ -24,6 +24,21 @@ namespace Symbiote.Core.Serialization
             }
         }
 
+        public static object FromProtocolBuffer(this Stream stream, Type type)
+        {
+            stream.Position = 0;
+            return Serializer.NonGeneric.Deserialize( type, stream );
+        }
+
+        public static object FromProtocolBuffer(this byte[] bytes, Type type)
+        {
+            using (var stream = new MemoryStream(bytes))
+            {
+                stream.Position = 0;
+                return Serializer.NonGeneric.Deserialize(type, stream);
+            }
+        }
+
         public static byte[] ToProtocolBuffer<T>(this T instance)
         {
             using(var stream = new MemoryStream())

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -32,5 +33,11 @@ namespace Symbiote.Messaging.Impl.Channels
         }
 
         public LocalChannelDefinition() : base() {}
+    }
+
+    public class LocalChannelDefinition
+        : BaseChannelDefinition
+    {
+        
     }
 }

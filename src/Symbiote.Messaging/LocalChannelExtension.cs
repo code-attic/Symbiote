@@ -40,5 +40,21 @@ namespace Symbiote.Messaging
             manager.AddDefinition(localChannelDefinition);
             return bus;
         }
+
+        public static IBus AddLocalChannelUntypedChannel(this IBus bus)
+        {
+            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
+            manager.AddDefinition(new LocalChannelDefinition());
+            return bus;
+        }
+
+        public static IBus AddLocalChannelUntypedChannel(this IBus bus, Action<IConfigureChannel> configure)
+        {
+            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
+            var localChannelDefinition = new LocalChannelDefinition();
+            configure(localChannelDefinition);
+            manager.AddDefinition(localChannelDefinition);
+            return bus;
+        }
     }
 }

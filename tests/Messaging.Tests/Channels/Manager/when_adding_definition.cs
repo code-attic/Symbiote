@@ -150,6 +150,7 @@ namespace Messaging.Tests.Channels.Manager
         protected static MissingChannelDefinitionException Exception { get; set; }
         private Because of = () =>
         {
+            Manager.GetChannelFor<DummyMessage>();
             Exception = Catch.Exception( () => 
                 Manager.GetChannelFor<DummyMessage>()) as MissingChannelDefinitionException;
         };

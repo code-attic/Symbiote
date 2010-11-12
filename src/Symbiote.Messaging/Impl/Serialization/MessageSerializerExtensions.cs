@@ -12,6 +12,11 @@ namespace Symbiote.Messaging.Impl.Serialization
         public static Type GetBestMessageSerializerFor<T>()
         {
             var type = typeof(T);
+            return GetBestMessageSerializer( type );
+        }
+
+        public static Type GetBestMessageSerializer( Type type )
+        {
             if(type.IsProtobufSerializable())
             {
                 return typeof(ProtobufMessageSerializer);

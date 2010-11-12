@@ -15,12 +15,10 @@ limitations under the License.
 */
 
 using System;
-using System.Linq;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Core.Extensions;
-using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl
 {
@@ -45,14 +43,14 @@ namespace Symbiote.Messaging.Impl
         {
             Channels
                 .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send(message));
+                .ForEach(x => x.Send<TMessage>(message));
         }
 
-        public void Publish<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope)
+        public void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
         {
             Channels
                 .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send(message,
+                .ForEach(x => x.Send<TMessage>(message,
                                        modifyEnvelope));
         }
 
@@ -61,7 +59,7 @@ namespace Symbiote.Messaging.Impl
             Channels.GetChannelFor<TMessage>().ExpectReply(message, x => { }, Dispatcher, onReply);
         }
 
-        public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, Action<TResponse> onReply)
+        public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply)
         {
             Channels.GetChannelFor<TMessage>().ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
         }

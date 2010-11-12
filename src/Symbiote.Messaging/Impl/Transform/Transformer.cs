@@ -25,7 +25,7 @@ namespace Symbiote.Messaging.Impl.Transform
 {
     public class Transformer
     {
-        protected List<Type> Phases { get; set; }
+        public List<Type> Phases { get; set; }
 
         public Transformer Then<TPhase>()
             where TPhase : ITransform

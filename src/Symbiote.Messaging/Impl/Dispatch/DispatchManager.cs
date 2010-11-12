@@ -18,9 +18,68 @@ using System;
 using System.Collections.Concurrent;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
+    public class HyperDispatchManager
+        : IDispatcher
+    {
+        public int Count { get; set; }
+        public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
+        public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
+
+        public void Send<TMessage>(IEnvelope<TMessage> envelope)
+        {
+            Count++;
+            SendToHandler( envelope );
+        }
+
+        public void Send(IEnvelope envelope)
+        {
+            Count++;
+            SendToHandler( envelope );
+        }
+
+        public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
+        {
+            ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
+        }
+
+        public void SendToHandler(IEnvelope envelope)
+        {
+            IDispatchMessage dispatcher = null;
+            if (Dispatchers.TryGetValue(envelope.MessageType, out dispatcher))
+            {
+                dispatcher.Dispatch(envelope);
+            }
+            else // message is a response to a request message
+            {
+                if(ResponseDispatchers.TryRemove(envelope.CorrelationId, out dispatcher))
+                {
+                    dispatcher.Dispatch(envelope);
+                }
+            }
+        }
+
+        public void WireupDispatchers()
+        {
+            if (Dispatchers.Count == 0)
+            {
+                var dispatchers = Assimilate.GetAllInstancesOf<IDispatchMessage>();
+                dispatchers
+                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate((Type) y, (IDispatchMessage) x, (t, m) => x)));
+            }
+        }
+
+        public HyperDispatchManager()
+        {
+            Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
+            ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
+            WireupDispatchers();
+        }
+    }
+
     public class DispatchManager
         : IDispatcher
     {

@@ -75,7 +75,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Dispatch(IEnvelope envelope)
         {
             var typedEnvelope = envelope as IEnvelope<TMessage>;
-            var actor = Agent.GetActor(typedEnvelope.CorrelationId);
+            var actor = Agent.GetActor(envelope.CorrelationId);
             Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
             Handler.Handle(actor, typedEnvelope);
             Agent.Memoize(actor);

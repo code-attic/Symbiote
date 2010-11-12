@@ -205,4 +205,187 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             ChannelDefinition = new RabbitChannelDefinition<TMessage>();
         }
     }
+
+    public class RabbitEndpointFluentConfigurator
+    {
+        public RabbitEndpoint Endpoint { get; set; }
+        public RabbitChannelDefinition ChannelDefinition { get; protected set; }
+        public bool Subscribe { get; set; }
+
+        public RabbitEndpointFluentConfigurator Broker(string broker)
+        {
+            Endpoint.Broker = broker;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator CreateResponseChannel()
+        {
+            Endpoint.NeedsResponseChannel = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator QueueName(string queueName)
+        {
+            Endpoint.QueueName = queueName;
+            ChannelDefinition.Queue = queueName;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator RoutingKeys(params string[] routingKeys)
+        {
+            Endpoint.RoutingKeys = new List<string>(routingKeys);
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Direct(string exchangeName)
+        {
+            Endpoint.ExchangeName = exchangeName;
+            ChannelDefinition.Name = exchangeName;
+            Endpoint.ExchangeType = ExchangeType.direct;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Fanout(string exchangeName)
+        {
+            Endpoint.ExchangeName = exchangeName;
+            ChannelDefinition.Name = exchangeName;
+            Endpoint.ExchangeType = ExchangeType.fanout;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Topic(string exchangeName)
+        {
+            Endpoint.ExchangeName = exchangeName;
+            ChannelDefinition.Name = exchangeName;
+            Endpoint.ExchangeType = ExchangeType.topic;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Durable()
+        {
+            Endpoint.Durable = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Exclusive()
+        {
+            Endpoint.Exclusive = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Passive()
+        {
+            Endpoint.Passive = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator AutoDelete()
+        {
+            Endpoint.AutoDelete = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Immediate()
+        {
+            Endpoint.ImmediateDelivery = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Internal()
+        {
+            Endpoint.Internal = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator LoadBalanced()
+        {
+            Endpoint.LoadBalance = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Mandatory()
+        {
+            Endpoint.MandatoryDelivery = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator NoWait()
+        {
+            Endpoint.NoWait = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator NoAck()
+        {
+            Endpoint.NoAck = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator PersistentDelivery()
+        {
+            Endpoint.PersistentDelivery = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator StartSubscription()
+        {
+            Subscribe = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator UseTransactions()
+        {
+            Endpoint.UseTransactions = true;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator Named(string name)
+        {
+            ChannelDefinition.Name = name;
+            Endpoint.ExchangeName = name;
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator CorrelateBy<TMessage>(string correlationId)
+        {
+            ChannelDefinition.CorrelateBy<TMessage>(correlationId);
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator CorrelateBy<TMessage>(Func<TMessage, string> messageProperty)
+        {
+            ChannelDefinition.CorrelateBy(messageProperty);
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator RouteBy<TMessage>(string routingKey)
+        {
+            ChannelDefinition.RouteBy<TMessage>( routingKey );
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator RouteBy<TMessage>(Func<TMessage, string> messageProperty)
+        {
+            ChannelDefinition.RouteBy( messageProperty );
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator IncomingTransform(Func<Transformer, Transformer> incomingConfig)
+        {
+            ChannelDefinition.IncomingTransform = incomingConfig(new Transformer());
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator OutgoingTransform(Func<Transformer, Transformer> outgoingConfig)
+        {
+            ChannelDefinition.IncomingTransform = outgoingConfig(new Transformer());
+            return this;
+        }
+
+        public RabbitEndpointFluentConfigurator()
+        {
+            Endpoint = new RabbitEndpoint();
+            ChannelDefinition = new RabbitChannelDefinition();
+        }
+    }
 }
