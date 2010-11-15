@@ -53,17 +53,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IEventAdapter.cs" />
     <Compile Include="Impl\Actors\DefaultAgentFactory.cs" />
     <Compile Include="Impl\Actors\IAgentFactory.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Impl\Channels\ChannelAdapter.cs" />
-    <Compile Include="Impl\Channels\IChannelProperties.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
+    <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
     <Compile Include="Impl\Subscriptions\ISubscription.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Impl\Transform\SerializerTransform.cs" />
     <Compile Include="Impl\Transform\Transformer.cs" />
     <Compile Include="Impl\Transform\TransformExtension.cs" />
-    <Compile Include="InvalidChannelDefinitionException.cs" />
+    <Compile Include="Exception\InvalidChannelDefinitionException.cs" />
     <Compile Include="LocalChannelExtension.cs" />
     <Compile Include="Impl\Envelope\Envelope.cs" />
     <Compile Include="MessagingAssimilation.cs" />
@@ -107,8 +108,8 @@
     <Compile Include="Impl\Channels\LocalChannel.cs" />
     <Compile Include="Impl\Dispatch\MessageDispatcher.cs" />
     <Compile Include="Impl\Actors\NullActorStore.cs" />
-    <Compile Include="MessagingException.cs" />
-    <Compile Include="MissingChannelDefinitionException.cs" />
+    <Compile Include="Exception\MessagingException.cs" />
+    <Compile Include="Exception\MissingChannelDefinitionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\Actors\InMemoryActorCache.cs" />
   </ItemGroup>

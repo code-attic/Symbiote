@@ -14,29 +14,17 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging
 {
-    public class LocalChannelDefinition<TMessage>
-        : BaseChannelDefinition<TMessage>
+    public interface IProcessEvent<TEvent, TActor>
+        where TActor : class
     {
-        public override Type ChannelType
-        {
-            get { return typeof(LocalChannel<TMessage>); }
-        }
-
-        public override Type FactoryType
-        {
-            get { return typeof(LocalChannelFactory<TMessage>); }
-        }
-
-        public LocalChannelDefinition() : base() {}
-    }
-
-    public class LocalChannelDefinition
-        : BaseChannelDefinition
-    {
-        
+        void Process( TActor actor, TEvent actorEvent );
     }
 }

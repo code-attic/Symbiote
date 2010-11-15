@@ -46,6 +46,13 @@ namespace Symbiote.Messaging.Impl
                 .ForEach(x => x.Send<TMessage>(message));
         }
 
+        public void Publish<TMessage>( string channelName, TMessage message )
+        {
+            Channels
+                .GetChannelFor<TMessage>( channelName )
+                .Send<TMessage>( message );
+        }
+
         public void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
         {
             Channels
@@ -54,14 +61,39 @@ namespace Symbiote.Messaging.Impl
                                        modifyEnvelope));
         }
 
+        public void Publish<TMessage>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
+        {
+            Channels
+                .GetChannelFor<TMessage>(channelName)
+                .Send<TMessage>(message, modifyEnvelope);
+        }
+
         public void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply)
         {
-            Channels.GetChannelFor<TMessage>().ExpectReply(message, x => { }, Dispatcher, onReply);
+            Channels
+                .GetChannelFor<TMessage>()
+                .ExpectReply(message, x => { }, Dispatcher, onReply);
+        }
+
+        public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<TResponse> onReply )
+        {
+            Channels
+                .GetChannelFor<TMessage>(channelName)
+                .ExpectReply(message, x => { }, Dispatcher, onReply);
         }
 
         public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply)
         {
-            Channels.GetChannelFor<TMessage>().ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
+            Channels
+                .GetChannelFor<TMessage>()
+                .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
+        }
+
+        public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply )
+        {
+            Channels
+                .GetChannelFor<TMessage>(channelName)
+                .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
         }
 
         public void StartSubscription(string subscription)
