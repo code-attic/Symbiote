@@ -28,8 +28,6 @@ namespace Symbiote.Messaging.Impl.Channels
         Type ChannelType { get; }
         Type MessageType { get; }
         Type FactoryType { get; }
-        Transformer OutgoingTransform { get; set; }
-        Transformer IncomingTransform { get; set; }
     }
 
     public interface IOpenChannelDefinition
@@ -42,5 +40,6 @@ namespace Symbiote.Messaging.Impl.Channels
         IChannelDefinition,
         IConfigureChannel<TMessage>
     {
+
     }
 }

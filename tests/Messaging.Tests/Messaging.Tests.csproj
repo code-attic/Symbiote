@@ -97,6 +97,7 @@
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_json_only_message.cs" />
     <Compile Include="Pipes\BytesToString.cs" />
     <Compile Include="Pipes\FuncPipe.cs" />
+    <Compile Include="Pipes\Functional\when_creating_pipeline.cs" />
     <Compile Include="Pipes\IntToString.cs" />
     <Compile Include="Pipes\IPipe.cs" />
     <Compile Include="Pipes\IPipeline.cs" />

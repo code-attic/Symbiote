@@ -59,11 +59,14 @@
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Impl\Channels\ChannelAdapter.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
+    <Compile Include="Impl\Channels\ChannelIndex.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\IChannelIndex.cs" />
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
+    <Compile Include="Impl\Endpoints\IEndpointDefinition.cs" />
     <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />

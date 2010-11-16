@@ -26,101 +26,66 @@ namespace Symbiote.Messaging.Impl.Channels
     public class ChannelManager
         : IChannelManager
     {
-        public ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
         public ConcurrentDictionary<int, IChannel> Channels { get; set; }
-        public ConcurrentDictionary<int, IChannelDefinition> Definitions { get; set; }
         public ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
+        public IChannelIndex Index { get; set; }
 
-        public void AddDefinition(IChannelDefinition definition)
+        public IChannel CreateChannelInstance( int key, IChannelDefinition definition )
         {
-            ValidateChannelDefinition( definition );
-
-            Definitions.AddOrUpdate(
-                GetChannelKey(definition.MessageType, definition.Name),
-                definition,
-                (x, y) => definition);
-
-            ChannelFactories.GetOrAdd(definition.ChannelType,
-                                       Assimilate.GetInstanceOf(definition.FactoryType) as IChannelFactory);
-            AddChannelForMessageType(definition.MessageType,
-                                      definition.Name);
+            var factory = GetChannelFactory(definition);
+            IChannel channel = factory.CreateChannel(definition);
+            Channels.TryAdd(key, channel);
+            return channel;
         }
 
-        public IChannelDefinition GetDefinitionFor<TMessage>(string name)
+        public IChannelAdapter GetAdapterForChannel<TMessage>( IChannel channel )
         {
-            IChannelDefinition definition = null;
-            var messageType = typeof(TMessage);
-            if (!Definitions.TryGetValue(
-                                GetChannelKey(
-                                    messageType,
-                                    name),
-                                out definition) &&
-                !Definitions.TryGetValue(
-                                GetChannelKey( 
-                                    typeof(object),
-                                    name),
-                                out definition)
-                )
-            {
-                throw new MissingChannelDefinitionException(
-                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                        .AsFormat(name, messageType));
-            }
-            return definition;
-        }
-
-        protected int GetChannelKey(Type messageType, string name)
-        {
-            return (name.GetHashCode() * 397) ^ messageType.GetHashCode();
+            return channel.GetType().GetInterface( "IChannel`1" ) == null
+                       ? new ChannelAdapter( channel as IOpenChannel ) as IChannelAdapter
+                       : new ChannelAdapter<TMessage>( channel as IChannel<TMessage> );
         }
 
         public IChannelAdapter GetChannelFor<TMessage>()
         {
             var messageType = typeof(TMessage);
-            var channelName = MessageChannels[messageType].FirstOrDefault() ??
-                              MessageChannels[typeof(object)].FirstOrDefault();
+            var adapter = GetChannelsFor<TMessage>().FirstOrDefault();
 
-            if(string.IsNullOrEmpty(channelName))
+            if(adapter == null)
                 throw new MissingChannelDefinitionException(
                     "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
                         .AsFormat("<nothing>", messageType));
 
-
-            return GetChannelFor<TMessage>(channelName);
-        }
-
-        public IEnumerable<IChannelAdapter> GetChannelsFor<TMessage>()
-        {
-            List<string> channelNameList;
-            if (!MessageChannels.TryGetValue(typeof(TMessage), out channelNameList) &&
-                !MessageChannels.TryGetValue(typeof(object), out channelNameList))
-            {
-                channelNameList = new List<string>();    
-            }
-            
-            return channelNameList
-                .Select(GetChannelFor<TMessage>);
+            return adapter;
         }
 
         public IChannelAdapter GetChannelFor<TMessage>(string channelName)
         {
             IChannel channel = null;
-            var key = GetChannelKey(typeof(TMessage),
-                                     channelName);
-
-            var openKey = GetChannelKey( typeof(Object), channelName );
-            if (!Channels.TryGetValue(key, out channel) &&
-                !Channels.TryGetValue(openKey, out channel))
+            int key = Index.GetKeyFor<TMessage>( channelName );
+            if (!Channels.TryGetValue(key, out channel))
             {
-                var definition = GetDefinitionFor<TMessage>(channelName);
-                var factory = GetChannelFactory(definition);
-                channel = factory.CreateChannel(definition);
-                Channels.TryAdd(key, channel);
+                var definition = Index.GetDefinitionFor<TMessage>(channelName);
+                channel = CreateChannelInstance( key, definition );
             }
-            var adapter = channel.GetType().GetInterface( "IChannel`1" ) == null
-                              ? new ChannelAdapter( channel as IOpenChannel ) as IChannelAdapter
-                              : new ChannelAdapter<TMessage>( channel as IChannel<TMessage> );
-            return adapter;
+            return GetAdapterForChannel<TMessage>( channel );
+        }
+
+        public IEnumerable<IChannelAdapter> GetChannelsFor<TMessage>()
+        {
+            var adapters = new List<IChannelAdapter>();
+            var definitions = Index.GetDefinitionsFor<TMessage>();
+
+            foreach (var definition in definitions)
+            {
+                IChannel channel = null;
+                var key = Index.GetKeyFor<TMessage>( definition.Name );
+                if(!Channels.TryGetValue( key, out channel ))
+                {
+                    channel = CreateChannelInstance(key, definition);
+                }
+                adapters.Add(GetAdapterForChannel<TMessage>(channel));
+            }
+            return adapters;
         }
 
         public IChannelFactory GetChannelFactory(IChannelDefinition definition)
@@ -144,60 +109,11 @@ namespace Symbiote.Messaging.Impl.Channels
             return factory;
         }
 
-        public bool HasChannelFor<TMessage>()
+        public ChannelManager(IChannelIndex channelIndex)
         {
-            return MessageChannels.ContainsKey(typeof(TMessage)) || MessageChannels.ContainsKey( typeof(object) );
-        }
-
-        public bool HasChannelFor<TMessage>(string channelName)
-        {
-            return (MessageChannels.ContainsKey(typeof(TMessage)) &&
-                   MessageChannels[typeof(TMessage)].Contains(channelName)) ||
-                   (MessageChannels.ContainsKey( typeof(object) ) &&
-                   MessageChannels[typeof(object)].Contains(channelName));
-        }
-
-        public void AddChannelForMessageType(Type messageType, string channelName)
-        {
-            List<string> channels = null;
-            if (!MessageChannels.TryGetValue(messageType,
-                                               out channels))
-            {
-                channels = new List<string>();
-                MessageChannels.TryAdd(messageType,
-                                        channels);
-            }
-            if (!channels.Contains(channelName))
-                channels.Add(channelName);
-        }
-
-        public void ValidateChannelDefinition(IChannelDefinition definition)
-        {
-            var violations = GetDefinitionViolations( definition ).ToList();
-            if(violations.Count > 0)
-                throw new InvalidChannelDefinitionException() { Violations = violations };
-        }
-
-        public IEnumerable<string> GetDefinitionViolations(IChannelDefinition definition)
-        {
-            if (definition.FactoryType == null)
-                yield return "Channel definition must specify a channel factory type";
-
-            if(definition.ChannelType == null)
-                yield return "Channel definition must specify a channel type";
-
-            if (string.IsNullOrWhiteSpace(definition.Name))
-                yield return "Channel definition must specify a channel name";
-
-            yield break;
-        }
-
-        public ChannelManager()
-        {
+            Index = channelIndex;
             Channels = new ConcurrentDictionary<int, IChannel>();
             ChannelFactories = new ConcurrentDictionary<Type, IChannelFactory>();
-            Definitions = new ConcurrentDictionary<int, IChannelDefinition>();
-            MessageChannels = new ConcurrentDictionary<Type, List<string>>();
         }
     }
 }

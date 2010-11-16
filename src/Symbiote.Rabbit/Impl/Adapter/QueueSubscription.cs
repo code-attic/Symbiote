@@ -17,6 +17,7 @@ limitations under the License.
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Channels;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Adapter
 {
@@ -26,7 +27,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IChannelProxyFactory ProxyFactory { get; set; }
         protected IChannelProxy CurrentProxy { get; set; }
         protected RabbitQueueListener Listener { get; set; }
-        protected RabbitChannelDefinition Definition { get; set; }
+        protected RabbitEndpoint Endpoint { get; set; }
         protected IDispatcher Dispatcher { get; set; }
         public string Name { get; set; }
         public bool Started { get; private set; }
@@ -56,11 +57,11 @@ namespace Symbiote.Rabbit.Impl.Adapter
         public QueueSubscription(
             IChannelProxyFactory proxyFactory,
             IDispatcher dispatcher,
-            RabbitChannelDefinition definition)
+            RabbitEndpoint endpoint)
         {
             ProxyFactory = proxyFactory;
             Dispatcher = dispatcher;
-            Definition = definition;
+            Endpoint = endpoint;
         }
     }
 
@@ -70,7 +71,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IChannelProxyFactory ProxyFactory { get; set; }
         protected IChannelProxy CurrentProxy { get; set; }
         protected RabbitQueueListener<TMessage> Listener { get; set; }
-        protected RabbitChannelDefinition<TMessage> Definition { get; set; }
+        protected RabbitEndpoint Endpoint { get; set; }
         protected IDispatcher Dispatcher { get; set; }
         public string Name { get; set; }
         public bool Started { get; private set; }
@@ -100,11 +101,11 @@ namespace Symbiote.Rabbit.Impl.Adapter
         public QueueSubscription(
             IChannelProxyFactory proxyFactory, 
             IDispatcher dispatcher,
-            RabbitChannelDefinition<TMessage> definition)
+            RabbitEndpoint endpoint)
         {
             ProxyFactory = proxyFactory;
             Dispatcher = dispatcher;
-            Definition = definition;
+            Endpoint = endpoint;
         }
     }
 }

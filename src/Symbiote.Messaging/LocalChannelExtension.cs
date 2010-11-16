@@ -25,35 +25,36 @@ namespace Symbiote.Messaging
 {
     public static class LocalChannelExtension
     {
+        private static IChannelIndex Index
+        {
+            get { return Assimilate.GetInstanceOf<IChannelIndex>(); }
+        }
+
         public static IBus AddLocalChannelForMessageOf<T>(this IBus bus)
         {
-            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
-            manager.AddDefinition(new LocalChannelDefinition<T>());
+            Index.AddDefinition(new LocalChannelDefinition<T>());
             return bus;
         }
 
         public static IBus AddLocalChannelForMessageOf<T>(this IBus bus, Action<IConfigureChannel<T>> configure)
         {
-            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
             var localChannelDefinition = new LocalChannelDefinition<T>();
             configure(localChannelDefinition);
-            manager.AddDefinition(localChannelDefinition);
+            Index.AddDefinition(localChannelDefinition);
             return bus;
         }
 
         public static IBus AddLocalChannelUntypedChannel(this IBus bus)
         {
-            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
-            manager.AddDefinition(new LocalChannelDefinition());
+            Index.AddDefinition(new LocalChannelDefinition());
             return bus;
         }
 
         public static IBus AddLocalChannelUntypedChannel(this IBus bus, Action<IConfigureChannel> configure)
         {
-            IChannelManager manager = Assimilate.GetInstanceOf<IChannelManager>();
             var localChannelDefinition = new LocalChannelDefinition();
             configure(localChannelDefinition);
-            manager.AddDefinition(localChannelDefinition);
+            Index.AddDefinition(localChannelDefinition);
             return bus;
         }
     }

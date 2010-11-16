@@ -15,12 +15,22 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Messaging;
 
-namespace Symbiote.Rabbit.Impl.Endpoint
+namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IEndpointManager
+    public interface IRabbitChannelDetails
     {
-        void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> endpoint);
+        string Broker { get; set; }
+        string Exchange { get; set; }
+        ExchangeType ExchangeType { get; set; }
+        string ExchangeTypeName { get; }
+        bool Passive { get; set; }
+        bool Durable { get; set; }
+        bool AutoDelete { get; set; }
+        bool Immediate { get; set; }
+        bool Internal { get; set; }
+        bool NoWait { get; set; }
+        bool Mandatory { get; set; }
+        bool Transactional { get; set; }
     }
 }

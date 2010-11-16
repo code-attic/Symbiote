@@ -16,7 +16,6 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Transform;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -48,23 +47,4 @@ namespace Symbiote.Messaging.Impl.Channels
         void Send<TMessage>(TMessage message);
         void Send<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);
     }
-
-    //public interface IChannel<TMessage>
-    //    : IChannel
-    //{
-    //    void ExpectReply<T, TReply>( T message, Action<IEnvelope<T>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
-    //        where T : TMessage;
-    //    IEnvelope<T> Send<T>(T message)
-    //        where T : TMessage;
-    //    IEnvelope<T> Send<T>(T message, Action<IEnvelope<T>> modifyEnvelope)
-    //        where T : TMessage;
-    //}
-
-    //public interface IOpenChannel
-    //    : IChannel
-    //{
-    //    void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
-    //    IEnvelope<TMessage> Send<TMessage>(TMessage message);
-    //    IEnvelope<TMessage> Send<TMessage>(TMessage message, Action<IEnvelope<TMessage>> modifyEnvelope);
-    //}
 }

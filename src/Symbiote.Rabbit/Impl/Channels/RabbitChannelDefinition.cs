@@ -15,41 +15,56 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
 using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Messaging.Impl.Transform;
-using Symbiote.Rabbit.Impl.Transform;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannelDefinition
-        : BaseChannelDefinition
+        : BaseChannelDefinition, IRabbitChannelDetails
     {
+        public string Broker { get; set; }
         public string Exchange { get; set; }
-        public string Queue { get; set; }
+        public ExchangeType ExchangeType { get; set; }
+        public string ExchangeTypeName { get { return ExchangeType.ToString(); } }
+        public bool Passive { get; set; }
+        public bool Durable { get; set; }
+        public bool AutoDelete { get; set; }
+        public bool Immediate { get; set; }
+        public bool Internal { get; set; }
+        public bool NoWait { get; set; }
+        public bool Mandatory { get; set; }
+        public bool Transactional { get; set; }
         public override Type ChannelType { get { return typeof(RabbitChannel); } }
         public override Type FactoryType { get { return typeof(RabbitChannelFactory); } }
         
         public RabbitChannelDefinition() : base()
         {
-            OutgoingTransform = new Transformer().Then<RabbitSerializerTransform>();
-            IncomingTransform = new Transformer().Then<RabbitSerializerTransform>();
+            Broker = "default";
         }
     }
 
     public class RabbitChannelDefinition<TMessage>
-        : BaseChannelDefinition<TMessage>
+        : BaseChannelDefinition<TMessage>, IRabbitChannelDetails
     {
+        public string Broker { get; set; }
         public string Exchange { get; set; }
-        public string Queue { get; set; }
+        public ExchangeType ExchangeType { get; set; }
+        public string ExchangeTypeName { get { return ExchangeType.ToString(); } }
+        public bool Passive { get; set; }
+        public bool Durable { get; set; }
+        public bool AutoDelete { get; set; }
+        public bool Immediate { get; set; }
+        public bool Internal { get; set; }
+        public bool NoWait { get; set; }
+        public bool Mandatory { get; set; }
+        public bool Transactional { get; set; }
         public override Type ChannelType { get { return typeof(RabbitChannel<TMessage>); } }
         public override Type FactoryType { get { return typeof(RabbitChannelFactory<TMessage>); } }
 
         public RabbitChannelDefinition()
             : base()
         {
-            OutgoingTransform = new Transformer().Then<RabbitSerializerTransform>();
-            IncomingTransform = new Transformer().Then<RabbitSerializerTransform>();
+            Broker = "default";
         }
     }
 }

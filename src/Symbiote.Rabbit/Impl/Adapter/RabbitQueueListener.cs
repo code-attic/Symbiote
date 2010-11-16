@@ -23,6 +23,7 @@ using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Transform;
 using Symbiote.Rabbit.Impl.Channels;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Adapter
 {
@@ -31,7 +32,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }
-        protected RabbitChannelDefinition Definition { get; set; }
+        protected RabbitEndpoint Endpoint { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
         protected VolatileRingBuffer RingBuffer { get; set; }
@@ -84,15 +85,15 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Running = false;
         }
 
-        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch, RabbitChannelDefinition definition)
+        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch, RabbitEndpoint endpoint)
         {
             Proxy = proxy;
             Dispatch = dispatch;
-            Definition = definition;
+            Endpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
             RingBuffer = new VolatileRingBuffer(100000);
-            definition.IncomingTransform.Phases.ForEach(x =>
+            endpoint.IncomingTransform.Phases.ForEach(x =>
             {
                 var transform = Assimilate.GetInstanceOf(x) as ITransform;
                 RingBuffer.AddTransform(transform.From);
@@ -107,7 +108,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }
-        protected RabbitChannelDefinition<TMessage> Definition { get; set; }
+        protected RabbitEndpoint Endpoint { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
         protected VolatileRingBuffer RingBuffer { get; set; }
@@ -151,15 +152,15 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Running = false;
         }
 
-        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch, RabbitChannelDefinition<TMessage> definition)
+        public RabbitQueueListener(IChannelProxy proxy, IDispatcher dispatch, RabbitEndpoint endpoint)
         {
             Proxy = proxy;
             Dispatch = dispatch;
-            Definition = definition;
+            Endpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
             RingBuffer = new VolatileRingBuffer( 1000000 );
-            definition.IncomingTransform.Phases.ForEach( x =>
+            endpoint.IncomingTransform.Phases.ForEach( x =>
             {
                 var transform = Assimilate.GetInstanceOf( x ) as ITransform;
                 RingBuffer.AddTransform( transform.From );

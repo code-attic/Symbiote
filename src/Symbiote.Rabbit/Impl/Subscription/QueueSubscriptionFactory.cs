@@ -18,6 +18,7 @@ using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Channels;
+using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Subscription
 {
@@ -27,20 +28,10 @@ namespace Symbiote.Rabbit.Impl.Subscription
         protected IDispatcher Dispatcher { get; set; }
         protected IChannelProxyFactory ProxyFactory { get; set; }
         
-        public void CreateSubscription(RabbitChannelDefinition definition, bool start)
+        public void CreateSubscription(RabbitEndpoint definition, bool start)
         {
             var queueSubscription = new QueueSubscription(ProxyFactory, Dispatcher, definition);
-            queueSubscription.Name = definition.Queue;
-            if (start)
-                Subscriptions.AddAndStartSubscription(queueSubscription);
-            else
-                Subscriptions.AddSubscription(queueSubscription);
-        }
-
-        public void CreateSubscription<TMessage>(RabbitChannelDefinition<TMessage> definition, bool start)
-        {
-            var queueSubscription = new QueueSubscription<TMessage>(ProxyFactory, Dispatcher, definition);
-            queueSubscription.Name = definition.Queue;
+            queueSubscription.Name = definition.QueueName;
             if (start)
                 Subscriptions.AddAndStartSubscription(queueSubscription);
             else

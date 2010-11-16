@@ -204,6 +204,7 @@
     <Compile Include="Utility\HierarchyVisitor.cs" />
     <Compile Include="Utility\ILockManager.cs" />
     <Compile Include="Utility\NullLockManager.cs" />
+    <Compile Include="Utility\Pipeline.cs" />
     <Compile Include="Utility\SpinLockManager.cs" />
     <Compile Include="Utility\VolatileRingBuffer.cs" />
     <Compile Include="Utility\VolatileRingBufferArray.cs" />

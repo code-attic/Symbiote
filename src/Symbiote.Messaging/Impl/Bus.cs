@@ -25,18 +25,19 @@ namespace Symbiote.Messaging.Impl
     public class Bus
         : IBus
     {
+        protected IChannelIndex ChannelIndex { get; set; }
         protected IChannelManager Channels { get; set; }
         protected ISubscriptionManager Subscriptions { get; set; }
         protected IDispatcher Dispatcher { get; set; }
 
         public bool HasChannelFor<T>()
         {
-            return Channels.HasChannelFor<T>();
+            return ChannelIndex.HasChannelFor<T>();
         }
 
         public bool HasChannelFor<T>(string channelName)
         {
-            return Channels.HasChannelFor<T>(channelName);
+            return ChannelIndex.HasChannelFor<T>(channelName);
         }
 
         public void Publish<TMessage>(TMessage message)
@@ -108,10 +109,12 @@ namespace Symbiote.Messaging.Impl
 
         public Bus(
             IChannelManager channels,
+            IChannelIndex channelIndex,
             ISubscriptionManager subscriptions,
             IDispatcher dispatcher)
         {
             Channels = channels;
+            ChannelIndex = channelIndex;
             Subscriptions = subscriptions;
             Dispatcher = dispatcher;
         }

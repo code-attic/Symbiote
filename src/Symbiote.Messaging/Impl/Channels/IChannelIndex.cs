@@ -14,13 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using Symbiote.Messaging;
+using System.Collections.Generic;
 
-namespace Symbiote.Rabbit.Impl.Endpoint
+namespace Symbiote.Messaging.Impl.Channels
 {
-    public interface IEndpointManager
+    public interface IChannelIndex
     {
-        void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> endpoint);
+        void AddDefinition(IChannelDefinition definition);
+        IEnumerable<IChannelDefinition> GetDefinitionsFor<TMessage>();
+        IChannelDefinition GetDefinitionFor<TMessage>(string channelName);
+        bool HasChannelFor<TMessage>();
+        bool HasChannelFor<TMessage>(string channelName);
+        int GetKeyFor<TMessage>(string channelName);
+        IEnumerable<int> GetKeysFor<TMessage>();
     }
 }

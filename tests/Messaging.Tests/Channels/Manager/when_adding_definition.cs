@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Machine.Specifications;
+using Moq;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Transform;
+using It = Machine.Specifications.It;
 
 namespace Messaging.Tests.Channels.Manager
 {
@@ -33,49 +35,70 @@ namespace Messaging.Tests.Channels.Manager
         
     }
 
-    public class with_channel_manager
+    public class with_channel_index
         : with_assimilation
     {
-        protected static ChannelManager Manager { get; set; }
-
+        protected static ChannelIndex Index { get; set; }
         protected static TestChannelDefinition ChannelDef1 { get; set; }
         protected static TestChannelDefinition ChannelDef2 { get; set; }
         protected static TestChannelDefinition ChannelDef3 { get; set; }
         protected static TestChannelDefinition ChannelDef4 { get; set; }
+
+        private Establish context = () =>
+        {
+
+            ChannelDef1 = new TestChannelDefinition("test1", typeof(DummyMessage));
+            ChannelDef2 = new TestChannelDefinition("test2", typeof(DummyMessage));
+            ChannelDef3 = new TestChannelDefinition("test3", typeof(DummyMessage));
+            ChannelDef4 = new TestChannelDefinition("test4", typeof(DummyMessage));
+        };
+    }
+
+    public class with_mock_index
+        : with_assimilation
+    {
+        protected static IChannelIndex Index { get; set; }
+        protected static Mock<IChannelIndex> MockIndex { get; set; }
+
+        private Establish context = () =>
+        {
+            
+        };
+    }
+
+    public class with_channel_manager
+        : with_mock_index
+    {
+        protected static ChannelManager Manager { get; set; }
         
         private Establish context = () =>
         {
-            Manager = new ChannelManager();
-
-            ChannelDef1 = new TestChannelDefinition( "test1", typeof(DummyMessage) );
-            ChannelDef2 = new TestChannelDefinition( "test2", typeof(DummyMessage) );
-            ChannelDef3 = new TestChannelDefinition( "test3", typeof(DummyMessage) );
-            ChannelDef4 = new TestChannelDefinition( "test4", typeof(DummyMessage) );
+            Manager = new ChannelManager(Index);
         };
     }
 
     public class when_adding_definition
-        : with_channel_manager
+        : with_channel_index
     {
         protected static Exception Exception { get; set; }
         private Because of = () =>
         {
             Exception = Catch.Exception(() => 
-                Manager.AddDefinition( ChannelDef1 ));
+                Index.AddDefinition( ChannelDef1 ));
         };
 
-        private It should_have_channel_for_message = () => 
-            Manager.HasChannelFor<DummyMessage>();
+        private It should_have_channel_for_message = () =>
+            Index.HasChannelFor<DummyMessage>();
 
-        private It should_have_channel_by_name = () => 
-            Manager.HasChannelFor<DummyMessage>("test1");
+        private It should_have_channel_by_name = () =>
+            Index.HasChannelFor<DummyMessage>("test1");
 
         private It should_not_cause_exception = () => 
             Exception.ShouldBeNull();
     }
 
     public class when_adding_invalid_channel_definition
-        : with_channel_manager
+        : with_channel_index
     {
         protected static InvalidChannelDefinitionException Exception { get; set; }
         protected static TestChannelDefinition InvalidChannelDef { get; set; }
@@ -88,7 +111,7 @@ namespace Messaging.Tests.Channels.Manager
             InvalidChannelDef.Name = null;
 
             Exception = Catch.Exception( () =>
-                Manager.AddDefinition( InvalidChannelDef ) ) as InvalidChannelDefinitionException;
+                Index.AddDefinition( InvalidChannelDef ) ) as InvalidChannelDefinitionException;
         };
 
         private It should_throw_invalid_channel_exception = () => 
@@ -110,7 +133,7 @@ namespace Messaging.Tests.Channels.Manager
     }
 
     public class when_adding_definitions_in_parallel
-        : with_channel_manager
+        : with_channel_index
     {
         private Because of = () =>
         {
@@ -123,25 +146,21 @@ namespace Messaging.Tests.Channels.Manager
             };
 
             defList.AsParallel()
-                .ForAll( x => Manager.AddDefinition( x ) );
+                .ForAll( x => Index.AddDefinition( x ) );
         };
 
-        private It should_have_definition_1_by_name = () => 
-            Manager.HasChannelFor<DummyMessage>("test1");
-        private It should_have_definition_2_by_name = () => 
-            Manager.HasChannelFor<DummyMessage>("test2");
-        private It should_have_definition_3_by_name = () => 
-            Manager.HasChannelFor<DummyMessage>("test3");
+        private It should_have_definition_1_by_name = () =>
+            Index.HasChannelFor<DummyMessage>("test1");
+        private It should_have_definition_2_by_name = () =>
+            Index.HasChannelFor<DummyMessage>("test2");
+        private It should_have_definition_3_by_name = () =>
+            Index.HasChannelFor<DummyMessage>("test3");
         private It should_have_definition_4_by_name = () =>
-            Manager.HasChannelFor<DummyMessage>("test4");
-        private It should_have_definitions_for_4 = () => 
-            Manager.Definitions.Count.ShouldEqual( 4 );
-        private It should_have_4_channels_for_type = () => 
-            Manager.MessageChannels[typeof(DummyMessage)].Count.ShouldEqual( 4 );
-        private It should_have_1_channel_factory = () => 
-            Manager.ChannelFactories.Count.ShouldEqual( 1 );
-        private It should_not_instantiate_channels = () => 
-            Manager.Channels.Count.ShouldEqual( 0 );
+            Index.HasChannelFor<DummyMessage>("test4");
+        private It should_have_definitions_for_4 = () =>
+            Index.Definitions.Count.ShouldEqual(4);
+        private It should_have_4_channels_for_type = () =>
+            Index.MessageChannels[typeof(DummyMessage)].Count.ShouldEqual(4);
     }
 
     public class when_requesting_missing_channel

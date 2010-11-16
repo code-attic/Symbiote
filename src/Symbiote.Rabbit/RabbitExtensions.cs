@@ -25,17 +25,19 @@ namespace Symbiote.Rabbit
 {
     public static class RabbitExtensions
     {
-        public static IBus AddRabbitChannel<TMessage>(this IBus bus, Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
+        public static IBus AddRabbitQueue(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
         {
             var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             endpoints.ConfigureEndpoint(configurate);
             return bus;
         }
 
-        public static IBus AddRabbitChannel(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+        public static IBus AddRabbitChannel(this IBus bus, Action<RabbitChannelConfigurator> configurate)
         {
-            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            endpoints.ConfigureEndpoint(configurate);
+            var channels = Assimilate.GetInstanceOf<IChannelIndex>();
+            var configurator = new RabbitChannelConfigurator();
+            configurate( configurator );
+            channels.AddDefinition( configurator.ChannelDefinition );
             return bus;
         }
 

@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using System.Collections;
 using RabbitMQ.Client;
+using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
 

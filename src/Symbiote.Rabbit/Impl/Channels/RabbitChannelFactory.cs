@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Core;
+using RabbitMQ.Client;
+using Symbiote.Core.Extensions;
 using Symbiote.Messaging.Impl.Channels;
 
 namespace Symbiote.Rabbit.Impl.Channels
@@ -32,8 +30,22 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var rabbitDef = definition as RabbitChannelDefinition;
             var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Name);
+
             var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IOpenChannel;
             return channel;
+        }
+
+        public void BuildExchange(IModel channel, IRabbitChannelDetails details)
+        {
+            channel.ExchangeDeclare(
+                details.Exchange,
+                details.ExchangeTypeName,
+                details.Passive,
+                details.Durable,
+                details.AutoDelete,
+                details.Internal,
+                details.NoWait,
+                null );
         }
 
         public RabbitChannelFactory(IChannelProxyFactory proxyFactory)

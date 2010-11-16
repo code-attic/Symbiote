@@ -32,26 +32,11 @@ namespace Symbiote.Rabbit.Impl.Endpoint
     public class EndpointManager : IEndpointManager
     {
         protected IEndpointIndex EndpointIndex { get; set; }
-        protected IChannelManager ChannelManager { get; set; }
         protected QueueSubscriptionFactory SubscriptionFactory { get; set; }
 
         public void AddEndpoint(RabbitEndpoint endpoint)
         {
             EndpointIndex.AddEndpoint(endpoint);
-        }
-
-        public void ConfigureEndpoint<TMessage>(Action<RabbitEndpointFluentConfigurator<TMessage>> configurate)
-        {
-            var configurator = new RabbitEndpointFluentConfigurator<TMessage>();
-            configurate(configurator);
-            var endpoint = configurator.Endpoint;
-            AddEndpoint(endpoint);
-            ChannelManager.AddDefinition( configurator.ChannelDefinition );
-
-            if (!string.IsNullOrEmpty(endpoint.QueueName))
-            {
-                SubscriptionFactory.CreateSubscription( configurator.ChannelDefinition, configurator.Subscribe );
-            }
         }
 
         public void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> configurate)
@@ -60,21 +45,18 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             configurate(configurator);
             var endpoint = configurator.Endpoint;
             AddEndpoint(endpoint);
-            ChannelManager.AddDefinition( configurator.ChannelDefinition );
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
             {
-                SubscriptionFactory.CreateSubscription( configurator.ChannelDefinition, configurator.Subscribe );
+                SubscriptionFactory.CreateSubscription( endpoint, configurator.Subscribe );
             }
         }
 
         public EndpointManager(
-            IChannelManager channelManager, 
             IEndpointIndex endpointIndex,
             QueueSubscriptionFactory subscriptionFactory)
         {
             EndpointIndex = endpointIndex;
-            ChannelManager = channelManager;
             SubscriptionFactory = subscriptionFactory;
         }
     }

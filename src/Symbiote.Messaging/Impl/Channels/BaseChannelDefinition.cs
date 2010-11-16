@@ -30,8 +30,6 @@ namespace Symbiote.Messaging.Impl.Channels
         public Func<TMessage, string> CorrelationMethod { get; set; }
         public abstract Type ChannelType { get; }
         public abstract Type FactoryType { get; }
-        public Transformer IncomingTransform { get; set; }
-        public Transformer OutgoingTransform { get; set; }
 
         public IConfigureChannel<TMessage> Named( string channelName )
         {
@@ -79,8 +77,6 @@ namespace Symbiote.Messaging.Impl.Channels
         public virtual Type ChannelType { get { return typeof(LocalChannel); } }
         public Type MessageType { get { return typeof(object); } }
         public virtual Type FactoryType { get { return typeof(LocalChannelFactory); } }
-        public Transformer OutgoingTransform { get; set; }
-        public Transformer IncomingTransform { get; set; }
         public Dictionary<Type, Func<object, string>> RoutingMethods { get; set; }
         public Dictionary<Type, Func<object, string>> CorrelationMethods { get; set; }
 
