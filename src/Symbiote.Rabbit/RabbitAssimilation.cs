@@ -20,6 +20,7 @@ using Symbiote.Rabbit.Config;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
+using Symbiote.Rabbit.Impl.Transform;
 
 namespace Symbiote.Rabbit
 {
@@ -50,6 +51,9 @@ namespace Symbiote.Rabbit
                                                 .Use<ConnectionManager>();
                                             x.For<IEndpointIndex>()
                                                 .Use(new EndpointIndex());
+                                            x.For<RabbitSerializerTransform>()
+                                                .Use<RabbitSerializerTransform>()
+                                                .AsSingleton();
                                         });
         }
     }

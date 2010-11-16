@@ -24,11 +24,27 @@ namespace Symbiote.Messaging.Impl.Monitor
     public class MonitorConfiguration
     {
         public string EventChannel { get; set; }
+
+        public MonitorConfiguration()
+        {
+            EventChannel = "system.events";
+        }
     }
 
     public class MonitorConfigurator
     {
-        
+        public MonitorConfiguration Configuration { get; set; }
+
+        public MonitorConfigurator SendEventsTo( string channelName )
+        {
+            Configuration.EventChannel = channelName;
+            return this;
+        }
+
+        public MonitorConfigurator()
+        {
+            Configuration = new MonitorConfiguration();
+        }
     }
 
     public interface IAdapterMonitor
@@ -64,11 +80,14 @@ namespace Symbiote.Messaging.Impl.Monitor
 
     public class ActorEvent
     {
-        
+        public string ActorId { get; set; }
+        public DateTime Occurred { get; set; }
+        public string Machine { get; set; }
     }
 
     public class MessageEvent
     {
-        
+        public DateTime Occurred { get; set; }
+        public string Machine { get; set; }
     }
 }
