@@ -37,7 +37,7 @@ namespace Messaging.Tests.Pipes.Functional
                         x[0] = t;
                         return x;
                     } )
-                    .Then( x => Encoding.UTF8.GetString( x ) )));
+                    .Then( x => Encoding.UTF8.GetString( x ) );
 
             Result = pipe( Message );
         };

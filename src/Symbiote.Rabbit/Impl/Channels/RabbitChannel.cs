@@ -15,28 +15,23 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Config;
-using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IHaveChannelProxy
-    {
-        IChannelProxy Proxy { get; set; }
-    }
-
     public class RabbitChannel :
         IOpenChannel
         , IHaveChannelProxy
     {
         public string Name { get; set; }
         public IChannelProxy Proxy { get; set; }
-        public RabbitChannelDefinition Definition { get; set; }
+        public IMessageSerializer Serializer { get; set; }
+        public ChannelDefinition Definition { get; set; }
 
         public void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
         {
@@ -50,23 +45,27 @@ namespace Symbiote.Rabbit.Impl.Channels
 
             modifyEnvelope(envelope);
             dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize( envelope.Message );
             Proxy.Send(envelope);
         }
 
         public string ConfigureResponseChannel<TReply>()
         {
-            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             var baseName = RabbitBroker.ResponseId;
             var messageType = typeof(TReply).Name;
-            Action<RabbitEndpointFluentConfigurator<TReply>> configurate = x => x
+
+            RabbitExtensions.AddRabbitChannel(null, x => x
                 .AutoDelete()
-                .Direct(baseName)
+                .Direct( baseName ));
+
+            RabbitExtensions.AddRabbitQueue(null, x => x
+                .AutoDelete()
+                .ExchangeName( baseName )
                 .QueueName("{0}.{1}.{2}".AsFormat(baseName, "response", messageType))
                 .RoutingKeys(messageType)
                 .NoAck()
-                .StartSubscription();
-            endpoints.ConfigureEndpoint(configurate);
+                .StartSubscription());
+            
             return messageType;
         }
 
@@ -80,7 +79,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
             Proxy.Send(envelope);
         }
 
@@ -93,14 +92,15 @@ namespace Symbiote.Rabbit.Impl.Channels
                 ReplyToExchange = RabbitBroker.ResponseId
             };
 
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
             Proxy.Send(envelope);
         }
 
-        public RabbitChannel(IChannelProxy proxy, RabbitChannelDefinition definition)
+        public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition definition)
         {
             Definition = definition;
             Proxy = proxy;
+            Serializer = serializer;
         }
     }
 
@@ -110,7 +110,8 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         public string Name { get; set; }
         public IChannelProxy Proxy { get; set; }
-        public RabbitChannelDefinition<TMessage> Definition { get; set; }
+        public IMessageSerializer Serializer { get; set; }
+        public ChannelDefinition<TMessage> Definition { get; set; }
 
         public void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
         {
@@ -124,23 +125,26 @@ namespace Symbiote.Rabbit.Impl.Channels
 
             modifyEnvelope(envelope);
             dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
             Proxy.Send(envelope);
         }
 
         public string ConfigureResponseChannel<TReply>()
         {
-            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             var baseName = RabbitBroker.ResponseId;
             var messageType = typeof(TReply).Name;
-            Action<RabbitEndpointFluentConfigurator<TReply>> configurate = x => x
+            
+            RabbitExtensions.AddRabbitChannel(null, x => x
                 .AutoDelete()
-                .Direct(baseName)
+                .Direct( baseName ));
+
+            RabbitExtensions.AddRabbitQueue( null, x => x
+                .AutoDelete()
                 .QueueName("{0}.{1}.{2}".AsFormat(baseName, "response", messageType))
                 .RoutingKeys(messageType)
                 .NoAck()
-                .StartSubscription();
-            endpoints.ConfigureEndpoint(configurate);
+                .StartSubscription());
+            
             return messageType;
         }
 
@@ -154,7 +158,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
             Proxy.Send(envelope);
         }
 
@@ -167,14 +171,15 @@ namespace Symbiote.Rabbit.Impl.Channels
                 ReplyToExchange = RabbitBroker.ResponseId
             };
 
-            Definition.OutgoingTransform.Transform<RabbitEnvelope, RabbitEnvelope>(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
             Proxy.Send(envelope);
         }
 
-        public RabbitChannel(IChannelProxy proxy, RabbitChannelDefinition<TMessage> definition)
+        public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition<TMessage> definition)
         {
             Definition = definition;
             Proxy = proxy;
+            Serializer = serializer;
         }
     }
 }

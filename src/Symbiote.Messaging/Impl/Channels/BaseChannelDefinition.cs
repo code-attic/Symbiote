@@ -14,10 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
 using System;
 using System.Collections.Generic;
-using Symbiote.Messaging.Impl.Transform;
+using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -30,6 +29,7 @@ namespace Symbiote.Messaging.Impl.Channels
         public Func<TMessage, string> CorrelationMethod { get; set; }
         public abstract Type ChannelType { get; }
         public abstract Type FactoryType { get; }
+        public Type SerializerType { get; set; }
 
         public IConfigureChannel<TMessage> Named( string channelName )
         {
@@ -67,6 +67,7 @@ namespace Symbiote.Messaging.Impl.Channels
             MessageType = typeof(TMessage);
             RoutingMethod = x => "";
             CorrelationMethod = x => "";
+            SerializerType = typeof(MessageOptimizedSerializer);
         }
     }
 
@@ -79,6 +80,7 @@ namespace Symbiote.Messaging.Impl.Channels
         public virtual Type FactoryType { get { return typeof(LocalChannelFactory); } }
         public Dictionary<Type, Func<object, string>> RoutingMethods { get; set; }
         public Dictionary<Type, Func<object, string>> CorrelationMethods { get; set; }
+        public Type SerializerType { get; set; }
 
         public IConfigureChannel Named(string channelName)
         {
@@ -137,6 +139,7 @@ namespace Symbiote.Messaging.Impl.Channels
             Name = "default";
             RoutingMethods = new Dictionary<Type, Func<object, string>>();
             CorrelationMethods = new Dictionary<Type, Func<object, string>>();
+            SerializerType = typeof(MessageOptimizedSerializer);
         }
     }
 }

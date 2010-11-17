@@ -28,7 +28,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             RabbitEndpoint endpoint = null;
             _endpointsByQueue.TryGetValue(queueName, out endpoint);
             if (endpoint == null)
-                throw new RabbitConfigurationException(
+                throw new ConfigurationException(
                     "There was no endpoint configured for queue {0}. Please provide configuration using the AddEndPoint method on the IBus interface.".AsFormat(queueName));
             return endpoint;
         }

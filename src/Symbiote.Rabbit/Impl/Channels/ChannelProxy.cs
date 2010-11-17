@@ -18,11 +18,9 @@ using System;
 using System.Collections.Generic;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Serialization;
-using Symbiote.Rabbit.Impl.Adapter;
 using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
@@ -30,7 +28,8 @@ namespace Symbiote.Rabbit.Impl.Channels
     public class ChannelProxy : IChannelProxy
     {
         private IModel _channel;
-        private RabbitEndpoint _configuration;
+        private RabbitEndpoint _endpoint;
+        private ChannelDefinition _channelDefinition;
         private IMessageSerializer _messageSerializer;
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
@@ -42,7 +41,12 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public RabbitEndpoint EndpointConfiguration
         {
-            get { return _configuration; }
+            get { return _endpoint; }
+        }
+
+        public ChannelDefinition ChannelDefinition
+        {
+            get { return _channelDefinition; }
         }
 
         public IModel Channel
@@ -64,7 +68,7 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public string QueueName
         {
-            get { return _configuration.QueueName ?? ""; }
+            get { return _endpoint.QueueName ?? ""; }
         }
 
         public void Acknowledge(ulong tag, bool multiple)
@@ -82,10 +86,10 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
             Channel.BasicPublish(
-                _configuration.ExchangeName,
+                _endpoint.ExchangeName,
                 envelope.RoutingKey,
-                EndpointConfiguration.MandatoryDelivery,
-                EndpointConfiguration.ImmediateDelivery,
+                ChannelDefinition.Mandatory,
+                ChannelDefinition.Immediate,
                 properties,
                 envelope.ByteStream);
         }
@@ -100,7 +104,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         protected IBasicProperties CreatePublishingProperties<T>(string contentType, RabbitEnvelope<T> envelope)
         {
             var properties = Channel.CreateBasicProperties();
-            properties.DeliveryMode = (byte)(_configuration.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
+            properties.DeliveryMode = (byte)(_endpoint.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
             properties.ContentType = contentType;
             properties.CorrelationId = envelope.CorrelationId;
             properties.MessageId = envelope.MessageId.ToString();
@@ -123,8 +127,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var consumer = new QueueingBasicConsumer(Channel);
             _channel.BasicConsume(
-                _configuration.QueueName,
-                _configuration.NoAck,
+                _endpoint.QueueName,
+                _endpoint.NoAck,
                 null,
                 consumer);
 
@@ -134,8 +138,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         public void InitConsumer(IBasicConsumer consumer)
         {
             _channel.BasicConsume(
-                _configuration.QueueName,
-                _configuration.NoAck,
+                _endpoint.QueueName,
+                _endpoint.NoAck,
                 null,
                 consumer);
         }
@@ -144,8 +148,20 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             _channel = channel;
             _protocol = protocol;
-            _configuration = endpointConfiguration;
-            if (_configuration.UseTransactions)
+            _endpoint = endpointConfiguration;
+            if (_endpoint.Transactional)
+                channel.TxSelect();
+            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
+            //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
+            //_channel.ModelShutdown += ChannelShutdown;
+        }
+
+        public ChannelProxy(IModel channel, string protocol, ChannelDefinition channelDefinition)
+        {
+            _channel = channel;
+            _protocol = protocol;
+            _channelDefinition = channelDefinition;
+            if (_channelDefinition.Transactional)
                 channel.TxSelect();
             //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
             //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);

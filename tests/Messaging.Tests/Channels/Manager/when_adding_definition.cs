@@ -18,6 +18,7 @@ namespace Messaging.Tests.Channels.Manager
         public Type ChannelType { get; set; }
         public Type MessageType { get; set; }
         public Type FactoryType { get; set; }
+        public Type SerializerType { get; set; }
         public Transformer OutgoingTransform { get; set; }
         public Transformer IncomingTransform { get; set; }
 

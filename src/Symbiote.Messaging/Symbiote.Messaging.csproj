@@ -68,6 +68,7 @@
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Endpoints\IEndpointDefinition.cs" />
     <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
+    <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
     <Compile Include="Impl\Subscriptions\ISubscription.cs" />

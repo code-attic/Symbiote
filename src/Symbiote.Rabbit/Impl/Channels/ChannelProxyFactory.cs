@@ -14,9 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using System.Collections;
-using RabbitMQ.Client;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
@@ -26,32 +23,23 @@ namespace Symbiote.Rabbit.Impl.Channels
     public class ChannelProxyFactory : IChannelProxyFactory
     {
         private IConnectionManager ConnectionManager { get; set; }
-        private IEndpointIndex EndpointIndex  { get; set; }
         
-        public IChannelProxy GetProxyForQueue(string queueName)
+        public IChannelProxy GetProxyForQueue(RabbitEndpoint endpoint)
         {
-            var endpoint = EndpointIndex.GetEndpointByQueue(queueName);
-            return CreateProxy(endpoint);
-        }
-
-        public IChannelProxy GetProxyForExchange(string exchangeName)
-        {
-            var endpoint = EndpointIndex.GetEndpointByExchange(exchangeName);
-            return CreateProxy(endpoint);
-        }
-
-        protected IChannelProxy CreateProxy(RabbitEndpoint endpoint)
-        {
-            endpoint.CreateOnBroker( ConnectionManager );
+            endpoint.CreateOnBroker(ConnectionManager);
             return new ChannelProxy(ConnectionManager.GetConnection(endpoint.Broker).CreateModel(), ConnectionManager.Protocol, endpoint);
         }
 
+        public IChannelProxy GetProxyForExchange(ChannelDefinition channelDefinition)
+        {
+            channelDefinition.CreateOnBroker(ConnectionManager);
+            return new ChannelProxy(ConnectionManager.GetConnection(channelDefinition.Broker).CreateModel(), ConnectionManager.Protocol, channelDefinition);
+        }
+
         public ChannelProxyFactory(
-            IConnectionManager connectionManager, 
-            IEndpointIndex endpointIndex)
+            IConnectionManager connectionManager)
         {
             ConnectionManager = connectionManager;
-            EndpointIndex = endpointIndex;
         }
     }
 }

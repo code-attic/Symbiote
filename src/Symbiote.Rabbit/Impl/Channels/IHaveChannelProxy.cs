@@ -14,14 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using Symbiote.Messaging.Impl.Channels;
-
 namespace Symbiote.Rabbit.Impl.Channels
 {
-    public interface IRabbitChannelDefinition<TMessage>
-        : IChannelDefinition<TMessage>
+    public interface IHaveChannelProxy
     {
-        string Exchange { get; set; }
+        IChannelProxy Proxy { get; set; }
     }
 }

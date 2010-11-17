@@ -14,11 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Symbiote.Rabbit.Impl.Endpoint;
+
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public interface IChannelProxyFactory
     {
-        IChannelProxy GetProxyForQueue(string queueName);
-        IChannelProxy GetProxyForExchange(string exchangeName);
+        IChannelProxy GetProxyForQueue(RabbitEndpoint endpoint);
+        IChannelProxy GetProxyForExchange(ChannelDefinition channelDefinition);
     }
 }

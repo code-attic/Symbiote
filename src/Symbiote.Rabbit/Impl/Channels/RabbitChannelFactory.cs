@@ -15,9 +15,8 @@ limitations under the License.
 */
 
 using System;
-using RabbitMQ.Client;
-using Symbiote.Core.Extensions;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {
@@ -25,27 +24,14 @@ namespace Symbiote.Rabbit.Impl.Channels
         : IChannelFactory
     {
         public IChannelProxyFactory ProxyFactory { get; set; }
-
+        public IMessageSerializer Serializer { get; set; }
         public IChannel CreateChannel(IChannelDefinition definition)
         {
-            var rabbitDef = definition as RabbitChannelDefinition;
-            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Name);
+            var rabbitDef = definition as ChannelDefinition;
+            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef);
 
             var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IOpenChannel;
             return channel;
-        }
-
-        public void BuildExchange(IModel channel, IRabbitChannelDetails details)
-        {
-            channel.ExchangeDeclare(
-                details.Exchange,
-                details.ExchangeTypeName,
-                details.Passive,
-                details.Durable,
-                details.AutoDelete,
-                details.Internal,
-                details.NoWait,
-                null );
         }
 
         public RabbitChannelFactory(IChannelProxyFactory proxyFactory)
@@ -58,11 +44,11 @@ namespace Symbiote.Rabbit.Impl.Channels
         : IChannelFactory<TMessage>
     {
         public IChannelProxyFactory ProxyFactory { get; set; }
-
+        public IMessageSerializer Serializer { get; set; }
         public IChannel CreateChannel(IChannelDefinition definition)
         {
-            var rabbitDef = definition as RabbitChannelDefinition<TMessage>;
-            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef.Name);
+            var rabbitDef = definition as ChannelDefinition;
+            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef);
             var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IChannel<TMessage>;
             return channel;
         }

@@ -15,15 +15,6 @@ limitations under the License.
 */
 
 using System;
-using System.Collections;
-using RabbitMQ.Client;
-using Symbiote.Core;
-using Symbiote.Core.Extensions;
-using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Subscriptions;
-using Symbiote.Rabbit.Impl.Adapter;
-using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Server;
 using Symbiote.Rabbit.Impl.Subscription;
 
@@ -32,18 +23,20 @@ namespace Symbiote.Rabbit.Impl.Endpoint
     public class EndpointManager : IEndpointManager
     {
         protected IEndpointIndex EndpointIndex { get; set; }
+        protected IConnectionManager ConnectionManager { get; set; }
         protected QueueSubscriptionFactory SubscriptionFactory { get; set; }
 
         public void AddEndpoint(RabbitEndpoint endpoint)
         {
+            endpoint.CreateOnBroker(ConnectionManager);
             EndpointIndex.AddEndpoint(endpoint);
         }
 
-        public void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> configurate)
+        public void ConfigureEndpoint(Action<EndpointFluentConfigurator> configurate)
         {
-            var configurator = new RabbitEndpointFluentConfigurator();
+            var configurator = new EndpointFluentConfigurator();
             configurate(configurator);
-            var endpoint = configurator.Endpoint;
+            var endpoint = configurator.RabbitEndpoint;
             AddEndpoint(endpoint);
 
             if (!string.IsNullOrEmpty(endpoint.QueueName))
@@ -54,8 +47,10 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 
         public EndpointManager(
             IEndpointIndex endpointIndex,
+            IConnectionManager connectionManager,
             QueueSubscriptionFactory subscriptionFactory)
         {
+            ConnectionManager = connectionManager;
             EndpointIndex = endpointIndex;
             SubscriptionFactory = subscriptionFactory;
         }

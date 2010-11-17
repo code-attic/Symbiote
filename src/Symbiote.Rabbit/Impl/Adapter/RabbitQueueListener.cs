@@ -17,11 +17,10 @@ limitations under the License.
 using System;
 using System.Text;
 using RabbitMQ.Client;
-using Symbiote.Core;
 using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Transform;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 
@@ -32,7 +31,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }
-        protected RabbitEndpoint Endpoint { get; set; }
+        protected RabbitEndpoint RabbitEndpoint { get; set; }
+        protected IMessageSerializer Serializer { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
         protected VolatileRingBuffer RingBuffer { get; set; }
@@ -75,6 +75,13 @@ namespace Symbiote.Rabbit.Impl.Adapter
             return null;
         }
 
+        public object DeserializeMessage(object envelope)
+        {
+            var rabbitEnvelope = envelope as RabbitEnvelope;
+            rabbitEnvelope.Message = Serializer.Deserialize( rabbitEnvelope.MessageType, rabbitEnvelope.ByteStream );
+            return rabbitEnvelope;
+        }
+
         public override void HandleBasicCancelOk(string consumerTag)
         {
             Running = false;
@@ -89,15 +96,12 @@ namespace Symbiote.Rabbit.Impl.Adapter
         {
             Proxy = proxy;
             Dispatch = dispatch;
-            Endpoint = endpoint;
+            RabbitEndpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
             RingBuffer = new VolatileRingBuffer(100000);
-            endpoint.IncomingTransform.Phases.ForEach(x =>
-            {
-                var transform = Assimilate.GetInstanceOf(x) as ITransform;
-                RingBuffer.AddTransform(transform.From);
-            });
+
+            RingBuffer.AddTransform(DeserializeMessage);
             RingBuffer.AddTransform(DispatchResult);
             RingBuffer.Start();
         }
@@ -108,7 +112,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
     {
         protected IChannelProxy Proxy { get; set; }
         protected IDispatcher Dispatch { get; set; }
-        protected RabbitEndpoint Endpoint { get; set; }
+        protected RabbitEndpoint RabbitEndpoint { get; set; }
+        protected IMessageSerializer Serializer { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
         protected VolatileRingBuffer RingBuffer { get; set; }
@@ -142,6 +147,13 @@ namespace Symbiote.Rabbit.Impl.Adapter
             return null;
         }
 
+        public object DeserializeMessage(object envelope)
+        {
+            var rabbitEnvelope = envelope as RabbitEnvelope;
+            rabbitEnvelope.Message = Serializer.Deserialize<TMessage>(rabbitEnvelope.ByteStream);
+            return rabbitEnvelope;
+        }
+
         public override void HandleBasicCancelOk(string consumerTag)
         {
             Running = false;
@@ -156,15 +168,12 @@ namespace Symbiote.Rabbit.Impl.Adapter
         {
             Proxy = proxy;
             Dispatch = dispatch;
-            Endpoint = endpoint;
+            RabbitEndpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
             RingBuffer = new VolatileRingBuffer( 1000000 );
-            endpoint.IncomingTransform.Phases.ForEach( x =>
-            {
-                var transform = Assimilate.GetInstanceOf( x ) as ITransform;
-                RingBuffer.AddTransform( transform.From );
-            } );
+            
+            RingBuffer.AddTransform( DeserializeMessage );
             RingBuffer.AddTransform( DispatchResult );
             RingBuffer.Start();
         }

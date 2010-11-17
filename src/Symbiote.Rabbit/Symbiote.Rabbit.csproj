@@ -48,9 +48,9 @@
     <Compile Include="Impl\Adapter\QueueSubscription.cs" />
     <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
     <Compile Include="Impl\Channels\DeliveryMode.cs" />
-    <Compile Include="Impl\Channels\IRabbitChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\IHaveChannelProxy.cs" />
     <Compile Include="Impl\Channels\IRabbitChannelDetails.cs" />
-    <Compile Include="Impl\Endpoint\RabbitChannelConfigurator.cs" />
+    <Compile Include="Impl\Channels\ChannelConfigurator.cs" />
     <Compile Include="Impl\Subscription\QueueSubscriptionFactory.cs" />
     <Compile Include="Impl\Transform\RabbitSerializerTransform.cs" />
     <Compile Include="RabbitActorHandler.cs" />
@@ -68,17 +68,17 @@
     <Compile Include="Impl\Channels\IChannelProxy.cs" />
     <Compile Include="Impl\Channels\IChannelProxyFactory.cs" />
     <Compile Include="Impl\Channels\RabbitChannel.cs" />
-    <Compile Include="Impl\Channels\RabbitChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\ChannelDefinition.cs" />
     <Compile Include="Impl\Channels\RabbitChannelFactory.cs" />
     <Compile Include="Impl\Endpoint\EndpointIndex.cs" />
     <Compile Include="Impl\Endpoint\EndpointManager.cs" />
     <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
-    <Compile Include="Impl\Endpoint\RabbitConfigurationException.cs" />
+    <Compile Include="Impl\Endpoint\ConfigurationException.cs" />
     <Compile Include="Impl\Endpoint\RabbitEndpoint.cs" />
-    <Compile Include="Impl\Endpoint\RabbitEndpointFluentConfigurator.cs" />
-    <Compile Include="Impl\Server\ConnectionManager.cs" />
-    <Compile Include="Impl\Server\IConnectionManager.cs" />
+    <Compile Include="Impl\Endpoint\EndpointFluentConfigurator.cs" />
+    <Compile Include="Impl\Connection\ConnectionManager.cs" />
+    <Compile Include="Impl\Connection\IConnectionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitExtensions.cs" />
     <Compile Include="RabbitMessageHandler.cs" />
@@ -93,9 +93,7 @@
       <Name>Symbiote.Messaging</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\Connection\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">

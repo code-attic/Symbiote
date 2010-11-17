@@ -18,6 +18,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using RabbitMQ.Client;
+using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
@@ -38,7 +39,8 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public bool PersistentDelivery { get; set; }
         public string QueueName { get; set; }
         public List<string> RoutingKeys { get; set; }
-        public bool UseTransactions { get; set; }
+        public Type SerializerType { get; set; }
+        public bool Transactional { get; set; }
 
         public void BindQueue(IModel channel)
         {
@@ -79,6 +81,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         {
             Broker = "default";
             ExchangeName = "";
+            SerializerType = typeof(MessageOptimizedSerializer);
             RoutingKeys = new List<string>();
         }
     }

@@ -21,6 +21,6 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 {
     public interface IEndpointManager
     {
-        void ConfigureEndpoint(Action<RabbitEndpointFluentConfigurator> endpoint);
+        void ConfigureEndpoint(Action<EndpointFluentConfigurator> endpoint);
     }
 }

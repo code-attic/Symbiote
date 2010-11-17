@@ -20,24 +20,30 @@ using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
+using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit
 {
     public static class RabbitExtensions
     {
-        public static IBus AddRabbitQueue(this IBus bus, Action<RabbitEndpointFluentConfigurator> configurate)
+        public static IBus AddRabbitQueue(this IBus bus, Action<EndpointFluentConfigurator> configurate)
         {
             var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             endpoints.ConfigureEndpoint(configurate);
             return bus;
         }
 
-        public static IBus AddRabbitChannel(this IBus bus, Action<RabbitChannelConfigurator> configurate)
+        public static IBus AddRabbitChannel(this IBus bus, Action<ChannelConfigurator> configurate)
         {
             var channels = Assimilate.GetInstanceOf<IChannelIndex>();
-            var configurator = new RabbitChannelConfigurator();
+            var connectionManager = Assimilate.GetInstanceOf<IConnectionManager>();
+            var configurator = new ChannelConfigurator();
+            
             configurate( configurator );
-            channels.AddDefinition( configurator.ChannelDefinition );
+            var channelDefinition = configurator.ChannelDefinition;
+            
+            channelDefinition.CreateOnBroker( connectionManager );
+            channels.AddDefinition( channelDefinition );
             return bus;
         }
 

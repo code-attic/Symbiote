@@ -44,8 +44,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
 
         public void Start()
         {
-            CurrentProxy = ProxyFactory.GetProxyForQueue(Name);
-            Listener = new RabbitQueueListener(CurrentProxy, Dispatcher, Definition);
+            CurrentProxy = ProxyFactory.GetProxyForQueue(Endpoint);
+            Listener = new RabbitQueueListener(CurrentProxy, Dispatcher, Endpoint);
         }
 
         public void Stop()
@@ -88,8 +88,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
 
         public void Start()
         {
-            CurrentProxy = ProxyFactory.GetProxyForQueue(Name);
-            Listener = new RabbitQueueListener<TMessage>(CurrentProxy, Dispatcher, Definition);
+            CurrentProxy = ProxyFactory.GetProxyForQueue(Endpoint);
+            Listener = new RabbitQueueListener<TMessage>(CurrentProxy, Dispatcher, Endpoint);
         }
 
         public void Stop()

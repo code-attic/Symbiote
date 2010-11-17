@@ -15,15 +15,14 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Rabbit.Impl.Channels;
 
-namespace Symbiote.Rabbit.Impl.Endpoint
+namespace Symbiote.Rabbit.Impl.Channels
 {
-    public class RabbitChannelConfigurator
+    public class ChannelConfigurator
     {
-        public RabbitChannelDefinition ChannelDefinition { get; protected set; }
+        public ChannelDefinition ChannelDefinition { get; protected set; }
 
-        public RabbitChannelConfigurator Direct(string exchangeName)
+        public ChannelConfigurator Direct(string exchangeName)
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -31,7 +30,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return this;
         }
 
-        public RabbitChannelConfigurator Fanout(string exchangeName)
+        public ChannelConfigurator Fanout(string exchangeName)
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -39,7 +38,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return this;
         }
 
-        public RabbitChannelConfigurator Topic(string exchangeName)
+        public ChannelConfigurator Topic(string exchangeName)
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -47,81 +46,87 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             return this;
         }
 
-        public RabbitChannelConfigurator AutoDelete()
+        public ChannelConfigurator AutoDelete()
         {
             ChannelDefinition.AutoDelete = true;
             return this;
         }
 
-        public RabbitChannelConfigurator Durable()
+        public ChannelConfigurator Durable()
         {
             ChannelDefinition.Durable = true;
             return this;
         }
 
-        public RabbitChannelConfigurator Immediate()
+        public ChannelConfigurator Immediate()
         {
             ChannelDefinition.Immediate = true;
             return this;
         }
 
-        public RabbitChannelConfigurator Internal()
+        public ChannelConfigurator Internal()
         {
             ChannelDefinition.Internal = true;
             return this;
         }
 
-        public RabbitChannelConfigurator Mandatory()
+        public ChannelConfigurator Mandatory()
         {
             ChannelDefinition.Mandatory = true;
             return this;
         }
 
-        public RabbitChannelConfigurator NoWait()
+        public ChannelConfigurator NoWait()
         {
             ChannelDefinition.NoWait = true;
             return this;
         }
 
-        public RabbitChannelConfigurator Passive()
+        public ChannelConfigurator Passive()
         {
             ChannelDefinition.Passive = true;
             return this;
         }
 
-        public RabbitChannelConfigurator UseTransactions()
+        public ChannelConfigurator UseTransactions()
         {
             ChannelDefinition.Transactional = true;
             return this;
         }
 
-        public RabbitChannelConfigurator RouteBy<TMessage>(string routingKey)
+        public ChannelConfigurator SerializeBy<TSerializer>()
+        {
+            ChannelDefinition.SerializerType = typeof(TSerializer);
+            return this;
+        }
+
+        public ChannelConfigurator RouteBy<TMessage>(string routingKey)
         {
             ChannelDefinition.RouteBy<TMessage>( routingKey );
             return this;
         }
 
-        public RabbitChannelConfigurator RouteBy<TMessage>(Func<TMessage, string> messageProperty)
+        public ChannelConfigurator RouteBy<TMessage>(Func<TMessage, string> messageProperty)
         {
             ChannelDefinition.RouteBy( messageProperty );
             return this;
         }
 
-        public RabbitChannelConfigurator CorrelateBy<TMessage>(string correlationId)
+        public ChannelConfigurator CorrelateBy<TMessage>(string correlationId)
         {
             ChannelDefinition.CorrelateBy<TMessage>( correlationId );
             return this;
         }
 
-        public RabbitChannelConfigurator CorrelateBy<TMessage>(Func<TMessage, string> messageProperty)
+        public ChannelConfigurator CorrelateBy<TMessage>(Func<TMessage, string> messageProperty)
         {
             ChannelDefinition.CorrelateBy( messageProperty );
             return this;
         }
 
-        public RabbitChannelConfigurator()
+        public ChannelConfigurator()
         {
-            ChannelDefinition = new RabbitChannelDefinition();
+            ChannelDefinition = new ChannelDefinition();
         }
     }
 }

@@ -120,7 +120,7 @@ namespace Symbiote.Rabbit
             var bus = Assimilate.GetInstanceOf<IBus>();
             if (!bus.HasChannelFor<TResponse>())
             {
-                bus.AddRabbitChannel<TResponse>(x => x.AutoDelete().Direct(ReplyToExchange).NoAck());
+                bus.AddRabbitChannel(x => x.AutoDelete().Direct(ReplyToExchange));
             }
             bus.Publish(response, x =>
             {
