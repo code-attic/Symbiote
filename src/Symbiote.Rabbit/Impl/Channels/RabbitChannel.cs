@@ -25,8 +25,8 @@ using Symbiote.Rabbit.Config;
 namespace Symbiote.Rabbit.Impl.Channels
 {
     public class RabbitChannel :
-        IOpenChannel
-        , IHaveChannelProxy
+        IChannel,
+        IHaveChannelProxy
     {
         public string Name { get; set; }
         public IChannelProxy Proxy { get; set; }
@@ -97,85 +97,6 @@ namespace Symbiote.Rabbit.Impl.Channels
         }
 
         public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition definition)
-        {
-            Definition = definition;
-            Proxy = proxy;
-            Serializer = serializer;
-        }
-    }
-
-    public class RabbitChannel<TMessage> :
-        IChannel<TMessage>,
-        IHaveChannelProxy
-    {
-        public string Name { get; set; }
-        public IChannelProxy Proxy { get; set; }
-        public IMessageSerializer Serializer { get; set; }
-        public ChannelDefinition<TMessage> Definition { get; set; }
-
-        public void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
-        {
-            var envelope = new RabbitEnvelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-                ReplyToExchange = RabbitBroker.ResponseId,
-                ReplyToKey = ConfigureResponseChannel<TReply>()
-            };
-
-            modifyEnvelope(envelope);
-            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            envelope.ByteStream = Serializer.Serialize(envelope.Message);
-            Proxy.Send(envelope);
-        }
-
-        public string ConfigureResponseChannel<TReply>()
-        {
-            var baseName = RabbitBroker.ResponseId;
-            var messageType = typeof(TReply).Name;
-            
-            RabbitExtensions.AddRabbitChannel(null, x => x
-                .AutoDelete()
-                .Direct( baseName ));
-
-            RabbitExtensions.AddRabbitQueue( null, x => x
-                .AutoDelete()
-                .QueueName("{0}.{1}.{2}".AsFormat(baseName, "response", messageType))
-                .RoutingKeys(messageType)
-                .NoAck()
-                .StartSubscription());
-            
-            return messageType;
-        }
-
-        public void Send(TMessage message, Action<IEnvelope> modifyEnvelope)
-        {
-            var envelope = new RabbitEnvelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-                ReplyToExchange = RabbitBroker.ResponseId
-            };
-
-            modifyEnvelope(envelope);
-            envelope.ByteStream = Serializer.Serialize(envelope.Message);
-            Proxy.Send(envelope);
-        }
-
-        public void Send(TMessage message)
-        {
-            var envelope = new RabbitEnvelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-                ReplyToExchange = RabbitBroker.ResponseId
-            };
-
-            envelope.ByteStream = Serializer.Serialize(envelope.Message);
-            Proxy.Send(envelope);
-        }
-
-        public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition<TMessage> definition)
         {
             Definition = definition;
             Proxy = proxy;

@@ -38,14 +38,7 @@ namespace Symbiote.Messaging.Impl.Channels
             return channel;
         }
 
-        public IChannelAdapter GetAdapterForChannel<TMessage>( IChannel channel )
-        {
-            return channel.GetType().GetInterface( "IChannel`1" ) == null
-                       ? new ChannelAdapter( channel as IOpenChannel ) as IChannelAdapter
-                       : new ChannelAdapter<TMessage>( channel as IChannel<TMessage> );
-        }
-
-        public IChannelAdapter GetChannelFor<TMessage>()
+        public IChannel GetChannelFor<TMessage>()
         {
             var messageType = typeof(TMessage);
             var adapter = GetChannelsFor<TMessage>().FirstOrDefault();
@@ -58,7 +51,7 @@ namespace Symbiote.Messaging.Impl.Channels
             return adapter;
         }
 
-        public IChannelAdapter GetChannelFor<TMessage>(string channelName)
+        public IChannel GetChannelFor<TMessage>(string channelName)
         {
             IChannel channel = null;
             int key = Index.GetKeyFor<TMessage>( channelName );
@@ -67,12 +60,12 @@ namespace Symbiote.Messaging.Impl.Channels
                 var definition = Index.GetDefinitionFor<TMessage>(channelName);
                 channel = CreateChannelInstance( key, definition );
             }
-            return GetAdapterForChannel<TMessage>( channel );
+            return channel;
         }
 
-        public IEnumerable<IChannelAdapter> GetChannelsFor<TMessage>()
+        public IEnumerable<IChannel> GetChannelsFor<TMessage>()
         {
-            var adapters = new List<IChannelAdapter>();
+            var adapters = new List<IChannel>();
             var definitions = Index.GetDefinitionsFor<TMessage>();
 
             foreach (var definition in definitions)
@@ -83,7 +76,7 @@ namespace Symbiote.Messaging.Impl.Channels
                 {
                     channel = CreateChannelInstance(key, definition);
                 }
-                adapters.Add(GetAdapterForChannel<TMessage>(channel));
+                adapters.Add(channel);
             }
             return adapters;
         }
@@ -91,19 +84,10 @@ namespace Symbiote.Messaging.Impl.Channels
         public IChannelFactory GetChannelFactory(IChannelDefinition definition)
         {
             IChannelFactory factory = null;
-            if(definition as IOpenChannelDefinition != null 
-                && !ChannelFactories.TryGetValue(definition.ChannelType, out factory ))
+            if(!ChannelFactories.TryGetValue(definition.ChannelType, out factory ))
             {
                 factory = Assimilate.GetInstanceOf( definition.FactoryType ) as IChannelFactory;
                 ChannelFactories.TryAdd(definition.FactoryType,
-                                         factory);
-            }
-            else if (!ChannelFactories.TryGetValue(definition.ChannelType,
-                                                out factory))
-            {
-                var factoryType = typeof(IChannelFactory<>).MakeGenericType(definition.ChannelType);
-                factory = Assimilate.GetInstanceOf(factoryType) as IChannelFactory;
-                ChannelFactories.TryAdd(factoryType,
                                          factory);
             }
             return factory;

@@ -27,7 +27,7 @@ namespace Messaging.Tests.Channels.Manager
             Name = name;
             MessageType = messageType;
             ChannelType = typeof(TestChannelDefinition);
-            FactoryType = typeof(LocalChannelFactory<DummyMessage>);
+            FactoryType = typeof(LocalChannelFactory);
         }
     }
 

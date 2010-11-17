@@ -22,27 +22,6 @@ namespace Symbiote.Messaging.Impl.Channels
     public interface IChannel
     {
         string Name { get; }
-    }
-
-    public interface IChannelAdapter
-    {
-        IChannel UnderlyingChannel { get; }
-        void ExpectReply<TReply>(object message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
-        void Send<TMessage>(object message);
-        void Send<TMessage>(object message, Action<IEnvelope> modifyEnvelope);
-    }
-
-    public interface IChannel<TMessage>
-        : IChannel
-    {
-        void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
-        void Send(TMessage message);
-        void Send(TMessage message, Action<IEnvelope> modifyEnvelope);
-    }
-
-    public interface IOpenChannel
-        : IChannel
-    {
         void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
         void Send<TMessage>(TMessage message);
         void Send<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);

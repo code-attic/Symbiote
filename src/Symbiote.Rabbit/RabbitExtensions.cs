@@ -50,14 +50,14 @@ namespace Symbiote.Rabbit
         public static void CommitChannelOf<TMessage>(this IBus bus)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>().UnderlyingChannel as IHaveChannelProxy;
+            var channel = channels.GetChannelFor<TMessage>() as IHaveChannelProxy;
             channel.Proxy.Channel.TxCommit();
         }
 
         public static void RollbackChannelOf<TMessage>(this IBus bus)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>().UnderlyingChannel as IHaveChannelProxy;
+            var channel = channels.GetChannelFor<TMessage>() as IHaveChannelProxy;
             channel.Proxy.Channel.TxRollback();
         }
     }

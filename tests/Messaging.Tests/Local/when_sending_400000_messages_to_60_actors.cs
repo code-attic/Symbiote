@@ -25,7 +25,7 @@ namespace Messaging.Tests.Local
                                  {
                                      Actor.Created = 0;
 
-                                     bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateBy(m => m.CorrelationId));
+                                     bus.AddLocalChannel(x => x.CorrelateBy<KickRobotAss>(m => m.CorrelationId));
 
                                      var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
                                      var message = Enumerable.Range(0, actorCount)

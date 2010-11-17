@@ -57,7 +57,6 @@
     <Compile Include="Impl\Actors\DefaultAgentFactory.cs" />
     <Compile Include="Impl\Actors\IAgentFactory.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
-    <Compile Include="Impl\Channels\ChannelAdapter.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelIndex.cs" />
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />

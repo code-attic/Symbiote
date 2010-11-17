@@ -20,67 +20,11 @@ using Symbiote.Messaging.Impl.Envelope;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
-    public class LocalChannel<TMessage>
-        : IChannel<TMessage>
-    {
-        protected IDispatcher MessageDispatcher { get; set; }
-
-        public string Name { get { return Definition.Name; } }
-
-        public LocalChannelDefinition<TMessage> Definition { get; set; }
-
-        public void ExpectReply<TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
-        {
-            var envelope = new Envelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-            };
-
-            modifyEnvelope(envelope);
-            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-
-            MessageDispatcher.Send(envelope);
-        }
-
-        public void Send(TMessage message)
-        {
-            var envelope = new Envelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-            };
-
-            MessageDispatcher.Send(envelope);
-        }
-
-        public void Send(TMessage message, Action<IEnvelope> modifyEnvelope)
-        {
-            var envelope = new Envelope<TMessage>(message)
-            {
-                CorrelationId = Definition.CorrelationMethod(message),
-                RoutingKey = Definition.RoutingMethod(message),
-            };
-
-            modifyEnvelope(envelope);
-
-            MessageDispatcher.Send(envelope);
-        }
-
-        public LocalChannel(IDispatcher dispatcher, LocalChannelDefinition<TMessage> definition)
-        {
-            MessageDispatcher = dispatcher;
-            Definition = definition;
-        }
-    }
-
     public class LocalChannel
-        : IOpenChannel
+        : IChannel
     {
-        private IDispatcher Dispatcher;
-        private IChannelDefinition definition;
-
         public string Name { get { return Definition.Name; } }
+        public Func<object, string> Empty = x => "";
 
         public LocalChannelDefinition Definition { get; set; }
 
@@ -93,9 +37,8 @@ namespace Symbiote.Messaging.Impl.Channels
             Definition.CorrelationMethods.TryGetValue( typeof(TMessage), out correlate );
             Definition.RoutingMethods.TryGetValue( typeof(TMessage), out route );
 
-            var empty = new Func<object, string>(x => "");
-            correlate = correlate ?? empty;
-            route = route ?? empty;
+            correlate = correlate ?? Empty;
+            route = route ?? Empty;
 
             var envelope = new Envelope<TMessage>(message)
             {
@@ -116,9 +59,8 @@ namespace Symbiote.Messaging.Impl.Channels
             Definition.CorrelationMethods.TryGetValue(typeof(TMessage), out correlate);
             Definition.RoutingMethods.TryGetValue(typeof(TMessage), out route);
 
-            var empty = new Func<object, string>(x => "");
-            correlate = correlate ?? empty;
-            route = route ?? empty;
+            correlate = correlate ?? Empty;
+            route = route ?? Empty;
 
             var envelope = new Envelope<TMessage>(message)
             {
@@ -135,9 +77,8 @@ namespace Symbiote.Messaging.Impl.Channels
             Definition.CorrelationMethods.TryGetValue(typeof(TMessage), out correlate);
             Definition.RoutingMethods.TryGetValue(typeof(TMessage), out route);
 
-            var empty = new Func<object, string>(x => "");
-            correlate = correlate ?? empty;
-            route = route ?? empty;
+            correlate = correlate ?? Empty;
+            route = route ?? Empty;
 
             var envelope = new Envelope<TMessage>(message)
             {

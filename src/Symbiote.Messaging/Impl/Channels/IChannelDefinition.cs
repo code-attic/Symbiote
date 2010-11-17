@@ -30,17 +30,4 @@ namespace Symbiote.Messaging.Impl.Channels
         Type FactoryType { get; }
         Type SerializerType { get; set; }
     }
-
-    public interface IOpenChannelDefinition
-        : IChannelDefinition,
-        IConfigureChannel
-    {
-    }
-
-    public interface IChannelDefinition<TMessage> :
-        IChannelDefinition,
-        IConfigureChannel<TMessage>
-    {
-
-    }
 }

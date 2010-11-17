@@ -55,7 +55,7 @@ namespace Symbiote.Messaging.Impl.Envelope
             var bus = Assimilate.GetInstanceOf<IBus>();
             if(!bus.HasChannelFor<TResponse>())
             {
-                bus.AddLocalChannelForMessageOf<TResponse>();
+                bus.AddLocalChannel();
             }
             bus.Publish( 
                 response, 

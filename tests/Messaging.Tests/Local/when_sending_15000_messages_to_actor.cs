@@ -16,7 +16,7 @@ namespace Messaging.Tests.Local
                                  {
                                      Actor.Created = 0;
 
-                                     bus.AddLocalChannelForMessageOf<KickRobotAss>( x => x.CorrelateBy( m => m.CorrelationId ) );
+                                     bus.AddLocalChannel( x => x.CorrelateBy<KickRobotAss>( m => m.CorrelationId ) );
 
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
@@ -35,7 +35,7 @@ namespace Messaging.Tests.Local
         // performance is currently close to a factor of 100. Messages dispatched = 100 * ms run to send
         // fastest: 115ms = 15000 > 100 msg/ms
         // slowest: 198ms = 15000 ~ 75 msg/ms
-
+        
         private It should_complete_in_1_second = () =>
                                                  watch.ElapsedMilliseconds.ShouldBeLessThan(11);
 

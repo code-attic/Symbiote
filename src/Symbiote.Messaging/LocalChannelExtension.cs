@@ -30,27 +30,13 @@ namespace Symbiote.Messaging
             get { return Assimilate.GetInstanceOf<IChannelIndex>(); }
         }
 
-        public static IBus AddLocalChannelForMessageOf<T>(this IBus bus)
-        {
-            Index.AddDefinition(new LocalChannelDefinition<T>());
-            return bus;
-        }
-
-        public static IBus AddLocalChannelForMessageOf<T>(this IBus bus, Action<IConfigureChannel<T>> configure)
-        {
-            var localChannelDefinition = new LocalChannelDefinition<T>();
-            configure(localChannelDefinition);
-            Index.AddDefinition(localChannelDefinition);
-            return bus;
-        }
-
-        public static IBus AddLocalChannelUntypedChannel(this IBus bus)
+        public static IBus AddLocalChannel(this IBus bus)
         {
             Index.AddDefinition(new LocalChannelDefinition());
             return bus;
         }
 
-        public static IBus AddLocalChannelUntypedChannel(this IBus bus, Action<IConfigureChannel> configure)
+        public static IBus AddLocalChannel(this IBus bus, Action<IConfigureChannel> configure)
         {
             var localChannelDefinition = new LocalChannelDefinition();
             configure(localChannelDefinition);

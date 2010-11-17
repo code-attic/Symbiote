@@ -18,7 +18,7 @@ namespace Messaging.Tests.Local
         private Because of = () =>
                                  {
                                      //bus.AddLocalChannelForMessageOf<KickRobotAss>(x => x.CorrelateBy(m => m.CorrelationId));
-                                     bus.AddLocalChannelUntypedChannel(x => x.CorrelateBy<KickRobotAss>(m => m.CorrelationId));
+                                     bus.AddLocalChannel(x => x.CorrelateBy<KickRobotAss>(m => m.CorrelationId));
                                      bus.Publish(new KickRobotAss() { CorrelationId="Sam Worthington", Target = "Terminator", Created = DateTime.Now});
                                      Thread.Sleep( 9 );
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");

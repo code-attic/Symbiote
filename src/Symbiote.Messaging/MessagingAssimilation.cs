@@ -57,8 +57,8 @@ namespace Symbiote.Messaging
                                             x.For<IBus>().Use<Bus>();
                                             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
                                             x.For<IChannelIndex>().Use<ChannelIndex>().AsSingleton();
-                                            //x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
-                                            x.For<IDispatcher>().Use<HyperDispatchManager>().AsSingleton();
+                                            x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
+                                            //x.For<IDispatcher>().Use<HyperDispatchManager>().AsSingleton();
                                             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
                                             x.For<IAgency>().Use<Agency>().AsSingleton();
 

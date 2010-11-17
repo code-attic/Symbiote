@@ -402,7 +402,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
         {
             accounts = new List<Account>();
             bus = Assimilate.GetInstanceOf<IBus>();
-            bus.AddLocalChannelForMessageOf<Transaction>( x => x.Named( "transaction" ).CorrelateBy( m => m.AccountId ) );
+            bus.AddLocalChannel( x => x.Named( "transaction" ).CorrelateBy<Transaction>( m => m.AccountId ) );
 
             watch = Stopwatch.StartNew();
             //create 10,000 1.00 transactions for each 1000 accounts

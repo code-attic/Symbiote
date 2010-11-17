@@ -42,58 +42,74 @@ namespace Symbiote.Messaging.Impl
 
         public void Publish<TMessage>(TMessage message)
         {
-            Channels
-                .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send<TMessage>(message));
+            var channelsFor = Channels
+                .GetChannelsFor<TMessage>();
+
+            channelsFor
+                .ForEach(x => x.Send(message));
         }
 
         public void Publish<TMessage>( string channelName, TMessage message )
         {
-            Channels
-                .GetChannelFor<TMessage>( channelName )
-                .Send<TMessage>( message );
+            var channelFor = Channels
+                .GetChannelFor<TMessage>( channelName );
+
+            channelFor
+                .Send( message );
         }
 
         public void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
         {
-            Channels
-                .GetChannelsFor<TMessage>()
-                .ForEach(x => x.Send<TMessage>(message,
+            var channelsFor = Channels
+                .GetChannelsFor<TMessage>();
+
+            channelsFor
+                .ForEach(x => x.Send(message,
                                        modifyEnvelope));
         }
 
         public void Publish<TMessage>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
         {
-            Channels
-                .GetChannelFor<TMessage>(channelName)
-                .Send<TMessage>(message, modifyEnvelope);
+            var channelFor = Channels
+                .GetChannelFor<TMessage>(channelName);
+
+            channelFor
+                .Send(message, modifyEnvelope);
         }
 
         public void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply)
         {
-            Channels
-                .GetChannelFor<TMessage>()
+            var channelFor = Channels
+                .GetChannelFor<TMessage>();
+
+            channelFor
                 .ExpectReply(message, x => { }, Dispatcher, onReply);
         }
 
         public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<TResponse> onReply )
         {
-            Channels
-                .GetChannelFor<TMessage>(channelName)
+            var channelFor = Channels
+                .GetChannelFor<TMessage>(channelName);
+
+            channelFor
                 .ExpectReply(message, x => { }, Dispatcher, onReply);
         }
 
         public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply)
         {
-            Channels
-                .GetChannelFor<TMessage>()
+            var channelFor = Channels
+                .GetChannelFor<TMessage>();
+
+            channelFor
                 .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
         }
 
         public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply )
         {
-            Channels
-                .GetChannelFor<TMessage>(channelName)
+            var channelFor = Channels
+                .GetChannelFor<TMessage>(channelName);
+
+            channelFor
                 .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
         }
 

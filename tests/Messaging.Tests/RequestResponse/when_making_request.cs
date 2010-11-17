@@ -17,7 +17,7 @@ namespace Messaging.Tests.RequestResponse
         }
         private Because of = () =>
         {
-            bus.AddLocalChannelForMessageOf<Request>();
+            bus.AddLocalChannel();
             bus.Request<Request, Reply>( new Request(), OnReply );
             Thread.Sleep( 60 );
         };

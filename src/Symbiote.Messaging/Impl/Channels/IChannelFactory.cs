@@ -20,7 +20,4 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         IChannel CreateChannel(IChannelDefinition definition);
     }
-
-    public interface IChannelFactory<TMessage>
-        : IChannelFactory { }
 }

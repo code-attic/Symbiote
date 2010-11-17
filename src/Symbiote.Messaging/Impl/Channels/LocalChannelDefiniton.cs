@@ -18,22 +18,6 @@ using System;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
-    public class LocalChannelDefinition<TMessage>
-        : BaseChannelDefinition<TMessage>
-    {
-        public override Type ChannelType
-        {
-            get { return typeof(LocalChannel<TMessage>); }
-        }
-
-        public override Type FactoryType
-        {
-            get { return typeof(LocalChannelFactory<TMessage>); }
-        }
-
-        public LocalChannelDefinition() : base() {}
-    }
-
     public class LocalChannelDefinition
         : BaseChannelDefinition
     {

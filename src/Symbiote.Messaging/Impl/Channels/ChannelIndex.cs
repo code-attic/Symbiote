@@ -18,7 +18,6 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Messaging.Impl.Channels
