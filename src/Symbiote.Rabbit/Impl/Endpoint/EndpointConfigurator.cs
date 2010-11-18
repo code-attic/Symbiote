@@ -18,102 +18,96 @@ using System.Collections.Generic;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {
-    public class EndpointFluentConfigurator
+    public class EndpointConfigurator
     {
         public RabbitEndpoint RabbitEndpoint { get; set; }
         public bool Subscribe { get; set; }
 
-        public EndpointFluentConfigurator AutoDelete()
+        public EndpointConfigurator AutoDelete()
         {
             RabbitEndpoint.AutoDelete = true;
             return this;
         }
 
-        public EndpointFluentConfigurator Broker(string broker)
+        public EndpointConfigurator Broker(string broker)
         {
             RabbitEndpoint.Broker = broker;
             return this;
         }
 
-        public EndpointFluentConfigurator CreateResponseChannel()
+        public EndpointConfigurator CreateResponseChannel()
         {
             RabbitEndpoint.NeedsResponseChannel = true;
             return this;
         }
 
-        public EndpointFluentConfigurator Durable()
+        public EndpointConfigurator Durable()
         {
             RabbitEndpoint.Durable = true;
             return this;
         }
 
-        public EndpointFluentConfigurator ExchangeName(string name)
+        public EndpointConfigurator ExchangeName(string name)
         {
             RabbitEndpoint.ExchangeName = name;
             return this;
         }
 
-        public EndpointFluentConfigurator Exclusive()
+        public EndpointConfigurator Exclusive()
         {
             RabbitEndpoint.Exclusive = true;
             return this;
         }
 
-        public EndpointFluentConfigurator NoWait()
+        public EndpointConfigurator NoWait()
         {
             RabbitEndpoint.NoWait = true;
             return this;
         }
 
-        public EndpointFluentConfigurator NoAck()
+        public EndpointConfigurator NoAck()
         {
             RabbitEndpoint.NoAck = true;
             return this;
         }
 
-        public EndpointFluentConfigurator QueueName(string queueName)
+        public EndpointConfigurator QueueName(string queueName)
         {
             RabbitEndpoint.QueueName = queueName;
             return this;
         }
 
-        public EndpointFluentConfigurator RoutingKeys(params string[] routingKeys)
+        public EndpointConfigurator RoutingKeys(params string[] routingKeys)
         {
             RabbitEndpoint.RoutingKeys = new List<string>(routingKeys);
             return this;
         }
 
-        public EndpointFluentConfigurator Passive()
+        public EndpointConfigurator Passive()
         {
             RabbitEndpoint.Passive = true;
             return this;
         }
 
-        public EndpointFluentConfigurator PersistentDelivery()
-        {
-            RabbitEndpoint.PersistentDelivery = true;
-            return this;
-        }
-
-        public EndpointFluentConfigurator SerializeBy<TSerializer>()
+        public EndpointConfigurator SerializeBy<TSerializer>()
         {
             RabbitEndpoint.SerializerType = typeof(TSerializer);
             return this;
         }
 
-        public EndpointFluentConfigurator StartSubscription()
+        public EndpointConfigurator StartSubscription()
         {
             Subscribe = true;
             return this;
         }
 
-        public EndpointFluentConfigurator UseTransactions()
+        public EndpointConfigurator UseTransactions()
         {
             RabbitEndpoint.Transactional = true;
             return this;
         }
 
-        public EndpointFluentConfigurator()
+        public EndpointConfigurator()
         {
             RabbitEndpoint = new RabbitEndpoint();
         }

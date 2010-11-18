@@ -23,10 +23,5 @@ namespace Symbiote.Messaging
         : Exception
     {
         public List<string> Violations { get; set; }
-
-        public InvalidChannelDefinitionException()
-        {
-            
-        }
     }
 }

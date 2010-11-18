@@ -36,7 +36,6 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public bool NoAck { get; set; }
         public bool NoWait { get; set; }
         public bool Passive { get; set; }
-        public bool PersistentDelivery { get; set; }
         public string QueueName { get; set; }
         public List<string> RoutingKeys { get; set; }
         public Type SerializerType { get; set; }

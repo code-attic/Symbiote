@@ -26,7 +26,7 @@ namespace Symbiote.Messaging.Impl.Serialization
 
         public IMessageSerializer GetSerialzier(Type messageType)
         {
-            IMessageSerializer serializer = null;
+            IMessageSerializer serializer;
             if (!SerializationProviders.TryGetValue(messageType, out serializer))
             {
                 var serializerType = MessageSerializer.GetBestMessageSerializer(messageType);
@@ -54,6 +54,11 @@ namespace Symbiote.Messaging.Impl.Serialization
         public byte[] Serialize<T>(T body)
         {
             return GetSerialzier(typeof(T)).Serialize(body);
+        }
+
+        public MessageOptimizedSerializer()
+        {
+            SerializationProviders = new ConcurrentDictionary<Type, IMessageSerializer>();
         }
     }
 }

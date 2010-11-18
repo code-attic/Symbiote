@@ -25,7 +25,7 @@ namespace Messaging.Tests.Local
                                      }
 
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
-                                     while(actor.FacesIveDrivenOver.Count < .8 * MessagesToSend)
+                                     while(actor.FacesIveDrivenOver.Count < .99 * MessagesToSend)
                                      {
                                          
                                      }

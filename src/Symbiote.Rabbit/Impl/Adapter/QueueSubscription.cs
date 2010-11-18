@@ -64,48 +64,4 @@ namespace Symbiote.Rabbit.Impl.Adapter
             Endpoint = endpoint;
         }
     }
-
-    public class QueueSubscription<TMessage> :
-        ISubscription
-    {
-        protected IChannelProxyFactory ProxyFactory { get; set; }
-        protected IChannelProxy CurrentProxy { get; set; }
-        protected RabbitQueueListener<TMessage> Listener { get; set; }
-        protected RabbitEndpoint Endpoint { get; set; }
-        protected IDispatcher Dispatcher { get; set; }
-        public string Name { get; set; }
-        public bool Started { get; private set; }
-        public bool Starting { get; private set; }
-        public bool Stopped { get; private set; }
-        public bool Stopping { get; private set; }
-
-        public void Dispose()
-        {
-            CurrentProxy.Dispose();
-            Listener = null;
-            ProxyFactory = null;
-        }
-
-        public void Start()
-        {
-            CurrentProxy = ProxyFactory.GetProxyForQueue(Endpoint);
-            Listener = new RabbitQueueListener<TMessage>(CurrentProxy, Dispatcher, Endpoint);
-        }
-
-        public void Stop()
-        {
-            CurrentProxy.Dispose();
-            Listener = null;
-        }
-
-        public QueueSubscription(
-            IChannelProxyFactory proxyFactory, 
-            IDispatcher dispatcher,
-            RabbitEndpoint endpoint)
-        {
-            ProxyFactory = proxyFactory;
-            Dispatcher = dispatcher;
-            Endpoint = endpoint;
-        }
-    }
 }

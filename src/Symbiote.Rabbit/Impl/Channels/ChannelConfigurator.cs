@@ -88,6 +88,12 @@ namespace Symbiote.Rabbit.Impl.Channels
             return this;
         }
 
+        public ChannelConfigurator PersistentDelivery()
+        {
+            ChannelDefinition.PersistentDelivery = true;
+            return this;
+        }
+
         public ChannelConfigurator UseTransactions()
         {
             ChannelDefinition.Transactional = true;

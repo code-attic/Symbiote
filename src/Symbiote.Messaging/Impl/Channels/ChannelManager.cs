@@ -53,7 +53,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IChannel GetChannelFor<TMessage>(string channelName)
         {
-            IChannel channel = null;
+            IChannel channel;
             int key = Index.GetKeyFor<TMessage>( channelName );
             if (!Channels.TryGetValue(key, out channel))
             {
@@ -70,7 +70,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
             foreach (var definition in definitions)
             {
-                IChannel channel = null;
+                IChannel channel;
                 var key = Index.GetKeyFor<TMessage>( definition.Name );
                 if(!Channels.TryGetValue( key, out channel ))
                 {
@@ -83,7 +83,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IChannelFactory GetChannelFactory(IChannelDefinition definition)
         {
-            IChannelFactory factory = null;
+            IChannelFactory factory;
             if(!ChannelFactories.TryGetValue(definition.ChannelType, out factory ))
             {
                 factory = Assimilate.GetInstanceOf( definition.FactoryType ) as IChannelFactory;

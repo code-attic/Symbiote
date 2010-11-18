@@ -30,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public void AddChannelForMessageType(Type messageType, string channelName)
         {
-            List<string> channels = null;
+            List<string> channels;
             if (!MessageChannels.TryGetValue(messageType,
                                              out channels))
             {
@@ -67,7 +67,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IChannelDefinition GetDefinitionFor<TMessage>( string channelName )
         {
-            IChannelDefinition definition = null;
+            IChannelDefinition definition;
             if (!Definitions.TryGetValue( GetKeyFor<TMessage>( channelName ), out definition ))
             {
                 throw new MissingChannelDefinitionException(
@@ -94,10 +94,9 @@ namespace Symbiote.Messaging.Impl.Channels
         public int GetKeyFor<TMessage>(string channelName)
         {
             var typedKey = GetChannelKey( typeof(TMessage), channelName );
-            if (Definitions.ContainsKey(typedKey))
-                return typedKey;
-            else
-                return GetChannelKey( typeof(object), channelName );
+            return Definitions.ContainsKey( typedKey )
+                       ? typedKey
+                       : GetChannelKey( typeof(object), channelName );
         }
 
         public IEnumerable<int> GetKeysFor<TMessage>()
@@ -136,7 +135,7 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             var violations = GetDefinitionViolations(definition).ToList();
             if (violations.Count > 0)
-                throw new InvalidChannelDefinitionException() { Violations = violations };
+                throw new InvalidChannelDefinitionException { Violations = violations };
         }
 
         public ChannelIndex()

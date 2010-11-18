@@ -92,7 +92,9 @@ namespace Symbiote.Core.Utility
                     if(WriteIndex[step] != WriteIndex[step-1]
                         || Iteration[step] != Iteration[step-1])
                     {
-                        Ring[current] = transformer( Ring[current] );
+                        if(Ring[current] != null)
+                            Ring[current] = transformer( Ring[current] );
+
                         var nextIndex = GetNextIndex(current);
                         if (nextIndex < current)
                             UpdateIteration(step);

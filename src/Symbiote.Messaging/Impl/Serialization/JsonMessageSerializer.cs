@@ -17,7 +17,6 @@ limitations under the License.
 using System;
 using System.Text;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Serialization;
 
 namespace Symbiote.Messaging.Impl.Serialization
 {

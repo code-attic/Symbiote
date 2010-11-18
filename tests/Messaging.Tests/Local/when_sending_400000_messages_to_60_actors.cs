@@ -18,8 +18,8 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 400000;
-        protected static int actorCount = 60;
+        protected static int MessagesToSend = 1000000;
+        protected static int actorCount = 100;
         protected static IDispatcher dispatcher;
         private Because of = () =>
                                  {

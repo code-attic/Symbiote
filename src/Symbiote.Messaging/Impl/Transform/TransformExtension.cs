@@ -14,10 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Symbiote.Messaging.Impl.Transform
 {
@@ -28,7 +25,6 @@ namespace Symbiote.Messaging.Impl.Transform
             while(transform != null)
             {
                 yield return transform;
-                //transform = transform.NextTransform;
             }
         }
     }

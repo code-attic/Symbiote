@@ -32,11 +32,9 @@ namespace Symbiote.Messaging.Impl.Actors
 
         public void Store(TActor actor)
         {
-            if(actor != null)
-            {
-                var key = KeyAccessor.GetId(actor);
-                Actors[key] = actor;
-            }
+            if ( actor == null ) return;
+            var key = KeyAccessor.GetId(actor);
+            Actors[key] = actor;
         }
 
         public InMemoryActorCache(IKeyAccessor<TActor> keyAccessor)

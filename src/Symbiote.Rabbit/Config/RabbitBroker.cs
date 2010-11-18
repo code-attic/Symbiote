@@ -25,6 +25,7 @@ namespace Symbiote.Rabbit.Config
     public class RabbitBroker : IRabbitBroker
     {
         protected ConnectionFactory _factory { get; set; }
+        protected IConnection Connection { get; set; }
         public string Name { get; set; }
         public string Protocol { get; set; }
         public string Address { get; set; }
@@ -66,8 +67,11 @@ namespace Symbiote.Rabbit.Config
 
         public IConnection GetConnection()
         {
-            var connection = Factory.CreateConnection();
-            return connection;
+            if(Connection == null || !Connection.IsOpen)
+            {
+                Connection = Factory.CreateConnection();
+            }
+            return Connection;
         }
 
         public RabbitBroker(string address, int port) : this()

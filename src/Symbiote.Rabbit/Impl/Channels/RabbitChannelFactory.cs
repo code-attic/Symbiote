@@ -29,27 +29,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var rabbitDef = definition as ChannelDefinition;
             var proxy = ProxyFactory.GetProxyForExchange(rabbitDef);
-
-            var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IOpenChannel;
-            return channel;
-        }
-
-        public RabbitChannelFactory(IChannelProxyFactory proxyFactory)
-        {
-            ProxyFactory = proxyFactory;
-        }
-    }
-
-    public class RabbitChannelFactory<TMessage>
-        : IChannelFactory<TMessage>
-    {
-        public IChannelProxyFactory ProxyFactory { get; set; }
-        public IMessageSerializer Serializer { get; set; }
-        public IChannel CreateChannel(IChannelDefinition definition)
-        {
-            var rabbitDef = definition as ChannelDefinition;
-            var proxy = ProxyFactory.GetProxyForExchange(rabbitDef);
-            var channel = Activator.CreateInstance(rabbitDef.ChannelType, proxy, definition) as IChannel<TMessage>;
+            var serializer = Activator.CreateInstance( definition.SerializerType ) as IMessageSerializer;
+            var channel = new RabbitChannel(proxy, serializer, rabbitDef) as IChannel;
             return channel;
         }
 

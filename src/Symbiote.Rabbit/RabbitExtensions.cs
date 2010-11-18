@@ -26,7 +26,7 @@ namespace Symbiote.Rabbit
 {
     public static class RabbitExtensions
     {
-        public static IBus AddRabbitQueue(this IBus bus, Action<EndpointFluentConfigurator> configurate)
+        public static IBus AddRabbitQueue(this IBus bus, Action<EndpointConfigurator> configurate)
         {
             var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
             endpoints.ConfigureEndpoint(configurate);

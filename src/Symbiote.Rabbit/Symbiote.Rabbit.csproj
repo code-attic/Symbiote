@@ -76,7 +76,7 @@
     <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
     <Compile Include="Impl\Endpoint\ConfigurationException.cs" />
     <Compile Include="Impl\Endpoint\RabbitEndpoint.cs" />
-    <Compile Include="Impl\Endpoint\EndpointFluentConfigurator.cs" />
+    <Compile Include="Impl\Endpoint\EndpointConfigurator.cs" />
     <Compile Include="Impl\Connection\ConnectionManager.cs" />
     <Compile Include="Impl\Connection\IConnectionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

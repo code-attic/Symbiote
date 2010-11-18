@@ -25,16 +25,16 @@ namespace Symbiote.Core.Utility
     /// </summary>
     public class VolatileRingBufferArray
     {
-        public volatile int[,] WriteIndex;
-        public volatile object[,] Ring;
-        public volatile int[,] Iteration;
-        public bool Started;
+        protected volatile int[,] WriteIndex;
+        protected volatile object[,] Ring;
+        protected volatile int[,] Iteration;
+        protected bool Started;
         protected List<Func<object, object>> Transforms;
         protected ExclusiveConcurrentDictionary<string, int> ActorIndex { get; set; }
         protected bool Running;
-        public int Capacity;
-        public int LastIndex;
-        public int LastStep;
+        protected int Capacity;
+        protected int LastIndex;
+        protected int LastStep;
 
         public int GetNextIndex(int index)
         {

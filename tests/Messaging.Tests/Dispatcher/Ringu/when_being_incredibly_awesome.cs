@@ -328,7 +328,6 @@ namespace Messaging.Tests.Dispatcher.Ringu
         : with_buffer_array_setup
     {
         protected static VolatileRingBufferArray bufferArray { get; set; }
-        //protected static RingBufferList bufferArray { get; set; }
         protected static List<Account> accounts { get; set; }
         protected static Stopwatch watch;
         protected static int TotalAccounts = 60;

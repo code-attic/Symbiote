@@ -17,7 +17,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
@@ -42,12 +41,7 @@ namespace Symbiote.Messaging.Impl.Transform
 
         protected bool Validate(Type newPhase)
         {
-            if (Phases.Count == 0)
-                return true;
-            else
-            {
-                return GetInputType(newPhase).IsAssignableFrom(GetOutputType(Phases.Last()));
-            }
+            return Phases.Count == 0 || GetInputType( newPhase ).IsAssignableFrom( GetOutputType( Phases.Last() ) );
         }
 
         protected Type GetInputType(Type transform)

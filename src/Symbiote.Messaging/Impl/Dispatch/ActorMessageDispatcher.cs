@@ -17,7 +17,6 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Actors;

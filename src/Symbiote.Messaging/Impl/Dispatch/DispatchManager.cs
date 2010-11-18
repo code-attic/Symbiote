@@ -51,7 +51,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void SendToHandler(IEnvelope envelope)
         {
-            IDispatchMessage dispatcher = null;
+            IDispatchMessage dispatcher;
             if (Dispatchers.TryGetValue(envelope.MessageType, out dispatcher))
             {
                 dispatcher.Dispatch(envelope);
@@ -71,7 +71,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             {
                 var dispatchers = Assimilate.GetAllInstancesOf<IDispatchMessage>();
                 dispatchers
-                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate((Type) y, (IDispatchMessage) x, (t, m) => x)));
+                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate(y, x, (t, m) => x)));
             }
         }
 
@@ -127,7 +127,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void SendToHandler(string id, IEnvelope envelope)
         {
-            IDispatchMessage dispatcher = null;
+            IDispatchMessage dispatcher;
             if (Dispatchers.TryGetValue(envelope.MessageType, out dispatcher))
             {
                 dispatcher.Dispatch(envelope);
@@ -147,7 +147,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             {
                 var dispatchers = Assimilate.GetAllInstancesOf<IDispatchMessage>();
                 dispatchers
-                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate((Type) y, (IDispatchMessage) x, (t, m) => x)));
+                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate(y, x, (t, m) => x)));
             }
         }
 

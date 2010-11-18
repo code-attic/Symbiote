@@ -86,7 +86,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
             Channel.BasicPublish(
-                _endpoint.ExchangeName,
+                ChannelDefinition.Exchange,
                 envelope.RoutingKey,
                 ChannelDefinition.Mandatory,
                 ChannelDefinition.Immediate,
@@ -103,19 +103,27 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         protected IBasicProperties CreatePublishingProperties<T>(string contentType, RabbitEnvelope<T> envelope)
         {
-            var properties = Channel.CreateBasicProperties();
-            properties.DeliveryMode = (byte)(_endpoint.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
-            properties.ContentType = contentType;
-            properties.CorrelationId = envelope.CorrelationId;
-            properties.MessageId = envelope.MessageId.ToString();
-            properties.Headers = new Dictionary<object, object>();
-            properties.Headers.Add("Sequence", envelope.Sequence);
-            properties.Headers.Add("SequenceEnd", envelope.SequenceEnd);
-            properties.Headers.Add("Position", envelope.Position);
-            properties.Headers.Add("MessageType", envelope.MessageType.AssemblyQualifiedName);
-            properties.ReplyToAddress = new PublicationAddress(ExchangeType.direct.ToString(), envelope.ReplyToExchange, envelope.ReplyToKey);
-            properties.Timestamp = new AmqpTimestamp( DateTime.Now.Ticks + EPOCH );
-            return properties;
+            try
+            {
+                var properties = Channel.CreateBasicProperties();
+                properties.DeliveryMode = (byte)(ChannelDefinition.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
+                properties.ContentType = contentType;
+                properties.CorrelationId = envelope.CorrelationId;
+                properties.MessageId = envelope.MessageId.ToString();
+                properties.Headers = new Dictionary<object, object>();
+                properties.Headers.Add("Sequence", envelope.Sequence);
+                properties.Headers.Add("SequenceEnd", envelope.SequenceEnd);
+                properties.Headers.Add("Position", envelope.Position);
+                properties.Headers.Add("MessageType", envelope.MessageType.AssemblyQualifiedName);
+                properties.ReplyToAddress = new PublicationAddress(ExchangeType.direct.ToString(), envelope.ReplyToExchange, envelope.ReplyToKey);
+                properties.Timestamp = new AmqpTimestamp( DateTime.Now.Ticks + EPOCH );
+                return properties;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine( e );
+            }
+            return null;
         }
 
         protected void SetMessageCorrelation(IEnvelope envelope, BasicGetResult result)
@@ -127,8 +135,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             var consumer = new QueueingBasicConsumer(Channel);
             _channel.BasicConsume(
-                _endpoint.QueueName,
-                _endpoint.NoAck,
+                EndpointConfiguration.QueueName,
+                EndpointConfiguration.NoAck,
                 null,
                 consumer);
 
@@ -138,8 +146,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         public void InitConsumer(IBasicConsumer consumer)
         {
             _channel.BasicConsume(
-                _endpoint.QueueName,
-                _endpoint.NoAck,
+                EndpointConfiguration.QueueName,
+                EndpointConfiguration.NoAck,
                 null,
                 consumer);
         }

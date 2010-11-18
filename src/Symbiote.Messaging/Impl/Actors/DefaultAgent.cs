@@ -30,13 +30,9 @@ namespace Symbiote.Messaging.Impl.Actors
         public TActor GetActor<TKey>(TKey key)
         {
             return Actors.ReadOrWrite( key.ToString(), 
-                    () =>
-                    {
-                        return Cache.Get( key )
-                               ?? Store.Get( key )
-                               ?? Factory.CreateInstance( key );
-                    }
-                );
+                    () => Cache.Get( key )
+                          ?? Store.Get( key )
+                          ?? Factory.CreateInstance( key ) );
         }
 
         public void Memoize(TActor actor)

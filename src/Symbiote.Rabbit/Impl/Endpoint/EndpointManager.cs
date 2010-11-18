@@ -32,9 +32,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
             EndpointIndex.AddEndpoint(endpoint);
         }
 
-        public void ConfigureEndpoint(Action<EndpointFluentConfigurator> configurate)
+        public void ConfigureEndpoint(Action<EndpointConfigurator> configurate)
         {
-            var configurator = new EndpointFluentConfigurator();
+            var configurator = new EndpointConfigurator();
             configurate(configurator);
             var endpoint = configurator.RabbitEndpoint;
             AddEndpoint(endpoint);

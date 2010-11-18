@@ -30,8 +30,10 @@ namespace Rabbit.Tests
         : with_rabbit_configuration
     {
         private Because of = () =>
-                                 {
-                                     Bus.AddRabbitChannel(x => x.Direct("test").QueueName("test").NoAck().CorrelateBy<Message>(m => m.CorrelationId).StartSubscription());
+        {
+                                     Bus.AddRabbitChannel( x => x.Direct( "test" ).CorrelateBy<Message>( m => m.CorrelationId ) );
+                                     Bus.AddRabbitQueue(x => x.ExchangeName("test").QueueName("test").NoAck().StartSubscription());
+                                        
                                      Bus.Publish(new Message() {Id = 1, CorrelationId = "1"});
                                      Bus.Publish(new Message() { Id = 2, CorrelationId = "1" });
                                      Bus.Publish(new Message() { Id = 3, CorrelationId = "1" });
@@ -56,7 +58,8 @@ namespace Rabbit.Tests
         {
             Actor.Created = 0;
 
-            Bus.AddRabbitChannel<Message>(x => x.Direct("test").QueueName("test").CorrelateBy(m => m.CorrelationId).AutoDelete().NoAck());
+            Bus.AddRabbitChannel(x => x.Direct("test").CorrelateBy<Message>(m => m.CorrelationId).AutoDelete());
+            Bus.AddRabbitQueue(x => x.ExchangeName("test").QueueName("test").AutoDelete().NoAck());
             
             var names = Enumerable.Range(0, actorCount).Select(x => "Extra " + x).ToList();
             var message = Enumerable.Range(0, actorCount)

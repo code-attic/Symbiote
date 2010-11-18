@@ -22,11 +22,12 @@ namespace Rabbit.Tests.Request
 
         private Because of = () =>
         {
-            Bus.AddRabbitChannel<Request>(x => x.Direct("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
+            Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
+            Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
             Bus.Request<Request, Reply>(new Request(), OnReply);
-            Thread.Sleep(100);
+            Thread.Sleep(200);
         };
-
+        
         private It should_have_response = () => Reply.ShouldEqual("I have an answer!");
     }
 
