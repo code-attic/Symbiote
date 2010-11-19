@@ -77,8 +77,8 @@ namespace Rabbit.Tests
             }
             sendWatch.Stop();
 
-            receiveWatch = Stopwatch.StartNew();
             Bus.StartSubscription("test");
+            receiveWatch = Stopwatch.StartNew();
             Thread.Sleep(TimeSpan.FromSeconds(1));
             receiveWatch.Stop(); 
 

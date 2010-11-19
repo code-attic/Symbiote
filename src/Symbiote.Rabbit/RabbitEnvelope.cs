@@ -20,6 +20,7 @@ using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.Rabbit.Impl.Channels;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Rabbit
 {
@@ -75,7 +76,7 @@ namespace Symbiote.Rabbit
             Position = (long)properties.Headers["Position"];
             Sequence = (long)properties.Headers["Sequence"];
             SequenceEnd = (bool)properties.Headers["SequenceEnd"];
-            TimeStamp = new DateTime(EPOCH).AddTicks(properties.Timestamp.UnixTime);
+            TimeStamp = properties.Timestamp.UnixTime.FromUnixTimestamp();
         }
 
         public RabbitEnvelope(string consumerTag, IBasicProperties properties, ulong deliveryTag, string exchange, IChannelProxy proxy, bool redelivered, string routingKey, byte[] body)

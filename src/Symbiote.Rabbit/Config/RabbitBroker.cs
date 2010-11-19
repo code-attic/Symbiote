@@ -46,7 +46,9 @@ namespace Symbiote.Rabbit.Config
                                                UserName = User,
                                                Password = Password,
                                                VirtualHost = VirtualHost,
-                                               Protocol = Protocols.Lookup(Protocol)
+                                               Protocol = Protocols.Lookup(Protocol),
+                                               RequestedFrameMax = uint.MaxValue,
+                                               RequestedHeartbeat = ushort.MaxValue
                                            };
 
                 return _factory;

@@ -146,6 +146,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Extensions\ConcurentExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Hashing\Impl\AvlTreeBase.cs" />
     <Compile Include="Hashing\Distributor.cs" />
     <Compile Include="Hashing\Impl\HashedAvlLeaf.cs" />

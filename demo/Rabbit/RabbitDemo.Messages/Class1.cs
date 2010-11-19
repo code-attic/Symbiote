@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Messaging;
+using System.Runtime.Serialization;
 
 namespace RabbitDemo.Messages
 {
+    [DataContract]
     public class Message
-        : ICorrelate
     {
+        [DataMember(Order = 1)]
         public string CorrelationId { get; set; }
+        [DataMember(Order = 2)]
         public int MessageId { get; set; }
+
+        public Message() {}
 
         public Message(string correlationId, int id)
         {

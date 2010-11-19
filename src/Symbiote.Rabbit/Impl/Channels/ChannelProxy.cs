@@ -34,10 +34,15 @@ namespace Symbiote.Rabbit.Impl.Channels
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
         private bool _closed;
-        private readonly long EPOCH = 621355968000000000L;
-
-        private const string CONTENT_TYPE = "text/plain";
-        private const string AMQP_08 = "AMQP_0_8";
+        private readonly string SEQUENCE = "Sequence";
+        private readonly string SEQUENCE_END = "SequenceEnd";
+        private readonly string POSITION = "Position";
+        private readonly string MESSAGE_TYPE = "MessageType";
+        private readonly string DIRECT_EXCHANGE = ExchangeType.direct.ToString();
+        private readonly string CONTENT_TYPE = "text/plain";
+        private readonly string AMQP_08 = "AMQP_0_8";
+        private readonly byte _deliveryMode;
+        private IBasicProperties _propertyTemplate;
 
         public RabbitEndpoint EndpointConfiguration
         {
@@ -105,25 +110,34 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             try
             {
-                var properties = Channel.CreateBasicProperties();
-                properties.DeliveryMode = (byte)(ChannelDefinition.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
-                properties.ContentType = contentType;
-                properties.CorrelationId = envelope.CorrelationId;
-                properties.MessageId = envelope.MessageId.ToString();
-                properties.Headers = new Dictionary<object, object>();
-                properties.Headers.Add("Sequence", envelope.Sequence);
-                properties.Headers.Add("SequenceEnd", envelope.SequenceEnd);
-                properties.Headers.Add("Position", envelope.Position);
-                properties.Headers.Add("MessageType", envelope.MessageType.AssemblyQualifiedName);
-                properties.ReplyToAddress = new PublicationAddress(ExchangeType.direct.ToString(), envelope.ReplyToExchange, envelope.ReplyToKey);
-                properties.Timestamp = new AmqpTimestamp( DateTime.Now.Ticks + EPOCH );
-                return properties;
+                _propertyTemplate.CorrelationId = envelope.CorrelationId;
+                _propertyTemplate.MessageId = envelope.MessageId.ToString();
+                _propertyTemplate.Headers[SEQUENCE] = envelope.Sequence;
+                _propertyTemplate.Headers[SEQUENCE_END] = envelope.SequenceEnd;
+                _propertyTemplate.Headers[POSITION] = envelope.Position;
+                _propertyTemplate.Headers[MESSAGE_TYPE] = envelope.MessageType.AssemblyQualifiedName;
+                _propertyTemplate.ReplyToAddress = new PublicationAddress(DIRECT_EXCHANGE, envelope.ReplyToExchange, envelope.ReplyToKey);
+                _propertyTemplate.Timestamp = new AmqpTimestamp(DateTime.UtcNow.ToUnixTimestamp());
+                return _propertyTemplate;
             }
             catch (Exception e)
             {
                 Console.WriteLine( e );
             }
             return null;
+        }
+
+        protected void SetPropertyTemplate()
+        {
+            var properties = Channel.CreateBasicProperties();
+            properties.DeliveryMode = _deliveryMode;
+            properties.ContentType = CONTENT_TYPE;
+            properties.Headers = new Dictionary<object, object>(4);
+            properties.Headers.Add(SEQUENCE, 0);
+            properties.Headers.Add(SEQUENCE_END, false);
+            properties.Headers.Add(POSITION, 0);
+            properties.Headers.Add(MESSAGE_TYPE, "");
+            _propertyTemplate = properties;
         }
 
         protected void SetMessageCorrelation(IEnvelope envelope, BasicGetResult result)
@@ -174,6 +188,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
             //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
             //_channel.ModelShutdown += ChannelShutdown;
+            _deliveryMode = (byte)(ChannelDefinition.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
+            SetPropertyTemplate();
         }
 
         public void OnReturn()

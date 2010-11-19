@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using RabbitDemo.Messages;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
@@ -21,7 +22,7 @@ namespace RabbitDemo.Publisher
             Assimilate
                 .Core<StructureMapAdapter>()
                 .Messaging()
-                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("bootcamp2-pc")))
+                .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("publisher").Arguments(args))
                 .RunDaemon();
@@ -39,7 +40,7 @@ namespace RabbitDemo.Publisher
         {
             "Starting Publisher".ToInfo<Publisher>();
             "Configuring Rabbit...".ToInfo<Publisher>();
-            Bus.AddRabbitChannel("test", x => x.Fanout("test").QueueName("test").NoAck());
+            Bus.AddRabbitChannel(x => x.Fanout("test").AutoDelete().PersistentDelivery());
 
             "Creating {0} messages for {1} actors...".ToInfo<Publisher>(MessageCount, ActorCount);
             var messages = Enumerable.Range(1, MessageCount)
@@ -48,9 +49,17 @@ namespace RabbitDemo.Publisher
 
             "Sending Messages".ToInfo<Publisher>();
             var watch = Stopwatch.StartNew();
+            var count = 0;
             messages
-                .AsParallel()
-                .ForAll(x => Bus.Send("test", x));
+                .ForEach(x =>
+                {
+                    Bus.Publish( "test", x );
+                    //Thread.Sleep( 100 );
+                    //if(++count%1000==0)
+                    //    Bus.CommitChannelOf<Message>();
+                } );
+                //.AsParallel()
+                //.ForAll(x => Bus.Publish("test", x));
             watch.Stop();
             "{0} messages sent in {1} seconds"
                 .ToInfo<Publisher>(MessageCount, watch.Elapsed.TotalSeconds);

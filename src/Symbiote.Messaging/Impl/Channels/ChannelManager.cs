@@ -41,14 +41,14 @@ namespace Symbiote.Messaging.Impl.Channels
         public IChannel GetChannelFor<TMessage>()
         {
             var messageType = typeof(TMessage);
-            var adapter = GetChannelsFor<TMessage>().FirstOrDefault();
+            var channel = GetChannelsFor<TMessage>().FirstOrDefault();
 
-            if(adapter == null)
+            if(channel == null)
                 throw new MissingChannelDefinitionException(
                     "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
                         .AsFormat("<nothing>", messageType));
 
-            return adapter;
+            return channel;
         }
 
         public IChannel GetChannelFor<TMessage>(string channelName)

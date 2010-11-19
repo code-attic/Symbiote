@@ -83,7 +83,8 @@ namespace Symbiote.Core.Extensions
                 else
                     serializer = JsonSerializer.Create(GetSettingsWithoutTypeHandling());
 
-                SetContractResolver(serializer, type, action);    
+                SetContractResolver(serializer, type, action);
+                //Serializers.AddOrUpdate( type, serializer, ( x, y ) => serializer );
             }
             return serializer;
         }

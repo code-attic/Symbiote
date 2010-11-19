@@ -47,23 +47,23 @@ namespace Messaging.Tests.Channels.Manager
 
         private Establish context = () =>
         {
-
             ChannelDef1 = new TestChannelDefinition("test1", typeof(DummyMessage));
             ChannelDef2 = new TestChannelDefinition("test2", typeof(DummyMessage));
             ChannelDef3 = new TestChannelDefinition("test3", typeof(DummyMessage));
             ChannelDef4 = new TestChannelDefinition("test4", typeof(DummyMessage));
+            Index = new ChannelIndex();
         };
     }
 
     public class with_mock_index
         : with_assimilation
     {
-        protected static IChannelIndex Index { get; set; }
+        protected static IChannelIndex Index { get { return MockIndex.Object; } }
         protected static Mock<IChannelIndex> MockIndex { get; set; }
 
         private Establish context = () =>
         {
-            
+            MockIndex = new Mock<IChannelIndex>();
         };
     }
 
@@ -122,7 +122,6 @@ namespace Messaging.Tests.Channels.Manager
             Exception.Violations.ShouldContain(
                     "Channel definition must specify a channel factory type",
                     "Channel definition must specify a channel type",
-                    "Channel definition must specify a message type",
                     "Channel definition must specify a channel name"
                 );
     }
@@ -164,30 +163,64 @@ namespace Messaging.Tests.Channels.Manager
             Index.MessageChannels[typeof(DummyMessage)].Count.ShouldEqual(4);
     }
 
-    public class when_requesting_missing_channel
-        : with_channel_manager
+    public class when_requesting_missing_definition
+        : with_channel_index
     {
         protected static MissingChannelDefinitionException Exception { get; set; }
         private Because of = () =>
         {
-            Manager.GetChannelFor<DummyMessage>();
             Exception = Catch.Exception( () => 
-                Manager.GetChannelFor<DummyMessage>()) as MissingChannelDefinitionException;
+                Index.GetDefinitionFor<DummyMessage>("test")) as MissingChannelDefinitionException;
         };
 
         private It should_cause_exception = () =>
-            Exception.Message.ShouldEqual("There was no definition provided for a channel named <nothing> of message type DummyMessage. Please check that you have defined a channel before attempting to use it.");
+            Exception.Message.ShouldEqual("There was no definition provided for a channel named test of message type Messaging.Tests.Channels.Manager.DummyMessage. Please check that you have defined a channel before attempting to use it.");
     }
 
     public class when_getting_channel_list_for_message
         : with_channel_manager
     {
-        
+        private Because of = () =>
+        {
+            
+        };
     }
 
     public class when_getting_channel_by_name
         : with_channel_manager
     {
-        
+        protected static IChannel FirstRequest { get; set; }
+        protected static IChannel SecondRequest { get; set; }
+
+        private Because of = () =>
+        {
+            MockIndex
+                .Setup( x => x.GetKeyFor<DummyMessage>( "test" ) )
+                .Returns( 0 );
+            MockIndex
+                .Setup( x => x.GetDefinitionFor<DummyMessage>( "test" ) )
+                .Returns( new LocalChannelDefinition() {} );
+
+            FirstRequest = Manager.GetChannelFor<DummyMessage>("test");
+            SecondRequest = Manager.GetChannelFor<DummyMessage>("test");
+        };
+
+        private It should_have_asked_for_key_from_index_twice = () => 
+            MockIndex.Verify( x => x.GetKeyFor<DummyMessage>( "test" ), Times.Exactly(2));
+
+        private It should_have_asked_for_definition_once = () => 
+            MockIndex.Verify( x => x.GetDefinitionFor<DummyMessage>( "test" ), Times.Once());
+
+        private It should_instantiate_valid_channel = () => 
+            FirstRequest.ShouldNotBeNull();
+
+        private It should_have_returned_same_channel_on_second_request = () => 
+            SecondRequest.ShouldEqual( FirstRequest );
+    }
+
+    public class when_getting_channel
+        : with_channel_manager
+    {
+
     }
 }

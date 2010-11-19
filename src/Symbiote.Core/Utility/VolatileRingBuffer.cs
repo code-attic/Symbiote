@@ -100,6 +100,10 @@ namespace Symbiote.Core.Utility
                             UpdateIteration(step);
                         WriteIndex[step] = nextIndex;
                     }
+                    else
+                    {
+                        Thread.Sleep( 3 );
+                    }
                 }
                 catch (Exception e)
                 {
@@ -117,7 +121,7 @@ namespace Symbiote.Core.Utility
                 .ForEach(t =>
                 {
                     //step.BeginInvoke(t, index++, null, null);
-                    Task.Factory.StartNew( () => Transform( t, index++ ), TaskCreationOptions.LongRunning );
+                    var task = Task.Factory.StartNew( () => Transform( t, index++ ), TaskCreationOptions.LongRunning );
                 });
         }
 

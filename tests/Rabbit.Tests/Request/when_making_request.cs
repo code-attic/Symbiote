@@ -25,7 +25,7 @@ namespace Rabbit.Tests.Request
             Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
             Bus.Request<Request, Reply>(new Request(), OnReply);
-            Thread.Sleep(200);
+            Thread.Sleep(80);
         };
         
         private It should_have_response = () => Reply.ShouldEqual("I have an answer!");

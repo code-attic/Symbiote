@@ -39,6 +39,11 @@ namespace Symbiote.Messaging.Impl.Subscriptions
             subscription.Start();
         }
 
+        public bool HasSubscription(string subscriptionName)
+        {
+            return Subscriptions.ContainsKey( subscriptionName );
+        }
+
         public void StartSubscription(string subscriptionName)
         {
             var subscription = Subscriptions[subscriptionName];

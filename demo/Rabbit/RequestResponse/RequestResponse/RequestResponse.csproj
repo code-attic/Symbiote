@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A31AD84B-3FA3-4A82-B45D-A5907F275F62}</ProjectGuid>
+    <ProjectGuid>{642D1593-AC5B-4D03-AC8E-1645AE35FA30}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RabbitDemo.Publisher</RootNamespace>
-    <AssemblyName>RabbitDemo.Publisher</AssemblyName>
+    <RootNamespace>RequestResponse</RootNamespace>
+    <AssemblyName>RequestResponse</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -35,29 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Symbiote.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
+    <Reference Include="Symbiote.Core">
+      <HintPath>..\..\..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Daemon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
+    <Reference Include="Symbiote.Daemon">
+      <HintPath>..\..\..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Log4Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
+    <Reference Include="Symbiote.Log4Net">
+      <HintPath>..\..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Messaging.dll</HintPath>
+    <Reference Include="Symbiote.Messaging">
+      <HintPath>..\..\..\..\bin\Symbiote.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Rabbit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
+    <Reference Include="Symbiote.Rabbit">
+      <HintPath>..\..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    <Reference Include="Symbiote.StructureMap">
+      <HintPath>..\..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -73,12 +67,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\RabbitDemo.Messages\RabbitDemo.Messages.csproj">
-      <Project>{5045939B-F75D-42AD-95B3-C87B824715A6}</Project>
-      <Name>RabbitDemo.Messages</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

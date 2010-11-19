@@ -30,6 +30,8 @@ namespace Symbiote.Rabbit.Impl.Subscription
         
         public void CreateSubscription(RabbitEndpoint definition, bool start)
         {
+            if ( Subscriptions.HasSubscription( definition.QueueName ) ) return;
+
             var queueSubscription = new QueueSubscription(ProxyFactory, Dispatcher, definition);
             queueSubscription.Name = definition.QueueName;
             if (start)

@@ -23,7 +23,7 @@ namespace RabbitDemo.Subscriber
             Assimilate
                 .Core<StructureMapAdapter>()
                 .Messaging()
-                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("bootcamp2-pc")))
+                .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IHost>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("subscriber").Arguments(args))
@@ -44,7 +44,8 @@ namespace RabbitDemo.Subscriber
             {
                 "Starting Subscriber".ToInfo<Subscriber>();
                 "Configuring Rabbit...".ToInfo<Subscriber>();
-                Bus.AddRabbitQueue("test", x => x.Fanout("test").QueueName("test").NoAck());
+                Bus.AddRabbitChannel(x => x.Fanout("test").AutoDelete().PersistentDelivery());
+                Bus.AddRabbitQueue( x => x.ExchangeName("test").QueueName("test").AutoDelete().StartSubscription());
             }
             catch (Exception e)
             {
@@ -64,11 +65,21 @@ namespace RabbitDemo.Subscriber
     }
 
     public class ForActorMessage
-        : IHandle<Actor, Message>
+        : RabbitActorHandler<Actor, Message>
     {
-        public void Handle(Actor actor, IEnvelope<Message> envelope)
+        public int Total { get; set; }
+        public double Cumulative { get; set; }
+        public double Average { get; set; }
+        public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
         {
-            actor.AddMessageId(envelope.Message.MessageId);
+            //actor.AddMessageId(envelope.Message.MessageId);
+            if(++Total%1000==0)
+            {
+                Cumulative += DateTime.UtcNow.Subtract( envelope.TimeStamp ).TotalMilliseconds;
+                "Avg Latency: {0}"
+                    .ToInfo<Subscriber>(Cumulative / Total);
+            }
+            envelope.Acknowledge();
         }
     }
 
@@ -80,9 +91,9 @@ namespace RabbitDemo.Subscriber
         public void AddMessageId(int Id)
         {
             Ids.Add(Id);
-            if(Ids.Count % 100 == 0)
-                "Actor {0} has {1} messages!"
-                .ToInfo<Subscriber>(Name, Ids.Count);
+            //if(Ids.Count % 100 == 0)
+            //    "Actor {0} has {1} messages!"
+            //    .ToInfo<Subscriber>(Name, Ids.Count);
         }
 
         public Actor(string name)
@@ -92,6 +103,20 @@ namespace RabbitDemo.Subscriber
 
             "New Actor, {0}, created!"
                 .ToInfo<Subscriber>(name);
+        }
+    }
+
+    public class ActorKeyAccessor
+        : IKeyAccessor<Actor>
+    {
+        public string GetId( Actor actor )
+        {
+            return actor.Name;
+        }
+
+        public void SetId<TKey>( Actor actor, TKey id )
+        {
+            actor.Name = id.ToString();
         }
     }
 

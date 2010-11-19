@@ -23,6 +23,7 @@ namespace Symbiote.Messaging.Impl.Subscriptions
     {
         void AddSubscription(ISubscription subscription);
         void AddAndStartSubscription(ISubscription subscription);
+        bool HasSubscription( string subscriptionName );
         void StartSubscription(string subscriptionName);
         void StopSubscription(string subscriptionName);
     }

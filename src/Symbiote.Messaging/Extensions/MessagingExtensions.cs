@@ -22,7 +22,7 @@ namespace Symbiote.Messaging.Extensions
         {
             var messageType = typeof(T);
             var compareTo = message.GetType();
-            return compareTo.IsAssignableFrom(messageType) || messageType.IsAssignableFrom(compareTo);
+            return messageType.IsAssignableFrom(compareTo);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Symbiote.Core.Utility
         protected bool Started;
         protected List<Func<object, object>> Transforms;
         protected ExclusiveConcurrentDictionary<string, int> ActorIndex { get; set; }
+        protected int Actors;
         protected bool Running;
         protected int Capacity;
         protected int LastIndex;
@@ -76,9 +77,7 @@ namespace Symbiote.Core.Utility
             var actorIndex = ActorIndex.ReadOrWrite( actor, 
                 () =>
                 {
-                    var index = ActorIndex.Count;
-                    //Action<int> transform = TransformsForActor;
-                    //transform.BeginInvoke( index, null, null );
+                    var index = Actors++;
                     return index;
                 } );
 
@@ -89,6 +88,8 @@ namespace Symbiote.Core.Utility
                 Thread.Sleep( 10 );
             }
             Started = true;
+            if(!Running)
+                Start();
             Ring[actorIndex, current] = value;
             var nextIndex = GetNextIndex(current);
             if(nextIndex < current)
@@ -100,7 +101,9 @@ namespace Symbiote.Core.Utility
         {
             while(Running)
             {
-                for (int i = 0; i < ActorIndex.Count; i++)
+                if (Actors == 0)
+                    Running = false;
+                for (int i = 0; i < Actors; i++)
                 {
                     TransformActor( transformer, i, step );
                 }
