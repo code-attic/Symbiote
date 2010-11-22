@@ -47,6 +47,9 @@
     <Reference Include="Symbiote.Messaging">
       <HintPath>..\..\..\..\bin\Symbiote.Messaging.dll</HintPath>
     </Reference>
+    <Reference Include="Symbiote.StructureMap">
+      <HintPath>..\..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />

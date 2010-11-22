@@ -15,14 +15,13 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Messaging.Impl.Dispatch;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannel
     {
         string Name { get; }
-        void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply);
+        void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TReply> onReply);
         void Send<TMessage>(TMessage message);
         void Send<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);
     }

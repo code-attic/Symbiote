@@ -64,6 +64,7 @@
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
+    <Compile Include="Impl\Dispatch\HyperDispatchManager.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />

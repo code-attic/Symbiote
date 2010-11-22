@@ -89,7 +89,7 @@ namespace Symbiote.Core.Utility
 
         public ExclusiveConcurrentDictionary()
         {
-            SlimLock = new ReaderWriterLockSlim();
+            SlimLock = new ReaderWriterLockSlim(LockRecursionPolicy.SupportsRecursion);
             Dictionary = new ConcurrentDictionary<TKey, TValue>();
         }
     }

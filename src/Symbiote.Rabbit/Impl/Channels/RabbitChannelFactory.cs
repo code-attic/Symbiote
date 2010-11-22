@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Rabbit.Impl.Channels
@@ -25,18 +26,21 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         public IChannelProxyFactory ProxyFactory { get; set; }
         public IMessageSerializer Serializer { get; set; }
+        public IDispatcher MessageDispatcher { get; set; }
+
         public IChannel CreateChannel(IChannelDefinition definition)
         {
             var rabbitDef = definition as ChannelDefinition;
             var proxy = ProxyFactory.GetProxyForExchange(rabbitDef);
             var serializer = Activator.CreateInstance( definition.SerializerType ) as IMessageSerializer;
-            var channel = new RabbitChannel(proxy, serializer, rabbitDef) as IChannel;
+            var channel = new RabbitChannel(proxy, serializer, rabbitDef, MessageDispatcher) as IChannel;
             return channel;
         }
 
-        public RabbitChannelFactory(IChannelProxyFactory proxyFactory)
+        public RabbitChannelFactory(IChannelProxyFactory proxyFactory, IDispatcher dispatcher)
         {
             ProxyFactory = proxyFactory;
+            MessageDispatcher = dispatcher;
         }
     }
 }

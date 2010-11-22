@@ -32,8 +32,9 @@ namespace Symbiote.Rabbit.Impl.Channels
         public IChannelProxy Proxy { get; set; }
         public IMessageSerializer Serializer { get; set; }
         public ChannelDefinition Definition { get; set; }
+        public IDispatcher MessageDispatcher { get; set; }
 
-        public void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply)
+        public void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TReply> onReply)
         {
             var envelope = new RabbitEnvelope<TMessage>(message)
             {
@@ -44,7 +45,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
             envelope.ByteStream = Serializer.Serialize( envelope.Message );
             Proxy.Send(envelope);
         }
@@ -96,11 +97,12 @@ namespace Symbiote.Rabbit.Impl.Channels
             Proxy.Send(envelope);
         }
 
-        public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition definition)
+        public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition definition, IDispatcher dispatcher)
         {
             Definition = definition;
             Proxy = proxy;
             Serializer = serializer;
+            MessageDispatcher = dispatcher;
         }
     }
 }

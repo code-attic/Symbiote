@@ -28,7 +28,6 @@ namespace Symbiote.Messaging.Impl
         protected IChannelIndex ChannelIndex { get; set; }
         protected IChannelManager Channels { get; set; }
         protected ISubscriptionManager Subscriptions { get; set; }
-        protected IDispatcher Dispatcher { get; set; }
 
         public bool HasChannelFor<T>()
         {
@@ -83,7 +82,7 @@ namespace Symbiote.Messaging.Impl
                 .GetChannelFor<TMessage>();
 
             channelFor
-                .ExpectReply(message, x => { }, Dispatcher, onReply);
+                .ExpectReply(message, x => { }, onReply);
         }
 
         public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<TResponse> onReply )
@@ -92,7 +91,7 @@ namespace Symbiote.Messaging.Impl
                 .GetChannelFor<TMessage>(channelName);
 
             channelFor
-                .ExpectReply(message, x => { }, Dispatcher, onReply);
+                .ExpectReply(message, x => { }, onReply);
         }
 
         public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply)
@@ -101,7 +100,7 @@ namespace Symbiote.Messaging.Impl
                 .GetChannelFor<TMessage>();
 
             channelFor
-                .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
+                .ExpectReply(message, modifyEnvelope, onReply);
         }
 
         public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply )
@@ -110,7 +109,7 @@ namespace Symbiote.Messaging.Impl
                 .GetChannelFor<TMessage>(channelName);
 
             channelFor
-                .ExpectReply(message, modifyEnvelope, Dispatcher, onReply);
+                .ExpectReply(message, modifyEnvelope, onReply);
         }
 
         public void StartSubscription(string subscription)
@@ -126,13 +125,11 @@ namespace Symbiote.Messaging.Impl
         public Bus(
             IChannelManager channels,
             IChannelIndex channelIndex,
-            ISubscriptionManager subscriptions,
-            IDispatcher dispatcher)
+            ISubscriptionManager subscriptions)
         {
             Channels = channels;
             ChannelIndex = channelIndex;
             Subscriptions = subscriptions;
-            Dispatcher = dispatcher;
         }
     }
 }

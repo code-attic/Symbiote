@@ -30,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         protected IDispatcher MessageDispatcher { get; set; }
 
-        public void ExpectReply<TMessage, TReply>( TMessage message, Action<IEnvelope> modifyEnvelope, IDispatcher dispatcher, Action<TReply> onReply )
+        public void ExpectReply<TMessage, TReply>( TMessage message, Action<IEnvelope> modifyEnvelope, Action<TReply> onReply )
         {
             Func<object, string> correlate;
             Func<object, string> route;
@@ -48,7 +48,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
             modifyEnvelope(envelope);
 
-            dispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
             MessageDispatcher.Send(envelope);
         }
 

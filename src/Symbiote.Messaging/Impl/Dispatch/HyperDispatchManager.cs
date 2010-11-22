@@ -18,37 +18,30 @@ using System;
 using System.Collections.Concurrent;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
-    public class DispatchManager
+    public class HyperDispatchManager
         : IDispatcher
     {
-        public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
-        public Director<IEnvelope> Fibers { get; set; }
         public int Count { get; set; }
+        public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
-        
+        public VolatileRingBufferArray RingBuffer { get; set; }
+
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
         {
             Count++;
-            Fibers.SendTo(
-                string.IsNullOrEmpty(
-                    envelope.CorrelationId) 
-                    ? envelope.MessageId.ToString() 
-                    : envelope.CorrelationId,
-                envelope);
+            //SendToHandler( envelope );
+            RingBuffer.Write( envelope.CorrelationId, envelope );
         }
 
         public void Send(IEnvelope envelope)
         {
             Count++;
-            Fibers.SendTo(
-                string.IsNullOrEmpty(
-                    envelope.CorrelationId)
-                    ? envelope.MessageId.ToString()
-                    : envelope.CorrelationId,
-                envelope);
+            RingBuffer.Write(envelope.CorrelationId, envelope);
+            //SendToHandler( envelope );
         }
 
         public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
@@ -56,7 +49,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
         }
 
-        public void SendToHandler(string id, IEnvelope envelope)
+        public void SendToHandler(IEnvelope envelope)
         {
             IDispatchMessage dispatcher;
             if (Dispatchers.TryGetValue(envelope.MessageType, out dispatcher))
@@ -78,16 +71,22 @@ namespace Symbiote.Messaging.Impl.Dispatch
             {
                 var dispatchers = Assimilate.GetAllInstancesOf<IDispatchMessage>();
                 dispatchers
-                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate(y, x, (t, m) => x)));
+                    .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate((Type) y, (IDispatchMessage) x, (t, m) => x)));
             }
         }
 
-        public DispatchManager()
+        public HyperDispatchManager()
         {
+            RingBuffer = new VolatileRingBufferArray( 10000, 10000 );
+            RingBuffer.AddTransform( o =>
+            {
+                SendToHandler( o as IEnvelope );
+                return null;
+            } );
+            RingBuffer.Start();
             Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
             ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
             WireupDispatchers();
-            Fibers = new Director<IEnvelope>(SendToHandler);
         }
     }
 }
