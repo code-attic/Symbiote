@@ -47,16 +47,7 @@ namespace Symbiote.StructureMap
 
         public IEnumerable<Type> GetTypesRegisteredFor<T>()
         {
-            return ObjectFactory
-                .Container
-                .Model
-                .PluginTypes
-                .Where(x => x.PluginType.Equals(typeof(T)))
-                .SelectMany(x => x.Instances)
-                .Select(x =>
-                            {
-                                return x.ConcreteType;
-                            });
+            return GetTypesRegisteredFor(typeof(T));
         }
 
         public IEnumerable<Type> GetTypesRegisteredFor(Type type)
