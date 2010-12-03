@@ -472,11 +472,11 @@ Global
 		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Silverlight|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Silverlight|Mixed Platforms.Build.0 = Release|Any CPU
 		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Silverlight|x86.ActiveCfg = Release|Any CPU
-		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Any CPU.ActiveCfg = Unmerged|Any CPU
-		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Any CPU.Build.0 = Unmerged|Any CPU
-		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Mixed Platforms.ActiveCfg = Unmerged|Any CPU
-		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Mixed Platforms.Build.0 = Unmerged|Any CPU
-		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|x86.ActiveCfg = Unmerged|Any CPU
+		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Any CPU.ActiveCfg = Release|Any CPU
+		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Any CPU.Build.0 = Release|Any CPU
+		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|Mixed Platforms.Build.0 = Release|Any CPU
+		{D59C4A03-AA90-4891-BC64-2634DA41BDA5}.Unmerged|x86.ActiveCfg = Release|Any CPU
 		{D512AC95-C894-4DC7-B6DB-961C054FB1CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D512AC95-C894-4DC7-B6DB-961C054FB1CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D512AC95-C894-4DC7-B6DB-961C054FB1CD}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU

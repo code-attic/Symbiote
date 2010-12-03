@@ -72,6 +72,7 @@ namespace RabbitDemo.Subscriber
         public double Average { get; set; }
         public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
         {
+            envelope.Acknowledge();
             //actor.AddMessageId(envelope.Message.MessageId);
             if(++Total%1000==0)
             {
@@ -79,7 +80,7 @@ namespace RabbitDemo.Subscriber
                 "Avg Latency: {0}"
                     .ToInfo<Subscriber>(Cumulative / Total);
             }
-            envelope.Acknowledge();
+            
         }
     }
 

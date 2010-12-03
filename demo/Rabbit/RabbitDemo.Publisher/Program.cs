@@ -54,7 +54,7 @@ namespace RabbitDemo.Publisher
                 .ForEach(x =>
                 {
                     Bus.Publish( "test", x );
-                    //Thread.Sleep( 100 );
+                    Thread.Sleep( 2 );
                     //if(++count%1000==0)
                     //    Bus.CommitChannelOf<Message>();
                 } );

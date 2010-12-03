@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
@@ -19,8 +16,6 @@ namespace Messaging.Tests.FSM
         public int CurrentOrder { get; set; }
 
     }
-
-
 
     public class CashierKeyAccessor
         : IKeyAccessor<Cashier>
@@ -192,8 +187,10 @@ namespace Messaging.Tests.FSM
             } );
 
             cashier = Cashiers.GetActor( "Um" );
+
+            Thread.Sleep(5);
         };
-        
+
         private It should_have_changed_state_to_waiting_on_customer = () => cashier.WaitingOnCustomer.ShouldBeTrue();
         private It should_not_be_available_for_new_orders = () => cashier.Available.ShouldBeFalse();
     }
