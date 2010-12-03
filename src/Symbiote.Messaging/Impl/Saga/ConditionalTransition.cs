@@ -23,23 +23,15 @@ namespace Symbiote.Messaging.Impl.Saga
     {
         public Predicate<TActor> Guard { get; set; }
         public Action<TActor> Transition { get; set; }
-        public Func<TActor, IEnvelope<TMessage>, bool> Process { get; set; }
+        public Action<TActor, IEnvelope<TMessage>> Process { get; set; }
 
         public bool Execute(TActor instance, IEnvelope message)
         {
             var passed = Guard(instance);
             if (passed)
             {
-                var processed = Process( instance, (IEnvelope<TMessage>) message );
-                if(processed)
-                    try
-                    {
-                        Transition( instance );
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine( e );
-                    }
+                Process( instance, (IEnvelope<TMessage>) message );
+                Transition(instance);
             }
             return passed;
         }
@@ -47,7 +39,7 @@ namespace Symbiote.Messaging.Impl.Saga
         public ConditionalTransition()
         {
             Guard = x => true;
-            Process = ( x, y ) => true;
+            Process = ( x, y ) => { };
             Transition = x => { };
         }
     }

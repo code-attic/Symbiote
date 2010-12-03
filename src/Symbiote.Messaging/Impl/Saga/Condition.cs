@@ -27,7 +27,7 @@ namespace Symbiote.Messaging.Impl.Saga
         public Dictionary<Type, IConditionalTransition<TActor>> Transitions { get; set; }
         public List<Type> Handles { get { return Transitions.Keys.ToList(); } }
 
-        public ICondition<TActor> On<TMessage>(Func<TActor, IEnvelope<TMessage>, bool> processMessage)
+        public ICondition<TActor> On<TMessage>( Action<TActor, IEnvelope<TMessage>> processMessage)
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>()
             {
@@ -38,7 +38,7 @@ namespace Symbiote.Messaging.Impl.Saga
             return this;
         }
 
-        public ICondition<TActor> On<TMessage>(Action<TActor> transition)
+        public ICondition<TActor> On<TMessage>( Action<TActor> transition)
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>()
             {
@@ -49,7 +49,7 @@ namespace Symbiote.Messaging.Impl.Saga
             return this;
         }
 
-        public ICondition<TActor> On<TMessage>(Func<TActor, IEnvelope<TMessage>, bool> processMessage, Action<TActor> transition)
+        public ICondition<TActor> On<TMessage>( Action<TActor, IEnvelope<TMessage>> processMessage, Action<TActor> transition)
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>()
             {

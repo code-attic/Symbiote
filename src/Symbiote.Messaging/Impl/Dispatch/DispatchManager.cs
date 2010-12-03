@@ -16,8 +16,10 @@ limitations under the License.
 
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Messaging.Impl.Envelope;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -28,6 +30,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public Director<IEnvelope> Fibers { get; set; }
         public int Count { get; set; }
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
+        public ManualResetEventSlim Signal { get; set; }
         
         public void Send<TMessage>(IEnvelope<TMessage> envelope)
         {
@@ -80,14 +83,21 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 dispatchers
                     .ForEach(x => x.Handles.ForEach(y => Dispatchers.AddOrUpdate(y, x, (t, m) => x)));
             }
+
+            //prime director
+            Fibers.SendTo( "", new Envelope<PrimeDirector>( new PrimeDirector() ) { CorrelationId = ""} );
+            Signal.Wait( 100 );
         }
 
         public DispatchManager()
         {
             Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
             ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
-            WireupDispatchers();
             Fibers = new Director<IEnvelope>(SendToHandler);
+            Signal = new ManualResetEventSlim();
+            WireupDispatchers();
         }
+
+        
     }
 }

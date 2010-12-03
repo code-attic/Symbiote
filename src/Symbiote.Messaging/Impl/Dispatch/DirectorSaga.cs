@@ -14,14 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 
-namespace Symbiote.Messaging.Impl.Saga
+using System;
+using Symbiote.Messaging.Impl.Saga;
+
+namespace Symbiote.Messaging.Impl.Dispatch
 {
-    public interface ICondition<TActor>
+    public class DirectorSaga
+        : Saga<DispatchManager>
     {
-        ICondition<TActor> On<TMessage>( Action<TActor, IEnvelope<TMessage>> processMessage );
-        ICondition<TActor> On<TMessage>( Action<TActor> transition);
-        ICondition<TActor> On<TMessage>( Action<TActor, IEnvelope<TMessage>> processMessage, Action<TActor> transition);
+        public override Action<StateMachine<DispatchManager>> Setup()
+        {
+            return machine =>
+            {
+                machine.Unconditionally()
+                    .On<PrimeDirector>( director => 
+                                        director.Signal.Set() );
+            };
+        }
+
+        public DirectorSaga( StateMachine<DispatchManager> stateMachine ) : base( stateMachine ) {}
     }
 }

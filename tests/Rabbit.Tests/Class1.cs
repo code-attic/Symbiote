@@ -38,7 +38,7 @@ namespace Rabbit.Tests
                                      Bus.Publish(new Message() { Id = 2, CorrelationId = "1" });
                                      Bus.Publish(new Message() { Id = 3, CorrelationId = "1" });
 
-                                     Thread.Sleep(90);
+                                     Thread.Sleep(40);
                                  };
         
         private It actor_should_have_received_three_messages = () => Actor.MessageIds.ShouldContain(1, 2, 3);

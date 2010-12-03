@@ -44,34 +44,30 @@ namespace Messaging.Tests.FSM
         public bool WaitingForPayment { get; set; }
         public int CurrentOrder { get; set; }
 
-        public bool TakeNewOrder(string customer, string item, string size)
+        public void TakeNewOrder(string customer, string item, string size)
         {
 
-            return true;
-        }
-
-        public bool AddOrderItem(string item, string size)
-        {
-
-            return true;
-        }
-
-        public bool FinishOrder()
-        {
-
-            return true;
-        }
-
-        public void WaitOnCustomer()
-        {
             Available = false;
             WaitingOnCustomer = true;
         }
 
-        public bool WaitForPayment()
+        public void AddOrderItem(string item, string size)
         {
 
-            return true;
+        }
+
+        public void FinishOrder()
+        {
+
+            WaitingOnCustomer = false;
+            WaitingForPayment = true;
+        }
+
+        public void ProcessPayment()
+        {
+
+            Available = true;
+            WaitingOnCustomer = false;
         }
 
         public Cashier()
@@ -131,23 +127,26 @@ namespace Messaging.Tests.FSM
             return ( machine ) =>
             {
                 machine
-                    .When( x => x.Available )
+                    .When( cashier => cashier.Available )
                     .On<NewOrder>(
-                        ( x, y ) => x.TakeNewOrder( y.Message.Customer, y.Message.Item, y.Message.Size ),
-                        x => x.WaitOnCustomer() );
+                        ( cashier, envelope ) => cashier.TakeNewOrder( 
+                            envelope.Message.Customer, 
+                            envelope.Message.Item, 
+                            envelope.Message.Size ) );
 
                 machine
-                    .When( x => x.WaitingForPayment )
+                    .When( cashier => cashier.WaitingForPayment )
                     .On<OrderAnotherItem>(
-                        ( x, y ) => x.AddOrderItem( y.Message.Item, y.Message.Size ) )
+                        ( cashier, envelope ) => cashier.AddOrderItem( 
+                            envelope.Message.Item, 
+                            envelope.Message.Size ) )
                     .On<CompleteOrder>(
-                        ( x, y ) => x.FinishOrder(),
-                        x => x.WaitForPayment()
+                        ( cashier, envelope ) => cashier.FinishOrder()
                     );
 
                 machine
                     .Unconditionally()
-                    .On<Hi>( x => { } );
+                    .On<Hi>( cashier => { } );
             };
         }
 
@@ -184,9 +183,6 @@ namespace Messaging.Tests.FSM
 
         private Because of = () =>
         {
-            Bus.Publish( new Hi() { To = "Um"} );
-            Thread.Sleep( 60 );
-
             Bus.Publish( new NewOrder()
             {
                 Cashier = "Um",
@@ -195,7 +191,6 @@ namespace Messaging.Tests.FSM
                 Size = "Grande"
             } );
 
-            //Thread.Sleep( 45 );
             cashier = Cashiers.GetActor( "Um" );
         };
         

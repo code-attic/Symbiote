@@ -171,13 +171,15 @@ namespace Symbiote.Messaging
 
         private static void ScanAssemblies( IScanInstruction s )
         {
-            IEnumerableExtenders.ForEach(AppDomain
-                                             .CurrentDomain
-                                             .GetAssemblies()
-                                             .Where(
-                                                 a =>
-                                                 a.GetReferencedAssemblies().Any(
-                                                     r => r.FullName.Contains("Symbiote.Messaging"))), s.Assembly);
+            AppDomain
+                .CurrentDomain
+                .GetAssemblies()
+                .Where(a =>
+                    a.GetReferencedAssemblies().Any(
+                        r => r.FullName.Contains("Symbiote.Messaging")) ||
+                    a.FullName.Contains("Symbiote.Messaging"))
+                .ForEach(s.Assembly);
+
             s.AddAllTypesOf<ISaga>();
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<>));

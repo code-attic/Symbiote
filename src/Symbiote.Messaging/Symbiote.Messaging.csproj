@@ -64,8 +64,11 @@
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
+    <Compile Include="Impl\Dispatch\DirectorSaga.cs" />
+    <Compile Include="Impl\Dispatch\DispatcherKeyAccessor.cs" />
     <Compile Include="Impl\Dispatch\HyperDispatchManager.cs" />
     <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />
+    <Compile Include="Impl\Dispatch\PrimeDirector.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
     <Compile Include="Impl\Monitor\ActorEvent.cs" />

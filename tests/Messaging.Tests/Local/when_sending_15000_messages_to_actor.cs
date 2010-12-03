@@ -33,7 +33,8 @@ namespace Messaging.Tests.Local
                                  };
 
         // performance is currently close to a factor of 100. Messages dispatched = 100 * ms run to send
-        // fastest: 115ms = 15000 > 100 msg/ms
+        // new record: 83ms = 15000 > 180 msgs/ms
+        // old record: 115ms = 15000 > 100 msg/ms
         // slowest: 198ms = 15000 ~ 75 msg/ms
         
         private It should_complete_in_1_second = () =>
