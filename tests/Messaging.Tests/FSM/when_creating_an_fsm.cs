@@ -187,8 +187,6 @@ namespace Messaging.Tests.FSM
             } );
 
             cashier = Cashiers.GetActor( "Um" );
-
-            Thread.Sleep(5);
         };
 
         private It should_have_changed_state_to_waiting_on_customer = () => cashier.WaitingOnCustomer.ShouldBeTrue();
