@@ -18,8 +18,9 @@ using System;
 
 namespace Symbiote.Messaging.Impl.Monitor
 {
-    public interface IChannelMonitor
+    public interface IEnvelopeMonitor
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        void MessageAcknowledged<TMessage>( IEnvelope<TMessage> envelope );
+        void MessageRejected<TMessage>( IEnvelope<TMessage> envelope );
     }
 }

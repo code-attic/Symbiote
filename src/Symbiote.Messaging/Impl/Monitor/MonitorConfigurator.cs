@@ -14,12 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 
 namespace Symbiote.Messaging.Impl.Monitor
 {
-    public interface IChannelMonitor
+    public class MonitorConfigurator
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        public MonitorConfiguration Configuration { get; set; }
+
+        public MonitorConfigurator SendEventsTo( string channelName )
+        {
+            Configuration.EventChannel = channelName;
+            return this;
+        }
+
+        public MonitorConfigurator()
+        {
+            Configuration = new MonitorConfiguration();
+        }
     }
 }

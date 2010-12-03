@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-
-namespace Symbiote.Messaging.Impl.Monitor
+namespace Symbiote.Messaging.Impl.Dispatch
 {
-    public interface IChannelMonitor
+    public interface IDispatchToSaga<TSaga, TActor, TMessage>
+        : IDispatchMessage
+        where TSaga : class 
+        where TActor : class
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
     }
 }

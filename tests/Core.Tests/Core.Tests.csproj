@@ -115,6 +115,7 @@
     <Compile Include="Distributor\Basic\with_mod_wheel.cs" />
     <Compile Include="Distributor\Basic\with_simple_distributor_of_lists.cs" />
     <Compile Include="Distributor\Basic\with_value_list.cs" />
+    <Compile Include="StateMachine\when_transitioning_state.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

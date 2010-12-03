@@ -10,7 +10,7 @@ namespace Messaging.Tests.Local
         protected static IActorCache<Actor> cache { get; set; }
         private Establish context = () =>
                                         {
-                                            cache = new InMemoryActorCache<Actor>(new ActorKeyAccessor());
+                                            cache = new NullActorCache<Actor>();
                                         };
     }
 }

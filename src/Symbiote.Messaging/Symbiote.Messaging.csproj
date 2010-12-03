@@ -65,8 +65,33 @@
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
     <Compile Include="Impl\Dispatch\HyperDispatchManager.cs" />
+    <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
+    <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
+    <Compile Include="Impl\Monitor\ActorEvent.cs" />
+    <Compile Include="Impl\Monitor\AdapterMonitor.cs" />
+    <Compile Include="Impl\Monitor\AgentMonitor.cs" />
+    <Compile Include="Impl\Monitor\ChannelMonitor.cs" />
+    <Compile Include="Impl\Monitor\DispatchMonitor.cs" />
+    <Compile Include="Impl\Monitor\IAdapterMonitor.cs" />
+    <Compile Include="Impl\Monitor\IAgentMonitor.cs" />
     <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
+    <Compile Include="Impl\Monitor\IDispatchMonitor.cs" />
+    <Compile Include="Impl\Monitor\IEnvelopeMonitor.cs" />
+    <Compile Include="Impl\Monitor\MessageEvent.cs" />
+    <Compile Include="Impl\Monitor\MonitorConfiguration.cs" />
+    <Compile Include="Impl\Monitor\MonitorConfigurator.cs" />
+    <Compile Include="Impl\Monitor\NullAdapterMonitor.cs" />
+    <Compile Include="Impl\Monitor\NullAgentMonitor.cs" />
+    <Compile Include="Impl\Monitor\NullChannelMonitor.cs" />
+    <Compile Include="Impl\Monitor\NullDispatchMonitor.cs" />
+    <Compile Include="Impl\Saga\Condition.cs" />
+    <Compile Include="Impl\Saga\ConditionalTransition.cs" />
+    <Compile Include="Impl\Saga\ICondition.cs" />
+    <Compile Include="Impl\Saga\IConditionalTransition.cs" />
+    <Compile Include="Impl\Saga\ISaga.cs" />
+    <Compile Include="Saga.cs" />
+    <Compile Include="Impl\Saga\StateMachine.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
@@ -114,7 +139,7 @@
     <Compile Include="Exception\MessagingException.cs" />
     <Compile Include="Exception\MissingChannelDefinitionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Impl\Actors\InMemoryActorCache.cs" />
+    <Compile Include="Impl\Actors\NullActorCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

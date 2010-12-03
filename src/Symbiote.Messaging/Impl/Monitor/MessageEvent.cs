@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
 using System;
 
 namespace Symbiote.Messaging.Impl.Monitor
 {
-    public interface IChannelMonitor
+    public class MessageEvent
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        public DateTime Occurred { get; set; }
+        public string Machine { get; set; }
+
+        public MessageEvent() {}
     }
 }

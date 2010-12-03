@@ -1,19 +1,16 @@
-﻿using System;
+﻿
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Utility;
 using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Envelope;
-using Symbiote.Messaging.Impl.Transform;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Serialization;
 using Symbiote.Messaging;
 using Symbiote.StructureMap;
 
@@ -31,6 +28,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
         {
             Results = new ConcurrentBag<Message>();
             buffer = new VolatileRingBuffer(Capacity);
+            var future = new Future<int>();
 
             buffer.AddTransform(x =>
             {
@@ -41,6 +39,8 @@ namespace Messaging.Tests.Dispatcher.Ringu
             {
                 Results.Add(x as Message);
                 (x as Message).Text = "Done";
+                if (Results.Count == Qty)
+                    future.Done( Results.Count );
                 return x;
             });
 
@@ -52,7 +52,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
                 buffer.Write(message);
             } );
 
-            Thread.Sleep( 120 );
+            future.WaitFor( 1000 );
 
             buffer.Stop();
             watch.Stop();
@@ -242,6 +242,11 @@ namespace Messaging.Tests.Dispatcher.Ringu
         {
             TransactionHistory = new List<decimal>();
         }
+
+        public override string ToString()
+        {
+            return "{0} - ${1}".AsFormat( Id, Balance );
+        }
     }
 
     public class Transaction
@@ -285,42 +290,6 @@ namespace Messaging.Tests.Dispatcher.Ringu
         public void Handle( Account actor, IEnvelope<Transaction> envelope )
         {
             actor.ChangeBalanceBy( envelope.Message.Amount );
-        }
-    }
-
-    public class RingBufferList
-    {
-        public ExclusiveConcurrentDictionary<string, VolatileRingBuffer> Buffers { get; set; }
-        public Func<object, object> Callback { get; set; }
-
-        public void Write<T>(string id, T value)
-        {
-            var buffer = Buffers.ReadOrWrite( id, CreateBufferForActor );
-            buffer.Write( value );
-        }
-
-        public VolatileRingBuffer CreateBufferForActor()
-        {
-            var buffer = new VolatileRingBuffer( 1000 );
-            buffer.AddTransform( Callback );
-            buffer.Start();
-            return buffer;
-        }
-
-        public void Start()
-        {
-            Buffers.Values.ForEach( x => x.Start() );
-        }
-
-        public void Stop()
-        {
-            Buffers.Values.ForEach(x => x.Stop());
-        }
-
-        public RingBufferList( Func<object, object> callback )
-        {
-            Buffers = new ExclusiveConcurrentDictionary<string, VolatileRingBuffer>();
-            Callback = callback;
         }
     }
 
@@ -396,7 +365,7 @@ namespace Messaging.Tests.Dispatcher.Ringu
         protected static int TotalAccounts = 60;
         protected static int Transactions = 10000;
         protected static IBus bus;
-
+        
         Because of = () =>
         {
             accounts = new List<Account>();
@@ -412,21 +381,29 @@ namespace Messaging.Tests.Dispatcher.Ringu
                     return new Transaction(correlationId, 1.00m);
                 });
 
-            txList.AsParallel().ForAll(x =>
-            {
-                for (var i = 0; i < Transactions; i++)
-                {
-                    bus.Publish( x );
-                }
-            });
+            //txList.AsParallel().ForAll(x =>
+            //{
+            //    for (var i = 0; i < Transactions; i++)
+            //    {
+            //        bus.Publish( x );
+            //    }
+            //});
 
-            Thread.Sleep(150);
+            for (int i = 0; i < Transactions; i++)
+            {
+                foreach (var transaction in txList)
+                {
+                    bus.Publish( transaction );
+                }
+            }
+            
+            //Thread.Sleep(1000);
 
             watch.Stop();
-
+            
             var agent = agency.GetAgentFor<Account>();
             accounts = Enumerable
-                .Range(0, TotalAccounts)
+                .Range(0, TotalAccounts - 1)
                 .Select(x => x.ToString())
                 .Select(agent.GetActor)
                 .ToList();
@@ -437,5 +414,6 @@ namespace Messaging.Tests.Dispatcher.Ringu
 
         private It should_take_less_than_1_second = () =>
             watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
+        
     }
 }

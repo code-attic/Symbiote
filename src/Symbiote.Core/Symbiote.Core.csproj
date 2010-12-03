@@ -202,6 +202,7 @@
     <Compile Include="Utility\BaseObservable.cs" />
     <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\ExclusiveConcurrentDictionary.cs" />
+    <Compile Include="Utility\Future.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />
     <Compile Include="Utility\ILockManager.cs" />
     <Compile Include="Utility\NullLockManager.cs" />

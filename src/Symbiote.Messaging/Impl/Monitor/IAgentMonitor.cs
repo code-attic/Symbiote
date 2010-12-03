@@ -14,12 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
 using System;
 
 namespace Symbiote.Messaging.Impl.Monitor
 {
-    public interface IChannelMonitor
+    public interface IAgentMonitor
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        void ActorLoadedFromMemory<TActor>( string id );
+        void ActorLoadedFromCache<TActor>( string id );
+        void ActorLoadedFromStore<TActor>( string id );
+        void ActorMemoized<TActor>( string id );
+        void ActorReceivedMessage<TActor, TMessage>( string id, IEnvelope<TMessage> envelope );
+        void ActorUnloaded<TActor>( string id );
     }
 }

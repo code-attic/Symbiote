@@ -14,26 +14,26 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
 using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Actors
 {
-    public class Agency : IAgency
+    public class NullActorCache<TActor>
+        : IActorCache<TActor>
+        where TActor : class
     {
-        public IAgentFactory AgentFactory { get; set; }
-        public ExclusiveConcurrentDictionary<Type, IAgent> Agents { get; set; }
-
-        public IAgent<TActor> GetAgentFor<TActor>() where TActor : class
+        public TActor Get<TKey>(TKey id)
         {
-            var actorType = typeof (TActor);
-            return Agents.ReadOrWrite(actorType, () => AgentFactory.GetAgentFor<TActor>()) as IAgent<TActor>;
+            return null;
         }
 
-        public Agency( IAgentFactory agentFactory )
+        public void Store(TActor actor)
         {
-            AgentFactory = agentFactory;
-            Agents = new ExclusiveConcurrentDictionary<Type, IAgent>();
+            
+        }
+
+        public NullActorCache()
+        {
         }
     }
 }

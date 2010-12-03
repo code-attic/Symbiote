@@ -15,11 +15,21 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 
-namespace Symbiote.Messaging.Impl.Monitor
+namespace Symbiote.Messaging.Impl.Saga
 {
-    public interface IChannelMonitor
+    public interface ISaga
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        Type ActorType { get; }
+        List<Type> Handles { get; }
+    }
+
+    public interface ISaga<TActor> :
+        ISaga
+        where TActor : class
+    {
+        Action<StateMachine<TActor>> Setup();
+        bool Process<TMessage>( TActor actor, IEnvelope<TMessage> envelope );
     }
 }

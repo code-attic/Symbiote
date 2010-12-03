@@ -14,12 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+
 using System;
 
 namespace Symbiote.Messaging.Impl.Monitor
 {
-    public interface IChannelMonitor
+    public interface IAdapterMonitor
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        void MessageReceived<TMessage>(IEnvelope<TMessage> envelope);
     }
 }

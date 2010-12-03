@@ -28,7 +28,6 @@ namespace Symbiote.Core.Utility
         protected volatile int[,] WriteIndex;
         protected volatile object[,] Ring;
         protected volatile int[,] Iteration;
-        protected bool Started;
         protected List<Func<object, object>> Transforms;
         protected ExclusiveConcurrentDictionary<string, int> ActorIndex { get; set; }
         protected int Actors;
@@ -74,12 +73,7 @@ namespace Symbiote.Core.Utility
 
         public void Write<T>(string actor, T value)
         {
-            var actorIndex = ActorIndex.ReadOrWrite( actor, 
-                () =>
-                {
-                    var index = Actors++;
-                    return index;
-                } );
+            var actorIndex = ActorIndex.ReadOrWrite( actor, () => ++Actors );
 
             var current = WriteIndex[actorIndex, 0];
             while (current == WriteIndex[actorIndex, LastStep]
@@ -87,7 +81,7 @@ namespace Symbiote.Core.Utility
             {
                 Thread.Sleep( 10 );
             }
-            Started = true;
+
             if(!Running)
                 Start();
             Ring[actorIndex, current] = value;
@@ -124,7 +118,6 @@ namespace Symbiote.Core.Utility
 
         public void TransformActor(Func<object, object> transformer, int actorIndex, int step)
         {
-            var readFrom = step - 1;
             try
             {
                 var current = WriteIndex[actorIndex, step];

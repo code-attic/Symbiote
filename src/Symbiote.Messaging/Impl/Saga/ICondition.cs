@@ -16,10 +16,12 @@ limitations under the License.
 
 using System;
 
-namespace Symbiote.Messaging.Impl.Monitor
+namespace Symbiote.Messaging.Impl.Saga
 {
-    public interface IChannelMonitor
+    public interface ICondition<TActor>
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        ICondition<TActor> On<TMessage>( Func<TActor, IEnvelope<TMessage>, bool> processMessage );
+        ICondition<TActor> On<TMessage>(Action<TActor> transition);
+        ICondition<TActor> On<TMessage>(Func<TActor, IEnvelope<TMessage>, bool> processMessage, Action<TActor> transition);
     }
 }

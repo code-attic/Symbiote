@@ -59,6 +59,8 @@
     <Compile Include="Actor\Agency\with_mock_agent_factory.cs" />
     <Compile Include="Actor\Agent\DummyActor.cs" />
     <Compile Include="Actor\Agent\DummyActorFactory.cs" />
+    <Compile Include="Actor\Agent\DummyHandler.cs" />
+    <Compile Include="Actor\Agent\when_requesting_agent_with_preloading.cs" />
     <Compile Include="Actor\Agent\when_requesting_cached_actor.cs" />
     <Compile Include="Actor\Agent\when_requesting_new_actor.cs" />
     <Compile Include="Actor\Agent\when_requesting_stored_actor.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="Extensions\InterfaceType.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_compatible_types.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_incompatible_types.cs" />
+    <Compile Include="FSM\when_creating_an_fsm.cs" />
     <Compile Include="Local\Actor.cs">
       <SubType>Code</SubType>
     </Compile>

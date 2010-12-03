@@ -16,7 +16,6 @@ limitations under the License.
 
 using System;
 using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Core.Extensions;
 

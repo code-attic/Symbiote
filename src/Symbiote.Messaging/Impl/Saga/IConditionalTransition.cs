@@ -14,12 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-
-namespace Symbiote.Messaging.Impl.Monitor
+namespace Symbiote.Messaging.Impl.Saga
 {
-    public interface IChannelMonitor
+    public interface IConditionalTransition<TActor>
     {
-        void MessageSent<TMessage>(IEnvelope<TMessage> envelope);
+        bool Execute( TActor actor, IEnvelope message );
     }
 }

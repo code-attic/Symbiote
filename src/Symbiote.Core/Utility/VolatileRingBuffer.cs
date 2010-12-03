@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,6 +38,7 @@ namespace Symbiote.Core.Utility
         public int LastIndex;
         public int LastStep;
 
+        
         public int GetNextIndex(int index)
         {
             return index == LastIndex
@@ -68,11 +70,9 @@ namespace Symbiote.Core.Utility
         public void Write<T>(T value)
         {
             var current = WriteIndex[0];
-            while (current == WriteIndex[LastStep]
-                && Iteration[0] > Iteration[LastStep])
-            {
+
+            while (current == WriteIndex[LastStep] && Iteration[0] > Iteration[LastStep])
                 Thread.Sleep(1);
-            }
 
             Ring[current] = value;
             var nextIndex = GetNextIndex(current);
@@ -83,33 +83,33 @@ namespace Symbiote.Core.Utility
 
         public void Transform(Func<object, object> transformer, int step)
         {
-            var readFrom = step - 1;
             while(Running)
             {
                 try
                 {
-                    var current = WriteIndex[step];
-                    if(WriteIndex[step] != WriteIndex[step-1]
-                        || Iteration[step] != Iteration[step-1])
-                    {
-                        if(Ring[current] != null)
-                            Ring[current] = transformer( Ring[current] );
+                    while (!IsStepReady(step))
+                        Thread.Sleep(3);
 
-                        var nextIndex = GetNextIndex(current);
-                        if (nextIndex < current)
-                            UpdateIteration(step);
-                        WriteIndex[step] = nextIndex;
-                    }
-                    else
-                    {
-                        Thread.Sleep( 3 );
-                    }
+                    var current = WriteIndex[step];
+                    if(Ring[current] != null)
+                        Ring[current] = transformer( Ring[current] );
+
+                    var nextIndex = GetNextIndex(current);
+                    if (nextIndex < current)
+                        UpdateIteration(step);
+                    WriteIndex[step] = nextIndex;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine( e );
                 }
             }
+        }
+
+        public bool IsStepReady( int step )
+        {
+            return WriteIndex[step] != WriteIndex[step - 1]
+                    || Iteration[step] != Iteration[step - 1];
         }
 
         public void Start()
@@ -120,7 +120,6 @@ namespace Symbiote.Core.Utility
             Transforms
                 .ForEach(t =>
                 {
-                    //step.BeginInvoke(t, index++, null, null);
                     var task = Task.Factory.StartNew( () => Transform( t, index++ ), TaskCreationOptions.LongRunning );
                 });
         }
