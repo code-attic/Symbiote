@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Symbiote.Core.Extensions;
-using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Actors;
+using Symbiote.Actor;
 
 namespace Messaging.Tests.Local
 {

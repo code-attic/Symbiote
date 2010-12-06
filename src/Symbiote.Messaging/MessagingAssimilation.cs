@@ -17,14 +17,13 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging.Impl;
-using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
-using Symbiote.Messaging.Impl.Saga;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -79,15 +78,7 @@ namespace Symbiote.Messaging
             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
             //x.For<IDispatcher>().Use<HyperDispatchManager>().AsSingleton();
             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
-            x.For<IAgency>().Use<Agency>().AsSingleton();
-
-            x.For(typeof (IActorCache<>)).Use(typeof (NullActorCache<>));
-            x.For( typeof(IAgentFactory) ).Use<DefaultAgentFactory>();
-            x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
-            x.For(typeof (IKeyAccessor<>)).Use(typeof (DefaultKeyAccessor<>));
-            x.For(typeof (IAgent<>)).Use(typeof (DefaultAgent<>));
-            x.For(typeof (IActorStore<>)).Use(typeof (NullActorStore<>));
-            x.For(typeof (IActorFactory<>)).Use(typeof (DefaultActorFactory<>));
+            
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()
@@ -165,7 +156,6 @@ namespace Symbiote.Messaging
 
         private static void Preload()
         {
-            Assimilate.GetInstanceOf<IAgency>();
             Assimilate.GetInstanceOf<IDispatcher>();
         }
 
@@ -180,17 +170,10 @@ namespace Symbiote.Messaging
                     a.FullName.Contains("Symbiote.Messaging"))
                 .ForEach(s.Assembly);
 
-            s.AddAllTypesOf<ISaga>();
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<>));
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<,>));
-            s.ConnectImplementationsToTypesClosing( 
-                typeof(ISaga<>));
-            s.ConnectImplementationsToTypesClosing(
-                typeof (IActorFactory<>));
-            s.ConnectImplementationsToTypesClosing(
-                typeof(IKeyAccessor<>));
         }
     }
 }

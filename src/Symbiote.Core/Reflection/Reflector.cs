@@ -209,16 +209,33 @@ namespace Symbiote.Core.Reflection
             try
             {
                 var type = instance.GetType();
-                CreateLookupsForType(type);
-                var tuple = memberCache[Tuple.Create(type, memberName)];
-                if (tuple.Item2 != null)
-                    return tuple.Item2.Invoke(instance);
-                return null;
+                CreateLookupsForType( type );
+                var parts = memberName.Split( '.' );
+                if ( parts.Length > 1 )
+                {
+                    var parent = ReadFromCache( instance, type, parts[0] );
+                    if (parent != null)
+                        return ReadMember(parent, string.Join(".", parts.Skip(1)));
+                    else
+                        return null;
+                }
+                else
+                {
+                    return ReadFromCache( instance, type, memberName );
+                }
+                
             }
             catch (Exception e)
             {
                 return null;
             }
+        }
+
+        protected static object ReadFromCache( object instance, Type type, string memberName ) {
+            var tuple = memberCache[Tuple.Create(type, memberName)];
+            if (tuple.Item2 != null)
+                return tuple.Item2.Invoke(instance);
+            return null;
         }
 
         public static T ReadMember<T>(object instance, string memberName)
@@ -227,15 +244,32 @@ namespace Symbiote.Core.Reflection
             {
                 var type = instance.GetType();
                 CreateLookupsForType(type);
-                var tuple = memberCache[Tuple.Create(type, memberName)];
-                if(tuple.Item2 != null)
-                    return (T) tuple.Item2.Invoke(instance);
-                return default(T);
+                var parts = memberName.Split('.');
+                if (parts.Length > 1)
+                {
+                    var parent = ReadFromCache(instance, type, parts[0]);
+                    if (parent != null)
+                        return ReadMember<T>(parent, string.Join(".", parts.Skip(1)));
+                    else
+                        return default(T);
+                }
+                else
+                {
+                    return ReadFromCache<T>( instance, type, memberName );
+                }
             }
             catch (Exception e)
             {
                 return default(T);
             }
+        }
+
+        protected static T ReadFromCache<T>(object instance, Type type, string memberName)
+        {
+            var tuple = memberCache[Tuple.Create(type, memberName)];
+            if (tuple.Item2 != null)
+                return (T) tuple.Item2.Invoke(instance);
+            return default(T);
         }
 
         public static void WriteMember(object instance, string memberName, object value)
@@ -244,14 +278,30 @@ namespace Symbiote.Core.Reflection
             {
                 var type = instance.GetType();
                 CreateLookupsForType(type);
-                var tuple = memberCache[Tuple.Create(type, memberName)];
-                if (tuple.Item3 != null)
-                    tuple.Item3.Invoke(instance, value);
+                var parts = memberName.Split('.');
+                if (parts.Length > 1)
+                {
+                    var parent = ReadFromCache(instance, type, parts[0]);
+                    if (parent == null)
+                    {
+                        var intended = GetMemberType( type, parts[0] );
+                        parent = Assimilate.GetInstanceOf( intended );
+                    } 
+                    WriteMember(parent, string.Join(".", parts.Skip(1)), value);
+                }
+                else
+                    WriteThroughCache( instance, type, memberName, value );
             }
             catch (Exception e)
             {
                 // do nothing
             }
+        }
+
+        protected static void WriteThroughCache( object instance, Type type, string memberName, object value ) {
+            var tuple = memberCache[Tuple.Create(type, memberName)];
+            if (tuple.Item3 != null)
+                tuple.Item3.Invoke(instance, value);
         }
     }
 }

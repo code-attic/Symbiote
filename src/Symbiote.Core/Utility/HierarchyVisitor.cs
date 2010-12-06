@@ -18,8 +18,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 
@@ -30,27 +28,29 @@ namespace Symbiote.Core.Utility
     {
         protected List<IObserver<Tuple<object, string, object>>> Watchers { get; set; }
         protected Predicate<object> MatchIdentifier { get; set; }
+        protected bool IncludePath { get; set; }
+        protected readonly string pathTemplate = "{0}.{1}";
 
         public void Visit(object instance)
         {
             if(MatchIdentifier(instance))
-                NotifyWatchers(null, null, instance);
+                NotifyWatchers(null, "", null, instance);
 
             if (IsCrawlableEnumerable(instance))
-                Visit(null, "", instance);
+                Visit(null, "", "", instance);
             else
-                Crawl(instance);
+                Crawl("", instance);
         }
 
-        protected void Crawl(object instance)
+        protected void Crawl(string path, object instance)
         {
             Reflector
                 .GetProperties(instance.GetType())
                 .Where(x => !x.PropertyType.IsValueType)
-                .ForEach(x => Visit(instance, x.Name, Reflector.ReadMember(instance, x.Name)));
+                .ForEach(x => Visit(instance, path, x.Name, Reflector.ReadMember(instance, x.Name)));
         }
 
-        protected void Visit(object parent, string member, object value)
+        protected void Visit(object parent, string path, string member, object value)
         {
             if(value != null)
             {
@@ -63,7 +63,7 @@ namespace Symbiote.Core.Utility
                         do
                         {
                             if(enumerator.Current != null)
-                                Visit(parent, member, enumerator.Current);
+                                Visit(parent, path, member, enumerator.Current);
                         } while (enumerator.MoveNext());
                     }
                     catch (Exception e)
@@ -73,9 +73,13 @@ namespace Symbiote.Core.Utility
                 }
                 else
                 {
+                    path = string.IsNullOrWhiteSpace( path )
+                               ? member
+                               : pathTemplate.AsFormat( path, member );
+
                     if (MatchIdentifier(value))
-                        NotifyWatchers(parent, member, value);
-                    Crawl(value);
+                        NotifyWatchers(parent, path, member, value);
+                    Crawl(path, value);
                 }
             }
         }
@@ -85,9 +89,18 @@ namespace Symbiote.Core.Utility
             return value.GetType().GetInterface("IEnumerable", false) != null && value.GetType().Name != "String";
         }
 
-        protected void NotifyWatchers(object parent, string member, object instance)
+        protected void NotifyWatchers(object parent, string path, string member, object instance)
         {
-            Watchers.ForEach(x => x.OnNext(Tuple.Create(parent, member, instance)));
+            Watchers.ForEach(x => x.OnNext(GetTuple( parent, path, member, instance )));
+        }
+
+        public Tuple<object, string, object> GetTuple(object parent, string path, string member, object instance)
+        {
+            return Tuple.Create(
+                    parent,
+                    IncludePath ? pathTemplate.AsFormat( path, member ) : member,
+                    instance
+                );
         }
 
         public IDisposable Subscribe(IObserver<Tuple<object, string, object>> observer)
@@ -97,8 +110,9 @@ namespace Symbiote.Core.Utility
             return disposable;
         }
 
-        public HierarchyVisitor(Predicate<object> notifyOnMatches)
+        public HierarchyVisitor(bool includePath, Predicate<object> notifyOnMatches)
         {
+            IncludePath = includePath;
             MatchIdentifier = notifyOnMatches;
             Watchers = new List<IObserver<Tuple<object, string, object>>>();
         }

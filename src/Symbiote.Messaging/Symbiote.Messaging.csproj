@@ -53,9 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEventAdapter.cs" />
-    <Compile Include="Impl\Actors\DefaultAgentFactory.cs" />
-    <Compile Include="Impl\Actors\IAgentFactory.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelIndex.cs" />
@@ -88,13 +85,6 @@
     <Compile Include="Impl\Monitor\NullAgentMonitor.cs" />
     <Compile Include="Impl\Monitor\NullChannelMonitor.cs" />
     <Compile Include="Impl\Monitor\NullDispatchMonitor.cs" />
-    <Compile Include="Impl\Saga\Condition.cs" />
-    <Compile Include="Impl\Saga\ConditionalTransition.cs" />
-    <Compile Include="Impl\Saga\ICondition.cs" />
-    <Compile Include="Impl\Saga\IConditionalTransition.cs" />
-    <Compile Include="Impl\Saga\ISaga.cs" />
-    <Compile Include="Saga.cs" />
-    <Compile Include="Impl\Saga\StateMachine.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
@@ -102,13 +92,9 @@
     <Compile Include="Impl\Subscriptions\ISubscriptionManager.cs" />
     <Compile Include="Impl\Subscriptions\ObserverToken.cs" />
     <Compile Include="Impl\Subscriptions\SubscriptionManager.cs" />
-    <Compile Include="Impl\Actors\DefaultActorFactory.cs" />
     <Compile Include="Impl\Dispatch\ActorMessageDispatcher.cs" />
-    <Compile Include="Impl\Actors\Agency.cs" />
     <Compile Include="Impl\Bus.cs" />
     <Compile Include="Impl\Channels\ChannelManager.cs" />
-    <Compile Include="Impl\Actors\DefaultAgent.cs" />
-    <Compile Include="Impl\DefaultKeyAccessor.cs" />
     <Compile Include="Impl\Dispatch\DispatchManager.cs" />
     <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
@@ -122,11 +108,6 @@
     <Compile Include="LocalChannelExtension.cs" />
     <Compile Include="Impl\Envelope\Envelope.cs" />
     <Compile Include="MessagingAssimilation.cs" />
-    <Compile Include="Impl\Actors\IActorCache.cs" />
-    <Compile Include="Impl\Actors\IActorFactory.cs" />
-    <Compile Include="Impl\Actors\IActorStore.cs" />
-    <Compile Include="Impl\Actors\IAgency.cs" />
-    <Compile Include="Impl\Actors\IAgent.cs" />
     <Compile Include="IBus.cs" />
     <Compile Include="Impl\Channels\IChannel.cs" />
     <Compile Include="Impl\Channels\IChannelFactory.cs" />
@@ -135,24 +116,23 @@
     <Compile Include="Impl\Dispatch\IDispatchMessage.cs" />
     <Compile Include="IEnvelope.cs" />
     <Compile Include="IHandle.cs" />
-    <Compile Include="IKeyAccessor.cs" />
     <Compile Include="Impl\Channels\LocalChannel.cs" />
     <Compile Include="Impl\Dispatch\MessageDispatcher.cs" />
-    <Compile Include="Impl\Actors\NullActorStore.cs" />
     <Compile Include="Exception\MessagingException.cs" />
     <Compile Include="Exception\MissingChannelDefinitionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Impl\Actors\NullActorCache.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Actor\Symbiote.Actor.csproj">
+      <Project>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</Project>
+      <Name>Symbiote.Actor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\Endpoints\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">

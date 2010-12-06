@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
+using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Actors;
 
 namespace Messaging.Tests.Local
 {

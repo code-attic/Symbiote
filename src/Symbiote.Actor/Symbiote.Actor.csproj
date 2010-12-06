@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Symbiote.Actor</RootNamespace>
+    <AssemblyName>Symbiote.Actor</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ActorAssimilation.cs" />
+    <Compile Include="Impl\Actor\Agency.cs" />
+    <Compile Include="Impl\Actor\Defaults\DefaultKeyAccessor.cs" />
+    <Compile Include="IMemento.cs" />
+    <Compile Include="Impl\Memento\IMemento.cs" />
+    <Compile Include="Impl\Memento\IMemoizer.cs" />
+    <Compile Include="Impl\Memento\Memoizer.cs" />
+    <Compile Include="Impl\Memento\ReflectiveMemento.cs" />
+    <Compile Include="Impl\Saga\Condition.cs" />
+    <Compile Include="Impl\Saga\ConditionalTransition.cs" />
+    <Compile Include="Impl\Actor\Defaults\DefaultActorFactory.cs" />
+    <Compile Include="Impl\Actor\Defaults\DefaultAgent.cs" />
+    <Compile Include="Impl\Actor\Defaults\DefaultAgentFactory.cs" />
+    <Compile Include="IActorCache.cs" />
+    <Compile Include="IActorFactory.cs" />
+    <Compile Include="IActorStore.cs" />
+    <Compile Include="IAgency.cs" />
+    <Compile Include="IAgent.cs" />
+    <Compile Include="IAgentFactory.cs" />
+    <Compile Include="ICondition.cs" />
+    <Compile Include="IConditionalTransition.cs" />
+    <Compile Include="IKeyAccessor.cs" />
+    <Compile Include="ISaga.cs" />
+    <Compile Include="Impl\Actor\Defaults\NullActorCache.cs" />
+    <Compile Include="Impl\Actor\Defaults\NullActorStore.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Saga.cs" />
+    <Compile Include="Impl\Saga\StateMachine.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Impl\Eventing\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -53,35 +53,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor\Agency\DummyActor.cs" />
-    <Compile Include="Actor\Agency\DummyAgent.cs" />
-    <Compile Include="Actor\Agency\when_requesting_agents_in_parallel.cs" />
-    <Compile Include="Actor\Agency\with_mock_agent_factory.cs" />
-    <Compile Include="Actor\Agent\DummyActor.cs" />
-    <Compile Include="Actor\Agent\DummyActorFactory.cs" />
-    <Compile Include="Actor\Agent\DummyHandler.cs" />
-    <Compile Include="Actor\Agent\when_requesting_agent_with_preloading.cs" />
-    <Compile Include="Actor\Agent\when_requesting_cached_actor.cs" />
-    <Compile Include="Actor\Agent\when_requesting_new_actor.cs" />
-    <Compile Include="Actor\Agent\when_requesting_stored_actor.cs" />
-    <Compile Include="Actor\Agent\with_agent_setup.cs" />
-    <Compile Include="Actor\Agent\with_cached_actor.cs" />
-    <Compile Include="Actor\Agent\with_no_actor.cs" />
-    <Compile Include="Actor\Agent\with_stored_actor.cs" />
-    <Compile Include="Actor\Cache\CacheItem.cs" />
-    <Compile Include="Actor\Cache\TestKeyAccessor.cs" />
-    <Compile Include="Actor\Cache\when_caching_actor.cs" />
-    <Compile Include="Actor\Cache\with_cache.cs" />
-    <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Channels\Manager\when_adding_definition.cs" />
-    <Compile Include="Dispatcher\Ringu\when_being_incredibly_awesome.cs" />
     <Compile Include="Extensions\BaseType.cs" />
     <Compile Include="Extensions\ChildType.cs" />
     <Compile Include="Extensions\IndependentType.cs" />
     <Compile Include="Extensions\InterfaceType.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_compatible_types.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_incompatible_types.cs" />
-    <Compile Include="FSM\when_creating_an_fsm.cs" />
     <Compile Include="Local\Actor.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -146,6 +124,10 @@
     <Compile Include="RequestResponse\when_making_request.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Symbiote.Actor\Symbiote.Actor.csproj">
+      <Project>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</Project>
+      <Name>Symbiote.Actor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
@@ -160,7 +142,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Actor\Store\" />
+    <Folder Include="Dispatcher\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading;
 using Machine.Specifications;
+using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Actors;
 
 namespace Messaging.Tests.Local
 {

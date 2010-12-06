@@ -41,7 +41,7 @@ namespace Symbiote.Core.Extensions
                 return SerializerFactory;
             }
         }
-
+        
         public static string ToJson<T>(this T model)
         {
             return ToJson(model, true);

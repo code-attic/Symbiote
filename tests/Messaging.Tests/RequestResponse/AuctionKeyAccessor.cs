@@ -1,4 +1,5 @@
-﻿using Symbiote.Messaging;
+﻿using Symbiote.Actor;
+using Symbiote.Messaging;
 
 namespace Messaging.Tests.RequestResponse
 {

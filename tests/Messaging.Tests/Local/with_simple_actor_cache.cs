@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
-using Symbiote.Messaging.Impl;
-using Symbiote.Messaging.Impl.Actors;
+using Symbiote.Actor;
+using Symbiote.Actor.Impl.Actor.Defaults;
 
 namespace Messaging.Tests.Local
 {

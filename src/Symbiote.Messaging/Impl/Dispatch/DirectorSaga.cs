@@ -16,7 +16,8 @@ limitations under the License.
 
 
 using System;
-using Symbiote.Messaging.Impl.Saga;
+using Symbiote.Actor;
+using Symbiote.Actor.Impl.Saga;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {

@@ -12,6 +12,8 @@ namespace Core.Tests.Reflection
         protected static int val2;
         protected static TimeSpan val3;
         protected static Guid val4;
+        private static string val5a = "test";
+        private static decimal val5b = 10.5m;
         protected static Stopwatch assignmentWatch;
 
         private Because of = () =>
@@ -27,6 +29,8 @@ namespace Core.Tests.Reflection
                                      Reflector.WriteMember(target, "val2", val2);
                                      Reflector.WriteMember(target, "val3", val3);
                                      Reflector.WriteMember(target, "val4", val4);
+                                     Reflector.WriteMember( target, "val5.val5a", val5a );
+                                     Reflector.WriteMember( target, "val5.val5b", val5b );
 
                                      assignmentWatch.Stop();
                                      var ms = assignmentWatch.ElapsedMilliseconds;
@@ -36,5 +40,7 @@ namespace Core.Tests.Reflection
         private It should_match_val2 = () => target.GetVal2().ShouldEqual(val2);
         private It should_match_val3 = () => target.GetVal3().ShouldEqual(val3);
         private It should_match_val4 = () => target.val4.ShouldEqual(val4);
+        private It should_match_val5a = () => target.val5.val5a.ShouldEqual(val5a);
+        private It should_match_val5b = () => target.val5.val5b.ShouldEqual(val5b);
     }
 }
