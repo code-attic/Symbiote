@@ -47,7 +47,7 @@
     <Compile Include="Impl\Memento\IMemento.cs" />
     <Compile Include="Impl\Memento\IMemoizer.cs" />
     <Compile Include="Impl\Memento\Memoizer.cs" />
-    <Compile Include="Impl\Memento\ReflectiveMemento.cs" />
+    <Compile Include="Impl\Memento\BinaryMemento.cs" />
     <Compile Include="Impl\Saga\Condition.cs" />
     <Compile Include="Impl\Saga\ConditionalTransition.cs" />
     <Compile Include="Impl\Actor\Defaults\DefaultActorFactory.cs" />

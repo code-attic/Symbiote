@@ -41,7 +41,7 @@ namespace Symbiote.Actor
                 x.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
                 x.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
                 x.For<IMemoizer>().Use<Memoizer>();
-                x.For( typeof(IMemento<>) ).Use( typeof(ReflectiveMemento<>) );
+                x.For( typeof(IMemento<>) ).Use( typeof(BinaryMemento<>) );
 
                 x.Scan( s =>
                 {

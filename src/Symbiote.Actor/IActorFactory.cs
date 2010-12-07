@@ -22,8 +22,14 @@ namespace Symbiote.Actor
 
     public interface IActorFactory<TActor> :
         IActorFactory
-        where TActor : class
     {
         TActor CreateInstance<TKey>(TKey id);
+    }
+
+    public interface IActorFactory<TActor, TMessage> :
+        IActorFactory
+        where TActor : class
+    {
+        TActor CreateInstance<TKey>(TKey id, TMessage message);
     }
 }
