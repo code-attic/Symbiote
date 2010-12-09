@@ -33,6 +33,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,30 +42,44 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorAssimilation.cs" />
-    <Compile Include="Impl\Actor\Agency.cs" />
-    <Compile Include="Impl\Actor\Defaults\DefaultKeyAccessor.cs" />
+    <Compile Include="EventContext.cs" />
+    <Compile Include="IEvent.cs" />
+    <Compile Include="Impl\Eventing\EventPublisher.cs" />
+    <Compile Include="Impl\Eventing\EventSubscriptionToken.cs" />
+    <Compile Include="Impl\Eventing\IEventStore.cs" />
+    <Compile Include="Impl\Agency.cs" />
+    <Compile Include="Impl\Defaults\DefaultKeyAccessor.cs" />
     <Compile Include="IMemento.cs" />
+    <Compile Include="Impl\Eventing\EventConfiguration.cs" />
+    <Compile Include="Impl\Eventing\EventContext.cs" />
+    <Compile Include="Impl\Eventing\EventContextProvider.cs" />
+    <Compile Include="Impl\Eventing\IEventConfiguration.cs" />
+    <Compile Include="Impl\Eventing\IEventContext.cs" />
+    <Compile Include="Impl\Eventing\IEventContextProvider.cs" />
+    <Compile Include="Impl\Eventing\IEventPublisher.cs" />
+    <Compile Include="Impl\Eventing\ReplayEventContext.cs" />
     <Compile Include="Impl\Memento\IMemento.cs" />
     <Compile Include="Impl\Memento\IMemoizer.cs" />
     <Compile Include="Impl\Memento\Memoizer.cs" />
-    <Compile Include="Impl\Memento\BinaryMemento.cs" />
+    <Compile Include="Impl\Memento\PassthroughMemento.cs" />
     <Compile Include="Impl\Saga\Condition.cs" />
     <Compile Include="Impl\Saga\ConditionalTransition.cs" />
-    <Compile Include="Impl\Actor\Defaults\DefaultActorFactory.cs" />
-    <Compile Include="Impl\Actor\Defaults\DefaultAgent.cs" />
-    <Compile Include="Impl\Actor\Defaults\DefaultAgentFactory.cs" />
+    <Compile Include="Impl\Defaults\DefaultActorFactory.cs" />
+    <Compile Include="Impl\Defaults\DefaultAgent.cs" />
+    <Compile Include="Impl\Defaults\DefaultAgentFactory.cs" />
     <Compile Include="IActorCache.cs" />
     <Compile Include="IActorFactory.cs" />
     <Compile Include="IActorStore.cs" />
-    <Compile Include="IAgency.cs" />
-    <Compile Include="IAgent.cs" />
-    <Compile Include="IAgentFactory.cs" />
-    <Compile Include="ICondition.cs" />
-    <Compile Include="IConditionalTransition.cs" />
+    <Compile Include="Impl\IAgency.cs" />
+    <Compile Include="Impl\IAgent.cs" />
+    <Compile Include="Impl\IAgentFactory.cs" />
+    <Compile Include="Impl\Saga\ICondition.cs" />
+    <Compile Include="Impl\Saga\IConditionalTransition.cs" />
     <Compile Include="IKeyAccessor.cs" />
-    <Compile Include="ISaga.cs" />
-    <Compile Include="Impl\Actor\Defaults\NullActorCache.cs" />
-    <Compile Include="Impl\Actor\Defaults\NullActorStore.cs" />
+    <Compile Include="Impl\Saga\ISaga.cs" />
+    <Compile Include="Impl\Defaults\NullActorCache.cs" />
+    <Compile Include="Impl\Defaults\NullActorStore.cs" />
+    <Compile Include="KeyAccessAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saga.cs" />
     <Compile Include="Impl\Saga\StateMachine.cs" />
@@ -75,9 +90,7 @@
       <Name>Symbiote.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Impl\Eventing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,7 +1,8 @@
 ﻿using Machine.Specifications;
 using Moq;
 using Symbiote.Actor;
-using Symbiote.Actor.Impl.Actor.Defaults;
+using Symbiote.Actor.Impl.Defaults;
+using Symbiote.Actor.Impl.Memento;
 
 namespace Actor.Tests.Agent
 {
@@ -26,7 +27,7 @@ namespace Actor.Tests.Agent
             MockActorStore = new Mock<IActorStore<DummyActor>>();
 
             ActorStore = MockActorStore.Object;
-            Agent = new DefaultAgent<DummyActor>( ActorCache, ActorStore, ActorFactory  );
+            Agent = new DefaultAgent<DummyActor>( ActorCache, ActorStore, ActorFactory, new Memoizer() );
         };
     }
 }

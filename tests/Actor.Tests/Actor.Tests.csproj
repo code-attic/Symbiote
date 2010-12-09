@@ -60,7 +60,22 @@
     <Compile Include="Agent\when_requesting_same_actor_under_race_condition.cs" />
     <Compile Include="Agent\when_requesting_stored_actor.cs" />
     <Compile Include="Agent\with_agent_setup.cs" />
-    <Compile Include="Mementos\when_mementizing.cs" />
+    <Compile Include="Domain\Model\Address.cs" />
+    <Compile Include="Domain\Memoization\AddressMemento.cs" />
+    <Compile Include="Domain\DriverFactory.cs" />
+    <Compile Include="Domain\DriverKeyAccessor.cs" />
+    <Compile Include="Domain\Memoization\DriverMemento.cs" />
+    <Compile Include="Domain\Model\IAddressMemento.cs" />
+    <Compile Include="Domain\Model\IDriverMemento.cs" />
+    <Compile Include="Domain\Model\IVehicleMemento.cs" />
+    <Compile Include="Domain\NewMotoristHandler.cs" />
+    <Compile Include="Domain\NewMotoristMessage.cs" />
+    <Compile Include="Domain\Model\Vehicle.cs" />
+    <Compile Include="Domain\Memoization\VehicleMemento.cs" />
+    <Compile Include="Domain\Model\Driver.cs" />
+    <Compile Include="Events\when_capturing_events.cs" />
+    <Compile Include="Mementos\when_mementizing_via_reflection.cs" />
+    <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="when_caching_actor.cs" />
     <Compile Include="with_assimilation.cs" />
     <Compile Include="Agent\with_cached_actor.cs" />
@@ -77,11 +92,16 @@
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
+      <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
+      <Name>Symbiote.Messaging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
       <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

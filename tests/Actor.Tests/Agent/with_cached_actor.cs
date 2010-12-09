@@ -1,4 +1,5 @@
 ﻿using Machine.Specifications;
+using Symbiote.Actor.Impl.Memento;
 
 namespace Actor.Tests.Agent
 {
@@ -7,8 +8,8 @@ namespace Actor.Tests.Agent
     {
         private Establish context = () =>
         {
-            MockActorCache.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new DummyActor());
-            MockActorStore.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(default(DummyActor));
+            MockActorCache.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new PassthroughMemento<DummyActor>() { Actor = new DummyActor() });
+            MockActorStore.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new PassthroughMemento<DummyActor>());
         };
     }
 }

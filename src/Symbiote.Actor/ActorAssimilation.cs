@@ -16,9 +16,11 @@ limitations under the License.
 
 using System;
 using System.Collections.Generic;
-using Symbiote.Actor.Impl.Actor;
-using Symbiote.Actor.Impl.Actor.Defaults;
+using Symbiote.Actor.Impl;
+using Symbiote.Actor.Impl.Defaults;
+using Symbiote.Actor.Impl.Eventing;
 using Symbiote.Actor.Impl.Memento;
+using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using System.Linq;
 using Symbiote.Core.Extensions;
@@ -41,7 +43,10 @@ namespace Symbiote.Actor
                 x.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
                 x.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
                 x.For<IMemoizer>().Use<Memoizer>();
-                x.For( typeof(IMemento<>) ).Use( typeof(BinaryMemento<>) );
+                x.For( typeof(IMemento<>) ).Use( typeof(PassthroughMemento<>) );
+                x.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
+                x.For<IEventContextProvider>().Use<EventContextProvider>();
+                x.For<IEventConfiguration>().Use<EventConfiguration>();
 
                 x.Scan( s =>
                 {
@@ -61,6 +66,8 @@ namespace Symbiote.Actor
                         typeof(IKeyAccessor<>));
                     s.ConnectImplementationsToTypesClosing(
                         typeof(ISaga<>));
+                    s.ConnectImplementationsToTypesClosing( 
+                        typeof(IMemento<>));
                 } );
             } );
 

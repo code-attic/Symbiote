@@ -19,7 +19,7 @@ namespace Symbiote.Actor
     public interface IActorStore<TActor>
         where TActor : class
     {
-        TActor Get<TKey>(TKey id);
-        void Store(TActor actor);
+        IMemento<TActor> Get<TKey>(TKey id);
+        void Store(IMemento<TActor> actor);
     }
 }

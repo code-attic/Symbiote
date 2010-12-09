@@ -53,6 +53,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\EventChannelConfiguration.cs" />
+    <Compile Include="Config\EventChannelConfigurator.cs" />
+    <Compile Include="Config\IEventChannelConfiguration.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelIndex.cs" />

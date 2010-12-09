@@ -1,4 +1,6 @@
-﻿using Symbiote.Actor;
+﻿using System;
+using Symbiote.Actor;
+using Symbiote.Actor.Impl;
 
 namespace Actor.Tests.Agency
 {
@@ -10,6 +12,11 @@ namespace Actor.Tests.Agency
         public DummyActor GetActor<TKey>( TKey key )
         {
             return new DummyActor();
+        }
+
+        public void RegisterActor<TKey>( TKey key, DummyActor actor )
+        {
+            
         }
 
         public void Memoize( DummyActor actor )

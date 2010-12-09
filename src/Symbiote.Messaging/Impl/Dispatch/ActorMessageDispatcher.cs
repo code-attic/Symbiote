@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Actor;
+using Symbiote.Actor.Impl;
 using Symbiote.Core;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Extensions;

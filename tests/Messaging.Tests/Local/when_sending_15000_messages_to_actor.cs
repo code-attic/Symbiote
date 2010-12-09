@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
 using Symbiote.Actor;
+using Symbiote.Actor.Impl;
 using Symbiote.Core;
 using Symbiote.Messaging;
 

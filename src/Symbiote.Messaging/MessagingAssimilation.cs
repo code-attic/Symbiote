@@ -18,9 +18,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Actor;
+using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
+using Symbiote.Messaging.Config;
 using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
@@ -30,6 +32,15 @@ namespace Symbiote.Messaging
 {
     public static class MessagingAssimilation
     {
+        public static IAssimilate Messaging(this IAssimilate assimilate, Action<EventChannelConfigurator> eventChannels)
+        {
+            Messaging( assimilate );
+            var configurator = new EventChannelConfigurator();
+            eventChannels( configurator );
+            Assimilate.Dependencies( x => x.For<IEventChannelConfiguration>().Use( configurator.Configuration ) );
+            return assimilate;
+        }
+
         public static IAssimilate Messaging(this IAssimilate assimilate)
         {
             assimilate.Dependencies(x =>
