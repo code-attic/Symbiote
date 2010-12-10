@@ -39,7 +39,8 @@ namespace Symbiote.Redis
                                       x.For<RedisConfiguration>().Use(configurator.Configuration);
                                       x.For<IRedisConnectionPool>().Use<LockingRedisConnectionPool>().AsSingleton();
                                       x.For<IRedisClient>().Use<RedisClient>();
-                                      x.For<ICacheSerializer>().Use<JsonCacheSerializer>();
+                                      x.For<ICacheSerializer>().Use<ProtobufCacheSerializer>();
+                                      //x.For<ICacheSerializer>().Use<JsonCacheSerializer>();
                                       x.For<IRedisConnectionFactory>().Use<RedisConnectionFactory>();
                                   });
             return assimilate;

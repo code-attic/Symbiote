@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9FFC8D26-1CD2-4F5C-925C-0B6DD1DF96CD}</ProjectGuid>
+    <ProjectGuid>{43BBB698-EB42-49E4-B46D-BA920246D4A9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Domain.Tests</RootNamespace>
-    <AssemblyName>Domain.Tests</AssemblyName>
+    <RootNamespace>NetGraph</RootNamespace>
+    <AssemblyName>NetGraph</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,20 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
-      <HintPath>..\..\bin\Machine.Specifications.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Actor">
-      <HintPath>..\..\bin\Symbiote.Actor.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Core">
-      <HintPath>..\..\bin\Symbiote.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Messaging">
-      <HintPath>..\..\bin\Symbiote.Messaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.StructureMap">
-      <HintPath>..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    <Reference Include="Symbiote.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\SymbioteLib\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -55,13 +44,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Impl\Command\AddAttributeCommand.cs" />
+    <Compile Include="Impl\Command\AddNodeCommand.cs" />
+    <Compile Include="Impl\Command\AddNodeWIthObjectSerializationCommand.cs" />
+    <Compile Include="Impl\Command\AddRelationshipCommand.cs" />
+    <Compile Include="EdgeDirection.cs" />
+    <Compile Include="Impl\Command\AddToLookupSetCommand.cs" />
+    <Compile Include="Impl\Command\GetCommonNodesCommand.cs" />
+    <Compile Include="Impl\Command\GetMasterAttributeNodesCommand.cs" />
+    <Compile Include="Impl\Command\GetNodesWithAttributesCommand.cs" />
+    <Compile Include="Impl\Command\GetRelatedNodesCommand.cs" />
+    <Compile Include="Impl\Command\GetStartNodesForRelationshipTypeCommand.cs" />
+    <Compile Include="Impl\Command\GraphHashKey.cs" />
+    <Compile Include="Impl\Command\KeyProvider.cs" />
+    <Compile Include="Impl\Connection\ConnectionHandle.cs" />
+    <Compile Include="Impl\Command\NetGraphCommand.cs" />
+    <Compile Include="Impl\Config\NetGraphConfiguration.cs" />
+    <Compile Include="INetGraphClient.cs" />
+    <Compile Include="NetGraphAssimilation.cs" />
+    <Compile Include="NetGraphClient.cs" />
+    <Compile Include="NetGraphConfigurator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="when_creating_auction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Auction.Domain\Auction.Domain.csproj">
-      <Project>{6EC21824-6468-4F73-ABA2-B370CA9B3C68}</Project>
-      <Name>Auction.Domain</Name>
+    <ProjectReference Include="..\src\Symbiote.Redis\Symbiote.Redis.csproj">
+      <Project>{29F73967-24AC-438D-957E-7FF3EDC6840E}</Project>
+      <Name>Symbiote.Redis</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

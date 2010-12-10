@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Redis.Impl.Connection
 {
@@ -23,8 +24,11 @@ namespace Symbiote.Redis.Impl.Connection
     {
         bool InUse { get; set; }
         bool SendExpectSuccess(byte[] data, string command);
+        IEnumerable<bool> SendExpectSuccess(IEnumerable<Tuple<byte[], string>> pairs);
         int SendDataExpectInt(byte[] data, string command);
         byte[] SendExpectData(byte[] data, string command);
+        List<byte[]> SendExpectDataList(byte[] data, string command);
+        IDictionary<string, byte[]> SendExpectDataDictionary(byte[] data, string command);
         string SendExpectString(string command);
         void Connect();
     }

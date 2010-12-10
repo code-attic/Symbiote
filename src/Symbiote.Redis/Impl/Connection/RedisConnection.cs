@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
@@ -82,6 +83,17 @@ namespace Symbiote.Redis.Impl.Connection
            return ExpectSuccess();
         }
 
+        public IEnumerable<bool> SendExpectSuccess(IEnumerable<Tuple<byte[], string>> pairs)
+        {
+            pairs.ForEach(p => SendCommand(p.Item1, p.Item2));
+            var rslt = new List<bool>();
+            for (int i = 0; i < pairs.Count(); i++)
+            {
+            	rslt.Add(ExpectSuccess());
+            }
+            return rslt;
+        }
+
         public int SendDataExpectInt(byte[] data, string command)
         {
             SendCommand(data, command);
@@ -111,6 +123,18 @@ namespace Symbiote.Redis.Impl.Connection
         {
             SendCommand(data, command);
             return ReadData ();
+        }
+
+        public List<byte[]> SendExpectDataList(byte[] data, string command)
+        {
+            SendCommand(data, command);
+            return ReadDataList();
+        }
+
+        public IDictionary<string, byte[]> SendExpectDataDictionary(byte[] data, string command)
+        {
+            SendCommand(data, command);
+            return ReadDataDict();
         }
 
         protected byte[] ReadData()
@@ -154,6 +178,106 @@ namespace Symbiote.Redis.Impl.Connection
             throw new ResponseException ("Unexpected reply: " + line);
         }
 
+        protected List<byte[]> ReadDataList()
+        {
+            int? sentinel = null;
+            var line = GetNextLine(ref sentinel);
+            List<byte[]> rsltList = new List<byte[]>();
+
+            if (sentinel == '$')
+            {
+                if (line == "$-1")
+                    return null;
+                var bufferLength = 0;
+
+                if (Int32.TryParse(line.Substring(1), out bufferLength))
+                {
+                    var returnBuffer = new byte[bufferLength];
+                    var bytesRead = 0;
+
+                    do
+                    {
+                        var read = BufferedStream.Read(returnBuffer, bytesRead, bufferLength - bytesRead);
+                        if (read < 1)
+                            throw new ResponseException("Invalid termination mid stream");
+                        bytesRead += read;
+                    } while (bytesRead < bufferLength);
+
+                    if (BufferedStream.ReadByte() != RETURN || BufferedStream.ReadByte() != NEWLINE)
+                        throw new ResponseException("Invalid termination");
+                    rsltList.Add(returnBuffer);
+                    return rsltList;
+                }
+                throw new ResponseException("Invalid length");
+            }
+
+            //returns the number of matches
+            if (sentinel == '*')
+            {
+                var replyCount = 0;
+                if (Int32.TryParse(line.Substring(1), out replyCount))
+                {
+                    if (replyCount <= 0)
+                    {
+                        rsltList.Add(new byte[0]);
+                        return rsltList;
+                    }
+                    else
+                    {
+                    	for (int i = 0; i < replyCount; i++)
+                        {
+                            rsltList.Add(ReadData());
+                        }
+                        return rsltList;
+                    }
+                }
+                throw new ResponseException("Unexpected length parameter" + line);
+            }
+
+            throw new ResponseException("Unexpected reply: " + line);
+        }
+
+        protected IDictionary<string, byte[]> ReadDataDict()
+        {
+            int? sentinel = null;
+            var line = GetNextLine(ref sentinel);
+
+            if (sentinel == '$')
+            {
+                throw new ResponseException("Invalid return data; unable to convert single value to IDictionary<string, T>");
+            }
+
+            //returns the number of matches
+            if (sentinel == '*')
+            {
+                var rsltDict = new Dictionary<string, byte[]>();
+                var replyCount = 0;
+                if (Int32.TryParse(line.Substring(1), out replyCount))
+                {
+                    if (replyCount <= 0)
+                    {
+                        return rsltDict;
+                    }
+                    else
+                    {
+                        int remainder;
+                        Math.DivRem(replyCount, 2, out remainder);
+                        if (remainder != 0)
+                            throw new ResponseException("Invalid return data; unable to convert an odd number of returns to IDictionary<string, T>");
+                        
+                        for (int i = 0; i < replyCount/2; i++)
+                        {
+                            var key = Encoding.UTF8.GetString(ReadData());
+                            rsltDict.Add(key, ReadData());
+                        }
+                        return rsltDict;
+                    }
+                }
+                throw new ResponseException("Unexpected length parameter" + line);
+            }
+
+            throw new ResponseException("Unexpected reply: " + line);
+        }
         protected string ReadLine()
         {
             var builder = new StringBuilder ();

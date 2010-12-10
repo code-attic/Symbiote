@@ -63,6 +63,9 @@
     <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Symbiote.Core">
+      <HintPath>..\..\..\SymbioteLib\Symbiote.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -73,7 +76,46 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HDelCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HExistsCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HGetAllCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HGetCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HGetManyCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HIncrementCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HKeysCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HLenCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HSetCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HSetManyCommand.cs" />
+    <Compile Include="Impl\Command\Hash\HValsCommand.cs" />
+    <Compile Include="Impl\Command\List\LIndexCommand.cs" />
+    <Compile Include="Impl\Command\List\LLenCommand.cs" />
+    <Compile Include="Impl\Command\List\LPopCommand.cs" />
+    <Compile Include="Impl\Command\List\LPushCommand.cs" />
+    <Compile Include="Impl\Command\List\LRangeCommand.cs" />
+    <Compile Include="Impl\Command\List\LRemCommand.cs" />
+    <Compile Include="Impl\Command\List\LSetCommand.cs" />
+    <Compile Include="Impl\Command\List\LTrimCommand.cs" />
+    <Compile Include="Impl\Command\List\RPopCommand.cs" />
+    <Compile Include="Impl\Command\List\RPopLPushCommand.cs" />
+    <Compile Include="Impl\Command\List\RPushCommand.cs" />
     <Compile Include="Impl\Command\SetManyCommand.cs" />
+    <Compile Include="Impl\Command\Set\SAddCommand.cs" />
+    <Compile Include="Impl\Command\Set\SAddMultiCommand.cs" />
+    <Compile Include="Impl\Command\Set\SCardCommand.cs" />
+    <Compile Include="Impl\Command\Set\SDiffCommand.cs" />
+    <Compile Include="Impl\Command\Set\SDiffStoreCommand.cs" />
+    <Compile Include="Impl\Command\Set\SEnumInputBoolOutCommand.cs" />
+    <Compile Include="Impl\Command\Set\SEnumInputCommand.cs" />
+    <Compile Include="Impl\Command\Set\SInterCommand.cs" />
+    <Compile Include="Impl\Command\Set\SInterStoreCommand.cs" />
+    <Compile Include="Impl\Command\Set\SIsMemberCommand.cs" />
+    <Compile Include="Impl\Command\Set\SMembersCommand.cs" />
+    <Compile Include="Impl\Command\Set\SMoveCommand.cs" />
+    <Compile Include="Impl\Command\Set\SPopCommand.cs" />
+    <Compile Include="Impl\Command\Set\SRandMemberCommand.cs" />
+    <Compile Include="Impl\Command\Set\SRemCommand.cs" />
+    <Compile Include="Impl\Command\Set\SUnionCommand.cs" />
+    <Compile Include="Impl\Command\Set\SUnionStoreCommand.cs" />
     <Compile Include="Impl\Connection\ConnectionHandle.cs" />
     <Compile Include="Impl\Command\DatabaseSizeCommand.cs" />
     <Compile Include="Impl\Command\DecrementCommand.cs" />
@@ -81,6 +123,7 @@
     <Compile Include="Impl\Command\FlushCommand.cs" />
     <Compile Include="Impl\Command\GetAndSetCommand.cs" />
     <Compile Include="Impl\Command\GetCommand.cs" />
+    <Compile Include="Impl\Serialization\ProtobufCacheSerializer.cs" />
     <Compile Include="IRedisClient.cs" />
     <Compile Include="Impl\Serialization\ICacheSerializer.cs" />
     <Compile Include="Impl\Command\IncrementCommand.cs" />
@@ -112,6 +155,7 @@
     <Compile Include="RedisAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+<<<<<<< HEAD
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
@@ -129,6 +173,10 @@
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
     <Exec Command="&quot;..\..\tools\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
   </Target>
+=======
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+>>>>>>> ae80260b3dde7960f75443b6e5db5b345fbc60a4
   <Target Name="_CopyFilesMarkedCopyLocal" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
