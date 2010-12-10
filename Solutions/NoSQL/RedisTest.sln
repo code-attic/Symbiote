@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Redis", "src\Symbiote.Redis\Symbiote.Redis.csproj", "{29F73967-24AC-438D-957E-7FF3EDC6840E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Redis", "..\..\src\Symbiote.Redis\Symbiote.Redis.csproj", "{29F73967-24AC-438D-957E-7FF3EDC6840E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisDemo", "demo\RedisDemo\RedisDemo.csproj", "{9F2C42ED-6B40-4328-B386-EB937BDE798C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisDemo", "..\..\demo\Redis\RedisDemo\RedisDemo.csproj", "{9F2C42ED-6B40-4328-B386-EB937BDE798C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGraph", "NetGraph\NetGraph.csproj", "{43BBB698-EB42-49E4-B46D-BA920246D4A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGraph", "..\..\src\NetGraph\NetGraph.csproj", "{43BBB698-EB42-49E4-B46D-BA920246D4A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGraphDemo", "NetGraphDemo\NetGraphDemo.csproj", "{6B96AD97-2A25-4C5E-88AA-5846D06993C9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetGraphDemo", "..\..\demo\NetGraphDemo\NetGraphDemo.csproj", "{6B96AD97-2A25-4C5E-88AA-5846D06993C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

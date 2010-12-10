@@ -106,7 +106,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Redis\Symbiote.Redis.csproj">
+    <ProjectReference Include="..\..\..\src\Symbiote.Redis\Symbiote.Redis.csproj">
       <Project>{29F73967-24AC-438D-957E-7FF3EDC6840E}</Project>
       <Name>Symbiote.Redis</Name>
     </ProjectReference>

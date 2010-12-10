@@ -36,16 +36,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Symbiote.Core">
-      <HintPath>..\..\SymbioteLib\Symbiote.Core.dll</HintPath>
+      <HintPath>..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon">
-      <HintPath>..\..\SymbioteLib\Symbiote.Daemon.dll</HintPath>
+      <HintPath>..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net">
-      <HintPath>..\..\SymbioteLib\Symbiote.Log4Net.dll</HintPath>
+      <HintPath>..\..\bin\Symbiote.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.StructureMap">
-      <HintPath>..\..\SymbioteLib\Symbiote.StructureMap.dll</HintPath>
+      <HintPath>..\..\bin\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,11 +64,11 @@
     <Compile Include="TransactionProto.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NetGraph\NetGraph.csproj">
+    <ProjectReference Include="..\..\src\NetGraph\NetGraph.csproj">
       <Project>{43BBB698-EB42-49E4-B46D-BA920246D4A9}</Project>
       <Name>NetGraph</Name>
     </ProjectReference>
-    <ProjectReference Include="..\src\Symbiote.Redis\Symbiote.Redis.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.Redis\Symbiote.Redis.csproj">
       <Project>{29F73967-24AC-438D-957E-7FF3EDC6840E}</Project>
       <Name>Symbiote.Redis</Name>
     </ProjectReference>
