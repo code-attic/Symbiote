@@ -96,6 +96,15 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+  <Target Name="BeforeBuild">
+	<FileUpdate 
+		Files="\Properties\AssemblyInfo.cs"
+		Regex="(\d+)\.(\d+).(\d+).(\d+)"
+		ReplacementText="$(build_number)"
+		Condition="'$(builder)'=='TeamCity'"
+		/>
+  </Target>
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
       <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />

@@ -218,8 +218,8 @@
       <IlMerge>True</IlMerge>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
   <Target Name="BeforeBuild">
 	<FileUpdate 
 		Files="\Properties\AssemblyInfo.cs"
