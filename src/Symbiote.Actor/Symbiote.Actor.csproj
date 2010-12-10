@@ -96,7 +96,7 @@
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
   <Target Name="BeforeBuild">
 	<FileUpdate 
-		Files="\Properties\AssemblyInfo.cs"
+		Files="Properties\AssemblyInfo.cs"
 		Regex="(\d+)\.(\d+).(\d+).(\d+)"
 		ReplacementText="$(build_number)"
 		Condition="'$(builder)'=='TeamCity'"
