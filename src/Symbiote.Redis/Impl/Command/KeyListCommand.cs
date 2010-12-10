@@ -30,11 +30,12 @@ namespace Symbiote.Redis.Impl.Command
         
         public IEnumerable<string> GetList(IRedisConnection connection)
         {
-            var response = Encoding.UTF8.GetString(connection.SendExpectData(null, CommandBody));
-            if (response.Length < 1)
-                return new string[] { };
-            else
-                return response.Split(' ');
+            List<byte[]> response = connection.SendExpectDataList(null, CommandBody);
+            var rsltArray = new string[response.Count];
+            var counter = 0;
+            response.ForEach(x => rsltArray[counter++] = Encoding.UTF8.GetString(x));
+            return rsltArray;
+
         }
 
         public KeyListCommand(string pattern)
