@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Actor.Tests.Domain.Events;
 using Symbiote.Actor;
 
 namespace Actor.Tests.Domain.Model
@@ -59,6 +60,13 @@ namespace Actor.Tests.Domain.Model
             {
                 FirstName = firstName;
                 LastName = lastName;
+
+                context.Publish<DriverChangedName>( x =>
+                {
+                    x.FirstName = firstName;
+                    x.LastName = lastName;
+                } );
+
             }
         }
 

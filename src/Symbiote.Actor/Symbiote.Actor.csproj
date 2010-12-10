@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActorAssimilation.cs" />
+    <Compile Include="Event.cs" />
     <Compile Include="EventContext.cs" />
     <Compile Include="IEvent.cs" />
     <Compile Include="Impl\Eventing\EventPublisher.cs" />

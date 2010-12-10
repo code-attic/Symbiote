@@ -18,6 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Actor;
+using Symbiote.Actor.Impl.Eventing;
 using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using Symbiote.Core.DI;
@@ -26,18 +27,30 @@ using Symbiote.Messaging.Config;
 using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Eventing;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
 {
     public static class MessagingAssimilation
     {
+        private static IDisposable EventSubscription { get; set; }
+
         public static IAssimilate Messaging(this IAssimilate assimilate, Action<EventChannelConfigurator> eventChannels)
         {
+            var publisher = Assimilate.GetInstanceOf<IEventPublisher>() as IObservable<IEvent>;
+            if(publisher == null)
+            {
+                throw new AssimilationException( "You must call the Actor assimilation extension method before setting up event channels in Symbiote.Messaging." );
+            }
+
             Messaging( assimilate );
             var configurator = new EventChannelConfigurator();
             eventChannels( configurator );
             Assimilate.Dependencies( x => x.For<IEventChannelConfiguration>().Use( configurator.Configuration ) );
+
+            EventSubscription = publisher.Subscribe( Assimilate.GetInstanceOf<EventChannel>() );
+
             return assimilate;
         }
 

@@ -27,11 +27,4 @@ namespace Actor.Tests.Domain.Events
             Zip = zip;
         }
     }
-
-    public class DriverChangedName
-        : ActorEvent
-    {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-    }
 }

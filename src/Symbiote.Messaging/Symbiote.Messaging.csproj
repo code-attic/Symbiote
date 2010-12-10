@@ -71,6 +71,7 @@
     <Compile Include="Impl\Dispatch\PrimeDirector.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
+    <Compile Include="Impl\Eventing\EventChannel.cs" />
     <Compile Include="Impl\Monitor\ActorEvent.cs" />
     <Compile Include="Impl\Monitor\AdapterMonitor.cs" />
     <Compile Include="Impl\Monitor\AgentMonitor.cs" />

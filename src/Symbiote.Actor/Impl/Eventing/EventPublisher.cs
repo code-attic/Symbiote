@@ -47,7 +47,18 @@ namespace Symbiote.Actor.Impl.Eventing
 
         public void PublishEvents( IEnumerable<IEvent> events )
         {
-            events.ForEach( e => Subscribers.ForEach( x => x.Item2.OnNext( e ) ) );
+            events.ForEach( e => Subscribers.ForEach( x =>
+            {
+                try
+                {
+                    x.Item2.OnNext( e );
+                }
+                catch (Exception exception)
+                {
+                    // ignore for now
+                    // fix later?
+                }
+            } ) );
         }
     }
 }

@@ -53,6 +53,9 @@
     <Compile Include="Cache\TestKeyAccessor.cs" />
     <Compile Include="Cache\when_caching_actor.cs" />
     <Compile Include="Cache\with_cache.cs" />
+    <Compile Include="Domain\Events\DriverAddedVehicle.cs" />
+    <Compile Include="Domain\Events\DriverChangedName.cs" />
+    <Compile Include="Domain\Events\DriverAddedAddress.cs" />
     <Compile Include="DummyActor.cs" />
     <Compile Include="Agent\DummyActorFactory.cs" />
     <Compile Include="Agent\when_requesting_agent_with_preloading.cs" />
