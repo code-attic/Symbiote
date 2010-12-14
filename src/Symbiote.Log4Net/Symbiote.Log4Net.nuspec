@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Log4Net.dll" target="lib" />
-		<file src="Symbiote.Log4Net.pdb" target="lib" />
-		<file src="Symbiote.Log4Net.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Log4Net.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Log4Net.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Log4Net.xml" target="lib" />
 	</files>
 </package>

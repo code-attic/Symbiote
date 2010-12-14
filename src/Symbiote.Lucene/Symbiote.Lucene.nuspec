@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Lucene.dll" target="lib" />
-		<file src="Symbiote.Lucene.pdb" target="lib" />
-		<file src="Symbiote.Lucene.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Lucene.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Lucene.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Lucene.xml" target="lib" />
 	</files>
 </package>

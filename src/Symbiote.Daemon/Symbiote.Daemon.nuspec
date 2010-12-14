@@ -16,8 +16,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Daemon.dll" target="lib" />
-		<file src="Symbiote.Daemon.pdb" target="lib" />
-		<file src="Symbiote.Daemon.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Daemon.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Daemon.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Daemon.xml" target="lib" />
 	</files>
 </package>

@@ -15,8 +15,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Rabbit.dll" target="lib" />
-		<file src="Symbiote.Rabbit.pdb" target="lib" />
-		<file src="Symbiote.Rabbit.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Rabbit.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Rabbit.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Rabbit.xml" target="lib" />
 	</files>
 </package>

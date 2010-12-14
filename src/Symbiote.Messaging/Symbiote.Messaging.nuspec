@@ -15,8 +15,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Messaging.dll" target="lib" />
-		<file src="Symbiote.Messaging.pdb" target="lib" />
-		<file src="Symbiote.Messaging.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Messaging.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Messaging.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Messaging.xml" target="lib" />
 	</files>
 </package>

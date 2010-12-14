@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Couch.dll" target="lib" />
-		<file src="Symbiote.Couch.pdb" target="lib" />
-		<file src="Symbiote.Couch.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Couch.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Couch.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Couch.xml" target="lib" />
 	</files>
 </package>

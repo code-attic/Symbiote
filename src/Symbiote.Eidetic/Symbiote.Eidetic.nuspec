@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Eidetic.dll" target="lib" />
-		<file src="Symbiote.Eidetic.pdb" target="lib" />
-		<file src="Symbiote.Eidetic.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Eidetic.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Eidetic.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Eidetic.xml" target="lib" />
 	</files>
 </package>

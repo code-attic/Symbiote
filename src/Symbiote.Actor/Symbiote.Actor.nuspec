@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Actor.dll" target="lib" />
-		<file src="Symbiote.Actor.pdb" target="lib" />
-		<file src="Symbiote.Actor.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Actor.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Actor.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Actor.xml" target="lib" />
 	</files>
 </package>

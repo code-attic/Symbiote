@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Wcf.dll" target="lib" />
-		<file src="Symbiote.Wcf.pdb" target="lib" />
-		<file src="Symbiote.Wcf.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Wcf.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Wcf.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Wcf.xml" target="lib" />
 	</files>
 </package>

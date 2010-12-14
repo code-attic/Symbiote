@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.JsonRpc.Client.dll" target="lib" />
-		<file src="Symbiote.JsonRpc.Client.pdb" target="lib" />
-		<file src="Symbiote.JsonRpc.Client.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Client.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Client.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Client.xml" target="lib" />
 	</files>
 </package>

@@ -14,10 +14,10 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Hibernate.dll" target="lib" />
-		<file src="Symbiote.Hibernate.pdb" target="lib" />
-		<file src="Symbiote.Hibernate.xml" target="lib" />
-		<file src="NHibernate.dll" target="lib" />
-		<file src="NHibernate.ByteCode.Castl.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Hibernate.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Hibernate.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Hibernate.xml" target="lib" />
+		<file src="..\..\bin\NHibernate.dll" target="lib" />
+		<file src="..\..\bin\NHibernate.ByteCode.Castl.dll" target="lib" />
 	</files>
 </package>

@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Redis.dll" target="lib" />
-		<file src="Symbiote.Redis.pdb" target="lib" />
-		<file src="Symbiote.Redis.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Redis.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Redis.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Redis.xml" target="lib" />
 	</files>
 </package>

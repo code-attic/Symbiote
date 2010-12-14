@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.StructureMap.dll" target="lib" />
-		<file src="Symbiote.StructureMap.pdb" target="lib" />
-		<file src="Symbiote.StructureMap.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.StructureMap.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.StructureMap.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.StructureMap.xml" target="lib" />
 	</files>
 </package>

@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.Caliburn.Micro.dll" target="lib" />
-		<file src="Symbiote.Caliburn.Micro.pdb" target="lib" />
-		<file src="Symbiote.Caliburn.Micro.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Caliburn.Micro.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Caliburn.Micro.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Caliburn.Micro.xml" target="lib" />
 	</files>
 </package>

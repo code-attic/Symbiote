@@ -14,8 +14,8 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="Symbiote.JsonRpc.Host.dll" target="lib" />
-		<file src="Symbiote.JsonRpc.Host.pdb" target="lib" />
-		<file src="Symbiote.JsonRpc.Host.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Host.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Host.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.JsonRpc.Host.xml" target="lib" />
 	</files>
 </package>
