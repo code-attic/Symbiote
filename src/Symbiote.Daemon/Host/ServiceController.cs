@@ -1,11 +1,10 @@
 ﻿using System;
-using Microsoft.Practices.ServiceLocation;
 using System.Diagnostics;
 using Symbiote.Core;
 
 namespace Symbiote.Daemon.Host
 {
-    [DebuggerDisplay("Service({Name}) is {State}")]
+    [DebuggerDisplay("Service {Name} is {State}")]
     public class ServiceController<TService> :
         IServiceController
         where TService : class, IDaemon

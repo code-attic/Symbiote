@@ -130,16 +130,14 @@
       <Name>Symbiote.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Symbiote.Couch.nuspec">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
-  <Target Name="BeforeBuild">
-	<FileUpdate 
-		Files="Properties\AssemblyInfo.cs"
-		Regex="(\d+)\.(\d+).(\d+).(\d+)"
-		ReplacementText="$(build_number)"
-		Condition="'$(builder)'=='TeamCity'"
-		/>
-  </Target>
+  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

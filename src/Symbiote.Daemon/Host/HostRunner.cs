@@ -17,7 +17,7 @@ namespace Symbiote.Daemon.Host
 
         static void UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            "Host encountered an unhandled exception on the AppDomain"
+            "Host encountered an unhandled exception."
                 .ToFatal<IHost>((Exception) e.ExceptionObject);
         }
 

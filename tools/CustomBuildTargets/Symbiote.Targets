@@ -8,6 +8,11 @@
 		ReplacementText="$(build_number)"
 		Condition="'$(builder)'=='TeamCity'"
 		/>
+	<FileUpdate Files="*.nuspec"
+		Regex="(\d+)\.(\d+).(\d+).(\d+)"
+		ReplacementText="$(build_number)"
+		Condition="'$(builder)'=='TeamCity'"
+		/>
   </Target>
   <Target Name="AfterBuild">
     <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
@@ -17,7 +22,8 @@
       <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
     </CreateItem>
     <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;..\..\tools\ILMerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+	<Exec Command="&quot;..\..\tools\ILMerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
+	<Exec Command="&quot;..\..\tools\NuGet\NuGet.exe&quot; p $(AssemblyName).nuspec -o &quot;..\..\packs&quot;" Condition="'$(builder)'=='TeamCity'"/>
   </Target>
   
 </Project>

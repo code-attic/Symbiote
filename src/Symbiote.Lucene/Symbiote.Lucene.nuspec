@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Lucene</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Symbiote Lucene API. Includes LINQ provider.</description>
+		<summary>A very simplified Lucene provider for funneling in aggregate roots or JSON docs for FTI.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.Lucene.dll" target="lib" />
+		<file src="Symbiote.Lucene.pdb" target="lib" />
+		<file src="Symbiote.Lucene.xml" target="lib" />
+	</files>
+</package>

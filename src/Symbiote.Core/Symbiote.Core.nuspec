@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Core</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>The core assembly for the Symbiote ecosystem.</description>
+		<summary>Provides interfaces and basic implementations for concerns like DI, logging, caching, serialization. Also provides several utility classes and extension methods.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+	</metadata>
+	<files>
+		<file src="Symbiote.Core.dll" target="lib" />
+		<file src="Symbiote.Core.pdb" target="lib" />
+		<file src="Symbiote.Core.xml" target="lib" />
+	</files>
+</package>

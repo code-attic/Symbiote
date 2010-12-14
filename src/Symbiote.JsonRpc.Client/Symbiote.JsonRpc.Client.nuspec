@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.JsonRpc.Client</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Client for Json RPC.</description>
+		<summary>Likely to be deprecated soon in favor of an external open source project.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.JsonRpc.Client.dll" target="lib" />
+		<file src="Symbiote.JsonRpc.Client.pdb" target="lib" />
+		<file src="Symbiote.JsonRpc.Client.xml" target="lib" />
+	</files>
+</package>

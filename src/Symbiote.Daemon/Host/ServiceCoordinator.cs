@@ -2,20 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.Host
 {
-    public class ServiceInformation
-    {
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public ServiceState State { get; set; }
-    }
-
     [DebuggerDisplay("Hosting {HostedServiceCount} Services")]
     public class ServiceCoordinator :
         IServiceCoordinator

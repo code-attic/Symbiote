@@ -63,6 +63,10 @@ namespace Symbiote.Actor
                     s.ConnectImplementationsToTypesClosing(
                         typeof(IActorFactory<>));
                     s.ConnectImplementationsToTypesClosing(
+                        typeof(IActorCache<>));
+                    s.ConnectImplementationsToTypesClosing(
+                        typeof(IActorStore<>));
+                    s.ConnectImplementationsToTypesClosing(
                         typeof(IKeyAccessor<>));
                     s.ConnectImplementationsToTypesClosing(
                         typeof(ISaga<>));

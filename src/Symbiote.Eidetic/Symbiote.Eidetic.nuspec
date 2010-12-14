@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Eidetic</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Symbiote wrapper around Enyim's memcached API.</description>
+		<summary>Very simple, includes some extension methods. Needs API refactoring :(</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.Eidetic.dll" target="lib" />
+		<file src="Symbiote.Eidetic.pdb" target="lib" />
+		<file src="Symbiote.Eidetic.xml" target="lib" />
+	</files>
+</package>

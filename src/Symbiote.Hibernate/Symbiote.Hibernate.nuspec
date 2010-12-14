@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Hibernate</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Repository pattern and other utilities around NHibernate 3.0.</description>
+		<summary>Repository, session management and FluentNhibernate support.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.Hibernate.dll" target="lib" />
+		<file src="Symbiote.Hibernate.pdb" target="lib" />
+		<file src="Symbiote.Hibernate.xml" target="lib" />
+		<file src="NHibernate.dll" target="lib" />
+		<file src="NHibernate.ByteCode.Castl.dll" target="lib" />
+	</files>
+</package>

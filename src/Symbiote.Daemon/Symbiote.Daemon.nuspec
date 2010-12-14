@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Daemon</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Windows service host.</description>
+		<summary>All it can do for now is host as a console application. More coming soon.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+			<dependency id="Symbiote.Actor" version="0.1.0.0" />
+			<dependency id="Symbiote.Messaging" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.Daemon.dll" target="lib" />
+		<file src="Symbiote.Daemon.pdb" target="lib" />
+		<file src="Symbiote.Daemon.xml" target="lib" />
+	</files>
+</package>

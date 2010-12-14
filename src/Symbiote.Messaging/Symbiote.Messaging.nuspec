@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Messaging</id>
+		<version>0.1.0.0</version>
+		<authors>Alex Robson</authors>
+		<description>Adds messaging primitives (bus and channels) to Symbiote.</description>
+		<summary>Enables distributed messaging to message handlers and/or actors through a bus and channels. Local channels only, add other Symbiote libraries to get channel transports.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+			<dependency id="Symbiote.Actor" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="Symbiote.Messaging.dll" target="lib" />
+		<file src="Symbiote.Messaging.pdb" target="lib" />
+		<file src="Symbiote.Messaging.xml" target="lib" />
+	</files>
+</package>
