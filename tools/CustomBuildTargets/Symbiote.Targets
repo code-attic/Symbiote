@@ -8,7 +8,7 @@
 		ReplacementText="$(build_number)"
 		Condition="'$(builder)'=='TeamCity'"
 		/>
-	<FileUpdate Files="*.nuspec"
+	<FileUpdate Files="$(AssemblyName).nuspec"
 		Regex="(\d+)\.(\d+).(\d+).(\d+)"
 		ReplacementText="$(build_number)"
 		Condition="'$(builder)'=='TeamCity'"
