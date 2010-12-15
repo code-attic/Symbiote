@@ -37,8 +37,8 @@ namespace Symbiote.Daemon
             var daemonConfiguration = new DaemonConfigurator();
             config(daemonConfiguration);
             var hostType = Process.GetCurrentProcess().Parent().ProcessName == "services"
-                               ? typeof(DaemonServiceHost)
-                               : typeof(SimpleHost);
+                               ? typeof(DaemonHost)
+                               : typeof(ConsoleHost);
 
             assimilate.Dependencies(x =>
                                         {

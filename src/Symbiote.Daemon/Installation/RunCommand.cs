@@ -28,7 +28,7 @@ namespace Symbiote.Daemon.Installation
             HostRunner.Start(Host);
         }
 
-        public RunCommand( IHost host )
+        public RunCommand(IHost host)
         {
             Host = host;
         }

@@ -123,8 +123,10 @@
     <Compile Include="Host\ServiceInformation.cs" />
     <Compile Include="Host\ServiceName.cs" />
     <Compile Include="Host\ServiceState.cs" />
-    <Compile Include="Host\SimpleHost.cs" />
-    <Compile Include="Host\DaemonServiceHost.cs" />
+    <Compile Include="Host\ConsoleHost.cs" />
+    <Compile Include="Host\DaemonHost.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IDaemon.cs" />
     <Compile Include="Installation\CommandFactory.cs" />
     <Compile Include="Installation\CredentialCheck.cs" />
