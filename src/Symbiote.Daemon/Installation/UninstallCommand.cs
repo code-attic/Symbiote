@@ -51,16 +51,13 @@ namespace Symbiote.Daemon.Installation
 
         protected void Unregister()
         {
-            if (!Installer.Installed)
+            using (var transactedInstall = new TransactedInstaller())
             {
-                using (var transactedInstall = new TransactedInstaller())
+                transactedInstall.Installers.Add(Installer);
+                if (ENTRY_ASSEMBLY != null)
                 {
-                    transactedInstall.Installers.Add(Installer);
-                    if (ENTRY_ASSEMBLY != null)
-                    {
-                        transactedInstall.Context = new InstallContext(null, CommandLine);
-                        transactedInstall.Uninstall(new Hashtable());
-                    }
+                    transactedInstall.Context = new InstallContext(null, CommandLine);
+                    transactedInstall.Uninstall(new Hashtable());
                 }
             }
         }
