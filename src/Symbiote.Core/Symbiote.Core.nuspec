@@ -11,8 +11,8 @@
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
 	</metadata>
 	<files>
-		<file src="Symbiote.Core.dll" target="lib" />
-		<file src="Symbiote.Core.pdb" target="lib" />
-		<file src="Symbiote.Core.xml" target="lib" />
+		<file src="..\..\bin\Symbiote.Core.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Core.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Core.xml" target="lib" />
 	</files>
 </package>
