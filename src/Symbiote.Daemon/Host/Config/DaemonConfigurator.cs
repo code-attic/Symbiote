@@ -15,10 +15,8 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Symbiote.Core.DI;
-using Symbiote.Core.Extensions;
+using System.ServiceProcess;
+using Symbiote.Daemon.Args;
 
 namespace Symbiote.Daemon
 {
@@ -48,7 +46,20 @@ namespace Symbiote.Daemon
 
         public DaemonConfigurator Arguments(string[] arguments)
         {
-            Configuration.Arguments = arguments;
+            var parser = new ArgumentParser( arguments );
+            Configuration.Arguments = parser.Parsed;
+            return this;
+        }
+
+        public DaemonConfigurator AsLocalSystem()
+        {
+            Configuration.PrincipalType = ServiceAccount.LocalSystem;
+            return this;
+        }
+
+        public DaemonConfigurator AsNetworkAccount()
+        {
+            Configuration.PrincipalType = ServiceAccount.NetworkService;
             return this;
         }
 
@@ -56,7 +67,13 @@ namespace Symbiote.Daemon
         {
             Configuration.Principal = user;
             Configuration.Password = password;
-            Configuration.AsLocal = false;
+            Configuration.PrincipalType = ServiceAccount.User;
+            return this;
+        }
+
+        public DaemonConfigurator ManualStartOnly()
+        {
+            Configuration.StartMode = ServiceStartMode.Manual;
             return this;
         }
 

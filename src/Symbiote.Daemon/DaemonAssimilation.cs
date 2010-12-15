@@ -16,10 +16,10 @@ limitations under the License.
 
 using System;
 using System.Diagnostics;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Daemon.Host;
 using Symbiote.Core.Extensions;
+using Symbiote.Daemon.Installation;
 
 namespace Symbiote.Daemon
 {
@@ -36,16 +36,16 @@ namespace Symbiote.Daemon
 
             var daemonConfiguration = new DaemonConfigurator();
             config(daemonConfiguration);
-            //var hostType = Process.GetCurrentProcess().Parent().ProcessName == "services"
-            //                   ? typeof (DaemonServiceHost)
-            //                   : typeof (SimpleHost);
+            var hostType = Process.GetCurrentProcess().Parent().ProcessName == "services"
+                               ? typeof(DaemonServiceHost)
+                               : typeof(SimpleHost);
 
             assimilate.Dependencies(x =>
                                         {
                                             x.For<DaemonConfiguration>().Use(daemonConfiguration.Configuration);
                                             x.For<IServiceCoordinator>().Use<ServiceCoordinator>();
                                             x.For(typeof (ServiceController<>)).Use(typeof (ServiceController<>));
-                                            x.For<IHost>().Use<SimpleHost>();
+                                            x.For<IHost>().Use(hostType);
                                         });
             return assimilate;
         }
@@ -56,8 +56,9 @@ namespace Symbiote.Daemon
             {
                 "Waking the Daemon..."
                     .ToInfo<IHost>();
-                var host = Assimilate.GetInstanceOf<IHost>();
-                HostRunner.Start(host);
+                var factory = Assimilate.GetInstanceOf<CommandFactory>();
+                var command = factory.GetCommand();
+                command.Execute();
             }
             catch (Exception e)
             {
