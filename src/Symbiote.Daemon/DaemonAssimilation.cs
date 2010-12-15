@@ -44,6 +44,7 @@ namespace Symbiote.Daemon
                                         {
                                             x.For<DaemonConfiguration>().Use(daemonConfiguration.Configuration);
                                             x.For<IServiceCoordinator>().Use<ServiceCoordinator>();
+                                            x.For<ICheckPermission>().Use<CredentialCheck>();
                                             x.For(typeof (ServiceController<>)).Use(typeof (ServiceController<>));
                                             x.For<IHost>().Use(hostType);
                                         });
