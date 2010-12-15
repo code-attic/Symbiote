@@ -7,8 +7,8 @@ namespace Symbiote.Daemon.Host
     public class SimpleHost
         : IHost
     {
-        readonly IServiceCoordinator ServiceCoordinator;
-        readonly ServiceName Name;
+        public readonly IServiceCoordinator ServiceCoordinator;
+        public readonly ServiceName Name;
 
         public SimpleHost(ServiceName name, IServiceCoordinator serviceCoordinator)
         {
