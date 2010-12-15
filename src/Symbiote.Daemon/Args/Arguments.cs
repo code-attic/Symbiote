@@ -4,13 +4,13 @@ namespace Symbiote.Daemon.Args
 {
     public class Arguments
     {
-        [Option( "i", "install", HelpText = "Install the service as a windows service", MutuallyExclusiveSet = "u" )] 
+        [Option( "i", "install", HelpText = "Install the service as a windows service" )] 
         public bool Install = false;
 
-        [Option("u", "uninstall", HelpText = "Uninstall an installed windows service", MutuallyExclusiveSet = "i")]
+        [Option("u", "uninstall", HelpText = "Uninstall an installed windows service")]
         public bool Uninstall = false;
 
-        [Option("user", "user", HelpText = "Specify the account to run the service under")]
+        [Option("a", "account", HelpText = "Specify the account to run the service under")]
         public string UserName = "";
 
         [Option("p", "password", HelpText = "Sepcify the password for the account")]

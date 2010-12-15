@@ -107,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Args\ArgumentParser.cs" />
+    <Compile Include="Args\Arguments.cs" />
     <Compile Include="DaemonAssimilation.cs" />
     <Compile Include="Host\Config\DaemonConfiguration.cs" />
     <Compile Include="Host\Config\DaemonConfigurator.cs" />
