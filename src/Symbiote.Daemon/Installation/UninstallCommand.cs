@@ -26,12 +26,10 @@ namespace Symbiote.Daemon.Installation
     public class UninstallCommand
         : IDaemonCommand
     {
-        private readonly string RUN_AS = "runas";
         private readonly string ASSEMBLY_PATH = "/assemblypath={0}";
         private readonly Assembly ENTRY_ASSEMBLY = Assembly.GetEntryAssembly();
 
         public DaemonInstaller Installer { get; set; }
-        public string CommandLineArguments { get; set; }
         public ICheckPermission PermissionCheck { get; set; }
         public string[] CommandLine
         {
@@ -57,14 +55,13 @@ namespace Symbiote.Daemon.Installation
                 if (ENTRY_ASSEMBLY != null)
                 {
                     transactedInstall.Context = new InstallContext(null, CommandLine);
-                    transactedInstall.Uninstall(new Hashtable());
+                    transactedInstall.Uninstall(null);
                 }
             }
         }
 
         public UninstallCommand( DaemonInstaller installer, ICheckPermission permissionCheck )
         {
-            CommandLineArguments = "";
             Installer = installer;
             PermissionCheck = permissionCheck;
         }
