@@ -44,26 +44,8 @@ namespace Symbiote.Daemon.Installation
             {
                 if ( PermissionCheck.HasPermission() )
                 {
-                    var processInfo = 
-                        new ProcessStartInfo( ENTRY_ASSEMBLY.Location )
-                        {
-                            Arguments = CommandLineArguments,
-                            CreateNoWindow = true,
-                            Verb = RUN_AS,
-                        };
-                    try
-                    {
-                        var process = Process.Start( processInfo );
-                        process.WaitForExit();
-                        return;
-                    }
-                    catch (Win32Exception ex)
-                    {
-                    
-                        throw;
-                    }
+                    Register();
                 }
-                Register();
             }
         }
 
