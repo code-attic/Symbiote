@@ -2,53 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 
 namespace Symbiote.Core.Utility
 {
-    public class Future<TValue>
-        : IAsyncResult
+    public class Future
     {
-        protected AsyncCallback Callback { get; set; }
-        protected ManualResetEvent ResetEvent { get; set; }
-
-        public bool IsCompleted { get; protected set; }
-        public WaitHandle AsyncWaitHandle { get { return ResetEvent; } }
-        public object AsyncState { get; protected set; }
-        public bool CompletedSynchronously { get; protected set; }
-        public TValue Value { get; protected set; }
-
-        public void Done(TValue value)
+        public static FutureResult<T> Of<T>( Func<T> call )
         {
-            if(!IsCompleted)
-            {
-                Value = value;
-                IsCompleted = true;
-                ResetEvent.Set();
-                if (Callback != null)
-                    Callback( this );
-            }
+            return new FutureResult<T>( call );
         }
 
-        public bool WaitFor( TimeSpan timeout )
+        public static FutureCallback<T> Of<T>(Action<Action<T>> call)
         {
-            return ResetEvent.WaitOne( timeout );
-        }
-
-        public bool WaitFor(int miliseconds)
-        {
-            return ResetEvent.WaitOne( miliseconds );
-        }
-
-        public Future()
-            : this (null, null)
-        {}
-
-        public Future(AsyncCallback callback, object asyncState)
-        {
-            Callback = callback;
-            AsyncState = asyncState;
-            ResetEvent = new ManualResetEvent(false);
+           return new FutureCallback<T>( call );
         }
     }
 }

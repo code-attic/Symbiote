@@ -200,8 +200,10 @@
     <Compile Include="Serialization\ProtobufExtensions.cs" />
     <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
+    <Compile Include="Utility\FutureCallback.cs" />
     <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\ExclusiveConcurrentDictionary.cs" />
+    <Compile Include="Utility\FutureResult.cs" />
     <Compile Include="Utility\Future.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />
     <Compile Include="Utility\ILockManager.cs" />

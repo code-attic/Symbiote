@@ -89,6 +89,7 @@
     <Compile Include="Impl\Monitor\NullAgentMonitor.cs" />
     <Compile Include="Impl\Monitor\NullChannelMonitor.cs" />
     <Compile Include="Impl\Monitor\NullDispatchMonitor.cs" />
+    <Compile Include="Impl\Mesh\INodeRegistry.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
