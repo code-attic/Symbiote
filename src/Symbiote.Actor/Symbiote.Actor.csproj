@@ -51,7 +51,6 @@
     <Compile Include="Impl\Eventing\IEventStore.cs" />
     <Compile Include="Impl\Agency.cs" />
     <Compile Include="Impl\Defaults\DefaultKeyAccessor.cs" />
-    <Compile Include="IMemento.cs" />
     <Compile Include="Impl\Eventing\EventConfiguration.cs" />
     <Compile Include="Impl\Eventing\EventContext.cs" />
     <Compile Include="Impl\Eventing\EventContextProvider.cs" />
@@ -60,10 +59,6 @@
     <Compile Include="Impl\Eventing\IEventContextProvider.cs" />
     <Compile Include="Impl\Eventing\IEventPublisher.cs" />
     <Compile Include="Impl\Eventing\ReplayEventContext.cs" />
-    <Compile Include="Impl\Memento\IMemento.cs" />
-    <Compile Include="Impl\Memento\IMemoizer.cs" />
-    <Compile Include="Impl\Memento\Memoizer.cs" />
-    <Compile Include="Impl\Memento\PassthroughMemento.cs" />
     <Compile Include="Impl\Saga\Condition.cs" />
     <Compile Include="Impl\Saga\ConditionalTransition.cs" />
     <Compile Include="Impl\Defaults\DefaultActorFactory.cs" />

@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Symbiote.Core;
+
 namespace Symbiote.Actor.Impl.Defaults
 {
     public class NullActorStore<TActor>
