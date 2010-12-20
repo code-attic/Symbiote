@@ -55,6 +55,14 @@ namespace Symbiote.Core.Utility
             }
         }
 
+        protected void Init()
+        {
+            Limit = 1;
+            TimeBetweenTries = TimeSpan.Zero;
+            Timeout = TimeSpan.FromMilliseconds(-1);
+            OnFail = () => default(T);
+        }
+
         protected abstract void InvokeCall();
 
         public Future<T> MaxRetries(int retries)

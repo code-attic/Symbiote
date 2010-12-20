@@ -24,9 +24,7 @@ namespace Symbiote.Core.Utility
 
         public FutureCallback(Action<Action<T>> call)
         {
-            Limit = 1;
-            TimeBetweenTries = TimeSpan.Zero;
-            Timeout = TimeSpan.FromMilliseconds(-1);
+            Init();
             Call = call;
             GetResult = () => default(T);
         }

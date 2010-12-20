@@ -17,18 +17,19 @@ namespace Symbiote.Core.Utility
         {
             if (result != null)
             {
-                Call.EndInvoke(result);
+                var value = Call.EndInvoke(result);
+                if(!HasResult)
+                {
+                    Result = value;
+                    HasResult = true;
+                }
             }
         }
 
         public FutureResult(Func<T> call)
         {
-            Limit = 1;
-            TimeBetweenTries = TimeSpan.Zero;
-            Timeout = TimeSpan.FromMilliseconds(-1);
+            Init();
             Call = call;
         }
-
-        
     }
 }
