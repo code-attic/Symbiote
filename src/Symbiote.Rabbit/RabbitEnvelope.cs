@@ -123,7 +123,7 @@ namespace Symbiote.Rabbit
             {
                 bus.AddRabbitChannel(x => x.AutoDelete().Direct(ReplyToExchange));
             }
-            bus.Publish(response, x =>
+            bus.Publish( ReplyToExchange, response, x =>
             {
                 x.CorrelationId = MessageId.ToString();
                 x.RoutingKey = ReplyToKey;

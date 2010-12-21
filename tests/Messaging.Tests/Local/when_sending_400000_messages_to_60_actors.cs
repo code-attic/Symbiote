@@ -37,7 +37,7 @@ namespace Messaging.Tests.Local
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
-                                         bus.Publish(message[i % actorCount]);
+                                         bus.Publish("local", message[i % actorCount]);
                                      }
                                      watch.Stop();
 

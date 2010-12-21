@@ -36,9 +36,9 @@ namespace Rabbit.Tests
                                      Bus.AddRabbitChannel( x => x.Direct( "test" ).CorrelateBy<Message>( m => m.CorrelationId ) );
                                      Bus.AddRabbitQueue(x => x.ExchangeName("test").QueueName("test").NoAck().StartSubscription());
                                         
-                                     Bus.Publish(new Message() {Id = 1, CorrelationId = "1"});
-                                     Bus.Publish(new Message() { Id = 2, CorrelationId = "1" });
-                                     Bus.Publish(new Message() { Id = 3, CorrelationId = "1" });
+                                     Bus.Publish("test", new Message() {Id = 1, CorrelationId = "1"});
+                                     Bus.Publish("test", new Message() { Id = 2, CorrelationId = "1" });
+                                     Bus.Publish("test", new Message() { Id = 3, CorrelationId = "1" });
 
                                      Thread.Sleep(40);
                                  };
@@ -73,7 +73,7 @@ namespace Rabbit.Tests
             for (int i = 0; i < MessagesToSend; i++)
             {
                 message[i % actorCount].Id = i;
-                Bus.Publish(message[i % actorCount]);
+                Bus.Publish("test", message[i % actorCount]);
                 //if(i % 1000 == 0)
                 //    Bus.CommitChannelOf<Message>();
             }

@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Core.Utility;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Core.Extensions;
@@ -56,16 +57,6 @@ namespace Symbiote.Messaging.Impl
                 .Send( message );
         }
 
-        public void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
-        {
-            var channelsFor = Channels
-                .GetChannelsFor<TMessage>();
-
-            channelsFor
-                .ForEach(x => x.Send(message,
-                                       modifyEnvelope));
-        }
-
         public void Publish<TMessage>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             var channelFor = Channels
@@ -75,40 +66,20 @@ namespace Symbiote.Messaging.Impl
                 .Send(message, modifyEnvelope);
         }
 
-        public void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply)
-        {
-            var channelFor = Channels
-                .GetChannelFor<TMessage>();
-
-            channelFor
-                .ExpectReply(message, x => { }, onReply);
-        }
-
-        public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<TResponse> onReply )
+        public Future<TResponse> Request<TMessage, TResponse>(string channelName, TMessage message )
         {
             var channelFor = Channels
                 .GetChannelFor<TMessage>(channelName);
 
-            channelFor
-                .ExpectReply(message, x => { }, onReply);
+            return channelFor.ExpectReply<TResponse, TMessage>( message, x => { });
         }
 
-        public void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply)
-        {
-            var channelFor = Channels
-                .GetChannelFor<TMessage>();
-
-            channelFor
-                .ExpectReply(message, modifyEnvelope, onReply);
-        }
-
-        public void Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply )
+        public Future<TResponse> Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             var channelFor = Channels
                 .GetChannelFor<TMessage>(channelName);
 
-            channelFor
-                .ExpectReply(message, modifyEnvelope, onReply);
+            return channelFor.ExpectReply<TResponse, TMessage>(message, modifyEnvelope);
         }
 
         public void StartSubscription(string subscription)

@@ -19,7 +19,6 @@ using System.Collections.Concurrent;
 using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Utility;
 using Symbiote.Messaging.Impl.Envelope;
 
 namespace Symbiote.Messaging.Impl.Dispatch
@@ -55,7 +54,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 envelope);
         }
 
-        public FutureResult<TResponse> ExpectResponse<TResponse>(string correlationId)
+        public void ExpectResponse<TResponse>(string correlationId, Action<TResponse> onResponse)
         {
             ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
         }

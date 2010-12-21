@@ -208,6 +208,7 @@
     <Compile Include="Utility\FutureCallback.cs" />
     <Compile Include="Utility\DistributedLock.cs" />
     <Compile Include="Utility\ExclusiveConcurrentDictionary.cs" />
+    <Compile Include="Utility\FutureAction.cs" />
     <Compile Include="Utility\FutureResult.cs" />
     <Compile Include="Utility\Future.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />

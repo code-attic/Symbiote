@@ -24,9 +24,7 @@ namespace Symbiote.Core.Utility
 
         public FutureCallback(Action<Action<T>> call)
         {
-            Limit = 1;
-            TimeBetweenTries = TimeSpan.Zero;
-            Timeout = TimeSpan.FromMilliseconds(-1);
+            Init();
             Call = call;
             GetResult = () => default(T);
         }
@@ -40,12 +38,7 @@ namespace Symbiote.Core.Utility
 
         public static implicit operator Action<T>(FutureCallback<T> future)
         {
-            Action<T> onValue = x =>
-            {
-                future.GetResult = () => x;
-                ((ManualResetEvent)future.AsyncResult.AsyncWaitHandle).Set();
-            };
-            return onValue;
+            return future.Callback;
         }
     }
 }

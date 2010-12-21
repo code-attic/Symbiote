@@ -116,9 +116,13 @@
     <Compile Include="Distributor\Basic\with_simple_distributor_of_lists.cs" />
     <Compile Include="Distributor\Basic\with_value_list.cs" />
     <Compile Include="StateMachine\when_transitioning_state.cs" />
+    <Compile Include="Utility\Futures\when_using_future_coroutine_invoked_immediately.cs" />
+    <Compile Include="Utility\Futures\when_using_future_coroutine_on_failure.cs" />
     <Compile Include="Utility\Futures\when_using_future_func.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine.cs" />
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
+    <Compile Include="Utility\Futures\with_callback.cs" />
+    <Compile Include="Utility\Futures\with_function_call.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

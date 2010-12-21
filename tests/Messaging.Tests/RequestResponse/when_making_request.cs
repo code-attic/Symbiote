@@ -10,18 +10,14 @@ namespace Messaging.Tests.RequestResponse
     public class when_making_request
         : with_bus
     {
-        public static string Reply {get;set;}
-        public static void OnReply(Reply reply)
-        {
-            Reply = reply.Text;
-        }
+        public static Reply Reply { get; set; }
+
         private Because of = () =>
         {
             bus.AddLocalChannel();
-            bus.Request<Request, Reply>( new Request(), OnReply );
-            Thread.Sleep( 10 );
+            Reply = bus.Request<Request, Reply>("local", new Request()).WaitFor( 10 );
         };
 
-        private It should_have_response = () => Reply.ShouldEqual( "I have an answer!" );
+        private It should_have_response = () => Reply.Text.ShouldEqual( "I have an answer!" );
     }
 }

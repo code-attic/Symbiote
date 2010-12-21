@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Core.Utility;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
 
@@ -30,29 +31,12 @@ namespace Symbiote.Messaging.Impl.Channels
 
         protected IDispatcher MessageDispatcher { get; set; }
 
-        public void ExpectReply<TMessage, TReply>( TMessage message, Action<IEnvelope> modifyEnvelope, Action<TReply> onReply )
+        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message )
         {
-            Func<object, string> correlate;
-            Func<object, string> route;
-            Definition.CorrelationMethods.TryGetValue( typeof(TMessage), out correlate );
-            Definition.RoutingMethods.TryGetValue( typeof(TMessage), out route );
-
-            correlate = correlate ?? Empty;
-            route = route ?? Empty;
-
-            var envelope = new Envelope<TMessage>(message)
-            {
-                CorrelationId = correlate(message),
-                RoutingKey = route(message),
-            };
-
-            modifyEnvelope(envelope);
-
-            MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            MessageDispatcher.Send(envelope);
+            return ExpectReply<TReply, TMessage>( message, x => { } );
         }
 
-        public void Send<TMessage>( TMessage message )
+        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             Func<object, string> correlate;
             Func<object, string> route;
@@ -67,7 +51,17 @@ namespace Symbiote.Messaging.Impl.Channels
                 CorrelationId = correlate(message),
                 RoutingKey = route(message),
             };
-            MessageDispatcher.Send(envelope);
+
+            modifyEnvelope(envelope);
+
+            var future = Future.Of<TReply>( () => MessageDispatcher.Send(envelope) );
+            MessageDispatcher.ExpectResponse<TReply>(envelope.MessageId.ToString(), future );
+            return future;
+        }
+
+        public void Send<TMessage>( TMessage message )
+        {
+            Send( message, x => { } );
         }
 
         public void Send<TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )

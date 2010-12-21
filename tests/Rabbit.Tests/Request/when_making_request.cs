@@ -13,22 +13,16 @@ namespace Rabbit.Tests.Request
     public class when_making_request
         : with_rabbit_configuration
     {
-        public static string Reply { get; set; }
-
-        public static void OnReply(Reply reply)
-        {
-            Reply = reply.Text;
-        }
+        public static Reply Reply { get; set; }
 
         private Because of = () =>
         {
             Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
-            Bus.Request<Request, Reply>(new Request(), OnReply);
-            Thread.Sleep(50);
+            Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 60 );
         };
         
-        private It should_have_response = () => Reply.ShouldEqual("I have an answer!");
+        private It should_have_response = () => Reply.Text.ShouldEqual("I have an answer!");
     }
 
     [DataContract]

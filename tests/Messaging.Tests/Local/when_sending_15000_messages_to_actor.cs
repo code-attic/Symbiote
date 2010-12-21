@@ -22,7 +22,7 @@ namespace Messaging.Tests.Local
                                      watch = Stopwatch.StartNew();
                                      for (int i = 0; i < MessagesToSend; i++)
                                      {
-                                         bus.Publish(new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });
+                                         bus.Publish("local", new KickRobotAss() { CorrelationId = "Sam Worthington", Target = "Terminator" });
                                      }
 
                                      actor = Assimilate.GetInstanceOf<IAgency>().GetAgentFor<Actor>().GetActor("Sam Worthington");
