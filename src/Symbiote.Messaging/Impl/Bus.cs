@@ -70,8 +70,8 @@ namespace Symbiote.Messaging.Impl
         {
             var channelFor = Channels
                 .GetChannelFor<TMessage>(channelName);
-            
-            return Future.Of<TResponse>( c => channelFor.ExpectReply( message, x => { }, c ) );
+
+            return channelFor.ExpectReply<TResponse, TMessage>( message, x => { });
         }
 
         public Future<TResponse> Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
@@ -79,7 +79,7 @@ namespace Symbiote.Messaging.Impl
             var channelFor = Channels
                 .GetChannelFor<TMessage>(channelName);
 
-            return Future.Of<TResponse>(c => channelFor.ExpectReply(message, x => { }, c));
+            return channelFor.ExpectReply<TResponse, TMessage>(message, modifyEnvelope);
         }
 
         public void StartSubscription(string subscription)

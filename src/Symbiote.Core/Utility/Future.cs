@@ -17,6 +17,11 @@ namespace Symbiote.Core.Utility
         {
            return new FutureCallback<T>( call );
         }
+    
+        public static FutureAction<T> Of<T>(Action call)
+        {
+            return new FutureAction<T>( call );
+        }
     }
 
     public abstract class Future<T>
@@ -48,9 +53,10 @@ namespace Symbiote.Core.Utility
 
                 if (!HasResult && Attempts >= Limit)
                     Result = OnFail();
-
+                
                 if (Coroutine != null && HasResult)
                     Coroutine(Result);
+
                 return Result;
             }
         }

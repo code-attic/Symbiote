@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -22,7 +23,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
     {
         int Count { get; set; }
         void Send<TMessage>(IEnvelope<TMessage> envelope);
-        //void ExpectResponse<TResponse>( string correlationId, Action<TResponse> onResponse );
+        void ExpectResponse<TResponse>( string correlationId, Action<TResponse> onResponse );
         void Send(IEnvelope envelope);
     }
 }

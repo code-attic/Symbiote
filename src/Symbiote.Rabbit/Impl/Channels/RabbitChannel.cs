@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
@@ -34,7 +35,12 @@ namespace Symbiote.Rabbit.Impl.Channels
         public ChannelDefinition Definition { get; set; }
         public IDispatcher MessageDispatcher { get; set; }
 
-        public void ExpectReply<TMessage, TReply>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TReply> onReply)
+        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message )
+        {
+            return ExpectReply<TReply, TMessage>( message, x => { } );
+        }
+
+        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             var envelope = new RabbitEnvelope<TMessage>(message)
             {
@@ -45,9 +51,10 @@ namespace Symbiote.Rabbit.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            //MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
-            envelope.ByteStream = Serializer.Serialize( envelope.Message );
-            Proxy.Send(envelope);
+            envelope.ByteStream = Serializer.Serialize(envelope.Message);
+            var future = Future.Of<TReply>(() => Proxy.Send(envelope));
+            MessageDispatcher.ExpectResponse<TReply>(envelope.MessageId.ToString(), future);
+            return future;
         }
 
         public string ConfigureResponseChannel<TReply>()
@@ -86,15 +93,7 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public void Send<TMessage>(TMessage message)
         {
-            var envelope = new RabbitEnvelope<TMessage>(message)
-            {
-                CorrelationId = Definition.GetCorrelationId(message),
-                RoutingKey = Definition.GetRoutingKey(message),
-                ReplyToExchange = RabbitBroker.ResponseId
-            };
-
-            envelope.ByteStream = Serializer.Serialize(envelope.Message);
-            Proxy.Send(envelope);
+            Send( message, x => { } );
         }
 
         public RabbitChannel(IChannelProxy proxy, IMessageSerializer serializer, ChannelDefinition definition, IDispatcher dispatcher)

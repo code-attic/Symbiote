@@ -29,13 +29,13 @@ namespace Symbiote.Messaging
 
         public static IBus AddLocalChannel(this IBus bus)
         {
-            Index.AddDefinition(new LocalChannelDefinition());
+            Index.AddDefinition(new LocalChannelDefinition() { Name = "local"} );
             return bus;
         }
 
         public static IBus AddLocalChannel(this IBus bus, Action<IConfigureChannel> configure)
         {
-            var localChannelDefinition = new LocalChannelDefinition();
+            var localChannelDefinition = new LocalChannelDefinition() { Name = "local" };
             configure(localChannelDefinition);
             Index.AddDefinition(localChannelDefinition);
             return bus;

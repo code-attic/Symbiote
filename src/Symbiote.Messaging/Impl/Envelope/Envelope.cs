@@ -57,12 +57,13 @@ namespace Symbiote.Messaging.Impl.Envelope
             {
                 bus.AddLocalChannel();
             }
-            //bus.Publish( 
-            //    response, 
-            //    x => 
-            //    {
-            //        x.CorrelationId = MessageId.ToString();
-            //    } );
+            bus.Publish(
+                "local",
+                response,
+                x =>
+                {
+                    x.CorrelationId = MessageId.ToString();
+                });
         }
 
         public Envelope() {}
