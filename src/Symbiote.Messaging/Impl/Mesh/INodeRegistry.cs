@@ -21,10 +21,7 @@ namespace Symbiote.Messaging.Impl.Node
     public interface INode
     {
         void Publish<T>( T message );
-        void Request<T, R>( T message, Action<R> handler );
-        FutureResult<R> Request<T, R>( T message );
-        FutureResult<R> Request<T, R>( T message , TimeSpan timeout);
-        FutureResult<R> Request<T, R>( T message , int miliseconds);
+        Future<R> Request<T, R>( T message );
     }
 
     public class Node
@@ -44,27 +41,9 @@ namespace Symbiote.Messaging.Impl.Node
             
         }
 
-        public void Request<T, R>( T message, Action<R> handler )
+        public Future<R> Request<T, R>( T message )
         {
-            var channel = Nodes.GetNodeFor( message );
-            Bus.Request( channel, message, handler );
-        }
-
-        public FutureResult<R> Request<T, R>( T message )
-        {
-            return Request<T, R>( message, -1 );
-        }
-
-        public FutureResult<R> Request<T, R>( T message, TimeSpan timeout )
-        {
-            return Request<T, R>( message, timeout.TotalMilliseconds );
-        }
-
-        public FutureResult<R> Request<T, R>( T message, double miliseconds )
-        {
-            //Action<R> handler 
-            var channel = Nodes.GetNodeFor(message);
-            Bus.Request(channel, message, handler);
+            return default( Future<R> );
         }
 
         public Node( INodeRegistry nodes, IBus bus, INodeConfiguration configuration )

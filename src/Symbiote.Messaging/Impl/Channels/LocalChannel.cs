@@ -48,7 +48,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
             modifyEnvelope(envelope);
 
-            MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            //MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
             MessageDispatcher.Send(envelope);
         }
 

@@ -55,10 +55,10 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 envelope);
         }
 
-        public FutureResult<TResponse> ExpectResponse<TResponse>(string correlationId)
-        {
-            ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
-        }
+        //public Future<TResponse> ExpectResponse<TResponse>(string correlationId)
+        //{
+        //    ResponseDispatchers.TryAdd(correlationId, new ResponseDispatcher<TResponse>(onResponse));
+        //}
 
         public void SendToHandler(string id, IEnvelope envelope)
         {

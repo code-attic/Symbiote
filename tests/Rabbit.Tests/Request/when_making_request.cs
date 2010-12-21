@@ -24,7 +24,7 @@ namespace Rabbit.Tests.Request
         {
             Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
-            Bus.Request<Request, Reply>(new Request(), OnReply);
+            Bus.Request<Request, Reply>("test", new Request()).OnValue( OnReply ).Now();
             Thread.Sleep(50);
         };
         

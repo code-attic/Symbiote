@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging
 {
@@ -33,22 +34,9 @@ namespace Symbiote.Messaging
         bool HasChannelFor<T>(string channelName);
 
         /// <summary>
-        /// Publish a message to its default channel defined for
-        /// the message type.
-        /// </summary>
-        void Publish<TMessage>(TMessage message);
-        
-        /// <summary>
         /// Publish a message to the named channel.
         /// </summary>
         void Publish<TMessage>(string channelName, TMessage message);
-        
-        /// <summary>
-        /// Publish a message to its default channel defined for
-        /// the message type after modifying the envelope according
-        /// to the provided delegate.
-        /// </summary>
-        void Publish<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope);
         
         /// <summary>
         /// Publish a message to the named channel defined for
@@ -56,6 +44,18 @@ namespace Symbiote.Messaging
         /// to the provided delegate.
         /// </summary>
         void Publish<TMessage>(string channelName, TMessage message, Action<IEnvelope> modifyEnvelope);
+
+        /// <summary>
+        /// Publish a message to the named channel with an expected response.
+        /// </summary>
+        Future<TResponse> Request<TMessage, TResponse>(string channelName, TMessage message);
+
+        /// <summary>
+        /// Publish a message to the named channel defined for
+        /// the message type after modifying the envelope according
+        /// to the provided delegate.
+        /// </summary>
+        Future<TResponse> Request<TMessage, TResponse>(string channelName, TMessage message, Action<IEnvelope> modifyEnvelope);
 
         /// <summary>
         /// Starts listening for messages associated with the named subscription.
@@ -66,35 +66,5 @@ namespace Symbiote.Messaging
         /// Stops listening for messages associated with the named subscription.
         /// </summary>
         void StopSubscription(string subscription);
-
-        /// <summary>
-        /// Publishes a request message to the default channel defined for the
-        /// request message type and provides a callback delegate to invoke in
-        /// the event of a corresponding response message.
-        /// </summary>
-        void Request<TMessage, TResponse>(TMessage message, Action<TResponse> onReply);
-
-        /// <summary>
-        /// Publishes a request message to the named channel defined and 
-        /// provides a callback delegate to invoke in the event of a 
-        /// corresponding response message.
-        /// </summary>
-        void Request<TMessage, TResponse>(string channelName, TMessage message, Action<TResponse> onReply);
-
-        /// <summary>
-        /// Publishes a request message to the default channel defined for the
-        /// request message type after modifying the envelope according
-        /// to the provided delegate. Also provides a callback delegate to invoke in
-        /// the event of a corresponding response message.
-        /// </summary>
-        void Request<TMessage, TResponse>(TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply);
-
-        /// <summary>
-        /// Publishes a request message to the named channel defined after 
-        /// modifying the envelope according to the provided delegate. Also 
-        /// provides a callback delegate to invoke in the event of a 
-        /// corresponding response message.
-        /// </summary>
-        void Request<TMessage, TResponse>(string channelName, TMessage message, Action<IEnvelope> modifyEnvelope, Action<TResponse> onReply);
     }
 }

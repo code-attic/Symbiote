@@ -45,7 +45,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             };
 
             modifyEnvelope(envelope);
-            MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
+            //MessageDispatcher.ExpectResponse(envelope.MessageId.ToString(), onReply);
             envelope.ByteStream = Serializer.Serialize( envelope.Message );
             Proxy.Send(envelope);
         }
