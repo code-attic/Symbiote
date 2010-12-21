@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Hashing.Impl;
+using System.Linq;
 
 namespace Symbiote.Core.Hashing
 {
@@ -39,11 +40,25 @@ namespace Symbiote.Core.Hashing
             BuildAliases(name);
         }
 
-        protected void BuildAliases(string name)
+        public virtual void RebalanceNode(string name, int change)
         {
-            var aliasList = new List<long>(AliasCount);
-            
-            for (int i = 0; i < AliasCount; i++)
+            if(change > 0)
+                AddAliases( name, change );
+            else
+                RemoveKeySpaceFrom( name, change * -1 );
+        }
+        
+        protected void AddAliases(string name, int count)
+        {
+            var aliasList = new List<long>();
+            if (!AliasLookup.TryGetValue(name, out aliasList))
+            {
+               aliasList = new List<long>(count);
+               AliasLookup[name] = aliasList;
+            }
+
+            var total = aliasList.Count;
+            for (int i = total; i <= total + count; i++)
             {
                 try
                 {
@@ -57,7 +72,34 @@ namespace Symbiote.Core.Hashing
                     MapLock.ExitWriteLock();
                 }
             }
-            AliasLookup[name] = aliasList;
+        }
+
+        protected void BuildAliases(string name)
+        {
+            AddAliases( name, AliasCount );
+        }
+
+        protected void RemoveKeySpaceFrom(string name, int count)
+        {
+            var aliasList = new List<long>();
+            if(AliasLookup.TryGetValue( name, out aliasList ))
+            {
+                var removals = aliasList.Take( count );
+                removals
+                    .ForEach( x =>
+                    {
+                        try
+                        {
+                            aliasList.Remove( x );
+                            MapLock.EnterWriteLock();
+                            Map.Delete( x );
+                        }
+                        finally
+                        {
+                            MapLock.ExitWriteLock();
+                        }
+                    } );
+            }
         }
 
         protected void RemoveAliases(string name)

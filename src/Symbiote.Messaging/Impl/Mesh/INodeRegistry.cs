@@ -9,13 +9,13 @@ namespace Symbiote.Messaging.Impl.Node
 {
     public interface INodeConfiguration
     {
-        string BroadcastExchange { get; set; }
+        string BroadcastChannel { get; set; }
     }
 
     public class NodeConfiguration
         : INodeConfiguration
     {
-        public string BroadcastExchange { get; set; }
+        public string BroadcastChannel { get; set; }
     }
 
     public interface INode
@@ -42,6 +42,8 @@ namespace Symbiote.Messaging.Impl.Node
         public INodeRegistry Nodes { get; set; }
         public IBus Bus { get; set; }
         public INodeConfiguration Configuration { get; set; }
+        public INodeIdentityProvider IdentityProvider { get; set; }
+        public INodeChannelProvider ChannelProvider { get; set; }
 
         public void Initialize()
         {
@@ -75,11 +77,13 @@ namespace Symbiote.Messaging.Impl.Node
             return Nodes.GetNodeFor( message );
         }
 
-        public Node( INodeRegistry nodes, IBus bus, INodeConfiguration configuration )
+        public Node( INodeRegistry nodes, IBus bus, INodeConfiguration configuration, INodeIdentityProvider identityProvider, INodeChannelProvider channelProvider )
         {
             Nodes = nodes;
             Bus = bus;
             Configuration = configuration;
+            IdentityProvider = identityProvider;
+            ChannelProvider = channelProvider;
             Initialize();
         }
     }
@@ -94,9 +98,16 @@ namespace Symbiote.Messaging.Impl.Node
         public string NodeId { get; set; }
     }
 
+    public class NodeHealth
+    {
+        public string NodeId { get; set; }
+        public decimal LoadScore { get; set; }
+    }
+
     public class NodeChangeHandler :
         IHandle<NodeUp>,
-        IHandle<NodeDown>
+        IHandle<NodeDown>,
+        IHandle<NodeHealth>
     {
         protected INodeRegistry Registry { get; set; }
 
@@ -108,6 +119,11 @@ namespace Symbiote.Messaging.Impl.Node
         public void Handle( IEnvelope<NodeDown> envelope )
         {
             Registry.RemoveNode(envelope.Message.NodeId);
+        }
+
+        public void Handle( IEnvelope<NodeHealth> envelope )
+        {
+            
         }
 
         public NodeChangeHandler( INodeRegistry registry )
@@ -136,6 +152,7 @@ namespace Symbiote.Messaging.Impl.Node
         public void RemoveNode( string NodeId )
         {
             Nodes.RemoveNode( NodeId );
+            
         }
 
         public string GetNodeFor<T>( T value )

@@ -19,7 +19,7 @@ namespace Messaging.Tests.Local
     {
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch watch { get; set; }
-        protected static int MessagesToSend = 400000;
+        protected static int MessagesToSend = 100000;
         protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
         private Because of = () =>
@@ -67,9 +67,9 @@ namespace Messaging.Tests.Local
         // 400000 / 2565 ms
         // 400000 / 2358 ms
 
-
+        
         private It should_complete_in_1_second = () =>
-                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(1001);
+                                                 watch.ElapsedMilliseconds.ShouldBeLessThan(10);
 
         private It should_create_the_correct_number_of_actors = () =>
                                                                   Actor.Created.ShouldEqual(actorCount);

@@ -18,8 +18,8 @@ namespace Symbiote.Core.Memento
 {
     public interface IMemoizer
     {
-        IMemento<T> GetMemento<T>( T instance );
-        T GetFromMemento<T>( IMemento<T> memento );
-        void ResetToMemento<T>( T instance, IMemento<T> memento );
+        IMemento<T> GetMemento<T>(T instance);
+        T GetFromMemento<T>(IMemento<T> memento);
+        void ResetToMemento<T>(T instance, IMemento<T> memento);
     }
 }

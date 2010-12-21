@@ -153,7 +153,6 @@
     <Compile Include="Hashing\Impl\HashedAvlTree.cs" />
     <Compile Include="Hashing\Impl\HashedRedBlackLeaf.cs" />
     <Compile Include="Hashing\Impl\HashedRedBlackTree.cs" />
-    <Compile Include="Hashing\HashMap.cs" />
     <Compile Include="Hashing\Impl\IAvlLeaf.cs" />
     <Compile Include="Hashing\IHashingProvider.cs" />
     <Compile Include="Hashing\Impl\IRedBlackLeaf.cs" />
