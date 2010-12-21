@@ -20,8 +20,6 @@ namespace Symbiote.Messaging.Impl.Channels
 {
     public interface IChannelManager
     {
-        IChannel GetChannelFor<TMessage>();
-        IEnumerable<IChannel> GetChannelsFor<TMessage>();
-        IChannel GetChannelFor<TMessage>(string channelName);
+        IChannel GetChannelFor(string channelName);
     }
 }

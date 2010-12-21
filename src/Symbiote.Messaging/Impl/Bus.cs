@@ -29,29 +29,15 @@ namespace Symbiote.Messaging.Impl
         protected IChannelManager Channels { get; set; }
         protected ISubscriptionManager Subscriptions { get; set; }
 
-        public bool HasChannelFor<T>()
+        public bool HasChannelFor(string channelName)
         {
-            return ChannelIndex.HasChannelFor<T>();
-        }
-
-        public bool HasChannelFor<T>(string channelName)
-        {
-            return ChannelIndex.HasChannelFor<T>(channelName);
-        }
-
-        public void Publish<TMessage>(TMessage message)
-        {
-            var channelsFor = Channels
-                .GetChannelsFor<TMessage>();
-
-            channelsFor
-                .ForEach(x => x.Send(message));
+            return ChannelIndex.HasChannelFor(channelName);
         }
 
         public void Publish<TMessage>( string channelName, TMessage message )
         {
             var channelFor = Channels
-                .GetChannelFor<TMessage>( channelName );
+                .GetChannelFor( channelName );
 
             channelFor
                 .Send( message );
@@ -60,7 +46,7 @@ namespace Symbiote.Messaging.Impl
         public void Publish<TMessage>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             var channelFor = Channels
-                .GetChannelFor<TMessage>(channelName);
+                .GetChannelFor(channelName);
 
             channelFor
                 .Send(message, modifyEnvelope);
@@ -69,7 +55,7 @@ namespace Symbiote.Messaging.Impl
         public Future<TResponse> Request<TMessage, TResponse>(string channelName, TMessage message )
         {
             var channelFor = Channels
-                .GetChannelFor<TMessage>(channelName);
+                .GetChannelFor(channelName);
 
             return channelFor.ExpectReply<TResponse, TMessage>( message, x => { });
         }
@@ -77,7 +63,7 @@ namespace Symbiote.Messaging.Impl
         public Future<TResponse> Request<TMessage, TResponse>( string channelName, TMessage message, Action<IEnvelope> modifyEnvelope )
         {
             var channelFor = Channels
-                .GetChannelFor<TMessage>(channelName);
+                .GetChannelFor(channelName);
 
             return channelFor.ExpectReply<TResponse, TMessage>(message, modifyEnvelope);
         }

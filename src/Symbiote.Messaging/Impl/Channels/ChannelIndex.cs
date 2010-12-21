@@ -25,56 +25,33 @@ namespace Symbiote.Messaging.Impl.Channels
     public class ChannelIndex
         : IChannelIndex
     {
-        public ConcurrentDictionary<int, IChannelDefinition> Definitions { get; set; }
-        public ConcurrentDictionary<Type, List<string>> MessageChannels { get; set; }
-
-        public void AddChannelForMessageType(Type messageType, string channelName)
-        {
-            List<string> channels;
-            if (!MessageChannels.TryGetValue(messageType,
-                                             out channels))
-            {
-                channels = new List<string>();
-                MessageChannels.TryAdd(messageType,
-                                       channels);
-            }
-            if (!channels.Contains(channelName))
-                channels.Add(channelName);
-        }
+        public ConcurrentDictionary<string, IChannelDefinition> Definitions { get; set; }
 
         public void AddDefinition(IChannelDefinition definition)
         {
             ValidateChannelDefinition(definition);
 
             Definitions.AddOrUpdate(
-                GetChannelKey(definition.MessageType, definition.Name),
+                definition.Name,
                 definition,
                 (x, y) => definition);
-
-            AddChannelForMessageType(definition.MessageType,
-                                      definition.Name);
         }
 
-        public int GetChannelKey(Type messageType, string name)
-        {
-            return (name.GetHashCode() * 397) ^ messageType.GetHashCode();
-        }
-
-        public IEnumerable<IChannelDefinition> GetDefinitionsFor<TMessage>()
-        {
-            return GetKeysFor<TMessage>().Select( x => Definitions[x] );
-        }
-
-        public IChannelDefinition GetDefinitionFor<TMessage>( string channelName )
+        public IChannelDefinition GetDefinition( string channelName )
         {
             IChannelDefinition definition;
-            if (!Definitions.TryGetValue( GetKeyFor<TMessage>( channelName ), out definition ))
+            if (!Definitions.TryGetValue( channelName , out definition ))
             {
                 throw new MissingChannelDefinitionException(
-                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                        .AsFormat(channelName, typeof(TMessage)));
+                    "There was no definition provided for a channel named {0}. Please check that you have defined a channel before attempting to use it."
+                        .AsFormat(channelName));
             }
             return definition;
+        }
+
+        public IEnumerable<IChannelDefinition> GetDefinitions()
+        {
+            return Definitions.Values;
         }
 
         public IEnumerable<string> GetDefinitionViolations(IChannelDefinition definition)
@@ -91,44 +68,9 @@ namespace Symbiote.Messaging.Impl.Channels
             yield break;
         }
 
-        public int GetKeyFor<TMessage>(string channelName)
+        public bool HasChannelFor(string channelName)
         {
-            var typedKey = GetChannelKey( typeof(TMessage), channelName );
-            return Definitions.ContainsKey( typedKey )
-                       ? typedKey
-                       : GetChannelKey( typeof(object), channelName );
-        }
-
-        public IEnumerable<int> GetKeysFor<TMessage>()
-        {
-            List<string> channelNameList;
-            var messageType = typeof(TMessage);
-            
-            if (MessageChannels.TryGetValue(messageType, out channelNameList))
-            {
-                return channelNameList.Select( x => GetChannelKey( messageType, x ) );
-            }
-
-            var objectType = typeof(object);
-            if(MessageChannels.TryGetValue(objectType, out channelNameList))
-            {
-                return channelNameList.Select( x => GetChannelKey( objectType, x ) );    
-            }
-
-            return new List<int>();
-        }
-
-        public bool HasChannelFor<TMessage>()
-        {
-            return MessageChannels.ContainsKey(typeof(TMessage)) || MessageChannels.ContainsKey(typeof(object));
-        }
-
-        public bool HasChannelFor<TMessage>(string channelName)
-        {
-            return (MessageChannels.ContainsKey(typeof(TMessage)) &&
-                   MessageChannels[typeof(TMessage)].Contains(channelName)) ||
-                   (MessageChannels.ContainsKey(typeof(object)) &&
-                   MessageChannels[typeof(object)].Contains(channelName));
+            return Definitions.ContainsKey( channelName );
         }
 
         public void ValidateChannelDefinition(IChannelDefinition definition)
@@ -140,8 +82,7 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public ChannelIndex()
         {
-            Definitions = new ConcurrentDictionary<int, IChannelDefinition>();
-            MessageChannels = new ConcurrentDictionary<Type, List<string>>();
+            Definitions = new ConcurrentDictionary<string, IChannelDefinition>();
         }
     }
 }

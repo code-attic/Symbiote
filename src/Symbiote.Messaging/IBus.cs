@@ -23,15 +23,9 @@ namespace Symbiote.Messaging
     {
         /// <summary>
         /// Checks to see if any typed channels have been defined
-        /// for message type T.
-        /// </summary>
-        bool HasChannelFor<T>();
-
-        /// <summary>
-        /// Checks to see if any typed channels have been defined
         /// for message type T with the specified name.
         /// </summary>
-        bool HasChannelFor<T>(string channelName);
+        bool HasChannelFor(string channelName);
 
         /// <summary>
         /// Publish a message to the named channel.

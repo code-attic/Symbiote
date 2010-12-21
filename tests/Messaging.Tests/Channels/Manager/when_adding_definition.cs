@@ -86,11 +86,8 @@ namespace Messaging.Tests.Channels.Manager
                 Index.AddDefinition( ChannelDef1 ));
         };
 
-        private It should_have_channel_for_message = () =>
-            Index.HasChannelFor<DummyMessage>();
-
         private It should_have_channel_by_name = () =>
-            Index.HasChannelFor<DummyMessage>("test1");
+            Index.HasChannelFor("test1");
 
         private It should_not_cause_exception = () => 
             Exception.ShouldBeNull();
@@ -148,17 +145,17 @@ namespace Messaging.Tests.Channels.Manager
         };
 
         private It should_have_definition_1_by_name = () =>
-            Index.HasChannelFor<DummyMessage>("test1");
+            Index.HasChannelFor("test1");
         private It should_have_definition_2_by_name = () =>
-            Index.HasChannelFor<DummyMessage>("test2");
+            Index.HasChannelFor("test2");
         private It should_have_definition_3_by_name = () =>
-            Index.HasChannelFor<DummyMessage>("test3");
+            Index.HasChannelFor("test3");
         private It should_have_definition_4_by_name = () =>
-            Index.HasChannelFor<DummyMessage>("test4");
+            Index.HasChannelFor("test4");
         private It should_have_definitions_for_4 = () =>
             Index.Definitions.Count.ShouldEqual(4);
         private It should_have_4_channels_for_type = () =>
-            Index.MessageChannels[typeof(DummyMessage)].Count.ShouldEqual(4);
+            Index.Definitions.Count.ShouldEqual(4);
     }
 
     public class when_requesting_missing_definition
@@ -168,7 +165,7 @@ namespace Messaging.Tests.Channels.Manager
         private Because of = () =>
         {
             Exception = Catch.Exception( () => 
-                Index.GetDefinitionFor<DummyMessage>("test")) as MissingChannelDefinitionException;
+                Index.GetDefinition("test1")) as MissingChannelDefinitionException;
         };
 
         private It should_cause_exception = () =>
@@ -193,32 +190,20 @@ namespace Messaging.Tests.Channels.Manager
         private Because of = () =>
         {
             MockIndex
-                .Setup( x => x.GetKeyFor<DummyMessage>( "test" ) )
-                .Returns( 0 );
-            MockIndex
-                .Setup( x => x.GetDefinitionFor<DummyMessage>( "test" ) )
+                .Setup( x => x.GetDefinition( "test" ) )
                 .Returns( new LocalChannelDefinition() {} );
 
-            FirstRequest = Manager.GetChannelFor<DummyMessage>("test");
-            SecondRequest = Manager.GetChannelFor<DummyMessage>("test");
+            FirstRequest = Manager.GetChannelFor("test");
+            SecondRequest = Manager.GetChannelFor("test");
         };
-
-        private It should_have_asked_for_key_from_index_twice = () => 
-            MockIndex.Verify( x => x.GetKeyFor<DummyMessage>( "test" ), Times.Exactly(2));
-
+        
         private It should_have_asked_for_definition_once = () => 
-            MockIndex.Verify( x => x.GetDefinitionFor<DummyMessage>( "test" ), Times.Once());
+            MockIndex.Verify( x => x.GetDefinition( "test" ), Times.Once());
 
         private It should_instantiate_valid_channel = () => 
             FirstRequest.ShouldNotBeNull();
 
         private It should_have_returned_same_channel_on_second_request = () => 
             SecondRequest.ShouldEqual( FirstRequest );
-    }
-
-    public class when_getting_channel
-        : with_channel_manager
-    {
-
     }
 }

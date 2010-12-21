@@ -9,19 +9,31 @@ namespace Symbiote.Messaging.Impl.Node
 {
     public interface INodeConfiguration
     {
-        string StandardExchange { get; set; }
+        string BroadcastExchange { get; set; }
     }
 
     public class NodeConfiguration
         : INodeConfiguration
     {
-        public string StandardExchange { get; set; }
+        public string BroadcastExchange { get; set; }
     }
 
     public interface INode
     {
         void Publish<T>( T message );
+        void Publish<T>( T message, Action<IEnvelope> modifyEnvelope);
         Future<R> Request<T, R>( T message );
+        Future<R> Request<T, R>(T message, Action<IEnvelope> modifyEnvelope);
+    }
+
+    public interface INodeIdentityProvider
+    {
+        
+    }
+
+    public interface INodeChannelProvider
+    {
+        
     }
 
     public class Node
@@ -38,12 +50,29 @@ namespace Symbiote.Messaging.Impl.Node
 
         public void Publish<T>( T message )
         {
-            
+            Publish( message, x => { } );
+        }
+
+        public void Publish<T>( T message, Action<IEnvelope> modifyEnvelope )
+        {
+            var channelName = GetChannelForMessage( message );
+            Bus.Publish( channelName, message, modifyEnvelope );
         }
 
         public Future<R> Request<T, R>( T message )
         {
-            return default( Future<R> );
+            return Request<T, R>( message, x => { } );
+        }
+
+        public Future<R> Request<T, R>( T message, Action<IEnvelope> modifyEnvelope )
+        {
+            var channelName = GetChannelForMessage(message);
+            return Bus.Request<T, R>( channelName, message, modifyEnvelope );
+        }
+
+        public string GetChannelForMessage<T>(T message)
+        {
+            return Nodes.GetNodeFor( message );
         }
 
         public Node( INodeRegistry nodes, IBus bus, INodeConfiguration configuration )

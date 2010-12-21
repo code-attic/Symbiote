@@ -26,59 +26,27 @@ namespace Symbiote.Messaging.Impl.Channels
     public class ChannelManager
         : IChannelManager
     {
-        public ConcurrentDictionary<int, IChannel> Channels { get; set; }
+        public ConcurrentDictionary<string, IChannel> Channels { get; set; }
         public ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
         public IChannelIndex Index { get; set; }
 
-        public IChannel CreateChannelInstance( int key, IChannelDefinition definition )
+        public IChannel CreateChannelInstance( string channelName, IChannelDefinition definition )
         {
             var factory = GetChannelFactory(definition);
             IChannel channel = factory.CreateChannel(definition);
-            Channels.TryAdd(key, channel);
+            Channels.TryAdd(channelName, channel);
             return channel;
         }
 
-        public IChannel GetChannelFor<TMessage>()
-        {
-            var messageType = typeof(TMessage);
-            var channel = GetChannelsFor<TMessage>().FirstOrDefault();
-
-            if(channel == null)
-                throw new MissingChannelDefinitionException(
-                    "There was no definition provided for a channel named {0} of message type {1}. Please check that you have defined a channel before attempting to use it."
-                        .AsFormat("<nothing>", messageType));
-
-            return channel;
-        }
-
-        public IChannel GetChannelFor<TMessage>(string channelName)
+        public IChannel GetChannelFor(string channelName)
         {
             IChannel channel;
-            int key = Index.GetKeyFor<TMessage>( channelName );
-            if (!Channels.TryGetValue(key, out channel))
+            if (!Channels.TryGetValue(channelName, out channel))
             {
-                var definition = Index.GetDefinitionFor<TMessage>(channelName);
-                channel = CreateChannelInstance( key, definition );
+                var definition = Index.GetDefinition(channelName);
+                channel = CreateChannelInstance( channelName, definition );
             }
             return channel;
-        }
-
-        public IEnumerable<IChannel> GetChannelsFor<TMessage>()
-        {
-            var adapters = new List<IChannel>();
-            var definitions = Index.GetDefinitionsFor<TMessage>();
-
-            foreach (var definition in definitions)
-            {
-                IChannel channel;
-                var key = Index.GetKeyFor<TMessage>( definition.Name );
-                if(!Channels.TryGetValue( key, out channel ))
-                {
-                    channel = CreateChannelInstance(key, definition);
-                }
-                adapters.Add(channel);
-            }
-            return adapters;
         }
 
         public IChannelFactory GetChannelFactory(IChannelDefinition definition)
@@ -96,7 +64,7 @@ namespace Symbiote.Messaging.Impl.Channels
         public ChannelManager(IChannelIndex channelIndex)
         {
             Index = channelIndex;
-            Channels = new ConcurrentDictionary<int, IChannel>();
+            Channels = new ConcurrentDictionary<string, IChannel>();
             ChannelFactories = new ConcurrentDictionary<Type, IChannelFactory>();
         }
     }
