@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using Symbiote.Actor.Impl.Memento;
+using Symbiote.Core.Memento;
 
 namespace Actor.Tests.Agent
 {

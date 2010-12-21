@@ -14,26 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core;
-
-namespace Symbiote.Actor.Impl.Defaults
+namespace Symbiote.Core.Memento
 {
-    public class NullActorCache<TActor>
-        : IActorCache<TActor>
-        where TActor : class
+    public interface IMemoizer
     {
-        public IMemento<TActor> Get<TKey>(TKey id)
-        {
-            return null;
-        }
-
-        public void Store(IMemento<TActor> actor)
-        {
-            
-        }
-
-        public NullActorCache()
-        {
-        }
+        IMemento<T> GetMemento<T>( T instance );
+        T GetFromMemento<T>( IMemento<T> memento );
+        void ResetToMemento<T>( T instance, IMemento<T> memento );
     }
 }

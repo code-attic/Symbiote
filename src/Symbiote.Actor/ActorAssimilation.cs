@@ -19,11 +19,11 @@ using System.Collections.Generic;
 using Symbiote.Actor.Impl;
 using Symbiote.Actor.Impl.Defaults;
 using Symbiote.Actor.Impl.Eventing;
-using Symbiote.Actor.Impl.Memento;
 using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using System.Linq;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Memento;
 
 namespace Symbiote.Actor
 {

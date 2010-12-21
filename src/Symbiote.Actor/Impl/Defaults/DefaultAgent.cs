@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Actor.Impl.Memento;
+using Symbiote.Core.Memento;
 using Symbiote.Core.Utility;
 
 namespace Symbiote.Actor.Impl.Defaults
@@ -32,9 +32,11 @@ namespace Symbiote.Actor.Impl.Defaults
         public TActor GetActor<TKey>(TKey key)
         {
             return Actors.ReadOrWrite( key.ToString(), 
-                    () => Cache.Get( key ).Retrieve()
-                          ?? Store.Get( key ).Retrieve()
-                          ?? Factory.CreateInstance( key ) );
+                    () =>
+                        {
+                            var memento = Cache.Get(key) ?? Store.Get(key);
+                            return memento != null ? memento.Retrieve() : Factory.CreateInstance(key);
+                        });
         }
 
         public void RegisterActor<TKey>( TKey key, TActor actor )

@@ -1,8 +1,8 @@
 ﻿using Machine.Specifications;
 using Moq;
 using Symbiote.Actor;
-using Symbiote.Actor.Impl.Memento;
 using Symbiote.Core;
+using Symbiote.Core.Memento;
 
 namespace Actor.Tests.Cache
 {

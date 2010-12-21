@@ -92,6 +92,16 @@
   <ItemGroup>
     <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
+    <Compile Include="Domain\DriverFactory.cs" />
+    <Compile Include="Domain\Memoization\AddressMemento.cs" />
+    <Compile Include="Domain\Memoization\DriverMemento.cs" />
+    <Compile Include="Domain\Memoization\VehicleMemento.cs" />
+    <Compile Include="Domain\Model\Address.cs" />
+    <Compile Include="Domain\Model\Driver.cs" />
+    <Compile Include="Domain\Model\IAddressMemento.cs" />
+    <Compile Include="Domain\Model\IDriverMemento.cs" />
+    <Compile Include="Domain\Model\IVehicleMemento.cs" />
+    <Compile Include="Domain\Model\Vehicle.cs" />
     <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
     <Compile Include="Json\Performance\when_serializing_one_thousand_items.cs" />
     <Compile Include="Json\when_serializing_string.cs" />
@@ -102,6 +112,7 @@
     <Compile Include="Json\when_serializing_objects.cs" />
     <Compile Include="Json\with_core_assimilation.cs" />
     <Compile Include="Extensions\Permutations.cs" />
+    <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\TestClass.cs" />
     <Compile Include="Reflection\POC\when_reading_dynamically.cs" />
@@ -123,6 +134,7 @@
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
     <Compile Include="Utility\Futures\with_callback.cs" />
     <Compile Include="Utility\Futures\with_function_call.cs" />
+    <Compile Include="with_assimilation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

@@ -77,8 +77,6 @@
     <Compile Include="Domain\Memoization\VehicleMemento.cs" />
     <Compile Include="Domain\Model\Driver.cs" />
     <Compile Include="Events\when_capturing_events.cs" />
-    <Compile Include="Mementos\when_mementizing_via_reflection.cs" />
-    <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="when_caching_actor.cs" />
     <Compile Include="with_assimilation.cs" />
     <Compile Include="Agent\with_cached_actor.cs" />

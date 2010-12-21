@@ -177,6 +177,11 @@
     <Compile Include="DI\ScanInstruction.cs" />
     <Compile Include="DI\ScannerExtensions.cs" />
     <Compile Include="DI\TypeScanner.cs" />
+    <Compile Include="IMemento.cs" />
+    <Compile Include="Memento\IMemento.cs" />
+    <Compile Include="Memento\IMemoizer.cs" />
+    <Compile Include="Memento\Memoizer.cs" />
+    <Compile Include="Memento\PassthroughMemento.cs" />
     <Compile Include="Serialization\IContractResolverStrategy.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Serialization\IJsonSerializerFactory.cs" />
