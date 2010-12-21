@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Actor.Tests.Domain.Model;
+using Core.Tests.Domain.Model;
 using Symbiote.Core;
 
-namespace Actor.Tests.Domain.Memoization
+namespace Core.Tests.Domain.Memoization
 {
     public class DriverMemento 
         : IMemento<Driver>, IDriverMemento

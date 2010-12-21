@@ -1,0 +1,13 @@
+﻿using System;
+using Core.Tests.Domain.Model;
+
+namespace Core.Tests.Domain
+{
+    public class DriverFactory
+    {
+        public Driver CreateNewDriver(string ssn, string firstName, string lastName, DateTime dateOfBirth)
+        {
+            return new Driver(ssn, firstName, lastName, dateOfBirth);
+        }
+    }
+}

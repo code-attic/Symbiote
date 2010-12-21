@@ -32,9 +32,11 @@ namespace Symbiote.Actor.Impl.Defaults
         public TActor GetActor<TKey>(TKey key)
         {
             return Actors.ReadOrWrite( key.ToString(), 
-                    () => Cache.Get( key ).Retrieve()
-                          ?? Store.Get( key ).Retrieve()
-                          ?? Factory.CreateInstance( key ) );
+                    () =>
+                        {
+                            var memento = Cache.Get(key) ?? Store.Get(key);
+                            return memento != null ? memento.Retrieve() : Factory.CreateInstance(key);
+                        });
         }
 
         public void RegisterActor<TKey>( TKey key, TActor actor )
