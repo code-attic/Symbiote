@@ -58,7 +58,7 @@ namespace Core.Tests.Reflection.POC
                 else
                     return memberInfo.DeclaringType.GetField(memberInfo.Name, bindingFlags).FieldType;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

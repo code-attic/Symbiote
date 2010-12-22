@@ -15,7 +15,6 @@ namespace Core.Tests.Utility
                                          tree.Add(i, i);
                                      }
                                      var root = tree.Root;
-                                     var x = 0;
                                  };
 
         private It tree_should_have_correct_node_count = () => 12.ShouldEqual(tree.Count);
