@@ -47,17 +47,17 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
-        public static void CommitChannelOf<TMessage>(this IBus bus)
+        public static void CommitChannelOf(this IBus bus, string channelName)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>() as IHaveChannelProxy;
+            var channel = channels.GetChannelFor(channelName) as IHaveChannelProxy;
             channel.Proxy.Channel.TxCommit();
         }
 
-        public static void RollbackChannelOf<TMessage>(this IBus bus)
+        public static void RollbackChannelOf(this IBus bus, string channelName)
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
-            var channel = channels.GetChannelFor<TMessage>() as IHaveChannelProxy;
+            var channel = channels.GetChannelFor(channelName) as IHaveChannelProxy;
             channel.Proxy.Channel.TxRollback();
         }
     }

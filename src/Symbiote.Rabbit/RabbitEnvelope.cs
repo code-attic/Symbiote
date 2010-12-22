@@ -119,7 +119,7 @@ namespace Symbiote.Rabbit
         public void Reply<TResponse>(TResponse response)
         {
             var bus = Assimilate.GetInstanceOf<IBus>();
-            if (!bus.HasChannelFor<TResponse>())
+            if (!bus.HasChannelFor(ReplyToExchange))
             {
                 bus.AddRabbitChannel(x => x.AutoDelete().Direct(ReplyToExchange));
             }

@@ -14,12 +14,18 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Microsoft.Practices.ServiceLocation;
+using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Core.DI
 {
-    public interface IDependencyContainer : IServiceLocator
+    public interface IDependencyContainer
     {
-
+        object GetInstance(Type serviceType);
+        object GetInstance(Type serviceType, string key);
+        IEnumerable<object> GetAllInstances(Type serviceType);
+        T GetInstance<T>();
+        T GetInstance<T>(string key);
+        IEnumerable<T> GetAllInstances<T>();
     }
 }

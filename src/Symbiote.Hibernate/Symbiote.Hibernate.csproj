@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Development</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -32,6 +32,18 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Development|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\Symbiote.Hibernate.XML</DocumentationFile>
+	<DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -183,22 +195,40 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <Choose>
+	<When Condition="'$(DevOnly)' == 'True'">
+		<ItemGroup>
+			<ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
+			  <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
+			  <Name>Symbiote.Fibers</Name>
+			</ProjectReference>
+			<Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+			  <SpecificVersion>False</SpecificVersion>
+			  <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
+			</Reference>
+			<Reference Include="protobuf-net">
+			  <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
+			</Reference>
+			<Reference Include="ServiceStack.Text">
+			  <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
+			</Reference>
+			<Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			  <SpecificVersion>False</SpecificVersion>
+			  <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+			</Reference>
+			<Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			  <SpecificVersion>False</SpecificVersion>
+			  <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
+			</Reference>
+			<Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+			  <SpecificVersion>False</SpecificVersion>
+			  <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
+			</Reference>
+		</ItemGroup>
+	</When>
+  </Choose>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" />
-  <Target Name="BeforeBuild">
-    <FileUpdate Files="Properties\AssemblyInfo.cs" Regex="(\d+)\.(\d+).(\d+).(\d+)" ReplacementText="$(build_number)" Condition="'$(builder)'=='TeamCity'" />
-  </Target>
-  <Target Name="AfterBuild">
-    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'=='true'">
-      <Output TaskParameter="Include" ItemName="IlmergeAssemblies" />
-    </CreateItem>
-    <CreateItem Include="@(ReferencePath)" Condition="'%(CopyLocal)'=='true' and '%(ReferencePath.IlMerge)'==''">
-      <Output TaskParameter="Include" ItemName="IlRefAssemblies" />
-    </CreateItem>
-    <Message Text="MERGING: @(IlmergeAssemblies->'%(Filename)')" Importance="High" />
-    <Exec Command="&quot;..\..\tools\Ilmerge\Ilmerge.exe&quot; /xmldocs /targetplatform:v4,&quot;$(ProgramFiles)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0&quot; /out:@(MainAssembly) @(IntermediateAssembly) @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') @(IlRefAssemblies->'/lib:%(RootDir)%(Directory)', ' ')" />
-    <Copy SourceFiles="@(IlRefAssemblies)" DestinationFolder="..\..\bin\" />
-  </Target>
+  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition="'$(DevOnly)' == ''"/>
   <Target Name="_CopyFilesMarkedCopyLocal">
   </Target>
   <!--<Target Name="_CopyFilesMarkedCopyLocal" /> -->

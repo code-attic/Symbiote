@@ -20,7 +20,6 @@ using System.Linq;
 using System.Text;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Core.Cache;
 using Symbiote.Eidetic.Config;

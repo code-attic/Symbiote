@@ -1,5 +1,4 @@
 ﻿using Machine.Specifications;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Lucene;
 using Symbiote.StructureMap;

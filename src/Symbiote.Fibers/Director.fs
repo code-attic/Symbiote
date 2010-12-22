@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 *)
 
-namespace Symbiote.Messaging
+namespace Symbiote.Fibers
 
 open System
 open System.Collections.Concurrent

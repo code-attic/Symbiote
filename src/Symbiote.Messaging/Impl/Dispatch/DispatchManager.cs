@@ -19,6 +19,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Fibers;
 using Symbiote.Messaging.Impl.Envelope;
 
 namespace Symbiote.Messaging.Impl.Dispatch

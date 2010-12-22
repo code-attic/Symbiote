@@ -19,11 +19,8 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization.Formatters;
-using System.Text;
-using Microsoft.Practices.ServiceLocation;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 namespace Symbiote.Core.Extensions
@@ -127,7 +124,7 @@ namespace Symbiote.Core.Extensions
 
         public JsonSerializerFactory()
         {
-            ContractResolverStrategies = ServiceLocator.Current.GetAllInstances<IContractResolverStrategy>().ToList();
+            ContractResolverStrategies = Assimilate.GetAllInstancesOf<IContractResolverStrategy>().ToList();
             Serializers = new ConcurrentDictionary<Type, JsonSerializer>();
         }
     }

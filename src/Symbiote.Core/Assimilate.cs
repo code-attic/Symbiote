@@ -20,7 +20,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
@@ -64,8 +63,6 @@ namespace Symbiote.Core
             Initialized = true;
 
             Assimilation.DependencyAdapter = adapter;
-
-            ServiceLocator.SetLocatorProvider(() => Assimilation.DependencyAdapter);
 
             Assimilation.Dependencies(x =>
                          {
