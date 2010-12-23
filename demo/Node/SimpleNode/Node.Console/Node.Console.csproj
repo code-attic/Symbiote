@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>c881d215-11e7-4938-87f5-2a27a0577aaf</ProjectGuid>
+    <ProjectGuid>{53927429-51F4-4C4F-BC13-89F9B148D9E4}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Node.Console</RootNamespace>
     <AssemblyName>Node.Console</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -34,6 +35,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Symbiote.Actor">
+      <HintPath>..\packages\Symbiote.Actor.0.1.0.31\lib\Symbiote.Actor.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Core">
+      <HintPath>..\packages\Symbiote.Core.0.1.0.31\lib\Symbiote.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Daemon">
+      <HintPath>..\packages\Symbiote.Daemon.0.1.0.30\lib\Symbiote.Daemon.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Log4Net">
+      <HintPath>..\packages\Symbiote.Log4Net.0.1.0.31\lib\Symbiote.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Messaging">
+      <HintPath>..\packages\Symbiote.Messaging.0.1.0.31\lib\Symbiote.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Rabbit">
+      <HintPath>..\packages\Symbiote.Rabbit.0.1.0.31\lib\Symbiote.Rabbit.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.StructureMap">
+      <HintPath>..\packages\Symbiote.StructureMap.0.1.0.31\lib\Symbiote.StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +67,13 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

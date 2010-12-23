@@ -113,6 +113,7 @@ namespace Symbiote.Messaging
             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
             x.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
             x.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
+            x.For<INodeConfiguration>().Use<INodeConfiguration>().AsSingleton();
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()

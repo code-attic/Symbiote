@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Timers;
 using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Messaging.Impl.Mesh;
@@ -26,26 +28,66 @@ namespace Node.Console
         }
     }
 
+    public class Message
+    {
+        public string Text { get; set; }
+
+        public Message() {}
+
+        public Message( string text )
+        {
+            Text = text;
+        }
+    }
+
+    public class MessageHandler
+        : IHandle<Message>
+    {
+        public INodeIdentityProvider IdentityProvider { get; set; }
+
+        public void Handle( IEnvelope<Message> envelope )
+        {
+            "{0} got a message: {1}"
+                .ToDebug<NodeService>(IdentityProvider.Identity, envelope.Message);
+        }
+
+        public MessageHandler( INodeIdentityProvider identityProvider )
+        {
+            IdentityProvider = identityProvider;
+        }
+    }
+
     public class NodeService
         : IDaemon
     {
         public INode Node { get; set; }
+        public INodeIdentityProvider IdentityProvider { get; set; }
+        public Timer Timer { get; set; }
 
         public void Start()
         {
-            "Starting node..."
-                .ToDebug<NodeService>();
+            "Starting node {0}"
+                .ToDebug<NodeService>(IdentityProvider.Identity);
         }
 
         public void Stop()
         {
-            "Stopping node..."
-                .ToDebug<NodeService>();
+            "Stopping node {0}"
+                .ToDebug<NodeService>(IdentityProvider.Identity);
         }
 
-        public NodeService( INode node )
+        public NodeService(INode node, INodeIdentityProvider identityProvider)
         {
             Node = node;
+            IdentityProvider = identityProvider;
+            this.Timer = new Timer(1000);
+            this.Timer.Start();
+            this.Timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
+        }
+
+        void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Node.Publish( new Message("Hi, from ") );
         }
     }
 }
