@@ -28,6 +28,7 @@ using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Eventing;
+using Symbiote.Messaging.Impl.Mesh;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -50,6 +51,15 @@ namespace Symbiote.Messaging
             Assimilate.Dependencies( x => x.For<IEventChannelConfiguration>().Use( configurator.Configuration ) );
 
             EventSubscription = publisher.Subscribe( Assimilate.GetInstanceOf<EventChannel>() );
+
+            return assimilate;
+        }
+
+        public static IAssimilate AsNode( this IAssimilate assimilate)
+        {
+            Assimilate
+                .GetAllInstancesOf<IInitializeNode>()
+                .ForEach( x => x.InitializeChannels() );
 
             return assimilate;
         }
@@ -100,9 +110,9 @@ namespace Symbiote.Messaging
             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
             x.For<IChannelIndex>().Use<ChannelIndex>().AsSingleton();
             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
-            //x.For<IDispatcher>().Use<HyperDispatchManager>().AsSingleton();
             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
-            
+            x.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
+            x.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()
@@ -198,6 +208,7 @@ namespace Symbiote.Messaging
                 typeof (IHandle<>));
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<,>));
+            s.AddAllTypesOf<IInitializeNode>();
         }
     }
 }

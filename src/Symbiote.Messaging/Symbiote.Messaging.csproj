@@ -91,6 +91,19 @@
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
     <Compile Include="Impl\Eventing\EventChannel.cs" />
+    <Compile Include="Impl\Mesh\DefaultNodeIdentityProvider.cs" />
+    <Compile Include="Impl\Mesh\IInitializeNode.cs" />
+    <Compile Include="Impl\Mesh\INode.cs" />
+    <Compile Include="Impl\Mesh\INodeConfiguration.cs" />
+    <Compile Include="Impl\Mesh\INodeHealthMonitor.cs" />
+    <Compile Include="Impl\Mesh\INodeNamingProvider.cs" />
+    <Compile Include="Impl\Mesh\Node.cs" />
+    <Compile Include="Impl\Mesh\NodeChangeHandler.cs" />
+    <Compile Include="Impl\Mesh\NodeConfiguration.cs" />
+    <Compile Include="Impl\Mesh\NodeDown.cs" />
+    <Compile Include="Impl\Mesh\NodeHealth.cs" />
+    <Compile Include="Impl\Mesh\NodeRegistry.cs" />
+    <Compile Include="Impl\Mesh\NodeUp.cs" />
     <Compile Include="Impl\Monitor\ActorEvent.cs" />
     <Compile Include="Impl\Monitor\AdapterMonitor.cs" />
     <Compile Include="Impl\Monitor\AgentMonitor.cs" />
@@ -147,14 +160,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Choose>
-	<When Condition=" '$(Configuration)'=='Development' ">
-		<ItemGroup>			
-			<ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
-			  <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
-			  <Name>Symbiote.Fibers</Name>
-			</ProjectReference>
-		</ItemGroup>
-	</When>
+    <When Condition=" '$(Configuration)'=='Development' ">
+      <ItemGroup>
+        <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
+          <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
+          <Name>Symbiote.Fibers</Name>
+        </ProjectReference>
+      </ItemGroup>
+    </When>
   </Choose>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Actor\Symbiote.Actor.csproj">
