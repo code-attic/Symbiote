@@ -13,31 +13,42 @@ namespace Symbiote.Rabbit.Impl.Node
 
         public void InitializeChannels()
         {
+            var nodeExchange = NodeConfiguration.NodeChannel;
+            var nodeQueue = NodeConfiguration.NodeChannel + "Q";
+            var meshExchange = NodeConfiguration.MeshChannel;
+            var meshQueue = NodeConfiguration.MeshChannel + "Q";
+
             Bus.AddRabbitChannel( x => x
-                .Direct( NodeConfiguration.NodeChannel )
+                .Direct( nodeExchange )
                 .Immediate()
                 .Mandatory()
                 .PersistentDelivery() // we do want messages sticking around even if the broker dies
                 );
 
+            
             Bus.AddRabbitQueue( x => x
-                .QueueName( NodeConfiguration.NodeChannel )
-                .ExchangeName( NodeConfiguration.NodeChannel )
+                .QueueName( nodeQueue )
+                .ExchangeName( nodeExchange )
                 .Durable() // we do want messages sticking around even if the broker dies
                 .AutoDelete() // we don't want queues lingering after the node is gone
                 .StartSubscription() );
 
+            
             Bus.AddRabbitChannel( x => x
-                .Fanout( NodeConfiguration.MeshChannel )
+                .Fanout( meshExchange)
                 .Durable()
                 );
 
+            
             Bus.AddRabbitQueue( x => x
-                .QueueName( NodeConfiguration.MeshChannel )
-                .ExchangeName( NodeConfiguration.MeshChannel )
+                .QueueName( meshQueue)
+                .ExchangeName( meshExchange)
                 .Durable() // we do want messages sticking around even if the broker dies
                 .AutoDelete() // we don't want queues lingering after the node is gone
                 .StartSubscription() );
+
+            //Now for the magic
+            Bus.BindExchangeToQueue( meshExchange, nodeExchange, NodeConfiguration.NodeChannel );
         }
 
         public RabbitNodeInitializer( INodeConfiguration nodeConfiguration, IBus bus )
