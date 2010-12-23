@@ -35,11 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Symbiote.Actor">
-      <HintPath>..\packages\Symbiote.Actor.0.1.0.31\lib\Symbiote.Actor.dll</HintPath>
+    <Reference Include="Symbiote.Actor, Version=0.1.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Symbiote.Actor.0.1.0.32\lib\Symbiote.Actor.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Core">
-      <HintPath>..\packages\Symbiote.Core.0.1.0.31\lib\Symbiote.Core.dll</HintPath>
+    <Reference Include="Symbiote.Core, Version=0.1.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Symbiote.Core.0.1.0.32\lib\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon">
       <HintPath>..\packages\Symbiote.Daemon.0.1.0.30\lib\Symbiote.Daemon.dll</HintPath>
@@ -47,11 +49,13 @@
     <Reference Include="Symbiote.Log4Net">
       <HintPath>..\packages\Symbiote.Log4Net.0.1.0.31\lib\Symbiote.Log4Net.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Messaging">
-      <HintPath>..\packages\Symbiote.Messaging.0.1.0.31\lib\Symbiote.Messaging.dll</HintPath>
+    <Reference Include="Symbiote.Messaging, Version=0.1.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Symbiote.Messaging.0.1.0.32\lib\Symbiote.Messaging.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Rabbit">
-      <HintPath>..\packages\Symbiote.Rabbit.0.1.0.31\lib\Symbiote.Rabbit.dll</HintPath>
+    <Reference Include="Symbiote.Rabbit, Version=0.1.0.32, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Symbiote.Rabbit.0.1.0.32\lib\Symbiote.Rabbit.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.StructureMap">
       <HintPath>..\packages\Symbiote.StructureMap.0.1.0.31\lib\Symbiote.StructureMap.dll</HintPath>
