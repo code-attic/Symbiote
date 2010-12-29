@@ -1,0 +1,127 @@
+﻿using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
+using Symbiote.Core;
+using Symbiote.Core.Reflection;
+
+namespace Symbiote.Mikado.Impl
+{
+    /// <summary>
+    /// Out-of-the-box class that provides simple scan-and-load capability for loading
+    /// rules and target types into the TypeRules collection
+    /// </summary>
+    public class DefaultRulesIndex : IRulesIndex
+    {
+        public DefaultRulesIndex()
+        {
+            Init();
+        }
+
+        private void Init()
+        {
+            TypeRules = new ConcurrentDictionary<Type, List<IRule>>();
+            InstanceRules = new ConcurrentDictionary<Object, List<IRule>>();
+            ScanAndLoadRules();
+        }
+
+        /// <summary>
+        /// Gets all instances of IRule types from the IoC container and builds
+        /// up a list of the target types (the "T" in IRule&lt;T&gt;) and loads them
+        /// in the TypeRules dictionary with rules assigned to that type (as well as assigning
+        /// those rules to sub-types). 
+        /// </summary>
+        private void ScanAndLoadRules()
+        {
+            var rules = Assimilate.GetAllInstancesOf<IRule>().Distinct().ToList();
+
+            rules.ForEach(rule =>
+            {
+                var ruleTargetType = FindRuleTargetType(rule.GetType());
+                if (ruleTargetType == null) return;
+                var ruleTargetChildren = GetSubTypes(ruleTargetType).ToList();
+
+                ruleTargetChildren
+                    .ForEach(domainType =>
+                    {
+                        List<IRule> ruleList = null;
+                        if (TypeRules.TryGetValue(domainType, out ruleList))
+                        {
+                            if (!ruleList.Contains(rule))
+                                ruleList.Add(rule);
+                        }
+                        else
+                        {
+                            ruleList = new List<IRule>() { rule };
+                            TypeRules.TryAdd(domainType, ruleList);
+                        }
+                    });
+            });
+        }
+
+        /// <summary>
+        /// Finds all super-types that the given type descends from
+        /// </summary>
+        /// <param name="type">The type to start at, when you want to find all super-types</param>
+        /// <returns>list of types that the provided type inherits from</returns>
+        private static IEnumerable<Type> GetInheritanceChainFor(Type type)
+        {
+            yield return type;
+            var chain = Reflector.GetInheritenceChain(type);
+            if (chain != null)
+            {
+                foreach (var t in chain)
+                {
+                    yield return t;
+                }
+            }
+            yield break;
+        }
+
+        /// <summary>
+        /// Finds the type in the inheritance tree that closes the generic on the given IRule
+        /// and returns the generic parameter type that the given IRule type targets
+        /// </summary>
+        /// <param name="ruleType">IRule type</param>
+        /// <returns>Type object representing the Type which the IRule targets</returns>
+        private static Type FindRuleTargetType(Type ruleType)
+        {
+            var ruleParents = GetInheritanceChainFor(ruleType);
+            var firstRuleWithGeneric = ruleParents.Where(x => x.IsGenericType).First();
+            return firstRuleWithGeneric.GetGenericArguments().First();
+        }
+
+        /// <summary>
+        /// Returns the types that inherit from the provided type.
+        /// </summary>
+        /// <param name="type">Super-type you want to find sub-types for.</param>
+        /// <returns>list of types that inherit from the provided type.</returns>
+        private static IEnumerable<Type> GetSubTypes(Type type)
+        {
+            yield return type;
+            // Machine.Specifications and Moq-generated assemblies blow up when reading Types in, plus we don't need 'em.
+            var children = AppDomain
+                            .CurrentDomain
+                            .GetAssemblies()
+                            .Where(a => !a.FullName.Contains("DynamicProxyGenAssembly2") && !a.FullName.Contains("Machine.Specifications"))
+                            .SelectMany(s => s.GetTypes())
+                            .Where(x => (x.IsSubclassOf(type) || type.IsAssignableFrom(x)) && x != type)
+                            .ToList();
+            foreach (var t in children.Distinct())
+            {
+                yield return t;
+            }
+            yield break;
+        }
+
+        /// <summary>
+        /// Dictionary associating IRules with Types
+        /// </summary>
+        public ConcurrentDictionary<Type, List<IRule>> TypeRules { get; set; }
+
+        /// <summary>
+        /// Dictionary associating IRules with specific instances
+        /// </summary>
+        public ConcurrentDictionary<Object, List<IRule>> InstanceRules { get; set; }
+    }
+}
