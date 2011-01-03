@@ -26,6 +26,7 @@ using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Core.Serialization;
 using Symbiote.Core.Utility;
+using Symbiote.Core.Work;
 
 namespace Symbiote.Core
 {
@@ -88,9 +89,11 @@ namespace Symbiote.Core
                                                         );
                                                 });
                                             s.AddAllTypesOf<IContractResolverStrategy>();
+                                            s.AddSingleImplementations();
                                         });
                              x.For<IDependencyAdapter>().Use(adapter);
                          });
+            WireUpListenersToContainer();
             return Assimilation;
         }
 
@@ -200,6 +203,21 @@ namespace Symbiote.Core
                                                });
             LogManager.Initialized = true;
             return assimilate;
+        }
+
+        private static void WireUpListenersToContainer()
+        {
+            var assemblies = AppDomain
+                                .CurrentDomain
+                                .GetAssemblies()
+                                .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("Symbiote.Core")) && !a.FullName.Contains("DynamicProxyGenAssembly2"))
+                                .ToList();
+
+            Dependencies( x => x.Scan( s =>
+                                           {
+                                               assemblies.ForEach( s.Assembly );
+                                               s.AddAllTypesOf<IEventListener>();
+                                           } ) );
         }
     }
 }

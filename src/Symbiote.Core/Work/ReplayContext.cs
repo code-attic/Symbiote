@@ -41,7 +41,7 @@ namespace Symbiote.Core.Work
             OriginalState.Reset( Actor );
         }
 
-        public ReplayContext( TActor actor, IMemento<TActor> originalState )
+        public ReplayContext(TActor actor, IMemento<TActor> originalState)
         {
             Actor = actor;
             OriginalState = originalState;

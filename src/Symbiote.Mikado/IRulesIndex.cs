@@ -6,7 +6,6 @@ namespace Symbiote.Mikado
 {
     public interface IRulesIndex
     {
-        ConcurrentDictionary<Type, List<IRule>> TypeRules { get; set; }
-        ConcurrentDictionary<Object, List<IRule>> InstanceRules { get; set; }
+        ConcurrentDictionary<Type, List<IRule>> Rules { get; set; }
     }
 }

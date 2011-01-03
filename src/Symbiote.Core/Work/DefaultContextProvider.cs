@@ -26,6 +26,14 @@ namespace Symbiote.Core.Work
         public IMemoizer Memoizer { get; set; }
         public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
+
+        public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher, IKeyAccessor keyAccessor )
+        {
+            Configuration = configuration;
+            Memoizer = memoizer;
+            Publisher = publisher;
+            KeyAccessor = keyAccessor;
+        }
         
         public IContext GetContext<TActor>( TActor actor )
             where TActor : class
@@ -33,7 +41,7 @@ namespace Symbiote.Core.Work
             return GetContext(actor, null);
         }
 
-        public IContext GetContext<TActor>(TActor actor, IEnumerable<IObserver<IEvent>> listeners)
+        public IContext GetContext<TActor>( TActor actor, IEnumerable<IObserver<IEvent>> listeners)
             where TActor : class
         {
             var originalState = Memoizer.GetMemento(actor);
@@ -42,13 +50,7 @@ namespace Symbiote.Core.Work
                 return new ReplayContext<TActor>(actor, originalState);
             }
 
-            return new DefaultContext<TActor>(actor, originalState, KeyAccessor, Publisher);
-        }
-
-        public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer )
-        {
-            Configuration = configuration;
-            Memoizer = memoizer;
+            return new DefaultContext<TActor>(actor, originalState, KeyAccessor, Publisher, listeners);
         }
     }
 }

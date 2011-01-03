@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BA7FE9D9-14B1-4734-9E97-AEE911009333}</ProjectGuid>
+    <ProjectGuid>{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Symbiote.Mikado</RootNamespace>
-    <AssemblyName>Symbiote.Mikado</AssemblyName>
+    <RootNamespace>Mikado.Tests</RootNamespace>
+    <AssemblyName>Mikado.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,6 +31,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Machine.Specifications">
+      <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq">
+      <HintPath>..\..\lib\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,26 +46,31 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBrokenRuleNotification.cs" />
-    <Compile Include="Impl\BrokenRuleNotification.cs" />
-    <Compile Include="Impl\BrokenRulesCollection.cs" />
-    <Compile Include="Impl\MikadoContext.cs" />
-    <Compile Include="Impl\MikdaoContextProvider.cs" />
-    <Compile Include="Impl\Rule.cs" />
-    <Compile Include="Impl\RuleUnsubscriber.cs" />
-    <Compile Include="Impl\DefaultRulesIndex.cs" />
-    <Compile Include="Impl\DefaultRulesRunner.cs" />
-    <Compile Include="IRule.cs" />
-    <Compile Include="IRulesIndex.cs" />
-    <Compile Include="IRunRules.cs" />
-    <Compile Include="MikadoAssimilation.cs" />
+    <Compile Include="Domain\Model\Person.cs" />
+    <Compile Include="Domain\Rules\AgeMustBePositiveInteger.cs" />
+    <Compile Include="Domain\Rules\DepartmentNameIsRequired.cs" />
+    <Compile Include="Domain\Rules\FirstNameCannotExceedLengthLimitRule.cs" />
+    <Compile Include="Domain\Rules\LastNameCannotExceedLengthLimitRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rule Index Loading Tests.cs" />
+    <Compile Include="TestSetup\with_ioc_configuration.cs" />
+    <Compile Include="TestSetup\with_Manager.cs" />
+    <Compile Include="TestSetup\with_Person.cs" />
+    <Compile Include="when_testing_rules_loaded_against_a_Manager_type.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Mikado\Symbiote.Mikado.csproj">
+      <Project>{BA7FE9D9-14B1-4734-9E97-AEE911009333}</Project>
+      <Name>Symbiote.Mikado</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
+      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
+      <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 {
     public interface IBrokenRuleNotification
     {
-        IRule Rule { get; set; }
+        string Description { get; set; }
+        object RuleBreaker { get; set; }
     }
 }

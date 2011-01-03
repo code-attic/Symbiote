@@ -2,6 +2,7 @@
 {
     public class BrokenRuleNotification : IBrokenRuleNotification
     {
-        public IRule Rule { get; set; }
+        public string Description { get; set; }
+        public object RuleBreaker { get; set; }
     }
 }

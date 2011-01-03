@@ -59,6 +59,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Actor.Tests", "..\..\tests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Symbiote.Mikado", "..\..\src\Symbiote.Mikado\Symbiote.Mikado.csproj", "{BA7FE9D9-14B1-4734-9E97-AEE911009333}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mikado.Tests", "..\..\tests\Mikado.Tests\Mikado.Tests.csproj", "{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -460,6 +462,21 @@ Global
 		{BA7FE9D9-14B1-4734-9E97-AEE911009333}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{BA7FE9D9-14B1-4734-9E97-AEE911009333}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BA7FE9D9-14B1-4734-9E97-AEE911009333}.Release|x86.ActiveCfg = Release|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Development|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Development|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Development|x86.ActiveCfg = Debug|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -491,5 +508,6 @@ Global
 		{D512AC95-C894-4DC7-B6DB-961C054FB1CD} = {D3AEDC1F-5761-45D9-8563-69AAC394D5A3}
 		{99361C6F-C615-4508-9DAC-314DA9DB0B66} = {D3AEDC1F-5761-45D9-8563-69AAC394D5A3}
 		{78D865BE-4B65-4F98-81B5-2A441DE11C09} = {D3AEDC1F-5761-45D9-8563-69AAC394D5A3}
+		{A6BD5016-0FF8-47FB-88FB-815A54EC62B3} = {D3AEDC1F-5761-45D9-8563-69AAC394D5A3}
 	EndGlobalSection
 EndGlobal

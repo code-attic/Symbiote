@@ -9,30 +9,25 @@ namespace Symbiote.Mikado.Impl
 {
     /// <summary>
     /// Out-of-the-box class that provides simple scan-and-load capability for loading
-    /// rules and target types into the TypeRules collection
+    /// rules and target types into the Rules collection
     /// </summary>
     public class DefaultRulesIndex : IRulesIndex
     {
         public DefaultRulesIndex()
         {
-            Init();
-        }
-
-        private void Init()
-        {
-            TypeRules = new ConcurrentDictionary<Type, List<IRule>>();
-            InstanceRules = new ConcurrentDictionary<Object, List<IRule>>();
+            Rules = new ConcurrentDictionary<Type, List<IRule>>();
             ScanAndLoadRules();
         }
 
         /// <summary>
         /// Gets all instances of IRule types from the IoC container and builds
         /// up a list of the target types (the "T" in IRule&lt;T&gt;) and loads them
-        /// in the TypeRules dictionary with rules assigned to that type (as well as assigning
+        /// in the Rules dictionary with rules assigned to that type (as well as assigning
         /// those rules to sub-types). 
         /// </summary>
         private void ScanAndLoadRules()
         {
+            Rules.Clear();
             var rules = Assimilate.GetAllInstancesOf<IRule>().Distinct().ToList();
 
             rules.ForEach(rule =>
@@ -45,7 +40,7 @@ namespace Symbiote.Mikado.Impl
                     .ForEach(domainType =>
                     {
                         List<IRule> ruleList = null;
-                        if (TypeRules.TryGetValue(domainType, out ruleList))
+                        if (Rules.TryGetValue(domainType, out ruleList))
                         {
                             if (!ruleList.Contains(rule))
                                 ruleList.Add(rule);
@@ -53,7 +48,7 @@ namespace Symbiote.Mikado.Impl
                         else
                         {
                             ruleList = new List<IRule>() { rule };
-                            TypeRules.TryAdd(domainType, ruleList);
+                            Rules.TryAdd(domainType, ruleList);
                         }
                     });
             });
@@ -117,11 +112,6 @@ namespace Symbiote.Mikado.Impl
         /// <summary>
         /// Dictionary associating IRules with Types
         /// </summary>
-        public ConcurrentDictionary<Type, List<IRule>> TypeRules { get; set; }
-
-        /// <summary>
-        /// Dictionary associating IRules with specific instances
-        /// </summary>
-        public ConcurrentDictionary<Object, List<IRule>> InstanceRules { get; set; }
+        public ConcurrentDictionary<Type, List<IRule>> Rules { get; set; }
     }
 }

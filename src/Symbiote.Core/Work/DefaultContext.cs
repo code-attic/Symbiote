@@ -24,7 +24,7 @@ namespace Symbiote.Core.Work
         : IContext
         where TActor : class
     {
-        private List<IDisposable> _subscriptionTokens = new List<IDisposable>();
+        private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
@@ -74,16 +74,16 @@ namespace Symbiote.Core.Work
             Events.Add( baseEvent );
         }
 
+        public void Rollback()
+        {
+            OriginalState.Reset(Actor);
+        }
+
         protected void PopulateDefaultEventFields( IEvent baseEvent ) 
         {
             baseEvent.ActorId = KeyAccessor.GetId( Actor );
             baseEvent.ActorType = Actor.GetType().FullName;
             baseEvent.UtcTimeStamp = DateTime.UtcNow;
-        }
-
-        public void Rollback()
-        {
-            OriginalState.Reset( Actor );
         }
     }
 }

@@ -17,7 +17,6 @@ namespace Symbiote.Core.Work
 
         public void PublishEvent(IEvent evnt)
         {
-            //TODO: do we need to synchronize this?
             List<IEventListener> listeners;
             if (Listeners.TryGetValue(evnt.GetType(), out listeners))
             {
