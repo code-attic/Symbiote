@@ -6,15 +6,9 @@ namespace Symbiote.Messaging.Impl.Mesh
     {
         public INodeConfiguration Configuration { get; set; }
 
-
-        public void Init()
+        public NodeConfigurator BroadcastChannel(string meshChannelName)
         {
-            Configuration.BroadcastChannel = "broadcast";
-        }
-
-        public NodeConfigurator BroadcastChannel(string broadcastTo)
-        {
-            Configuration.BroadcastChannel = broadcastTo;
+            Configuration.MeshChannel = meshChannelName;
             return this;
         }
 
@@ -37,7 +31,6 @@ namespace Symbiote.Messaging.Impl.Mesh
 
     public interface INodeConfiguration
     {
-        string BroadcastChannel { get; set; }
         string MeshChannel { get; set; }
         string NodeChannel { get; set; }
         string GetNodeChannelForId( string nodeId );

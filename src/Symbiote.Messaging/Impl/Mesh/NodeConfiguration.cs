@@ -12,7 +12,6 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public string MeshChannel { get; set; }
         public string NodeChannel { get; set; }
-        public string BroadcastChannel { get; set; }
 
         public string GetNodeChannelForId( string nodeId )
         {

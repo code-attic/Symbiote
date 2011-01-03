@@ -72,7 +72,7 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public void OnNext( NodeHealth value )
         {
-            Bus.Publish( Configuration.BroadcastChannel, value );
+            Bus.Publish( Configuration.MeshChannel, value );
         }
 
         public void OnError( Exception error )
