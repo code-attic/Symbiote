@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Timers;
 using Microsoft.VisualBasic.Devices;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Utility;
@@ -22,22 +22,20 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public void Start()
         {
-            if(UpdateTimer == null)
-            {
-                UpdateTimer = new Timer(UpdateHealth, null, TimeSpan.Zero, Configuration.HealthMonitorFrequency);
-            }
+            UpdateTimer.Start();
         }
 
         public void Stop()
         {
-            UpdateTimer.Dispose();
-            UpdateTimer = null;
+            UpdateTimer.Stop();
         }
 
-        public void UpdateHealth(object nullstate)
+        public void UpdateHealth(object sender, ElapsedEventArgs e)
         {
             var computerInfo = new ComputerInfo();
             var availableRam = (decimal) computerInfo.AvailablePhysicalMemory / (decimal) computerInfo.TotalPhysicalMemory;
+            UpdateTimer = new Timer(Configuration.HealthMonitorFrequency.TotalMilliseconds);
+            UpdateTimer.Elapsed += UpdateHealth;
             Observers.OnEvent( new NodeHealth() { LoadScore = availableRam, NodeId = Configuration.IdentityProvider.Identity });
         }
 

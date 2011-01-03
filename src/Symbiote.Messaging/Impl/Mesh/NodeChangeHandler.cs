@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Messaging.Impl.Mesh
+﻿using System;
+
+namespace Symbiote.Messaging.Impl.Mesh
 {
     public class NodeChangeHandler :
         IHandle<NodeUp>,
@@ -19,11 +21,18 @@
 
         public void Handle( IEnvelope<NodeHealth> envelope )
         {
-            var nodeId = envelope.Message.NodeId;
-            if( !Registry.HasNode( nodeId ) )
-                Registry.AddNode( nodeId );
+            try
+            {
+                var nodeId = envelope.Message.NodeId;
+                if( !Registry.HasNode( nodeId ) )
+                    Registry.AddNode( nodeId );
 
-            Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
+                Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine( e );
+            }
         }
 
         public NodeChangeHandler( INodeRegistry registry )
