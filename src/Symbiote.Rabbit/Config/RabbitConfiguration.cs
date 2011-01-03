@@ -24,18 +24,27 @@ namespace Symbiote.Rabbit.Config
 {
     public class RabbitConfiguration
     {
+        public bool AsNode { get; set; }
         public ConcurrentDictionary<string, IRabbitBroker> Brokers { get; set; }
 
-        public void AddBroker(IRabbitBroker broker)
+        public RabbitConfiguration AddBroker(IRabbitBroker broker)
         {
             Brokers.GetOrAdd(broker.Name, broker);
+            return this;
         }
 
-        public void AddBroker(Action<RabbitBrokerFluentConfigurator> configurate)
+        public RabbitConfiguration AddBroker(Action<RabbitBrokerFluentConfigurator> configurate)
         {
             var configurator = new RabbitBrokerFluentConfigurator();
             configurate(configurator);
             AddBroker(configurator.RabbitBroker);
+            return this;
+        }
+
+        public RabbitConfiguration EnrollAsMeshNode()
+        {
+            AsNode = true;
+            return this;
         }
 
         public RabbitConfiguration()

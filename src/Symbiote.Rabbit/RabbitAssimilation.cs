@@ -16,9 +16,11 @@ limitations under the License.
 
 using System;
 using Symbiote.Core;
+using Symbiote.Messaging.Impl.Mesh;
 using Symbiote.Rabbit.Config;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
+using Symbiote.Rabbit.Impl.Node;
 using Symbiote.Rabbit.Impl.Server;
 using Symbiote.Rabbit.Impl.Transform;
 
@@ -54,7 +56,14 @@ namespace Symbiote.Rabbit
                                             x.For<RabbitSerializerTransform>()
                                                 .Use<RabbitSerializerTransform>()
                                                 .AsSingleton();
+                                            x.For<IInitializeNode>()
+                                                .Use<RabbitNodeInitializer>().AsSingleton();
                                         });
+            if(configuration.AsNode)
+            {
+                var initializer = Assimilate.GetInstanceOf<IInitializeNode>();
+                initializer.InitializeChannels();
+            }
         }
     }
 }

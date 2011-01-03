@@ -43,7 +43,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>..\..\bin\Symbiote.Core.xml</DocumentationFile>
-	<DevOnly>True</DevOnly>
+    <DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -183,6 +183,8 @@
     <Compile Include="Utility\HierarchyVisitor.cs" />
     <Compile Include="Utility\ILockManager.cs" />
     <Compile Include="Utility\NullLockManager.cs" />
+    <Compile Include="Utility\ObserverCollection.cs" />
+    <Compile Include="Utility\ObserverToken.cs" />
     <Compile Include="Utility\Pipeline.cs" />
     <Compile Include="Utility\SpinLockManager.cs" />
     <Compile Include="Utility\VolatileRingBuffer.cs" />

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Messaging.Impl.Mesh;
 
 namespace Symbiote.Daemon.Host
 {
@@ -23,6 +25,12 @@ namespace Symbiote.Daemon.Host
 
         public static void Start(IHost host)
         {
+            Assimilate
+                .GetAllInstancesOf<IInitializeNode>()
+                .ForEach(x => x.InitializeChannels());
+
+
+
             host.Start();
         }
     }

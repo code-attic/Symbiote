@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Messaging.Impl.Mesh
+﻿using System;
+
+namespace Symbiote.Messaging.Impl.Mesh
 {
     public class NodeConfigurator
     {
@@ -16,6 +18,17 @@
             return this;
         }
 
+        public NodeConfigurator HealthUpdateEvery( int milisecondsBetweenUpdates )
+        {
+            return HealthUpdateEvery(TimeSpan.FromMilliseconds(milisecondsBetweenUpdates));
+        }
+
+        public NodeConfigurator HealthUpdateEvery( TimeSpan timeBetweenUpdates )
+        {
+            Configuration.HealthMonitorFrequency = timeBetweenUpdates;
+            return this;
+        }
+
         public NodeConfigurator( INodeConfiguration configuration )
         {
             Configuration = configuration;
@@ -27,5 +40,7 @@
         string BroadcastChannel { get; set; }
         string MeshChannel { get; set; }
         string NodeChannel { get; set; }
+        TimeSpan HealthMonitorFrequency { get; set; }
+        INodeIdentityProvider IdentityProvider { get; set; }
     }
 }

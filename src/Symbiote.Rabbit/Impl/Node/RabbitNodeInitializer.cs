@@ -1,5 +1,7 @@
 ﻿
 
+using System;
+using System.Collections.Concurrent;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Mesh;
 
@@ -9,6 +11,7 @@ namespace Symbiote.Rabbit.Impl.Node
         : IInitializeNode
     {
         public INodeConfiguration NodeConfiguration { get; set; }
+        public INodeHealthMonitor NodeMonitor { get; set; }
         public IBus Bus { get; set; }
 
         public void InitializeChannels()
@@ -49,11 +52,15 @@ namespace Symbiote.Rabbit.Impl.Node
 
             //Now for the magic
             Bus.BindExchangeToQueue( meshExchange, nodeExchange, NodeConfiguration.NodeChannel );
+
+            //Start the monitor
+            NodeMonitor.Start();
         }
 
-        public RabbitNodeInitializer( INodeConfiguration nodeConfiguration, IBus bus )
+        public RabbitNodeInitializer( INodeConfiguration nodeConfiguration, INodeHealthMonitor nodeMonitor, IBus bus )
         {
             NodeConfiguration = nodeConfiguration;
+            NodeMonitor = nodeMonitor;
             Bus = bus;
         }
     }

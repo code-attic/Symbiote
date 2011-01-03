@@ -11,6 +11,7 @@ using Symbiote.StructureMap;
 using Symbiote.Messaging;
 using Symbiote.Log4Net;
 using Symbiote.Core.Extensions;
+using Symbiote.Rabbit;
 
 namespace Node.Console
 {
@@ -22,6 +23,7 @@ namespace Node.Console
                 .Core<StructureMapAdapter>()
                 .Daemon( x => x.Arguments( args ).Name( "node" ) )
                 .Messaging()
+                .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()))
                 .AsNode()
                 .AddConsoleLogger<NodeService>( x => x.Debug().MessageLayout( m => m.Message().Newline() ) )
                 .RunDaemon();

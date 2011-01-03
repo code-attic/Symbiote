@@ -55,15 +55,6 @@ namespace Symbiote.Messaging
             return assimilate;
         }
 
-        public static IAssimilate AsNode( this IAssimilate assimilate)
-        {
-            Assimilate
-                .GetAllInstancesOf<IInitializeNode>()
-                .ForEach( x => x.InitializeChannels() );
-
-            return assimilate;
-        }
-
         public static IAssimilate Messaging(this IAssimilate assimilate)
         {
             assimilate.Dependencies(x =>
@@ -114,6 +105,8 @@ namespace Symbiote.Messaging
             x.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
             x.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
             x.For<INodeConfiguration>().Use<NodeConfiguration>().AsSingleton();
+            x.For<INode>().Use<Node>().AsSingleton();
+            x.For<INodeHealthMonitor>().Use<NodeHealthMonitor>().AsSingleton();
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()
@@ -209,6 +202,7 @@ namespace Symbiote.Messaging
                 typeof (IHandle<>));
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<,>));
+            s.AddAllTypesOf<INodeHealthBroadcaster>();
             s.AddAllTypesOf<IInitializeNode>();
         }
     }
