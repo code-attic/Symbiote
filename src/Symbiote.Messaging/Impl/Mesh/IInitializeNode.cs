@@ -9,13 +9,4 @@ namespace Symbiote.Messaging.Impl.Mesh
     {
         void InitializeChannels();
     }
-
-    public class NullInitializer
-        : IInitializeNode
-    {
-        public void InitializeChannels()
-        {
-            // do nothing
-        }
-    }
 }

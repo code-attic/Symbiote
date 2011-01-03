@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
@@ -32,8 +33,8 @@ namespace Symbiote.Core.Hashing
         protected IHashingProvider HashProvider { get; set; }
         protected ReaderWriterLockSlim MapLock { get; set; }
         protected RedBlackTree<long, string> Map { get; set; }
-        protected ConcurrentDictionary<string, List<long>> AliasLookup { get; set; }
-        protected ConcurrentDictionary<string, TNode> Nodes { get; set; }
+        public ConcurrentDictionary<string, List<long>> AliasLookup { get; set; }
+        public ConcurrentDictionary<string, TNode> Nodes { get; set; }
 
         public int AliasCount { get; protected set; }
 
@@ -123,12 +124,11 @@ namespace Symbiote.Core.Hashing
                         try
                         {
                             aliasList.Remove( x );
-                            MapLock.EnterWriteLock();
                             Map.Delete( x );
                         }
-                        finally
+                        catch(Exception ex)
                         {
-                            MapLock.ExitWriteLock();
+                            Console.WriteLine(ex);
                         }
                     } );
             }

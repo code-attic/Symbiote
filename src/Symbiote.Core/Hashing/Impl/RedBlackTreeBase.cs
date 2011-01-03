@@ -33,12 +33,17 @@ namespace Symbiote.Core.Hashing.Impl
         {
             Lock.EnterWriteLock();
 
-            bool done = false;
-            Root = Remove(Root, key, ref done);
-            if (!Root.IsEmpty())
-                Root.Color = LeafColor.BLACK;
-
-            Lock.ExitWriteLock();
+            try
+            {
+                bool done = false;
+                Root = Remove(Root, key, ref done);
+                if (!Root.IsEmpty())
+                    Root.Color = LeafColor.BLACK;
+            }
+            finally
+            {
+                Lock.ExitWriteLock();  
+            }
         }
 
         public virtual TValue Get(TKey key)
@@ -68,10 +73,16 @@ namespace Symbiote.Core.Hashing.Impl
         public virtual void Add(TKey key, TValue value)
         {
             Lock.EnterWriteLock();
-            var leaf = CreateLeaf(key, value);
-            Root = Insert(Root, leaf);
-            Root.Color = LeafColor.BLACK;
-            Lock.ExitWriteLock();
+            try
+            {
+                var leaf = CreateLeaf(key, value);
+                Root = Insert(Root, leaf);
+                Root.Color = LeafColor.BLACK;
+            }
+            finally
+            {
+                Lock.ExitWriteLock();   
+            }
         }
 
         protected abstract IRedBlackLeaf<TKey, TValue> CreateLeaf(TKey key, TValue value);
@@ -211,7 +222,7 @@ namespace Symbiote.Core.Hashing.Impl
         {
             IRedBlackLeaf<TKey, TValue> worker = root;
             IRedBlackLeaf<TKey, TValue> leaf = root[!direction];
-
+            
             if(leaf.IsRed())
             {
                 root = Rotate(root, direction);
@@ -231,14 +242,17 @@ namespace Symbiote.Core.Hashing.Impl
                 {
                     var save = worker.IsRed();
                     var newRoot = root.Key.Equals(worker.Key);
-                    if (leaf[direction].IsRed())
+
+                    if (leaf[!direction].IsRed())
                         worker = Rotate(worker, direction);
                     else
                         worker = DoubleRotate(worker, direction);
 
                     worker.Color = save ? LeafColor.RED : LeafColor.BLACK;
-                    worker.Left.Color = LeafColor.BLACK;
-                    worker.Right.Color = LeafColor.BLACK;
+                    if(!worker.Left.IsEmpty())
+                        worker.Left.Color = LeafColor.BLACK;
+                    if (!worker.Right.IsEmpty())
+                        worker.Right.Color = LeafColor.BLACK;
 
                     if (newRoot)
                         root = worker;
@@ -248,6 +262,7 @@ namespace Symbiote.Core.Hashing.Impl
                     done = true;
                 }
             }
+
             return root;
         }
 
@@ -260,14 +275,17 @@ namespace Symbiote.Core.Hashing.Impl
         protected virtual IRedBlackLeaf<TKey, TValue> Rotate(IRedBlackLeaf<TKey, TValue> leaf, bool direction)
         {
             var working = leaf[!direction];
-            
-            leaf[!direction] = working[direction];
-            working[direction] = leaf;
 
-            leaf.Color = LeafColor.RED;
-            working.Color = LeafColor.BLACK;
+            if(!working.IsEmpty())
+            {
+                leaf[!direction] = working[direction];
+                working[direction] = leaf;
 
-            return working;
+                leaf.Color = LeafColor.RED;
+                working.Color = LeafColor.BLACK;
+                return working;
+            }
+            return leaf;
         }
 
         protected RedBlackTreeBase()
