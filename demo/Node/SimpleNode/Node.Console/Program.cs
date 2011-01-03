@@ -25,7 +25,7 @@ namespace Node.Console
                 .Core<StructureMapAdapter>()
                 .Daemon( x => x.Arguments( args ).Name( "node" ) )
                 .Messaging()
-                .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()))
+                .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()).EnrollAsMeshNode())
                 .AddConsoleLogger<NodeService>( x => x.Debug().MessageLayout( m => m.Message().Newline() ) )
                 .RunDaemon();
         }

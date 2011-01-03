@@ -34,7 +34,7 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public string GetChannelForMessage<T>(T message)
         {
-            return Nodes.GetNodeFor( message );
+            return Configuration.GetNodeChannelForId(Nodes.GetNodeFor( message ));
         }
 
         public Node( INodeRegistry nodes, IBus bus, INodeConfiguration configuration )

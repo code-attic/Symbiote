@@ -111,6 +111,10 @@ namespace Symbiote.Core.Hashing.Impl
         {
             IRedBlackLeaf<TKey, TValue> leaf;
             leaf = this.Root;
+
+            if (leaf == null)
+                return null;
+
             while (leaf.Right != null)
             {
                 leaf = leaf.Right;

@@ -15,6 +15,11 @@ namespace Symbiote.Messaging.Impl.Mesh
         public string NodeChannel { get; set; }
         public string BroadcastChannel { get; set; }
 
+        public string GetNodeChannelForId( string nodeId )
+        {
+            return NODE_FORMAT.AsFormat( nodeId );
+        }
+
         public NodeConfiguration( INodeIdentityProvider identityProvider )
         {
             IdentityProvider = identityProvider;

@@ -40,7 +40,9 @@ namespace Symbiote.Messaging.Impl.Mesh
         string BroadcastChannel { get; set; }
         string MeshChannel { get; set; }
         string NodeChannel { get; set; }
+        string GetNodeChannelForId( string nodeId );
         TimeSpan HealthMonitorFrequency { get; set; }
         INodeIdentityProvider IdentityProvider { get; set; }
+
     }
 }
