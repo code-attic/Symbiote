@@ -116,7 +116,7 @@ namespace Symbiote.Core.Hashing
             List<long> aliasList;
             if(AliasLookup.TryGetValue( name, out aliasList ))
             {
-                var removals = aliasList.Take( count );
+                var removals = aliasList.Take( count ).ToList();
                 removals
                     .ForEach( x =>
                     {
