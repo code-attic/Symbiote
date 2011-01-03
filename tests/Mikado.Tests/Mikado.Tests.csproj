@@ -56,7 +56,6 @@
     <Compile Include="TestSetup\with_ioc_configuration.cs" />
     <Compile Include="TestSetup\with_Manager.cs" />
     <Compile Include="TestSetup\with_Person.cs" />
-    <Compile Include="when_testing_rules_loaded_against_a_Manager_type.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
