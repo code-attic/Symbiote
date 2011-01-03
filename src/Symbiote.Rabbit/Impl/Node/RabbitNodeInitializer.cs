@@ -20,16 +20,16 @@ namespace Symbiote.Rabbit.Impl.Node
             var nodeExchange = NodeConfiguration.NodeChannel;
             var nodeQueue = NodeConfiguration.NodeChannel + "Q";
             var meshExchange = NodeConfiguration.MeshChannel;
-            var meshQueue = NodeConfiguration.MeshChannel + "Q";
 
             Bus.AddRabbitChannel( x => x
                 .Direct( nodeExchange )
                 .Immediate()
                 .Mandatory()
+                .AutoDelete()
                 .PersistentDelivery() // we do want messages sticking around even if the broker dies
                 );
 
-            
+
             Bus.AddRabbitQueue( x => x
                 .QueueName( nodeQueue )
                 .ExchangeName( nodeExchange )
@@ -43,13 +43,6 @@ namespace Symbiote.Rabbit.Impl.Node
                 .Durable()
                 );
 
-            
-            Bus.AddRabbitQueue( x => x
-                .QueueName( meshQueue)
-                .ExchangeName( meshExchange)
-                .Durable() // we do want messages sticking around even if the broker dies
-                .AutoDelete() // we don't want queues lingering after the node is gone
-                .StartSubscription() );
 
             //Now for the magic
             Bus.BindExchangeToQueue( meshExchange, nodeExchange, NodeConfiguration.NodeChannel );

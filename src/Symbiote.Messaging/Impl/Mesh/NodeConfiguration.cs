@@ -6,7 +6,6 @@ namespace Symbiote.Messaging.Impl.Mesh
     public class NodeConfiguration
         : INodeConfiguration
     {
-        protected readonly string MESH_FORMAT = "mesh.{0}";
         protected readonly string NODE_FORMAT = "node.{0}";
         public INodeIdentityProvider IdentityProvider { get; set; }
         public TimeSpan HealthMonitorFrequency { get; set; }
@@ -23,7 +22,7 @@ namespace Symbiote.Messaging.Impl.Mesh
         public NodeConfiguration( INodeIdentityProvider identityProvider )
         {
             IdentityProvider = identityProvider;
-            MeshChannel = MESH_FORMAT.AsFormat( identityProvider.Identity );
+            MeshChannel = "mesh";
             NodeChannel = NODE_FORMAT.AsFormat( identityProvider.Identity );
         }
     }

@@ -51,7 +51,7 @@ namespace Node.Console
         public void Handle( IEnvelope<Message> envelope )
         {
             "{0} got a message: {1}"
-                .ToDebug<NodeService>(IdentityProvider.Identity, envelope.Message);
+                .ToDebug<NodeService>(IdentityProvider.Identity, envelope.Message.Text);
         }
 
         public MessageHandler( INodeIdentityProvider identityProvider )
@@ -71,12 +71,6 @@ namespace Node.Console
         {
             "Starting node {0}"
                 .ToDebug<NodeService>(IdentityProvider.Identity);
-
-            while (true)
-            {
-                Node.Publish( "Dis here's a message from '{0}'".AsFormat( IdentityProvider.Identity ) );
-                Thread.Sleep( 1000 );
-            }
         }
 
         public void Stop()
@@ -96,7 +90,7 @@ namespace Node.Console
 
         void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Node.Publish( new Message("Hi, from ") );
+            Node.Publish(new Message("Dis here's a message from '{0}'".AsFormat(IdentityProvider.Identity)));
         }
     }
 }
