@@ -30,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public void Start()
         {
-            if(UpdateTimer != null)
+            if(UpdateTimer == null)
             {
                 UpdateTimer = new Timer(UpdateHealth, null, TimeSpan.Zero, Configuration.HealthMonitorFrequency);
             }
