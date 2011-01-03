@@ -46,6 +46,11 @@ namespace Symbiote.Core.Hashing
             BuildAliases(name);
         }
 
+        public virtual bool HasNode(string name)
+        {
+            return Nodes.ContainsKey( name );
+        }
+
         /// <summary>
         /// Rebalances a node's virtual key space by a delta of 'change'
         /// </summary>

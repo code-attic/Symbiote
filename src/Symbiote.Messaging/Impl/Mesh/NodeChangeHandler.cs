@@ -19,7 +19,11 @@
 
         public void Handle( IEnvelope<NodeHealth> envelope )
         {
-            Registry.RebalanceNode( envelope.Message.NodeId, envelope.Message.LoadScore );
+            var nodeId = envelope.Message.NodeId;
+            if( !Registry.HasNode( nodeId ) )
+                Registry.AddNode( nodeId );
+
+            Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
         }
 
         public NodeChangeHandler( INodeRegistry registry )

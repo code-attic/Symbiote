@@ -17,6 +17,11 @@ namespace Symbiote.Messaging.Impl.Mesh
             return Nodes.GetNode( value );
         }
 
+        public bool HasNode( string nodeId )
+        {
+            return Nodes.HasNode( nodeId );
+        }
+
         public void RebalanceNode( string nodeId, decimal loadScore )
         {
             var total = Nodes.AliasCount * loadScore;

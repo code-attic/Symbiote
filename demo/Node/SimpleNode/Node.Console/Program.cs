@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Timers;
 using Symbiote.Core;
 using Symbiote.Daemon;
@@ -12,6 +13,7 @@ using Symbiote.Messaging;
 using Symbiote.Log4Net;
 using Symbiote.Core.Extensions;
 using Symbiote.Rabbit;
+using Timer = System.Timers.Timer;
 
 namespace Node.Console
 {
@@ -24,7 +26,6 @@ namespace Node.Console
                 .Daemon( x => x.Arguments( args ).Name( "node" ) )
                 .Messaging()
                 .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()))
-                .AsNode()
                 .AddConsoleLogger<NodeService>( x => x.Debug().MessageLayout( m => m.Message().Newline() ) )
                 .RunDaemon();
         }
@@ -70,6 +71,12 @@ namespace Node.Console
         {
             "Starting node {0}"
                 .ToDebug<NodeService>(IdentityProvider.Identity);
+
+            while (true)
+            {
+                Node.Publish( "Dis here's a message from '{0}'".AsFormat( IdentityProvider.Identity ) );
+                Thread.Sleep( 1000 );
+            }
         }
 
         public void Stop()

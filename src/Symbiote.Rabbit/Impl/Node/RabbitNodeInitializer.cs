@@ -12,6 +12,7 @@ namespace Symbiote.Rabbit.Impl.Node
     {
         public INodeConfiguration NodeConfiguration { get; set; }
         public INodeHealthMonitor NodeMonitor { get; set; }
+        public INodeRegistry NodeRegistry { get; set; }
         public IBus Bus { get; set; }
 
         public void InitializeChannels()
@@ -53,14 +54,18 @@ namespace Symbiote.Rabbit.Impl.Node
             //Now for the magic
             Bus.BindExchangeToQueue( meshExchange, nodeExchange, NodeConfiguration.NodeChannel );
 
+            //Add 'self' to the node registry
+            this.NodeRegistry.AddNode( NodeConfiguration.IdentityProvider.Identity );
+
             //Start the monitor
             NodeMonitor.Start();
         }
 
-        public RabbitNodeInitializer( INodeConfiguration nodeConfiguration, INodeHealthMonitor nodeMonitor, IBus bus )
+        public RabbitNodeInitializer( INodeConfiguration nodeConfiguration, INodeHealthMonitor nodeMonitor, INodeRegistry nodeRegistry, IBus bus )
         {
             NodeConfiguration = nodeConfiguration;
             NodeMonitor = nodeMonitor;
+            NodeRegistry = nodeRegistry;
             Bus = bus;
         }
     }
