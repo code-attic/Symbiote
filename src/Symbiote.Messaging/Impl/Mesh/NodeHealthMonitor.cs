@@ -34,8 +34,6 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             var computerInfo = new ComputerInfo();
             var availableRam = (decimal) computerInfo.AvailablePhysicalMemory / (decimal) computerInfo.TotalPhysicalMemory;
-            UpdateTimer = new Timer(Configuration.HealthMonitorFrequency.TotalMilliseconds);
-            UpdateTimer.Elapsed += UpdateHealth;
             Observers.OnEvent( new NodeHealth() { LoadScore = availableRam, NodeId = Configuration.IdentityProvider.Identity });
         }
 
@@ -43,6 +41,8 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             Observers = new ObserverCollection<NodeHealth>();
             Configuration = configuration;
+            UpdateTimer = new Timer(Configuration.HealthMonitorFrequency.TotalMilliseconds);
+            UpdateTimer.Elapsed += UpdateHealth;
             broadcasters
                 .ForEach( x => Subscribe(x) );
         }
