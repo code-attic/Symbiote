@@ -23,6 +23,9 @@ namespace Symbiote.JsonRpc.Client
 {
     public static class JsonRpcClientAssimilation
     {
+        /// <summary>
+        /// Configure the JSON Rpc client library
+        /// </summary>
         public static IAssimilate JsonRpcClient(this IAssimilate assimilate, Action<JsonRpcClientConfigurator> configure)
         {
             var configurator = new JsonRpcClientConfigurator(new JsonRpcClientConfiguration());

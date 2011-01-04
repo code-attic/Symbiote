@@ -21,6 +21,7 @@ using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Rabbit
 {
@@ -44,6 +45,22 @@ namespace Symbiote.Rabbit
             
             channelDefinition.CreateOnBroker( connectionManager );
             channels.AddDefinition( channelDefinition );
+            return bus;
+        }
+
+        public static IBus BindExchangeToQueue(this IBus bus, string exchange, string queue, params string[] routingKeys)
+        {
+            var connectionManager = Assimilate.GetInstanceOf<IConnectionManager>();
+            var connection = connectionManager.GetConnection();
+            using(var channel = connection.CreateModel())
+            {
+                if(routingKeys.Length == 0)
+                    channel.ExchangeBind( queue, exchange, "", false, null );
+                else
+                    routingKeys
+                        .ForEach(x => channel.ExchangeBind( queue, exchange, x, false, null ));
+            }
+
             return bus;
         }
 

@@ -28,6 +28,7 @@ using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Eventing;
+using Symbiote.Messaging.Impl.Mesh;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -100,9 +101,12 @@ namespace Symbiote.Messaging
             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
             x.For<IChannelIndex>().Use<ChannelIndex>().AsSingleton();
             x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
-            //x.For<IDispatcher>().Use<HyperDispatchManager>().AsSingleton();
             x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
-            
+            x.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
+            x.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
+            x.For<INodeConfiguration>().Use<NodeConfiguration>().AsSingleton();
+            x.For<INode>().Use<Node>().AsSingleton();
+            x.For<INodeHealthMonitor>().Use<NodeHealthMonitor>().AsSingleton();
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()
@@ -198,6 +202,8 @@ namespace Symbiote.Messaging
                 typeof (IHandle<>));
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<,>));
+            s.AddAllTypesOf<INodeHealthBroadcaster>();
+            s.AddAllTypesOf<INodeChannelManager>();
         }
     }
 }
