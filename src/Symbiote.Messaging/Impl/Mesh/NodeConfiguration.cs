@@ -23,6 +23,7 @@ namespace Symbiote.Messaging.Impl.Mesh
             IdentityProvider = identityProvider;
             MeshChannel = "mesh";
             NodeChannel = NODE_FORMAT.AsFormat( identityProvider.Identity );
+            HealthMonitorFrequency = TimeSpan.FromSeconds( 1 );
         }
     }
 }
