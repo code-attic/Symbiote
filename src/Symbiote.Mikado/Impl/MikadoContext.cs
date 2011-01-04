@@ -84,5 +84,24 @@ namespace Symbiote.Mikado.Impl
         {
             OriginalState.Reset( Actor );
         }
+
+        #region Static Members...
+        private static IContextProvider _provider;
+
+        protected static IContextProvider ContextProvider
+        {
+            get
+            {
+                _provider = _provider ?? Assimilate.GetInstanceOf<IContextProvider>();
+                return _provider;
+            }
+        }
+
+        public static IContext CreateFor<TActor>(TActor instance)
+            where TActor : class
+        {
+            return ContextProvider.GetContext(instance);
+        }
+        #endregion
     }
 }

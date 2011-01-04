@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Actor.Tests.Domain.Events;
-using Symbiote.Actor;
+using Symbiote.Core.Work;
 
 namespace Actor.Tests.Domain.Model
 {
@@ -56,12 +56,12 @@ namespace Actor.Tests.Domain.Model
 
         public void ChangeName(string firstName, string lastName)
         {
-            using(var context = EventContext.CreateFor( this ))
+            using(var context = DefaultContext.CreateFor( this ))
             {
                 FirstName = firstName;
                 LastName = lastName;
 
-                context.Publish<DriverChangedName>( x =>
+                context.PublishOnCommit<DriverChangedName>(x =>
                 {
                     x.FirstName = firstName;
                     x.LastName = lastName;

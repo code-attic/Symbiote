@@ -49,13 +49,17 @@
     <Compile Include="Domain\Model\Person.cs" />
     <Compile Include="Domain\Rules\AgeMustBePositiveInteger.cs" />
     <Compile Include="Domain\Rules\DepartmentNameIsRequired.cs" />
-    <Compile Include="Domain\Rules\FirstNameCannotExceedLengthLimitRule.cs" />
-    <Compile Include="Domain\Rules\LastNameCannotExceedLengthLimitRule.cs" />
+    <Compile Include="Domain\Rules\FirstNameCannotExceedLengthLimit.cs" />
+    <Compile Include="Domain\Rules\LastNameCannotExceedLengthLimit.cs" />
+    <Compile Include="Mikado Context Tests.cs" />
+    <Compile Include="Passing Rule Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rule Index Loading Tests.cs" />
     <Compile Include="TestSetup\with_ioc_configuration.cs" />
     <Compile Include="TestSetup\with_Manager.cs" />
     <Compile Include="TestSetup\with_Person.cs" />
+    <Compile Include="Domain\TestSubscriber.cs" />
+    <Compile Include="Broken Rule Tests.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

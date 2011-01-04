@@ -27,7 +27,8 @@ namespace Symbiote.Mikado.Impl
                 callback( new BrokenRuleNotification()
                               {
                                   Description = DescriptionDelegate( target ),
-                                  RuleBreaker = target
+                                  RuleBreaker = target,
+                                  BrokenRuleType = GetType()
                               } );
             }
         }

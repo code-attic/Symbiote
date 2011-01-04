@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using Symbiote.Actor;
+using Symbiote.Core.Work;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {

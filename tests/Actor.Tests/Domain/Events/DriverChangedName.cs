@@ -1,4 +1,5 @@
 ﻿using Symbiote.Actor;
+using Symbiote.Messaging.Impl.Monitor;
 
 namespace Actor.Tests.Domain.Events
 {

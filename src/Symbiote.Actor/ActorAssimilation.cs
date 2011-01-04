@@ -18,12 +18,12 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Actor.Impl;
 using Symbiote.Actor.Impl.Defaults;
-using Symbiote.Actor.Impl.Eventing;
 using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using System.Linq;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Memento;
+using Symbiote.Core.Work;
 
 namespace Symbiote.Actor
 {
@@ -34,19 +34,11 @@ namespace Symbiote.Actor
             assimilation.Dependencies( x =>
             {
                 x.For<IAgency>().Use<Agency>().AsSingleton();
-
                 x.For(typeof(IActorCache<>)).Use(typeof(NullActorCache<>));
                 x.For(typeof(IAgentFactory)).Use<DefaultAgentFactory>();
-                x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
-                x.For(typeof(IKeyAccessor<>)).Use(typeof(DefaultKeyAccessor<>));
                 x.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>));
                 x.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
                 x.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
-                x.For<IMemoizer>().Use<Memoizer>();
-                x.For( typeof(IMemento<>) ).Use( typeof(PassthroughMemento<>) );
-                x.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
-                x.For<IEventContextProvider>().Use<EventContextProvider>();
-                x.For<IEventConfiguration>().Use<EventConfiguration>();
 
                 x.Scan( s =>
                 {
@@ -67,11 +59,7 @@ namespace Symbiote.Actor
                     s.ConnectImplementationsToTypesClosing(
                         typeof(IActorStore<>));
                     s.ConnectImplementationsToTypesClosing(
-                        typeof(IKeyAccessor<>));
-                    s.ConnectImplementationsToTypesClosing(
                         typeof(ISaga<>));
-                    s.ConnectImplementationsToTypesClosing( 
-                        typeof(IMemento<>));
                 } );
             } );
 

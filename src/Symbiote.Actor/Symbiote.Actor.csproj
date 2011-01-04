@@ -21,7 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-	<DevOnly>True</DevOnly>
+    <DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -53,22 +53,7 @@
   <ItemGroup>
     <Compile Include="ActorAssimilation.cs" />
     <Compile Include="Config\ActorConfigurator.cs" />
-    <Compile Include="Event.cs" />
-    <Compile Include="EventContext.cs" />
-    <Compile Include="IEvent.cs" />
-    <Compile Include="Impl\Eventing\EventPublisher.cs" />
-    <Compile Include="Impl\Eventing\EventSubscriptionToken.cs" />
-    <Compile Include="Impl\Eventing\IEventStore.cs" />
     <Compile Include="Impl\Agency.cs" />
-    <Compile Include="Impl\Defaults\DefaultKeyAccessor.cs" />
-    <Compile Include="Impl\Eventing\EventConfiguration.cs" />
-    <Compile Include="Impl\Eventing\EventContext.cs" />
-    <Compile Include="Impl\Eventing\EventContextProvider.cs" />
-    <Compile Include="Impl\Eventing\IEventConfiguration.cs" />
-    <Compile Include="Impl\Eventing\IEventContext.cs" />
-    <Compile Include="Impl\Eventing\IEventContextProvider.cs" />
-    <Compile Include="Impl\Eventing\IEventPublisher.cs" />
-    <Compile Include="Impl\Eventing\ReplayEventContext.cs" />
     <Compile Include="Impl\Saga\Condition.cs" />
     <Compile Include="Impl\Saga\ConditionalTransition.cs" />
     <Compile Include="Impl\Defaults\DefaultActorFactory.cs" />
@@ -82,11 +67,9 @@
     <Compile Include="Impl\IAgentFactory.cs" />
     <Compile Include="Impl\Saga\ICondition.cs" />
     <Compile Include="Impl\Saga\IConditionalTransition.cs" />
-    <Compile Include="IKeyAccessor.cs" />
     <Compile Include="Impl\Saga\ISaga.cs" />
     <Compile Include="Impl\Defaults\NullActorCache.cs" />
     <Compile Include="Impl\Defaults\NullActorStore.cs" />
-    <Compile Include="KeyAccessAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Saga.cs" />
     <Compile Include="Impl\Saga\StateMachine.cs" />
@@ -98,42 +81,45 @@
     </ProjectReference>
   </ItemGroup>
   <Choose>
-	<When Condition="'$(DevOnly)' == 'True'">
-		<ItemGroup>
-			<ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
-			  <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
-			  <Name>Symbiote.Fibers</Name>
-			</ProjectReference>
-			<Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-			  <SpecificVersion>False</SpecificVersion>
-			  <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
-			</Reference>
-			<Reference Include="protobuf-net">
-			  <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
-			</Reference>
-			<Reference Include="ServiceStack.Text">
-			  <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
-			</Reference>
-			<Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			  <SpecificVersion>False</SpecificVersion>
-			  <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
-			</Reference>
-			<Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			  <SpecificVersion>False</SpecificVersion>
-			  <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-			</Reference>
-			<Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-			  <SpecificVersion>False</SpecificVersion>
-			  <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-			</Reference>
-		</ItemGroup>
-	</When>
+    <When Condition="'$(DevOnly)' == 'True'">
+      <ItemGroup>
+        <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
+          <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
+          <Name>Symbiote.Fibers</Name>
+        </ProjectReference>
+        <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+        <Reference Include="protobuf-net">
+          <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
+        </Reference>
+        <Reference Include="ServiceStack.Text">
+          <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
+        </Reference>
+        <Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
+        </Reference>
+        <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+          <SpecificVersion>False</SpecificVersion>
+          <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
+        </Reference>
+      </ItemGroup>
+    </When>
   </Choose>
   <ItemGroup>
     <Content Include="Symbiote.Actor.nuspec">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Impl\Eventing\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" Condition="'$(DevOnly)' == ''" />

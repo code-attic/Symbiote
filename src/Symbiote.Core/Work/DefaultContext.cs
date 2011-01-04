@@ -20,8 +20,29 @@ using System.Linq;
 
 namespace Symbiote.Core.Work
 {
-    public class DefaultContext<TActor>
-        : IContext
+    public class DefaultContext
+    {
+        #region Static Members...
+        private static IContextProvider _provider;
+
+        protected static IContextProvider ContextProvider
+        {
+            get
+            {
+                _provider = _provider ?? Assimilate.GetInstanceOf<IContextProvider>();
+                return _provider;
+            }
+        }
+
+        public static IContext CreateFor<TActr>(TActr instance)
+            where TActr : class
+        {
+            return ContextProvider.GetContext(instance);
+        }
+        #endregion
+    }
+
+    public class DefaultContext<TActor> : IContext
         where TActor : class
     {
         private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();

@@ -14,27 +14,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core;
-using Symbiote.Core.Work;
+using Symbiote.Core.Reflection;
 
-namespace Symbiote.Actor.Impl.Defaults
+namespace Symbiote.Core.Work
 {
-    public class DefaultActorFactory<TActor>
-        : IActorFactory<TActor>
+    public class DefaultKeyAccessor<TActor>
+        : IKeyAccessor<TActor>
         where TActor : class
     {
-        protected IKeyAccessor<TActor> KeyAccessor { get; set; }
-
-        public TActor CreateInstance<TKey>(TKey id)
+        public string GetId(TActor actor)
         {
-            var actor = Assimilate.GetInstanceOf<TActor>();
-            KeyAccessor.SetId(actor, id);
-            return actor;
+            return Reflector.ReadMember(actor, "Id").ToString();
         }
 
-        public DefaultActorFactory(IKeyAccessor<TActor> keyAccessor)
+        public void SetId<TKey>(TActor actor, TKey id)
         {
-            KeyAccessor = keyAccessor;
+            Reflector.WriteMember(actor, "Id", id);
         }
     }
 }

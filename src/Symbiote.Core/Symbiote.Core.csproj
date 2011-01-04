@@ -187,6 +187,7 @@
     <Compile Include="Utility\SpinLockManager.cs" />
     <Compile Include="Utility\VolatileRingBuffer.cs" />
     <Compile Include="Utility\VolatileRingBufferArray.cs" />
+    <Compile Include="Work\DefaultKeyAccessor.cs" />
     <Compile Include="Work\EventBase.cs" />
     <Compile Include="Work\EventConfiguration.cs" />
     <Compile Include="Work\DefaultContext.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Work\IEventPublisher.cs" />
     <Compile Include="Work\IEventStore.cs" />
     <Compile Include="Work\IKeyAccessor.cs" />
+    <Compile Include="Work\KeyAccessAdapter.cs" />
     <Compile Include="Work\ReplayContext.cs" />
   </ItemGroup>
   <ItemGroup>

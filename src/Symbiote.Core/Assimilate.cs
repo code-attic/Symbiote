@@ -24,6 +24,7 @@ using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
+using Symbiote.Core.Memento;
 using Symbiote.Core.Serialization;
 using Symbiote.Core.Utility;
 using Symbiote.Core.Work;
@@ -71,6 +72,13 @@ namespace Symbiote.Core
                              x.For<ILogger>().Use<NullLogger>();
                              x.For(typeof (ILogger<>)).Add(typeof (ProxyLogger<>));
                              x.For<ILockManager>().Use<NullLockManager>();
+                             x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
+                             x.For(typeof(IKeyAccessor<>)).Use(typeof(DefaultKeyAccessor<>));
+                             x.For<IMemoizer>().Use<Memoizer>();
+                             x.For(typeof(IMemento<>)).Use(typeof(PassthroughMemento<>));
+                             x.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
+                             x.For<IContextProvider>().Use<DefaultContextProvider>();
+                             x.For<IEventConfiguration>().Use<EventConfiguration>();
                              x.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
                              x.Scan(s =>
                                         {
@@ -83,12 +91,14 @@ namespace Symbiote.Core
                                                 {
                                                     var fullName = a.FullName;
                                                     return !
-                                                        (fullName.Contains("Microsoft") ||
-                                                            fullName.Contains("Machine.Specifications") ||
-                                                        fullName.Contains("Gallio")
+                                                        (fullName.Contains("Microsoft")
+                                                         || fullName.Contains("Machine.Specifications")
+                                                         || fullName.Contains("Gallio")
                                                         );
                                                 });
                                             s.AddAllTypesOf<IContractResolverStrategy>();
+                                            s.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
+                                            s.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
                                             s.AddSingleImplementations();
                                         });
                              x.For<IDependencyAdapter>().Use(adapter);

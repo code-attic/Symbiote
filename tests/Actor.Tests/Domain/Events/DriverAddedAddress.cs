@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Actor.Tests.Domain.Model;
 using Symbiote.Actor;
+using Symbiote.Messaging.Impl.Monitor;
 
 namespace Actor.Tests.Domain.Events
 {
