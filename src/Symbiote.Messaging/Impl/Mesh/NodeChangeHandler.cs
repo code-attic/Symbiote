@@ -8,6 +8,7 @@ namespace Symbiote.Messaging.Impl.Mesh
         IHandle<NodeHealth>
     {
         protected INodeRegistry Registry { get; set; }
+        protected INodeChannelManager NodeChannelManager { get; set; }
 
         public void Handle( IEnvelope<NodeUp> envelope )
         {
@@ -25,7 +26,10 @@ namespace Symbiote.Messaging.Impl.Mesh
             {
                 var nodeId = envelope.Message.NodeId;
                 if( !Registry.HasNode( nodeId ) )
+                {
                     Registry.AddNode( nodeId );
+                    NodeChannelManager.AddNewOutgoingChannel(nodeId);
+                }
 
                 Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
             }
@@ -35,8 +39,9 @@ namespace Symbiote.Messaging.Impl.Mesh
             }
         }
 
-        public NodeChangeHandler( INodeRegistry registry )
+        public NodeChangeHandler( INodeRegistry registry, INodeChannelManager nodeChannelManager )
         {
+            NodeChannelManager = nodeChannelManager;
             Registry = registry;
         }
     }

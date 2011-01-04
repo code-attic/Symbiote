@@ -6,12 +6,10 @@ namespace Symbiote.Messaging.Impl.Mesh
         : INodeRegistry
     {
         protected Distributor<string> Nodes { get; set; }
-        protected INodeChannelManager NodeChannelManager { get; set; }
 
         public void AddNode( string nodeId )
         {
             Nodes.AddNode( nodeId, nodeId );
-            NodeChannelManager.AddNewOutgoingChannel( nodeId );
         }
 
         public string GetNodeFor<T>( T value )
@@ -35,9 +33,8 @@ namespace Symbiote.Messaging.Impl.Mesh
             Nodes.RemoveNode( nodeId );
         }
 
-        public NodeRegistry(INodeChannelManager nodeChannelManager)
+        public NodeRegistry()
         {
-            NodeChannelManager = nodeChannelManager;
             Nodes = new Distributor<string>( 1000 );
         }
     }
