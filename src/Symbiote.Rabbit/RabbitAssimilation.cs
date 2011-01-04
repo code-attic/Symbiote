@@ -56,12 +56,12 @@ namespace Symbiote.Rabbit
                                             x.For<RabbitSerializerTransform>()
                                                 .Use<RabbitSerializerTransform>()
                                                 .AsSingleton();
-                                            x.For<IInitializeNode>()
-                                                .Use<RabbitNodeInitializer>().AsSingleton();
+                                            x.For<INodeChannelManager>()
+                                                .Use<RabbitNodeChannelManager>().AsSingleton();
                                         });
             if(configuration.AsNode)
             {
-                var initializer = Assimilate.GetInstanceOf<IInitializeNode>();
+                var initializer = Assimilate.GetInstanceOf<INodeChannelManager>();
                 initializer.InitializeChannels();
             }
         }

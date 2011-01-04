@@ -93,7 +93,7 @@
     <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
     <Compile Include="Impl\Eventing\EventChannel.cs" />
     <Compile Include="Impl\Mesh\DefaultNodeIdentityProvider.cs" />
-    <Compile Include="Impl\Mesh\IInitializeNode.cs" />
+    <Compile Include="Impl\Mesh\INodeChannelManager.cs" />
     <Compile Include="Impl\Mesh\INode.cs" />
     <Compile Include="Impl\Mesh\INodeConfiguration.cs" />
     <Compile Include="Impl\Mesh\INodeHealthBroadcaster.cs" />
@@ -109,7 +109,6 @@
     <Compile Include="Impl\Mesh\NodeHealthMonitor.cs" />
     <Compile Include="Impl\Mesh\NodeRegistry.cs" />
     <Compile Include="Impl\Mesh\NodeUp.cs" />
-    <Compile Include="Impl\Mesh\NullInitializer.cs" />
     <Compile Include="Impl\Monitor\ActorEvent.cs" />
     <Compile Include="Impl\Monitor\AdapterMonitor.cs" />
     <Compile Include="Impl\Monitor\AgentMonitor.cs" />

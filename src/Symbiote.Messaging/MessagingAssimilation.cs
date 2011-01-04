@@ -203,7 +203,7 @@ namespace Symbiote.Messaging
             s.ConnectImplementationsToTypesClosing(
                 typeof (IHandle<,>));
             s.AddAllTypesOf<INodeHealthBroadcaster>();
-            s.AddAllTypesOf<IInitializeNode>();
+            s.AddAllTypesOf<INodeChannelManager>();
         }
     }
 }
