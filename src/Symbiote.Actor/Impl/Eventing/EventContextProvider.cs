@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Symbiote.Core;
 using Symbiote.Core.Memento;
 
 namespace Symbiote.Actor.Impl.Eventing
@@ -23,7 +24,6 @@ namespace Symbiote.Actor.Impl.Eventing
     {
         public IEventConfiguration Configuration { get; set; }
         public IMemoizer Memoizer { get; set; }
-        public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         
         public IEventContext GetContext<TActor>( TActor actor )
@@ -34,8 +34,8 @@ namespace Symbiote.Actor.Impl.Eventing
             {
                 return new ReplayEventContext<TActor>( actor, originalState );
             }
-
-            return new EventContext<TActor>( actor, originalState, KeyAccessor, Publisher );
+            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<TActor>>();
+            return new EventContext<TActor>(actor, originalState, keyAccessor, Publisher);
         }
 
         public EventContextProvider( IEventConfiguration configuration, IMemoizer memoizer )

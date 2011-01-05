@@ -26,7 +26,7 @@ namespace Symbiote.Actor.Impl.Eventing
     {
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
-        public IKeyAccessor KeyAccessor { get; set; }
+        public IKeyAccessor<TActor> KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
 
@@ -64,7 +64,7 @@ namespace Symbiote.Actor.Impl.Eventing
         public EventContext( 
             TActor actor, 
             IMemento<TActor> originalState, 
-            IKeyAccessor keyAccessor,
+            IKeyAccessor<TActor> keyAccessor,
             IEventPublisher eventPublisher )
         {
             Actor = actor;
