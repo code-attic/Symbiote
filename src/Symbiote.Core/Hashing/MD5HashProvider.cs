@@ -24,11 +24,16 @@ namespace Symbiote.Core.Hashing
         : IHashingProvider
     {
         protected MD5 Provider { get; set; }
+        protected object _lock = new object();
 
         public long Hash<T>(T value)
         {
             var temp = value.ToString();
-            var hashBytes = Provider.ComputeHash(Encoding.ASCII.GetBytes(temp));
+            byte[] hashBytes;
+            lock(_lock)
+            {
+                hashBytes = Provider.ComputeHash(Encoding.ASCII.GetBytes(temp));
+            }
             return BitConverter.ToInt64(hashBytes, 0) + BitConverter.ToInt64(hashBytes, 8);
         }
 
