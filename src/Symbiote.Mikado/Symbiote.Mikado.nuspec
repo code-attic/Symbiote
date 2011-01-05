@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+	<metadata>
+		<id>Symbiote.Mikado</id>
+		<version>0.1.0.0</version>
+		<authors>Jim Cowart</authors>
+		<description>Adding lightweight rules framework to Symbiote.</description>
+		<summary>Extends unit of work/event context in Symbiote.Core with a rules engine.</summary>
+		<language>en-US</language>
+		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
+		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+		<dependencies>
+			<dependency id="Symbiote.Core" version="0.1.0.0" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="..\..\bin\Symbiote.Mikado.dll" target="lib" />
+		<file src="..\..\bin\Symbiote.Mikado.pdb" target="lib" />
+		<file src="..\..\bin\Symbiote.Mikado.xml" target="lib" />
+	</files>
+</package>
