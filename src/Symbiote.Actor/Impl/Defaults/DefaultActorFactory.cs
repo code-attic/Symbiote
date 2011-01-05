@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using Symbiote.Core;
+using Symbiote.Core.Work;
 
 namespace Symbiote.Actor.Impl.Defaults
 {

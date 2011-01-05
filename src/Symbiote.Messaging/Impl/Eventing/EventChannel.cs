@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Symbiote.Actor;
+using Symbiote.Core.Work;
 using Symbiote.Messaging.Config;
 using Symbiote.Core.Extensions;
 

@@ -189,6 +189,25 @@
     <Compile Include="Utility\SpinLockManager.cs" />
     <Compile Include="Utility\VolatileRingBuffer.cs" />
     <Compile Include="Utility\VolatileRingBufferArray.cs" />
+    <Compile Include="Work\DefaultKeyAccessor.cs" />
+    <Compile Include="Work\EventBase.cs" />
+    <Compile Include="Work\EventConfiguration.cs" />
+    <Compile Include="Work\DefaultContext.cs" />
+    <Compile Include="Work\DefaultContextProvider.cs" />
+    <Compile Include="Work\EventListenerManager.cs" />
+    <Compile Include="Work\EventPublisher.cs" />
+    <Compile Include="Work\EventSubscriptionToken.cs" />
+    <Compile Include="Work\IEvent.cs" />
+    <Compile Include="Work\IEventConfiguration.cs" />
+    <Compile Include="Work\IContext.cs" />
+    <Compile Include="Work\IContextProvider.cs" />
+    <Compile Include="Work\IEventListener.cs" />
+    <Compile Include="Work\IEventListenerManager.cs" />
+    <Compile Include="Work\IEventPublisher.cs" />
+    <Compile Include="Work\IEventStore.cs" />
+    <Compile Include="Work\IKeyAccessor.cs" />
+    <Compile Include="Work\KeyAccessAdapter.cs" />
+    <Compile Include="Work\ReplayContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
@@ -203,6 +222,7 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" Condition=" '$(Configuration)'!='Development' " />
   <Target Name="_CopyFilesMarkedCopyLocal" />

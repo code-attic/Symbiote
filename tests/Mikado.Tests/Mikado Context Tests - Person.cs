@@ -1,0 +1,133 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Machine.Specifications;
+using Mikado.Tests.Domain;
+using Mikado.Tests.Domain.Model;
+using Mikado.Tests.Domain.Rules;
+using Mikado.Tests.TestSetup;
+using Symbiote.Core;
+using Symbiote.Core.Memento;
+using Symbiote.Core.Work;
+using Symbiote.Mikado;
+using Symbiote.Mikado.Impl;
+
+namespace Mikado.Tests
+{
+    public class when_testing_passing_rules_on_a_Person_in_a_Mikado_Context : with_Person
+    {
+        public static TestSubscriber Subscriber = new TestSubscriber();
+
+        private Because of = () =>
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using (var subscription = runner.Subscribe( Subscriber ))
+                                     using (var context = provider.GetContext( Person ))
+                                     {
+                                         Person.Age = 24;
+                                         Person.FirstName = "Bugs";
+                                         Person.LastName = "Bunny";
+                                     }
+                                 };
+
+        private It should_have_zero_broken_rules = () => Subscriber.BrokenRules.Count.ShouldEqual( 0 );
+        private It should_have_set_the_Person_FirstName_to_Bugs = () => Person.FirstName.ShouldEqual( "Bugs" );
+        private It should_have_set_the_Person_LastName_to_Bugs = () => Person.LastName.ShouldEqual( "Bunny" );
+        private It should_have_set_the_Person_Age_to_24 = () => Person.Age.ShouldEqual( 24 );
+
+    }
+
+    public class when_testing_all_broken_rules_on_a_Person_in_a_Mikado_Context : with_Person
+    {
+        public static TestSubscriber Subscriber = new TestSubscriber();
+
+        private Because of = () =>
+        {
+            var runner = Assimilate.GetInstanceOf<IRunRules>();
+            var provider = Assimilate.GetInstanceOf<IContextProvider>();
+            using (var subscription = runner.Subscribe(Subscriber))
+            using (var context = provider.GetContext(Person))
+            {
+                Person.Age = -24;
+                Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+            }
+        };
+
+        private It should_have_three_broken_rules = () => Subscriber.BrokenRules.Count.ShouldEqual(3);
+        private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
+        private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
+        private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
+        private It should_break_the_AgeMustBePositiveInteger_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(AgeMustBePositiveInteger)).ShouldEqual(1);
+        private It should_break_the_FirstNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(FirstNameCannotExceedLengthLimit)).ShouldEqual(1);
+        private It should_break_the_LastNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(LastNameCannotExceedLengthLimit)).ShouldEqual(1);
+    }
+
+    public class when_testing_broken_FirstName_rule_on_a_Person_in_a_Mikado_Context : with_Person
+    {
+        public static TestSubscriber Subscriber = new TestSubscriber();
+
+        private Because of = () =>
+        {
+            var runner = Assimilate.GetInstanceOf<IRunRules>();
+            var provider = Assimilate.GetInstanceOf<IContextProvider>();
+            using (var subscription = runner.Subscribe(Subscriber))
+            using (var context = provider.GetContext(Person))
+            {
+                Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+            }
+        };
+
+        private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
+        private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
+        private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
+        private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
+        private It should_break_the_FirstNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(FirstNameCannotExceedLengthLimit)).ShouldEqual(1);
+    }
+
+    public class when_testing_LastName_broken_rule_on_a_Person_in_a_Mikado_Context : with_Person
+    {
+        public static TestSubscriber Subscriber = new TestSubscriber();
+
+        private Because of = () =>
+        {
+            var runner = Assimilate.GetInstanceOf<IRunRules>();
+            var provider = Assimilate.GetInstanceOf<IContextProvider>();
+            using (var subscription = runner.Subscribe(Subscriber))
+            using (var context = provider.GetContext(Person))
+            {
+                Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+            }
+        };
+
+        private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
+        private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
+        private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
+        private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
+        private It should_break_the_LastNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(LastNameCannotExceedLengthLimit)).ShouldEqual(1);
+    }
+
+    public class when_testing_Age_broken_rule_on_a_Person_in_a_Mikado_Context : with_Person
+    {
+        public static TestSubscriber Subscriber = new TestSubscriber();
+
+        private Because of = () =>
+        {
+            var runner = Assimilate.GetInstanceOf<IRunRules>();
+            var provider = Assimilate.GetInstanceOf<IContextProvider>();
+            using (var subscription = runner.Subscribe(Subscriber))
+            using (var context = provider.GetContext(Person))
+            {
+                Person.Age = -24;
+            }
+        };
+
+        private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
+        private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
+        private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
+        private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
+        private It should_break_the_AgeMustBePositiveInteger_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(AgeMustBePositiveInteger)).ShouldEqual(1);
+    }
+}
