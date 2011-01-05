@@ -1,4 +1,5 @@
-﻿using Symbiote.Core.Hashing;
+﻿using Symbiote.Core.Extensions;
+using Symbiote.Core.Hashing;
 
 namespace Symbiote.Messaging.Impl.Mesh
 {
@@ -26,6 +27,8 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             var total = Nodes.AliasCount * loadScore;
             Nodes.RebalanceNodeTo(nodeId, (int) total);
+            "Rebalancing Node '{0}' to {1} virtual nodes."
+                .ToDebug<INode>( nodeId, (int) total );
         }
 
         public void RemoveNode( string nodeId )
@@ -35,7 +38,7 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public NodeRegistry()
         {
-            Nodes = new Distributor<string>( 1000 );
+            Nodes = new Distributor<string>( 10000 );
         }
     }
 }

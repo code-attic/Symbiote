@@ -34,7 +34,7 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             var computerInfo = new ComputerInfo();
             var availableRam = (decimal) computerInfo.AvailablePhysicalMemory / (decimal) computerInfo.TotalPhysicalMemory;
-            Observers.OnEvent( new NodeHealth() { LoadScore = availableRam, NodeId = Configuration.IdentityProvider.Identity });
+            Observers.OnEvent( new NodeHealth() { LoadScore = 1, NodeId = Configuration.IdentityProvider.Identity });
         }
 
         public NodeHealthMonitor( INodeConfiguration configuration, IEnumerable<INodeHealthBroadcaster> broadcasters )

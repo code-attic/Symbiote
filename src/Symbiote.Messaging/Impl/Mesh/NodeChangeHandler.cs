@@ -31,6 +31,8 @@ namespace Symbiote.Messaging.Impl.Mesh
                     NodeChannelManager.AddNewOutgoingChannel(nodeId);
                 }
                 Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
+
+
             }
             catch (Exception e)
             {

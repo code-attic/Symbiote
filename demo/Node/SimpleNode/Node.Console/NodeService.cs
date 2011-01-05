@@ -1,4 +1,5 @@
-﻿using System.Timers;
+﻿using System;
+using System.Timers;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Messaging.Impl.Mesh;
@@ -35,7 +36,7 @@ namespace Node.Console
 
         void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Node.Publish(new Message("from '{0}' at {1}".AsFormat(IdentityProvider.Identity, e.SignalTime)));
+            Node.Publish(new Message("from '{0}' at {1}".AsFormat(IdentityProvider.Identity, e.SignalTime)), x => x.CorrelationId = DateTime.UtcNow.Ticks.ToString());
         }
     }
 }
