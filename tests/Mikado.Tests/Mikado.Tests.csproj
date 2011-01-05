@@ -46,12 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mikado Context Tests - Manager.cs" />
     <Compile Include="Domain\Model\Person.cs" />
     <Compile Include="Domain\Rules\AgeMustBePositiveInteger.cs" />
     <Compile Include="Domain\Rules\DepartmentNameIsRequired.cs" />
     <Compile Include="Domain\Rules\FirstNameCannotExceedLengthLimit.cs" />
     <Compile Include="Domain\Rules\LastNameCannotExceedLengthLimit.cs" />
-    <Compile Include="Mikado Context Tests.cs" />
+    <Compile Include="Mikado Context Tests - Person.cs" />
     <Compile Include="Passing Rule Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rule Index Loading Tests.cs" />

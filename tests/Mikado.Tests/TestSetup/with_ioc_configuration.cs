@@ -1,5 +1,7 @@
 ﻿using Machine.Specifications;
+using Mikado.Tests.Domain.Model;
 using Symbiote.Core;
+using Symbiote.Core.Work;
 using Symbiote.Mikado;
 using Symbiote.Mikado.Impl;
 using Symbiote.StructureMap;
@@ -13,8 +15,8 @@ namespace Mikado.Tests.TestSetup
                                             .Mikado()
                                             .Dependencies(x =>
                                                                 {
-                                                                    x.For<IRulesIndex>().Use<DefaultRulesIndex>().AsSingleton();
-                                                                    x.For<IRunRules>().Use<DefaultRulesRunner>();
+                                                                    x.For<IKeyAccessor<Person>>().Use<DefaultKeyAccessor<Person>>();
+                                                                    x.For<IKeyAccessor<Manager>>().Use<DefaultKeyAccessor<Manager>>();
                                                                 });
     }
 }

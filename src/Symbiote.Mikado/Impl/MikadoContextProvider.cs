@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Symbiote.Core;
 using Symbiote.Core.Memento;
 using Symbiote.Core.Work;
 
@@ -11,15 +12,13 @@ namespace Symbiote.Mikado.Impl
 
         public IEventConfiguration Configuration { get; set; }
         public IMemoizer Memoizer { get; set; }
-        public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
 
-        public MikadoContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher, IKeyAccessor keyAccessor, IRunRules rulesRunner )
+        public MikadoContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher, IRunRules rulesRunner )
         {
             Configuration = configuration;
             Memoizer = memoizer;
             Publisher = publisher;
-            KeyAccessor = keyAccessor;
             _rulesRunner = rulesRunner;
         }
 
@@ -37,8 +36,8 @@ namespace Symbiote.Mikado.Impl
             {
                 return new ReplayContext<TActor>(actor, originalState);
             }
-
-            return new MikadoContext<TActor>(actor, originalState, KeyAccessor, Publisher, _rulesRunner, listeners);
+            var keyAccessor = Assimilate.GetInstanceOf <IKeyAccessor<TActor>>();
+            return new MikadoContext<TActor>(actor, originalState, keyAccessor, Publisher, _rulesRunner, listeners);
         }
     }
 }

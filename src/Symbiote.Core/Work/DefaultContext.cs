@@ -49,14 +49,14 @@ namespace Symbiote.Core.Work
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
-        public IKeyAccessor KeyAccessor { get; set; }
+        public IKeyAccessor<TActor> KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
 
         public DefaultContext(
             TActor actor,
             IMemento<TActor> originalState,
-            IKeyAccessor keyAccessor,
+            IKeyAccessor<TActor> keyAccessor,
             IEventPublisher eventPublisher,
             IEnumerable<IObserver<IEvent>> listeners)
         {
@@ -69,7 +69,7 @@ namespace Symbiote.Core.Work
                 listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
         }
 
-        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor keyAccessor, IEventPublisher eventPublisher)
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher)
             : this(actor, originalState, keyAccessor, eventPublisher, null)
         {
             

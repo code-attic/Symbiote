@@ -9,12 +9,12 @@ namespace Symbiote.Mikado.Impl
 {
     public class MikadoContext<TActor> : IContext where TActor : class
     {
-        private List<IDisposable> _subscriptionTokens = new List<IDisposable>();
-        private IRunRules _rulesRunner;
+        private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
+        private readonly IRunRules _rulesRunner;
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
-        public IKeyAccessor KeyAccessor { get; set; }
+        public IKeyAccessor<TActor> KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
         public BrokenRulesCollection BrokenRules { get; set; }
@@ -22,7 +22,7 @@ namespace Symbiote.Mikado.Impl
         public MikadoContext(
             TActor actor,
             IMemento<TActor> originalState,
-            IKeyAccessor keyAccessor,
+            IKeyAccessor<TActor> keyAccessor,
             IEventPublisher eventPublisher,
             IRunRules rulesRunner,
             IEnumerable<IObserver<IEvent>> listeners)
@@ -39,7 +39,7 @@ namespace Symbiote.Mikado.Impl
                 listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
         }
 
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner)
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner)
             : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, null)
         {
             

@@ -17,6 +17,7 @@ limitations under the License.
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
@@ -79,7 +80,6 @@ namespace Symbiote.Core
                              x.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
                              x.Scan(s =>
                                         {
-                                            
                                             // oh the shameful hack :(
                                             // Machine.Specifications blows itself all to heck when
                                             // StructureMap scans it. I haven't really tried to determine why

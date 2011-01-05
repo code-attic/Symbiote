@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Work;
+using Symbiote.Mikado.Impl;
 
 namespace Symbiote.Mikado
 {
@@ -17,6 +19,13 @@ namespace Symbiote.Mikado
                 return assimilate;
 
             WireUpRulesToContainer();
+            assimilate.Dependencies( x =>
+                                         {
+                                             x.For<IContextProvider>().Use<MikadoContextProvider>();
+                                             x.For<IBrokenRuleNotification>().Use<BrokenRuleNotification>();
+                                             x.For<IRulesIndex>().Use<DefaultRulesIndex>().AsSingleton();
+                                             x.For<IRunRules>().Use<DefaultRulesRunner>().AsSingleton();
+                                         } );
             MikadoInitialized = true;
             return assimilate;
         }

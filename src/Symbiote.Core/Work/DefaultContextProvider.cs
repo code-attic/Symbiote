@@ -27,12 +27,11 @@ namespace Symbiote.Core.Work
         public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
 
-        public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher, IKeyAccessor keyAccessor )
+        public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher )
         {
             Configuration = configuration;
             Memoizer = memoizer;
             Publisher = publisher;
-            KeyAccessor = keyAccessor;
         }
         
         public IContext GetContext<TActor>( TActor actor )
@@ -49,8 +48,8 @@ namespace Symbiote.Core.Work
             {
                 return new ReplayContext<TActor>(actor, originalState);
             }
-
-            return new DefaultContext<TActor>(actor, originalState, KeyAccessor, Publisher, listeners);
+            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<TActor>>();
+            return new DefaultContext<TActor>(actor, originalState, keyAccessor, Publisher, listeners);
         }
     }
 }
