@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Timers;
 using Microsoft.VisualBasic.Devices;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Utility;
 
 namespace Symbiote.Messaging.Impl.Mesh
 {

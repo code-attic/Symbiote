@@ -16,8 +16,8 @@ limitations under the License.
 
 using System;
 using Symbiote.Core;
-using Symbiote.Core.Cache;
-using Symbiote.Core.DI;
+using Symbiote.Core.Impl.Cache;
+using Symbiote.Core.Impl.DI;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl;
 using Symbiote.Couch.Impl.Cache;

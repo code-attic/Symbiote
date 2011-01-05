@@ -1,8 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 using System.Linq;
-using Symbiote.Core.Hashing;
-using Symbiote.Core.Hashing.Impl;
+using Symbiote.Core.Impl.Trees;
 
 namespace Core.Tests.Utility
 {

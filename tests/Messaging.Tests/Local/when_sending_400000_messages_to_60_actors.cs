@@ -7,7 +7,7 @@ using Machine.Specifications;
 using Symbiote.Actor;
 using Symbiote.Actor.Impl;
 using Symbiote.Core;
-using Symbiote.Core.Log.Impl;
+using Symbiote.Core.Impl.Log.Impl;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Core.Extensions;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Actor.Tests.Domain.Events;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Actor.Tests.Domain.Model
 {

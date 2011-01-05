@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Machine.Specifications;
-using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 
 namespace Messaging.Tests.Pipes.Functional
@@ -27,17 +26,16 @@ namespace Messaging.Tests.Pipes.Functional
         private Because of = () =>
         {
             var pipe =
-                Symbiote.Core.Utility.Pipeline
-                    .Start<string, byte[]>( x => Encoding.UTF8.GetBytes( x ) )
-                    .Then<string, byte[], IEnumerable, byte[]>((r,x) => x)
-                    .Then( x =>
-                    {
-                        var t = x[1];
-                        x[1] = x[0];
-                        x[0] = t;
-                        return x;
-                    } )
-                    .Then( x => Encoding.UTF8.GetString( x ) );
+                Symbiote.Core.Impl.Utility.Pipeline.Then<string, byte[], string>( Symbiote.Core.Utility.Pipeline
+                                                       .Start<string, byte[]>( x => Encoding.UTF8.GetBytes( x ) )
+                                                       .Then<string, byte[], IEnumerable, byte[]>((r,x) => x)
+                                                       .Then( x =>
+                                                       {
+                                                           var t = x[1];
+                                                           x[1] = x[0];
+                                                           x[0] = t;
+                                                           return x;
+                                                       } ), x => Encoding.UTF8.GetString( x ) );
 
             Result = pipe( Message );
         };

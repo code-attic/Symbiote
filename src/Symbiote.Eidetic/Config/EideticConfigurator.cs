@@ -21,7 +21,7 @@ using System.Net;
 using System.Text;
 using Enyim.Caching.Configuration;
 using Symbiote.Core;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Locking;
 using Symbiote.Eidetic.Impl;
 
 namespace Symbiote.Eidetic.Config

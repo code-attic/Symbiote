@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Futures;
 
 namespace Core.Tests.Utility
 {

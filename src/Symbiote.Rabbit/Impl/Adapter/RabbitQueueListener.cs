@@ -18,7 +18,7 @@ using System;
 using System.Text;
 using RabbitMQ.Client;
 using Symbiote.Core;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Serialization;

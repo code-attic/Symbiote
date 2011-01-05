@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core.Memento;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Collections;
+using Symbiote.Core.Impl.Memento;
 
 namespace Symbiote.Actor.Impl.Defaults
 {

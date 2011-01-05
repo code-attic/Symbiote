@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using log4net;
-using Symbiote.Core.Log;
-using Symbiote.Core.Log.Impl;
+using Symbiote.Core.Impl.Log;
+using Symbiote.Core.Impl.Log.Impl;
 
 namespace Symbiote.Log4Net.Impl
 {

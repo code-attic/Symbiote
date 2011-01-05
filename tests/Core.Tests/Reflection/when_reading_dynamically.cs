@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Core.Tests.Reflection.POC;
 using Machine.Specifications;
-using Symbiote.Core.Reflection;
+using Symbiote.Core.Impl.Reflection;
 
 namespace Core.Tests.Reflection
 {

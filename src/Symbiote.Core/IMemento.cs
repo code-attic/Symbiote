@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core.Memento;
+using Symbiote.Core.Impl.Memento;
 
 namespace Symbiote.Core
 {

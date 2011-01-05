@@ -21,7 +21,7 @@ using System.Linq;
 using Symbiote.Actor;
 using Symbiote.Actor.Impl;
 using Symbiote.Actor.Impl.Saga;
-using Symbiote.Core.Reflection;
+using Symbiote.Core.Impl.Reflection;
 using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl.Dispatch

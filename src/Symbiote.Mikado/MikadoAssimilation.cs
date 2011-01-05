@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.UnitOfWork;
 using Symbiote.Mikado.Impl;
 
 namespace Symbiote.Mikado

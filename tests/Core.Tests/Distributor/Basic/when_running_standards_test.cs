@@ -2,8 +2,7 @@
 using System.Linq;
 using Core.Tests.Utility.distributor;
 using Machine.Specifications;
-using Symbiote.Core.Hashing;
-using Symbiote.Core.Hashing.Impl;
+using Symbiote.Core.Impl.Trees;
 
 namespace Core.Tests.Utility
 {

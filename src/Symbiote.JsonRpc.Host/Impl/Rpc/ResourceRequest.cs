@@ -20,7 +20,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Serialization;
+using Symbiote.Core.Impl.Serialization;
 using Symbiote.JsonRpc.Host.Config;
 using Symbiote.JsonRpc.Host.Impl.Adapters;
 

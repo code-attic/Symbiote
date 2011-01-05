@@ -19,6 +19,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.Serialization;
 using Symbiote.Couch.Config;
 
 namespace Symbiote.Couch.Impl.Http

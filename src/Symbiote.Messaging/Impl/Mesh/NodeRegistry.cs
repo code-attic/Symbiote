@@ -1,5 +1,5 @@
 ﻿using Symbiote.Core.Extensions;
-using Symbiote.Core.Hashing;
+using Symbiote.Core.Impl.Hashing;
 
 namespace Symbiote.Messaging.Impl.Mesh
 {

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Symbiote.Core;
-using Symbiote.Core.Memento;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.Memento;
+using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Symbiote.Mikado.Impl
 {

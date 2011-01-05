@@ -22,8 +22,7 @@ using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using System.Linq;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Memento;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Symbiote.Actor
 {

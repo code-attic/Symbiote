@@ -19,13 +19,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Log;
-using Symbiote.Core.Log.Impl;
-using Symbiote.Core.Memento;
-using Symbiote.Core.Utility;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.DI;
+using Symbiote.Core.Impl.Locking;
+using Symbiote.Core.Impl.Log;
+using Symbiote.Core.Impl.Log.Impl;
+using Symbiote.Core.Impl.Memento;
+using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Symbiote.Core
 {

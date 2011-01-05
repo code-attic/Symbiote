@@ -18,6 +18,7 @@ using System;
 using System.Text;
 using System.Web;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.Serialization;
 using Symbiote.Couch.Impl.Json;
 
 namespace Symbiote.Couch.Impl.Http

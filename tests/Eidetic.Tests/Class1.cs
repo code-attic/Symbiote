@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Machine.Specifications;
 using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Locking;
 using Symbiote.StructureMap;
 using Symbiote.Eidetic;
 using Symbiote.Core.Extensions;

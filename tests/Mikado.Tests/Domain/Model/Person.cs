@@ -1,6 +1,5 @@
 ﻿using System;
 using Symbiote.Core;
-using Symbiote.Core.Work;
 
 namespace Mikado.Tests.Domain.Model
 {

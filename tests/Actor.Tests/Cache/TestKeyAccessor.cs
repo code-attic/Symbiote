@@ -1,5 +1,5 @@
 ﻿using Symbiote.Actor;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Actor.Tests.Cache
 {

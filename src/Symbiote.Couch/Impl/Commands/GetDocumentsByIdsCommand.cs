@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.Serialization;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;

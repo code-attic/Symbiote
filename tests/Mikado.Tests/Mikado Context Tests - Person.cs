@@ -8,8 +8,7 @@ using Mikado.Tests.Domain.Model;
 using Mikado.Tests.Domain.Rules;
 using Mikado.Tests.TestSetup;
 using Symbiote.Core;
-using Symbiote.Core.Memento;
-using Symbiote.Core.Work;
+using Symbiote.Core.Impl.UnitOfWork;
 using Symbiote.Mikado;
 using Symbiote.Mikado.Impl;
 

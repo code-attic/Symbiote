@@ -21,7 +21,7 @@ using System.Text;
 using StructureMap;
 using StructureMap.Pipeline;
 using StructureMap.TypeRules;
-using Symbiote.Core.DI;
+using Symbiote.Core.Impl.DI;
 
 namespace Symbiote.StructureMap
 {

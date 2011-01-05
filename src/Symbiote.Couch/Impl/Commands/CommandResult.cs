@@ -16,6 +16,7 @@ limitations under the License.
 
 using System.IO;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.Serialization;
 using Symbiote.Couch.Impl.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

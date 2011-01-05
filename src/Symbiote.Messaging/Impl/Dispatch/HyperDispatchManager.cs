@@ -18,7 +18,7 @@ using System;
 using System.Collections.Concurrent;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Utility;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {

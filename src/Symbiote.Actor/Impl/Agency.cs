@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Core.Utility;
+using Symbiote.Core.Impl.Collections;
 
 namespace Symbiote.Actor.Impl
 {

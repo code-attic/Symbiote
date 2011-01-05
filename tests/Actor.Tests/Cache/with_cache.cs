@@ -2,7 +2,7 @@
 using Moq;
 using Symbiote.Actor;
 using Symbiote.Core;
-using Symbiote.Core.Memento;
+using Symbiote.Core.Impl.Memento;
 
 namespace Actor.Tests.Cache
 {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Machine.Specifications;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Serialization;
+using Symbiote.Core.Impl.Serialization;
 
 namespace Core.Tests
 {

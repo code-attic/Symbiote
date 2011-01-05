@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Core.Utility;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
