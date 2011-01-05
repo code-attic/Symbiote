@@ -20,6 +20,7 @@ namespace Symbiote.Riak.Impl.ProtoBufCommands
         public byte[] Tag { get; set; }
     }
 
+    [Serializable, DataContract(Name = "RpbPair")]
     public class RiakPair
     {
         [DataMember(Order = 1, IsRequired = true, Name = "key")]
@@ -63,7 +64,7 @@ namespace Symbiote.Riak.Impl.ProtoBufCommands
     }
 
     [Serializable, DataContract(Name = "RpbDelReq")]
-    public class DeleteCommand
+    public class Delete
     {
         [DataMember( Order = 1, IsRequired = true, Name = "bucket" )] 
         public byte[] Bucket { get; set; }
@@ -83,7 +84,7 @@ namespace Symbiote.Riak.Impl.ProtoBufCommands
     }
 
     [Serializable, DataContract(Name = "RpbGetReq")]
-    public class GetCommand
+    public class Get
     {
         [DataMember(Order = 1, IsRequired = true, Name = "bucket")] 
         public byte[] Bucket { get; set; }
@@ -100,7 +101,61 @@ namespace Symbiote.Riak.Impl.ProtoBufCommands
     {
         [DataMember(Order = 1, Name = "content")]
         public List<RiakContent> Content { get; set; }
+
+        [DataMember(Order = 2, IsRequired = false, Name = "vclock")]
+        public byte[] VectorClock { get; set; }
     }
 
-    
+    [Serializable, DataContract(Name = "RpbGetServerInfoResp")]
+    public class ServerInformation
+    {
+        [DataMember(Order = 1, IsRequired = false, Name = "node")]
+        public byte[] Node { get; set; }
+
+        [DataMember(Order = 2, IsRequired = false, Name = "server_version")]
+        public byte[] ServerVersion { get; set; }
+    }
+
+    [Serializable, DataContract(Name = "RpbListBucketResp")]
+    public class BucketList
+    {
+        [DataMember(Order = 1, Name = "buckets")]
+        public List<byte[]> Buckets { get; set; }
+    }
+
+    [Serializable, DataContract(Name = "RpbListKeysReq")]
+    public class GetKeyList
+    {
+        [DataMember(Order = 1, IsRequired = true, Name = "bucket")]
+        public byte[] Bucket { get; set; }
+    }
+
+    [Serializable, DataContract(Name = "RpbListKeysResp")]
+    public class KeyList
+    {
+        [DataMember(Order = 1, IsRequired = true, Name = "keys")]
+        public List<byte[]> Keys { get; set; }
+
+        [DataMember(Order = 2, IsRequired = false, Name = "done")]
+        public bool Done { get; set; }
+    }
+
+    [Serializable, DataContract(Name = "RpbErrorResp")]
+    public class Error
+    {
+        [DataMember(Order = 1, IsRequired = true, Name = "errmsg")]
+        public byte[] Message { get; set; }
+
+        [DataMember(Order = 2, IsRequired = true, Name = "errcode")]
+        public uint Code { get; set; }
+    }
+
+    [Serializable, DataContract(Name = "RpbSetClientIdReq")]
+    public class PersistClientId
+    {
+        [DataMember(Order = 1, IsRequired = true, Name = "client_id")]
+        public byte[] ClientId { get; set; }
+    }
+
+
 }
