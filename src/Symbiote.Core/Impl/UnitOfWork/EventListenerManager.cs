@@ -36,17 +36,7 @@ namespace Symbiote.Core.Impl.UnitOfWork
             List<IEventListener> listeners;
             if (Listeners.TryGetValue(evnt.GetType(), out listeners))
             {
-                listeners.ForEach(a =>
-                                      {
-                                          try
-                                          {
-                                              a.OnNext(evnt);
-                                          }
-                                          catch (Exception exception)
-                                          {
-                                              a.OnError(exception);
-                                          }
-                                      });
+                listeners.ForEach(a => a.ListenTo(evnt) );
             }
         }
 
