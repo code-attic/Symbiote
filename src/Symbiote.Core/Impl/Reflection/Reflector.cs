@@ -18,15 +18,12 @@ using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
 using Symbiote.Core.Extensions;
 
-namespace Symbiote.Core.Reflection
+namespace Symbiote.Core.Impl.Reflection
 {
     public static class ReflectionExtensions
     {
@@ -93,7 +90,7 @@ namespace Symbiote.Core.Reflection
                     .Where(x => x.MemberType == MemberTypes.Property || x.MemberType == MemberTypes.Field)
                     .ForEach(x =>
                                  {
-                                     var key = Tuple.Create(type, x.Name);
+                                     var key = Tuple.Create<Type, string>(type, x.Name);
                                      var memberType = GetMemberInfoType(x);
                                      
                                      var getter = CanRead(type, x.Name) ? BuildGet(type, x.Name) : null;
