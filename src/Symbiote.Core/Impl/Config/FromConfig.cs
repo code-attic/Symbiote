@@ -28,14 +28,14 @@ namespace Symbiote.Core.Impl.Config
             {
                 {typeof(bool), x => bool.Parse(x)},                                                                          
                 {typeof(string), x => x},                                                                          
-                {typeof(short), x => int.Parse(x)},                                                                          
+                {typeof(short), x => short.Parse(x)},                                                                          
                 {typeof(int), x => int.Parse(x)},                                                                          
-                {typeof(long), x => int.Parse(x)},                                                                          
-                {typeof(decimal), x => int.Parse(x)},                                                                          
-                {typeof(double), x => int.Parse(x)},                                                                          
-                {typeof(float), x => int.Parse(x)},                                                                          
-                {typeof(DateTime), x => int.Parse(x)},                                                                          
-                {typeof(Guid), x => int.Parse(x)},                                                                          
+                {typeof(long), x => long.Parse(x)},                                                                          
+                {typeof(decimal), x => decimal.Parse(x)},                                                                          
+                {typeof(double), x => double.Parse(x)},                                                                          
+                {typeof(float), x => float.Parse(x)},                                                                          
+                {typeof(DateTime), x => DateTime.Parse(x)},                                                                          
+                {typeof(Guid), x => Guid.Parse(x)},                                                                          
             };
 
         protected static NameValueCollection ConfigCollection { get; set; }
