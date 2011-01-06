@@ -168,6 +168,7 @@
     <Compile Include="Impl\Log\LogLevel.cs" />
     <Compile Include="Impl\Log\Impl\NullLogger.cs" />
     <Compile Include="Impl\Log\LogManager.cs" />
+    <Compile Include="Impl\UnitOfWork\EventListenerBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\Reflection\Reflector.cs" />
     <Compile Include="Impl\DI\IDependencyContainer.cs" />

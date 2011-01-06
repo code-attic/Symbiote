@@ -18,8 +18,14 @@ using System;
 
 namespace Symbiote.Core.Impl.UnitOfWork
 {
-    public interface IEventListener : IObserver<IEvent>
+    public interface IEventListener
     {
         Type EventType { get; }
+        void ListenTo(IEvent evnt);
+    }
+
+    public interface IEventListener<T> : IEventListener, IObserver<T> where T : IEvent
+    {
+        
     }
 }
