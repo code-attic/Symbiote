@@ -68,7 +68,7 @@ namespace Core.Tests.Domain.Listeners
 
         public override void OnNext(VehicleGenericEvent value)
         {
-            Events.Add(value);
+            Events.Add( value );
         }
     }
 }

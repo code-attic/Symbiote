@@ -100,6 +100,7 @@ namespace Symbiote.Core
                                             s.AddSingleImplementations();
                                         });
                              x.For<IDependencyAdapter>().Use(adapter);
+                             x.For<IEventListenerManager>().Use<EventListenerManager>().AsSingleton();
                          });
             WireUpListenersToContainer();
             return Assimilation;

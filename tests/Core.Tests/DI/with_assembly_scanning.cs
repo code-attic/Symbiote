@@ -37,8 +37,7 @@ namespace Core.Tests.DI
                                                 .Core<StructureMapAdapter>()
                                                 .Dependencies(x => x.Scan(s =>
                                                                               {
-                                                                                  s.AssemblyContainingType
-                                                                                      <IAmAnInterface>();
+                                                                                  s.AssemblyContainingType<IAmAnInterface>();
                                                                                   s.AddAllTypesOf<IAmAnInterface>();
                                                                               }));
                                         };

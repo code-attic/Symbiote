@@ -1,4 +1,6 @@
-﻿namespace Core.Tests.Domain.Model
+﻿using System;
+
+namespace Core.Tests.Domain.Model
 {
     public class Vehicle
     {
@@ -6,6 +8,7 @@
         public string Make { get; protected set; }
         public string Model { get; protected set; }
         public int Year { get; protected set; }
+        public Guid Id { get; set; }
 
         public void Populate(IVehicleMemento vehicleMemento)
         {
@@ -34,6 +37,7 @@
             Make = make;
             Model = model;
             Year = year;
+            Id = Guid.NewGuid();
         }
     }
 }

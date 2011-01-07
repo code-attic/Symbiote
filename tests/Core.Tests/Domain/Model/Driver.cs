@@ -14,6 +14,7 @@ namespace Core.Tests.Domain.Model
         public Address CurrentAddress { get; protected set; }
         public IList<Address> FormerAddresses { get; protected set; }
         public IList<Vehicle> Vehicles { get; protected set; }
+        public Guid Id { get; set; }
 
         public void PopulateMemento(IDriverMemento memento)
         {
@@ -71,6 +72,7 @@ namespace Core.Tests.Domain.Model
         {
             FormerAddresses = new List<Address>();
             Vehicles = new List<Vehicle>();
+            Id = Guid.NewGuid();
         }
 
         public Driver( string ssn, string firstName, string lastName, DateTime dateOfBirth) : this()
