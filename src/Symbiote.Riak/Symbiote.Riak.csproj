@@ -51,7 +51,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\ProtoBufCommands\DetachRequest.cs" />
+    <Compile Include="Impl\IConnectionProvider.cs" />
+    <Compile Include="Impl\IRiakAdapter.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\MapReduceResult.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\RunMapReduce.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\Bucket.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\BucketList.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\BucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\BucketPropertiesSet.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\ClientIdSet.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\Delete.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\Deleted.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\GetBucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\GetClientId.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\GetServerInfo.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\ListBuckets.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\Ping.cs" />
+    <Compile Include="Impl\ProtoBuf\ResponseToken.cs" />
+    <Compile Include="Impl\ProtoBuf\RiakSerializer.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\RiakLink.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\Error.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\Client.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\Get.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\ListKeys.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\GetResult.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\KeyList.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\SetClientId.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\Persist.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\Persisted.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\RiakContent.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\RiakPair.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Response\ServerInformation.cs" />
+    <Compile Include="Impl\ProtoBuf\ByteExtensions.cs" />
+    <Compile Include="Impl\ProtoBuf\Data\Request\SetBucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\ProtoBufCommandRunner.cs" />
+    <Compile Include="Impl\ProtoBuf\ProtoBufConnection.cs" />
+    <Compile Include="Impl\ProtoBuf\RequestToken.cs" />
+    <Compile Include="Impl\Responses\Document.cs" />
+    <Compile Include="Impl\Responses\Response.cs" />
+    <Compile Include="Impl\Responses\ResponseCode.cs" />
+    <Compile Include="Impl\Responses\ServerInfo.cs" />
     <Compile Include="RiakAssimilation.cs" />
     <Compile Include="Config\IRiakConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,7 +98,9 @@
     <Compile Include="Config\RiakConfigurator.cs" />
     <Compile Include="Impl\RiakNode.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Impl\Http\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
