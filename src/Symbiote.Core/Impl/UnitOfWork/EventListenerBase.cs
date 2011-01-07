@@ -4,6 +4,18 @@ namespace Symbiote.Core.Impl.UnitOfWork
 {
     public abstract class EventListenerBase<T> : IEventListener<T> where T : IEvent
     {
+        protected EventListenerBase(bool listenToSubTypesOfEvent)
+        {
+            ListenSubTypesOfEvent = listenToSubTypesOfEvent;
+        }
+
+        protected EventListenerBase() : this( true )
+        {
+            
+        }
+
+        public bool ListenSubTypesOfEvent { get; private set; }
+
         public Type EventType
         {
             get { return typeof(T); }

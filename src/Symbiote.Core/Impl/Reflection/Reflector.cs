@@ -79,6 +79,48 @@ namespace Symbiote.Core.Impl.Reflection
             return enumerable == null ? types : types.Concat(enumerable);
         }
 
+        /// <summary>
+        /// Finds all super-types that the given type descends from, including the type passed in
+        /// </summary>
+        /// <param name="type">The type to start at, when you want to find all super-types</param>
+        /// <returns>list of types that the provided type inherits from, including the type argument passed in</returns>
+        public static IEnumerable<Type> GetInheritanceChainFor(Type type)
+        {
+            yield return type;
+            var chain = GetInheritenceChain(type);
+            if (chain != null)
+            {
+                foreach (var t in chain)
+                {
+                    yield return t;
+                }
+            }
+            yield break;
+        }
+
+        /// <summary>
+        /// Returns the types that inherit from the provided type.
+        /// </summary>
+        /// <param name="type">Super-type you want to find sub-types for.</param>
+        /// <returns>list of types that inherit from the provided type.</returns>
+        public static IEnumerable<Type> GetSubTypes(Type type)
+        {
+            yield return type;
+            // Machine.Specifications and Moq-generated assemblies blow up when reading Types in, plus we don't need 'em.
+            var children = AppDomain
+                            .CurrentDomain
+                            .GetAssemblies()
+                            .Where(a => !a.FullName.Contains("DynamicProxyGenAssembly2") && !a.FullName.Contains("Machine.Specifications"))
+                            .SelectMany(s => s.GetTypes())
+                            .Where(x => (x.IsSubclassOf(type) || type.IsAssignableFrom(x)) && x != type)
+                            .ToList();
+            foreach (var t in children.Distinct())
+            {
+                yield return t;
+            }
+            yield break;
+        }
+
         static void CreateLookupsForType(Type type)
         {
             if (initializedTypes.Contains(type))

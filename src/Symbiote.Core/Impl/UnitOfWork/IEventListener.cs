@@ -20,6 +20,7 @@ namespace Symbiote.Core.Impl.UnitOfWork
 {
     public interface IEventListener
     {
+        bool ListenSubTypesOfEvent { get; }
         Type EventType { get; }
         void ListenTo(IEvent evnt);
     }

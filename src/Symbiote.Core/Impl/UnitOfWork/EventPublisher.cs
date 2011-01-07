@@ -55,7 +55,20 @@ namespace Symbiote.Core.Impl.UnitOfWork
                                                       }
                                                       catch (Exception exception)
                                                       {
-                                                          x.OnError(exception);
+                                                          try
+                                                          {
+                                                              x.OnError(exception);
+                                                          }
+                                                          // ReSharper disable EmptyGeneralCatchClause
+                                                          catch
+                                                          // ReSharper restore EmptyGeneralCatchClause
+                                                          {
+                                                              // Well, this is awkward.  We tried to tell your listener about an event,
+                                                              // but he blew up.  Then we tried to tell your listener about an exception
+                                                              // and he gave us the proverbial finger. So, here we are with all the
+                                                              // existential silence of an empty catch block. Selah.
+                                                          }
+                                                          
                                                       }
                                                   });
                                  if (_manager != null)
