@@ -5,5 +5,8 @@ using System.Text;
 
 namespace Symbiote.Riak.Impl
 {
-    public interface IRiakAdapter {}
+    public interface IRiakConnection
+    {
+        object Send<T>( T command );
+    }
 }

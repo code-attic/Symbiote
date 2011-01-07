@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Symbiote.Core.Impl.Serialization;
-using Symbiote.Riak.Impl.ProtoBuf.Data.Request;
-using Symbiote.Riak.Impl.ProtoBuf.Data.Response;
+using Symbiote.Riak.Impl.ProtoBuf.Request;
+using Symbiote.Riak.Impl.ProtoBuf.Response;
+using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
 
 namespace Symbiote.Riak.Impl.ProtoBuf
 {
@@ -28,22 +29,22 @@ namespace Symbiote.Riak.Impl.ProtoBuf
 
         public Dictionary<short, Type> ResponseCodes = new Dictionary<short, Type>()
         {
-            {0, typeof(Error)},
-            {2, typeof(Ping)},
-            {4, typeof(Client)},
-            {6, typeof(ClientIdSet)},
-            {8, typeof(ServerInformation)},
-            {10, typeof(GetResult)},
-            {12, typeof(Persisted)},
-            {14, typeof(Deleted)},
-            {16, typeof(BucketList)},
-            {18, typeof(KeyList)},
-            {20, typeof(BucketProperties)},
-            {22, typeof(BucketPropertiesSet)},
-            {24, typeof(MapReduceResult)},
+            { 0, typeof(Error) },
+            { 2, typeof(Ping) },
+            { 4, typeof(Client) },
+            { 6, typeof(ClientIdSet) },
+            { 8, typeof(ServerInformation) },
+            { 10, typeof(GetResult) },
+            { 12, typeof(Persisted) },
+            { 14, typeof(Deleted) },
+            { 16, typeof(BucketList) },
+            { 18, typeof(KeyList) },
+            { 20, typeof(BucketProperties) },
+            { 22, typeof(BucketPropertiesSet) },
+            { 24, typeof(MapReduceResult) },
         };
 
-        public byte[] GetCommandBytes<T>(T command)
+        public byte[] GetCommandBytes<T>( T command )
         {
             var commandType = typeof(T);
             var code = CommandCodes[commandType];
@@ -52,23 +53,23 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             var length = contentBytes.Length + 1;
             var byteLength = BitConverter.GetBytes( length );
             return byteLength
-                .Concat( new [] {byteCode} )
+                .Concat( new[] { byteCode } )
                 .Concat( contentBytes )
                 .ToArray();
         }
 
-        public object GetResult(Stream stream)
+        public object GetResult( Stream stream )
         {
             var bytes = stream.ToBytes();
             var messageType = ResponseCodes[bytes[4]];
             var messageBytes = bytes.Skip( 5 ).ToArray();
-            if(messageBytes.Length == 0)
+            if ( messageBytes.Length == 0 )
             {
                 return Activator.CreateInstance( messageType );
             }
             else
             {
-                return messageBytes.FromProtocolBuffer(messageType);   
+                return messageBytes.FromProtocolBuffer( messageType );
             }
         }
     }

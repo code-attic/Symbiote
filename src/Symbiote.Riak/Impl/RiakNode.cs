@@ -6,19 +6,19 @@
         public int ProtoBufPort { get; set; }
         public int HttpPort { get; set; }
 
-        public RiakNode Address(string address)
+        public RiakNode Address( string address )
         {
             NodeAddress = address;
             return this;
         }
 
-        public RiakNode ForHttp(int httpPort)
+        public RiakNode ForHttp( int httpPort )
         {
             HttpPort = httpPort;
             return this;
         }
 
-        public RiakNode ForProtocolBufferPort(int protocolBufferPort)
+        public RiakNode ForProtocolBufferPort( int protocolBufferPort )
         {
             ProtoBufPort = protocolBufferPort;
             return this;

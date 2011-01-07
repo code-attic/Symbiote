@@ -13,7 +13,7 @@ namespace Symbiote.Riak.Config
             return this;
         }
 
-        public RiakConfigurator AddNode(Action<RiakNode> riakNodeConfiguration)
+        public RiakConfigurator AddNode( Action<RiakNode> riakNodeConfiguration )
         {
             var node = new RiakNode();
             riakNodeConfiguration( node );

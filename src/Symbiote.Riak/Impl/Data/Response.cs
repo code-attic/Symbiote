@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Symbiote.Riak.Impl
+namespace Symbiote.Riak.Impl.Responses
 {
-    public interface IRiakAdapter {}
 }

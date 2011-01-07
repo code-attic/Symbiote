@@ -7,6 +7,6 @@ namespace Symbiote.Riak.Impl
 {
     public interface IConnectionProvider
     {
-
+        IRiakConnection GetConnection();
     }
 }
