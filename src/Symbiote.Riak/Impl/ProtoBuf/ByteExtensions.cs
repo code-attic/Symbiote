@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 
 namespace Symbiote.Riak.Impl.ProtoBuf
 {
     public static class ByteExtensions
     {
-        private static readonly int BUFFER_SIZE = 4 * 1024;
+        private static readonly int BUFFER_LENGTH = 8 * 1024;
 
         public static string FromBytes( this byte[] bytes )
         {
@@ -20,20 +21,16 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             return Encoding.UTF8.GetBytes( value );
         }
 
-        public static byte[] ToBytes( this Stream stream )
+        public static byte[] ToBytes( this NetworkStream stream )
         {
-            var buffer = new byte[BUFFER_SIZE];
-            using (var memoryStream = new MemoryStream())
+            var buffer = new byte[BUFFER_LENGTH];
+            using(var memoryStream = new MemoryStream())
             {
-                int read;
-                while ((read = stream.Read(buffer, 0, buffer.Length)) > 0)
+                while(stream.DataAvailable)
                 {
-                    // exclude the response termination byte
-                    var count = buffer[read - 1] == -1
-                                    ? read - 1
-                                    : read;
-                    memoryStream.Write( buffer, 0, count );
-                } while ( read > 0 );
+                    var read = stream.Read( buffer, 0, buffer.Length );
+                    memoryStream.Write( buffer, 0, read );
+                }
                 return memoryStream.ToArray();
             }
         }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Symbiote.Core.Impl.Serialization;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
@@ -88,18 +89,25 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             return bytes;
         }
 
-        public object GetResult( Stream stream )
+        public object GetResult( NetworkStream stream )
         {
             var bytes = stream.ToBytes();
-            var messageType = ResponseCodes[bytes[4]];
-            var messageBytes = bytes.Skip( 5 ).ToArray();
-            if ( messageBytes.Length == 0 )
+            if(bytes.Length > 4)
             {
-                return Activator.CreateInstance( messageType );
+                var messageType = ResponseCodes[bytes[4]];
+                var messageBytes = bytes.Skip( 5 ).ToArray();
+                if ( messageBytes.Length == 0 )
+                {
+                    return Activator.CreateInstance( messageType );
+                }
+                else
+                {
+                    return messageBytes.FromProtocolBuffer( messageType );
+                }
             }
             else
             {
-                return messageBytes.FromProtocolBuffer( messageType );
+                return GetResult( stream );
             }
         }
     }

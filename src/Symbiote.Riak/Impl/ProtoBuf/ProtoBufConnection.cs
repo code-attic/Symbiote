@@ -9,45 +9,16 @@ using System.Text;
 namespace Symbiote.Riak.Impl.ProtoBuf
 {
     public class ProtoBufConnection
-        : IRiakConnection
+        : IRiakConnection, IDisposable
     {
         protected Stream _stream;
         protected TcpClient _client;
         protected int? _sendLength;
         protected RiakSerializer Serializer { get; set; }
-        public Stream Stream { get; protected set; }
+        public NetworkStream Stream { get; protected set; }
         public TcpClient Client { get; protected set; }
         public int SendLength { get; protected set; }
         public RiakNode Node { get; set; }
-
-        //public TcpClient Client
-        //{
-        //    get
-        //    {
-        //        _client = _client ??
-        //               new TcpClient( Node.NodeAddress, Node.ProtoBufPort );
-        //        return _client;
-        //    }
-        //}
-
-        //public int SendLength
-        //{
-        //    get
-        //    {
-        //        _sendLength = _sendLength ?? Client.SendBufferSize;
-        //        return _sendLength.Value;
-        //    }
-        //}
-
-        //public Stream Stream
-        //{
-        //    get
-        //    {
-        //        _stream = _stream ??
-        //               Client.GetStream();
-        //        return _stream;
-        //    }
-        //}
 
         public object Send<T>(T command)
         {
@@ -68,7 +39,15 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             Client = new TcpClient(Node.NodeAddress, Node.ProtoBufPort);
             Stream = Client.GetStream();
             SendLength = Client.SendBufferSize;
-            Client.ReceiveTimeout = 1000;
+        }
+
+        public void Dispose()
+        {
+            if(Stream != null)
+                Stream.Close();
+            
+            if(Client != null && Client.Connected)
+                Client.Close();
         }
     }
 }
