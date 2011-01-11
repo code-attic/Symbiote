@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using Symbiote.Core.Impl.Serialization;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
@@ -9,22 +11,38 @@ using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
 
 namespace Symbiote.Riak.Impl.ProtoBuf
 {
+    public enum RequestCode
+    {
+        Ping = 1,
+        GetClientId = 3,
+        SetClientId = 5,
+        GetServerInfo = 7,
+        Get = 9,
+        Persist = 11,
+        Delete = 13,
+        ListBuckets = 15,
+        ListKeys = 17,
+        GetBucketProperties = 19,
+        SetBucketProperties = 21,
+        RunMapReduce = 23
+    }
+
     public class RiakSerializer
     {
-        public Dictionary<Type, short> CommandCodes = new Dictionary<Type, short>()
+        public Dictionary<Type, RequestCode> CommandCodes = new Dictionary<Type, RequestCode>()
         {
-            { typeof(Ping), 1 },
-            { typeof(GetClientId), 3 },
-            { typeof(SetClientId), 5 },
-            { typeof(GetServerInfo), 7 },
-            { typeof(Get), 9 },
-            { typeof(Persist), 11 },
-            { typeof(Delete), 13 },
-            { typeof(ListBuckets), 15 },
-            { typeof(ListKeys), 17 },
-            { typeof(GetBucketProperties), 19 },
-            { typeof(SetBucketProperties), 21 },
-            { typeof(RunMapReduce), 23 },
+            { typeof(Ping), RequestCode.Ping },
+            { typeof(GetClientId), RequestCode.GetClientId },
+            { typeof(SetClientId), RequestCode.SetClientId },
+            { typeof(GetServerInfo), RequestCode.GetServerInfo },
+            { typeof(Get), RequestCode.Get },
+            { typeof(Persist), RequestCode.Persist },
+            { typeof(Delete), RequestCode.Delete },
+            { typeof(ListBuckets), RequestCode.ListBuckets },
+            { typeof(ListKeys), RequestCode.ListKeys },
+            { typeof(GetBucketProperties), RequestCode.GetBucketProperties },
+            { typeof(SetBucketProperties), RequestCode.SetBucketProperties },
+            { typeof(RunMapReduce), RequestCode.RunMapReduce },
         };
 
         public Dictionary<short, Type> ResponseCodes = new Dictionary<short, Type>()
@@ -48,14 +66,26 @@ namespace Symbiote.Riak.Impl.ProtoBuf
         {
             var commandType = typeof(T);
             var code = CommandCodes[commandType];
-            var byteCode = BitConverter.GetBytes( code )[1];
+            var byteCode = Convert.ToByte( code );
             var contentBytes = command.ToProtocolBuffer();
-            var length = contentBytes.Length + 1;
-            var byteLength = BitConverter.GetBytes( length );
-            return byteLength
-                .Concat( new[] { byteCode } )
-                .Concat( contentBytes )
-                .ToArray();
+            var length = IPAddress.HostToNetworkOrder(contentBytes.Length + 1);
+            byte[] bytes;
+            if(contentBytes.Length > 0)
+            {
+                bytes = BitConverter
+                    .GetBytes((length))
+                    .Concat(new[] { byteCode })
+                    .Concat(contentBytes)
+                    .ToArray();
+            }
+            else
+            {
+                bytes = BitConverter
+                    .GetBytes(IPAddress.HostToNetworkOrder(1))
+                    .Concat(new[] { byteCode })
+                    .ToArray();
+            }
+            return bytes;
         }
 
         public object GetResult( Stream stream )

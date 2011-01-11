@@ -53,10 +53,13 @@
   <ItemGroup>
     <Compile Include="Impl\Data\BucketProperties.cs" />
     <Compile Include="Impl\Data\ClientId.cs" />
+    <Compile Include="Impl\DocumentRepository.cs" />
     <Compile Include="Impl\IConnectionProvider.cs" />
+    <Compile Include="Impl\IDocumentRepository.cs" />
     <Compile Include="Impl\IRepository.cs" />
     <Compile Include="Impl\IRiakAdapter.cs" />
     <Compile Include="Impl\IRiakConnection.cs" />
+    <Compile Include="Impl\IRiakServer.cs" />
     <Compile Include="Impl\ProtoBuf\Response\MapReduceResult.cs" />
     <Compile Include="Impl\ProtoBuf\Request\RunMapReduce.cs" />
     <Compile Include="Impl\ProtoBuf\Response\Bucket.cs" />
@@ -96,6 +99,7 @@
     <Compile Include="Impl\Data\ResponseCode.cs" />
     <Compile Include="Impl\Data\ServerInfo.cs" />
     <Compile Include="Impl\Data\QueryResult.cs" />
+    <Compile Include="Impl\RiakServer.cs" />
     <Compile Include="RiakAssimilation.cs" />
     <Compile Include="Config\IRiakConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

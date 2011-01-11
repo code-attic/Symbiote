@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 namespace Symbiote.Core.Impl.Utility
 {
     /// <summary>
-    /// Caution: may eat babies, data and your registers
+    /// Caution: understand what this is before using it in your application!
     /// </summary>
     public class VolatileRingBuffer
     {
@@ -37,7 +37,6 @@ namespace Symbiote.Core.Impl.Utility
         public int LastIndex;
         public int LastStep;
 
-        
         public int GetNextIndex(int index)
         {
             return index == LastIndex

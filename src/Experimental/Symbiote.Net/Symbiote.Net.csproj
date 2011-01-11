@@ -101,7 +101,7 @@
     <Compile Include="WorthlessAuthenticationValidator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core %28Framework\Symbiote.Core%29</Name>
       <IlMerge>False</IlMerge>

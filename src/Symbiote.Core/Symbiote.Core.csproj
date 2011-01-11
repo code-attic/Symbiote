@@ -169,6 +169,13 @@
     <Compile Include="Impl\Log\Impl\NullLogger.cs" />
     <Compile Include="Impl\Log\LogManager.cs" />
     <Compile Include="Impl\UnitOfWork\EventListenerBase.cs" />
+    <Compile Include="Impl\Utility\VolatileRingBuffer.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Impl\Utility\RingBufferIndex.cs" />
+    <Compile Include="Impl\Utility\VolatileRingBuffer2.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\Reflection\Reflector.cs" />
     <Compile Include="Impl\DI\IDependencyContainer.cs" />
@@ -188,7 +195,6 @@
     <Compile Include="Impl\Utility\ObserverToken.cs" />
     <Compile Include="Impl\Utility\Pipeline.cs" />
     <Compile Include="Impl\Locking\SpinLockManager.cs" />
-    <Compile Include="Impl\Utility\VolatileRingBuffer.cs" />
     <Compile Include="Impl\Utility\VolatileRingBufferArray.cs" />
     <Compile Include="Impl\UnitOfWork\DefaultKeyAccessor.cs" />
     <Compile Include="Impl\UnitOfWork\EventBase.cs" />

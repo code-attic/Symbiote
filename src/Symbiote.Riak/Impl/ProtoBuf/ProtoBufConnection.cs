@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -14,50 +15,45 @@ namespace Symbiote.Riak.Impl.ProtoBuf
         protected TcpClient _client;
         protected int? _sendLength;
         protected RiakSerializer Serializer { get; set; }
+        public Stream Stream { get; protected set; }
+        public TcpClient Client { get; protected set; }
+        public int SendLength { get; protected set; }
         public RiakNode Node { get; set; }
 
-        public TcpClient Client
-        {
-            get
-            {
-                _client = _client ??
-                       new TcpClient( Node.NodeAddress, Node.ProtoBufPort );
-                return _client;
-            }
-        }
+        //public TcpClient Client
+        //{
+        //    get
+        //    {
+        //        _client = _client ??
+        //               new TcpClient( Node.NodeAddress, Node.ProtoBufPort );
+        //        return _client;
+        //    }
+        //}
 
-        public int SendLength
-        {
-            get
-            {
-                _sendLength = _sendLength ?? Client.SendBufferSize;
-                return _sendLength.Value;
-            }
-        }
+        //public int SendLength
+        //{
+        //    get
+        //    {
+        //        _sendLength = _sendLength ?? Client.SendBufferSize;
+        //        return _sendLength.Value;
+        //    }
+        //}
 
-        public Stream Stream
-        {
-            get
-            {
-                _stream = _stream ??
-                       Client.GetStream();
-                return _stream;
-            }
-        }
+        //public Stream Stream
+        //{
+        //    get
+        //    {
+        //        _stream = _stream ??
+        //               Client.GetStream();
+        //        return _stream;
+        //    }
+        //}
 
         public object Send<T>(T command)
         {
             var bytes = Serializer.GetCommandBytes( command );
-            Write(bytes, 0, SendLength > bytes.Length ? SendLength : bytes.Length);
+            Stream.Write( bytes, 0, bytes.Length );
             return Read();
-        }
-
-        protected void Write(byte[] bytes, int offset, int count)
-        {
-            Stream.Write( bytes, offset, count );
-            offset += count;
-            if(offset < bytes.Length)
-                Write(bytes, offset, SendLength > bytes.Length - offset ? SendLength : bytes.Length - offset);
         }
 
         public object Read()
@@ -69,6 +65,10 @@ namespace Symbiote.Riak.Impl.ProtoBuf
         {
             Node = node;
             Serializer = new RiakSerializer();
+            Client = new TcpClient(Node.NodeAddress, Node.ProtoBufPort);
+            Stream = Client.GetStream();
+            SendLength = Client.SendBufferSize;
+            Client.ReceiveTimeout = 1000;
         }
     }
 }

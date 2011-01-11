@@ -52,9 +52,9 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Response
 
         public RiakContent() {}
 
-        public RiakContent( string value, string contentType, string charset, string contentEncoding, string vectorClock, uint lastMod, uint lastModSecs )
+        public RiakContent( object value, string contentType, string charset, string contentEncoding, string vectorClock, uint lastMod, uint lastModSecs )
         {
-            Value = value.ToBytes();
+            Value = value.ToProtocolBuffer();
             ContentType = contentType.ToBytes();
             Charset = charset.ToBytes();
             ContentEncoding = contentEncoding.ToBytes();

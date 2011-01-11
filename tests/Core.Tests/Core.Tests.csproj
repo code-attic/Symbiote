@@ -50,6 +50,9 @@
     <Reference Include="ServiceStack.Text">
       <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -110,6 +113,7 @@
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
     <Compile Include="Utility\Futures\with_callback.cs" />
     <Compile Include="Utility\Futures\with_function_call.cs" />
+    <Compile Include="Utility\RingBuffer\when_writing_1000_values.cs" />
     <Compile Include="with_assimilation.cs" />
   </ItemGroup>
   <ItemGroup>
