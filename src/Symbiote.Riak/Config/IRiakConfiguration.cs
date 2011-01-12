@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Symbiote.Riak.Impl;
 
 namespace Symbiote.Riak.Config
@@ -6,5 +7,7 @@ namespace Symbiote.Riak.Config
     public interface IRiakConfiguration
     {
         List<RiakNode> Nodes { get; set; }
+
+        string GetBucketForType<T>();
     }
 }
