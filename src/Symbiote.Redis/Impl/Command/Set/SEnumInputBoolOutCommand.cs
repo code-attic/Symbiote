@@ -37,7 +37,7 @@ namespace Symbiote.Redis.Impl.Command.Set
 
         protected abstract void SetCmd();
 
-        public bool GetEnum(IRedisConnection connection)
+        public bool GetEnum(IConnection connection)
         {
             SetCmd();
             var stream = new MemoryStream();

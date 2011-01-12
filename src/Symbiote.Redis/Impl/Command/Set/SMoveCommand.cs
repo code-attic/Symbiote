@@ -30,7 +30,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected string DestKey { get; set; }
         protected TValue Value { get; set; }
 
-        public bool SMove(IRedisConnection connection)
+        public bool SMove(IConnection connection)
         {
             var data = Serialize(Value);
             if (data.Length > 1073741824)

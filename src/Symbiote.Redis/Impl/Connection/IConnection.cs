@@ -19,7 +19,7 @@ using System.Collections.Generic;
 
 namespace Symbiote.Redis.Impl.Connection
 {
-    public interface IRedisConnection 
+    public interface IConnection
         : IDisposable
     {
         bool InUse { get; set; }

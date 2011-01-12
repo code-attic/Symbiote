@@ -16,11 +16,14 @@ namespace Riak.Tests
 {
     public class with_assimilate
     {
+        public static string Ip = "10.15.199.62";
+        //public static string Ip = "192.168.1.105";
+
         private Establish context = () =>
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Riak( x => x.AddNode( r => r.Address( "192.168.1.105" ).ForProtocolBufferPort( 8081 ) ) );
+                .Riak( x => x.AddNode( r => r.Address( Ip ).ForProtocolBufferPort( 8081 ) ) );
         };
     }
 
@@ -63,13 +66,14 @@ namespace Riak.Tests
     }
 
     public class when_sending_ping_manually
+        : with_assimilate
     {
         public static TcpClient Client { get; set; }
         public static byte[] response { get; set; }
 
         private Because of = () =>
         {
-            Client = new TcpClient("192.168.1.105", 8081);
+            Client = new TcpClient( Ip, 8081);
             var stream = Client.GetStream();
 
             stream.Write( 
@@ -87,13 +91,14 @@ namespace Riak.Tests
     }
 
     public class when_sending_ping
+        : with_assimilate
     {
         public static TcpClient Client { get; set; }
         public static byte[] response { get; set; }
 
         private Because of = () =>
         {
-            Client = new TcpClient("192.168.1.105", 8081);
+            Client = new TcpClient( Ip, 8081);
             var stream = Client.GetStream();
             var riakSerializer = new RiakSerializer();
             var generated = riakSerializer.GetCommandBytes(new Ping());

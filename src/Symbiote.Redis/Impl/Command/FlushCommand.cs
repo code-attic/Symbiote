@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const string FLUSH_DATABASE = "FLUSHDB\r\n";
         protected bool FlushAll { get; set; }
         
-        public bool Flush(IRedisConnection connection)
+        public bool Flush(IConnection connection)
         {
             connection.SendExpectString(FlushAll ? FLUSH_ALL : FLUSH_DATABASE);
             return true;

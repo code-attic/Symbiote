@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Symbiote.Riak.Impl
+namespace Symbiote.Redis.Impl.Connection
 {
     public interface IConnectionProvider
     {
-        IRiakConnection GetConnection();
+         IConnectionHandle Acquire();
     }
 }

@@ -18,17 +18,17 @@ using Symbiote.Redis.Impl.Config;
 
 namespace Symbiote.Redis.Impl.Connection
 {
-    public class RedisConnectionFactory
-        : IRedisConnectionFactory
+    public class ConnectionFactory
+        : IConnectionFactory
     {
         public RedisConfiguration Configuration { get; set; }
 
-        public IRedisConnection GetConnection()
+        public IConnection GetConnection()
         {
-            return new RedisConnection(Configuration);
+            return new Connection(Configuration);
         }
 
-        public RedisConnectionFactory(RedisConfiguration configuration)
+        public ConnectionFactory(RedisConfiguration configuration)
         {
             Configuration = configuration;
         }

@@ -1,4 +1,5 @@
 ﻿using Symbiote.Riak.Impl.Data;
+using Symbiote.Riak.Impl.ProtoBuf.Connection;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
 
 namespace Symbiote.Riak.Impl
@@ -8,13 +9,11 @@ namespace Symbiote.Riak.Impl
     {
         public IConnectionProvider ConnectionProvider { get; set; }
         public IBasicCommandFactory CommandFactory { get; set; }
-        public IRiakConnection Connection { get { return ConnectionProvider.GetConnection(); } }
 
         public Document<T> GetDocument<T>( string bucket, string key, uint minimum )
         {
             var command = CommandFactory.CreateGet( bucket, key, minimum );
-            var result = Connection.Send( command );
-            var content = result as RiakContent;
+            var content = command.Execute();
             return content.ToDocument<T>();
         }
 

@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
     {
         protected const string INFO = "INFO\r\n";
 
-        public Dictionary<string,string> GetInfo(IRedisConnection connection)
+        public Dictionary<string,string> GetInfo(IConnection connection)
         {
             byte[] r = connection.SendExpectData(null, INFO);
             var dict = new Dictionary<string, string>();

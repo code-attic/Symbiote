@@ -22,7 +22,7 @@ namespace Symbiote.Redis.Impl.Command
         : RedisCommand<bool>
     {
         protected const string SHUTDOWN = "SHUTDOWN\r\n";
-        public bool Shutdown(IRedisConnection connection)
+        public bool Shutdown(IConnection connection)
         {
             connection.SendExpectString(SHUTDOWN);
             return true;

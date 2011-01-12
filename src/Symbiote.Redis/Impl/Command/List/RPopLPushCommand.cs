@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected string SrcKey { get; set; }
         protected string DestKey { get; set; }
 
-        public bool RPopLPush(IRedisConnection connection)
+        public bool RPopLPush(IConnection connection)
         {
             return connection.SendExpectSuccess(null, RPLP.AsFormat(SrcKey, DestKey));
         }

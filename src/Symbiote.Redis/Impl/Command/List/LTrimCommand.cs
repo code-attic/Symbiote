@@ -29,7 +29,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected int StartIndex {get; set;}
         protected int EndIndex {get; set;}
 
-        public bool LTrim(IRedisConnection connection)
+        public bool LTrim(IConnection connection)
         {
             return connection.SendExpectSuccess(null, LTRIM.AsFormat(Key, StartIndex, EndIndex));
         }

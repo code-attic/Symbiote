@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Net.Sockets;
-using System.Text;
 
-namespace Symbiote.Riak.Impl.ProtoBuf
+namespace Symbiote.Riak.Impl.ProtoBuf.Connection
 {
     public class ProtoBufConnection
-        : IRiakConnection, IDisposable
+        : IProtoBufConnection, IDisposable
     {
         protected Stream _stream;
         protected TcpClient _client;

@@ -30,7 +30,7 @@ namespace Symbiote.Redis.Impl.Command
         protected string CommandBody { get; set; }
         public string Key { get; set; }
         
-        public bool SetExpiration(IRedisConnection connection)
+        public bool SetExpiration(IConnection connection)
         {
             return connection.SendDataExpectInt(null, CommandBody) == 1;
         }

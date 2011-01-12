@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command
         protected string Key { get; set; }
         protected string Field {get; set; }
 
-        public int Increment(IRedisConnection connection)
+        public int Increment(IConnection connection)
         {
             var command = INCREMENT_BY.AsFormat(Key, Field, IncrementBy);
 

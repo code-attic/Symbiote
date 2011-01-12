@@ -34,7 +34,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected IEnumerable<Tuple<string, TValue>> Values { get; set; }
 
-        public bool HSet(IRedisConnection connection)
+        public bool HSet(IConnection connection)
         {
             var stream = new MemoryStream();
             Values.ForEach(v =>

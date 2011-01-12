@@ -29,7 +29,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected int Index {get; set;}
         protected TValue Value { get; set; }
 
-        public TValue LIndex(IRedisConnection connection)
+        public TValue LIndex(IConnection connection)
         {
             var data = connection.SendExpectData(null, LINDEX.AsFormat(Key, Index));
             return Deserialize<TValue>(data);

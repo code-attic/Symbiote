@@ -16,8 +16,8 @@ limitations under the License.
 
 namespace Symbiote.Redis.Impl.Connection
 {
-    public interface IRedisConnectionFactory
+    public interface IConnectionFactory
     {
-        IRedisConnection GetConnection();
+        IConnection GetConnection();
     }
 }

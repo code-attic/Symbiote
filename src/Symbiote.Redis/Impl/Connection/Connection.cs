@@ -25,8 +25,8 @@ using Symbiote.Redis.Impl.Config;
 
 namespace Symbiote.Redis.Impl.Connection
 {
-    public class RedisConnection
-        : IRedisConnection
+    public class Connection
+        : IConnection
     {
         protected Socket Socket { get; set; }
         protected BufferedStream BufferedStream { get; set; }
@@ -355,7 +355,7 @@ namespace Symbiote.Redis.Impl.Connection
             }
         }
 
-        public RedisConnection(RedisConfiguration configuration)
+        public Connection(RedisConfiguration configuration)
         {
             Configuration = configuration;
         }

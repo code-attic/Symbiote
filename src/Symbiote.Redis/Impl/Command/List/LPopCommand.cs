@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected const string LPOP = "LPOP {0}\r\n";
         protected string Key { get; set; }
 
-        public TValue LPop(IRedisConnection connection)
+        public TValue LPop(IConnection connection)
         {
             var data = connection.SendExpectData(null, LPOP.AsFormat(Key));
             return Deserialize<TValue>(data);

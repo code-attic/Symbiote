@@ -26,7 +26,7 @@ namespace Symbiote.Redis.Impl.Command
         public string OriginalKey { get; set; }
         public string NewKey { get; set; }
 
-        public bool Rename(IRedisConnection connection)
+        public bool Rename(IConnection connection)
         {
             return connection.SendExpectString(RENAME_KEY.AsFormat(OriginalKey, NewKey))[0] == '+';
         }

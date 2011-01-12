@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         private const string SET_DATABASE = "SELECT {0}\r\n";
         protected int DatabaseIndex { get; set; }
 
-        public bool SetInstance(IRedisConnection connection)
+        public bool SetInstance(IConnection connection)
         {
             return connection.SendExpectSuccess(null, SET_DATABASE.AsFormat(DatabaseIndex));
         }

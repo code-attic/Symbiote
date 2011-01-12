@@ -30,7 +30,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Field {get; set; }
         protected TValue Value { get; set; }
 
-        public bool HSet(IRedisConnection connection)
+        public bool HSet(IConnection connection)
         {
             var data = Serialize(Value);
             if (data.Length > 1073741824)

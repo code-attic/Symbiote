@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Symbiote.Riak.Impl.ProtoBuf.Response;
 
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [Serializable, DataContract( Name = "RpbDelReq" )]
-    public class Delete
+    public class Delete : RiakCommand<Delete, Deleted>
     {
         [DataMember( Order = 1, IsRequired = true, Name = "bucket" )]
         public byte[] Bucket { get; set; }

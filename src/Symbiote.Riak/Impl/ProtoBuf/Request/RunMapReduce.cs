@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Symbiote.Riak.Impl.ProtoBuf.Response;
 
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [Serializable, DataContract( Name = "RpbMapRedReq" )]
-    public class RunMapReduce
+    public class RunMapReduce : RiakCommand<RunMapReduce, MapReduceResult>
     {
         [DataMember( Order = 1, IsRequired = true, Name = "request" )]
         public byte[] Request { get; set; }

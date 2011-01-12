@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
+using Symbiote.Riak.Impl.ProtoBuf.Response;
 
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [Serializable, DataContract( Name = "RpbGetReq" )]
-    public class Get
+    public class Get : RiakCommand<Get, RiakContent>
     {
         [DataMember( Order = 1, IsRequired = true, Name = "bucket" )]
         public byte[] Bucket { get; set; }

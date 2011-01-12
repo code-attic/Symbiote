@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const string SAVE_ASYNC = "BGSAVE\r\n";
         public bool Synchronous { get; set; }
 
-        public bool Save(IRedisConnection connection)
+        public bool Save(IConnection connection)
         {
             connection.SendExpectString(Synchronous ? SAVE : SAVE_ASYNC);
             return true;

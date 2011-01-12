@@ -24,7 +24,8 @@ namespace Symbiote.Redis.Impl.Command
     public abstract class RedisCommand<TReturn>
     {
         protected ICacheSerializer Serializer { get; set; }
-        public Func<IRedisConnection, TReturn> Command { get; protected set; }
+        protected IConnectionProvider ConnectionProvider { get; set; }
+        public Func<IConnection, TReturn> Command { get; protected set; }
 
         public byte[] Serialize<T>(T value)
         {
@@ -39,7 +40,7 @@ namespace Symbiote.Redis.Impl.Command
         public TReturn Execute()
         {
             TReturn value = default(TReturn);
-            using(var handle = ConnectionHandle.Acquire())
+            using(var handle = ConnectionProvider.Acquire())
             {
                 value = Command(handle.Connection);
             }
@@ -49,6 +50,7 @@ namespace Symbiote.Redis.Impl.Command
         protected RedisCommand()
         {
             Serializer = Assimilate.GetInstanceOf<ICacheSerializer>();
+            ConnectionProvider = Assimilate.GetInstanceOf<IConnectionProvider>();
         }
     }
 }

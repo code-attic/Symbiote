@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
-        public TValue RPop(IRedisConnection connection)
+        public TValue RPop(IConnection connection)
         {
             var data = connection.SendExpectData(null, RPOP.AsFormat(Key));
             return Deserialize<TValue>(data);

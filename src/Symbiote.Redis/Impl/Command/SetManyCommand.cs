@@ -33,7 +33,7 @@ namespace Symbiote.Redis.Impl.Command
 
         public IEnumerable<Tuple<string, TValue>> Values { get; set; }
 
-        public bool Set(IRedisConnection connection)
+        public bool Set(IConnection connection)
         {
             var stream = new MemoryStream();
             Values.ForEach(v =>

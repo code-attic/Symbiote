@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected const string SCARD = "SCARD {0}\r\n";
         protected string Key { get; set; }
 
-        public int SCard(IRedisConnection connection)
+        public int SCard(IConnection connection)
         {
             var command = SCARD.AsFormat(Key);
 

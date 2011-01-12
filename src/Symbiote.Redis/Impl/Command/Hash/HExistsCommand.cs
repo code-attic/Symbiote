@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected string Field { get; set; }
 
-        public bool Exists(IRedisConnection connection)
+        public bool Exists(IConnection connection)
         {
             return connection.SendExpectSuccess(null, EXISTS.AsFormat(Key, Field));
         }

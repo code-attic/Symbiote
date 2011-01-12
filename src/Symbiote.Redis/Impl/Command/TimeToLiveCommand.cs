@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const string TTL = "TTL {0}\r\n";
         public string Key { get; set; }
 
-        public int GetTime(IRedisConnection connection)
+        public int GetTime(IConnection connection)
         {
             return connection.SendDataExpectInt(null, TTL.AsFormat(Key));
         }

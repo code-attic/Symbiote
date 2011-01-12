@@ -30,7 +30,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected int Index {get; set;}
         protected TValue Value { get; set; }
 
-        public bool LSet(IRedisConnection connection)
+        public bool LSet(IConnection connection)
         {
             var data = Serialize(Value);
             if (data.Length > 1073741824)

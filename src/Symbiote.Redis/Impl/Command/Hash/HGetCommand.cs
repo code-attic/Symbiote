@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected string Field {get; set; }
 
-        public TValue HGet(IRedisConnection connection)
+        public TValue HGet(IConnection connection)
         {
             //For some reason HGet isn't working properly.  Workaround is to use HMGet until I have time to sort it out
             //var data = connection.SendExpectData(null, HGET.AsFormat(Key, Field));

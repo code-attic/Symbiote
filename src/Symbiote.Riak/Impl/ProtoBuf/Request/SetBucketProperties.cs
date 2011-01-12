@@ -5,7 +5,7 @@ using Symbiote.Riak.Impl.Data;
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [Serializable, DataContract( Name = "RpbSetBucketReq" )]
-    public class SetBucketProperties
+    public class SetBucketProperties : RiakCommand<SetBucketProperties, BucketProperties>
     {
         [DataMember( Order = 1, Name = "bucket", IsRequired = true )]
         public byte[] Bucket { get; set; }

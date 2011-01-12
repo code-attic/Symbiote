@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const string KEYS_LIST_MATCHING = "KEYS {0}\r\n";
         protected string CommandBody { get; set; }
         
-        public IEnumerable<string> GetList(IRedisConnection connection)
+        public IEnumerable<string> GetList(IConnection connection)
         {
             List<byte[]> response = connection.SendExpectDataList(null, CommandBody);
             var rsltArray = new string[response.Count];

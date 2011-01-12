@@ -8,6 +8,7 @@ namespace Symbiote.Riak.Config
     {
         public List<RiakNode> Nodes { get; set; }
         public Dictionary<Type, string> RegisteredBuckets { get; set; }
+        public int ConnectionLimit { get; set; }
 
         public string GetBucketForType<T>()
         {
@@ -20,6 +21,7 @@ namespace Symbiote.Riak.Config
         public RiakConfiguration()
         {
             Nodes = new List<RiakNode>();
+            ConnectionLimit = 5;
         }
     }
 }

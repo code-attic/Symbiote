@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const long EPOCH = 621355968000000000L;
         protected const string LAST_SAVE = "LASTSAVE\r\n";
         
-        public DateTime GetLast(IRedisConnection connection)
+        public DateTime GetLast(IConnection connection)
         {
             var last = connection.SendDataExpectInt(null, LAST_SAVE);
             return new DateTime(EPOCH).AddSeconds(last);

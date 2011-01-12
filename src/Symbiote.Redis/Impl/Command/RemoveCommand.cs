@@ -26,7 +26,7 @@ namespace Symbiote.Redis.Impl.Command
         private const string REMOVE = "DEL {0}\r\n";
         protected List<string> Keys { get; set; }
 
-        public bool Remove(IRedisConnection connection)
+        public bool Remove(IConnection connection)
         {
             var count = connection.SendDataExpectInt(null, REMOVE.AsFormat(string.Join(" ", Keys)));
             return count == Keys.Count;

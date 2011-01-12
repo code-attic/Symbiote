@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command
         protected const string GET = "GET {0}\r\n";
         protected string Key { get; set; }
 
-        public TValue Get(IRedisConnection connection)
+        public TValue Get(IConnection connection)
         {
             var data = connection.SendExpectData(null, GET.AsFormat(Key));
             return Deserialize<TValue>(data);

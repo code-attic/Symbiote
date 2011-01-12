@@ -5,6 +5,7 @@ using Symbiote.Core;
 using Symbiote.Riak.Config;
 using Symbiote.Riak.Impl;
 using Symbiote.Riak.Impl.ProtoBuf;
+using Symbiote.Riak.Impl.ProtoBuf.Connection;
 
 namespace Symbiote.Riak
 {
@@ -17,9 +18,11 @@ namespace Symbiote.Riak
 
             Assimilate.Dependencies( x =>
             {
-                x.For<IRiakConfiguration>().Use( configurator.Configuration );
+                x.For<IRiakConfiguration>().Use(configurator.Configuration);
+                x.For<IConnectionFactory>().Use<ConnectionFactory>();
+                x.For<IConnectionProvider>().Use<PooledConnectionProvider>();
                 x.For<IBasicCommandFactory>().Use<ProtoBufCommandFactory>().AsSingleton();
-                x.For<IConnectionProvider>().Use<ProtoBufConnectionProvider>().AsSingleton();
+                x.For<IConnectionPool>().Use<LockingConnectionPool>();
                 x.For<IRiakServer>().Use<RiakServer>();
                 x.For<IDocumentRepository>().Use<DocumentRepository>();
             } );

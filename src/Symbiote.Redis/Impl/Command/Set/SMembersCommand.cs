@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected string Key { get; set; }
         protected const string SMEMBER = "SMEMBERS {0}\r\n";
 
-        public IEnumerable<T> SMembers<T>(IRedisConnection connection)
+        public IEnumerable<T> SMembers<T>(IConnection connection)
         {
             var response = connection.SendExpectDataList(null, SMEMBER.AsFormat(Key));
             return response.Select(item => Deserialize<T>(item)); //.ToList();

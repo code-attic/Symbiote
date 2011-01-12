@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected string Field { get; set; }
 
-        public bool Delete(IRedisConnection connection)
+        public bool Delete(IConnection connection)
         {
             return connection.SendExpectSuccess(null, DEL.AsFormat(Key, Field));
         }

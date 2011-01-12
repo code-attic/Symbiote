@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected const string HVALS = "HVALS {0}\r\n";
 
-        public IEnumerable<T> HVals<T>(IRedisConnection connection)
+        public IEnumerable<T> HVals<T>(IConnection connection)
         {
             var response = connection.SendExpectDataList(null, HVALS.AsFormat(Key));
             return response.Select(item => Deserialize<T>(item)); //.ToList();

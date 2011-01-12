@@ -29,7 +29,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected const string SADD = "SADD {0} {1}\r\n";
         protected IEnumerable<Tuple<string, TValue>> Pairs { get; set; }
 
-        public IEnumerable<bool> SAddMulti(IRedisConnection connection)
+        public IEnumerable<bool> SAddMulti(IConnection connection)
         {
             var sendParams = new System.Collections.Generic.List<Tuple<byte[], string>>();
             Pairs.ForEach( p =>

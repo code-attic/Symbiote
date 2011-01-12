@@ -5,7 +5,7 @@ using Symbiote.Riak.Impl.ProtoBuf.Response;
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [Serializable, DataContract( Name = "RpbPutReq" )]
-    public class Persist
+    public class Persist : RiakCommand<Persist, Persisted>
     {
         [DataMember( Order = 1, IsRequired = true, Name = "bucket" )]
         public byte[] Bucket { get; set; }

@@ -15,9 +15,6 @@ limitations under the License.
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Symbiote.Core;
 using Symbiote.Redis.Impl;
 using Symbiote.Redis.Impl.Config;
@@ -37,11 +34,11 @@ namespace Symbiote.Redis
                 .Dependencies(x =>
                                   {
                                       x.For<RedisConfiguration>().Use(configurator.Configuration);
-                                      x.For<IRedisConnectionPool>().Use<LockingRedisConnectionPool>().AsSingleton();
+                                      x.For<IConnectionPool>().Use<LockingConnectionPool>().AsSingleton();
                                       x.For<IRedisClient>().Use<RedisClient>();
                                       x.For<ICacheSerializer>().Use<ProtobufCacheSerializer>();
-                                      //x.For<ICacheSerializer>().Use<JsonCacheSerializer>();
-                                      x.For<IRedisConnectionFactory>().Use<RedisConnectionFactory>();
+                                      x.For<IConnectionProvider>().Use<PooledConnectionProvider>();
+                                      x.For<IConnectionFactory>().Use<ConnectionFactory>();
                                   });
             return assimilate;
         }

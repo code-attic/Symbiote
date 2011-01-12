@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
-        public bool SRem(IRedisConnection connection)
+        public bool SRem(IConnection connection)
         {
             var data = Serialize(Value);
             return connection.SendExpectSuccess(data, SREM.AsFormat(Key, data.Length));

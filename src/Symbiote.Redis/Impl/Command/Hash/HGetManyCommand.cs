@@ -33,7 +33,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected IEnumerable<string> Values { get; set; }
 
-        public IEnumerable<T> HGet(IRedisConnection connection)
+        public IEnumerable<T> HGet(IConnection connection)
         {
             var stream = new MemoryStream();
             Values.ForEach(v =>

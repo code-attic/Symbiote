@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected const string LLEN = "LLEN {0}\r\n";
         protected string Key { get; set; }
 
-        public int LLen(IRedisConnection connection)
+        public int LLen(IConnection connection)
         {
             var command = LLEN.AsFormat(Key);
 

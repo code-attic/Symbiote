@@ -27,18 +27,13 @@ namespace Symbiote.Redis.Impl.Config
         public string Password { get; set; }
         public int ConnectionLimit { get; set; }
 
-        public void Init()
+        public RedisConfiguration()
         {
+            Hosts = new ConcurrentDictionary<string, RedisHost>();
             ConnectionLimit = 10;
             SendTimeout = 30;
             RetryTimeout = 30;
             RetryCount = 5;
-        }
-
-        public RedisConfiguration()
-        {
-            Hosts = new ConcurrentDictionary<string, RedisHost>();
-            Init();
         }
     }
 }

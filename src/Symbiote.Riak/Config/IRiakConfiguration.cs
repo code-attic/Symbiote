@@ -7,7 +7,7 @@ namespace Symbiote.Riak.Config
     public interface IRiakConfiguration
     {
         List<RiakNode> Nodes { get; set; }
-
+        int ConnectionLimit { get; set; }
         string GetBucketForType<T>();
     }
 }

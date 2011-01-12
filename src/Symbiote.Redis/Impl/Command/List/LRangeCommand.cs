@@ -30,7 +30,7 @@ namespace Symbiote.Redis.Impl.Command.List
         protected int EndIndex {get; set;}
         protected const string LRANGE = "LRANGE {0} {1} {2}\r\n";
 
-        public IEnumerable<T> LRange(IRedisConnection connection)
+        public IEnumerable<T> LRange(IConnection connection)
         {
             var response = connection.SendExpectDataList(null, LRANGE.AsFormat(Key, StartIndex, EndIndex));
             return response.Select(item => Deserialize<T>(item)); //.ToList();

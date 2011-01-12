@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected const string SRANDMEMBER = "SRANDMEMBER {0}\r\n";
         protected string Key { get; set; }
 
-        public TValue SRandMember(IRedisConnection connection)
+        public TValue SRandMember(IConnection connection)
         {
             var data = connection.SendExpectData(null, SRANDMEMBER.AsFormat(Key));
             return Deserialize<TValue>(data);

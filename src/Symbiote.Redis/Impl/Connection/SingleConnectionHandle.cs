@@ -19,29 +19,19 @@ using Symbiote.Core;
 
 namespace Symbiote.Redis.Impl.Connection
 {
-    public class ConnectionHandle
-        : IDisposable
+    public class SingleConnectionHandle :
+        IConnectionHandle
     {
-        protected IRedisConnectionPool Pool { get; set; }
-        public IRedisConnection Connection { get; set; }
+        public IConnection Connection { get; set; }
 
-        public static ConnectionHandle Acquire()
+        public SingleConnectionHandle( IConnection connection )
         {
-            var pool = Assimilate.GetInstanceOf<IRedisConnectionPool>();
-            var connection = pool.Acquire();
-            return new ConnectionHandle(pool, connection);
-        }
-
-        public ConnectionHandle(IRedisConnectionPool pool, IRedisConnection connection)
-        {
-            Pool = pool;
             Connection = connection;
         }
 
         public void Dispose()
         {
-            Pool.Release(Connection);
-            Pool = null;
+            Connection.Dispose();
             Connection = null;
         }
     }

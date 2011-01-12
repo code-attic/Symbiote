@@ -3,5 +3,7 @@
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {
     [DataContract]
-    public class Ping {}
+    public class Ping : RiakCommand<Ping, Ping>
+    {
+    }
 }

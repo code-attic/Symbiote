@@ -27,7 +27,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         protected const string SPOP = "SPOP {0}\r\n";
         protected string Key { get; set; }
 
-        public TValue SPop(IRedisConnection connection)
+        public TValue SPop(IConnection connection)
         {
             var data = connection.SendExpectData(null, SPOP.AsFormat(Key));
             return Deserialize<TValue>(data);

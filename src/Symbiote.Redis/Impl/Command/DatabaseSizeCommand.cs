@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command
     {
         protected const string DBSIZE = "DBSIZE\r\n";
 
-        public int GetSize(IRedisConnection connection)
+        public int GetSize(IConnection connection)
         {
             return connection.SendDataExpectInt(null, DBSIZE);
         }

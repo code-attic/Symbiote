@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
-        public bool CheckAndSet(IRedisConnection connection)
+        public bool CheckAndSet(IConnection connection)
         {
             var data = Serialize(Value);
             if (data.Length > 1073741824)

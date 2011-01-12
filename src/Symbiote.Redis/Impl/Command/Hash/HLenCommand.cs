@@ -25,7 +25,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected const string HLEN = "HLEN {0}\r\n";
         protected string Key { get; set; }
 
-        public int HLen(IRedisConnection connection)
+        public int HLen(IConnection connection)
         {
             var command = HLEN.AsFormat(Key);
 

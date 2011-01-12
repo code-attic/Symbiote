@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected const string HVALS = "HGETALL {0}\r\n";
 
-        public IDictionary<string, T> HGetAll<T>(IRedisConnection connection)
+        public IDictionary<string, T> HGetAll<T>(IConnection connection)
         {
             var response = connection.SendExpectDataDictionary(null, HVALS.AsFormat(Key));
             return response.ToDictionary(x => x.Key, x => Deserialize<T>(x.Value));

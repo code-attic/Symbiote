@@ -28,7 +28,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         protected string Key { get; set; }
         protected const string HKEYS = "HKEYS {0}\r\n";
 
-        public IEnumerable<string> HKeys(IRedisConnection connection)
+        public IEnumerable<string> HKeys(IConnection connection)
         {
             var response = connection.SendExpectDataList(null, HKEYS.AsFormat(Key));
             return response.Select(item => Encoding.UTF8.GetString(item)); //.ToList();
