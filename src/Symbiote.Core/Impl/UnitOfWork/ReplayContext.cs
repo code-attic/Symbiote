@@ -23,6 +23,8 @@ namespace Symbiote.Core.Impl.UnitOfWork
         : IContext
         where TActor : class
     {
+        private Action<TActor> _successAction;
+        private Action<TActor, Exception> _failureAction;
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
 
@@ -41,15 +43,34 @@ namespace Symbiote.Core.Impl.UnitOfWork
             OriginalState.Reset( Actor );
         }
 
-        public ReplayContext(TActor actor, IMemento<TActor> originalState)
+        public ReplayContext(TActor actor, IMemento<TActor> originalState) : this(actor, originalState, null, null)
+        {
+            
+        }
+
+        public ReplayContext(TActor actor, IMemento<TActor> originalState, Action<TActor> successAction, Action<TActor, Exception> failureAction)
         {
             Actor = actor;
             OriginalState = originalState;
+            _successAction = successAction;
+            _failureAction = failureAction;
         }
 
         public void Dispose()
         {
-            Commit();
+            try
+            {
+                Commit();
+                if (_successAction != null)
+                    _successAction( Actor );
+            }
+            catch ( Exception exception )
+            {
+                if (_failureAction != null)
+                    _failureAction( Actor, exception );
+                else
+                    throw;
+            }
         }
     }
 }
