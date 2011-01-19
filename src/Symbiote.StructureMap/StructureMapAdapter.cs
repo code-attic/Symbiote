@@ -17,10 +17,8 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using StructureMap;
 using StructureMap.Pipeline;
-using StructureMap.TypeRules;
 using Symbiote.Core.Impl.DI;
 
 namespace Symbiote.StructureMap
@@ -67,6 +65,14 @@ namespace Symbiote.StructureMap
         public bool HasPluginFor<T>()
         {
             return ObjectFactory.Container.Model.HasDefaultImplementationFor<T>();
+        }
+
+        public bool IsDuplicate(IDependencyDefinition dependency)
+        {
+            return GetTypesRegisteredFor( dependency.PluginType )
+                .Any( x => 
+                    ReferenceEquals( x, dependency.ConcreteType ) ||
+                    ReferenceEquals( x, dependency.ConcreteInstance == null ? null : dependency.ConcreteInstance.GetType()));
         }
 
         public object GetInstance(Type serviceType)
@@ -128,6 +134,8 @@ namespace Symbiote.StructureMap
 
         private void HandleAdd(IDependencyDefinition dependency)
         {
+            if (IsDuplicate(dependency))
+                return;
             ObjectFactory.Configure(x =>
                     {
                         if(dependency.IsSingleton)
@@ -151,6 +159,8 @@ namespace Symbiote.StructureMap
 
         private void HandleFor(IDependencyDefinition dependency)
         {
+            if (IsDuplicate(dependency))
+                return;
             ObjectFactory.Configure(x =>
                     {
                         var forExpression = x.For(dependency.PluginType);

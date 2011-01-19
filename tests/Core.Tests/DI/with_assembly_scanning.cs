@@ -29,6 +29,21 @@ namespace Core.Tests.DI
         
     }
 
+    public interface AnInterfaceOf
+    {
+
+    }
+
+    public interface AnInterfaceOf<T> : AnInterfaceOf
+    {
+        
+    }
+
+    public class AClassOf<T> : AnInterfaceOf<T>
+    {
+
+    }
+
     public abstract class with_assembly_scanning
     {
         private Establish context = () =>
@@ -39,6 +54,7 @@ namespace Core.Tests.DI
                                                                               {
                                                                                   s.AssemblyContainingType<IAmAnInterface>();
                                                                                   s.AddAllTypesOf<IAmAnInterface>();
+                                                                                  s.AddSingleImplementations();
                                                                               }));
                                         };
 

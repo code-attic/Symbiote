@@ -48,15 +48,25 @@ namespace Symbiote.Core.Impl.DI
             return type.IsGenericTypeDefinition || type.ContainsGenericParameters;
         }
 
+        public static int GetGenericCardinality(this Type type)
+        {
+            return !type.ContainsGenericParameters
+                       ? 0
+                       : type.GetGenericArguments().Length;
+        }
+
         public static bool IsConcreteAndAssignableTo(this Type pluggedType, Type pluginType)
         {
-            return pluggedType.IsConcrete() && pluginType.IsAssignableFrom(pluggedType);
+            return 
+                pluggedType.IsConcrete() && 
+                pluginType.IsAssignableFrom(pluggedType) && 
+                pluginType.GetGenericCardinality() >= pluggedType.GetGenericCardinality();
         }
 
         public static bool ImplementsInterfaceTemplate(this Type pluggedType, Type templateType)
         {
             if (!pluggedType.IsConcrete()) return false;
-
+            
             foreach (Type interfaceType in pluggedType.GetInterfaces())
             {
                 if (interfaceType.IsGenericType && interfaceType.GetGenericTypeDefinition() == templateType)
