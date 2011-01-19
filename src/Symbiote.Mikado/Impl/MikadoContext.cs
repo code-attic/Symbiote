@@ -27,6 +27,8 @@ namespace Symbiote.Mikado.Impl
     {
         private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
         private readonly IRunRules _rulesRunner;
+        private Action<TActor> _successAction;
+        private Action<TActor, Exception> _failureAction;
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
@@ -35,13 +37,19 @@ namespace Symbiote.Mikado.Impl
         public IList<IEvent> Events { get; set; }
         public BrokenRulesCollection BrokenRules { get; set; }
 
-        public MikadoContext(
-            TActor actor,
-            IMemento<TActor> originalState,
-            IKeyAccessor<TActor> keyAccessor,
-            IEventPublisher eventPublisher,
-            IRunRules rulesRunner,
-            IEnumerable<IObserver<IEvent>> listeners)
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner)
+            : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, null, null, null)
+        {
+            
+        }
+
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner, IEnumerable<IObserver<IEvent>> listeners)
+            : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, null, null)
+        {
+
+        }
+
+        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner, IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor,Exception> failureAction )
         {
             Actor = actor;
             OriginalState = originalState;
@@ -53,18 +61,24 @@ namespace Symbiote.Mikado.Impl
             _rulesRunner.Subscribe(BrokenRules);
             if(listeners != null)
                 listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
-        }
-
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner)
-            : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, null)
-        {
-            
+            _successAction = successAction;
+            _failureAction = failureAction;
         }
 
         public void Dispose()
         {
-            Commit();
-            _subscriptionTokens.ForEach(a => a.Dispose());
+            try
+            {
+                Commit();
+                _subscriptionTokens.ForEach(a => a.Dispose());
+            }
+            catch (Exception exception)
+            {
+                if (_failureAction != null)
+                    _failureAction(Actor, exception);
+                else
+                    throw;
+            }
         }
 
         public void Commit()
@@ -73,9 +87,13 @@ namespace Symbiote.Mikado.Impl
             if (BrokenRules.Count == 0)
             {
                 Publisher.PublishEvents(Events);
+                if (_successAction != null)
+                    _successAction(Actor);
             }
             else
             {
+                if (OnBrokenRules != null)
+                    OnBrokenRules( Actor, BrokenRules );
                 Rollback();
             }
         }
@@ -100,6 +118,8 @@ namespace Symbiote.Mikado.Impl
         {
             OriginalState.Reset( Actor );
         }
+
+        public Action<TActor, IList<IBrokenRuleNotification>> OnBrokenRules { get; set; }
 
         #region Static Members...
         private static IContextProvider _provider;

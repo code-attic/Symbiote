@@ -35,24 +35,10 @@ namespace Symbiote.Core.Impl.UnitOfWork
 
         public void PublishEvent(IEvent evnt)
         {
-            //TODO: Add protection on this in case the listeners throw exceptions....
             List<IEventListener> listeners;
             if (Listeners.TryGetValue(evnt.GetType(), out listeners))
             {
-                listeners.ForEach(a =>
-                                      {
-                                          try
-                                          {
-                                              a.ListenTo( evnt );
-                                          }
-                                          // ReSharper disable EmptyGeneralCatchClause
-                                          catch
-                                          // ReSharper restore EmptyGeneralCatchClause
-                                          {
-                                              // hmmmm, something in your code broke... and we really feel terrible about that,
-                                              // but we're being nice and allowing your other listeners to keep on listening...
-                                          }
-                                      });
+                listeners.ForEach(a => a.ListenTo(evnt));
             }
         }
 

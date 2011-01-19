@@ -7,6 +7,7 @@ namespace Mikado.Tests.Domain
     public class TestSubscriber : IObserver<IBrokenRuleNotification>
     {
         public List<IBrokenRuleNotification> BrokenRules = new List<IBrokenRuleNotification>();
+        public bool ThrowException { get; set; }
 
         public void OnCompleted()
         {
@@ -20,7 +21,10 @@ namespace Mikado.Tests.Domain
 
         public void OnNext(IBrokenRuleNotification value)
         {
-            BrokenRules.Add( value );
+            if(!ThrowException)
+                BrokenRules.Add( value );
+            else
+                throw new Exception("TestSubscriber was told to throw an exception...");
         }
     }
 }

@@ -46,6 +46,8 @@ namespace Symbiote.Core.Impl.UnitOfWork
         where TActor : class
     {
         private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
+        private readonly Action<TActor> _successAction;
+        private readonly Action<TActor, Exception> _failureAction;
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
@@ -53,32 +55,53 @@ namespace Symbiote.Core.Impl.UnitOfWork
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
 
-        public DefaultContext(
-            TActor actor,
-            IMemento<TActor> originalState,
-            IKeyAccessor<TActor> keyAccessor,
-            IEventPublisher eventPublisher,
-            IEnumerable<IObserver<IEvent>> listeners)
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IEnumerable<IObserver<IEvent>> listeners)
+            : this(actor, originalState, keyAccessor, eventPublisher, listeners, null, null)
+        {
+            
+        }
+
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher)
+            : this(actor, originalState, keyAccessor, eventPublisher, null, null, null)
+        {
+            
+        }
+
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, Action<TActor> successAction, Action<TActor, Exception> failureAction)
+            : this(actor, originalState, keyAccessor, eventPublisher, null, successAction, failureAction)
+        {
+
+        }
+
+        public DefaultContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor,Exception> failureAction )
         {
             Actor = actor;
             OriginalState = originalState;
             Events = new List<IEvent>();
             KeyAccessor = keyAccessor;
             Publisher = eventPublisher;
-            if(listeners != null)
+            if (listeners != null)
                 listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
-        }
-
-        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher)
-            : this(actor, originalState, keyAccessor, eventPublisher, null)
-        {
-            
+            _successAction = successAction;
+            _failureAction = failureAction;
         }
 
         public void Dispose()
         {
-            Commit();
-            _subscriptionTokens.ForEach(a => a.Dispose());
+            try
+            {
+                Commit();
+                _subscriptionTokens.ForEach(a => a.Dispose());
+                if (_successAction != null)
+                    _successAction( Actor );
+            }
+            catch ( Exception exception )
+            {
+                if(_failureAction != null)
+                    _failureAction( Actor, exception );
+                else
+                    throw;
+            }
         }
 
         public void Commit()
