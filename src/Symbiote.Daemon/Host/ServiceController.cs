@@ -68,7 +68,7 @@ namespace Symbiote.Daemon.Host
             }
             catch (Exception ex)
             {
-               
+                throw ex;
             }
             Initialized = true;
         }

@@ -5,13 +5,16 @@ namespace Symbiote.Riak.Impl
 {
     public interface IRiakServer
     {
-        BucketProperties GetBucketProperties(string bucket);
+        void Delete<T>( string bucket, string key, uint minimumDeletes );
+        BucketProperties GetBucketProperties( string bucket );
+        Document<T> Get<T>( string bucket, string key, uint reads );
         string GetClientId();
         ServerInfo GetServerInfo();
         IEnumerable<string> GetBucketsList();
-        IEnumerable<string> GetKeyList(string bucket);
+        IEnumerable<string> GetKeyList( string bucket );
         bool Ping();
-        void SetBucketProperties(string bucket, BucketProperties properties);
-        void SetClientId(string clientId);
+        void Persist<T>( string bucket, string key, string vectorClock, Document<T> document, uint writeQuorum, uint minimumWrites );
+        void SetBucketProperties( string bucket, BucketProperties properties );
+        void SetClientId( string clientId );
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Symbiote.Riak.Impl.Data
+﻿using Symbiote.Riak.Config;
+
+namespace Symbiote.Riak.Impl.Data
 {
     public class Document<T>
     {
@@ -11,6 +13,14 @@
         public string VectorClock { get; set; }
 
         public Document() {}
+
+        public Document(T instance, string vectorClock)
+        {
+            Value = instance;
+            Charset = "UTF8";
+            ContentType = "protobuf-byte-array";
+            VectorClock = vectorClock;
+        }
     }
 
     public class Link

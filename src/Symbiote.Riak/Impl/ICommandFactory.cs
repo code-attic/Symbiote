@@ -4,7 +4,7 @@ using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
 
 namespace Symbiote.Riak.Impl
 {
-    public interface IBasicCommandFactory
+    public interface ICommandFactory
     {
         Delete CreateDelete( string bucket, string key, uint minimum );
         Get CreateGet( string bucket, string key, uint minimum );

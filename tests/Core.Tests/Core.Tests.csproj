@@ -68,6 +68,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\with_nrudictionary.cs" />
     <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
     <Compile Include="Domain\DriverFactory.cs" />

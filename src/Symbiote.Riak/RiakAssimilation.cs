@@ -21,10 +21,12 @@ namespace Symbiote.Riak
                 x.For<IRiakConfiguration>().Use(configurator.Configuration);
                 x.For<IConnectionFactory>().Use<ConnectionFactory>();
                 x.For<IConnectionProvider>().Use<PooledConnectionProvider>();
-                x.For<IBasicCommandFactory>().Use<ProtoBufCommandFactory>().AsSingleton();
+                x.For<ICommandFactory>().Use<ProtoBufCommandFactory>().AsSingleton();
                 x.For<IConnectionPool>().Use<LockingConnectionPool>();
-                x.For<IRiakServer>().Use<RiakServer>();
-                x.For<IDocumentRepository>().Use<DocumentRepository>();
+                x.For<IRiakServer>().Use<RiakClient>();
+                x.For<IDocumentRepository>().Use<RiakClient>();
+                x.For<IKeyValueStore>().Use<RiakClient>();
+                x.For<ITrackVectors>().Use<VectorRegistry>().AsSingleton();
             } );
 
             return assimilate;

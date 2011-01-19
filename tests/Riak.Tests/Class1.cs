@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Riak.Impl;
@@ -16,7 +14,8 @@ namespace Riak.Tests
 {
     public class with_assimilate
     {
-        public static string Ip = "10.15.199.62";
+        public static string Ip = "10.15.198.214";
+        //public static string Ip = "10.15.199.62";
         //public static string Ip = "192.168.1.105";
 
         private Establish context = () =>
@@ -31,11 +30,30 @@ namespace Riak.Tests
         : with_assimilate
     {
         public static IRiakServer Server { get; set; }
+        public static IKeyValueStore KeyValues { get; set; }
 
         private Establish context = () =>
         {
             Server = Assimilate.GetInstanceOf<IRiakServer>();
+            KeyValues = Assimilate.GetInstanceOf<IKeyValueStore>();
         };
+    }
+
+    public class when_writing_and_retrieving_value
+        : with_riak_server
+    {
+        public static int value;
+
+        private Because of = () =>
+        {
+            KeyValues.Persist( "test", 100 );
+            var value = KeyValues.Get<int>( "test" );
+            value++;
+            KeyValues.Persist( "test", value );
+            value = KeyValues.Get<int>( "test" );
+        };
+        
+        private It should_be_incremented = () => value.ShouldEqual( 101 );
     }
 
     public class when_pinging_riak

@@ -18,7 +18,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf
 
         public static byte[] ToBytes( this string value )
         {
-            return Encoding.UTF8.GetBytes( value );
+            return value == null ? null : Encoding.UTF8.GetBytes( value );
         }
 
         public static byte[] ToBytes( this NetworkStream stream )

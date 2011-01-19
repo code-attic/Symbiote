@@ -8,7 +8,7 @@ using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
 
 namespace Symbiote.Riak.Impl.ProtoBuf
 {
-    public class ProtoBufCommandFactory : IBasicCommandFactory
+    public class ProtoBufCommandFactory : ICommandFactory
     {
         public Delete CreateDelete( string bucket, string key, uint minimum )
         {
