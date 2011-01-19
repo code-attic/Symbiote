@@ -25,12 +25,9 @@ namespace Symbiote.Daemon.Host
 
         public static void Start(IHost host)
         {
-            Assimilate
-                .GetAllInstancesOf<INodeChannelManager>()
-                .ForEach(x => x.InitializeChannels());
-
-
-
+            //Assimilate
+            //    .GetAllInstancesOf<INodeChannelManager>()
+            //    .ForEach(x => x.InitializeChannels());
             host.Start();
         }
     }

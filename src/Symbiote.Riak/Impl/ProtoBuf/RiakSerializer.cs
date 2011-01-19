@@ -107,7 +107,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             }
             else
             {
-                return GetResult( stream );
+                return null;
             }
         }
     }
