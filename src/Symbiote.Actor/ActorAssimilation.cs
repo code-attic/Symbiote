@@ -22,6 +22,7 @@ using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
 using System.Linq;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.DI;
 using Symbiote.Core.Impl.UnitOfWork;
 
 namespace Symbiote.Actor
@@ -32,38 +33,64 @@ namespace Symbiote.Actor
         {
             assimilation.Dependencies( x =>
             {
-                x.For<IAgency>().Use<Agency>().AsSingleton();
-                x.For(typeof(IActorCache<>)).Use(typeof(NullActorCache<>));
-                x.For(typeof(IAgentFactory)).Use<DefaultAgentFactory>();
-                x.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>));
-                x.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
-                x.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
+                DefineDependencies( x );
 
-                x.Scan( s =>
-                {
-                    AppDomain
-                        .CurrentDomain
-                        .GetAssemblies()
-                        .Where(a =>
-                            a.GetReferencedAssemblies().Any(
-                                r => r.FullName.Contains("Symbiote.Actor")) ||
-                            a.FullName.Contains("Symbiote.Actor"))
-                        .ForEach(s.Assembly);
-
-                    s.AddAllTypesOf<ISaga>();
-                    s.ConnectImplementationsToTypesClosing(
-                        typeof(IActorFactory<>));
-                    s.ConnectImplementationsToTypesClosing(
-                        typeof(IActorCache<>));
-                    s.ConnectImplementationsToTypesClosing(
-                        typeof(IActorStore<>));
-                    s.ConnectImplementationsToTypesClosing(
-                        typeof(ISaga<>));
-                } );
+                ScanDependencies( x );
             } );
 
+            SagaWireup();
             Preload();
             return assimilation;
+        }
+
+        private static void SagaWireup() 
+        {
+            var sagas = Assimilate.GetAllInstancesOf<ISaga>();
+
+            Assimilate.Dependencies( x =>
+            {
+                sagas
+                    .ForEach( s =>
+                    {
+                        var makeGenericType = typeof(ISaga<>).MakeGenericType( s.ActorType );
+                        var concreteType = s.GetType();
+                        x.For( makeGenericType ).Use( concreteType );
+                    } );
+            } );
+        }
+
+        private static void ScanDependencies( DependencyConfigurator x )
+        {
+            x.Scan( s =>
+            {
+                AppDomain
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .Where(a =>
+                           a.GetReferencedAssemblies().Any(
+                               r => r.FullName.Contains("Symbiote.Core")) ||
+                           a.FullName.Contains("Symbiote.Core"))
+                    .ForEach(s.Assembly);
+
+                s.AddAllTypesOf<ISaga>();
+                s.ConnectImplementationsToTypesClosing(
+                    typeof(IActorFactory<>));
+                s.ConnectImplementationsToTypesClosing(
+                    typeof(IActorCache<>));
+                s.ConnectImplementationsToTypesClosing(
+                    typeof(IActorStore<>));
+                s.ConnectImplementationsToTypesClosing(
+                    typeof(ISaga<>));
+            } );
+        }
+
+        private static void DefineDependencies( DependencyConfigurator x ) {
+            x.For<IAgency>().Use<Agency>().AsSingleton();
+            x.For(typeof(IActorCache<>)).Use(typeof(NullActorCache<>));
+            x.For(typeof(IAgentFactory)).Use<DefaultAgentFactory>();
+            x.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>));
+            x.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
+            x.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
         }
 
         private static IEnumerable<Type> GetKnownActorTypes()

@@ -174,9 +174,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Impl\Utility\RingBufferIndex.cs" />
-    <Compile Include="Impl\Utility\VolatileRingBuffer2.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\Reflection\Reflector.cs" />
     <Compile Include="Impl\DI\IDependencyContainer.cs" />

@@ -165,10 +165,8 @@ namespace Symbiote.StructureMap
             ObjectFactory.Configure(x =>
                     {
                         var forExpression = x.For(dependency.PluginType);
-                        ObjectFactory.Model.EjectAndRemoveTypes(t => 
-                            t.Equals(dependency.ConcreteInstance == null
-                                ? dependency.ConcreteType
-                                : dependency.ConcreteInstance.GetType()));
+
+                        ObjectFactory.Model.EjectAndRemovePluginTypes( t => t.Equals( dependency.PluginType ) );
 
                         Instance instance;
                         if (dependency.IsSingleton)

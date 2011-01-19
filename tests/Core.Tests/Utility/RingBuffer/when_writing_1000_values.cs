@@ -13,13 +13,13 @@ namespace Core.Tests.Utility.RingBuffer
     public class with_ring_buffer
         : with_assimilation
     {
-        public static VolatileRingBuffer2 RingBuffer { get; set; }
+        public static VolatileRingBuffer RingBuffer { get; set; }
         public static int Numbers { get; set; }
         public static Func<object, object> Callback { get; set; }
 
         private Establish context = () =>
         {
-            RingBuffer = new VolatileRingBuffer2( 100 );
+            RingBuffer = new VolatileRingBuffer( 100 );
             RingBuffer.AddTransform(x =>
             {
                 Numbers++;

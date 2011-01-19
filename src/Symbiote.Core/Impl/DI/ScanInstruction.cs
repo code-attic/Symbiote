@@ -70,7 +70,6 @@ namespace Symbiote.Core.Impl.DI
         }
 #endif
 
-
         public void AssembliesFromApplicationBaseDirectory()
         {
             scanner.AddAssembliesFromBaseDirectory();
@@ -138,7 +137,7 @@ namespace Symbiote.Core.Impl.DI
                 .Where(t => t.IsConcreteAndAssignableTo(type))
                 .ForEach(m =>
                              {
-                                 var dependencyExpression = DependencyExpression.For(m.Name, type);
+                                 var dependencyExpression = DependencyExpression.For(type);
                                  dependencyExpression.Add(m);
                                  registry.Register(dependencyExpression);
                              });

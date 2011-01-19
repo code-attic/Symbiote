@@ -36,7 +36,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IMessageSerializer Serializer { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
-        protected VolatileRingBuffer2 RingBuffer { get; set; }
+        protected VolatileRingBuffer RingBuffer { get; set; }
 
         public override void HandleBasicDeliver(
             string consumerTag,
@@ -115,7 +115,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
             RabbitEndpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
-            RingBuffer = new VolatileRingBuffer2(100000);
+            RingBuffer = new VolatileRingBuffer(100000);
             Serializer = Assimilate.GetInstanceOf( endpoint.SerializerType ) as IMessageSerializer;
             RingBuffer.AddTransform(DeserializeMessage);
             RingBuffer.AddTransform(DispatchResult);
