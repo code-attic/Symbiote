@@ -14,9 +14,9 @@ namespace Riak.Tests
 {
     public class with_assimilate
     {
-        public static string Ip = "10.15.198.214";
+        //public static string Ip = "10.15.198.214";
         //public static string Ip = "10.15.199.62";
-        //public static string Ip = "192.168.1.105";
+        public static string Ip = "192.168.1.105";
 
         private Establish context = () =>
         {

@@ -70,9 +70,9 @@ namespace Symbiote.StructureMap
         public bool IsDuplicate(IDependencyDefinition dependency)
         {
             return GetTypesRegisteredFor( dependency.PluginType )
-                .Any( x => 
-                    ReferenceEquals( x, dependency.ConcreteType ) ||
-                    ReferenceEquals( x, dependency.ConcreteInstance == null ? null : dependency.ConcreteInstance.GetType()));
+                .Any( x => ReferenceEquals(x, dependency.ConcreteInstance == null 
+                    ? dependency.ConcreteType 
+                    : dependency.ConcreteInstance.GetType()));
         }
 
         public object GetInstance(Type serviceType)
@@ -134,24 +134,27 @@ namespace Symbiote.StructureMap
 
         private void HandleAdd(IDependencyDefinition dependency)
         {
-            if (IsDuplicate(dependency))
-                return;
+            var isDuplicate = IsDuplicate(dependency);
             ObjectFactory.Configure(x =>
                     {
-                        if(dependency.IsSingleton)
+                        if(dependency.IsSingleton && !isDuplicate)
                         {
                             var singleton = x.For(dependency.PluginType).Singleton();
                             if (dependency.HasSingleton)
+                            {
                                 singleton.Add(dependency.ConcreteInstance);
+                            }
                             else
+                            {
                                 singleton.Add(dependency.ConcreteType);
+                            }
                         }
                         else if(dependency.IsNamed)
                         {
                             x.For(dependency.PluginType).Add(dependency.ConcreteType).Named(dependency.PluginName);
                         }
-                        else
-                        {
+                        else if(!isDuplicate)
+                        {   
                             x.For(dependency.PluginType).Add(dependency.ConcreteType);
                         }
                     });
@@ -159,11 +162,14 @@ namespace Symbiote.StructureMap
 
         private void HandleFor(IDependencyDefinition dependency)
         {
-            if (IsDuplicate(dependency))
-                return;
             ObjectFactory.Configure(x =>
                     {
                         var forExpression = x.For(dependency.PluginType);
+                        ObjectFactory.Model.EjectAndRemoveTypes(t => 
+                            t.Equals(dependency.ConcreteInstance == null
+                                ? dependency.ConcreteType
+                                : dependency.ConcreteInstance.GetType()));
+
                         Instance instance;
                         if (dependency.IsSingleton)
                         {

@@ -14,13 +14,8 @@ namespace Symbiote.Riak.Config
         public BucketConfiguration GetBucketForType<T>()
         {
             BucketConfiguration configuration = DefaultBucketSettings;
-            return new BucketConfiguration();
             var type = typeof(T);
-            if (RegisteredBuckets.ContainsKey(type))
-            {
-                configuration = RegisteredBuckets[type];
-            }
-            return RegisteredBuckets[type] ?? DefaultBucketSettings;
+            return configuration;
         }
 
         public RiakConfiguration()
