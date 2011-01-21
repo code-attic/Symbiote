@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core.Extensions;
 using Symbiote.Riak.Config;
 using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
@@ -37,7 +38,12 @@ namespace Symbiote.Riak.Impl
         public Document<T> Get<T>( string bucket, string key, uint reads )
         {
             var command = CommandFactory.CreateGet( bucket, key, reads );
-            return command.Execute().ToDocument<T>();
+            var riakContent = command.Execute();
+            if(riakContent == null)
+            {
+                throw new RiakException( "There was no value available in bucket {0} for the key {1}".AsFormat( bucket, key ) );
+            }
+            return riakContent.ToDocument<T>();
         }
 
         public BucketProperties GetBucketProperties(string bucket)
@@ -78,7 +84,12 @@ namespace Symbiote.Riak.Impl
         public void Persist<T>( string bucket, string key, string vectorClock, Document<T> document, uint writeQuorum, uint minimumWrites )
         {
             var riakContent = new RiakContent( document.Value, document.ContentType, document.Charset, document.ContentEncoding, document.VectorClock, document.LastModified, document.LastModifiedInSeconds );
-            var command = CommandFactory.CreatePersist( bucket, key, vectorClock, riakContent, writeQuorum, minimumWrites, false );
+            var command = vectorClock == null
+                              ? CommandFactory.CreatePersistNew( bucket, key, riakContent, writeQuorum, minimumWrites, true )
+                              : CommandFactory.CreatePersistExisting( bucket, key, vectorClock, riakContent, writeQuorum, minimumWrites, true );
+
+            var result = command.Execute();
+            VectorClockLookup.SetVectorFor( key, result.VectorClock.FromBytes() );
         }
 
         public bool Ping()
@@ -190,7 +201,7 @@ namespace Symbiote.Riak.Impl
                 document.LastModified,
                 document.LastModifiedInSeconds
                 );
-            var command = CommandFactory.CreatePersist( bucket.BucketName, key, document.VectorClock, content, bucket.QuorumWriteNodes, bucket.QuorumWriteNodes, true );
+            var command = CommandFactory.CreatePersistExisting( bucket.BucketName, key, document.VectorClock, content, bucket.QuorumWriteNodes, bucket.QuorumWriteNodes, true );
             var result = command.Execute();
             VectorClockLookup.SetVectorFor(key, result.VectorClock.FromBytes());
         }

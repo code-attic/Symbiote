@@ -9,7 +9,6 @@ using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Impl.DI;
 using Symbiote.StructureMap;
-using StructureMap.TypeRules;
 
 namespace Core.Tests.DI
 {
@@ -58,7 +57,7 @@ namespace Core.Tests.DI
 
         private Because of = () =>
         {
-            compatible = TypeExtensions.IsConcreteAndAssignableTo( typeof(AClassOf<>), typeof(AnInterfaceOf) );
+            compatible = typeof(AClassOf<>).IsConcreteAndAssignableTo( typeof(AnInterfaceOf) );
             genericMatch = typeof(AClassOf<>).GetGenericCardinality() == typeof(AnInterfaceOf).GetGenericCardinality();
         };
 
@@ -73,7 +72,7 @@ namespace Core.Tests.DI
 
         private Because of = () =>
         {
-            compatible = TypeExtensions.IsConcreteAndAssignableTo( typeof(ClosedClass), typeof(AnInterfaceOf));
+            compatible = typeof(ClosedClass).IsConcreteAndAssignableTo( typeof(AnInterfaceOf));
             genericMatch = typeof(ClosedClass).GetGenericCardinality() == typeof(AnInterfaceOf).GetGenericCardinality();
         };
 

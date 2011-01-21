@@ -22,7 +22,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Request
         {
             Bucket = bucket.ToBytes();
             Key = key.ToBytes();
-            SuccessfulDeletionCount = 3;
+            SuccessfulDeletionCount = minimum.ToggleEndianicity();
         }
     }
 }

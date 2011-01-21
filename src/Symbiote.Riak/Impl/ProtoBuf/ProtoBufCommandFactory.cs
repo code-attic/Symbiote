@@ -45,9 +45,14 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             return new ListKeys( bucket );
         }
 
-        public Persist CreatePersist( string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody )
+        public Persist CreatePersistNew( string bucket, string key, RiakContent content, uint write, uint dw, bool returnBody )
         {
-            return new Persist( bucket, key, vectorClock, content, write, dw, returnBody );
+            return new Persist( bucket, key, content, write, dw, returnBody );
+        }
+
+        public Persist CreatePersistExisting(string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody)
+        {
+            return new Persist(bucket, key, vectorClock, content, write, dw, returnBody);
         }
 
         public Ping CreatePing()
@@ -60,9 +65,9 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             return new RunMapReduce( mapReduce, contentType );
         }
 
-        public SetBucketProperties CreateSetBucketProperties( string bucket, BucketProperties properties )
+        public SetBucketProperties CreateSetBucketProperties( string bucket, Data.BucketProperties properties )
         {
-            return new SetBucketProperties( bucket, properties );
+            return new SetBucketProperties( bucket, properties.ToProtoBuf());
         }
 
         public SetClientId CreateSetClientId( string clientId )

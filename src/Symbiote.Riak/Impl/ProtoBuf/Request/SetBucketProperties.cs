@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Symbiote.Riak.Impl.Data;
 
 namespace Symbiote.Riak.Impl.ProtoBuf.Request
 {

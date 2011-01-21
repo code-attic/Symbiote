@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace Symbiote.Riak.Impl.ProtoBuf.Response
+namespace Symbiote.Riak.Impl.ProtoBuf
 {
     [Serializable, DataContract( Name = "RpbBucketProps" )]
     public class BucketProperties

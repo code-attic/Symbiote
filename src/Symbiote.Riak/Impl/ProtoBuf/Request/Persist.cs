@@ -30,15 +30,20 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Request
 
         public Persist() {}
 
-        public Persist( string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody )
+        public Persist(string bucket, string key, RiakContent content, uint write, uint dw, bool returnBody)
         {
             Bucket = bucket.ToBytes();
             Key = key.ToBytes();
-            VectorClock = vectorClock.ToBytes();
             Content = content;
-            Write = write;
-            Dw = dw;
+            Write = write.ToggleEndianicity();
+            Dw = dw.ToggleEndianicity();
             ReturnBody = returnBody;
+        }
+
+        public Persist( string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody )
+            : this (bucket, key, content, write, dw, returnBody)
+        {
+            VectorClock = vectorClock.ToBytes();
         }
     }
 }

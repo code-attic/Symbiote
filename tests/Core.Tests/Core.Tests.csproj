@@ -50,9 +50,6 @@
     <Reference Include="ServiceStack.Text">
       <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -156,6 +153,10 @@
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
         </Reference>
+		<Reference Include="StructureMap">
+		  <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+		  <IlMerge>True</IlMerge>
+		</Reference>
       </ItemGroup>
     </When>
   </Choose>

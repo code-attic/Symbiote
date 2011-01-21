@@ -5,10 +5,12 @@ using System.Net.Sockets;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Riak.Impl;
+using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
 using Symbiote.StructureMap;
 using Symbiote.Riak;
+using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
 
 namespace Riak.Tests
 {
@@ -16,13 +18,14 @@ namespace Riak.Tests
     {
         //public static string Ip = "10.15.198.214";
         //public static string Ip = "10.15.199.62";
+        //public static string Ip = "10.15.198.71";
         public static string Ip = "192.168.1.105";
 
         private Establish context = () =>
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Riak( x => x.AddNode( r => r.Address( Ip ).ForProtocolBufferPort( 8081 ) ) );
+                .Riak( x => x.AddNode( r => r.Address( Ip ).ForProtocolBufferPort( 8087 ) ) );
         };
     }
 
@@ -42,18 +45,19 @@ namespace Riak.Tests
     public class when_writing_and_retrieving_value
         : with_riak_server
     {
-        public static int value;
+        public static string value;
 
         private Because of = () =>
         {
-            KeyValues.Persist( "test", 100 );
+            Server.SetBucketProperties( "test", new BucketProperties( 3, true ) );
+            KeyValues.Delete<int>( "test" );
+            KeyValues.Persist( "test", "hi" );
             var value = KeyValues.Get<int>( "test" );
-            value++;
-            KeyValues.Persist( "test", value );
+            KeyValues.Persist( "test", "bye" );
             value = KeyValues.Get<int>( "test" );
         };
         
-        private It should_be_incremented = () => value.ShouldEqual( 101 );
+        private It should_be_incremented = () => value.ShouldEqual( "bye" );
     }
 
     public class when_pinging_riak

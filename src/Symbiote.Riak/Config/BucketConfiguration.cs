@@ -11,8 +11,8 @@
         {
             QuorumReadNodes = 1;
             QuorumWriteNodes = 1;
-            BucketName = ( System.Reflection.Assembly.GetEntryAssembly() ??
-                           System.Reflection.Assembly.GetExecutingAssembly() ).GetName().Name.Replace( ".", "" );
+            BucketName = (( System.Reflection.Assembly.GetEntryAssembly() ??
+                           System.Reflection.Assembly.GetExecutingAssembly() ).GetName().Name.Replace( ".", "" )).ToLower();
         }
 
         public BucketConfiguration(string name)

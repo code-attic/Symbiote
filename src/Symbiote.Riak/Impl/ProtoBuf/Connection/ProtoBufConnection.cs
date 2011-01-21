@@ -20,6 +20,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Connection
         {
             var bytes = Serializer.GetCommandBytes( command );
             Stream.Write( bytes, 0, bytes.Length );
+            Stream.Flush();
             return Read();
         }
 

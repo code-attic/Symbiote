@@ -22,7 +22,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Request
         {
             Bucket = bucket.ToBytes();
             Key = key.ToBytes();
-            MinimumNodes = readFrom;
+            MinimumNodes = readFrom.ToggleEndianicity();
         }
     }
 }

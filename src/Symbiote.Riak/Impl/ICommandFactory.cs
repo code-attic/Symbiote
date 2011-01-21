@@ -13,7 +13,8 @@ namespace Symbiote.Riak.Impl
         GetServerInfo CreateGetServerInfo();
         ListBuckets CreateListBuckets();
         ListKeys CreateListKeys( string bucket );
-        Persist CreatePersist( string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody );
+        Persist CreatePersistExisting( string bucket, string key, string vectorClock, RiakContent content, uint write, uint dw, bool returnBody );
+        Persist CreatePersistNew( string bucket, string key, RiakContent content, uint write, uint dw, bool returnBody );
         Ping CreatePing();
         RunMapReduce CreateMapReduce( string mapReduce, string contentType );
         SetBucketProperties CreateSetBucketProperties( string bucket, BucketProperties properties );
