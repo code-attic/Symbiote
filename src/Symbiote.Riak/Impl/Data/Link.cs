@@ -14,13 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.Runtime.Serialization;
-using Symbiote.Riak.Impl.ProtoBuf.Response;
-
-namespace Symbiote.Riak.Impl.ProtoBuf.Request
+namespace Symbiote.Riak.Impl.Data
 {
-    [DataContract]
-    public class ListBuckets : RiakCommand<ListBuckets, BucketList>
+    public class Link
     {
+        public string Bucket { get; set; }
+        public string Key { get; set; }
+        public string Tag { get; set; }
     }
 }

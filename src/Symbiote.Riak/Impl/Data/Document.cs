@@ -1,9 +1,24 @@
-﻿using Symbiote.Riak.Config;
+﻿/* 
+Copyright 2008-2010 Alex Robson
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 
 namespace Symbiote.Riak.Impl.Data
 {
     public class Document<T>
     {
+        private readonly string DEFAULT_MIME_TYPE = "application/octet-stream";
         public string Charset { get; set; }
         public string ContentEncoding { get; set; }
         public string ContentType { get; set; }
@@ -17,16 +32,9 @@ namespace Symbiote.Riak.Impl.Data
         public Document(T instance, string vectorClock)
         {
             Value = instance;
-            Charset = "UTF8";
-            ContentType = "protobuf-byte-array";
+            Charset = null;
+            ContentType = DEFAULT_MIME_TYPE;
             VectorClock = vectorClock;
         }
-    }
-
-    public class Link
-    {
-        public string Bucket { get; set; }
-        public string Key { get; set; }
-        public string Tag { get; set; }
     }
 }

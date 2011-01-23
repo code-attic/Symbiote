@@ -14,13 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.Runtime.Serialization;
-using Symbiote.Riak.Impl.ProtoBuf.Response;
+using System.Collections.Generic;
+using Symbiote.Riak.Impl.Data;
 
-namespace Symbiote.Riak.Impl.ProtoBuf.Request
+namespace Symbiote.Riak
 {
-    [DataContract]
-    public class ListBuckets : RiakCommand<ListBuckets, BucketList>
+    public interface IDocumentRepository
     {
+        bool DeleteDocument<T>( string key );
+        Document<T> GetDocument<T>(string key);
+        IEnumerable<Document<T>> GetAllDocuments<T>();
+        bool PersistDocument<T>(string key, Document<T> document);
     }
 }

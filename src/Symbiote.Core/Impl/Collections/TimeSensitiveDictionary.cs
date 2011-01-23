@@ -85,6 +85,7 @@ namespace Symbiote.Core.Impl.Collections
         public MruList(int limit)
         {
             Limit = limit;
+            SlimLock = new ReaderWriterLockSlim();
         }
 
         public struct Enumerator: IEnumerator<MruNode<V>>

@@ -1,4 +1,20 @@
-﻿using System.Collections.Generic;
+﻿/* 
+Copyright 2008-2010 Alex Robson
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core.Extensions;
 using Symbiote.Riak.Config;
@@ -6,11 +22,12 @@ using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
 using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
+using Symbiote.Core.Impl.Serialization;
 
 namespace Symbiote.Riak.Impl
 {
     public class RiakClient :
-        IRiakServer,
+        IRiakClient,
         IKeyValueStore,
         IRepository,
         IDocumentRepository
@@ -27,23 +44,24 @@ namespace Symbiote.Riak.Impl
             Configuration = configuration;
         }
 
-        #region Implementation of IRiakServer
+        #region Implementation of IRiakClient
 
-        public void Delete<T>( string bucket, string key, uint minimumDeletes )
+        public bool Delete<T>( string bucket, string key, uint minimumDeletes )
         {
             var command = CommandFactory.CreateDelete( bucket, key, minimumDeletes );
             var response = command.Execute();
+            return response != null;
         }
 
         public Document<T> Get<T>( string bucket, string key, uint reads )
         {
             var command = CommandFactory.CreateGet( bucket, key, reads );
-            var riakContent = command.Execute();
-            if(riakContent == null)
+            var getResult = command.Execute();
+            if(getResult == null || getResult.Content.Count == 0)
             {
                 throw new RiakException( "There was no value available in bucket {0} for the key {1}".AsFormat( bucket, key ) );
             }
-            return riakContent.ToDocument<T>();
+            return getResult.Content.FirstOrDefault().ToDocument<T>();
         }
 
         public BucketProperties GetBucketProperties(string bucket)
@@ -81,15 +99,20 @@ namespace Symbiote.Riak.Impl
             return list.Keys.Select(x => x.FromBytes());
         }
 
-        public void Persist<T>( string bucket, string key, string vectorClock, Document<T> document, uint writeQuorum, uint minimumWrites )
+        public bool Persist<T>( string bucket, string key, string vectorClock, Document<T> document, uint writeQuorum, uint minimumWrites )
         {
-            var riakContent = new RiakContent( document.Value, document.ContentType, document.Charset, document.ContentEncoding, document.VectorClock, document.LastModified, document.LastModifiedInSeconds );
+            var riakContent = new RiakContent( document.Value.ToProtocolBuffer(), document.ContentType, document.Charset, document.ContentEncoding, document.VectorClock, document.LastModified, document.LastModifiedInSeconds );
             var command = vectorClock == null
                               ? CommandFactory.CreatePersistNew( bucket, key, riakContent, writeQuorum, minimumWrites, true )
                               : CommandFactory.CreatePersistExisting( bucket, key, vectorClock, riakContent, writeQuorum, minimumWrites, true );
 
-            var result = command.Execute();
-            VectorClockLookup.SetVectorFor( key, result.VectorClock.FromBytes() );
+            Persisted result;
+            var success = ( result = command.Execute()) != null;
+            if(success)
+            {
+                VectorClockLookup.SetVectorFor(key, result.VectorClock.FromBytes() );
+            }
+            return success;
         }
 
         public bool Ping()
@@ -99,26 +122,26 @@ namespace Symbiote.Riak.Impl
             return ping != null;
         }
 
-        public void SetBucketProperties(string bucket, BucketProperties properties)
+        public bool SetBucketProperties(string bucket, BucketProperties properties)
         {
             var command = CommandFactory.CreateSetBucketProperties(bucket, properties);
-            command.Execute();
+            return ( command.Execute() ) != null;
         }
 
-        public void SetClientId(string clientId)
+        public bool SetClientId(string clientId)
         {
             var command = CommandFactory.CreateSetClientId(clientId);
-            command.Execute();
+            return (command.Execute()) != null;
         }
 
         #endregion
 
         #region Implementation of IKeyValueStore
 
-        public void Delete<T>( string key )
+        public bool Delete<T>( string key )
         {
             var bucket = Configuration.GetBucketForType<T>();
-            Delete<T>( bucket.BucketName, key, bucket.QuorumWriteNodes );
+            return Delete<T>( bucket.BucketName, key, bucket.QuorumWriteNodes );
         }
 
         public T Get<T>( string key )
@@ -137,12 +160,12 @@ namespace Symbiote.Riak.Impl
             return keys.Keys.Select( x => Get<T>( x.FromBytes() ) );
         }
 
-        public void Persist<T>( string key, T instance )
+        public bool Persist<T>( string key, T instance )
         {
             var bucket = Configuration.GetBucketForType<T>();
             var vectorClock = VectorClockLookup.GetVectorFor( key );
             var document = new Document<T>(instance, vectorClock);
-            Persist( 
+            return Persist( 
                 bucket.BucketName, 
                 key, 
                 vectorClock, 
@@ -154,30 +177,33 @@ namespace Symbiote.Riak.Impl
 
         #region Implementation of IRepository
 
-        public void Delete<T>( T instance )
+        public bool Delete<T>( T instance )
         {
-            //do nuffin    
+            //do nuffin
+            return false;
         }
 
-        public void Persist<T>( T instance )
+        public bool Persist<T>( T instance )
         {
             // do nuffin
+            return false;
         }
 
         #endregion
 
         #region Implementation of IDocumentRepository
 
-        public void DeleteDocument<T>( string key )
+        public bool DeleteDocument<T>( string key )
         {
-            Delete<T>( key );
+            return Delete<T>( key );
         }
 
         public Document<T> GetDocument<T>( string key )
         {
             var bucket = Configuration.GetBucketForType<T>();
             var command = CommandFactory.CreateGet( bucket.BucketName, key, bucket.QuorumReadNodes );
-            var document = command.Execute().ToDocument<T>();
+            var getResult = command.Execute();
+            var document = getResult.Content.FirstOrDefault().ToDocument<T>();
             return document;
         }
 
@@ -189,21 +215,10 @@ namespace Symbiote.Riak.Impl
             return keys.Keys.Select(x => GetDocument<T>(x.FromBytes()));
         }
 
-        public void PersistDocument<T>( string key, Document<T> document )
+        public bool PersistDocument<T>( string key, Document<T> document )
         {
             var bucket = Configuration.GetBucketForType<T>();
-            var content = new RiakContent(
-                document.Value,
-                document.ContentType,
-                document.Charset,
-                document.ContentEncoding,
-                document.VectorClock,
-                document.LastModified,
-                document.LastModifiedInSeconds
-                );
-            var command = CommandFactory.CreatePersistExisting( bucket.BucketName, key, document.VectorClock, content, bucket.QuorumWriteNodes, bucket.QuorumWriteNodes, true );
-            var result = command.Execute();
-            VectorClockLookup.SetVectorFor(key, result.VectorClock.FromBytes());
+            return Persist( bucket.BucketName, key, document.VectorClock, document, bucket.QuorumWriteNodes, bucket.QuorumReadNodes );
         }
 
         #endregion

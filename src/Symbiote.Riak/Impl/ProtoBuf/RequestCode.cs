@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.Runtime.Serialization;
-using Symbiote.Riak.Impl.ProtoBuf.Response;
-
-namespace Symbiote.Riak.Impl.ProtoBuf.Request
+namespace Symbiote.Riak.Impl.ProtoBuf
 {
-    [DataContract]
-    public class ListBuckets : RiakCommand<ListBuckets, BucketList>
+    public enum RequestCode
     {
+        Ping = 1,
+        GetClientId = 3,
+        SetClientId = 5,
+        GetServerInfo = 7,
+        Get = 9,
+        Persist = 11,
+        Delete = 13,
+        ListBuckets = 15,
+        ListKeys = 17,
+        GetBucketProperties = 19,
+        SetBucketProperties = 21,
+        RunMapReduce = 23
     }
 }
