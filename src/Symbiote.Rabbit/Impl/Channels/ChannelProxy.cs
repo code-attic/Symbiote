@@ -30,7 +30,6 @@ namespace Symbiote.Rabbit.Impl.Channels
         private IModel _channel;
         private RabbitEndpoint _endpoint;
         private ChannelDefinition _channelDefinition;
-        private IMessageSerializer _messageSerializer;
         private Action<IModel, BasicReturnEventArgs> _onReturn;
         private string _protocol;
         private bool _closed;
@@ -43,6 +42,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         private readonly string AMQP_08 = "AMQP_0_8";
         private readonly byte _deliveryMode;
         private IBasicProperties _propertyTemplate;
+        private object _lock { get; set; }
 
         public RabbitEndpoint EndpointConfiguration
         {
@@ -89,14 +89,24 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public void Send<T>(RabbitEnvelope<T> envelope)
         {
-            IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
-            Channel.BasicPublish(
-                ChannelDefinition.Exchange,
-                envelope.RoutingKey,
-                ChannelDefinition.Mandatory,
-                ChannelDefinition.Immediate,
-                properties,
-                envelope.ByteStream);
+            lock(_lock)
+            {
+                IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
+                try
+                {
+                    Channel.BasicPublish(
+                        ChannelDefinition.Exchange,
+                        envelope.RoutingKey,
+                        ChannelDefinition.Mandatory,
+                        ChannelDefinition.Immediate,
+                        properties,
+                        envelope.ByteStream);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine( e );
+                }
+            }
         }
 
         public void Reject(ulong tag, bool requeue)
@@ -168,6 +178,7 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public ChannelProxy(IModel channel, string protocol, RabbitEndpoint endpointConfiguration)
         {
+            _lock = new object();
             _channel = channel;
             _protocol = protocol;
             _endpoint = endpointConfiguration;
@@ -180,6 +191,7 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public ChannelProxy(IModel channel, string protocol, ChannelDefinition channelDefinition)
         {
+            _lock = new object();
             _channel = channel;
             _protocol = protocol;
             _channelDefinition = channelDefinition;
@@ -224,7 +236,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             _closed = true;
             if (_channel != null)
             {
-                _channel.BasicReturn -= new BasicReturnEventHandler(_onReturn);
+                if(_onReturn != null)
+                    _channel.BasicReturn -= new BasicReturnEventHandler(_onReturn);
                 _channel.ModelShutdown -= ChannelShutdown;
                 if (_channel.IsOpen)
                 {

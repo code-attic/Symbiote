@@ -29,7 +29,7 @@ namespace Node.Console
         {
             Node = node;
             IdentityProvider = identityProvider;
-            this.Timer = new Timer(1000);
+            this.Timer = new Timer(10);
             this.Timer.Start();
             this.Timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
         }

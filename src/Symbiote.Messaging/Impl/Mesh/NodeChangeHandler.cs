@@ -27,12 +27,10 @@ namespace Symbiote.Messaging.Impl.Mesh
                 var nodeId = envelope.Message.NodeId;
                 if( !Registry.HasNode( nodeId ) )
                 {
-                    Registry.AddNode( nodeId );
                     NodeChannelManager.AddNewOutgoingChannel(nodeId);
+                    Registry.AddNode( nodeId );
                 }
                 Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
-
-
             }
             catch (Exception e)
             {
