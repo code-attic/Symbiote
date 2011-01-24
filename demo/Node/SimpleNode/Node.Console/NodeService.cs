@@ -2,6 +2,7 @@
 using System.Timers;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
+using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Mesh;
 
 namespace Node.Console
@@ -29,14 +30,23 @@ namespace Node.Console
         {
             Node = node;
             IdentityProvider = identityProvider;
-            this.Timer = new Timer(10);
+            this.Timer = new Timer(100);
             this.Timer.Start();
             this.Timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
         }
 
         void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            Node.Publish(new Message("from '{0}' at {1}".AsFormat(IdentityProvider.Identity, e.SignalTime)), x => x.CorrelationId = DateTime.UtcNow.Ticks.ToString());
+            var message = new Message("from '{0}' at {1}".AsFormat(IdentityProvider.Identity, e.SignalTime));
+            Action<IEnvelope> modifyEnvelope = x => x.CorrelationId = DateTime.UtcNow.Ticks.ToString();
+            try
+            {
+                Node.Publish(message, modifyEnvelope);
+            }
+            catch (Exception exception)
+            {
+                Node.Publish(message, modifyEnvelope);
+            }
         }
     }
 }

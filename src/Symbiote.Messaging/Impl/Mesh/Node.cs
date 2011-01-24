@@ -17,8 +17,17 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public void Publish<T>( T message, Action<IEnvelope> modifyEnvelope )
         {
-            var channelName = GetChannelForMessage( message );
-            Bus.Publish( channelName, message, modifyEnvelope );
+            var channelName = GetChannelForMessage(message);
+            try
+            {
+                Bus.Publish( channelName, message, modifyEnvelope );
+            }
+            catch (Exception e)
+            {
+                // blame it all on the channel
+                HandleNodeDeath( channelName );
+                throw;
+            }
         }
 
         public Future<R> Request<T, R>( T message )
@@ -29,7 +38,22 @@ namespace Symbiote.Messaging.Impl.Mesh
         public Future<R> Request<T, R>( T message, Action<IEnvelope> modifyEnvelope )
         {
             var channelName = GetChannelForMessage(message);
-            return Bus.Request<T, R>( channelName, message, modifyEnvelope );
+            try
+            {
+                return Bus.Request<T, R>( channelName, message, modifyEnvelope );
+            }
+            catch (Exception e)
+            {
+                // blame it all on the channel
+                HandleNodeDeath( channelName );
+                throw;
+            }
+        }
+
+        public void HandleNodeDeath(string deadNode)
+        {
+            Nodes.RemoveNode(deadNode);
+            Bus.Publish( Configuration.MeshChannel, new NodeDown() { NodeId = deadNode } );
         }
 
         public string GetChannelForMessage<T>(T message)

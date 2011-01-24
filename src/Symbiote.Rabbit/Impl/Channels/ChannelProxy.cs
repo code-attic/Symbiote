@@ -92,20 +92,13 @@ namespace Symbiote.Rabbit.Impl.Channels
             lock(_lock)
             {
                 IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
-                try
-                {
-                    Channel.BasicPublish(
-                        ChannelDefinition.Exchange,
-                        envelope.RoutingKey,
-                        ChannelDefinition.Mandatory,
-                        ChannelDefinition.Immediate,
-                        properties,
-                        envelope.ByteStream);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine( e );
-                }
+                Channel.BasicPublish(
+                    ChannelDefinition.Exchange,
+                    envelope.RoutingKey,
+                    ChannelDefinition.Mandatory,
+                    ChannelDefinition.Immediate,
+                    properties,
+                    envelope.ByteStream);
             }
         }
 
