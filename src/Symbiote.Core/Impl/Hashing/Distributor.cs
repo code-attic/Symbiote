@@ -31,7 +31,7 @@ namespace Symbiote.Core.Impl.Hashing
     public class Distributor<TNode>
     {
         protected IHashingProvider HashProvider { get; set; }
-        protected ReaderWriterLockSlim MapLock { get; set; }
+        protected object Lock { get; set; }
         protected RedBlackTree<long, string> Map { get; set; }
         public ConcurrentDictionary<string, List<long>> AliasLookup { get; set; }
         public ConcurrentDictionary<string, TNode> Nodes { get; set; }
@@ -91,18 +91,17 @@ namespace Symbiote.Core.Impl.Hashing
             }
 
             var total = aliasList.Count;
+            lock(Lock)
             for (int i = total; i <= total + count; i++)
             {
                 try
                 {
                     var alias = HashProvider.Hash("{0}_{1}".AsFormat(name, i));
                     aliasList.Add(alias);
-                    MapLock.EnterWriteLock();
                     Map.Add(alias, name);
                 }
                 finally
                 {
-                    MapLock.ExitWriteLock();
                 }
             }
         }
@@ -115,9 +114,9 @@ namespace Symbiote.Core.Impl.Hashing
         protected void RemoveKeySpaceFrom(string name, int count)
         {
             List<long> aliasList;
+            lock(Lock)
             if(AliasLookup.TryGetValue( name, out aliasList ))
             {
-                MapLock.EnterWriteLock();
                 var removals = aliasList.Take( count ).ToList();
                 removals
                     .ForEach( x =>
@@ -132,25 +131,24 @@ namespace Symbiote.Core.Impl.Hashing
                             Console.WriteLine(ex);
                         }
                     } );
-                MapLock.ExitWriteLock();
             }
         }
 
         protected void RemoveAliases(string name)
         {
             List<long> aliasList;
+            lock(Lock)
             if(AliasLookup.TryRemove(name, out aliasList))
             {
                 foreach (var alias in aliasList)
                 {
                     try
                     {
-                        MapLock.EnterWriteLock();
                         Map.Delete(alias);
                     }
                     finally
                     {
-                        MapLock.ExitWriteLock();
+                        
                     }
                 }
             }
@@ -176,12 +174,11 @@ namespace Symbiote.Core.Impl.Hashing
             string nodeKey = "";
             try
             {
-                MapLock.EnterReadLock();
+                lock(Lock)
                 nodeKey = Map.GetNearest(hashKey);
             }
             finally
             {
-                MapLock.ExitReadLock();
             }
             return Nodes[nodeKey];
         }
@@ -197,7 +194,7 @@ namespace Symbiote.Core.Impl.Hashing
             AliasLookup = new ConcurrentDictionary<string, List<long>>(3, 10);
 
             Nodes = new ConcurrentDictionary<string, TNode>(3, 10);
-            MapLock = new ReaderWriterLockSlim();
+            Lock = new object();
             HashProvider = new MD5HashProvider();
         }
     }
