@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System.Collections.Generic;
 using Symbiote.Core.Impl.DI;
 
 namespace Symbiote.Core
@@ -21,10 +22,13 @@ namespace Symbiote.Core
     public class Assimilation : IAssimilate
     {
         public IDependencyAdapter DependencyAdapter { get; set; }
+        public List<string> AssemblyBlacklist { get; set; }
+        public List<string> AssemblyWhitelist { get; set; }
 
         public Assimilation()
         {
-
+            AssemblyBlacklist = new List<string>();
+            AssemblyWhitelist = new List<string>();
         }
     }
 }

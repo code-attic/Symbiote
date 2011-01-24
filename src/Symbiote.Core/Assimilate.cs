@@ -87,12 +87,13 @@ namespace Symbiote.Core
                                             // but this will prevent the scan code from running
                                             s.AssembliesFromApplicationBaseDirectory(a =>
                                                 {
-                                                    var fullName = a.FullName;
-                                                    return !
-                                                        (fullName.Contains("Microsoft")
-                                                         || fullName.Contains("Machine.Specifications")
-                                                         || fullName.Contains("Gallio")
-                                                        );
+                                                    return a.GetReferencedAssemblies().Any( r => r.Name.Contains( "Symbiote" ) );
+                                                    //var fullName = a.FullName;
+                                                    //return !
+                                                    //    (fullName.Contains("Microsoft")
+                                                    //     || fullName.Contains("Machine.Specifications")
+                                                    //     || fullName.Contains("Gallio")
+                                                    //    );
                                                 });
                                             s.AddAllTypesOf<IContractResolverStrategy>();
                                             s.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );

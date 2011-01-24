@@ -86,7 +86,6 @@
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
     <Compile Include="Impl\Dispatch\DirectorSaga.cs" />
     <Compile Include="Impl\Dispatch\DispatcherKeyAccessor.cs" />
-    <Compile Include="Impl\Dispatch\HyperDispatchManager.cs" />
     <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />
     <Compile Include="Impl\Dispatch\PrimeDirector.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />

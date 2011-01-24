@@ -36,7 +36,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IMessageSerializer Serializer { get; set; }
         protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
-        protected VolatileRingBuffer RingBuffer { get; set; }
+        protected RingBuffer RingBuffer { get; set; }
 
         public override void HandleBasicDeliver(
             string consumerTag,
@@ -58,6 +58,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
                         redelivered,
                         routingKey
                         );
+            if(envelope == null)
+                throw new Exception("fffffFFFFFFFuuuuuuuuHHHHHHHHH");
             RingBuffer.Write(envelope);
         }
 
@@ -90,6 +92,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
             try
             {
                 rabbitEnvelope.Message = Serializer.Deserialize( rabbitEnvelope.MessageType, rabbitEnvelope.ByteStream );
+                if(rabbitEnvelope.Message == null)
+                    throw new Exception("AHHHHHHH");
             }
             catch (Exception e)
             {
@@ -115,7 +119,7 @@ namespace Symbiote.Rabbit.Impl.Adapter
             RabbitEndpoint = endpoint;
             proxy.InitConsumer(this);
             Running = true;
-            RingBuffer = new VolatileRingBuffer(100000);
+            RingBuffer = new RingBuffer(10000);
             Serializer = Assimilate.GetInstanceOf( endpoint.SerializerType ) as IMessageSerializer;
             RingBuffer.AddTransform(DeserializeMessage);
             RingBuffer.AddTransform(DispatchResult);

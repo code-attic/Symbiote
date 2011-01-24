@@ -112,6 +112,10 @@
 			</Reference>
 			<Reference Include="RabbitMQ.Client">
 			  <HintPath>..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
+			</Reference>			
+			<Reference Include="StructureMap">
+			  <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+			  <IlMerge>True</IlMerge>
 			</Reference>
 		</ItemGroup>
 	</When>

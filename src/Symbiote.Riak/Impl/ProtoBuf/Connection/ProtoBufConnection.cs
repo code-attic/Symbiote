@@ -22,6 +22,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Connection
         : IProtoBufConnection
     {
         protected readonly int DEFAULT_BUFFER_SIZE = 16 * 1024;
+        protected readonly int DEFAULT_RECEIVE_TIMEOUT = 500;
         protected RiakSerializer Serializer { get; set; }
         public NetworkStream Stream { get; protected set; }
         public TcpClient Client { get; protected set; }
@@ -48,6 +49,7 @@ namespace Symbiote.Riak.Impl.ProtoBuf.Connection
             Client = new TcpClient(Node.NodeAddress, Node.ProtoBufPort);
             Stream = Client.GetStream();
             Client.SendBufferSize = DEFAULT_BUFFER_SIZE;
+            Client.ReceiveTimeout = DEFAULT_RECEIVE_TIMEOUT;
         }
 
         public void Dispose()

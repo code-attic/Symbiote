@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using System;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -40,12 +41,18 @@ namespace Symbiote.Riak.Impl.ProtoBuf
             var attempts = 0;
             using (var memoryStream = new MemoryStream())
             {
-                while (memoryStream.Length == 0)
-                while (stream.DataAvailable)
+                do
                 {
-                    var read = stream.Read(buffer, 0, buffer.Length);
-                    memoryStream.Write(buffer, 0, read);
-                }
+                    try
+                    {
+                        var read = stream.Read( buffer, 0, buffer.Length );
+                        memoryStream.Write( buffer, 0, read );
+                    }
+                    catch (Exception e)
+                    {
+                        //do nothing for now
+                    }
+                } while ( stream.DataAvailable );
                 return memoryStream.ToArray();
             }
         }

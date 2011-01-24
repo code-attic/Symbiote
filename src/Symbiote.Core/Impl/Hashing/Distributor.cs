@@ -117,6 +117,7 @@ namespace Symbiote.Core.Impl.Hashing
             List<long> aliasList;
             if(AliasLookup.TryGetValue( name, out aliasList ))
             {
+                MapLock.EnterWriteLock();
                 var removals = aliasList.Take( count ).ToList();
                 removals
                     .ForEach( x =>
@@ -131,6 +132,7 @@ namespace Symbiote.Core.Impl.Hashing
                             Console.WriteLine(ex);
                         }
                     } );
+                MapLock.ExitWriteLock();
             }
         }
 

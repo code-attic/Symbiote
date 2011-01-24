@@ -16,6 +16,7 @@ limitations under the License.
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Symbiote.Core;
 using Symbiote.Daemon.Host;
 using Symbiote.Core.Extensions;
@@ -30,7 +31,7 @@ namespace Symbiote.Daemon
             assimilate.Dependencies(x => x.Scan(s =>
                                                     {
                                                         s.TheCallingAssembly();
-                                                        s.AssembliesFromApplicationBaseDirectory();
+                                                        s.AssembliesFromApplicationBaseDirectory(a => a.GetReferencedAssemblies().Any( r => r.Name.Contains( "Symbiote" ) ));
                                                         s.AddAllTypesOf<IDaemon>();
                                                     }));
 

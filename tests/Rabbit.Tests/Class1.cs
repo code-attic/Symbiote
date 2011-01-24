@@ -34,14 +34,14 @@ namespace Rabbit.Tests
     {
         private Because of = () =>
         {
-                                     Bus.AddRabbitChannel( x => x.Direct( "test" ).CorrelateBy<Message>( m => m.CorrelationId ) );
-                                     Bus.AddRabbitQueue(x => x.ExchangeName("test").QueueName("test").NoAck().StartSubscription());
+                                     Bus.AddRabbitChannel( x => x.Direct( "test" ).CorrelateBy<Message>( m => m.CorrelationId ).AutoDelete() );
+                                     Bus.AddRabbitQueue(x => x.ExchangeName("test").QueueName("test").AutoDelete().NoAck().StartSubscription());
                                         
                                      Bus.Publish("test", new Message() {Id = 1, CorrelationId = "1"});
                                      Bus.Publish("test", new Message() { Id = 2, CorrelationId = "1" });
                                      Bus.Publish("test", new Message() { Id = 3, CorrelationId = "1" });
 
-                                     Thread.Sleep(40);
+                                     Thread.Sleep(45);
                                  };
         
         private It actor_should_have_received_three_messages = () => Actor.MessageIds.ShouldContain(1, 2, 3);
@@ -53,7 +53,7 @@ namespace Rabbit.Tests
         protected static List<Actor> cast { get; set; }
         protected static Stopwatch receiveWatch { get; set; }
         protected static Stopwatch sendWatch { get; set; }
-        protected static int MessagesToSend = 10000;
+        protected static int MessagesToSend = 400000;
         protected static int actorCount = 60;
         protected static IDispatcher dispatcher;
 

@@ -111,7 +111,9 @@
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
     <Compile Include="Utility\Futures\with_callback.cs" />
     <Compile Include="Utility\Futures\with_function_call.cs" />
-    <Compile Include="Utility\RingBuffer\when_writing_1000_values.cs" />
+    <Compile Include="Utility\RingBuffer\when_doing_simple_math.cs" />
+    <Compile Include="Utility\RingBuffer\when_instantiating_buffer.cs" />
+    <Compile Include="Utility\RingBuffer\with_buffer.cs" />
     <Compile Include="with_assimilation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -153,10 +155,10 @@
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
         </Reference>
-		<Reference Include="StructureMap">
-		  <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-		  <IlMerge>True</IlMerge>
-		</Reference>
+        <Reference Include="StructureMap">
+          <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+          <IlMerge>True</IlMerge>
+        </Reference>
       </ItemGroup>
     </When>
   </Choose>
