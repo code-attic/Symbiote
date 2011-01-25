@@ -9,6 +9,8 @@ namespace Symbiote.Messaging.Impl.Mesh
         public string NodeId { get; set; }
         [DataMember(Order = 2)]
         public decimal LoadScore { get; set; }
+        [DataMember(Order = 3)]
+        public bool Proxy { get; set; }
 
         public NodeHealth() {}
     }

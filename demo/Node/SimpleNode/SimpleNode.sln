@@ -3,6 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Node.Console", "Node.Console\Node.Console.csproj", "{53927429-51F4-4C4F-BC13-89F9B148D9E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MeshNode", "MeshNode\MeshNode.csproj", "{D13CDB72-26C8-4849-A2BF-30BD39243F5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EdgeNode", "EdgeNode\EdgeNode.csproj", "{4EDBD33A-F99B-43BF-B5BE-630A4E8A6808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{5BE0818D-9461-43DC-A9DF-AAC5771EBA4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +19,18 @@ Global
 		{53927429-51F4-4C4F-BC13-89F9B148D9E4}.Debug|x86.Build.0 = Debug|x86
 		{53927429-51F4-4C4F-BC13-89F9B148D9E4}.Release|x86.ActiveCfg = Release|x86
 		{53927429-51F4-4C4F-BC13-89F9B148D9E4}.Release|x86.Build.0 = Release|x86
+		{D13CDB72-26C8-4849-A2BF-30BD39243F5D}.Debug|x86.ActiveCfg = Debug|x86
+		{D13CDB72-26C8-4849-A2BF-30BD39243F5D}.Debug|x86.Build.0 = Debug|x86
+		{D13CDB72-26C8-4849-A2BF-30BD39243F5D}.Release|x86.ActiveCfg = Release|x86
+		{D13CDB72-26C8-4849-A2BF-30BD39243F5D}.Release|x86.Build.0 = Release|x86
+		{4EDBD33A-F99B-43BF-B5BE-630A4E8A6808}.Debug|x86.ActiveCfg = Debug|x86
+		{4EDBD33A-F99B-43BF-B5BE-630A4E8A6808}.Debug|x86.Build.0 = Debug|x86
+		{4EDBD33A-F99B-43BF-B5BE-630A4E8A6808}.Release|x86.ActiveCfg = Release|x86
+		{4EDBD33A-F99B-43BF-B5BE-630A4E8A6808}.Release|x86.Build.0 = Release|x86
+		{5BE0818D-9461-43DC-A9DF-AAC5771EBA4F}.Debug|x86.ActiveCfg = Debug|x86
+		{5BE0818D-9461-43DC-A9DF-AAC5771EBA4F}.Debug|x86.Build.0 = Debug|x86
+		{5BE0818D-9461-43DC-A9DF-AAC5771EBA4F}.Release|x86.ActiveCfg = Release|x86
+		{5BE0818D-9461-43DC-A9DF-AAC5771EBA4F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

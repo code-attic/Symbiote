@@ -63,7 +63,8 @@ namespace Symbiote.Rabbit.Impl.Node
             this.NodeRegistry.AddNode( NodeConfiguration.IdentityProvider.Identity );
 
             //Start the monitor
-            NodeMonitor.Start();
+            if(!NodeConfiguration.AsProxy)
+                NodeMonitor.Start();
         }
 
         public RabbitNodeChannelManager( INodeConfiguration nodeConfiguration, INodeHealthMonitor nodeMonitor, INodeRegistry nodeRegistry, IBus bus )

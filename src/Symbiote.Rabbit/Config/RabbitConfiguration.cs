@@ -19,11 +19,13 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Messaging.Impl.Mesh;
 
 namespace Symbiote.Rabbit.Config
 {
     public class RabbitConfiguration
     {
+        public INodeConfiguration NodeConfiguration { get; set; }
         public bool AsNode { get; set; }
         public ConcurrentDictionary<string, IRabbitBroker> Brokers { get; set; }
 
@@ -41,17 +43,17 @@ namespace Symbiote.Rabbit.Config
             return this;
         }
 
-        public RabbitConfiguration EnrollAsMeshNode()
+        public RabbitConfiguration EnrollAsMeshNode(bool proxyOnly)
         {
             AsNode = true;
+            NodeConfiguration.AsProxy = proxyOnly;
             return this;
         }
 
-        public RabbitConfiguration()
+        public RabbitConfiguration(INodeConfiguration nodeConfiguration)
         {
+            NodeConfiguration = nodeConfiguration;
             Brokers = new ConcurrentDictionary<string, IRabbitBroker>();
         }
     }
-
-
 }

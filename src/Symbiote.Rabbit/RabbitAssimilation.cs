@@ -30,7 +30,7 @@ namespace Symbiote.Rabbit
     {
         public static IAssimilate Rabbit(this IAssimilate assimilate, Action<RabbitConfiguration> configurate)
         {
-            var configuration = new RabbitConfiguration();
+            var configuration = Assimilate.GetInstanceOf<RabbitConfiguration>();
             configurate(configuration);
             ConfigureStandardDependencies(assimilate, configuration);
             return assimilate;

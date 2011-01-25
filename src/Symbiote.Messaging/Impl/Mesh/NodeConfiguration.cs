@@ -9,6 +9,7 @@ namespace Symbiote.Messaging.Impl.Mesh
         protected readonly string NODE_FORMAT = "node.{0}";
         public INodeIdentityProvider IdentityProvider { get; set; }
         public TimeSpan HealthMonitorFrequency { get; set; }
+        public bool AsProxy { get; set; }
 
         public string MeshChannel { get; set; }
         public string NodeChannel { get; set; }
