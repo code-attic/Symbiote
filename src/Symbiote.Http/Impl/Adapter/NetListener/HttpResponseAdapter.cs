@@ -37,8 +37,8 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
 
             headers.ForEach( x => Response.AddHeader( x.Key, DelimitedBuilder.Construct( x.Value, ";" )) );
             Response.ProtocolVersion = HttpVersion.Version11;
-            Response.ContentEncoding = Encoding.UTF8;
-            Response.ContentType = "text/plain";
+            //Response.ContentEncoding = Encoding.UTF8;
+            //Response.ContentType = "text/plain";
             var count = body
                 .Select(Serialize)
                 .Where(x => x.Length > 0)
