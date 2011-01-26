@@ -16,12 +16,11 @@ limitations under the License.
 
 using System.Net;
 
-namespace Symbiote.Http.Impl.Adapter.Web
+namespace Symbiote.Http.Impl.Adapter.NetListener
 {
     public class HttpContextTransform : IConextTransformer<HttpListenerContext>
     {
         public HttpRequestTransform RequestTransform { get; set; }
-        public HttpResponseAdapter ResponseTransform { get; set; }
 
         public Context From<T>( T context )
         {
@@ -30,11 +29,11 @@ namespace Symbiote.Http.Impl.Adapter.Web
 
         public Context From( HttpListenerContext context )
         {
-            ResponseTransform = new HttpResponseAdapter(context);
+            var responseAdapter = new HttpResponseAdapter(context);
             return new Context
                 ( 
                     RequestTransform.Transform( context.Request ),
-                    ResponseTransform
+                    responseAdapter
                 );
         }
 

@@ -21,6 +21,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>..\..\bin\Symbiote.StructureMap.xml</DocumentationFile>
+    <DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +45,7 @@
   <ItemGroup>
     <Reference Include="StructureMap">
       <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
+	  <Private>True</Private>
       <IlMerge>True</IlMerge>
     </Reference>
     <Reference Include="System" />

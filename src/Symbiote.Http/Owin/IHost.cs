@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Symbiote.Http
+namespace Symbiote.Http.Owin
 {
-    public class Class1
+    public interface IHost
     {
+        void Start();
+        void Stop();
     }
 }

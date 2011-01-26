@@ -23,7 +23,7 @@ using Symbiote.Core.Extensions;
 using Symbiote.Http.Owin;
 using Symbiote.Core.Impl.Serialization;
 
-namespace Symbiote.Http.Impl.Adapter.Web
+namespace Symbiote.Http.Impl.Adapter.NetListener
 {
     public class HttpResponseAdapter : IResponseAdapter
     {
@@ -36,21 +36,19 @@ namespace Symbiote.Http.Impl.Adapter.Web
             Response.StatusDescription = httpStatus.Description;
 
             headers.ForEach( x => Response.AddHeader( x.Key, DelimitedBuilder.Construct( x.Value, ";" )) );
-            var count = body
-                .Select( Serialize )
-                .Where( x => x.Length > 0)
-                .Sum( x =>
-                {
-                    var length = x.Length;
-                    Response.OutputStream.Write( x, 0, length );
-                    return length;
-                });
-
             Response.ProtocolVersion = HttpVersion.Version11;
-            Response.ContentLength64 = count;
             Response.ContentEncoding = Encoding.UTF8;
             Response.ContentType = "text/plain";
-
+            var count = body
+                .Select(Serialize)
+                .Where(x => x.Length > 0)
+                .Sum(x =>
+                {
+                    var length = x.Length;
+                    Response.OutputStream.Write(x, 0, length);
+                    return length;
+                });
+            //Response.ContentLength64 = count;
             Response.Close();
         }
 

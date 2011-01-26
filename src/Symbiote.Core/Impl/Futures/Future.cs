@@ -15,9 +15,14 @@ namespace Symbiote.Core.Impl.Futures
            return new FutureCallback<T>( call );
         }
     
+        public static FutureAction Blind(Action call)
+        {
+            return new FutureAction( call );
+        }
+
         public static FutureAction<T> Of<T>(Action call)
         {
-            return new FutureAction<T>( call );
+            return new FutureAction<T>(call);
         }
     }
 

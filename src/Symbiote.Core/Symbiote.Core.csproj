@@ -118,6 +118,7 @@
     </Compile>
     <Compile Include="Extensions\ConcurentExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Impl\Futures\CallbackResult.cs" />
     <Compile Include="Impl\Trees\AvlTreeBase.cs" />
     <Compile Include="Impl\Hashing\Distributor.cs" />
     <Compile Include="Impl\Trees\HashedAvlLeaf.cs" />

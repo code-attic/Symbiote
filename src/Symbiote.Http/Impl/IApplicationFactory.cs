@@ -14,14 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System;
-using System.Collections.Generic;
-using Symbiote.Core.Impl.Futures;
+using Symbiote.Http.Owin;
 
-namespace Symbiote.Http.Owin
+namespace Symbiote.Http.Impl
 {
-    public interface IApplication
+    public interface IApplicationFactory
     {
-        void Process( IDictionary<string, object> requestItems, Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond, Action<Exception> onException );
+        IApplication CreateApplication();
     }
 }
