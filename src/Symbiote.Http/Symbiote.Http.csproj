@@ -55,16 +55,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Impl\Adapter\Context.cs" />
+    <Compile Include="Impl\Adapter\IConextTransformer.cs" />
+    <Compile Include="Impl\Adapter\IContextTransformer.cs" />
+    <Compile Include="Impl\Adapter\IOwinAdapter.cs" />
+    <Compile Include="Impl\Adapter\IResponseProvider.cs" />
+    <Compile Include="Impl\Adapter\OwinAdapter.cs" />
     <Compile Include="Impl\Adapter\Request.cs" />
-    <Compile Include="Impl\Adapter\Web\HttpContextAdapter.cs" />
-    <Compile Include="Impl\Adapter\Web\HttpListenerRequestAdapter.cs" />
-    <Compile Include="Impl\Adapter\Web\HttpListenerResponseAdapter.cs" />
-    <Compile Include="Impl\Adapter\Web\HttpRequestAdapter.cs" />
+    <Compile Include="Impl\Adapter\Web\HttpContextTransform.cs" />
+    <Compile Include="Impl\Adapter\Web\HttpListenerHost.cs" />
     <Compile Include="Impl\Adapter\Web\HttpResponseAdapter.cs" />
+    <Compile Include="Impl\Adapter\Web\HttpRequestTransform.cs" />
+    <Compile Include="Impl\HttpResponseCodes.cs" />
+    <Compile Include="Impl\Owin.cs" />
+    <Compile Include="Impl\OwinCodes.cs" />
     <Compile Include="Owin\IContext.cs" />
     <Compile Include="Owin\IApplication.cs" />
     <Compile Include="Owin\IRequest.cs" />
-    <Compile Include="Owin\IResponse.cs" />
+    <Compile Include="Owin\IResponseAdapter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

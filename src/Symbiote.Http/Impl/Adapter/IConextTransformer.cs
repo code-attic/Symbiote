@@ -14,20 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.IO;
-using System.Net;
 
-namespace Symbiote.Http.Impl.Adapter.Web
+namespace Symbiote.Http.Impl.Adapter
 {
-    public class HttpListenerResponseAdapter : IHttpResponseAdapter
+    public interface IConextTransformer<T> : IContextTransformer
     {
-        protected HttpListenerResponse Response { get; set; }
-
-        public Stream OutputStream { get { return Response.OutputStream; } }
-
-        public HttpListenerResponseAdapter(HttpListenerResponse response)
-        {
-            Response = response;
-        }
+        Context From( T context );
     }
 }

@@ -29,6 +29,7 @@ namespace Symbiote.Core.Impl.Futures
         protected bool HasResult { get; set; }
         protected int Limit { get; set; }
         protected Func<T> OnFail { get; set; }
+        protected Action<Exception> ExceptionHandler { get; set; }
         protected T Result { get; set; }
         protected TimeSpan Timeout { get; set; }
         protected TimeSpan TimeBetweenTries { get; set; }
@@ -83,6 +84,12 @@ namespace Symbiote.Core.Impl.Futures
         public Future<T> OnFailure(Func<T> onFailure)
         {
             OnFail = onFailure;
+            return this;
+        }
+
+        public Future<T> OnException(Action<Exception> exceptionHandler)
+        {
+            ExceptionHandler = exceptionHandler;
             return this;
         }
 

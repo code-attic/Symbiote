@@ -19,7 +19,7 @@ namespace Node.Console
                 .Daemon( x => x.Arguments( args ).Name( "node" ) )
                 .Actors()
                 .Messaging()
-                .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()).EnrollAsMeshNode())
+                .Rabbit(x => x.AddBroker(b => b.Address("localhost").AMQP091()).EnrollAsMeshNode(false))
                 .AddConsoleLogger<NodeService>( x => x.Debug().MessageLayout( m => m.Message().Newline() ) )
                 .RunDaemon();
         }

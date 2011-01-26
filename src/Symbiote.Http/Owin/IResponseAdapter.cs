@@ -18,10 +18,8 @@ using System.Collections.Generic;
 
 namespace Symbiote.Http.Owin
 {
-    public interface IResponse
+    public interface IResponseAdapter
     {
-        string Status { get; }
-        IDictionary<string, IEnumerable<string>> Headers { get; }
-        IEnumerable<object> GetBody();
+        void Respond( string status, IDictionary<string, IList<string>> headers, IEnumerable<object> body );
     }
 }

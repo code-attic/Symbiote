@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-namespace Symbiote.Http.Owin
+namespace Symbiote.Http.Impl
 {
-    public interface IContext
+    public class Owin
     {
-        IRequest Request { get; }
-        IResponseAdapter Response { get; }
+        public static OwinCodes ItemKeys = new OwinCodes();
+        public static HttpStatusCode HttpStatus = new HttpStatusCode();
     }
 }

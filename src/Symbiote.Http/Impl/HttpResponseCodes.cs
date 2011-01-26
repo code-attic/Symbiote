@@ -1,0 +1,103 @@
+﻿/* 
+Copyright 2008-2010 Alex Robson
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+using System.Collections.Generic;
+using Symbiote.Core.Extensions;
+
+namespace Symbiote.Http.Impl
+{
+    public class HttpStatus
+    {
+        private static readonly string TEMPLATE = "{0} {1}";
+        public int Code { get; set; }
+        public string Description { get; set; }
+        public HttpStatus( int code, string description )
+        {
+            Code = code;
+            Description = description;
+        }
+
+        public override string ToString()
+        {
+            return TEMPLATE.AsFormat( Code, Description );
+        }
+
+        public static readonly HttpStatus Continue = new HttpStatus( 100, "Continue" );
+        public static readonly HttpStatus SwitchingProtocols = new HttpStatus(101, "Switching Protocols");
+        public static readonly HttpStatus Ok = new HttpStatus(200, "OK");
+        public static readonly HttpStatus Created = new HttpStatus(201, "Created");
+        public static readonly HttpStatus Accepted = new HttpStatus(202, "Accepted");
+        public static readonly HttpStatus NoContent = new HttpStatus(204, "No Content");
+        public static readonly HttpStatus MultipleChoices = new HttpStatus(300, "Multiple Choices");
+        public static readonly HttpStatus MovedPermanently = new HttpStatus(301, "Moved Permanently");
+        public static readonly HttpStatus UseProxy = new HttpStatus(305, "Use Proxy");
+        public static readonly HttpStatus BadRequest = new HttpStatus(400, "Bad Request");
+        public static readonly HttpStatus Unauthorized = new HttpStatus(401, "Unauthorized");
+        public static readonly HttpStatus Forbidden = new HttpStatus(403, "Forbidden");
+        public static readonly HttpStatus NotFound = new HttpStatus(404, "Not Found");
+        public static readonly HttpStatus MethodNotAllowed = new HttpStatus(405, "Method Not Allowed");
+        public static readonly HttpStatus RequestTimeout = new HttpStatus(408, "Request Timeout");
+        public static readonly HttpStatus Conflict = new HttpStatus(409, "Conflict");
+        public static readonly HttpStatus InternalServerError = new HttpStatus(500, "Internal Server Error");
+        public static readonly HttpStatus NotImplemented = new HttpStatus(501, "Not Implemented");
+        public static readonly HttpStatus ServiceNotAvailable = new HttpStatus(503, "Service Not Available");
+
+        public static readonly Dictionary<string, HttpStatus> Lookup = new Dictionary<string, HttpStatus>()
+        {
+            {Continue.ToString(), Continue},
+            {SwitchingProtocols.ToString(), SwitchingProtocols},
+            {Ok.ToString(), Ok},
+            {Created.ToString(), Created},
+            {Accepted.ToString(), Accepted},
+            {NoContent.ToString(), NoContent},
+            {MultipleChoices.ToString(), MultipleChoices},
+            {MovedPermanently.ToString(), MovedPermanently},
+            {UseProxy.ToString(), UseProxy},
+            {BadRequest.ToString(), BadRequest},
+            {Unauthorized.ToString(), Unauthorized},
+            {Forbidden.ToString(), Forbidden},
+            {NotFound.ToString(), NotFound},
+            {MethodNotAllowed.ToString(), MethodNotAllowed},
+            {RequestTimeout.ToString(), RequestTimeout},
+            {Conflict.ToString(), Conflict},
+            {InternalServerError.ToString(), InternalServerError},
+            {ServiceNotAvailable.ToString(), ServiceNotAvailable},
+        };
+    }
+
+    public class HttpStatusCode
+    {
+        public readonly string CONTINUE = "100 Continue";
+        public readonly string SWITCH_PROTOCOL = "101 Switching Protocols";
+        public readonly string OK = "200 OK";
+        public readonly string CREATED = "201 Created";
+        public readonly string ACCEPTED = "202 Accepted";
+        public readonly string NO_CONTENT = "204 No Content";
+        public readonly string MULTIPLE_CHOICES = "300 Multiple Choices";
+        public readonly string MOVED_PERMANENTLY = "301 Moved Permanently";
+        public readonly string USE_PROXY = "305 Use Proxy";
+        public readonly string BAD_REQUEST = "400 Bad Request";
+        public readonly string UNAUTHORIZED = "401 Unauthorized";
+        public readonly string FORBIDDEN = "403 Forbidden";
+        public readonly string NOTFOUND = "404 Not Found";
+        public readonly string METHOD_NOT_ALLOWED = "405 Method Not Allowed";
+        public readonly string TIMEOUT = "408 Request Timeout";
+        public readonly string CONFLICT = "409 Conflict";
+        public readonly string SERVER_ERROR = "500 Internal Server Error";
+        public readonly string NOT_IMPLEMENTED = "501 Not Implemented";
+        public readonly string SERVICE_UNAVAILABLE = "503 Service Not Available";
+    }
+}

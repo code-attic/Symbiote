@@ -1,95 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
-using Symbiote.Core.Extensions;
+using System.IO;
+using System.Net;
 using Symbiote.Core.Impl.Futures;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter
 {
-    public interface IOwinAdapter
-    {
-        IContext Process<T>( T context );
-    }
-
-    public interface IContextTransformer
-    {
-        Context From<T>( T context );
-    }
-
-    public interface IConextTransformer<T> : IContextTransformer
-    {
-        Context From( T context );
-    }
-
-    public class OwinAdapter : IOwinAdapter
-    {
-        protected Dictionary<Type, IContextTransformer> Transformers { get; set; }
-
-        public IContext Process<T>( T context )
-        {
-            IContextTransformer transformer = null;
-            var type = typeof(T);
-            if(!Transformers.TryGetValue( type, out transformer ))
-            {
-                throw new KeyNotFoundException( "There was no adapter for the context type {0}".AsFormat( type.FullName ) );
-            }
-            return transformer.From( context );
-        }
-
-        public OwinAdapter()
-        {
-            Transformers = new Dictionary<Type, IContextTransformer>();
-        }
-    }
-
     public class Request
         : IRequest
     {
+        public IPEndPoint ClientEndpoint { get; set; }
         public string Method { get; set; }
+        public string Scheme { get; set; }
+        public string Server { get; set; }
+        public Stream Stream { get; set; }
         public string Uri { get; set; }
         public string Url { get; set; }
+        public string Version { get; set; }
         public IDictionary<string, string> Parameters { get; set; }
         public IDictionary<string, IEnumerable<string>> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
 
-        public Future<int> Read( byte[] buffer, int offset, int count, Func<byte[], int, int, int> callback, object state )
+        public Future<int> Read( byte[] buffer, int offset, int length, Action<int> callback, Action<Exception> onException )
         {
-            return Future.Of( () => callback( buffer, offset, count ) ).Now();
-        }
-    }
-
-    public class Response : IResponse
-    {
-        public IResponseProvider Provider { get; set; }
-        public string Status { get; set; }
-        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
-        public IEnumerable<object> GetBody()
-        {
-            return Provider.GetResponseBody();
+            return Future
+                .Of( () => Stream.Read( buffer, offset, length ) )
+                .OnValue( callback )
+                .OnException( onException )
+                .Now();
         }
 
-        public Response( IResponseProvider provider, string status, IDictionary<string, IEnumerable<string>> headers )
+        public Request()
         {
-            Provider = provider;
-            Status = status;
-            Headers = headers;
-        }
-    }
-
-    public interface IResponseProvider
-    {
-        IEnumerable<object> GetResponseBody();
-    }
-
-    public class Context : IContext
-    {
-        public IRequest Request { get; set; }
-        public IResponse Response { get; set; }
-
-        public Context( IRequest request, IResponse response )
-        {
-            Request = request;
-            Response = response;
+            Parameters = new Dictionary<string, string>();
+            Headers = new Dictionary<string, IEnumerable<string>>();
+            Items = new Dictionary<string, object>();
         }
     }
 }

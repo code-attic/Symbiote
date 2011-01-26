@@ -16,18 +16,25 @@ limitations under the License.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using Symbiote.Core.Impl.Futures;
 
 namespace Symbiote.Http.Owin
 {
     public interface IRequest
     {
+        IPEndPoint ClientEndpoint { get; }
         string Method { get; }
         string Uri { get; }
         string Url { get; }
+        string Scheme { get; }
+        string Server { get; }
+        string Version { get; }
+
         IDictionary<string, string> Parameters { get; }
         IDictionary<string, IEnumerable<string>> Headers { get; }
         IDictionary<string, object> Items { get; }
-        Future<int> Read( byte[] buffer, int offset, int count, Func<byte[], int, int, int> callback, object state );
+        Future<int> Read( byte[] buffer, int offset, int length, Action<int> callback, Action<Exception> onException );
     }
 }
