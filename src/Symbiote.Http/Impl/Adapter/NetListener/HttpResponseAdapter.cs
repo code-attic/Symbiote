@@ -37,34 +37,24 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
 
             headers.ForEach( x => Response.AddHeader( x.Key, DelimitedBuilder.Construct( x.Value, ";" )) );
             Response.ProtocolVersion = HttpVersion.Version11;
-            //Response.ContentEncoding = Encoding.UTF8;
-            //Response.ContentType = "text/plain";
-            var count = body
+            body
                 .Select(Serialize)
                 .Where(x => x.Length > 0)
-                .Sum(x =>
-                {
-                    var length = x.Length;
-                    Response.OutputStream.Write(x, 0, length);
-                    return length;
-                });
-            //Response.ContentLength64 = count;
+                .ForEach(x => Response.OutputStream.Write(x, 0, x.Length) );
+            
             Response.Close();
         }
 
         public byte[] Serialize(object o)
         {
+            byte[] buffer;
             if (o == null)
-                return new byte[] {};
-
-            if (o is byte[])
-                return o as byte[];
-
-            var source = o is string
-                         ? o.ToString()
-                         : o.ToJson( false );
-            var bytes = Encoding.UTF8.GetBytes( source );
-            return bytes;
+                buffer = new byte[] {};
+            else if (o is byte[])
+                buffer = o as byte[];
+            else
+                buffer = Encoding.UTF8.GetBytes(o.ToString());
+            return buffer;
         }
 
         public HttpResponseAdapter( HttpListenerContext context )

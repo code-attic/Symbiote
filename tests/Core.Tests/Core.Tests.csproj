@@ -91,6 +91,11 @@
     <Compile Include="Extensions\Permutations.cs" />
     <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reflection\Inheritence\InterfaceA.cs" />
+    <Compile Include="Reflection\Inheritence\InterfaceB.cs" />
+    <Compile Include="Reflection\Inheritence\MyClass.cs" />
+    <Compile Include="Reflection\Inheritence\MyBase.cs" />
+    <Compile Include="Reflection\Inheritence\when_retrieving_inheritance_chain.cs" />
     <Compile Include="Reflection\TestClass.cs" />
     <Compile Include="Reflection\POC\when_reading_dynamically.cs" />
     <Compile Include="Reflection\POC\with_precompiled_read_cache.cs" />

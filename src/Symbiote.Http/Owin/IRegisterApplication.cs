@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Symbiote.Http.Owin;
 
-namespace Symbiote.Http.Impl.Adapter
+namespace Symbiote.Http.Owin
 {
     public interface IRegisterApplication
     {

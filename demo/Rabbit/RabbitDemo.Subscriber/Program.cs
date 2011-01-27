@@ -4,13 +4,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using RabbitDemo.Messages;
+using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Impl.UnitOfWork;
 using Symbiote.Daemon;
 using Symbiote.Daemon.Host;
 using Symbiote.Log4Net;
 using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Actors;
 using Symbiote.Rabbit;
 using Symbiote.StructureMap;
 
@@ -22,6 +23,7 @@ namespace RabbitDemo.Subscriber
         {
             Assimilate
                 .Core<StructureMapAdapter>()
+                .Actors()
                 .Messaging()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))

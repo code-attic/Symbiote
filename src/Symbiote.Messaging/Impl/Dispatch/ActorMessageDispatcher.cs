@@ -61,7 +61,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         private IEnumerable<Type> GetMessageChain()
         {
             yield return typeof(TMessage);
-            var chain = Reflector.GetInheritenceChain(typeof(TMessage));
+            var chain = Reflector.GetInheritanceChain(typeof(TMessage));
             if (chain != null)
             {
                 foreach (var type in chain)

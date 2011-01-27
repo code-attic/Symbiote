@@ -1,6 +1,4 @@
-﻿using Symbiote.Http.Owin;
-
-namespace Symbiote.Http.Impl.Adapter
+﻿namespace Symbiote.Http.Owin
 {
     public interface IRouteRequest
     {

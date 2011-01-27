@@ -46,9 +46,9 @@ namespace Symbiote.Actor.Impl.Defaults
 
         public void Memoize(TActor actor)
         {
-            //var memento = Memoizer.GetMemento( actor );
-            //Cache.Store(memento);
-            //Store.Store(memento);
+            var memento = Memoizer.GetMemento(actor);
+            Cache.Store(memento);
+            Store.Store(memento);
         }
 
         public DefaultAgent(

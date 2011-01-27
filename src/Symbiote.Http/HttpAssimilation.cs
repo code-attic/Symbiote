@@ -15,14 +15,13 @@ limitations under the License.
 */
 
 using System;
-using System.Net;
 using Symbiote.Core;
 using Symbiote.Core.Impl.DI;
 using Symbiote.Http.Config;
 using Symbiote.Http.Impl;
-using Symbiote.Http.Impl.Adapter;
+using Symbiote.Http.Owin;
 
-namespace Symbiote.JsonRpc.Host
+namespace Symbiote.Http
 {
     public static class HttpHostAssimilation
     {

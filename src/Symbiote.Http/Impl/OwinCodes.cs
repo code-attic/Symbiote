@@ -28,5 +28,6 @@ namespace Symbiote.Http.Impl
         public readonly string URI_SCHEME = "owin.UriScheme";
         public readonly string REMOTE_ENDPOINT = "owin.RemoteEndPoint";
         public readonly string VERSION = "owin.Version";
+        public readonly string REQUEST = "owin.Request";
     }
 }

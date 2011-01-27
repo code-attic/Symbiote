@@ -35,29 +35,57 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\..\..\lib\CommandLineParser\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\lib\log4net\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\bin\dev\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>..\..\..\bin\dev\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=2.1.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>..\..\..\bin\dev\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\..\lib\StructureMap\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Actor">
+      <HintPath>..\..\..\bin\dev\Symbiote.Actor.dll</HintPath>
+    </Reference>
     <Reference Include="Symbiote.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.Daemon.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Fibers">
+      <HintPath>..\..\..\bin\dev\Symbiote.Fibers.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Messaging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Messaging.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Rabbit, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.Rabbit.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.StructureMap, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+      <HintPath>..\..\..\bin\dev\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

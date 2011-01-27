@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using RabbitDemo.Messages;
+using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.StructureMap;
@@ -21,6 +22,7 @@ namespace RabbitDemo.Publisher
         {
             Assimilate
                 .Core<StructureMapAdapter>()
+                .Actors()
                 .Messaging()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))

@@ -36,7 +36,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine">
-      <HintPath>..\..\..\bin\dev\CommandLine.dll</HintPath>
+      <HintPath>..\..\..\lib\CommandLineParser\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\lib\log4net\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\..\..\bin\dev\Newtonsoft.Json.dll</HintPath>
@@ -95,8 +98,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileServer.cs" />
+    <Compile Include="HelloHttpApp.cs" />
+    <Compile Include="HostService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SayByeApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -38,7 +38,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             request.Uri = origin.Url.GetLeftPart(UriPartial.Path);
             request.Url = origin.Url.PathAndQuery.Split('?')[0];
             request.Version = origin.ProtocolVersion.ToString();
-
+            
             request.Items = ProcessItems( request );
 
             return request;
@@ -69,6 +69,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
                 Tuple.Create<string, object>( Owin.ItemKeys.URI_SCHEME, origin.Scheme ),
                 Tuple.Create<string, object>( Owin.ItemKeys.REMOTE_ENDPOINT, origin.ClientEndpoint ),
                 Tuple.Create<string, object>( Owin.ItemKeys.VERSION, origin.Version ),
+                Tuple.Create<string, object>( Owin.ItemKeys.REQUEST, origin ),
                 //Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_BODY, ( (b, o, l, c, e) => origin.Read(b, o, l, c, e) ),
                 
             }.ToDictionary( x => x.Item1, x => x.Item2 );

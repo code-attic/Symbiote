@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,34 +24,6 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.Impl.Reflection
 {
-    public static class ReflectionExtensions
-    {
-        private static readonly BindingFlags _bindingFlags = BindingFlags.FlattenHierarchy | BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance;
-
-        public static object GetMemberValue(this MemberInfo member, object source)
-        {
-            if(member.MemberType == MemberTypes.Field)
-            {
-                return source.GetType().GetField(member.Name, _bindingFlags).GetValue(source);
-            }
-            else if(member.MemberType == MemberTypes.Property)
-            {
-                return source.GetType().GetProperty(member.Name, _bindingFlags).GetValue(source, null);
-            }
-            return null;
-        }
-    
-        public static bool IsEnumerable(this Type type)
-        {
-            return type.GetInterface("IEnumerable", false) != null;
-        }
-
-        public static Type DetermineElementType(this IEnumerable enumerable)
-        {
-            return typeof (object);
-        }
-    }
-
     public class Reflector
     {
         private static List<Type> initializedTypes = new List<Type>();
@@ -68,15 +39,30 @@ namespace Symbiote.Core.Impl.Reflection
                                                    BindingFlags.Public |
                                                    BindingFlags.Instance;
 
-        public static IEnumerable<Type> GetInheritenceChain(Type type)
+        public static IEnumerable<Type> GetInheritanceChain(Type type)
         {
-            var baseType = type.BaseType;
-            if (baseType == null || baseType == typeof(object))
-                return null;
+            Type baseType = type.BaseType;
+            Type simpleObject = typeof(object);
 
-            var types = new[] { baseType };
-            var enumerable = GetInheritenceChain(baseType);
-            return enumerable == null ? types : types.Concat(enumerable);
+            while (baseType != null && baseType != simpleObject)
+            {
+                yield return baseType;
+                baseType = baseType.BaseType;
+            }
+
+            foreach( var baseInterface in type.GetInterfaces())
+            {
+                yield return baseInterface;
+            }
+            yield break;
+
+            //var baseType = type.BaseType;
+            //if (baseType == null || baseType == typeof(object))
+            //    return null;
+
+            //var types = new[] { baseType };
+            //var enumerable = GetInheritanceChain(baseType);
+            //return enumerable == null ? types : types.Concat(enumerable);
         }
 
         /// <summary>
@@ -87,7 +73,7 @@ namespace Symbiote.Core.Impl.Reflection
         public static IEnumerable<Type> GetInheritanceChainFor(Type type)
         {
             yield return type;
-            var chain = GetInheritenceChain(type);
+            var chain = GetInheritanceChain(type);
             if (chain != null)
             {
                 foreach (var t in chain)
