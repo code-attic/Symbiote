@@ -20,6 +20,7 @@ using System.IO;
 using System.Net;
 using Symbiote.Core.Impl.Futures;
 using Symbiote.Http.Owin;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Http.Impl.Adapter
 {
@@ -38,10 +39,10 @@ namespace Symbiote.Http.Impl.Adapter
         public IDictionary<string, IEnumerable<string>> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
 
-        public Future<int> Read( byte[] buffer, int offset, int length, Action<int> callback, Action<Exception> onException )
+        public Future<byte[]> Read(Action<byte[]> callback, Action<Exception> onException )
         {
             return Future
-                .Of( () => Stream.Read( buffer, offset, length ) )
+                .Of( () => Stream.ReadToEnd( 1000 ) )
                 .OnValue( callback )
                 .OnException( onException )
                 .Now();

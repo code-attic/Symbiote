@@ -79,7 +79,12 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             Configuration = configuration;
             ContextTransformer = new HttpContextTransform();
             Listener = new HttpListener();
-            Configuration.HostedUrls.ForEach(x => Listener.Prefixes.Add(x));
+            Listener.AuthenticationSchemes = Configuration.AuthSchemes;
+            Configuration.HostedUrls.ForEach(x =>
+            {
+                Listener.Prefixes.Add( x );
+            } );
+            
         }
 
         public void Dispose()

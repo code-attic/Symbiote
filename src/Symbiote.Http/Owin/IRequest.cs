@@ -35,6 +35,6 @@ namespace Symbiote.Http.Owin
         IDictionary<string, string> Parameters { get; }
         IDictionary<string, IEnumerable<string>> Headers { get; }
         IDictionary<string, object> Items { get; }
-        Future<int> Read( byte[] buffer, int offset, int length, Action<int> callback, Action<Exception> onException );
+        Future<byte[]> Read( Action<byte[]> callback, Action<Exception> onException );
     }
 }

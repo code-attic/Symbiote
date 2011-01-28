@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{1B8D6742-4F27-4093-B5D2-377A0790BA05}</ProjectGuid>
+    <ProjectGuid>{6D122D3C-6E9C-4F3D-9ADA-6FCFB6DB84E6}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HelloHttp</RootNamespace>
-    <AssemblyName>HelloHttp</AssemblyName>
+    <RootNamespace>messageClient</RootNamespace>
+    <AssemblyName>messageClient</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
@@ -47,9 +47,6 @@
     <Reference Include="protobuf-net">
       <HintPath>..\..\..\bin\dev\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\..\bin\dev\ServiceStack.Text.dll</HintPath>
-    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
@@ -79,18 +76,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.CoreEx, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\dev\System.CoreEx.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Interactive, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\dev\System.Interactive.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive, Version=1.0.2563.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\dev\System.Reactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,23 +83,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileServer.cs" />
-    <Compile Include="HelloHttpApp.cs" />
-    <Compile Include="HostService.cs" />
-    <Compile Include="MessageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SayByeApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="file\smile.bmp" />
-    <Content Include="file\test.htm" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Messages\Messages.csproj">
+    <ProjectReference Include="..\HelloHttp\Messages\Messages.csproj">
       <Project>{6B1A5E92-55BD-45F4-B665-6A016B562DF5}</Project>
       <Name>Messages</Name>
     </ProjectReference>

@@ -14,12 +14,16 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Http.Owin;
+using Symbiote.Messaging.Impl.Channels;
 
-namespace Symbiote.Http.Impl.Adapter
+namespace Symbiote.Http.Impl.Adapter.Channel
 {
-    public interface IOwinAdapter
+    public class HttpChannelFactory
+        : IChannelFactory
     {
-        IContext Process<T>( T context );
+        public IChannel CreateChannel(IChannelDefinition definition)
+        {
+            return new HttpChannel( definition as ChannelDefinition);
+        }
     }
 }

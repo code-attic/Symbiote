@@ -91,6 +91,7 @@
     <Compile Include="Extensions\Permutations.cs" />
     <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoBuf\when_serializaing_inherited_class.cs" />
     <Compile Include="Reflection\Inheritence\InterfaceA.cs" />
     <Compile Include="Reflection\Inheritence\InterfaceB.cs" />
     <Compile Include="Reflection\Inheritence\MyClass.cs" />
@@ -167,9 +168,7 @@
       </ItemGroup>
     </When>
   </Choose>
-  <ItemGroup>
-    <Folder Include="ProtoBuf\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="UnitOfWork\Event Listener Tests.cs" />
   </ItemGroup>

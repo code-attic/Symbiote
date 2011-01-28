@@ -55,14 +55,6 @@ namespace Symbiote.Core.Impl.Reflection
                 yield return baseInterface;
             }
             yield break;
-
-            //var baseType = type.BaseType;
-            //if (baseType == null || baseType == typeof(object))
-            //    return null;
-
-            //var types = new[] { baseType };
-            //var enumerable = GetInheritanceChain(baseType);
-            //return enumerable == null ? types : types.Concat(enumerable);
         }
 
         /// <summary>

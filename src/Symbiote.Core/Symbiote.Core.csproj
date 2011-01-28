@@ -110,6 +110,7 @@
     <Compile Include="Assimilate.cs" />
     <Compile Include="Assimilation.cs" />
     <Compile Include="AssimilationException.cs" />
+    <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Impl\Cache\ICacheProvider.cs" />
     <Compile Include="Impl\Collections\TimeSensitiveDictionary.cs" />
     <Compile Include="Impl\Config\FromConfig.cs" />

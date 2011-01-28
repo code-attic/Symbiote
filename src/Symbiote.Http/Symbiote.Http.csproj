@@ -59,8 +59,15 @@
     <Compile Include="ContentType.cs" />
     <Compile Include="Config\HttpConfigurator.cs" />
     <Compile Include="Config\HttpListenerConfigurator.cs" />
+    <Compile Include="Impl\Adapter\Channel\ChannelConfigurator.cs" />
     <Compile Include="Impl\Adapter\Channel\ChannelDefinition.cs" />
-    <Compile Include="Impl\Adapter\Messaging\Envelope.cs" />
+    <Compile Include="Impl\Adapter\Channel\HttpChannel.cs" />
+    <Compile Include="HttpChannelExtensions.cs" />
+    <Compile Include="Impl\Adapter\Channel\HttpChannelFactory.cs" />
+    <Compile Include="Impl\Adapter\Channel\HttpEnvelope.cs" />
+    <Compile Include="Impl\Adapter\Channel\IChannelAdapter.cs" />
+    <Compile Include="MessagingApplication.cs" />
+    <Compile Include="Impl\Adapter\Channel\WebClientChannelAdapter.cs" />
     <Compile Include="Impl\HeaderBuilder.cs" />
     <Compile Include="HttpAssimilation.cs" />
     <Compile Include="IBuildResponse.cs" />

@@ -1,8 +1,25 @@
-﻿using System;
+﻿/* 
+Copyright 2008-2010 Alex Robson
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+using System;
 using System.Net;
-using Symbiote.Core.Impl.Futures;
-using Symbiote.Messaging;
+using System.Net.Security;
+using System.Text;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Core.Impl.Serialization;
 
 namespace Symbiote.Http.Impl.Adapter.Channel
 {
@@ -11,138 +28,43 @@ namespace Symbiote.Http.Impl.Adapter.Channel
     {
         public UriBuilder UriBuilder { get; set; }
         public Uri RequestUri { get { return UriBuilder.Uri; } }
+        public string Verb { get; set; }
         public string BaseUri { get; set; }
+        public Func<object, byte[]> Serializer { get; set; }
+        public string ContentType { get; set; }
+        public string ContentEncoding { get; set; }
+        public NetworkCredential Credentials { get; set; }
+        public override Type ChannelType { get { return typeof(HttpChannel); } }
+        public override Type FactoryType { get { return typeof(HttpChannelFactory); }}
+
+        public string GetUriForEnvelope<T>(HttpEnvelope<T> envelope)
+        {
+            var uri = UriBuilder.Uri.ToString();
+            string additionalPath = envelope.RoutingKey;
+            if(!string.IsNullOrEmpty(additionalPath))
+            {
+                var separator = additionalPath.StartsWith( "?" )
+                                    ? ""
+                                    : "/";
+                uri = string.Join( separator, uri, additionalPath );
+            }
+            return uri;
+        }
+
+        public byte[] JsonSerialize(object body)
+        {
+            return Encoding.UTF8.GetBytes( body.ToJson() );
+        }
+
+        public byte[] ProtoBufSerialize(object body)
+        {
+            return body.ToProtocolBuffer();
+        }
 
         public ChannelDefinition()
         {
             UriBuilder = new UriBuilder();
+            Serializer = JsonSerialize;
         }
     }
-
-    public interface IChannelAdapter
-        : IChannel
-    {
-        
-    }
-
-    public class HttpEnvelope
-    {
-
-        public Type MessageType { get; set; }
-    }
-
-    public class HttpEnvelope<TMessage> :
-        HttpEnvelope,
-        IEnvelope<TMessage>
-    {
-        public TMessage Message
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public void Reply<TResponse>( TResponse response )
-        {
-            throw new NotImplementedException();
-        }
-
-        public string CorrelationId
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public string RoutingKey
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public long Sequence
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public long Position
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public bool SequenceEnd
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-        public Guid MessageId
-        {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
-        }
-    }
-
-    public class WebClientChannelAdapter
-        : IChannelAdapter
-    {
-        public WebRequest Client { get; set; }
-
-        public string Name { get; set; }
-
-        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message )
-        {
-            return ExpectReply<TReply, TMessage>( message, x => { } );
-        }
-
-        public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Send<TMessage>( TMessage message )
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Send<TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
-        {
-            throw new NotImplementedException();
-        }
-
-        public WebClientChannelAdapter(ChannelDefinition definition)
-        {
-//            Client = WebRequest.Create( definition.BaseUrl );
-        }
-    }
-
-    public class HttpChannel :
-        IChannel
-    {
-        public string Name { get; set; }
-        public IChannelAdapter Adapter { get; set; }
-
-        public Future<TReply> ExpectReply<TReply, TMessage>(TMessage message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Future<TReply> ExpectReply<TReply, TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Send<TMessage>(TMessage message)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Send<TMessage>(TMessage message, Action<IEnvelope> modifyEnvelope)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    //public class ChannelFactory
-    //    : IChannelFactory
-    //{
-    //    public IChannel CreateChannel( IChannelDefinition definition )
-    //    {
-            
-    //    }
-    //}
 }

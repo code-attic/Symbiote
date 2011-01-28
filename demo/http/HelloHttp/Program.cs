@@ -14,7 +14,7 @@ namespace HelloHttp
     {
         static void Main(string[] args)
         {
-            DaemonAssimilation.RunDaemon( Assimilate
+            Assimilate
                                 .Core<StructureMapAdapter>()
                                 .Daemon(x => x.Arguments(args))
                                 .Actors()
@@ -22,11 +22,12 @@ namespace HelloHttp
                                 .HttpHost(x => x
                                                    .ConfigureHttpListener(l => l.AddPort(8989))
                                                    .RegisterApplications(a => a.DefineApplication(r => r.Url.Equals(@"/"), (rq, rsp, ex) => rsp.Build().AppendToBody( "You should fiddle around with the site. It's fun." ).Submit( HttpStatus.Ok )))
+                                                   .RegisterApplications(a => a.DefineApplication<MessagingApplication>(r => r.Url.StartsWith("/message")))
                                                    .RegisterApplications(a => a.DefineApplication<HelloHttpApp>(r => r.Url.StartsWith("/hi")))
                                                    .RegisterApplications(a => a.DefineApplication<SayByeApp>(r => r.Url.StartsWith("/bye")))
                                                    .RegisterApplications(a => a.DefineApplication<FileServer>(r => r.Url.StartsWith("/file")))
-                                                   .RegisterApplications(a => a.DefineApplication((r => true), (rq, rsp, ex) => rsp(Owin.HttpStatus.NO_CONTENT, new Dictionary<string, IList<string>>(), new string[]{})))
-                                ) );
+                                                   .RegisterApplications(a => a.DefineApplication((r => true), (rq, rsp, ex) => rsp(Owin.HttpStatus.NO_CONTENT, new Dictionary<string, IList<string>>(), new string[]{}))))
+                                .RunDaemon();
         }
     }
 }
