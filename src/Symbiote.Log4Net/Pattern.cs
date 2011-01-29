@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Log4Net
 {

@@ -53,10 +53,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Actor\Symbiote.Actor.csproj">
-      <Project>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</Project>
-      <Name>Symbiote.Actor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>

@@ -17,10 +17,10 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core.DI;
 using Symbiote.Http.Impl.Adapter;
 using Symbiote.Http.Owin;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.DI;
 
 namespace Symbiote.Http.Impl
 {

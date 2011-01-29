@@ -1,7 +1,7 @@
 ﻿using System;
 using Machine.Specifications;
 using System.Linq;
-using Symbiote.Core.Impl.Trees;
+using Symbiote.Core.Trees;
 
 namespace Core.Tests.Utility
 {

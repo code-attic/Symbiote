@@ -18,9 +18,9 @@ using System;
 using System.Collections.Generic;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
-using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Endpoint;
 
 namespace Symbiote.Rabbit.Impl.Channels
@@ -76,6 +76,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             get { return _endpoint.QueueName ?? ""; }
         }
 
+        // TODO: Rewrite this, it's stupid.
         public void Acknowledge(ulong tag, bool multiple)
         {
             Action<ulong, bool> call = ActualAck;
@@ -89,16 +90,24 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public void Send<T>(RabbitEnvelope<T> envelope)
         {
-            lock(_lock)
+            try
             {
-                IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
-                Channel.BasicPublish(
-                    ChannelDefinition.Exchange,
-                    envelope.RoutingKey,
-                    ChannelDefinition.Mandatory,
-                    ChannelDefinition.Immediate,
-                    properties,
-                    envelope.ByteStream);
+                lock(_lock)
+                {
+                    IBasicProperties properties = CreatePublishingProperties(CONTENT_TYPE, envelope);
+                    Channel.BasicPublish(
+                        ChannelDefinition.Exchange,
+                        envelope.RoutingKey,
+                        ChannelDefinition.Mandatory,
+                        ChannelDefinition.Immediate,
+                        properties,
+                        envelope.ByteStream);
+                }
+            }
+            catch (Exception e)
+            {
+                "Sending a Rabbit message caused an exception. \r\n\t Exchange: {0} \r\n\t MessageType: {1} \r\n\t MessageId: {2} \r\n\t CorrelationId: {3} \r\n\t {4}"
+                    .ToError<IBus>(_endpoint.ExchangeName, typeof(T).AssemblyQualifiedName,  envelope.MessageId, envelope.CorrelationId, e);
             }
         }
 
@@ -125,7 +134,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             }
             catch (Exception e)
             {
-                Console.WriteLine( e );
+                "Setting publishing properties for a Rabbit message caused an exception. \r\n\t Exchange: {0} \r\n\t MessageType: {1} \r\n\t {2}"
+                    .ToError<IBus>(_endpoint.ExchangeName, typeof(T).AssemblyQualifiedName, e);
             }
             return null;
         }
@@ -177,9 +187,9 @@ namespace Symbiote.Rabbit.Impl.Channels
             _endpoint = endpointConfiguration;
             if (_endpoint.Transactional)
                 channel.TxSelect();
-            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
-            //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
-            //_channel.ModelShutdown += ChannelShutdown;
+            _onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
+            _channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
+            _channel.ModelShutdown += ChannelShutdown;
         }
 
         public ChannelProxy(IModel channel, string protocol, ChannelDefinition channelDefinition)
@@ -190,27 +200,30 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channelDefinition = channelDefinition;
             if (_channelDefinition.Transactional)
                 channel.TxSelect();
-            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
-            //_channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
-            //_channel.ModelShutdown += ChannelShutdown;
+            _onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
+            _channel.BasicReturn += new BasicReturnEventHandler(_onReturn);
+            _channel.ModelShutdown += ChannelShutdown;
             _deliveryMode = (byte)(ChannelDefinition.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);
             SetPropertyTemplate();
         }
 
         public void OnReturn()
         {
-            Channel.BasicReturn += new BasicReturnEventHandler(Channel_BasicReturn);
+            Channel.BasicReturn += Channel_BasicReturn;
         }
 
-        void Channel_BasicReturn(IModel model, BasicReturnEventArgs args)
+        private void Channel_BasicReturn(IModel model, BasicReturnEventArgs args)
         {
-            
+            if (_onReturn != null)
+                _onReturn(model, args);
         }
 
         private void ChannelShutdown(IModel model, ShutdownEventArgs reason)
         {
-            "A channel proxy shut down. \r\n\t Class {0} \r\n\t Method {1} \r\n\t Cause {2} \r\n\t ReplyCode {3} : {4}"
+            "Shutting down rabbit channel. \r\n\t Exchange: {0} \r\n\t Queue: {1} \r\n\t Class {2} \r\n\t Method {3} \r\n\t Cause {4} \r\n\t ReplyCode {5} : {6}"
                 .ToInfo<IBus>(
+                    _endpoint.ExchangeName,
+                    _endpoint.QueueName,
                     reason.ClassId,
                     reason.MethodId,
                     reason.Cause,
@@ -242,7 +255,7 @@ namespace Symbiote.Rabbit.Impl.Channels
                     }
                     catch (Exception e)
                     {
-                        "An exception occurred trying to close a RabbitMQ channel \r\n\t {0}"
+                        "Closing a RabbitMQ channel caused and exception\r\n\t {0}"
                             .ToError<IBus>(e);
                     }
                 }

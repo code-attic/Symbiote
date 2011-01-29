@@ -17,7 +17,7 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Riak.Impl.Data;
 
 namespace Symbiote.Riak.Impl.ProtoBuf.Response

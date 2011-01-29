@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Messaging;
 
 namespace Symbiote.Rabbit.Impl.Endpoint
 {

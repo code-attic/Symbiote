@@ -65,6 +65,43 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\Agency\DummyAgent.cs" />
+    <Compile Include="Actor\Agency\when_requesting_agents_in_parallel.cs" />
+    <Compile Include="Actor\Agency\with_mock_agent_factory.cs" />
+    <Compile Include="Actor\Agent\DummyActorFactory.cs" />
+    <Compile Include="Actor\Agent\when_requesting_agent_with_preloading.cs" />
+    <Compile Include="Actor\Agent\when_requesting_cached_actor.cs" />
+    <Compile Include="Actor\Agent\when_requesting_same_actor_under_race_condition.cs" />
+    <Compile Include="Actor\Agent\when_requesting_stored_actor.cs" />
+    <Compile Include="Actor\Agent\with_agent_setup.cs" />
+    <Compile Include="Actor\Agent\with_cached_actor.cs" />
+    <Compile Include="Actor\Agent\with_no_actor.cs" />
+    <Compile Include="Actor\Agent\with_stored_actor.cs" />
+    <Compile Include="Actor\Cache\CacheItem.cs" />
+    <Compile Include="Actor\Cache\TestKeyAccessor.cs" />
+    <Compile Include="Actor\Cache\when_caching_actor.cs" />
+    <Compile Include="Actor\Cache\with_cache.cs" />
+    <Compile Include="Actor\Domain\DriverFactory.cs" />
+    <Compile Include="Actor\Domain\DriverKeyAccessor.cs" />
+    <Compile Include="Actor\Domain\Events\DriverAddedAddress.cs" />
+    <Compile Include="Actor\Domain\Events\DriverAddedVehicle.cs" />
+    <Compile Include="Actor\Domain\Events\DriverChangedName.cs" />
+    <Compile Include="Actor\Domain\Memoization\AddressMemento.cs" />
+    <Compile Include="Actor\Domain\Memoization\DriverMemento.cs" />
+    <Compile Include="Actor\Domain\Memoization\VehicleMemento.cs" />
+    <Compile Include="Actor\Domain\Model\Address.cs" />
+    <Compile Include="Actor\Domain\Model\Driver.cs" />
+    <Compile Include="Actor\Domain\Model\IAddressMemento.cs" />
+    <Compile Include="Actor\Domain\Model\IDriverMemento.cs" />
+    <Compile Include="Actor\Domain\Model\IVehicleMemento.cs" />
+    <Compile Include="Actor\Domain\Model\Vehicle.cs" />
+    <Compile Include="Actor\Domain\NewMotoristHandler.cs" />
+    <Compile Include="Actor\Domain\NewMotoristMessage.cs" />
+    <Compile Include="Actor\DummyActor.cs" />
+    <Compile Include="Actor\Events\when_capturing_events.cs" />
+    <Compile Include="Actor\Sagas\when_requesting_saga.cs" />
+    <Compile Include="Actor\when_caching_actor.cs" />
+    <Compile Include="Actor\with_assimilation.cs" />
     <Compile Include="Collections\with_nrudictionary.cs" />
     <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
@@ -126,6 +163,10 @@
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
+      <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
+      <Name>Symbiote.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>

@@ -6,13 +6,13 @@ using System.Net.Sockets;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
 using Symbiote.StructureMap;
 using Symbiote.Riak;
-using Symbiote.Core.Impl.Serialization;
 
 namespace Riak.Tests
 {

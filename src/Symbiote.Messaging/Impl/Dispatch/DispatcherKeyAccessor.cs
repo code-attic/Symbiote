@@ -14,8 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Actor;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {

@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Reflection;
+using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl.Dispatch

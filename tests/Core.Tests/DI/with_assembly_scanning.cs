@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.Core.Impl.DI;
+using Symbiote.Core.DI;
 using Symbiote.StructureMap;
 
 namespace Core.Tests.DI

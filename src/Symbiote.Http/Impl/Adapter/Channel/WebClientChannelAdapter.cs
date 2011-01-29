@@ -3,10 +3,10 @@ using System.Net;
 using System.Net.Security;
 using System.Text;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Futures;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Futures;
+using Symbiote.Core.Serialization;
 using Symbiote.Messaging;
-using JsonExtensions = Symbiote.Core.Impl.Serialization.JsonExtensions;
+using JsonExtensions = Symbiote.Core.Serialization.JsonExtensions;
 
 namespace Symbiote.Http.Impl.Adapter.Channel
 {

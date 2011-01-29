@@ -17,8 +17,8 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Memento;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.Memento;
+using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Mikado.Impl
 {

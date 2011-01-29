@@ -18,8 +18,8 @@ using System;
 using System.Net;
 using System.Net.Security;
 using System.Text;
+using Symbiote.Core.Serialization;
 using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Core.Impl.Serialization;
 
 namespace Symbiote.Http.Impl.Adapter.Channel
 {

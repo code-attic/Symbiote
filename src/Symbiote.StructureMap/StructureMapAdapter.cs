@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using StructureMap;
 using StructureMap.Pipeline;
-using Symbiote.Core.Impl.DI;
+using Symbiote.Core.DI;
 
 namespace Symbiote.StructureMap
 {

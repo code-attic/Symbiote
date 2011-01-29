@@ -18,10 +18,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 using Symbiote.Http.Owin;
-using Symbiote.Core.Impl.Serialization;
 
 namespace Symbiote.Http.Impl.Adapter.NetListener
 {

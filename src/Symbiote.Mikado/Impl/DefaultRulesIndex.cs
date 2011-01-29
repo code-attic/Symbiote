@@ -19,7 +19,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Reflection;
+using Symbiote.Core.Reflection;
 
 namespace Symbiote.Mikado.Impl
 {

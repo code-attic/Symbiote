@@ -16,7 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Core;
-using Symbiote.Core.Impl.DI;
+using Symbiote.Core.DI;
 using Symbiote.Http.Config;
 using Symbiote.Http.Impl;
 using Symbiote.Http.Owin;

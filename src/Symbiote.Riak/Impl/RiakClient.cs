@@ -17,12 +17,12 @@ limitations under the License.
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Serialization;
 using Symbiote.Riak.Config;
 using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
 using BucketProperties = Symbiote.Riak.Impl.Data.BucketProperties;
-using Symbiote.Core.Impl.Serialization;
 
 namespace Symbiote.Riak.Impl
 {

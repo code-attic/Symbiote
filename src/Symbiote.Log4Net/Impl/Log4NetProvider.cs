@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
-using Symbiote.Core.Impl.Log.Impl;
+using Symbiote.Core.Log.Impl;
 using LogManager=log4net.LogManager;
 
 namespace Symbiote.Log4Net.Impl

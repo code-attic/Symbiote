@@ -18,7 +18,7 @@ using System;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Newtonsoft.Json.Serialization;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace Symbiote.Couch.Impl.Serialization
 {

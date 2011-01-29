@@ -1,5 +1,4 @@
 ﻿using Machine.Specifications;
-using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.StructureMap;
@@ -12,7 +11,6 @@ namespace Rabbit.Tests
                                         {
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
-                                                .Actors()
                                                 .Messaging()
                                                 .UseTestLogAdapter();
                                         };    

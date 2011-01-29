@@ -21,7 +21,7 @@ using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
 using Lucene.Net.Search;
-using Symbiote.Core;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Lucene.Impl
 {

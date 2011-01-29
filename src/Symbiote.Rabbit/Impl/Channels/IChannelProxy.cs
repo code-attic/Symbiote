@@ -16,8 +16,6 @@ limitations under the License.
 
 using System;
 using RabbitMQ.Client;
-using Symbiote.Messaging.Impl.Serialization;
-using Symbiote.Rabbit.Impl.Adapter;
 
 namespace Symbiote.Rabbit.Impl.Channels
 {

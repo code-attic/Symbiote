@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using Machine.Specifications;
 using RabbitMQ.Client.Framing.v0_9_1;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Rabbit;
 
 namespace Rabbit.Tests.Envelope

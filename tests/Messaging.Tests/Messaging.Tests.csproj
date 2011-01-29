@@ -94,20 +94,6 @@
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_incompatible_message.cs" />
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_json_and_binary_message.cs" />
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_json_only_message.cs" />
-    <Compile Include="Pipes\BytesToString.cs" />
-    <Compile Include="Pipes\FuncPipe.cs" />
-    <Compile Include="Pipes\Functional\when_creating_pipeline.cs" />
-    <Compile Include="Pipes\IntToString.cs" />
-    <Compile Include="Pipes\IPipe.cs" />
-    <Compile Include="Pipes\IPipeline.cs" />
-    <Compile Include="Pipes\Pipe.cs" />
-    <Compile Include="Pipes\Pipeline.cs" />
-    <Compile Include="Pipes\PipelineExtensions.cs" />
-    <Compile Include="Pipes\StringToBytes.cs" />
-    <Compile Include="Pipes\StringToInt.cs" />
-    <Compile Include="Pipes\TransformIntToString.cs" />
-    <Compile Include="Pipes\TransformStringToBytes.cs" />
-    <Compile Include="Pipes\when_combining_delegates.cs" />
     <Compile Include="RequestResponse\Auction.cs" />
     <Compile Include="RequestResponse\AuctionFactory.cs" />
     <Compile Include="RequestResponse\AuctionKeyAccessor.cs" />
@@ -128,15 +114,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageSerializers\CompatibleMessage.cs" />
-    <Compile Include="Pipes\when_creating_pipeline.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestResponse\when_making_request.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Actor\Symbiote.Actor.csproj">
-      <Project>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</Project>
-      <Name>Symbiote.Actor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>

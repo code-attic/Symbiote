@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using Symbiote.Core.Impl.Futures;
+using Symbiote.Core.Futures;
 
 namespace Symbiote.Http.Owin
 {

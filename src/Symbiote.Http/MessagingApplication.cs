@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Http.Impl.Adapter.Channel;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;

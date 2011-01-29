@@ -19,7 +19,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Symbiote.Core.Extensions;
 using Newtonsoft.Json;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace Symbiote.Couch.Impl.Json
 {

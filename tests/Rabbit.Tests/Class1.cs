@@ -5,9 +5,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using Machine.Specifications;
-using Symbiote.Actor;
 using Symbiote.Core;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 using Symbiote.StructureMap;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
@@ -22,7 +21,6 @@ namespace Rabbit.Tests
                                         {
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
-                                                .Actors()
                                                 .Messaging()
                                                 .Rabbit(x => x.AddBroker(r => r.Defaults().Address("localhost")));
                                             Bus = Assimilate.GetInstanceOf<IBus>();

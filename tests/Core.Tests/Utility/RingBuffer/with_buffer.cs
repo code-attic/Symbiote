@@ -1,5 +1,5 @@
 ﻿using Machine.Specifications;
-using Symbiote.Core.Impl.Utility;
+using Symbiote.Core.Utility;
 
 namespace ringbuffer
 {

@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System;
-using Symbiote.Core.Impl.Futures;
+using Symbiote.Core.Futures;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 

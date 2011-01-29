@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Symbiote.Core;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Mikado.Impl
 {

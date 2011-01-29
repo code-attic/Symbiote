@@ -17,12 +17,11 @@ limitations under the License.
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Symbiote.Actor;
-using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
+using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.DI;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.Saga;
+using Symbiote.Core.UnitOfWork;
 using Symbiote.Messaging.Config;
 using Symbiote.Messaging.Impl;
 using Symbiote.Messaging.Impl.Channels;

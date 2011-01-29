@@ -18,9 +18,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 
 namespace Symbiote.Lucene.Impl
 {

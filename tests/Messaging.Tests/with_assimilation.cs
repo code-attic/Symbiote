@@ -2,7 +2,6 @@
 using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.StructureMap;
-using Symbiote.Actor;
 
 namespace Messaging.Tests
 {
@@ -12,7 +11,6 @@ namespace Messaging.Tests
                                         {
                                             Assimilate
                                                 .Core<StructureMapAdapter>()
-                                                .Actors()
                                                 .Messaging()
                                                 .UseTestLogAdapter();
                                         };    

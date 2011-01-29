@@ -19,14 +19,15 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.DI;
-using Symbiote.Core.Impl.Locking;
-using Symbiote.Core.Impl.Log;
-using Symbiote.Core.Impl.Log.Impl;
-using Symbiote.Core.Impl.Memento;
-using Symbiote.Core.Impl.Serialization;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.Actor;
+using Symbiote.Core.DI;
+using Symbiote.Core.Locking;
+using Symbiote.Core.Log;
+using Symbiote.Core.Log.Impl;
+using Symbiote.Core.Memento;
+using Symbiote.Core.Saga;
+using Symbiote.Core.Serialization;
+using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core
 {
@@ -67,44 +68,52 @@ namespace Symbiote.Core
 
             Assimilation.Dependencies(x =>
                          {
-                             x.For<ILogProvider>().Use<NullLogProvider>();
-                             x.For<ILogger>().Use<NullLogger>();
-                             x.For(typeof (ILogger<>)).Add(typeof (ProxyLogger<>));
-                             x.For<ILockManager>().Use<NullLockManager>();
-                             x.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
-                             x.For(typeof(IKeyAccessor<>)).Use(typeof(DefaultKeyAccessor<>));
-                             x.For<IMemoizer>().Use<Memoizer>();
-                             x.For(typeof(IMemento<>)).Use(typeof(PassthroughMemento<>));
-                             x.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
-                             x.For<IContextProvider>().Use<DefaultContextProvider>();
-                             x.For<IEventConfiguration>().Use<EventConfiguration>();
-                             x.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
-                             x.Scan(s =>
-                                        {
-                                            // oh the shameful hack :(
-                                            // Machine.Specifications blows itself all to heck when
-                                            // StructureMap scans it. I haven't really tried to determine why
-                                            // but this will prevent the scan code from running
-                                            s.AssembliesFromApplicationBaseDirectory(a =>
-                                                {
-                                                    return a.GetReferencedAssemblies().Any( r => r.Name.Contains( "Symbiote" ) );
-                                                    //var fullName = a.FullName;
-                                                    //return !
-                                                    //    (fullName.Contains("Microsoft")
-                                                    //     || fullName.Contains("Machine.Specifications")
-                                                    //     || fullName.Contains("Gallio")
-                                                    //    );
-                                                });
-                                            s.AddAllTypesOf<IContractResolverStrategy>();
-                                            s.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
-                                            s.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
-                                            s.AddSingleImplementations();
-                                        });
-                             x.For<IDependencyAdapter>().Use(adapter);
-                             x.For<IEventListenerManager>().Use<EventListenerManager>().AsSingleton();
+                             DefineDependencies(x);
+                             x.Scan(DefineScan);
                          });
-            WireUpListenersToContainer();
             return Assimilation;
+        }
+
+        private static void DefineDependencies( DependencyConfigurator container )
+        {
+            container.For<ILogProvider>().Use<NullLogProvider>();
+            container.For<ILogger>().Use<NullLogger>();
+            container.For(typeof(ILogger<>)).Add(typeof(ProxyLogger<>));
+            container.For<ILockManager>().Use<NullLockManager>();
+            container.For(typeof(KeyAccessAdapter<>)).Use(typeof(KeyAccessAdapter<>));
+            container.For(typeof(IKeyAccessor<>)).Use(typeof(DefaultKeyAccessor<>));
+            container.For<IMemoizer>().Use<Memoizer>();
+            container.For(typeof(IMemento<>)).Use(typeof(PassthroughMemento<>));
+            container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
+            container.For<IContextProvider>().Use<DefaultContextProvider>();
+            container.For<IEventConfiguration>().Use<EventConfiguration>();
+            container.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
+            container.For<IDependencyAdapter>().Use(Assimilation.DependencyAdapter);
+            container.For<IEventListenerManager>().Use<EventListenerManager>().AsSingleton();
+        }
+
+        public static void DefineScan( IScanInstruction scan)
+        {
+            {
+                scan.AssembliesFromApplicationBaseDirectory(a =>
+                {
+                    return a.GetReferencedAssemblies().Any(r => r.Name.Contains("Symbiote"));
+                });
+                scan.AddAllTypesOf<IContractResolverStrategy>();
+                scan.ConnectImplementationsToTypesClosing(typeof(IKeyAccessor<>));
+                scan.ConnectImplementationsToTypesClosing(typeof(IMemento<>));
+                scan.AddAllTypesOf<IEventListener>();
+                scan.AddSingleImplementations();
+                scan.AddAllTypesOf<ISaga>();
+                scan.ConnectImplementationsToTypesClosing(
+                    typeof(IActorFactory<>));
+                scan.ConnectImplementationsToTypesClosing(
+                    typeof(IActorCache<>));
+                scan.ConnectImplementationsToTypesClosing(
+                    typeof(IActorStore<>));
+                scan.ConnectImplementationsToTypesClosing(
+                    typeof(ISaga<>));
+            }
         }
 
         public static IEnumerable<T> GetAllInstancesOf<T>()
@@ -213,21 +222,6 @@ namespace Symbiote.Core
                                                });
             LogManager.Initialized = true;
             return assimilate;
-        }
-
-        private static void WireUpListenersToContainer()
-        {
-            var assemblies = AppDomain
-                                .CurrentDomain
-                                .GetAssemblies()
-                                .Where(a => a.GetReferencedAssemblies().Any(r => r.FullName.Contains("Symbiote.Core")) && !a.FullName.Contains("DynamicProxyGenAssembly2"))
-                                .ToList();
-
-            Dependencies( x => x.Scan( s =>
-                                           {
-                                               assemblies.ForEach( s.Assembly );
-                                               s.AddAllTypesOf<IEventListener>();
-                                           } ) );
         }
     }
 }

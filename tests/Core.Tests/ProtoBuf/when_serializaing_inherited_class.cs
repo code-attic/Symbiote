@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Serialization;
 using ProtoBuf;
+using Symbiote.Core.Serialization;
 
 namespace Core.Tests.ProtoBuf
 {

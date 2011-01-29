@@ -16,8 +16,8 @@ limitations under the License.
 
 using System;
 using System.Collections.Generic;
+using Symbiote.Core.Cache;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Cache;
 
 namespace Symbiote.Couch.Impl.Cache
 {

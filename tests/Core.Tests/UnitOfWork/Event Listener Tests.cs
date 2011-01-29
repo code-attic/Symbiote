@@ -6,7 +6,7 @@ using Core.Tests.Domain.Listeners;
 using Core.Tests.Domain.Model;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 
 namespace Core.Tests.UnitOfWork
 {

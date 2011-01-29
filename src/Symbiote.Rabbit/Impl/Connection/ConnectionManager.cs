@@ -14,10 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using System.Collections.Generic;
 using RabbitMQ.Client;
 using Symbiote.Rabbit.Config;
-using Symbiote.Rabbit.Impl.Endpoint;
 using System.Linq;
 
 namespace Symbiote.Rabbit.Impl.Server

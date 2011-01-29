@@ -1,6 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Serialization;
 

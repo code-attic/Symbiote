@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Reflection;
+using Symbiote.Core.Reflection;
 
 namespace Core.Tests.Reflection
 {

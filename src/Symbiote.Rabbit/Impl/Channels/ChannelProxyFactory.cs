@@ -14,7 +14,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
 using Symbiote.Rabbit.Impl.Server;
 

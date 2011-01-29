@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using System.Collections.Generic;
-using Symbiote.Core.Impl.DI;
+using Symbiote.Core.DI;
 
 namespace Symbiote.Core
 {

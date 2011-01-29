@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Symbiote.Actor;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.Actor;
+using Symbiote.Core.UnitOfWork;
 
 namespace Messaging.Tests.Local
 {

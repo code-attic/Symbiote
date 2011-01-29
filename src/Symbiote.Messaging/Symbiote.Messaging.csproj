@@ -83,9 +83,12 @@
     <Compile Include="Impl\Channels\IChannelDefinition.cs" />
     <Compile Include="Impl\Channels\IChannelIndex.cs" />
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
-    <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
-    <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
-    <Compile Include="Impl\Channels\NamedPipeChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\Local\LocalChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\Local\LocalChannelFactory.cs" />
+    <Compile Include="Impl\Channels\Pipe\NamedPipeChannel.cs" />
+    <Compile Include="Impl\Channels\Pipe\NamedPipeChannelDefinition.cs" />
+    <Compile Include="Impl\Channels\Pipe\NamedPipeChannelFactory.cs" />
+    <Compile Include="Impl\Channels\Pipe\NamePipeConfigurator.cs" />
     <Compile Include="Impl\Dispatch\DirectorSaga.cs" />
     <Compile Include="Impl\Dispatch\DispatcherKeyAccessor.cs" />
     <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />
@@ -110,23 +113,6 @@
     <Compile Include="Impl\Mesh\NodeHealthMonitor.cs" />
     <Compile Include="Impl\Mesh\NodeRegistry.cs" />
     <Compile Include="Impl\Mesh\NodeUp.cs" />
-    <Compile Include="Impl\Monitor\ActorEvent.cs" />
-    <Compile Include="Impl\Monitor\AdapterMonitor.cs" />
-    <Compile Include="Impl\Monitor\AgentMonitor.cs" />
-    <Compile Include="Impl\Monitor\ChannelMonitor.cs" />
-    <Compile Include="Impl\Monitor\DispatchMonitor.cs" />
-    <Compile Include="Impl\Monitor\IAdapterMonitor.cs" />
-    <Compile Include="Impl\Monitor\IAgentMonitor.cs" />
-    <Compile Include="Impl\Monitor\IChannelMonitor.cs" />
-    <Compile Include="Impl\Monitor\IDispatchMonitor.cs" />
-    <Compile Include="Impl\Monitor\IEnvelopeMonitor.cs" />
-    <Compile Include="Impl\Monitor\MessageEvent.cs" />
-    <Compile Include="Impl\Monitor\MonitorConfiguration.cs" />
-    <Compile Include="Impl\Monitor\MonitorConfigurator.cs" />
-    <Compile Include="Impl\Monitor\NullAdapterMonitor.cs" />
-    <Compile Include="Impl\Monitor\NullAgentMonitor.cs" />
-    <Compile Include="Impl\Monitor\NullChannelMonitor.cs" />
-    <Compile Include="Impl\Monitor\NullDispatchMonitor.cs" />
     <Compile Include="Impl\Mesh\INodeRegistry.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
@@ -142,11 +128,6 @@
     <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
-    <Compile Include="Impl\Transform\BaseTransform.cs" />
-    <Compile Include="Impl\Transform\ITransform.cs" />
-    <Compile Include="Impl\Transform\SerializerTransform.cs" />
-    <Compile Include="Impl\Transform\Transformer.cs" />
-    <Compile Include="Impl\Transform\TransformExtension.cs" />
     <Compile Include="Exception\InvalidChannelDefinitionException.cs" />
     <Compile Include="LocalChannelExtension.cs" />
     <Compile Include="Impl\Envelope\Envelope.cs" />
@@ -159,7 +140,7 @@
     <Compile Include="Impl\Dispatch\IDispatchMessage.cs" />
     <Compile Include="IEnvelope.cs" />
     <Compile Include="IHandle.cs" />
-    <Compile Include="Impl\Channels\LocalChannel.cs" />
+    <Compile Include="Impl\Channels\Local\LocalChannel.cs" />
     <Compile Include="Impl\Dispatch\MessageDispatcher.cs" />
     <Compile Include="Exception\MessagingException.cs" />
     <Compile Include="Exception\MissingChannelDefinitionException.cs" />
@@ -176,10 +157,6 @@
     </When>
   </Choose>
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Actor\Symbiote.Actor.csproj">
-      <Project>{C8B680BF-51FF-4350-B38B-0BB1CC47BABA}</Project>
-      <Name>Symbiote.Actor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>

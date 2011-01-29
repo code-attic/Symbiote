@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Reflection;
+using Symbiote.Core.Reflection;
 using Enumerable = System.Linq.Enumerable;
 
 namespace Core.Tests.Reflection.Inheritance

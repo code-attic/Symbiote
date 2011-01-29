@@ -1,6 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Futures;
+using Symbiote.Core.Futures;
 
 namespace Core.Tests.Utility
 {

@@ -21,7 +21,7 @@ using System.Text;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Cache;
+using Symbiote.Core.Cache;
 using Symbiote.Eidetic.Config;
 using Symbiote.Eidetic.Extensions;
 using Symbiote.Eidetic.Impl;

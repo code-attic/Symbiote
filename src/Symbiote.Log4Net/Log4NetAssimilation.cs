@@ -23,9 +23,9 @@ using log4net.Appender;
 using log4net.Config;
 using log4net.Repository.Hierarchy;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Log.Impl;
+using Symbiote.Core.Log.Impl;
 using Symbiote.Log4Net.Impl;
-using LogManager=Symbiote.Core.Impl.Log.LogManager;
+using LogManager=Symbiote.Core.Log.LogManager;
 
 namespace Symbiote.Log4Net
 {

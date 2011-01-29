@@ -2,7 +2,7 @@
 using Moq;
 using Symbiote.Actor;
 using Symbiote.Actor.Impl.Defaults;
-using Symbiote.Core.Impl.Memento;
+using Symbiote.Core.Memento;
 
 namespace Actor.Tests.Agent
 {

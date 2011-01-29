@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 using Symbiote.Mikado.Impl;
 
 namespace Symbiote.Mikado

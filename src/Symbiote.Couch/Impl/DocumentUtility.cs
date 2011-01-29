@@ -18,9 +18,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Reflection;
-using Symbiote.Core.Impl.Serialization;
-using Symbiote.Core.Impl.Utility;
+using Symbiote.Core.Reflection;
+using Symbiote.Core.Serialization;
+using Symbiote.Core.Utility;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Model;
 

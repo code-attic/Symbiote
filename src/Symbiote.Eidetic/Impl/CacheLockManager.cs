@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Locking;
+using Symbiote.Core.Locking;
 
 namespace Symbiote.Eidetic.Impl
 {

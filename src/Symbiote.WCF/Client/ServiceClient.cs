@@ -20,7 +20,7 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Log;
+using Symbiote.Core.Log;
 
 namespace Symbiote.Wcf.Client
 {

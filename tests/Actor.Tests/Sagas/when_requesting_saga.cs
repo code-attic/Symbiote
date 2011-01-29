@@ -6,7 +6,7 @@ using Machine.Specifications;
 using Symbiote.Actor;
 using Symbiote.Actor.Impl.Saga;
 using Symbiote.Core;
-using Symbiote.Core.Impl.UnitOfWork;
+using Symbiote.Core.UnitOfWork;
 
 namespace Actor.Tests.Sagas
 {

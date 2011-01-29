@@ -4,7 +4,6 @@ using Machine.Specifications;
 using Moq;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
-using Symbiote.Messaging.Impl.Transform;
 using It = Machine.Specifications.It;
 
 namespace Messaging.Tests.Channels.Manager
@@ -17,8 +16,6 @@ namespace Messaging.Tests.Channels.Manager
         public Type MessageType { get; set; }
         public Type FactoryType { get; set; }
         public Type SerializerType { get; set; }
-        public Transformer OutgoingTransform { get; set; }
-        public Transformer IncomingTransform { get; set; }
 
         public TestChannelDefinition( string name, Type messageType )
         {

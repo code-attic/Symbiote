@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
 

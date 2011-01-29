@@ -1,5 +1,5 @@
 ﻿using System;
-using Symbiote.Core.Impl.Futures;
+using Symbiote.Core.Futures;
 
 namespace Symbiote.Messaging.Impl.Mesh
 {

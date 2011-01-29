@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-using Symbiote.Core.Impl.Collections;
+using Symbiote.Core.Collections;
 
 namespace Symbiote.Riak.Impl
 {

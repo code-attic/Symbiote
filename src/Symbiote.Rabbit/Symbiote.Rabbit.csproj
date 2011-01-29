@@ -55,14 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Adapter\QueueSubscription.cs" />
-    <Compile Include="Impl\Adapter\RabbitDelivery.cs" />
     <Compile Include="Impl\Channels\DeliveryMode.cs" />
     <Compile Include="Impl\Channels\IHaveChannelProxy.cs" />
     <Compile Include="Impl\Channels\IRabbitChannelDetails.cs" />
     <Compile Include="Impl\Channels\ChannelConfigurator.cs" />
     <Compile Include="Impl\Node\RabbitNodeInitializer.cs" />
     <Compile Include="Impl\Subscription\QueueSubscriptionFactory.cs" />
-    <Compile Include="Impl\Transform\RabbitSerializerTransform.cs" />
     <Compile Include="RabbitActorHandler.cs" />
     <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />

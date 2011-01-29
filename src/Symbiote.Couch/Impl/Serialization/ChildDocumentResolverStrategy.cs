@@ -16,7 +16,7 @@ limitations under the License.
 
 using System;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Couch.Config;
 using Newtonsoft.Json.Serialization;
 

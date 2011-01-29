@@ -14,6 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+using Symbiote.Core.Extensions;
+using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
 using Symbiote.Rabbit.Impl.Channels;
@@ -46,12 +48,14 @@ namespace Symbiote.Rabbit.Impl.Adapter
         {
             CurrentProxy = ProxyFactory.GetProxyForQueue(Endpoint);
             Listener = new RabbitQueueListener(CurrentProxy, Dispatcher, Endpoint);
+            "Started subscription to Rabbit Queue '{0}'".ToInfo<IBus>();
         }
 
         public void Stop()
         {
             CurrentProxy.Dispose();
             Listener = null;
+            "Stopped subscription to Rabbit Queue '{0}'".ToInfo<IBus>();
         }
 
         public QueueSubscription(

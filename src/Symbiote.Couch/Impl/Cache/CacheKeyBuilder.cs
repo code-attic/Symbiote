@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace Symbiote.Couch.Impl.Cache
 {

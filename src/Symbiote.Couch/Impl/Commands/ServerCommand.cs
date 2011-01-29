@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;

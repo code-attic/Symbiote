@@ -2,7 +2,7 @@
 using System.Linq;
 using Core.Tests.Utility.distributor;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Trees;
+using Symbiote.Core.Trees;
 
 namespace Core.Tests.Utility
 {

@@ -16,7 +16,6 @@ limitations under the License.
 
 using System;
 using System.Net;
-using Symbiote.Core.Impl.Futures;
 using Symbiote.Http.Config;
 using Symbiote.Http.Owin;
 

@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Symbiote.Core.Impl.Log;
+using Symbiote.Core.Log;
 
 namespace Symbiote.Core.Extensions
 {

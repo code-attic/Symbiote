@@ -18,12 +18,13 @@ using System;
 using System.Text;
 using RabbitMQ.Client;
 using Symbiote.Core;
-using Symbiote.Core.Impl.Utility;
+using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Serialization;
 using Symbiote.Rabbit.Impl.Channels;
 using Symbiote.Rabbit.Impl.Endpoint;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Rabbit.Impl.Adapter
 {
@@ -34,7 +35,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected IDispatcher Dispatch { get; set; }
         protected RabbitEndpoint RabbitEndpoint { get; set; }
         protected IMessageSerializer Serializer { get; set; }
-        protected int TotalReceived { get; set; }
         protected bool Running { get; set; }
         protected RingBuffer RingBuffer { get; set; }
 
@@ -58,17 +58,15 @@ namespace Symbiote.Rabbit.Impl.Adapter
                         redelivered,
                         routingKey
                         );
-            if(envelope == null)
-                throw new Exception("fffffFFFFFFFuuuuuuuuHHHHHHHHH");
             RingBuffer.Write(envelope);
         }
 
         public RabbitEnvelope GetEnvelope(IBasicProperties basicProperties)
         {
-            var envelopeType = typeof(RabbitEnvelope<>).MakeGenericType(
-                Type.GetType(
-                    Encoding.UTF8.GetString( (byte[]) basicProperties.Headers["MessageType"] )
-                    ) );
+            var messageTypeBuffer = (byte[])basicProperties.Headers["MessageType"];
+            var messageTypeName = Encoding.UTF8.GetString( messageTypeBuffer );
+            var messageType = Type.GetType(messageTypeName);
+            var envelopeType = typeof(RabbitEnvelope<>).MakeGenericType( messageType );
             return Activator.CreateInstance( envelopeType ) as RabbitEnvelope;
         }
 
@@ -81,25 +79,47 @@ namespace Symbiote.Rabbit.Impl.Adapter
             }
             else
             {
-                throw new Exception("THIS IS CRAP");
+                HandlePoisonMessage( translatedEnvelope );
             }
-            return null;
+            return envelope;
         }
 
         public object DeserializeMessage(object envelope)
         {
-            var rabbitEnvelope = envelope as RabbitEnvelope;
             try
             {
+                var rabbitEnvelope = envelope as RabbitEnvelope;
                 rabbitEnvelope.Message = Serializer.Deserialize( rabbitEnvelope.MessageType, rabbitEnvelope.ByteStream );
                 if(rabbitEnvelope.Message == null)
-                    throw new Exception("AHHHHHHH");
+                    HandlePoisonMessage( envelope );
             }
             catch (Exception e)
             {
-                Console.WriteLine( e );
+                HandlePoisonMessage( envelope );
             }
-            return rabbitEnvelope;
+            return envelope;
+        }
+
+        public void HandlePoisonMessage(object message)
+        {
+            var envelope = message as RabbitEnvelope;
+            if(envelope != null)
+            {
+                "Received bad message from \r\n\t Exchange: {0} \r\n\t Queue: {1} \r\n\t MessageId: {2} \r\n\t CorrelationId: {3} \r\n\t Type: {4}"
+                    .ToInfo<RabbitQueueListener>(
+                        envelope.Exchange,
+                        Proxy.QueueName,
+                        envelope.MessageId,
+                        envelope.CorrelationId,
+                        envelope.MessageType
+                    );
+            }
+            else
+            {
+                "Received garbage from queue {0}. No deserialization was possible."
+                    .ToInfo<RabbitQueueListener>(Proxy.QueueName);
+            }
+            
         }
 
         public override void HandleBasicCancelOk(string consumerTag)

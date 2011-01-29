@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Collections;
+using Symbiote.Core.Collections;
 using Symbiote.Core.Extensions;
 
 namespace Core.Tests.Collections

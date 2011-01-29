@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Machine.Specifications;
-using Symbiote.Core.Impl.Hashing;
+using Symbiote.Core.Hashing;
 
 namespace Core.Tests.Utility.distributor
 {

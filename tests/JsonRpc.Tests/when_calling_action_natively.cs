@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using Machine.Specifications;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace JsonRpc.Tests
 {
