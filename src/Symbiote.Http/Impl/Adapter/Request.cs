@@ -39,13 +39,10 @@ namespace Symbiote.Http.Impl.Adapter
         public IDictionary<string, IEnumerable<string>> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
 
-        public Future<byte[]> Read(Action<byte[]> callback, Action<Exception> onException )
+        public Future<byte[]> Read()
         {
             return Future
-                .Of( () => Stream.ReadToEnd( 1000 ) )
-                .OnValue( callback )
-                .OnException( onException )
-                .Now();
+                .Of( () => Stream.ReadToEnd( 1000 ) );
         }
 
         public Request()

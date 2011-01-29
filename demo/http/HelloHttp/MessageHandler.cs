@@ -7,10 +7,10 @@ using Symbiote.Messaging;
 
 namespace HelloHttp
 {
-    public class MessageHandler<TMessage>
-        : IHandle<TMessage>
+    public class MessageHandler
+        : IHandle<Message>
     {
-        public void Handle( IEnvelope<TMessage> envelope )
+        public void Handle(IEnvelope<Message> envelope)
         {
             envelope.Reply( new Message() { Text = "Hey there, how goes it?"} );
         }

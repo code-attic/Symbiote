@@ -55,12 +55,15 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         /// </summary>
         public void SendEnvelope<TMessage, TReply>(HttpEnvelope<TMessage> envelope, Action<TReply> callback)
         {
-            Client = WebRequest.Create( Definition.GetUriForEnvelope( envelope ) );
+            string requestUriString = Definition.GetUriForEnvelope( envelope );
+            Client = WebRequest.Create( requestUriString );
             Client.Method = Definition.Verb;
-            //Client.Credentials = Definition.Credentials;
+            Client.Credentials = Definition.Credentials;
             Client.AuthenticationLevel = AuthenticationLevel.None;
-            Client.ContentType = Definition.ContentType;
             
+            Client.Headers.Add( "Content-Encoding", Definition.ContentEncoding );
+            Client.ContentType = typeof(TMessage).AssemblyQualifiedName;
+
             var requestStream = Client.GetRequestStream();
             byte[] buffer = Definition.Serializer(envelope);
             requestStream.Write( buffer, 0, buffer.Length );

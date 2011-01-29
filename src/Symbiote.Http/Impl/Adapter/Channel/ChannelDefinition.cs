@@ -39,8 +39,8 @@ namespace Symbiote.Http.Impl.Adapter.Channel
 
         public string GetUriForEnvelope<T>(HttpEnvelope<T> envelope)
         {
-            var uri = UriBuilder.Uri.ToString();
             string additionalPath = envelope.RoutingKey;
+            var uri = BaseUri;
             if(!string.IsNullOrEmpty(additionalPath))
             {
                 var separator = additionalPath.StartsWith( "?" )

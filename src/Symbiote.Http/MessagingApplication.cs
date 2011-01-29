@@ -33,16 +33,16 @@ namespace Symbiote.Http
         public void Process( IDictionary<string, object> requestItems, Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond, Action<Exception> onException )
         {
             var request = requestItems.ExtractRequest();
-            byte[] readBuffer = request.Read( null, onException );
+            byte[] readBuffer = request.Read();
             var contentType = request.Headers["Content-Type"].FirstOrDefault() ?? "";
             var encoding = request.Headers["Content-Encoding"].FirstOrDefault() ?? "";
             var type = Type.GetType(contentType);
-            var envelopeType = typeof(HttpEnvelope<>).MakeGenericType( type );
+            var envelopeType = typeof(HttpEnvelope<>).MakeGenericType(type);
             HttpEnvelope result;
             switch (encoding.Trim())
             {
                 case "application/json":
-                    result = JsonExtensions.FromJson( Encoding.UTF8.GetString(readBuffer), envelopeType) as HttpEnvelope;
+                    result = JsonExtensions.FromJson(Encoding.UTF8.GetString(readBuffer), envelopeType) as HttpEnvelope;
                     break;
                 case "application/protocol-buffer":
                     result = readBuffer.FromProtocolBuffer(envelopeType) as HttpEnvelope;
@@ -53,7 +53,7 @@ namespace Symbiote.Http
             }
 
             result.Callback = respond;
-            Dispatcher.Send( result as IEnvelope );
+            Dispatcher.Send(result as IEnvelope);
         }
 
         public MessagingApplication( IDispatcher dispatcher )

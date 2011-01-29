@@ -84,7 +84,8 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         /// This method ONLY allows you to respond with:
         /// 
         /// 200 OK
-        /// Content-Type: application/json
+        /// Content-Type: {fully qualified type name of TResponse}
+        /// Content-Encoding: application/json
         /// {the json encoded messages}
         /// 
         /// This is the correct method. For more control over the
@@ -99,7 +100,7 @@ namespace Symbiote.Http.Impl.Adapter.Channel
             Callback
                 .Build()
                 .AppendJson(response)
-                .DefineHeaders(x => x.ContentType(typeof(TResponse).FullName))
+                .DefineHeaders(x => x.ContentType(typeof(TResponse).AssemblyQualifiedName).ContentEncoding( "application/json" ))
                 .Submit(HttpStatus.Ok);
         }
 

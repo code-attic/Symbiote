@@ -32,6 +32,7 @@ namespace Symbiote.Core.Impl.Futures
         protected int Attempts { get; set; }
         protected Action<T> Coroutine { get; set; }
         protected bool HasResult { get; set; }
+        protected bool ActiveCall;
         protected int Limit { get; set; }
         protected Func<T> OnFail { get; set; }
         protected Action<Exception> ExceptionHandler { get; set; }
@@ -80,11 +81,11 @@ namespace Symbiote.Core.Impl.Futures
             return this;
         }
 
-        public Future<T> Now()
-        {
-            InvokeCall();
-            return this;
-        }
+        //public Future<T> Now()
+        //{
+        //    var value = Value;
+        //    return this;
+        //}
 
         public Future<T> OnFailure(Func<T> onFailure)
         {

@@ -76,6 +76,7 @@
     <Compile Include="Config\EventChannelConfiguration.cs" />
     <Compile Include="Config\EventChannelConfigurator.cs" />
     <Compile Include="Config\IEventChannelConfiguration.cs" />
+    <Compile Include="Impl\Adapter\NamedPipeListener.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelIndex.cs" />
@@ -84,6 +85,7 @@
     <Compile Include="Impl\Channels\IConfigureChannel.cs" />
     <Compile Include="Impl\Channels\LocalChannelDefiniton.cs" />
     <Compile Include="Impl\Channels\LocalChannelFactory.cs" />
+    <Compile Include="Impl\Channels\NamedPipeChannelDefinition.cs" />
     <Compile Include="Impl\Dispatch\DirectorSaga.cs" />
     <Compile Include="Impl\Dispatch\DispatcherKeyAccessor.cs" />
     <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />

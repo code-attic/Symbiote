@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Messages;
 using Symbiote.Core;
 using Symbiote.StructureMap;
@@ -29,11 +30,16 @@ namespace messageClient
 
         public void Start()
         {
-            Bus.AddHttpChannel( x => x.Name("http").BaseUrl( "http://localhost:8989/message" ));
+            Bus.AddHttpChannel( x => x.Name("http").BaseUrl( @"http://localhost:8989/message" ));
+            var watch = Stopwatch.StartNew();
 
-            Message response = Bus.Request<Message, Message>( "http", new Message( "Hi, server" ) );
-
-            Console.WriteLine("Response received: {0}", response.Text);
+            for (int i = 0; i < 100; i++)
+            {
+                Message response = Bus.Request<Message, Message>("http", new Message("Hi, server"));
+                Console.WriteLine("Response received in {0}: '{1}'", watch.ElapsedMilliseconds, response.Text);    
+            }
+            Console.WriteLine( "{0} ms avg", watch.ElapsedMilliseconds / 100 );
+            watch.Stop();
         }
 
         public void Stop()

@@ -24,7 +24,8 @@ namespace Symbiote.Core.Extensions
         {
             int read;
             var buffer = new byte[8 * 1024];
-            stream.ReadTimeout = timeOut;
+            if(stream.CanTimeout)
+                stream.ReadTimeout = timeOut;
             using (var memoryStream = new MemoryStream())
             {
                 while ( ( ( read = stream.Read( buffer, 0, buffer.Length ) ) > 0 ) )

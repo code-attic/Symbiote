@@ -6,11 +6,12 @@ namespace Symbiote.Core.Impl.Futures
         : Future<T>
     {
         protected Func<T> Call { get; set; }
+        protected CallbackResult ResetTrigger { get; set; }
         protected Action<IAsyncResult> OnResult { get; set; }
 
         protected override void InvokeCall()
         {
-            AsyncResult = Call.BeginInvoke(CloseHandle, null);
+           Call.BeginInvoke(CloseHandle, null);
         }
 
         protected void CloseHandle(IAsyncResult result)
@@ -22,6 +23,7 @@ namespace Symbiote.Core.Impl.Futures
                 {
                     Result = value;
                     HasResult = true;
+                    ResetTrigger.Set();
                 }
             }
         }
@@ -30,6 +32,8 @@ namespace Symbiote.Core.Impl.Futures
         {
             Init();
             Call = call;
+            ResetTrigger = new CallbackResult();
+            AsyncResult = ResetTrigger;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Core.Tests.Utility
         {
             expected = 5;
             waitFor = 10;
-            var futureCallback = Future.Of<int>(GetResult).WaitFor(1).OnFailure(() => expected).Now();
+            int futureCallback = Future.Of<int>(GetResult).WaitFor(1).OnFailure(() => expected);//.Now();
             Thread.Sleep( waitFor );
             result = futureCallback;
         };
