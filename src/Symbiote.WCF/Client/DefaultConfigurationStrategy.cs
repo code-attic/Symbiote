@@ -1,19 +1,18 @@
-/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Configuration;
 using System.ServiceModel.Configuration;
@@ -22,22 +21,23 @@ namespace Symbiote.Wcf.Client
 {
     public class DefaultConfigurationStrategy<T> : IServiceClientConfigurationStrategy<T>
     {
-        public void ConfigureServiceClient(IServiceConfiguration configuration)
+        public void ConfigureServiceClient( IServiceConfiguration configuration )
         {
-            configuration.Configuration = GetEndPointForContractType(typeof(T));
+            configuration.Configuration = GetEndPointForContractType( typeof( T ) );
         }
 
-        public string GetEndPointForContractType(Type contractType)
+        public string GetEndPointForContractType( Type contractType )
         {
             ClientSection clientSection =
-                ConfigurationManager.GetSection("system.serviceModel/client") as ClientSection;
+                ConfigurationManager.GetSection( "system.serviceModel/client" ) as ClientSection;
 
             var endpoints =
                 clientSection.ElementInformation.Properties[string.Empty].Value as ChannelEndpointElementCollection;
 
-            foreach (ChannelEndpointElement endpoint in endpoints)
+            foreach( ChannelEndpointElement endpoint in endpoints )
             {
-                if (endpoint.Contract.Equals(contractType.FullName) || endpoint.Contract.Equals(contractType.AssemblyQualifiedName))
+                if ( endpoint.Contract.Equals( contractType.FullName ) ||
+                     endpoint.Contract.Equals( contractType.AssemblyQualifiedName ) )
                     return endpoint.Name;
             }
             return "";

@@ -7,9 +7,9 @@ namespace Core.Tests
     public class with_assimilation
     {
         private Establish context = () =>
-        {
-            Assimilate
-                .Core<StructureMapAdapter>();
-        };
+                                        {
+                                            Assimilate
+                                                .Core<StructureMapAdapter>();
+                                        };
     }
 }

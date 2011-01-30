@@ -9,17 +9,18 @@ namespace Actor.Tests.Agent
         : with_assimilation
     {
         public static Stopwatch firstRequestWatch { get; set; }
-        public static Stopwatch secondRequestWatch { get; set; }
+        public static IAgent<DummyActor> Agent { get; set; }
 
         private Because of = () =>
         {
             var agency = Assimilate.GetInstanceOf<IAgency>();
 
             firstRequestWatch = Stopwatch.StartNew();
-            var agent = agency.GetAgentFor<DummyActor>();
+            Agent = agency.GetAgentFor<DummyActor>();
             firstRequestWatch.Stop();
         };
-        
-        private It should_not_take_more_than_1_milisecond = () => firstRequestWatch.ElapsedMilliseconds.ShouldBeLessThan( 1.1 );
+
+        private It should_get_agent_instance = () => Agent.ShouldNotBeNull();
+        private It should_take_under_20_ms = () => firstRequestWatch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 20 );
     }
 }

@@ -8,8 +8,8 @@ namespace Actor.Tests.Agent
     {
         private Establish context = () =>
         {
-            MockActorCache.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new PassthroughMemento<DummyActor>());
-            MockActorStore.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new PassthroughMemento<DummyActor>());
+            MockActorCache.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns( default(PassthroughMemento<DummyActor>) );
+            MockActorStore.Setup(x => x.Get<string>(Moq.It.IsAny<string>())).Returns(new PassthroughMemento<DummyActor>() { Actor = new DummyActor() });
         };
     }
 }

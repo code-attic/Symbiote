@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,13 +31,15 @@ namespace Symbiote.Messaging.Impl.Dispatch
         protected IAgency Agency { get; set; }
         protected IAgent<TActor> Agent { get; set; }
         protected IHandle<TActor, TMessage> Handler { get; set; }
-        
+
+        #region IDispatchMessage<TActor,TMessage> Members
+
         public Type ActorType
         {
-            get { return typeof(TActor); }
+            get { return typeof( TActor ); }
         }
-        
-        public bool CanHandle(object payload)
+
+        public bool CanHandle( object payload )
         {
             return payload.IsOfType<TMessage>();
         }
@@ -57,13 +58,24 @@ namespace Symbiote.Messaging.Impl.Dispatch
             }
         }
 
+        public void Dispatch( IEnvelope envelope )
+        {
+            var typedEnvelope = envelope as IEnvelope<TMessage>;
+            var actor = Agent.GetActor( envelope.CorrelationId );
+            Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
+            Handler.Handle( actor, typedEnvelope );
+            Agent.Memoize( actor );
+        }
+
+        #endregion
+
         private IEnumerable<Type> GetMessageChain()
         {
-            yield return typeof(TMessage);
-            var chain = Reflector.GetInheritanceChain(typeof(TMessage));
-            if (chain != null)
+            yield return typeof( TMessage );
+            var chain = Reflector.GetInheritanceChain( typeof( TMessage ) );
+            if ( chain != null )
             {
-                foreach (var type in chain)
+                foreach( var type in chain )
                 {
                     yield return type;
                 }
@@ -71,16 +83,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             yield break;
         }
 
-        public void Dispatch(IEnvelope envelope)
-        {
-            var typedEnvelope = envelope as IEnvelope<TMessage>;
-            var actor = Agent.GetActor(envelope.CorrelationId);
-            Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
-            Handler.Handle(actor, typedEnvelope);
-            Agent.Memoize(actor);
-        }
-
-        public ActorMessageDispatcher(IAgency agency)
+        public ActorMessageDispatcher( IAgency agency )
         {
             Agency = agency;
             Agent = Agency.GetAgentFor<TActor>();

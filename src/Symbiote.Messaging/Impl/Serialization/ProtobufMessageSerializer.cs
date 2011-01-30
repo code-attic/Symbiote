@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using Symbiote.Core.Serialization;
 
@@ -22,15 +21,17 @@ namespace Symbiote.Messaging.Impl.Serialization
     public class ProtobufMessageSerializer
         : IMessageSerializer
     {
-        public T Deserialize<T>(byte[] message)
+        #region IMessageSerializer Members
+
+        public T Deserialize<T>( byte[] message )
         {
             return message.FromProtocolBuffer<T>();
         }
 
-        public object Deserialize(byte[] message)
+        public object Deserialize( byte[] message )
         {
             throw new MessagingException(
-                "Protobuf cannot deserialize messages of unknown type. You must call Deserialize<T> where T is a known message type.");
+                "Protobuf cannot deserialize messages of unknown type. You must call Deserialize<T> where T is a known message type." );
         }
 
         public object Deserialize( Type messageType, byte[] message )
@@ -38,9 +39,11 @@ namespace Symbiote.Messaging.Impl.Serialization
             return message.FromProtocolBuffer( messageType );
         }
 
-        public byte[] Serialize<T>(T body)
+        public byte[] Serialize<T>( T body )
         {
             return body.ToProtocolBuffer();
         }
+
+        #endregion
     }
 }

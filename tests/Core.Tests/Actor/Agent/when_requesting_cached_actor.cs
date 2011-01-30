@@ -25,6 +25,5 @@ namespace Actor.Tests.Agent
         private It should_not_call_the_factory = () => ActorFactory.Called.ShouldEqual(0);
         private It should_produce_actor_instance = () => Actor.ShouldNotBeNull();
         private It should_not_instantiate_actor = () => DummyActor.Instantiated.ShouldEqual(0);
-        private It should_have_had_concurrent_requests = () => Agent.Actors.MostWaiting.ShouldBeGreaterThan(1);
     }
 }

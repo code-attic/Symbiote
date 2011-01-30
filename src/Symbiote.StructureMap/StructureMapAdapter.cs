@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +22,7 @@ using Symbiote.Core.DI;
 
 namespace Symbiote.StructureMap
 {
-    public class StructureMapAdapter : 
+    public class StructureMapAdapter :
         IDependencyAdapter
     {
         public IEnumerable<Type> RegisteredPluginTypes
@@ -34,7 +33,7 @@ namespace Symbiote.StructureMap
                     .Container
                     .Model
                     .PluginTypes
-                    .SelectMany(x => x.Instances.Select(i => i.ConcreteType));
+                    .SelectMany( x => x.Instances.Select( i => i.ConcreteType ) );
             }
         }
 
@@ -45,21 +44,18 @@ namespace Symbiote.StructureMap
 
         public IEnumerable<Type> GetTypesRegisteredFor<T>()
         {
-            return GetTypesRegisteredFor(typeof(T));
+            return GetTypesRegisteredFor( typeof( T ) );
         }
 
-        public IEnumerable<Type> GetTypesRegisteredFor(Type type)
+        public IEnumerable<Type> GetTypesRegisteredFor( Type type )
         {
             return ObjectFactory
                 .Container
                 .Model
                 .PluginTypes
-                .Where(x => x.PluginType.Equals(type))
-                .SelectMany(x => x.Instances)
-                .Select(x =>
-                {
-                    return x.ConcreteType;
-                });
+                .Where( x => x.PluginType.Equals( type ) )
+                .SelectMany( x => x.Instances )
+                .Select( x => { return x.ConcreteType; } );
         }
 
         public bool HasPluginFor<T>()
@@ -67,41 +63,33 @@ namespace Symbiote.StructureMap
             return ObjectFactory.Container.Model.HasDefaultImplementationFor<T>();
         }
 
-        public bool IsDuplicate(IDependencyDefinition dependency)
+        public object GetInstance( Type serviceType )
         {
-            return GetTypesRegisteredFor( dependency.PluginType )
-                .Any( x => ReferenceEquals(x, dependency.ConcreteInstance == null 
-                    ? dependency.ConcreteType 
-                    : dependency.ConcreteInstance.GetType()));
+            if ( serviceType.IsConcrete() )
+                return ObjectFactory.GetInstance( serviceType );
+            return ObjectFactory.TryGetInstance( serviceType );
         }
 
-        public object GetInstance(Type serviceType)
+        public object GetInstance( Type serviceType, string key )
         {
-            if (ScannerExtensions.IsConcrete(serviceType))
-                return ObjectFactory.GetInstance(serviceType);
-            return ObjectFactory.TryGetInstance(serviceType);
+            return ObjectFactory.TryGetInstance( serviceType, key );
         }
 
-        public object GetInstance(Type serviceType, string key)
+        public IEnumerable<object> GetAllInstances( Type serviceType )
         {
-            return ObjectFactory.TryGetInstance(serviceType, key);
-        }
-
-        public IEnumerable<object> GetAllInstances(Type serviceType)
-        {
-            return ObjectFactory.GetAllInstances(serviceType).Cast<object>();
+            return ObjectFactory.GetAllInstances( serviceType ).Cast<object>();
         }
 
         public TService GetInstance<TService>()
         {
-            if (ScannerExtensions.IsConcrete(typeof(TService)))
+            if ( typeof( TService ).IsConcrete() )
                 return ObjectFactory.GetInstance<TService>();
             return ObjectFactory.TryGetInstance<TService>();
         }
 
-        public TService GetInstance<TService>(string key)
+        public TService GetInstance<TService>( string key )
         {
-            return ObjectFactory.TryGetInstance<TService>(key);
+            return ObjectFactory.TryGetInstance<TService>( key );
         }
 
         public IEnumerable<TService> GetAllInstances<TService>()
@@ -109,90 +97,97 @@ namespace Symbiote.StructureMap
             return ObjectFactory.GetAllInstances<TService>();
         }
 
-        public object GetService(Type serviceType)
+        public void Register( IDependencyDefinition dependency )
         {
-            return GetInstance(serviceType);
-        }
-
-        public void Register(IDependencyDefinition dependency)
-        {
-            if (dependency.IsAdd)
+            if ( dependency.IsAdd )
             {
-                HandleAdd(dependency);
+                HandleAdd( dependency );
             }
             else
             {
-                HandleFor(dependency);
+                HandleFor( dependency );
             }
-            
         }
 
-        public void Scan(IScanInstruction instruction)
+        public void Scan( IScanInstruction instruction )
         {
-            instruction.Execute(this);
+            instruction.Execute( this );
         }
 
-        private void HandleAdd(IDependencyDefinition dependency)
+        public bool IsDuplicate( IDependencyDefinition dependency )
         {
-            var isDuplicate = IsDuplicate(dependency);
-            ObjectFactory.Configure(x =>
-                    {
-                        if(dependency.IsSingleton && !isDuplicate)
-                        {
-                            var singleton = x.For(dependency.PluginType).Singleton();
-                            if (dependency.HasSingleton)
-                            {
-                                singleton.Add(dependency.ConcreteInstance);
-                            }
-                            else
-                            {
-                                singleton.Add(dependency.ConcreteType);
-                            }
-                        }
-                        else if(dependency.IsNamed)
-                        {
-                            x.For(dependency.PluginType).Add(dependency.ConcreteType).Named(dependency.PluginName);
-                        }
-                        else if(!isDuplicate)
-                        {   
-                            x.For(dependency.PluginType).Add(dependency.ConcreteType);
-                        }
-                    });
+            return GetTypesRegisteredFor( dependency.PluginType )
+                .Any( x => ReferenceEquals( x, dependency.ConcreteInstance == null
+                                                   ? dependency.ConcreteType
+                                                   : dependency.ConcreteInstance.GetType() ) );
         }
 
-        private void HandleFor(IDependencyDefinition dependency)
+        public object GetService( Type serviceType )
         {
-            ObjectFactory.Configure(x =>
-                    {
-                        var forExpression = x.For(dependency.PluginType);
+            return GetInstance( serviceType );
+        }
 
-                        ObjectFactory.Model.EjectAndRemovePluginTypes( t => t.Equals( dependency.PluginType ) );
+        private void HandleAdd( IDependencyDefinition dependency )
+        {
+            var isDuplicate = IsDuplicate( dependency );
+            ObjectFactory.Configure( x =>
+                                         {
+                                             if ( dependency.IsSingleton && !isDuplicate )
+                                             {
+                                                 var singleton = x.For( dependency.PluginType ).Singleton();
+                                                 if ( dependency.HasSingleton )
+                                                 {
+                                                     singleton.Add( dependency.ConcreteInstance );
+                                                 }
+                                                 else
+                                                 {
+                                                     singleton.Add( dependency.ConcreteType );
+                                                 }
+                                             }
+                                             else if ( dependency.IsNamed )
+                                             {
+                                                 x.For( dependency.PluginType ).Add( dependency.ConcreteType ).Named(
+                                                     dependency.PluginName );
+                                             }
+                                             else if ( !isDuplicate )
+                                             {
+                                                 x.For( dependency.PluginType ).Add( dependency.ConcreteType );
+                                             }
+                                         } );
+        }
 
-                        Instance instance;
-                        if (dependency.IsSingleton)
-                        {
-                            if (dependency.HasSingleton)
-                                instance = forExpression.Singleton().Use(dependency.ConcreteInstance);
-                            else
-                                instance = forExpression.Singleton().Use(dependency.ConcreteType);
-                        }
-                        else if(dependency.HasDelegate)
-                        {
-                            instance = forExpression.Use(f => dependency.CreatorDelegate.DynamicInvoke());
-                        }
-                        else
-                        {
-                            instance = forExpression.Use(dependency.ConcreteType);
-                        }
+        private void HandleFor( IDependencyDefinition dependency )
+        {
+            ObjectFactory.Configure( x =>
+                                         {
+                                             var forExpression = x.For( dependency.PluginType );
 
-                        if (dependency.IsNamed)
-                            instance.Name = dependency.PluginName;
-                    }
+                                             ObjectFactory.Model.EjectAndRemovePluginTypes(
+                                                 t => t.Equals( dependency.PluginType ) );
+
+                                             Instance instance;
+                                             if ( dependency.IsSingleton )
+                                             {
+                                                 if ( dependency.HasSingleton )
+                                                     instance =
+                                                         forExpression.Singleton().Use( dependency.ConcreteInstance );
+                                                 else
+                                                     instance = forExpression.Singleton().Use( dependency.ConcreteType );
+                                             }
+                                             else if ( dependency.HasDelegate )
+                                             {
+                                                 instance =
+                                                     forExpression.Use( f => dependency.CreatorDelegate.DynamicInvoke() );
+                                             }
+                                             else
+                                             {
+                                                 instance = forExpression.Use( dependency.ConcreteType );
+                                             }
+
+                                             if ( dependency.IsNamed )
+                                                 instance.Name = dependency.PluginName;
+                                         }
                 );
-        }
-
-        public StructureMapAdapter()
-        {
         }
     }
 }

@@ -1,4 +1,19 @@
-﻿using System.Linq;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System.Linq;
 using System.ServiceProcess;
 using Microsoft.Win32;
 
@@ -11,39 +26,39 @@ namespace Symbiote.Daemon.Installation
         private static readonly string SERVICES = "Services";
         private static readonly string DESCRIPTION = "Description";
 
-        public static ServiceInstaller GetServiceInstaller(this DaemonConfiguration configuration)
+        public static ServiceInstaller GetServiceInstaller( this DaemonConfiguration configuration )
         {
-            return new ServiceInstaller()
-            {
-                ServiceName = configuration.Name,
-                Description = configuration.Description,
-                DisplayName = configuration.DisplayName,
-                StartType = configuration.StartMode
-            };
+            return new ServiceInstaller
+                       {
+                           ServiceName = configuration.Name,
+                           Description = configuration.Description,
+                           DisplayName = configuration.DisplayName,
+                           StartType = configuration.StartMode
+                       };
         }
 
-        public static ServiceProcessInstaller GetProcessInstaller(this DaemonConfiguration configuration)
+        public static ServiceProcessInstaller GetProcessInstaller( this DaemonConfiguration configuration )
         {
-            return new ServiceProcessInstaller()
-            {
-                Account = configuration.PrincipalType,
-                Username = configuration.Principal,
-                Password = configuration.Password
-            };
+            return new ServiceProcessInstaller
+                       {
+                           Account = configuration.PrincipalType,
+                           Username = configuration.Principal,
+                           Password = configuration.Password
+                       };
         }
 
-        public static void UpdateRegistry(this DaemonConfiguration configuration)
+        public static void UpdateRegistry( this DaemonConfiguration configuration )
         {
-            using (RegistryKey system = Registry.LocalMachine.OpenSubKey( SYSTEM ))
-            using (RegistryKey currentControlSet = system.OpenSubKey( CURRENT_CONTROL_SET ))
-            using(RegistryKey services = currentControlSet.OpenSubKey( SERVICES ))
-            using(RegistryKey service = services.OpenSubKey( configuration.Name, true ))
+            using( RegistryKey system = Registry.LocalMachine.OpenSubKey( SYSTEM ) )
+            using( RegistryKey currentControlSet = system.OpenSubKey( CURRENT_CONTROL_SET ) )
+            using( RegistryKey services = currentControlSet.OpenSubKey( SERVICES ) )
+            using( RegistryKey service = services.OpenSubKey( configuration.Name, true ) )
             {
                 service.SetValue( DESCRIPTION, configuration.Description );
             }
         }
 
-        public static bool Installed(this DaemonConfiguration configuration)
+        public static bool Installed( this DaemonConfiguration configuration )
         {
             return ServiceController
                 .GetServices()

@@ -1,23 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using NHibernate;
 
 namespace Symbiote.Hibernate.Impl
@@ -27,11 +22,7 @@ namespace Symbiote.Hibernate.Impl
         private readonly ISessionFactory _sessionFactory;
         private readonly ISessionManager _sessionManager;
 
-        public SessionModule(ISessionFactory factory, ISessionManager manager)
-        {
-            _sessionFactory = factory;
-            _sessionManager = manager;
-        }
+        #region ISessionModule Members
 
         public virtual void BeginSession()
         {
@@ -43,15 +34,15 @@ namespace Symbiote.Hibernate.Impl
         public virtual void EndSession()
         {
             var session = _sessionManager.CurrentSession;
-            if (session != null && session.IsOpen)
+            if ( session != null && session.IsOpen )
             {
-                if (session.Transaction.IsActive)
+                if ( session.Transaction.IsActive )
                 {
                     session.Transaction.Commit();
                 }
                 session.Close();
             }
-            if (session != null)
+            if ( session != null )
             {
                 session.Dispose();
             }
@@ -60,6 +51,14 @@ namespace Symbiote.Hibernate.Impl
         public virtual void Dispose()
         {
             _sessionFactory.Dispose();
+        }
+
+        #endregion
+
+        public SessionModule( ISessionFactory factory, ISessionManager manager )
+        {
+            _sessionFactory = factory;
+            _sessionManager = manager;
         }
     }
 }

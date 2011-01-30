@@ -1,22 +1,21 @@
-/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System.Linq;
 using RabbitMQ.Client;
 using Symbiote.Rabbit.Config;
-using System.Linq;
 
 namespace Symbiote.Rabbit.Impl.Server
 {
@@ -24,21 +23,27 @@ namespace Symbiote.Rabbit.Impl.Server
     {
         protected RabbitConfiguration Configuration { get; set; }
 
-        protected IRabbitBroker DefaultBroker { get { return Configuration.Brokers["default"]; } }
+        protected IRabbitBroker DefaultBroker
+        {
+            get { return Configuration.Brokers["default"]; }
+        }
 
         public IConnection GetConnection()
         {
             return DefaultBroker.GetConnection();
         }
 
-        public IConnection GetConnection(string brokerName)
+        public IConnection GetConnection( string brokerName )
         {
             return Configuration.Brokers[brokerName].GetConnection();
         }
 
-        public string Protocol { get { return Configuration.Brokers.First().Value.Protocol; } }
+        public string Protocol
+        {
+            get { return Configuration.Brokers.First().Value.Protocol; }
+        }
 
-        public ConnectionManager(RabbitConfiguration configuration)
+        public ConnectionManager( RabbitConfiguration configuration )
         {
             Configuration = configuration;
         }

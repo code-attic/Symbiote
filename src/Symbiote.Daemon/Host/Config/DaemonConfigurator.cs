@@ -1,19 +1,18 @@
-/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.ServiceProcess;
 using Symbiote.Daemon.Args;
@@ -24,7 +23,7 @@ namespace Symbiote.Daemon
     {
         public DaemonConfiguration Configuration { get; set; }
 
-        public DaemonConfigurator Name(string name)
+        public DaemonConfigurator Name( string name )
         {
             Configuration.Name = name;
             Configuration.DisplayName = Configuration.DisplayName ?? name;
@@ -32,19 +31,19 @@ namespace Symbiote.Daemon
             return this;
         }
 
-        public DaemonConfigurator DisplayName(string displayName)
+        public DaemonConfigurator DisplayName( string displayName )
         {
             Configuration.DisplayName = displayName;
             return this;
         }
 
-        public DaemonConfigurator Description(string description)
+        public DaemonConfigurator Description( string description )
         {
             Configuration.Description = description;
             return this;
         }
 
-        public DaemonConfigurator Arguments(string[] arguments)
+        public DaemonConfigurator Arguments( string[] arguments )
         {
             var parser = new ArgumentParser( arguments );
             Configuration.Arguments = parser.Parsed;
@@ -63,7 +62,7 @@ namespace Symbiote.Daemon
             return this;
         }
 
-        public DaemonConfigurator AsAccount(string user, string password)
+        public DaemonConfigurator AsAccount( string user, string password )
         {
             Configuration.Principal = user;
             Configuration.Password = password;
@@ -77,9 +76,9 @@ namespace Symbiote.Daemon
             return this;
         }
 
-        public DaemonConfigurator TimeoutIn(int seconds)
+        public DaemonConfigurator TimeoutIn( int seconds )
         {
-            Configuration.StartupTimeout = TimeSpan.FromSeconds(seconds);
+            Configuration.StartupTimeout = TimeSpan.FromSeconds( seconds );
             return this;
         }
 

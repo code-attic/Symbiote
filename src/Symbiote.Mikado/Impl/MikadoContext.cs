@@ -121,7 +121,6 @@ namespace Symbiote.Mikado.Impl
 
         public Action<TActor, IList<IBrokenRuleNotification>> OnBrokenRules { get; set; }
 
-        #region Static Members...
         private static IContextProvider _provider;
 
         protected static IContextProvider ContextProvider
@@ -138,6 +137,5 @@ namespace Symbiote.Mikado.Impl
         {
             return ContextProvider.GetContext(instance);
         }
-        #endregion
     }
 }

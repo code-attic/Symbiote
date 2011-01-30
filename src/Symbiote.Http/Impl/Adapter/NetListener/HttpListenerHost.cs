@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Net;
 using Symbiote.Http.Config;
@@ -30,10 +29,25 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
         public HttpContextTransform ContextTransformer { get; set; }
         public bool Running { get; set; }
 
+        #region IDisposable Members
+
+        public void Dispose()
+        {
+            if ( Listener != null && Listener.IsListening )
+            {
+                Listener.Stop();
+                Listener.Abort();
+            }
+        }
+
+        #endregion
+
+        #region IHost Members
+
         public void Start()
         {
             Listener.Start();
-            Listener.BeginGetContext(GetRequest, null);
+            Listener.BeginGetContext( GetRequest, null );
         }
 
         public void Stop()
@@ -41,58 +55,47 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             Listener.Stop();
         }
 
-        public void GetRequest(IAsyncResult result)
+        #endregion
+
+        public void GetRequest( IAsyncResult result )
         {
             try
             {
-                var context = Listener.EndGetContext(result);
-                ProcessRequest(context);
+                var context = Listener.EndGetContext( result );
+                ProcessRequest( context );
             }
-            catch (Exception exception)
+            catch ( Exception exception )
             {
-                Console.WriteLine("Well, this is bad: \r\n {0}", exception);
+                Console.WriteLine( "Well, this is bad: \r\n {0}", exception );
                 throw;
             }
-            Listener.BeginGetContext(GetRequest, null);
+            Listener.BeginGetContext( GetRequest, null );
         }
 
-        public void ProcessRequest(HttpListenerContext listenerContext)
+        public void ProcessRequest( HttpListenerContext listenerContext )
         {
-            var context = ContextTransformer.From(listenerContext);
-            var application = RequestRouter.GetApplicationFor(context.Request);
-            application.Process( 
-                context.Request.Items,  
+            var context = ContextTransformer.From( listenerContext );
+            var application = RequestRouter.GetApplicationFor( context.Request );
+            application.Process(
+                context.Request.Items,
                 context.Response.Respond,
                 OnApplicationException
                 );
         }
 
-        public void OnApplicationException(Exception exception)
+        public void OnApplicationException( Exception exception )
         {
-            Console.WriteLine("Well, this is bad: \r\n {0}", exception);
+            Console.WriteLine( "Well, this is bad: \r\n {0}", exception );
         }
 
-        public HttpListenerHost(HttpListenerConfiguration configuration, IRouteRequest router)
+        public HttpListenerHost( HttpListenerConfiguration configuration, IRouteRequest router )
         {
             RequestRouter = router;
             Configuration = configuration;
             ContextTransformer = new HttpContextTransform();
             Listener = new HttpListener();
             Listener.AuthenticationSchemes = Configuration.AuthSchemes;
-            Configuration.HostedUrls.ForEach(x =>
-            {
-                Listener.Prefixes.Add( x );
-            } );
-            
-        }
-
-        public void Dispose()
-        {
-            if(Listener != null && Listener.IsListening)
-            {
-                Listener.Stop();
-                Listener.Abort();
-            }
+            Configuration.HostedUrls.ForEach( x => { Listener.Prefixes.Add( x ); } );
         }
     }
 }

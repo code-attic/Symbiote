@@ -69,6 +69,7 @@
     <Compile Include="Actor\Agency\when_requesting_agents_in_parallel.cs" />
     <Compile Include="Actor\Agency\with_mock_agent_factory.cs" />
     <Compile Include="Actor\Agent\DummyActorFactory.cs" />
+    <Compile Include="Actor\Agent\when_creating_actor_instance_with_default_factory.cs" />
     <Compile Include="Actor\Agent\when_requesting_agent_with_preloading.cs" />
     <Compile Include="Actor\Agent\when_requesting_cached_actor.cs" />
     <Compile Include="Actor\Agent\when_requesting_same_actor_under_race_condition.cs" />
@@ -98,11 +99,13 @@
     <Compile Include="Actor\Domain\NewMotoristHandler.cs" />
     <Compile Include="Actor\Domain\NewMotoristMessage.cs" />
     <Compile Include="Actor\DummyActor.cs" />
+    <Compile Include="Actor\DummyKeyAccessor.cs" />
     <Compile Include="Actor\Events\when_capturing_events.cs" />
     <Compile Include="Actor\Sagas\when_requesting_saga.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
-    <Compile Include="Collections\with_nrudictionary.cs" />
+    <Compile Include="Collections\when_writes_exceed_limit.cs" />
+    <Compile Include="Collections\with_mrudictionary.cs" />
     <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
     <Compile Include="Domain\DriverFactory.cs" />

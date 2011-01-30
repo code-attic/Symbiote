@@ -1,4 +1,7 @@
-﻿namespace Actor.Tests.Cache
+﻿using System;
+using Symbiote.Core;
+
+namespace Actor.Tests.Cache
 {
     public class CacheItem
     {

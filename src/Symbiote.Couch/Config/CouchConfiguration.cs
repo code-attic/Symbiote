@@ -1,19 +1,18 @@
-/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using Symbiote.Couch.Impl.Serialization;
@@ -23,27 +22,30 @@ namespace Symbiote.Couch.Config
     public class CouchConfiguration : ICouchConfiguration
     {
         protected Dictionary<Type, string> _databaseForType = new Dictionary<Type, string>();
+        public IResolveDatabaseNames DatabaseResolver { get; set; }
+
+        #region ICouchConfiguration Members
 
         public string GetDatabaseNameForType<T>()
         {
             string dbname = null;
-            if(DatabaseResolver != null)
+            if ( DatabaseResolver != null )
             {
                 dbname = DatabaseResolver.GetDatabaseNameFor<T>();
             }
-            if(dbname == null)
+            if ( dbname == null )
             {
-                var type = typeof(T);
-                _databaseForType.TryGetValue(type, out dbname);
+                var type = typeof( T );
+                _databaseForType.TryGetValue( type, out dbname );
             }
-            return (string.IsNullOrEmpty(dbname) ? DefaultDatabaseName : dbname).ToLower();
+            return (string.IsNullOrEmpty( dbname ) ? DefaultDatabaseName : dbname).ToLower();
         }
-        
-        public void SetDatabaseNameForType<T>(string databaseName)
+
+        public void SetDatabaseNameForType<T>( string databaseName )
         {
-            _databaseForType[typeof (T)] = databaseName.ToLower();
+            _databaseForType[typeof( T )] = databaseName.ToLower();
         }
-        public IResolveDatabaseNames DatabaseResolver { get; set; }
+
         public string DefaultDatabaseName { get; set; }
         public bool BreakDownDocumentGraphs { get; set; }
         public string Protocol { get; set; }
@@ -61,6 +63,8 @@ namespace Symbiote.Couch.Config
         public bool IncludeTypeSpecification { get; set; }
         public string CouchQueryServiceUrl { get; set; }
 
+        #endregion
+
         public CouchConfiguration()
         {
             Protocol = "http";
@@ -71,9 +75,9 @@ namespace Symbiote.Couch.Config
             IncludeTypeSpecification = true;
             CouchQueryServiceUrl = @"http://localhost:8420/";
             Conventions = new DocumentConventions();
-            DefaultDatabaseName = 
+            DefaultDatabaseName =
                 (System.Reflection.Assembly.GetEntryAssembly() ??
-                System.Reflection.Assembly.GetExecutingAssembly()).GetName().Name.Replace(".", "");
+                 System.Reflection.Assembly.GetExecutingAssembly()).GetName().Name.Replace( ".", "" );
         }
     }
 }

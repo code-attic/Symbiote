@@ -1,10 +1,26 @@
-﻿using System;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System;
 using System.Diagnostics;
 using Symbiote.Core;
 
 namespace Symbiote.Daemon.Host
 {
-    [DebuggerDisplay("Service {Name} is {State}")]
+    //TODO: Missing a LOT of implementation!?
+    [DebuggerDisplay( "Service {Name} is {State}" )]
     public class ServiceController<TService> :
         IServiceController
         where TService : class, IDaemon
@@ -12,61 +28,36 @@ namespace Symbiote.Daemon.Host
         protected bool Initialized { get; set; }
         protected TService ServiceInstance { get; set; }
         protected bool Disposed { get; set; }
-        public string Name { get; private set; }
-        public Type ServiceType { get { return typeof(TService); } }
-        public ServiceState State { get; protected set; }
-
-        //public ServiceController(string serviceName)
-        //{
-        //    Name = serviceName;
-        //}
-
-        public ServiceController(TService service)
-        {
-            ServiceInstance = service;
-        }
-
         public Action<TService> PauseAction { get; set; }
         public Action<TService> ContinueAction { get; set; }
 
-        #region Dispose Stuff
+        #region IServiceController Members
+
+        public string Name { get; private set; }
+
+        public Type ServiceType
+        {
+            get { return typeof( TService ); }
+        }
+
+        public ServiceState State { get; protected set; }
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
-
-        protected void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if (Disposed)
-                return;
-
-            ServiceInstance = default(TService);
-            PauseAction = null;
-            ContinueAction = null;
-            Disposed = true;
-        }
-
-        ~ServiceController()
-        {
-            Dispose(false);
-        }
-
-        #endregion
 
         public void Initialize()
         {
-            if (Initialized)
+            if ( Initialized )
                 return;
 
             try
             {
                 ServiceInstance = Assimilate.GetInstanceOf<TService>();
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
                 throw ex;
             }
@@ -79,9 +70,9 @@ namespace Symbiote.Daemon.Host
             {
                 ServiceInstance.Start();
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                SendFault(ex);
+                SendFault( ex );
             }
         }
 
@@ -91,9 +82,9 @@ namespace Symbiote.Daemon.Host
             {
                 ServiceInstance.Stop();
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                SendFault(ex);
+                SendFault( ex );
             }
         }
 
@@ -101,11 +92,10 @@ namespace Symbiote.Daemon.Host
         {
             try
             {
-               
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                SendFault(ex);
+                SendFault( ex );
             }
         }
 
@@ -113,24 +103,46 @@ namespace Symbiote.Daemon.Host
         {
             try
             {
-                
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
-                SendFault(ex);
+                SendFault( ex );
             }
         }
 
-        void SendFault(Exception exception)
+        #endregion
+
+        protected void Dispose( bool disposing )
+        {
+            if ( !disposing )
+                return;
+            if ( Disposed )
+                return;
+
+            ServiceInstance = default(TService);
+            PauseAction = null;
+            ContinueAction = null;
+            Disposed = true;
+        }
+
+        ~ServiceController()
+        {
+            Dispose( false );
+        }
+
+        private void SendFault( Exception exception )
         {
             try
             {
-                
             }
-            catch (Exception)
+            catch ( Exception )
             {
-                
             }
+        }
+
+        public ServiceController( TService service )
+        {
+            ServiceInstance = service;
         }
     }
 }

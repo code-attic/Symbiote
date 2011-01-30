@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,16 +40,16 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         public Type SerializerType { get; set; }
         public bool Transactional { get; set; }
 
-        public void BindQueue(IModel channel)
+        public void BindQueue( IModel channel )
         {
-            if (RoutingKeys.Count == 0)
-                RoutingKeys = new List<string>(new[] { "" });
+            if ( RoutingKeys.Count == 0 )
+                RoutingKeys = new List<string>( new[] {""} );
 
             RoutingKeys
                 .ForEach( x => channel.QueueBind( QueueName, ExchangeName, x, false, null ) );
         }
 
-        public void BuildQueue(IModel channel)
+        public void BuildQueue( IModel channel )
         {
             channel.QueueDeclare(
                 QueueName,
@@ -59,18 +58,18 @@ namespace Symbiote.Rabbit.Impl.Endpoint
                 Exclusive,
                 AutoDelete,
                 NoWait,
-                Arguments);
+                Arguments );
         }
 
-        public void CreateOnBroker(IConnectionManager manager)
+        public void CreateOnBroker( IConnectionManager manager )
         {
-            if (!CreatedOnBroker)
+            if ( !CreatedOnBroker )
             {
-                var connection = manager.GetConnection(Broker);
-                using (var channel = connection.CreateModel())
+                var connection = manager.GetConnection( Broker );
+                using( var channel = connection.CreateModel() )
                 {
-                    BuildQueue(channel);
-                    BindQueue(channel);
+                    BuildQueue( channel );
+                    BindQueue( channel );
                     CreatedOnBroker = true;
                 }
             }
@@ -80,7 +79,7 @@ namespace Symbiote.Rabbit.Impl.Endpoint
         {
             Broker = "default";
             ExchangeName = "";
-            SerializerType = typeof(MessageOptimizedSerializer);
+            SerializerType = typeof( MessageOptimizedSerializer );
             RoutingKeys = new List<string>();
         }
     }

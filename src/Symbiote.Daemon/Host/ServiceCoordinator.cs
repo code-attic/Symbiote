@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,58 +22,52 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.Host
 {
-    [DebuggerDisplay("Hosting {HostedServiceCount} Services")]
+    [DebuggerDisplay( "Hosting {HostedServiceCount} Services" )]
     public class ServiceCoordinator :
         IServiceCoordinator
     {
+        private bool _disposed;
         protected IList<IServiceController> Services { get; set; }
         protected DaemonConfiguration Configuration { get; set; }
 
-        public ServiceCoordinator(DaemonConfiguration configuration)
-        {
-            Services = new List<IServiceController>();
-            Configuration = configuration;
-            RegisterServices();
-        }
+        #region IServiceCoordinator Members
 
         public void Start()
         {
-            Services.ForEach(x => x.Start());
+            Services.ForEach( x => x.Start() );
         }
 
         public void Stop()
         {
-            Services.ForEach(x => x.Stop());
+            Services.ForEach( x => x.Stop() );
         }
 
         public void Pause()
         {
-            
         }
 
         public void Continue()
         {
-            
         }
 
-        public void StartService(string name)
+        public void StartService( string name )
         {
-            Services.Where(x => x.Name.Equals(name)).First().Start();
+            Services.Where( x => x.Name.Equals( name ) ).First().Start();
         }
 
-        public void StopService(string name)
+        public void StopService( string name )
         {
-            Services.Where(x => x.Name == name).First().Stop();
+            Services.Where( x => x.Name == name ).First().Stop();
         }
 
-        public void PauseService(string name)
+        public void PauseService( string name )
         {
-            Services.Where(x => x.Name == name).First().Pause();
+            Services.Where( x => x.Name == name ).First().Pause();
         }
 
-        public void ContinueService(string name)
+        public void ContinueService( string name )
         {
-            Services.Where(x => x.Name == name).First().Continue();
+            Services.Where( x => x.Name == name ).First().Continue();
         }
 
         public int HostedServiceCount
@@ -86,36 +79,34 @@ namespace Symbiote.Daemon.Host
         {
             return Services
                 .ToList()
-                .ConvertAll(serviceController => new ServiceInformation
-                                                     {
-                                                         Name = serviceController.Name,
-                                                         State = serviceController.State,
-                                                         Type = serviceController.ServiceType.Name
-                                                     });
+                .ConvertAll( serviceController => new ServiceInformation
+                                                      {
+                                                          Name = serviceController.Name,
+                                                          State = serviceController.State,
+                                                          Type = serviceController.ServiceType.Name
+                                                      } );
         }
 
-        public IServiceController GetService(string name)
+        public IServiceController GetService( string name )
         {
-            return Services.Where(x => x.Name == name).FirstOrDefault();
+            return Services.Where( x => x.Name == name ).FirstOrDefault();
         }
-
-        #region Dispose
-
-        bool _disposed;
 
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
 
-        void Dispose(bool disposing)
+        #endregion
+
+        private void Dispose( bool disposing )
         {
-            if (_disposed)
+            if ( _disposed )
                 return;
-            if (disposing)
+            if ( disposing )
             {
-                Services.ForEach(s => s.Dispose());
+                Services.ForEach( s => s.Dispose() );
                 Services.Clear();
             }
             _disposed = true;
@@ -123,14 +114,12 @@ namespace Symbiote.Daemon.Host
 
         ~ServiceCoordinator()
         {
-            Dispose(false);
+            Dispose( false );
         }
 
-        #endregion
-
-        public void AddNewService(IServiceController controller)
+        public void AddNewService( IServiceController controller )
         {
-            Services.Add(controller);
+            Services.Add( controller );
         }
 
         public void RegisterServices()
@@ -139,14 +128,21 @@ namespace Symbiote.Daemon.Host
                 .Assimilation
                 .DependencyAdapter
                 .GetTypesRegisteredFor<IDaemon>()
-                .Select(x => typeof (ServiceController<>).MakeGenericType(x))
-                .Select(CreateController)
-                .ForEach(Services.Add);
+                .Select( x => typeof( ServiceController<> ).MakeGenericType( x ) )
+                .Select( CreateController )
+                .ForEach( Services.Add );
         }
 
-        protected IServiceController CreateController(Type type)
+        protected IServiceController CreateController( Type type )
         {
-            return Assimilate.GetInstanceOf(type) as IServiceController;
+            return Assimilate.GetInstanceOf( type ) as IServiceController;
+        }
+
+        public ServiceCoordinator( DaemonConfiguration configuration )
+        {
+            Services = new List<IServiceController>();
+            Configuration = configuration;
+            RegisterServices();
         }
     }
 }

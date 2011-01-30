@@ -1,12 +1,17 @@
-﻿namespace Actor.Tests
+﻿using System;
+using Symbiote.Core.Actor;
+
+namespace Actor.Tests
 {
     public class DummyActor
     {
-        public static int Instantiated { get; set; }
+        public string Id { get; set; }
 
         public DummyActor()
         {
             Instantiated++;
         }
+
+        public static int Instantiated { get; set; }
     }
 }

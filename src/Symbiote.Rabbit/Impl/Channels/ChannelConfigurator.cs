@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 
 namespace Symbiote.Rabbit.Impl.Channels
@@ -22,7 +21,7 @@ namespace Symbiote.Rabbit.Impl.Channels
     {
         public ChannelDefinition ChannelDefinition { get; protected set; }
 
-        public ChannelConfigurator Direct(string exchangeName)
+        public ChannelConfigurator Direct( string exchangeName )
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -30,7 +29,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             return this;
         }
 
-        public ChannelConfigurator Fanout(string exchangeName)
+        public ChannelConfigurator Fanout( string exchangeName )
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -38,7 +37,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             return this;
         }
 
-        public ChannelConfigurator Topic(string exchangeName)
+        public ChannelConfigurator Topic( string exchangeName )
         {
             ChannelDefinition.Exchange = exchangeName;
             ChannelDefinition.Name = exchangeName;
@@ -102,29 +101,29 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         public ChannelConfigurator SerializeBy<TSerializer>()
         {
-            ChannelDefinition.SerializerType = typeof(TSerializer);
+            ChannelDefinition.SerializerType = typeof( TSerializer );
             return this;
         }
 
-        public ChannelConfigurator RouteBy<TMessage>(string routingKey)
+        public ChannelConfigurator RouteBy<TMessage>( string routingKey )
         {
             ChannelDefinition.RouteBy<TMessage>( routingKey );
             return this;
         }
 
-        public ChannelConfigurator RouteBy<TMessage>(Func<TMessage, string> messageProperty)
+        public ChannelConfigurator RouteBy<TMessage>( Func<TMessage, string> messageProperty )
         {
             ChannelDefinition.RouteBy( messageProperty );
             return this;
         }
 
-        public ChannelConfigurator CorrelateBy<TMessage>(string correlationId)
+        public ChannelConfigurator CorrelateBy<TMessage>( string correlationId )
         {
             ChannelDefinition.CorrelateBy<TMessage>( correlationId );
             return this;
         }
 
-        public ChannelConfigurator CorrelateBy<TMessage>(Func<TMessage, string> messageProperty)
+        public ChannelConfigurator CorrelateBy<TMessage>( Func<TMessage, string> messageProperty )
         {
             ChannelDefinition.CorrelateBy( messageProperty );
             return this;

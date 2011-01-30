@@ -19,6 +19,11 @@ namespace Actor.Tests.Agent
 
         private Establish context = () =>
         {
+            WireupAgentMocks();
+        };
+
+        public static void WireupAgentMocks()
+        {
             MockActorCache = new Mock<IActorCache<DummyActor>>();
 
             ActorCache = MockActorCache.Object;
@@ -26,7 +31,7 @@ namespace Actor.Tests.Agent
             MockActorStore = new Mock<IActorStore<DummyActor>>();
 
             ActorStore = MockActorStore.Object;
-            Agent = new DefaultAgent<DummyActor>( ActorCache, ActorStore, ActorFactory, new Memoizer() );
-        };
+            Agent = new DefaultAgent<DummyActor>(ActorCache, ActorStore, ActorFactory, new Memoizer());
+        }
     }
 }

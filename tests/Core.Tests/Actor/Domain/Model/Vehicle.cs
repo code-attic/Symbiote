@@ -6,6 +6,19 @@
         public string Make { get; protected set; }
         public string Model { get; protected set; }
         public int Year { get; protected set; }
+        
+        public Vehicle(IVehicleMemento vehicleMemento)
+        {
+            PopulateFrom(vehicleMemento);
+        }
+
+        public Vehicle(string vin, string make, string model, int year)
+        {
+            VIN = vin;
+            Make = make;
+            Model = model;
+            Year = year;
+        }
 
         public void Populate(IVehicleMemento vehicleMemento)
         {
@@ -21,19 +34,6 @@
             Make = vehicleMemento.Make;
             Model = vehicleMemento.Model;
             Year = vehicleMemento.Year;
-        }
-
-        public Vehicle(IVehicleMemento vehicleMemento)
-        {
-            PopulateFrom( vehicleMemento );
-        }
-
-        public Vehicle( string vin, string make, string model, int year )
-        {
-            VIN = vin;
-            Make = make;
-            Model = model;
-            Year = year;
         }
     }
 }

@@ -1,24 +1,22 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
@@ -42,44 +40,44 @@ namespace Symbiote.Couch.Impl.Commands
             Post();
         }
 
-        public void CompactView<TModel>(string view)
+        public void CompactView<TModel>( string view )
         {
             CreateUri<TModel>()
-                .CompactView(view);
+                .CompactView( view );
             Post();
         }
 
-        public void CopyDatabase<TModel>(CouchUri targetUri)
+        public void CopyDatabase<TModel>( CouchUri targetUri )
         {
             try
             {
                 CreateUri().Replicate();
                 var sourceUri = configuration.NewUri<TModel>();
-                var request = ReplicationCommand.Once(sourceUri, targetUri);
-                var body = request.ToJson(false);
-                Post(body);
+                var request = ReplicationCommand.Once( sourceUri, targetUri );
+                var body = request.ToJson( false );
+                Post( body );
             }
-            catch (WebException ex)
+            catch ( WebException ex )
             {
                 //do nothing, it's a timeout
-                if (!ex.Message.Contains("timed out"))
+                if ( !ex.Message.Contains( "timed out" ) )
                     throw;
             }
         }
 
-        public void CopyDatabase(CouchUri sourceUri, CouchUri targetUri)
+        public void CopyDatabase( CouchUri sourceUri, CouchUri targetUri )
         {
             try
             {
                 CreateUri().Replicate();
-                var request = ReplicationCommand.Once(sourceUri, targetUri);
-                var body = request.ToJson(false);
-                Post(body);
+                var request = ReplicationCommand.Once( sourceUri, targetUri );
+                var body = request.ToJson( false );
+                Post( body );
             }
-            catch (WebException ex)
+            catch ( WebException ex )
             {
                 //do nothing, it's a timeout
-                if (!ex.Message.Contains("timed out"))
+                if ( !ex.Message.Contains( "timed out" ) )
                     throw;
             }
         }
@@ -87,31 +85,32 @@ namespace Symbiote.Couch.Impl.Commands
         public void CreateDatabase<TModel>()
         {
             var database = configuration.GetDatabaseNameForType<TModel>();
-            CreateDatabase(database);
+            CreateDatabase( database );
         }
 
-        public void CreateDatabase(string database)
+        public void CreateDatabase( string database )
         {
-            Uri = configuration.Preauthorize ?
-                new CouchUri(configuration.User, configuration.Password, configuration.Protocol, configuration.Server, configuration.Port, database) :
-                new CouchUri(configuration.Protocol, configuration.Server, configuration.Port, database);
+            Uri = configuration.Preauthorize
+                      ? new CouchUri( configuration.User, configuration.Password, configuration.Protocol,
+                                      configuration.Server, configuration.Port, database )
+                      : new CouchUri( configuration.Protocol, configuration.Server, configuration.Port, database );
             Put();
         }
 
         public bool DatabaseExists<TModel>()
         {
-            return DatabaseExists(configuration.GetDatabaseNameForType<TModel>());
+            return DatabaseExists( configuration.GetDatabaseNameForType<TModel>() );
         }
 
-        public bool DatabaseExists(string database)
+        public bool DatabaseExists( string database )
         {
             try
             {
-                Uri = new CouchUri(configuration.Protocol, configuration.Server, configuration.Port, database);
-                var response = action.Get(Uri);
-                return !string.IsNullOrEmpty(response) && !response.StartsWith("{\"error\"");
+                Uri = new CouchUri( configuration.Protocol, configuration.Server, configuration.Port, database );
+                var response = action.Get( Uri );
+                return !string.IsNullOrEmpty( response ) && !response.StartsWith( "{\"error\"" );
             }
-            catch (Exception ex)
+            catch ( Exception ex )
             {
                 throw Exception(
                     ex,
@@ -125,7 +124,7 @@ namespace Symbiote.Couch.Impl.Commands
 
         public IList<string> GetDatabaseList()
         {
-            CreateUri("_all_dbs");
+            CreateUri( "_all_dbs" );
             var result = Get();
             return result.GetResultAs<string[]>().ToList();
         }
@@ -136,24 +135,24 @@ namespace Symbiote.Couch.Impl.Commands
             Delete();
         }
 
-        public void Replicate<TModel>(CouchUri targetUri)
+        public void Replicate<TModel>( CouchUri targetUri )
         {
             CreateUri().Replicate();
             var sourceUri = configuration.NewUri<TModel>();
-            var request = ReplicationCommand.Continuous(sourceUri, targetUri);
-            var body = request.ToJson(false);
-            Post(body);
+            var request = ReplicationCommand.Continuous( sourceUri, targetUri );
+            var body = request.ToJson( false );
+            Post( body );
         }
 
-        public void Replicate(CouchUri sourceUri, CouchUri targetUri)
+        public void Replicate( CouchUri sourceUri, CouchUri targetUri )
         {
             CreateUri().Replicate();
-            var request = ReplicationCommand.Continuous(sourceUri, targetUri);
-            var body = request.ToJson(false);
-            Post(body);
+            var request = ReplicationCommand.Continuous( sourceUri, targetUri );
+            var body = request.ToJson( false );
+            Post( body );
         }
 
-        public ServerCommand(IHttpAction action, ICouchConfiguration configuration) : base(action, configuration)
+        public ServerCommand( IHttpAction action, ICouchConfiguration configuration ) : base( action, configuration )
         {
         }
     }

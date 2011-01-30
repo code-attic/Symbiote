@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System.Collections.Generic;
 
 namespace Symbiote.Http
@@ -72,39 +71,39 @@ namespace Symbiote.Http
         public static readonly string P7c = "application/x-pkcs7-mime";
         public static readonly string P7s = "application/x-pkcs7-signature";
 
-        public static readonly Dictionary<string, string> ContentByExtension = new Dictionary<string, string>()
-        {
-            {"bmp", Bmp},
-            {"css", Css},
-            {"csv", Csv},
-            {"doc", Word},
-            {"docx", DocX},
-            {"gif", Gif},
-            {"htm", Html},
-            {"html", Html},
-            {"ico", Ico},
-            {"jpg", Jpeg},
-            {"js",Javascript},
-            {"mp3", Mp3},
-            {"mp4", Mp4},
-            {"mpg", Mpeg},
-            {"pdf", Pdf},
-            {"png", Png},
-            {"ppt", PowerPoint},
-            {"ppx", PPX},
-            {"qt", QuickTime},
-            {"rar", Rar},
-            {"svg", Svg},
-            {"tar", Tar},
-            {"tff", Tiff},
-            {"txt", Plain},
-            {"wma", Wma},
-            {"wmv", Wmv},
-            {"xhtml", Xhtml},
-            {"xml", Xml},
-            {"xls", Excel},
-            {"xlsx", ExcelX},
-            {"zip",Zip},
-        };
+        public static readonly Dictionary<string, string> ContentByExtension = new Dictionary<string, string>
+                                                                                   {
+                                                                                       {"bmp", Bmp},
+                                                                                       {"css", Css},
+                                                                                       {"csv", Csv},
+                                                                                       {"doc", Word},
+                                                                                       {"docx", DocX},
+                                                                                       {"gif", Gif},
+                                                                                       {"htm", Html},
+                                                                                       {"html", Html},
+                                                                                       {"ico", Ico},
+                                                                                       {"jpg", Jpeg},
+                                                                                       {"js", Javascript},
+                                                                                       {"mp3", Mp3},
+                                                                                       {"mp4", Mp4},
+                                                                                       {"mpg", Mpeg},
+                                                                                       {"pdf", Pdf},
+                                                                                       {"png", Png},
+                                                                                       {"ppt", PowerPoint},
+                                                                                       {"ppx", PPX},
+                                                                                       {"qt", QuickTime},
+                                                                                       {"rar", Rar},
+                                                                                       {"svg", Svg},
+                                                                                       {"tar", Tar},
+                                                                                       {"tff", Tiff},
+                                                                                       {"txt", Plain},
+                                                                                       {"wma", Wma},
+                                                                                       {"wmv", Wmv},
+                                                                                       {"xhtml", Xhtml},
+                                                                                       {"xml", Xml},
+                                                                                       {"xls", Excel},
+                                                                                       {"xlsx", ExcelX},
+                                                                                       {"zip", Zip},
+                                                                                   };
     }
 }

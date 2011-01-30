@@ -1,4 +1,19 @@
-﻿using System;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System;
 using System.Threading;
 
 namespace Symbiote.Core.Futures
@@ -10,29 +25,29 @@ namespace Symbiote.Core.Futures
             return new FutureResult<T>( call );
         }
 
-        public static FutureCallback<T> Of<T>(Action<Action<T>> call)
+        public static FutureCallback<T> Of<T>( Action<Action<T>> call )
         {
-           return new FutureCallback<T>( call );
+            return new FutureCallback<T>( call );
         }
-    
-        public static FutureAction Blind(Action call)
+
+        public static FutureAction Blind( Action call )
         {
             return new FutureAction( call );
         }
 
-        public static FutureAction<T> Of<T>(Action call)
+        public static FutureAction<T> Of<T>( Action call )
         {
-            return new FutureAction<T>(call);
+            return new FutureAction<T>( call );
         }
     }
 
     public abstract class Future<T>
     {
+        protected bool ActiveCall;
         protected IAsyncResult AsyncResult { get; set; }
         protected int Attempts { get; set; }
         protected Action<T> Coroutine { get; set; }
         protected bool HasResult { get; set; }
-        protected bool ActiveCall;
         protected int Limit { get; set; }
         protected Func<T> OnFail { get; set; }
         protected Action<Exception> ExceptionHandler { get; set; }
@@ -44,22 +59,22 @@ namespace Symbiote.Core.Futures
         {
             get
             {
-                while (Attempts < Limit && !HasResult)
+                while ( Attempts < Limit && !HasResult )
                 {
                     InvokeCall();
-                    if (!AsyncResult.IsCompleted)
+                    if ( !AsyncResult.IsCompleted )
                     {
-                        AsyncResult.AsyncWaitHandle.WaitOne(Timeout);
+                        AsyncResult.AsyncWaitHandle.WaitOne( Timeout );
                     }
                     Attempts++;
-                    Thread.Sleep(TimeBetweenTries);
+                    Thread.Sleep( TimeBetweenTries );
                 }
 
-                if (!HasResult && Attempts >= Limit)
+                if ( !HasResult && Attempts >= Limit )
                     Result = OnFail();
-                
-                if (Coroutine != null && HasResult)
-                    Coroutine(Result);
+
+                if ( Coroutine != null && HasResult )
+                    Coroutine( Result );
 
                 return Result;
             }
@@ -69,13 +84,13 @@ namespace Symbiote.Core.Futures
         {
             Limit = 1;
             TimeBetweenTries = TimeSpan.Zero;
-            Timeout = TimeSpan.FromMilliseconds(-1);
+            Timeout = TimeSpan.FromMilliseconds( -1 );
             OnFail = () => default(T);
         }
 
         protected abstract void InvokeCall();
 
-        public Future<T> MaxRetries(int retries)
+        public Future<T> MaxRetries( int retries )
         {
             Limit = retries;
             return this;
@@ -87,51 +102,51 @@ namespace Symbiote.Core.Futures
         //    return this;
         //}
 
-        public Future<T> OnFailure(Func<T> onFailure)
+        public Future<T> OnFailure( Func<T> onFailure )
         {
             OnFail = onFailure;
             return this;
         }
 
-        public Future<T> OnException(Action<Exception> exceptionHandler)
+        public Future<T> OnException( Action<Exception> exceptionHandler )
         {
             ExceptionHandler = exceptionHandler;
             return this;
         }
 
-        public Future<T> OnValue(Action<T> handle)
+        public Future<T> OnValue( Action<T> handle )
         {
             Coroutine = handle;
-            if (HasResult)
-                handle(Value);
+            if ( HasResult )
+                handle( Value );
             return this;
         }
 
-        public Future<T> TimeBetweenRetries(int miliseconds)
+        public Future<T> TimeBetweenRetries( int miliseconds )
         {
-            TimeBetweenTries = TimeSpan.FromMilliseconds(miliseconds);
+            TimeBetweenTries = TimeSpan.FromMilliseconds( miliseconds );
             return this;
         }
 
-        public Future<T> TimeBetweenRetries(TimeSpan span)
+        public Future<T> TimeBetweenRetries( TimeSpan span )
         {
             TimeBetweenTries = span;
             return this;
         }
 
-        public Future<T> WaitFor(TimeSpan span)
+        public Future<T> WaitFor( TimeSpan span )
         {
             Timeout = span;
             return this;
         }
 
-        public Future<T> WaitFor(int miliseconds)
+        public Future<T> WaitFor( int miliseconds )
         {
-            Timeout = TimeSpan.FromMilliseconds(miliseconds);
+            Timeout = TimeSpan.FromMilliseconds( miliseconds );
             return this;
         }
 
-        public static implicit operator T(Future<T> future)
+        public static implicit operator T( Future<T> future )
         {
             return future.Value;
         }

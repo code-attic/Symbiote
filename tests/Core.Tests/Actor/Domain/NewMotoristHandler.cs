@@ -10,17 +10,17 @@ namespace Actor.Tests.Domain
         public IAgent<Driver> Drivers { get; set; }
         public DriverFactory Factory { get; set; }
 
-        public void Handle( IEnvelope<NewMotoristMessage> envelope )
-        {
-            var message = envelope.Message;
-            var driver = Factory.CreateNewDriver( message.SSN, message.FirstName, message.LastName, message.DateOfBirth );
-            Drivers.RegisterActor( driver.SSN, driver );
-        }
-
-        public NewMotoristHandler( IAgent<Driver> drivers, DriverFactory factory )
+        public NewMotoristHandler(IAgent<Driver> drivers, DriverFactory factory)
         {
             Drivers = drivers;
             Factory = factory;
+        }
+
+        public void Handle(IEnvelope<NewMotoristMessage> envelope)
+        {
+            var message = envelope.Message;
+            var driver = Factory.CreateNewDriver(message.SSN, message.FirstName, message.LastName, message.DateOfBirth);
+            Drivers.RegisterActor(driver.SSN, driver);
         }
     }
 }

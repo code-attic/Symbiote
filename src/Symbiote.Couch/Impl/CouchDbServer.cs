@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System.Collections.Generic;
 using Symbiote.Couch.Impl.Commands;
 using Symbiote.Couch.Impl.Http;
@@ -24,6 +23,8 @@ namespace Symbiote.Couch.Impl
     {
         protected IDocumentRepository repository { get; set; }
         protected CouchCommandFactory commandFactory { get; set; }
+
+        #region ICouchServer Members
 
         public void CleanViews<TModel>()
         {
@@ -37,22 +38,22 @@ namespace Symbiote.Couch.Impl
             command.CompactDatabase<TModel>();
         }
 
-        public void CompactView<TModel>(string testview)
+        public void CompactView<TModel>( string testview )
         {
             var command = commandFactory.CreateServerCommand();
-            command.CompactView<TModel>(testview);
+            command.CompactView<TModel>( testview );
         }
 
-        public void CopyDatabase<TModel>(CouchUri targetUri)
+        public void CopyDatabase<TModel>( CouchUri targetUri )
         {
             var command = commandFactory.CreateServerCommand();
-            command.CopyDatabase<TModel>(targetUri);
+            command.CopyDatabase<TModel>( targetUri );
         }
 
-        public void CopyDatabase(CouchUri sourceUri, CouchUri targetUri)
+        public void CopyDatabase( CouchUri sourceUri, CouchUri targetUri )
         {
             var command = commandFactory.CreateServerCommand();
-            command.CopyDatabase(sourceUri, targetUri);
+            command.CopyDatabase( sourceUri, targetUri );
         }
 
         public void CreateDatabase<TModel>()
@@ -82,22 +83,16 @@ namespace Symbiote.Couch.Impl
             command.DeleteDatabase<TModel>();
         }
 
-        public void Replicate<TModel>(CouchUri targetUri) 
+        public void Replicate<TModel>( CouchUri targetUri )
         {
             var command = commandFactory.CreateServerCommand();
-            command.Replicate<TModel>(targetUri);
+            command.Replicate<TModel>( targetUri );
         }
 
-        public void Replicate(CouchUri sourceUri, CouchUri targetUri)
+        public void Replicate( CouchUri sourceUri, CouchUri targetUri )
         {
             var command = commandFactory.CreateServerCommand();
-            command.Replicate(sourceUri, targetUri);
-        }
-
-        public CouchDbServer(IDocumentRepository repository, CouchCommandFactory commandFactory)
-        {
-            this.commandFactory = commandFactory;
-            this.repository = repository;
+            command.Replicate( sourceUri, targetUri );
         }
 
         public IDocumentRepository Repository
@@ -107,7 +102,15 @@ namespace Symbiote.Couch.Impl
 
         public void Dispose()
         {
-            repository.Dispose();   
+            repository.Dispose();
+        }
+
+        #endregion
+
+        public CouchDbServer( IDocumentRepository repository, CouchCommandFactory commandFactory )
+        {
+            this.commandFactory = commandFactory;
+            this.repository = repository;
         }
     }
 }

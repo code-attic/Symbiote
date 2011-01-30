@@ -110,6 +110,8 @@
     <Compile Include="Assimilate.cs" />
     <Compile Include="Assimilation.cs" />
     <Compile Include="AssimilationException.cs" />
+    <Compile Include="Collections\MruDictionary.cs" />
+    <Compile Include="Collections\MruNode.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Actor\Agency.cs" />
     <Compile Include="Actor\IActorCache.cs" />
@@ -120,7 +122,7 @@
     <Compile Include="Actor\IAgentFactory.cs" />
     <Compile Include="Actor\Saga.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
-    <Compile Include="Collections\TimeSensitiveDictionary.cs" />
+    <Compile Include="Collections\MruList.cs" />
     <Compile Include="Config\FromConfig.cs" />
     <Compile Include="Utility\DelimitedBuilder.cs">
       <SubType>Code</SubType>

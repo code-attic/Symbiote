@@ -1,93 +1,91 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Symbiote.Core.Extensions
 {
     public static class IEnumerableExtenders
     {
-        public static IEnumerable<T> Flatten<T>(this IEnumerable<IEnumerable<T>> nestedCollection)
+        public static IEnumerable<T> Flatten<T>( this IEnumerable<IEnumerable<T>> nestedCollection )
         {
-            return nestedCollection.SelectMany(c => c);
+            return nestedCollection.SelectMany( c => c );
         }
 
-        public static Dictionary<K, V> ZipToDictionary<K, V>(this IEnumerable<K> keys, IEnumerable<V> values)
+        public static Dictionary<K, V> ZipToDictionary<K, V>( this IEnumerable<K> keys, IEnumerable<V> values )
         {
             var keyList = new List<K>();
-            return keys.Take(values.Count()).ToDictionary(
+            return keys.Take( values.Count() ).ToDictionary(
                 key =>
-                {
-                    keyList.Add(key);
-                    return key;
-                },
-                key => values.ElementAt(keyList.Count - 1));
+                    {
+                        keyList.Add( key );
+                        return key;
+                    },
+                key => values.ElementAt( keyList.Count - 1 ) );
         }
 
-        public static List<Tuple<K, V>> Zip<K, V>(this IEnumerable<K> collection1, IEnumerable<V> collection2)
+        public static List<Tuple<K, V>> Zip<K, V>( this IEnumerable<K> collection1, IEnumerable<V> collection2 )
         {
             var index = 0;
             return collection1
-                    .Take(collection2.Count())
-                    .Select<K, Tuple<K, V>>(value1 => Tuple.Create(value1, collection2.ElementAt(index++)))
-                    .ToList();
+                .Take( collection2.Count() )
+                .Select( value1 => Tuple.Create( value1, collection2.ElementAt( index++ ) ) )
+                .ToList();
         }
 
-        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        public static void ForEach<T>( this IEnumerable<T> enumerable, Action<T> action )
         {
-            if (enumerable == null)
+            if ( enumerable == null )
                 return;
 
-            if (action == null)
-                throw new ArgumentNullException("action");
+            if ( action == null )
+                throw new ArgumentNullException( "action" );
 
-            foreach (var t in enumerable)
+            foreach( var t in enumerable )
             {
-                action(t);
+                action( t );
             }
         }
 
-        public static string BuildString(this IEnumerable<string> source, string delimiter)
+        public static string BuildString( this IEnumerable<string> source, string delimiter )
         {
-            return String.Join(delimiter, source);
+            return String.Join( delimiter, source );
         }
 
-        public static IEnumerable<IEnumerable<T>> UniquePermutations<T>(this IEnumerable<T> enumerable)
+        public static IEnumerable<IEnumerable<T>> UniquePermutations<T>( this IEnumerable<T> enumerable )
         {
             var count = enumerable.Count();
-            int total = (int)(Math.Pow(2, count)) - 1;
-            var permutations = (from m in Enumerable.Range(1, 1 << count)
+            int total = (int) (Math.Pow( 2, count )) - 1;
+            var permutations = (from m in Enumerable.Range( 1, 1 << count )
                                 select
-                                    from i in Enumerable.Range(0, count)
+                                    from i in Enumerable.Range( 0, count )
                                     where (m & (1 << i)) != 0
-                                    select enumerable.Skip(i).Take(1).First());
+                                    select enumerable.Skip( i ).Take( 1 ).First());
             return
                 permutations
-                    .Take(total)
-                    .Select(x => x).ToList();
+                    .Take( total )
+                    .Select( x => x ).ToList();
         }
 
-        public static T TakeRandomly<T>(this IEnumerable<T> enumerable)
+        public static T TakeRandomly<T>( this IEnumerable<T> enumerable )
         {
-            var rnd = new Random((int) DateTime.UtcNow.TimeOfDay.TotalSeconds);
-            var index = rnd.Next(0, enumerable.Count());
-            return enumerable.Skip(index).Take(1).First();
+            var rnd = new Random( (int) DateTime.UtcNow.TimeOfDay.TotalSeconds );
+            var index = rnd.Next( 0, enumerable.Count() );
+            return enumerable.Skip( index ).Take( 1 ).First();
         }
     }
 }

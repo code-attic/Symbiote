@@ -1,19 +1,18 @@
-﻿/* 
-Copyright 2008-2010 Alex Robson
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-   http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,12 +35,13 @@ namespace Symbiote.Messaging
     {
         private static IDisposable EventSubscription { get; set; }
 
-        public static IAssimilate Messaging(this IAssimilate assimilate, Action<EventChannelConfigurator> eventChannels)
+        public static IAssimilate Messaging( this IAssimilate assimilate, Action<EventChannelConfigurator> eventChannels )
         {
             var publisher = Assimilate.GetInstanceOf<IEventPublisher>() as IObservable<IEvent>;
-            if(publisher == null)
+            if ( publisher == null )
             {
-                throw new AssimilationException( "You must call the Actor assimilation extension method before setting up event channels in Symbiote.Messaging." );
+                throw new AssimilationException(
+                    "You must call the Actor assimilation extension method before setting up event channels in Symbiote.Messaging." );
             }
 
             Messaging( assimilate );
@@ -54,47 +54,47 @@ namespace Symbiote.Messaging
             return assimilate;
         }
 
-        public static IAssimilate Messaging(this IAssimilate assimilate)
+        public static IAssimilate Messaging( this IAssimilate assimilate )
         {
-            assimilate.Dependencies(x =>
-            {
-                x.Scan(ScanAssemblies);
-                DefineDependencies( x );
-            } );
+            assimilate.Dependencies( x =>
+                                         {
+                                             x.Scan( ScanAssemblies );
+                                             DefineDependencies( x );
+                                         } );
 
             var handlerInterfaces = GetHandlerInterfaces().ToList();
             var dispatcherPairs = GetMessageDispatcherPairs( handlerInterfaces );
             var actorDispatcherPairs = GetActorDispatcherPairs( handlerInterfaces );
             var sagaPairs = GetSagaDispatcherPairs();
-            
-            var simpleInterface = typeof(IDispatchMessage);
-            Assimilate.Dependencies(x =>
-                                        {
-                                            dispatcherPairs.ForEach( p =>
-                                            {
-                                                x.For(p.Item1).Use(p.Item2);
-                                                x.For(simpleInterface).Add(p.Item2);
-                                            });
 
-                                            actorDispatcherPairs.ForEach( p =>
-                                            {
-                                                x.For(p.Item1).Use(p.Item2);
-                                                x.For(simpleInterface).Add(p.Item2);
-                                            });
+            var simpleInterface = typeof( IDispatchMessage );
+            Assimilate.Dependencies( x =>
+                                         {
+                                             dispatcherPairs.ForEach( p =>
+                                                                          {
+                                                                              x.For( p.Item1 ).Use( p.Item2 );
+                                                                              x.For( simpleInterface ).Add( p.Item2 );
+                                                                          } );
 
-                                            sagaPairs.ForEach( p =>
-                                            {
-                                                x.For( p.Item1 ).Use( p.Item2 );
-                                                x.For( simpleInterface ).Add( p.Item2 );
-                                            } );
-                                        });
+                                             actorDispatcherPairs.ForEach( p =>
+                                                                               {
+                                                                                   x.For( p.Item1 ).Use( p.Item2 );
+                                                                                   x.For( simpleInterface ).Add( p.Item2 );
+                                                                               } );
+
+                                             sagaPairs.ForEach( p =>
+                                                                    {
+                                                                        x.For( p.Item1 ).Use( p.Item2 );
+                                                                        x.For( simpleInterface ).Add( p.Item2 );
+                                                                    } );
+                                         } );
             // Pre-load expensive instances
             Preload();
 
             return assimilate;
         }
 
-        private static void DefineDependencies( DependencyConfigurator x ) 
+        private static void DefineDependencies( DependencyConfigurator x )
         {
             x.For<IBus>().Use<Bus>();
             x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
@@ -117,58 +117,64 @@ namespace Symbiote.Messaging
                     .GetAllInstances<ISaga>();
 
             return sagas
-                .SelectMany(s =>
-                {
-                    var actorType = s.ActorType;
-                    return s
-                        .Handles
-                        .Select(x =>
-                        {
-                            var dispatchInterface = typeof(IDispatchToSaga<,,>).MakeGenericType(s.GetType(), actorType, x);
-                            var dispatchType = typeof(SagaMessageDispatcher<,,>).MakeGenericType(s.GetType(), actorType, x);
-                            return Tuple.Create(dispatchInterface, dispatchType);
-                        });
-                });
+                .SelectMany( s =>
+                                 {
+                                     var actorType = s.ActorType;
+                                     return s
+                                         .Handles
+                                         .Select( x =>
+                                                      {
+                                                          var dispatchInterface =
+                                                              typeof( IDispatchToSaga<,,> ).MakeGenericType(
+                                                                  s.GetType(), actorType, x );
+                                                          var dispatchType =
+                                                              typeof( SagaMessageDispatcher<,,> ).MakeGenericType(
+                                                                  s.GetType(), actorType, x );
+                                                          return Tuple.Create( dispatchInterface, dispatchType );
+                                                      } );
+                                 } );
         }
 
-        private static IEnumerable<Tuple<Type, Type>> GetActorDispatcherPairs(List<Type> handlers)
+        private static IEnumerable<Tuple<Type, Type>> GetActorDispatcherPairs( List<Type> handlers )
         {
             return handlers
-                .SelectMany(h =>
-                {
-                    var interfaces = h.GetInterfaces().Where(t => t.Name == "IHandle`2");
-                    return interfaces
-                        .Select(handler =>
-                        {
-                            var messageType = handler.GetGenericArguments()[1];
-                            var actorType = handler.GetGenericArguments()[0];
-                            var dispatcherInterface =
-                                typeof(IDispatchMessage<,>).MakeGenericType(actorType,
-                                                                             messageType);
-                            var dispatcherType =
-                                typeof(ActorMessageDispatcher<,>).MakeGenericType(
-                                    actorType,
-                                    messageType);
-                            return Tuple.Create(dispatcherInterface, dispatcherType);
-                        });
-                });
+                .SelectMany( h =>
+                                 {
+                                     var interfaces = h.GetInterfaces().Where( t => t.Name == "IHandle`2" );
+                                     return interfaces
+                                         .Select( handler =>
+                                                      {
+                                                          var messageType = handler.GetGenericArguments()[1];
+                                                          var actorType = handler.GetGenericArguments()[0];
+                                                          var dispatcherInterface =
+                                                              typeof( IDispatchMessage<,> ).MakeGenericType( actorType,
+                                                                                                             messageType );
+                                                          var dispatcherType =
+                                                              typeof( ActorMessageDispatcher<,> ).MakeGenericType(
+                                                                  actorType,
+                                                                  messageType );
+                                                          return Tuple.Create( dispatcherInterface, dispatcherType );
+                                                      } );
+                                 } );
         }
 
-        private static IEnumerable<Tuple<Type, Type>> GetMessageDispatcherPairs(List<Type> handlers)
+        private static IEnumerable<Tuple<Type, Type>> GetMessageDispatcherPairs( List<Type> handlers )
         {
             return handlers
-                .SelectMany(h =>
-                {
-                    var interfaces = h.GetInterfaces().Where(t => t.Name == "IHandle`1");
-                    return interfaces
-                        .Select(handler =>
-                        {
-                            var messageType = handler.GetGenericArguments()[0];
-                            var dispatchInterface = typeof(IDispatchMessage<>).MakeGenericType(messageType);
-                            var dispatchType = typeof(MessageDispatcher<>).MakeGenericType(messageType);
-                            return Tuple.Create(dispatchInterface, dispatchType);
-                        });
-                });
+                .SelectMany( h =>
+                                 {
+                                     var interfaces = h.GetInterfaces().Where( t => t.Name == "IHandle`1" );
+                                     return interfaces
+                                         .Select( handler =>
+                                                      {
+                                                          var messageType = handler.GetGenericArguments()[0];
+                                                          var dispatchInterface =
+                                                              typeof( IDispatchMessage<> ).MakeGenericType( messageType );
+                                                          var dispatchType =
+                                                              typeof( MessageDispatcher<> ).MakeGenericType( messageType );
+                                                          return Tuple.Create( dispatchInterface, dispatchType );
+                                                      } );
+                                 } );
         }
 
         private static IEnumerable<Type> GetHandlerInterfaces()
@@ -178,7 +184,7 @@ namespace Symbiote.Messaging
                     .Assimilation
                     .DependencyAdapter
                     .RegisteredPluginTypes
-                    .Where(x => typeof(IHandle).IsAssignableFrom(x) || x.IsAssignableFrom(typeof(IHandle)));
+                    .Where( x => typeof( IHandle ).IsAssignableFrom( x ) || x.IsAssignableFrom( typeof( IHandle ) ) );
         }
 
         private static void Preload()
@@ -191,16 +197,16 @@ namespace Symbiote.Messaging
             AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(a =>
-                    a.GetReferencedAssemblies().Any(
-                        r => r.FullName.Contains("Symbiote.Messaging")) ||
-                    a.FullName.Contains("Symbiote.Messaging"))
-                .ForEach(s.Assembly);
+                .Where( a =>
+                        a.GetReferencedAssemblies().Any(
+                            r => r.FullName.Contains( "Symbiote.Messaging" ) ) ||
+                        a.FullName.Contains( "Symbiote.Messaging" ) )
+                .ForEach( s.Assembly );
 
             s.ConnectImplementationsToTypesClosing(
-                typeof (IHandle<>));
+                typeof( IHandle<> ) );
             s.ConnectImplementationsToTypesClosing(
-                typeof (IHandle<,>));
+                typeof( IHandle<,> ) );
             s.AddAllTypesOf<INodeHealthBroadcaster>();
             s.AddAllTypesOf<INodeChannelManager>();
         }
