@@ -36,19 +36,11 @@ namespace Symbiote.Couch.Impl.Model
             }
         }
 
-        [JsonProperty( "$doc_related_ids" )]
-        internal virtual Dictionary<string, object[]> RelatedDocumentIds { get; set; }
-
-        [JsonProperty( "$doc_parent_id" )]
-        internal virtual object ParentId { get; set; }
-
         [JsonIgnore]
         public virtual IEnumerable<string> Attachments
         {
             get { return attachments.Root.Children().Select( x => (x as JProperty).Name ); }
         }
-
-        #region IHaveAttachments Members
 
         public virtual void AddAttachment( string attachmentName, string contentType, long contentLength )
         {
@@ -78,12 +70,9 @@ namespace Symbiote.Couch.Impl.Model
             }
         }
 
-        #endregion
-
         protected BaseDocument()
         {
             attachments = JObject.FromObject( new object() );
-            RelatedDocumentIds = new Dictionary<string, object[]>();
         }
     }
 }

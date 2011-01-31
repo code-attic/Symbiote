@@ -25,8 +25,6 @@ namespace Symbiote.Daemon.Host
         public readonly ServiceName Name;
         public readonly IServiceCoordinator ServiceCoordinator;
 
-        #region IHost Members
-
         public void Start()
         {
             CheckToSeeIfWinServiceRunning();
@@ -47,8 +45,6 @@ namespace Symbiote.Daemon.Host
                 .ToInfo<IHost>();
             WaitHandle.WaitAny( waitHandles );
         }
-
-        #endregion
 
         protected void CheckToSeeIfWinServiceRunning()
         {

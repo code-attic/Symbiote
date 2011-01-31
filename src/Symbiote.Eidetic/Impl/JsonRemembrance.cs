@@ -26,8 +26,6 @@ namespace Symbiote.Eidetic.Impl
         private DateTime _until;
         private string _value;
 
-        #region IRemembrance Members
-
         public IRemembrance Is<T>( T value )
         {
             _value = value.ToJson();
@@ -45,8 +43,6 @@ namespace Symbiote.Eidetic.Impl
             _until = expiration;
             return this;
         }
-
-        #endregion
 
         internal T Fetch<T>()
         {

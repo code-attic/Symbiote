@@ -26,8 +26,6 @@ namespace Symbiote.Core.Actor
     {
         public StateMachine<TActor> StateMachine { get; set; }
 
-        #region ISaga<TActor> Members
-
         public Type ActorType
         {
             get { return typeof( TActor ); }
@@ -53,8 +51,6 @@ namespace Symbiote.Core.Actor
                          x.Execute( actor, message ) )
                 .All( x => x );
         }
-
-        #endregion
 
         protected Saga( StateMachine<TActor> stateMachine )
         {

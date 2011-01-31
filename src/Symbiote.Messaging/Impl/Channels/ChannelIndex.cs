@@ -25,8 +25,6 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         public ConcurrentDictionary<string, IChannelDefinition> Definitions { get; set; }
 
-        #region IChannelIndex Members
-
         public void AddDefinition( IChannelDefinition definition )
         {
             ValidateChannelDefinition( definition );
@@ -58,8 +56,6 @@ namespace Symbiote.Messaging.Impl.Channels
         {
             return Definitions.ContainsKey( channelName );
         }
-
-        #endregion
 
         public IEnumerable<string> GetDefinitionViolations( IChannelDefinition definition )
         {

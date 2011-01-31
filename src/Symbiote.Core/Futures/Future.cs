@@ -30,7 +30,7 @@ namespace Symbiote.Core.Futures
             return new FutureCallback<T>( call );
         }
 
-        public static FutureAction Blind( Action call )
+        public static FutureAction WithoutResult( Action call )
         {
             return new FutureAction( call );
         }
@@ -96,11 +96,11 @@ namespace Symbiote.Core.Futures
             return this;
         }
 
-        //public Future<T> Now()
-        //{
-        //    var value = Value;
-        //    return this;
-        //}
+        public Future<T> Start()
+        {
+            var value = Value;
+            return this;
+        }
 
         public Future<T> OnFailure( Func<T> onFailure )
         {

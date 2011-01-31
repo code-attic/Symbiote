@@ -28,8 +28,6 @@ namespace Symbiote.Couch
         [JsonIgnore]
         protected virtual string _docId { get; set; }
 
-        #region ICouchDocument<string> Members
-
         [JsonProperty( PropertyName = "_id" )]
         public virtual string DocumentId
         {
@@ -58,8 +56,6 @@ namespace Symbiote.Couch
         {
             DocumentRevision = jsonRev;
         }
-
-        #endregion
 
         public virtual void UpdateKeyFromJson( string jsonKey )
         {

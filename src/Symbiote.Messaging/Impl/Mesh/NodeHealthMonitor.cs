@@ -29,8 +29,6 @@ namespace Symbiote.Messaging.Impl.Mesh
         public INodeConfiguration Configuration { get; protected set; }
         public Timer UpdateTimer { get; protected set; }
 
-        #region INodeHealthMonitor Members
-
         public NodeHealth LastStatus { get; protected set; }
 
         public IDisposable Subscribe( IObserver<NodeHealth> observer )
@@ -47,8 +45,6 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             UpdateTimer.Stop();
         }
-
-        #endregion
 
         public void UpdateHealth( object sender, ElapsedEventArgs e )
         {

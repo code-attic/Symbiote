@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using Symbiote.Core;
 using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Messaging.Impl.Dispatch
@@ -20,8 +21,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
     public class DispatcherKeyAccessor :
         IKeyAccessor<DispatchManager>
     {
-        #region IKeyAccessor<DispatchManager> Members
-
         public string GetId( DispatchManager actor )
         {
             return "";
@@ -30,7 +29,5 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void SetId<TKey>( DispatchManager actor, TKey id )
         {
         }
-
-        #endregion
     }
 }

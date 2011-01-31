@@ -16,8 +16,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core;
+using Symbiote.Core.Collections;
 using Symbiote.Core.Reflection;
-using Symbiote.Core.Serialization;
 using Symbiote.Core.Utility;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Model;
@@ -27,6 +28,8 @@ namespace Symbiote.Couch.Impl
     public class DocumentUtility
     {
         protected ICouchConfiguration configuration { get; set; }
+        protected IKeyAccessor KeyAccessor { get; set; }
+        protected MruDictionary<string, DocumentMetadata> MetadataStore { get; set; }
 
         public virtual string GetDocumentIdAsJson( object instance )
         {
@@ -37,7 +40,7 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                return Reflector.ReadMember( instance, configuration.Conventions.IdPropertyName ).ToJson( false );
+                return KeyAccessor.GetId( instance );
             }
         }
 
@@ -50,7 +53,7 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                return Reflector.ReadMember( instance, configuration.Conventions.IdPropertyName );
+                return KeyAccessor.GetId( instance );
             }
         }
 
@@ -63,9 +66,10 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                var documentRevision =
-                    Reflector.ReadMember( instance, configuration.Conventions.RevisionPropertyName ).ToString();
-                return string.IsNullOrEmpty( documentRevision ) ? null : documentRevision;
+                //var documentRevision =
+                //    Reflector.ReadMember( instance, configuration.Conventions.RevisionPropertyName ).ToString();
+                //return string.IsNullOrEmpty( documentRevision ) ? null : documentRevision;
+                return null;
             }
         }
 
@@ -78,30 +82,8 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                Reflector.WriteMember( instance, configuration.Conventions.RevisionPropertyName, revision );
+                //Reflector.WriteMember( instance, configuration.Conventions.RevisionPropertyName, revision );
             }
-        }
-
-        public virtual object[] GetDocumentGraph( object model )
-        {
-            object[] documentArray = new object[] {};
-            List<object> original = new List<object>();
-            if ( model as IEnumerable != null )
-            {
-                original.AddRange( (model as IEnumerable).Cast<object>() );
-            }
-            else
-            {
-                original.Add( model );
-            }
-
-            var watcher = new DocumentHierarchyWatcher();
-            var visitor = new HierarchyVisitor( false, IsDocument );
-            visitor.Subscribe( watcher );
-            visitor.Visit( model );
-            documentArray = watcher.Documents.ToArray();
-
-            return documentArray.Length == 0 ? original.ToArray() : documentArray;
         }
 
         public virtual bool IsDocument( object instance )
@@ -109,9 +91,10 @@ namespace Symbiote.Couch.Impl
             return instance.GetType().GetInterface( "ICouchDocument`1" ) != null;
         }
 
-        public DocumentUtility( ICouchConfiguration couchConfiguration )
+        public DocumentUtility( ICouchConfiguration couchConfiguration, IKeyAccessor keyAccessor )
         {
             configuration = couchConfiguration;
+            KeyAccessor = keyAccessor;
         }
     }
 }

@@ -18,10 +18,6 @@ namespace Symbiote.Core.UnitOfWork
     public class EventConfiguration
         : IEventConfiguration
     {
-        #region IEventConfiguration Members
-
         public bool Replay { get; set; }
-
-        #endregion
     }
 }

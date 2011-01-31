@@ -26,16 +26,12 @@ namespace Symbiote.Http.Impl
             Action<Exception>
             > Application;
 
-        #region IApplication Members
-
         public void Process( IDictionary<string, object> requestItems,
                              Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond,
                              Action<Exception> onException )
         {
             Application( requestItems, respond, onException );
         }
-
-        #endregion
 
         public static implicit operator DelegateApplication(
             Action

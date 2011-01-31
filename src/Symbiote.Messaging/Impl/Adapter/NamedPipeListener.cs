@@ -13,9 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System.IO.Pipes;
+
 namespace Symbiote.Messaging.Impl.Adapter
 {
     public class NamedPipeListener
     {
+        public NamedPipeServerStream ServerStream { get; set; }
+
     }
 }

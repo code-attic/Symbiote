@@ -19,13 +19,9 @@ namespace Symbiote.Core.UnitOfWork
 {
     public abstract class EventBase : IEvent
     {
-        #region IEvent Members
-
         public Guid EventId { get; set; }
         public string ActorType { get; set; }
         public string ActorId { get; set; }
         public DateTime UtcTimeStamp { get; set; }
-
-        #endregion
     }
 }

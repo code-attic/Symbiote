@@ -22,14 +22,10 @@ namespace Symbiote.Daemon.Installation
     {
         public IHost Host { get; set; }
 
-        #region IDaemonCommand Members
-
         public void Execute()
         {
             HostRunner.Start( Host );
         }
-
-        #endregion
 
         public RunCommand( IHost host )
         {

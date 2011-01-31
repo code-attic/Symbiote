@@ -1,4 +1,5 @@
-﻿using Symbiote.Core.UnitOfWork;
+﻿using Symbiote.Core;
+using Symbiote.Core.UnitOfWork;
 
 namespace Messaging.Tests.RequestResponse
 {

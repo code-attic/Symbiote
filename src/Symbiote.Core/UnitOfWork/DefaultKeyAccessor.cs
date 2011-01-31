@@ -21,8 +21,6 @@ namespace Symbiote.Core.UnitOfWork
         : IKeyAccessor<TActor>
         where TActor : class
     {
-        #region IKeyAccessor<TActor> Members
-
         public string GetId( TActor actor )
         {
             return Reflector.ReadMember( actor, "Id" ).ToString();
@@ -32,7 +30,5 @@ namespace Symbiote.Core.UnitOfWork
         {
             Reflector.WriteMember( actor, "Id", id );
         }
-
-        #endregion
     }
 }

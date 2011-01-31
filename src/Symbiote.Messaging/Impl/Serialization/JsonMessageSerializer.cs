@@ -21,8 +21,6 @@ namespace Symbiote.Messaging.Impl.Serialization
 {
     public class JsonMessageSerializer : IMessageSerializer
     {
-        #region IMessageSerializer Members
-
         public T Deserialize<T>( byte[] message )
         {
             var json = Encoding.UTF8.GetString( message );
@@ -46,7 +44,5 @@ namespace Symbiote.Messaging.Impl.Serialization
             var json = body.ToJson();
             return Encoding.UTF8.GetBytes( json );
         }
-
-        #endregion
     }
 }

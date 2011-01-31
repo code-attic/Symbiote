@@ -1,0 +1,22 @@
+<<<<<<< HEAD
+﻿using Symbiote.Core.UnitOfWork;
+=======
+﻿using Symbiote.Core;
+using Symbiote.Core.UnitOfWork;
+>>>>>>> Beginning work on app domain hot loading
+
+namespace Actor.Tests
+{
+    public class DummyKeyAccessor : IKeyAccessor<DummyActor>
+    {
+        public string GetId( DummyActor actor )
+        {
+            return actor.Id;
+        }
+
+        public void SetId<TKey>( DummyActor actor, TKey id )
+        {
+            actor.Id = id.ToString();
+        }
+    }
+}

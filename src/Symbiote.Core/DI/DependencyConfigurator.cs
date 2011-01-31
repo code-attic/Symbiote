@@ -26,8 +26,6 @@ namespace Symbiote.Core.DI
         public IList<IDependencyDefinition> Dependencies { get; set; }
         public IList<IScanInstruction> ScanInstructions { get; set; }
 
-        #region IRequestPlugin Members
-
         public ISupplyPlugin<object> For( Type pluginType )
         {
             var expression = DependencyExpression.For( pluginType );
@@ -56,18 +54,12 @@ namespace Symbiote.Core.DI
             return expression;
         }
 
-        #endregion
-
-        #region IScan Members
-
         public void Scan( Action<IScanInstruction> scanConfigurator )
         {
             var instruction = new ScanInstruction();
             scanConfigurator( instruction );
             ScanInstructions.Add( instruction );
         }
-
-        #endregion
 
         public void RegisterDependencies( IDependencyRegistry registry )
         {

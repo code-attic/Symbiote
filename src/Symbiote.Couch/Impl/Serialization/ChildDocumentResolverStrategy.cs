@@ -29,8 +29,6 @@ namespace Symbiote.Couch.Impl.Serialization
             get { return new ChildDocumentContractResolver( configuration ); }
         }
 
-        #region IContractResolverStrategy Members
-
         public bool ResolverAppliesForSerialization( Type type )
         {
             return true;
@@ -40,8 +38,6 @@ namespace Symbiote.Couch.Impl.Serialization
         {
             return false;
         }
-
-        #endregion
 
         public ChildDocumentResolverStrategy( ICouchConfiguration configuration )
         {

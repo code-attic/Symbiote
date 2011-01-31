@@ -29,8 +29,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
         public HttpContextTransform ContextTransformer { get; set; }
         public bool Running { get; set; }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             if ( Listener != null && Listener.IsListening )
@@ -39,10 +37,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
                 Listener.Abort();
             }
         }
-
-        #endregion
-
-        #region IHost Members
 
         public void Start()
         {
@@ -54,8 +48,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
         {
             Listener.Stop();
         }
-
-        #endregion
 
         public void GetRequest( IAsyncResult result )
         {

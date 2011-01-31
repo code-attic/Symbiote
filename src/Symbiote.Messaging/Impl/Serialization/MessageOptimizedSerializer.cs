@@ -23,8 +23,6 @@ namespace Symbiote.Messaging.Impl.Serialization
     {
         protected ConcurrentDictionary<Type, IMessageSerializer> SerializationProviders { get; set; }
 
-        #region IMessageSerializer Members
-
         public T Deserialize<T>( byte[] message )
         {
             return GetSerialzier( typeof( T ) ).Deserialize<T>( message );
@@ -44,8 +42,6 @@ namespace Symbiote.Messaging.Impl.Serialization
         {
             return GetSerialzier( typeof( T ) ).Serialize( body );
         }
-
-        #endregion
 
         public IMessageSerializer GetSerialzier( Type messageType )
         {

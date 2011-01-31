@@ -27,8 +27,6 @@ namespace Symbiote.Hibernate.Impl
     {
         private readonly ISessionManager _manager;
 
-        #region IRepository<T> Members
-
         public void Commit()
         {
             _manager.CurrentSession.Flush();
@@ -97,8 +95,6 @@ namespace Symbiote.Hibernate.Impl
         {
             IEnumerableExtenders.ForEach( list, Insert );
         }
-
-        #endregion
 
         protected IQueryable<TEntity> CreateQuery<TEntity>() where TEntity : T
         {

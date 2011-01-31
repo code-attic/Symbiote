@@ -18,8 +18,6 @@ namespace Symbiote.Core.Locking
     public class NullLockManager
         : ILockManager
     {
-        #region ILockManager Members
-
         public bool AcquireLock<T>( T lockId )
         {
             throw new AssimilationException(
@@ -29,7 +27,5 @@ namespace Symbiote.Core.Locking
         public void ReleaseLock<T>( T lockId )
         {
         }
-
-        #endregion
     }
 }

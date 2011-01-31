@@ -20,11 +20,7 @@ namespace Symbiote.Messaging.Impl.Mesh
     public class DefaultNodeIdentityProvider
         : INodeIdentityProvider
     {
-        #region INodeIdentityProvider Members
-
         public string Identity { get; protected set; }
-
-        #endregion
 
         public DefaultNodeIdentityProvider()
         {

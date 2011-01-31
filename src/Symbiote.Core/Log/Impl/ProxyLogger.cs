@@ -19,8 +19,6 @@ namespace Symbiote.Core.Log.Impl
 {
     public class ProxyLogger<T> : ILogger<T>
     {
-        #region ILogger<T> Members
-
         public void Log( LogLevel level, object message )
         {
             LogManager.Log<T>( level, message );
@@ -40,7 +38,5 @@ namespace Symbiote.Core.Log.Impl
         {
             LogManager.Log<T>( level, provider, format, args );
         }
-
-        #endregion
     }
 }

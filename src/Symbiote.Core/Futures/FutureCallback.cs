@@ -23,6 +23,7 @@ namespace Symbiote.Core.Futures
     {
         protected Action<Action<T>> Call { get; set; }
         protected Func<T> GetResult { get; set; }
+        protected CallbackResult ResetTrigger { get; set; }
 
         protected override void InvokeCall()
         {

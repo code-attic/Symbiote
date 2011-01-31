@@ -22,8 +22,6 @@ namespace Symbiote.Couch.Impl.Cache
     {
         protected ConcurrentDictionary<string, ConcurrentStack<string>> KeyAssociations { get; set; }
 
-        #region IKeyAssociationManager Members
-
         public void AddKeyAssociation( string key, string cacheKey )
         {
             ConcurrentStack<string> associations = null;
@@ -53,8 +51,6 @@ namespace Symbiote.Couch.Impl.Cache
             }
             yield break;
         }
-
-        #endregion
 
         public DefaultKeyAssociationManager()
         {

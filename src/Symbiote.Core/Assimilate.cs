@@ -78,7 +78,7 @@ namespace Symbiote.Core
             container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );
             container.For<ILockManager>().Use<NullLockManager>();
             container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
-            container.For( typeof( IKeyAccessor<> ) ).Use( typeof( DefaultKeyAccessor<> ) );
+            container.For<IKeyAccessor>().Use<KeyAccessManager>();
             container.For<IMemoizer>().Use<Memoizer>();
             container.For( typeof( IMemento<> ) ).Use( typeof( PassthroughMemento<> ) );
             container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
@@ -95,12 +95,11 @@ namespace Symbiote.Core
             container.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
         }
 
-        public static void DefineScan( IScanInstruction scan )
+        private static void DefineScan(IScanInstruction scan)
         {
             {
                 scan.AssembliesFromApplicationBaseDirectory(
                     a => { return a.GetReferencedAssemblies().Any( r => r.Name.Contains( "Symbiote" ) ); } );
-                scan.AddAllTypesOf<IContractResolverStrategy>();
                 scan.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
                 scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
                 scan.AddAllTypesOf<IEventListener>();
@@ -190,7 +189,7 @@ namespace Symbiote.Core
 #endif
         }
 
-        public static void RegisterSymbioteLibrary( string sliverName )
+        private static void RegisterSymbioteLibrary(string sliverName)
         {
 #if !SILVERLIGHT
             _assimilationLock.EnterWriteLock();

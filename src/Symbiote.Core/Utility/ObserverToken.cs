@@ -23,15 +23,11 @@ namespace Symbiote.Core.Utility
         public Guid Id { get; set; }
         public Action<Guid> Unsubscribe { get; set; }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             Unsubscribe( Id );
             Unsubscribe = null;
         }
-
-        #endregion
 
         public ObserverToken( Action<Guid> unsubscribe )
         {

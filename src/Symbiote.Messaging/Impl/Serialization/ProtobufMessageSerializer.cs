@@ -21,8 +21,6 @@ namespace Symbiote.Messaging.Impl.Serialization
     public class ProtobufMessageSerializer
         : IMessageSerializer
     {
-        #region IMessageSerializer Members
-
         public T Deserialize<T>( byte[] message )
         {
             return message.FromProtocolBuffer<T>();
@@ -43,7 +41,5 @@ namespace Symbiote.Messaging.Impl.Serialization
         {
             return body.ToProtocolBuffer();
         }
-
-        #endregion
     }
 }

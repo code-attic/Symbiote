@@ -19,8 +19,6 @@ namespace Symbiote.Core.Actor
         : IActorCache<TActor>
         where TActor : class
     {
-        #region IActorCache<TActor> Members
-
         public IMemento<TActor> Get<TKey>( TKey id )
         {
             return null;
@@ -29,7 +27,5 @@ namespace Symbiote.Core.Actor
         public void Store( IMemento<TActor> actor )
         {
         }
-
-        #endregion
     }
 }

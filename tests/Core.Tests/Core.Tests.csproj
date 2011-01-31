@@ -101,6 +101,7 @@
     <Compile Include="Actor\DummyActor.cs" />
     <Compile Include="Actor\DummyKeyAccessor.cs" />
     <Compile Include="Actor\Events\when_capturing_events.cs" />
+    <Compile Include="Actor\KeyAccess\KeyAccess.cs" />
     <Compile Include="Actor\Sagas\when_requesting_saga.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Domain\Model\IVehicleMemento.cs" />
     <Compile Include="Domain\Model\Vehicle.cs" />
     <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
+    <Compile Include="Json\Decorator\when_serializing_decorator.cs" />
     <Compile Include="Json\Performance\when_serializing_one_thousand_items.cs" />
     <Compile Include="Json\when_serializing_string.cs" />
     <Compile Include="Json\TestClass.cs" />

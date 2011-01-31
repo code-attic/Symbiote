@@ -22,8 +22,6 @@ namespace Symbiote.Lucene.Impl
     {
         protected ILuceneConfiguration configuration;
 
-        #region IDirectoryFactory Members
-
         public Directory CreateDirectoryFor( string indexName )
         {
             string indexDirectory = null;
@@ -40,8 +38,6 @@ namespace Symbiote.Lucene.Impl
 
             return simpleFsDirectory;
         }
-
-        #endregion
 
         public DefaultDirectoryFactory( ILuceneConfiguration configuration )
         {

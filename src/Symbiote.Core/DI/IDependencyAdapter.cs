@@ -29,8 +29,6 @@ namespace Symbiote.Core.DI
         private string _msg =
             "The Dependency Adapter has not been specified.  This can happen when your code is accessing the IoC container before Assimilate.Core() has been called.\r\n";
 
-        #region IDependencyAdapter Members
-
         public object GetInstance( Type serviceType )
         {
             throw new AssimilationException( _msg );
@@ -92,7 +90,5 @@ namespace Symbiote.Core.DI
         {
             throw new AssimilationException( _msg );
         }
-
-        #endregion
     }
 }

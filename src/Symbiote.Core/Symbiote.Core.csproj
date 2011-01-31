@@ -107,6 +107,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\KeyAccessManager.cs" />
     <Compile Include="Assimilate.cs" />
     <Compile Include="Assimilation.cs" />
     <Compile Include="AssimilationException.cs" />
@@ -176,7 +177,6 @@
     <Compile Include="Memento\IMemoizer.cs" />
     <Compile Include="Memento\Memoizer.cs" />
     <Compile Include="Memento\PassthroughMemento.cs" />
-    <Compile Include="Serialization\IContractResolverStrategy.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Serialization\IJsonSerializerFactory.cs" />
     <Compile Include="Serialization\JsonExtensions.cs" />
@@ -215,7 +215,6 @@
     <Compile Include="Utility\ObserverToken.cs" />
     <Compile Include="Utility\Pipeline.cs" />
     <Compile Include="Locking\SpinLockManager.cs" />
-    <Compile Include="UnitOfWork\DefaultKeyAccessor.cs" />
     <Compile Include="UnitOfWork\EventBase.cs" />
     <Compile Include="UnitOfWork\EventConfiguration.cs" />
     <Compile Include="UnitOfWork\DefaultContext.cs" />
@@ -231,8 +230,8 @@
     <Compile Include="UnitOfWork\IEventListenerManager.cs" />
     <Compile Include="UnitOfWork\IEventPublisher.cs" />
     <Compile Include="UnitOfWork\IEventStore.cs" />
-    <Compile Include="UnitOfWork\IKeyAccessor.cs" />
-    <Compile Include="UnitOfWork\KeyAccessAdapter.cs" />
+    <Compile Include="IKeyAccessor.cs" />
+    <Compile Include="Actor\KeyAccessAdapter.cs" />
     <Compile Include="UnitOfWork\ReplayContext.cs" />
   </ItemGroup>
   <ItemGroup>

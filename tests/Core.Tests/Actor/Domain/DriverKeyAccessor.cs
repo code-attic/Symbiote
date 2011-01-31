@@ -1,4 +1,5 @@
 ﻿using Actor.Tests.Domain.Model;
+using Symbiote.Core;
 using Symbiote.Core.UnitOfWork;
 
 namespace Actor.Tests.Domain

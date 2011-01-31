@@ -27,8 +27,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
     {
         public HttpListenerResponse Response { get; set; }
 
-        #region IResponseAdapter Members
-
         public void Respond( string status, IDictionary<string, IList<string>> headers, IEnumerable<object> body )
         {
             var httpStatus = HttpStatus.Lookup[status];
@@ -44,8 +42,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
 
             Response.Close();
         }
-
-        #endregion
 
         public byte[] Serialize( object o )
         {

@@ -29,14 +29,10 @@ namespace Symbiote.Lucene.Impl
         public ConcurrentQueue<Document> Documents { get; set; }
         public object Lock { get; set; }
 
-        #region IDocumentQueue Members
-
         public void PushDocument( Document document )
         {
             Documents.Enqueue( document );
         }
-
-        #endregion
 
         public void IndexDocument( Document document )
         {

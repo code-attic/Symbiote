@@ -32,8 +32,6 @@ namespace Symbiote.Lucene.Impl
         protected ConcurrentDictionary<string, Analyzer> queryAnalyzers;
         protected ILuceneConfiguration configuration { get; set; }
 
-        #region ILuceneServiceFactory Members
-
         public virtual Directory GetIndex( string indexName )
         {
             Directory directory = null;
@@ -126,8 +124,6 @@ namespace Symbiote.Lucene.Impl
 
             documentQueues.Clear();
         }
-
-        #endregion
 
         public virtual IDocumentQueue GetDocumentQueue( string indexName )
         {

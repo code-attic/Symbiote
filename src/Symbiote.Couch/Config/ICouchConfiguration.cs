@@ -14,7 +14,6 @@
 // limitations under the License.
 // */
 using System;
-using Symbiote.Couch.Impl.Serialization;
 
 namespace Symbiote.Couch.Config
 {
@@ -22,7 +21,6 @@ namespace Symbiote.Couch.Config
     {
         int Port { get; set; }
         bool Preauthorize { get; set; }
-        bool BreakDownDocumentGraphs { get; set; }
         string DefaultDatabaseName { get; set; }
         int TimeOut { get; set; }
         string Protocol { get; set; }
@@ -32,7 +30,6 @@ namespace Symbiote.Couch.Config
         bool Cache { get; set; }
         DateTime CacheExpiration { get; set; }
         TimeSpan CacheLimit { get; set; }
-        DocumentConventions Conventions { get; set; }
         bool Throw404Exceptions { get; set; }
         bool IncludeTypeSpecification { get; set; }
         string CouchQueryServiceUrl { get; set; }

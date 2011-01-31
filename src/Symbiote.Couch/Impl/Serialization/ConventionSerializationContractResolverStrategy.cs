@@ -27,8 +27,6 @@ namespace Symbiote.Couch.Impl.Serialization
             get { return Assimilate.GetInstanceOf<ConventionSerializationContractResolver>(); }
         }
 
-        #region IContractResolverStrategy Members
-
         public bool ResolverAppliesForSerialization( Type type )
         {
             return type.GetInterface( "ICouchDocument`1" ) == null;
@@ -38,7 +36,5 @@ namespace Symbiote.Couch.Impl.Serialization
         {
             return false;
         }
-
-        #endregion
     }
 }

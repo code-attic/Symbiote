@@ -25,8 +25,6 @@ namespace Symbiote.Core.Hashing
         protected object _lock = new object();
         protected MD5 Provider { get; set; }
 
-        #region IHashingProvider Members
-
         public long Hash<T>( T value )
         {
             var temp = value.ToString();
@@ -37,8 +35,6 @@ namespace Symbiote.Core.Hashing
             }
             return BitConverter.ToInt64( hashBytes, 0 ) + BitConverter.ToInt64( hashBytes, 8 );
         }
-
-        #endregion
 
         public MD5HashProvider()
         {

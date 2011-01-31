@@ -238,33 +238,11 @@
             Returns a sequence that terminates with an exception.
             </summary>
         </member>
-        <member name="M:System.Linq.EnumerableEx.Generate``2(``0,System.Func{``0,System.Boolean},System.Func{``0,``1},System.Func{``0,``0})">
+        <member name="M:System.Linq.EnumerableEx.Generate``2(``0,System.Func{``0,System.Boolean},System.Func{``0,``0},System.Func{``0,``1})">
             <summary>
             Generates a sequence by iterating a state from an initial state until
             the condition fails.  For each state, a value is generated dependent
             on the state.
-            </summary>
-        </member>
-        <member name="M:System.Linq.EnumerableEx.Generate``1(System.Func{System.Collections.Generic.Notification{``0}})">
-            <summary>
-            Generates an observable sequence by repeatedly calling the function.
-            </summary>
-        </member>
-        <member name="M:System.Linq.EnumerableEx.Generate``2(``0,System.Func{``0,System.Collections.Generic.Notification{``1}},System.Func{``0,``0})">
-            <summary>
-            Generates a sequence by iterating a state from an initial state until a completion notification is sent.
-            </summary>
-        </member>
-        <member name="M:System.Linq.EnumerableEx.Generate``2(``0,System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``0})">
-            <summary>
-            Generates an observable sequence by iterating a state from an initial state until
-            the condition fails.  For each state, a sequence  is generated.
-            </summary>
-        </member>
-        <member name="M:System.Linq.EnumerableEx.Generate``2(``0,System.Func{``0,System.Boolean},System.Func{``0,System.Collections.Generic.IEnumerable{``1}},System.Func{``0,``0})">
-            <summary>
-            Generates an observable sequence by iterating a state from an initial state until
-            the condition fails.  For each state, a sequence is generated.
             </summary>
         </member>
         <member name="M:System.Linq.EnumerableEx.Using``2(System.Func{``1},System.Func{``1,System.Collections.Generic.IEnumerable{``0}})">

@@ -11,7 +11,6 @@
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
 		<dependencies>
 			<dependency id="Symbiote.Core" version="0.1.0.0" />
-			<dependency id="Symbiote.Actor" version="0.1.0.0" />
 		</dependencies>
 	</metadata>
 	<files>

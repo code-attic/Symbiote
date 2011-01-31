@@ -30,8 +30,6 @@ namespace Symbiote.Core.Saga
             get { return Transitions.Keys.ToList(); }
         }
 
-        #region ICondition<TActor> Members
-
         public ICondition<TActor> On<TMessage>( Action<TActor, TMessage> processMessage )
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>
@@ -65,8 +63,6 @@ namespace Symbiote.Core.Saga
             Transitions.Add( typeof( TMessage ), onMessage );
             return this;
         }
-
-        #endregion
 
         public Condition()
             : this( x => true )

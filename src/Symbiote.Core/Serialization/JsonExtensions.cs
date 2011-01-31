@@ -20,7 +20,6 @@ using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
-using System.Linq;
 
 namespace Symbiote.Core.Serialization
 {
@@ -33,9 +32,7 @@ namespace Symbiote.Core.Serialization
             get
             {
                 SerializerFactory =
-                    SerializerFactory ??
-                    Assimilate.GetInstanceOf<IJsonSerializerFactory>() ??
-                    new JsonSerializerFactory();
+                    SerializerFactory ?? new JsonSerializerFactory();
                 return SerializerFactory;
             }
         }
@@ -47,8 +44,7 @@ namespace Symbiote.Core.Serialization
 
         public static string ToJson<T>( this T model, bool includeTypeData )
         {
-            var serializer = JsonSerializerFactory.GetSerializerFor( typeof( T ), includeTypeData,
-                                                                     SerializerAction.Serializing );
+            var serializer = JsonSerializerFactory.GetSerializerFor( typeof( T ), includeTypeData );
             var textWriter = new StringWriter();
             var jsonWriter = new JsonTextWriter( textWriter );
 
@@ -70,7 +66,7 @@ namespace Symbiote.Core.Serialization
 
         public static object FromJson( this string json, Type type )
         {
-            var serializer = JsonSerializerFactory.GetSerializerFor( type, true, SerializerAction.Deserializing );
+            var serializer = JsonSerializerFactory.GetSerializerFor( type, true );
             
             try
             {
@@ -91,7 +87,7 @@ namespace Symbiote.Core.Serialization
         public static void RefreshFromJson<T>( this string json, T target )
         {
             var type = typeof( T );
-            var serializer = JsonSerializerFactory.GetSerializerFor( type, true, SerializerAction.Deserializing );
+            var serializer = JsonSerializerFactory.GetSerializerFor( type, true );
             JsonConvert.PopulateObject( json, target,
                                         new JsonSerializerSettings
                                             {

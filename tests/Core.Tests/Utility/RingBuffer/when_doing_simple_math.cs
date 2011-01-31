@@ -24,10 +24,11 @@ namespace ringbuffer
             });
             Watch = Stopwatch.StartNew();
             Buffer.Start();
-            for (int i = 0; i < TOTAL_WRITES; i++)
-            {
-                Buffer.Write(10);
-            }
+            Enumerable
+                .Range(0, TOTAL_WRITES)
+                .AsParallel()
+                .ForAll(x => Buffer.Write(10));
+            
             Thread.Sleep( 10 );
             Buffer.Stop();
             Watch.Stop();

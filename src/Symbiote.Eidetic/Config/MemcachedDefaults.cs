@@ -24,8 +24,6 @@ namespace Symbiote.Eidetic.Config
         private int _minPoolSize = 10;
         private int _timeout = 10;
 
-        #region IMemcachedConfig Members
-
         public int MinPoolSize
         {
             get { return _minPoolSize; }
@@ -61,7 +59,5 @@ namespace Symbiote.Eidetic.Config
                                  };
             }
         }
-
-        #endregion
     }
 }

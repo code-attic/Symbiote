@@ -14,61 +14,32 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization.Formatters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.Serialization
 {
-    public enum SerializerAction
-    {
-        Serializing,
-        Deserializing
-    }
-
     public class JsonSerializerFactory : IJsonSerializerFactory
     {
         private readonly string _resolverFormat = "CustomJsonResolver-{0}";
 
-        protected List<IContractResolverStrategy> ContractResolverStrategies { get; set; }
-        protected ConcurrentDictionary<Type, JsonSerializer> Serializers { get; set; }
-
-        #region IJsonSerializerFactory Members
-
-        public JsonSerializer GetSerializerFor( string json, bool includeTypeSpec, SerializerAction action )
+        public JsonSerializer GetSerializerFor( string json, bool includeTypeSpec )
         {
             var type = json.GetSerializedTypeFromJson();
-            return GetSerializerFor( type, includeTypeSpec, action );
+            return GetSerializerFor( type, includeTypeSpec );
         }
 
-        public JsonSerializer GetSerializerFor<T>( bool includeTypeSpec, SerializerAction action )
+        public JsonSerializer GetSerializerFor<T>( bool includeTypeSpec )
         {
             var type = typeof( T );
-            return GetSerializerFor( type, includeTypeSpec, action );
+            return GetSerializerFor( type, includeTypeSpec );
         }
 
-        public JsonSerializer GetSerializerFor( Type type, bool includeTypeSpec, SerializerAction action )
+        public JsonSerializer GetSerializerFor( Type type, bool includeTypeSpec )
         {
-            JsonSerializer serializer = null;
-            if ( !Serializers.TryGetValue( type, out serializer ) )
-            {
-                if ( includeTypeSpec )
-                    serializer = JsonSerializer.Create( GetDefaultSettings() );
-                else
-                    serializer = JsonSerializer.Create( GetSettingsWithoutTypeHandling() );
-
-                SetContractResolver( serializer, type, action );
-                //Serializers.AddOrUpdate( type, serializer, ( x, y ) => serializer );
-            }
-            return serializer;
+            return JsonSerializer.Create( includeTypeSpec ? GetDefaultSettings() : GetSettingsWithoutTypeHandling() );
         }
-
-        #endregion
 
         protected JsonSerializerSettings GetDefaultSettings()
         {
@@ -88,49 +59,6 @@ namespace Symbiote.Core.Serialization
             var settings = GetDefaultSettings();
             settings.TypeNameHandling = TypeNameHandling.None;
             return settings;
-        }
-
-        protected void SetContractResolver( JsonSerializer serializer, Type type, SerializerAction action )
-        {
-            if ( type == null )
-                return;
-
-            Func<Type, IContractResolver> get = action == SerializerAction.Deserializing
-                                                    ? GetResolverForDeserializationByStrategy
-                                                    : (Func<Type, IContractResolver>)
-                                                      GetResolverForSerializationByStrategy;
-
-            serializer.ContractResolver =
-                GetTypeSpecificContractResolver( type ) ??
-                get( type ) ??
-                serializer.ContractResolver;
-        }
-
-        private IContractResolver GetResolverForSerializationByStrategy( Type type )
-        {
-            return ContractResolverStrategies
-                .Where( x => x.ResolverAppliesForSerialization( type ) )
-                .Select( x => x.Resolver )
-                .FirstOrDefault();
-        }
-
-        private IContractResolver GetResolverForDeserializationByStrategy( Type type )
-        {
-            return ContractResolverStrategies
-                .Where( x => x.ResolverAppliesForDeserialization( type ) )
-                .Select( x => x.Resolver )
-                .FirstOrDefault();
-        }
-
-        protected IContractResolver GetTypeSpecificContractResolver( Type type )
-        {
-            return Assimilate.GetInstanceOf<IContractResolver>( _resolverFormat.AsFormat( type.FullName ) );
-        }
-
-        public JsonSerializerFactory()
-        {
-            ContractResolverStrategies = Assimilate.GetAllInstancesOf<IContractResolverStrategy>().ToList();
-            Serializers = new ConcurrentDictionary<Type, JsonSerializer>();
         }
     }
 }

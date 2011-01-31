@@ -25,16 +25,10 @@ namespace Symbiote.Messaging.Impl.Mesh
         protected INodeRegistry Registry { get; set; }
         protected INodeChannelManager NodeChannelManager { get; set; }
 
-        #region IHandle<NodeDown> Members
-
         public void Handle( IEnvelope<NodeDown> envelope )
         {
             Registry.RemoveNode( envelope.Message.NodeId );
         }
-
-        #endregion
-
-        #region IHandle<NodeHealth> Members
 
         public void Handle( IEnvelope<NodeHealth> envelope )
         {
@@ -54,16 +48,10 @@ namespace Symbiote.Messaging.Impl.Mesh
             }
         }
 
-        #endregion
-
-        #region IHandle<NodeUp> Members
-
         public void Handle( IEnvelope<NodeUp> envelope )
         {
             Registry.AddNode( envelope.Message.NodeId );
         }
-
-        #endregion
 
         public NodeChangeHandler( INodeRegistry registry, INodeChannelManager nodeChannelManager )
         {

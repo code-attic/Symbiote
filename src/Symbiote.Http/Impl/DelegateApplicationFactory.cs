@@ -19,14 +19,10 @@ namespace Symbiote.Http.Impl
     {
         public DelegateApplication Application { get; set; }
 
-        #region IApplicationFactory Members
-
         public IApplication CreateApplication()
         {
             return Application;
         }
-
-        #endregion
 
         public DelegateApplicationFactory( DelegateApplication application )
         {

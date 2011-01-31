@@ -5,7 +5,7 @@
 		<version>0.1.0.0</version>
 		<authors>Alex Robson</authors>
 		<description>Adding Riak driver to Symbiote.</description>
-		<summary>Support for HTTP Rest and Protocol Buffer APIs to Riak.</summary>
+		<summary>Support for Protocol Buffer APIs to Riak.</summary>
 		<language>en-US</language>
 		<projectUrl>https://github.com/arobson/Symbiote</projectUrl>
 		<licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>

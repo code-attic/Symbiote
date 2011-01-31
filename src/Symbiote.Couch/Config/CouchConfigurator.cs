@@ -22,12 +22,6 @@ namespace Symbiote.Couch.Config
     {
         private CouchConfiguration _config = new CouchConfiguration();
 
-        public CouchConfigurator BreakDocumentGraphsIntoSeperateDocuments()
-        {
-            _config.BreakDownDocumentGraphs = true;
-            return this;
-        }
-
         public CouchConfigurator Cache()
         {
             _config.Cache = true;
@@ -115,13 +109,6 @@ namespace Symbiote.Couch.Config
             where T : IResolveDatabaseNames
         {
             _config.DatabaseResolver = Assimilate.GetInstanceOf<T>();
-            return this;
-        }
-
-        public CouchConfigurator WithConventions( string idProperty, string revisionProperty )
-        {
-            _config.Conventions.IdPropertyName = idProperty;
-            _config.Conventions.RevisionPropertyName = revisionProperty;
             return this;
         }
 

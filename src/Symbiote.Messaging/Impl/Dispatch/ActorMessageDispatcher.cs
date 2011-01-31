@@ -32,8 +32,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
         protected IAgent<TActor> Agent { get; set; }
         protected IHandle<TActor, TMessage> Handler { get; set; }
 
-        #region IDispatchMessage<TActor,TMessage> Members
-
         public Type ActorType
         {
             get { return typeof( TActor ); }
@@ -66,8 +64,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
             Handler.Handle( actor, typedEnvelope );
             Agent.Memoize( actor );
         }
-
-        #endregion
 
         private IEnumerable<Type> GetMessageChain()
         {

@@ -22,8 +22,6 @@ namespace Symbiote.Hibernate.Impl
         private readonly ISessionFactory _sessionFactory;
         private readonly ISessionManager _sessionManager;
 
-        #region ISessionModule Members
-
         public virtual void BeginSession()
         {
             var session = _sessionFactory.OpenSession();
@@ -52,8 +50,6 @@ namespace Symbiote.Hibernate.Impl
         {
             _sessionFactory.Dispose();
         }
-
-        #endregion
 
         public SessionModule( ISessionFactory factory, ISessionManager manager )
         {

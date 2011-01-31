@@ -25,8 +25,6 @@ namespace Symbiote.Messaging.Impl.Mesh
         public IBus Bus { get; set; }
         public INodeConfiguration Configuration { get; set; }
 
-        #region INode Members
-
         public void Publish<T>( T message )
         {
             Publish( message, x => { } );
@@ -66,8 +64,6 @@ namespace Symbiote.Messaging.Impl.Mesh
                 throw;
             }
         }
-
-        #endregion
 
         public void HandleNodeDeath( string deadNode )
         {

@@ -17,13 +17,9 @@ namespace Symbiote.Core.Log.Impl
 {
     public class NullLogProvider : ILogProvider
     {
-        #region ILogProvider Members
-
         public ILogger GetLoggerForType<T>()
         {
             return new NullLogger();
         }
-
-        #endregion
     }
 }

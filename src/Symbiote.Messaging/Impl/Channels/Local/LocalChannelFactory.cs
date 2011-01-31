@@ -22,15 +22,11 @@ namespace Symbiote.Messaging.Impl.Channels
     {
         public IDispatcher Dispatcher { get; set; }
 
-        #region IChannelFactory Members
-
         public IChannel CreateChannel( IChannelDefinition definition )
         {
             var channel = new LocalChannel( Dispatcher, definition as LocalChannelDefinition );
             return channel;
         }
-
-        #endregion
 
         public LocalChannelFactory( IDispatcher dispatcher )
         {

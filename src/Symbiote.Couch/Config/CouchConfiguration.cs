@@ -15,7 +15,6 @@
 // */
 using System;
 using System.Collections.Generic;
-using Symbiote.Couch.Impl.Serialization;
 
 namespace Symbiote.Couch.Config
 {
@@ -23,8 +22,6 @@ namespace Symbiote.Couch.Config
     {
         protected Dictionary<Type, string> _databaseForType = new Dictionary<Type, string>();
         public IResolveDatabaseNames DatabaseResolver { get; set; }
-
-        #region ICouchConfiguration Members
 
         public string GetDatabaseNameForType<T>()
         {
@@ -47,7 +44,6 @@ namespace Symbiote.Couch.Config
         }
 
         public string DefaultDatabaseName { get; set; }
-        public bool BreakDownDocumentGraphs { get; set; }
         public string Protocol { get; set; }
         public string Server { get; set; }
         public int Port { get; set; }
@@ -55,15 +51,12 @@ namespace Symbiote.Couch.Config
         public string User { get; set; }
         public string Password { get; set; }
         public int TimeOut { get; set; }
-        public DocumentConventions Conventions { get; set; }
         public bool Cache { get; set; }
         public DateTime CacheExpiration { get; set; }
         public TimeSpan CacheLimit { get; set; }
         public bool Throw404Exceptions { get; set; }
         public bool IncludeTypeSpecification { get; set; }
         public string CouchQueryServiceUrl { get; set; }
-
-        #endregion
 
         public CouchConfiguration()
         {
@@ -74,7 +67,6 @@ namespace Symbiote.Couch.Config
             TimeOut = 6000;
             IncludeTypeSpecification = true;
             CouchQueryServiceUrl = @"http://localhost:8420/";
-            Conventions = new DocumentConventions();
             DefaultDatabaseName =
                 (System.Reflection.Assembly.GetEntryAssembly() ??
                  System.Reflection.Assembly.GetExecutingAssembly()).GetName().Name.Replace( ".", "" );

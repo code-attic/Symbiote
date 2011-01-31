@@ -21,8 +21,6 @@ namespace Symbiote.Eidetic.Impl
     {
         protected IRemember _remember;
 
-        #region ICacheProvider Members
-
         public void Store<T>( string key, T value )
         {
             _remember.Store( StoreMode.Set, key, value );
@@ -37,8 +35,6 @@ namespace Symbiote.Eidetic.Impl
         {
             _remember.Remove( key );
         }
-
-        #endregion
 
         public EideticCacheProvider( IRemember remember )
         {

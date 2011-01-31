@@ -1,0 +1,22 @@
+﻿using Actor.Tests.Domain.Model;
+<<<<<<< HEAD
+=======
+using Symbiote.Core;
+>>>>>>> Beginning work on app domain hot loading
+using Symbiote.Core.UnitOfWork;
+
+namespace Actor.Tests.Domain
+{
+    public class DriverKeyAccessor : IKeyAccessor<Driver>
+    {
+        public string GetId(Driver actor)
+        {
+            return actor.SSN;
+        }
+
+        public void SetId<TKey>(Driver actor, TKey id)
+        {
+            // this isn't necessary with a customer factory
+        }
+    }
+}

@@ -31,8 +31,6 @@ namespace Symbiote.Daemon.Host
         public Action<TService> PauseAction { get; set; }
         public Action<TService> ContinueAction { get; set; }
 
-        #region IServiceController Members
-
         public string Name { get; private set; }
 
         public Type ServiceType
@@ -109,8 +107,6 @@ namespace Symbiote.Daemon.Host
                 SendFault( ex );
             }
         }
-
-        #endregion
 
         protected void Dispose( bool disposing )
         {

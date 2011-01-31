@@ -1,0 +1,23 @@
+<<<<<<< HEAD
+﻿using Symbiote.Core.UnitOfWork;
+=======
+﻿using Symbiote.Core;
+using Symbiote.Core.UnitOfWork;
+>>>>>>> Beginning work on app domain hot loading
+
+namespace Messaging.Tests.RequestResponse
+{
+    public class AuctionKeyAccessor
+        : IKeyAccessor<Auction>
+    {
+        public string GetId( Auction actor )
+        {
+            return actor.Item;
+        }
+
+        public void SetId<TKey>( Auction actor, TKey id )
+        {
+            actor.Item = id.ToString();
+        }
+    }
+}

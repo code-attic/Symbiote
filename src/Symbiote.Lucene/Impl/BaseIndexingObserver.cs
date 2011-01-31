@@ -22,8 +22,6 @@ namespace Symbiote.Lucene.Impl
     {
         protected Document document { get; set; }
 
-        #region ILuceneIndexer Members
-
         public IDocumentQueue DocumentQueue { get; set; }
 
         public abstract void OnNext( Tuple<string, string> value );
@@ -31,7 +29,5 @@ namespace Symbiote.Lucene.Impl
         public abstract void OnError( Exception error );
 
         public abstract void OnCompleted();
-
-        #endregion
     }
 }

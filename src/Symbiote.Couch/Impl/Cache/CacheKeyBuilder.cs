@@ -20,8 +20,6 @@ namespace Symbiote.Couch.Impl.Cache
 {
     public class CacheKeyBuilder : ICacheKeyBuilder
     {
-        #region ICacheKeyBuilder Members
-
         public string GetKey<TModel>( object id )
         {
             return "{0}_{1}"
@@ -51,8 +49,6 @@ namespace Symbiote.Couch.Impl.Cache
             return "{0}_{1}_{2}"
                 .AsFormat( typeof( TModel ).FullName, page, size );
         }
-
-        #endregion
 
         public string GetIdAsValidString( object id )
         {

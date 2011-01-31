@@ -27,8 +27,6 @@ namespace Symbiote.Messaging.Impl
         protected IChannelManager Channels { get; set; }
         protected ISubscriptionManager Subscriptions { get; set; }
 
-        #region IBus Members
-
         public bool HasChannelFor( string channelName )
         {
             return ChannelIndex.HasChannelFor( channelName );
@@ -78,8 +76,6 @@ namespace Symbiote.Messaging.Impl
         {
             Subscriptions.StopSubscription( subscription );
         }
-
-        #endregion
 
         public Bus(
             IChannelManager channels,

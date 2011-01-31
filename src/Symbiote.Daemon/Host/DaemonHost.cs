@@ -23,14 +23,10 @@ namespace Symbiote.Daemon.Host
         private readonly ServiceName Name;
         private readonly IServiceCoordinator ServiceCoordinator;
 
-        #region IHost Members
-
         public void Start()
         {
             Run( this );
         }
-
-        #endregion
 
         protected override void OnStop()
         {

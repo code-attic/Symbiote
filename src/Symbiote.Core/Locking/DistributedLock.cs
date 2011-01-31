@@ -23,14 +23,10 @@ namespace Symbiote.Core.Locking
         protected ILockManager Manager { get; set; }
         protected object LockId { get; set; }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             Manager.ReleaseLock( LockId );
         }
-
-        #endregion
 
         public static DistributedLock Create<T>( T lockId )
         {

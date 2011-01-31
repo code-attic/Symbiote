@@ -30,8 +30,6 @@ namespace Symbiote.Couch.Impl.Model
         protected Action<TModel, TKey> DocumentIdSetter = ( x, k ) => x._documentId = k;
         protected TKey _documentId;
 
-        #region ICouchDocument<TKey> Members
-
         [JsonProperty( PropertyName = "_id" )]
         public virtual TKey DocumentId
         {
@@ -64,8 +62,6 @@ namespace Symbiote.Couch.Impl.Model
         {
             DocumentRevision = jsonRev;
         }
-
-        #endregion
 
         protected virtual TModel KeyGetter( Func<TModel, TKey> getter )
         {

@@ -23,8 +23,6 @@ namespace Symbiote.Core.Log.Impl
     {
         public List<string> Content { get; set; }
 
-        #region ILogger Members
-
         public void Log( LogLevel level, object message )
         {
             Content.Add( "{0} - {1}".AsFormat( level, message ) );
@@ -44,8 +42,6 @@ namespace Symbiote.Core.Log.Impl
         {
             Content.Add( "{0} - {1}".AsFormat( level, format.AsFormat( args ) ) );
         }
-
-        #endregion
 
         public TestLogger()
         {

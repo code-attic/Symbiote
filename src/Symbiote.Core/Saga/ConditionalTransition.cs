@@ -24,8 +24,6 @@ namespace Symbiote.Core.Saga
         public Action<TActor> Transition { get; set; }
         public Action<TActor, TMessage> Process { get; set; }
 
-        #region IConditionalTransition<TActor> Members
-
         public bool Execute( TActor instance, object message )
         {
             var passed = Guard( instance );
@@ -36,8 +34,6 @@ namespace Symbiote.Core.Saga
             }
             return passed;
         }
-
-        #endregion
 
         public ConditionalTransition()
         {

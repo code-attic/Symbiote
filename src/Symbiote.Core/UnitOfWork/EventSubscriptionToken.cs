@@ -24,16 +24,12 @@ namespace Symbiote.Core.UnitOfWork
         private readonly IObserver<IEvent> _listener;
         private readonly IList<IObserver<IEvent>> _listeners;
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             // TODO : determine if "Contains" is really necessary here.  Probably just extra overhead...
             if ( _listener != null && _listeners.Contains( _listener ) )
                 _listeners.Remove( _listener );
         }
-
-        #endregion
 
         public EventSubscriptionToken( IObserver<IEvent> listener, IList<IObserver<IEvent>> listeners )
         {

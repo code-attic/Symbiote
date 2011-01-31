@@ -27,8 +27,6 @@ namespace Symbiote.Hibernate
         private int? _pageNumber;
         private int? _pageSize;
 
-        #region ISearchCriteria<T> Members
-
         public ISearchCriteria<T> Add( Expression<Func<T, bool>> expression )
         {
             _list.Add( expression );
@@ -67,8 +65,6 @@ namespace Symbiote.Hibernate
             _orderClause.Enqueue( Tuple.Create( orderBy.GetMemberName(), order ) );
             return this;
         }
-
-        #endregion
 
         public SearchCriteria()
         {

@@ -22,14 +22,10 @@ namespace Symbiote.Http.Impl
     {
         public Type ApplicationType { get; set; }
 
-        #region IApplicationFactory Members
-
         public IApplication CreateApplication()
         {
             return Assimilate.GetInstanceOf( ApplicationType ) as IApplication;
         }
-
-        #endregion
 
         public ApplicationFactory( Type applicationType )
         {
@@ -40,13 +36,9 @@ namespace Symbiote.Http.Impl
     public class ApplicationFactory<T> : IApplicationFactory
         where T : IApplication
     {
-        #region IApplicationFactory Members
-
         public IApplication CreateApplication()
         {
             return Assimilate.GetInstanceOf<T>();
         }
-
-        #endregion
     }
 }

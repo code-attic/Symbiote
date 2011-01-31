@@ -20,13 +20,9 @@ namespace Symbiote.Http.Impl.Adapter.Channel
     public class HttpChannelFactory
         : IChannelFactory
     {
-        #region IChannelFactory Members
-
         public IChannel CreateChannel( IChannelDefinition definition )
         {
             return new HttpChannel( definition as ChannelDefinition );
         }
-
-        #endregion
     }
 }

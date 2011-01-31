@@ -34,8 +34,6 @@ namespace Symbiote.Couch.Impl.Repository
         protected ICouchConfiguration configuration { get; set; }
         protected CouchCommandFactory commandFactory { get; set; }
 
-        #region IDocumentRepository Members
-
         public virtual void DeleteAttachment<TModel>( TModel model, string attachmentName )
             where TModel : IHaveAttachments
         {
@@ -176,8 +174,6 @@ namespace Symbiote.Couch.Impl.Repository
         public void Dispose()
         {
         }
-
-        #endregion
 
         protected BaseDocumentRepository( ICouchConfiguration configuration )
         {

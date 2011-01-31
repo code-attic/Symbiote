@@ -21,8 +21,6 @@ namespace Symbiote.Hibernate.Impl
     {
         private readonly ISessionContext _context;
 
-        #region ISessionManager Members
-
         public ISession CurrentSession
         {
             get
@@ -38,8 +36,6 @@ namespace Symbiote.Hibernate.Impl
             }
             set { _context.Set( "CurrentSession", value ); }
         }
-
-        #endregion
 
         public SessionManager( ISessionContext context )
         {

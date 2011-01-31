@@ -26,8 +26,6 @@ namespace Symbiote.Messaging.Impl.Channels
         public ConcurrentDictionary<Type, IChannelFactory> ChannelFactories { get; set; }
         public IChannelIndex Index { get; set; }
 
-        #region IChannelManager Members
-
         public IChannel GetChannelFor( string channelName )
         {
             IChannel channel;
@@ -38,8 +36,6 @@ namespace Symbiote.Messaging.Impl.Channels
             }
             return channel;
         }
-
-        #endregion
 
         public IChannel CreateChannelInstance( string channelName, IChannelDefinition definition )
         {

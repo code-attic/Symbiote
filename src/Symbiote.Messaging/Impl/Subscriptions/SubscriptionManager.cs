@@ -22,8 +22,6 @@ namespace Symbiote.Messaging.Impl.Subscriptions
     {
         protected Dictionary<string, ISubscription> Subscriptions { get; set; }
 
-        #region ISubscriptionManager Members
-
         public void Dispose()
         {
         }
@@ -55,8 +53,6 @@ namespace Symbiote.Messaging.Impl.Subscriptions
             var subscription = Subscriptions[subscriptionName];
             subscription.Stop();
         }
-
-        #endregion
 
         public SubscriptionManager()
         {

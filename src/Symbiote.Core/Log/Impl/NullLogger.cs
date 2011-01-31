@@ -19,8 +19,6 @@ namespace Symbiote.Core.Log.Impl
 {
     public class NullLogger : ILogger
     {
-        #region ILogger Members
-
         public void Log( LogLevel level, object message )
         {
             // do nothing
@@ -40,7 +38,5 @@ namespace Symbiote.Core.Log.Impl
         {
             // do nothing
         }
-
-        #endregion
     }
 }

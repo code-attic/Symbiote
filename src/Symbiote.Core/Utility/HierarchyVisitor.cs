@@ -30,16 +30,12 @@ namespace Symbiote.Core.Utility
         protected Predicate<object> MatchIdentifier { get; set; }
         protected bool IncludePath { get; set; }
 
-        #region IObservable<Tuple<object,string,object>> Members
-
         public IDisposable Subscribe( IObserver<Tuple<object, string, object>> observer )
         {
             var disposable = observer as IDisposable;
             Watchers.Add( observer );
             return disposable;
         }
-
-        #endregion
 
         public void Visit( object instance )
         {

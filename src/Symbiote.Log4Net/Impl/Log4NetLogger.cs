@@ -202,8 +202,6 @@ namespace Symbiote.Log4Net.Impl
                                                                                      },
                                                                              };
 
-        #region ILogger Members
-
         public void Log( LogLevel level, object message )
         {
             _logMessage[level]( _log, message );
@@ -223,8 +221,6 @@ namespace Symbiote.Log4Net.Impl
         {
             _logFormatProvider[level]( _log, provider, format, args );
         }
-
-        #endregion
 
         public Log4NetLogger( ILog log )
         {

@@ -21,8 +21,6 @@ namespace Symbiote.Lucene.Impl
 {
     public class DefaultAnalyzerFactory : IAnalyzerFactory
     {
-        #region IAnalyzerFactory Members
-
         public Analyzer GetQueryAnalyzerFor( string indexName )
         {
             return new KeywordAnalyzer();
@@ -32,7 +30,5 @@ namespace Symbiote.Lucene.Impl
         {
             return new StandardAnalyzer( Version.LUCENE_29 );
         }
-
-        #endregion
     }
 }

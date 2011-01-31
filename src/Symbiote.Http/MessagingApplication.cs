@@ -29,8 +29,6 @@ namespace Symbiote.Http
     {
         public IDispatcher Dispatcher { get; set; }
 
-        #region IApplication Members
-
         public void Process( IDictionary<string, object> requestItems,
                              Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond,
                              Action<Exception> onException )
@@ -58,8 +56,6 @@ namespace Symbiote.Http
             result.Callback = respond;
             Dispatcher.Send( result as IEnvelope );
         }
-
-        #endregion
 
         public MessagingApplication( IDispatcher dispatcher )
         {

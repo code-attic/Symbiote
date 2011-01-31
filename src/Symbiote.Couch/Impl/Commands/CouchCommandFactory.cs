@@ -84,18 +84,12 @@ namespace Symbiote.Couch.Impl.Commands
 
         public ISaveDocument CreateSaveDocumentCommand()
         {
-            return configuration.BreakDownDocumentGraphs
-                       ? (ISaveDocument)
-                         CreateSaveDocumentGraphCommand()
-                       : CreateSaveDocumentOnlyCommand();
+            return CreateSaveDocumentOnlyCommand();
         }
 
         public ISaveDocuments CreateSaveDocumentsCommand()
         {
-            return configuration.BreakDownDocumentGraphs
-                       ? (ISaveDocuments)
-                         CreateSaveDocumentOnlyListCommand()
-                       : CreateSaveDocumentGraphListCommand();
+            return CreateSaveDocumentOnlyListCommand();
         }
 
         public SaveDocumentCommand CreateSaveDocumentOnlyCommand()
@@ -103,19 +97,9 @@ namespace Symbiote.Couch.Impl.Commands
             return CreateCommand<SaveDocumentCommand>();
         }
 
-        public SaveDocumentGraphCommand CreateSaveDocumentGraphCommand()
-        {
-            return CreateCommand<SaveDocumentGraphCommand>();
-        }
-
         public SaveDocumentListCommand CreateSaveDocumentOnlyListCommand()
         {
             return CreateCommand<SaveDocumentListCommand>();
-        }
-
-        public SaveDocumentGraphListCommand CreateSaveDocumentGraphListCommand()
-        {
-            return CreateCommand<SaveDocumentGraphListCommand>();
         }
 
         public ServerCommand CreateServerCommand()

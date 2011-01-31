@@ -18,13 +18,9 @@ namespace Symbiote.Messaging.Impl.Channels
     public class NamedPipeChannelFactory
         : IChannelFactory
     {
-        #region IChannelFactory Members
-
         public IChannel CreateChannel( IChannelDefinition definition )
         {
             return new NamedPipeChannel( definition as NamedPipeChannelDefinition );
         }
-
-        #endregion
     }
 }

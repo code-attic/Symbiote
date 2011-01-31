@@ -23,11 +23,7 @@ namespace Symbiote.Core
         public List<string> AssemblyBlacklist { get; set; }
         public List<string> AssemblyWhitelist { get; set; }
 
-        #region IAssimilate Members
-
         public IDependencyAdapter DependencyAdapter { get; set; }
-
-        #endregion
 
         public Assimilation()
         {

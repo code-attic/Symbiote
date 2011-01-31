@@ -62,11 +62,6 @@ namespace Symbiote.Couch.Impl
             DocumentUtility.SetDocumentRevision( revision, instance );
         }
 
-        public static object[] GetDocmentsFromGraph( this object instance )
-        {
-            return DocumentUtility.GetDocumentGraph( instance );
-        }
-
         public static CouchUri NewUri( this ICouchConfiguration configuration )
         {
             return CouchUtility.NewUri();

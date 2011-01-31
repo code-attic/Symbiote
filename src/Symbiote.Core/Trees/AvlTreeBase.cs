@@ -23,8 +23,6 @@ namespace Symbiote.Core.Trees
     {
         public IAvlLeaf<TKey, TValue> Root { get; set; }
 
-        #region ITree<TKey,TValue> Members
-
         public virtual int Count
         {
             get { return Root.Count; }
@@ -47,8 +45,6 @@ namespace Symbiote.Core.Trees
             var done = false;
             Root = Insert( Root, leaf, ref done );
         }
-
-        #endregion
 
         protected abstract IAvlLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value );
 

@@ -33,6 +33,7 @@ namespace Symbiote.Core.Futures
             if ( result != null )
             {
                 Call.EndInvoke( result );
+                ResetTrigger.Set();
             }
         }
 

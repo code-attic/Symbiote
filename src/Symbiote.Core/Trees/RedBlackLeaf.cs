@@ -24,8 +24,6 @@ namespace Symbiote.Core.Trees
         protected IRedBlackLeaf<TKey, TValue>[] _children = new IRedBlackLeaf<TKey, TValue>[2];
         protected Comparer Comparer { get; set; }
 
-        #region IRedBlackLeaf<TKey,TValue> Members
-
         public LeafColor Color { get; set; }
         public TKey Key { get; set; }
         public IRedBlackLeaf<TKey, TValue> Parent { get; set; }
@@ -76,8 +74,6 @@ namespace Symbiote.Core.Trees
         {
             return LessThan( leaf.Key );
         }
-
-        #endregion
 
         protected int GetCount()
         {

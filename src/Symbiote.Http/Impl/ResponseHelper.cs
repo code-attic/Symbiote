@@ -32,8 +32,6 @@ namespace Symbiote.Http.Impl
         public Func<string, byte[]> Encoder { get; set; }
         public IDefineHeaders HeaderDefinitions { get; set; }
 
-        #region IBuildResponse Members
-
         public IBuildResponse AppendToBody( byte[] bytes )
         {
             ResponseChunks.Add( bytes );
@@ -90,8 +88,6 @@ namespace Symbiote.Http.Impl
         {
             Submit( status.ToString() );
         }
-
-        #endregion
 
         private string GetContentTypeFromPath( string path )
         {

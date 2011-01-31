@@ -13,9 +13,80 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
+using System.Collections.Generic;
+using Symbiote.Core;
+using Symbiote.Core.Actor;
+using Symbiote.Core.Saga;
+using Symbiote.Messaging;
+
 namespace Symbiote.Daemon.BootStrap
 {
-    internal class AssemblyLoader
+    public class AssemblyLoader
     {
+
+    }
+
+    public class DaemonApplication
+    {
+        public string Name { get; set; }
+        public AppDomain DomainHandle { get; set; }
+        public bool Running { get; set; }
+        public bool Starting { get; set; }
+        public bool Stopping { get; set; }
+
+        public void StartUp()
+        {
+            
+        }
+
+        public void ShutItDown()
+        {
+            
+        }
+    }
+
+    public class DaemonApplicationKeyAccessor
+        : IKeyAccessor<DaemonApplication>
+    {
+        public string GetId( DaemonApplication actor )
+        {
+            return actor.Name;
+        }
+
+        public void SetId<TKey>( DaemonApplication actor, TKey id )
+        {
+            actor.Name = id.ToString();
+        }
+    }
+
+    public class ApplicationSaga
+        : Saga<DaemonApplication>
+    {
+        public override Action<StateMachine<DaemonApplication>> Setup()
+        {
+            return x =>
+                       {
+                           x.When( a => a.Running )
+                               .On<ApplicationDeleted>( ( a, h ) => a.ShutItDown() )
+                               .On<ApplicationChanged>( ( a, h ) =>
+                                                            {
+                                                                a.ShutItDown();
+                                                                a.StartUp();
+                                                            } );
+                           x.When( a => !a.Running )
+                               .On<ApplicationChanged>( ( a, h ) => a.StartUp() )
+                               .On<NewApplication>( ( a, h ) => a.StartUp() );
+                       };
+        }
+
+        public ApplicationSaga( StateMachine<DaemonApplication> stateMachine ) : base( stateMachine )
+        {
+        }
+    }
+
+    public class ApplicationBootStapper
+    {
+        
     }
 }

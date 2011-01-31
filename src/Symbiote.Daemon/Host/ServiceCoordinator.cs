@@ -30,8 +30,6 @@ namespace Symbiote.Daemon.Host
         protected IList<IServiceController> Services { get; set; }
         protected DaemonConfiguration Configuration { get; set; }
 
-        #region IServiceCoordinator Members
-
         public void Start()
         {
             Services.ForEach( x => x.Start() );
@@ -97,8 +95,6 @@ namespace Symbiote.Daemon.Host
             Dispose( true );
             GC.SuppressFinalize( this );
         }
-
-        #endregion
 
         private void Dispose( bool disposing )
         {

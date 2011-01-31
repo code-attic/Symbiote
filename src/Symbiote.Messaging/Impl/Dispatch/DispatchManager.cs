@@ -30,8 +30,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public Director<IEnvelope> Fibers { get; set; }
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
         public ManualResetEventSlim Signal { get; set; }
-
-        #region IDispatcher Members
+        public Random RandomMailbox { get; set; }
 
         public int Count { get; set; }
 
@@ -41,7 +40,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             Fibers.SendTo(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId )
-                    ? envelope.MessageId.ToString()
+                    ? (RandomMailbox.Next(1000000, 1001000)).ToString()
                     : envelope.CorrelationId,
                 envelope );
         }
@@ -52,7 +51,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             Fibers.SendTo(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId )
-                    ? envelope.MessageId.ToString()
+                    ? (envelope.MessageId.GetHashCode() % 100).ToString()
                     : envelope.CorrelationId,
                 envelope );
         }
@@ -61,8 +60,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
         {
             ResponseDispatchers.TryAdd( correlationId, new ResponseDispatcher<TResponse>( onResponse ) );
         }
-
-        #endregion
 
         public void SendToHandler( string id, IEnvelope envelope )
         {

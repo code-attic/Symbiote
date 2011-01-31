@@ -20,8 +20,8 @@ namespace Symbiote.Core.Serialization
 {
     public interface IJsonSerializerFactory
     {
-        JsonSerializer GetSerializerFor( string json, bool includeTypeSpec, SerializerAction action );
-        JsonSerializer GetSerializerFor<T>( bool includeTypeSpec, SerializerAction action );
-        JsonSerializer GetSerializerFor( Type type, bool includeTypeSpec, SerializerAction action );
+        JsonSerializer GetSerializerFor( string json, bool includeTypeSpec );
+        JsonSerializer GetSerializerFor<T>( bool includeTypeSpec );
+        JsonSerializer GetSerializerFor( Type type, bool includeTypeSpec );
     }
 }

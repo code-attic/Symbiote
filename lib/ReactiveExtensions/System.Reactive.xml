@@ -129,7 +129,7 @@
             Creates a subject that caches its last value and starts with the specified value.
             </summary>
         </member>
-        <member name="T:System.Collections.Generic.ConnectableObservable`1">
+        <member name="T:System.Collections.Generic.ConnectableObservable`2">
             <summary>
             Represents an observable that can be connected and disconnected from its source.
             </summary>
@@ -144,24 +144,29 @@
             Connects the observable.
             </summary>
         </member>
-        <member name="M:System.Collections.Generic.ConnectableObservable`1.#ctor(System.IObservable{`0},System.Collections.Generic.ISubject{`0})">
+        <member name="M:System.Collections.Generic.ConnectableObservable`2.#ctor(System.IObservable{`1},System.Collections.Generic.ISubject{`1,`0})">
             <summary>
             Creates an observable that can be connected and disconnected from its source.
             </summary>
         </member>
-        <member name="M:System.Collections.Generic.ConnectableObservable`1.#ctor(System.IObservable{`0})">
-            <summary>
-            Creates an observable that can be connected and disconnected from its source.
-            </summary>
-        </member>
-        <member name="M:System.Collections.Generic.ConnectableObservable`1.Connect">
+        <member name="M:System.Collections.Generic.ConnectableObservable`2.Connect">
             <summary>
             Connects the observable to its source.
             </summary>
         </member>
-        <member name="M:System.Collections.Generic.ConnectableObservable`1.Subscribe(System.IObserver{`0})">
+        <member name="M:System.Collections.Generic.ConnectableObservable`2.Subscribe(System.IObserver{`0})">
             <summary>
             Subscribes an observer to the observable sequence.
+            </summary>
+        </member>
+        <member name="T:System.Collections.Generic.ConnectableObservable`1">
+            <summary>
+            Represents an observable that can be connected and disconnected from its source.
+            </summary>
+        </member>
+        <member name="M:System.Collections.Generic.ConnectableObservable`1.#ctor(System.IObservable{`0},System.Collections.Generic.ISubject{`0})">
+            <summary>
+            Creates an observable that can be connected and disconnected from its source.
             </summary>
         </member>
         <member name="T:System.IQbservable`1">
@@ -1260,6 +1265,11 @@
             Converts a Begin/End invoke function pair into a asynchronous function.
             </summary>
         </member>
+        <member name="M:System.Linq.Observable.GetAwaiter``1(System.IObservable{``0})">
+            <summary>
+            Returns an awaiter that lists all values of the observable sequence.
+            </summary>
+        </member>
         <member name="M:System.Linq.Observable.Let``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}})">
             <summary>
             Bind the source to the parameter without sharing subscription side-effects.
@@ -1270,174 +1280,19 @@
             Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
         </member>
-        <member name="M:System.Linq.Observable.Publish``1(System.IObservable{``0})">
+        <member name="M:System.Linq.Observable.Publish``2(System.IObservable{``0},System.Collections.Generic.ISubject{``0,``1})">
             <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source.
+            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
         </member>
-        <member name="M:System.Linq.Observable.Publish``1(System.IObservable{``0},System.Concurrency.IScheduler)">
+        <member name="M:System.Linq.Observable.Multicast``2(System.IObservable{``0},System.Collections.Generic.ISubject{``0,``1})">
             <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source.
+            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
         </member>
-        <member name="M:System.Linq.Observable.Publish``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}})">
+        <member name="M:System.Linq.Observable.Publish``3(System.IObservable{``0},System.Collections.Generic.ISubject{``0,``1},System.Func{System.IObservable{``1},System.IObservable{``2}})">
             <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``3(System.IObservable{``0},System.IObservable{``1},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2}})">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``3(System.IObservable{``0},System.IObservable{``1},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``4(System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3}})">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``4(System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``5(System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3},System.IObservable{``4}})">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``5(System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3},System.Func{System.IObservable{``0},System.IObservable{``1},System.IObservable{``2},System.IObservable{``3},System.IObservable{``4}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on connectable observable sequences that share a single subscription to each underlying source.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Prune``1(System.IObservable{``0})">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source containing only the last notification.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Prune``1(System.IObservable{``0},System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source containing only the last notification.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Prune``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}})">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source containing only the last notification.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Prune``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source containing only the last notification.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0})">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}})">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.TimeSpan)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.TimeSpan)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.TimeSpan,System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.TimeSpan,System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying all notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.Int32,System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Int32,System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.Int32)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Int32)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.Int32,System.TimeSpan)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Int32,System.TimeSpan)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``1(System.IObservable{``0},System.Int32,System.TimeSpan,System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Replay``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},System.Int32,System.TimeSpan,System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source replaying bufferSize notifications within window.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``1(System.IObservable{``0},``0)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source and starts with initialValue.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``1(System.IObservable{``0},``0,System.Concurrency.IScheduler)">
-            <summary>
-            Returns a connectable observable sequence that shares a single subscription to the underlying source and starts with initialValue.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},``0)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source and starts with initialValue.
-            </summary>
-        </member>
-        <member name="M:System.Linq.Observable.Publish``2(System.IObservable{``0},System.Func{System.IObservable{``0},System.IObservable{``1}},``0,System.Concurrency.IScheduler)">
-            <summary>
-            Returns an observable sequence that is the result of invoking the selector on a connectable observable sequence that shares a single subscription to the underlying source and starts with initialValue.
+            Returns an observable sequence that stays connected to the source as long as there is at least one subscription to the observable sequence.
             </summary>
         </member>
         <member name="M:System.Linq.Observable.ToEnumerable``1(System.IObservable{``0})">
@@ -1542,12 +1397,12 @@
         </member>
         <member name="M:System.Linq.Observable.ObserveOnDispatcher``1(System.IObservable{``0})">
             <summary>
-            Asynchronously notify observers using the current dispatcher.
+            Asynchronously notify observers using the dispatcher from the current thread.
             </summary>
         </member>
         <member name="M:System.Linq.Observable.SubscribeOnDispatcher``1(System.IObservable{``0})">
             <summary>
-            Asynchronously subscribes and unsubscribes observers using the current dispatcher.
+            Asynchronously subscribes and unsubscribes observers using the dispatcher from the current thread.
             </summary>
         </member>
         <member name="M:System.Linq.Observable.SubscribeOn``1(System.IObservable{``0},System.Concurrency.DispatcherScheduler)">
@@ -1910,6 +1765,21 @@
             Merges an observable sequence of observable sequences into an observable sequence.
             </summary>
         </member>
+        <member name="M:System.Linq.Observable.Window``3(System.IObservable{``0},System.IObservable{``1},System.Func{``1,System.IObservable{``2}})">
+            <summary>
+            Projects each value in source to the windows defined by windowOpenings and windowClosing.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.Window``2(System.IObservable{``0},System.Func{System.IObservable{``1}},System.Concurrency.IScheduler)">
+            <summary>
+            Projects each value in source to the windows defined by windowClosing.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.Window``2(System.IObservable{``0},System.Func{System.IObservable{``1}})">
+            <summary>
+            Projects each value in source to the windows defined by windowClosing.
+            </summary>
+        </member>
         <member name="M:System.Linq.Observable.AsQbservable``1(System.IObservable{``0})">
             <summary>
             Converts an observable sequence into a queryable observable sequence.
@@ -2032,6 +1902,11 @@
             If condition is true, then thenSource else elseSource.
             </summary>        
         </member>
+        <member name="M:System.Linq.Observable.If``1(System.Func{System.Boolean},System.IObservable{``0})">
+            <summary>
+            If condition is true, then thenSource else elseSource.
+            </summary>        
+        </member>
         <member name="M:System.Linq.Observable.DoWhile``1(System.IObservable{``0},System.Func{System.Boolean})">
             <summary>
             Repeats source as long as condition holds.
@@ -2085,6 +1960,16 @@
         <member name="M:System.Linq.Observable.Start``1(System.IObservable{``0})">
             <summary>
             Immediately subscribes to source and retains the values in the observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.Drain``1(System.IObservable{``0},System.Func{``0,System.IObservable{System.Unit}})">
+            <summary>
+            Maintains a queue of values produced by source which are drained by pump.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.Drain``1(System.IObservable{``0},System.Func{``0,System.IObservable{System.Unit}},System.Concurrency.IScheduler)">
+            <summary>
+            Maintains a queue of values produced by source which are drained by pump.
             </summary>
         </member>
         <member name="M:System.Linq.Observable.Select``2(System.IObservable{``0},System.Func{``0,``1})">
@@ -2180,6 +2065,16 @@
         <member name="M:System.Linq.Observable.Cast``1(System.IObservable{System.Object})">
             <summary>
             Casts values to the given type.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.Join``5(System.IObservable{``0},System.IObservable{``1},System.Func{``0,System.IObservable{``2}},System.Func{``1,System.IObservable{``3}},System.Func{``0,``1,``4})">
+            <summary>
+            Correlates the elements of two sequences based on overlapping durations.
+            </summary>
+        </member>
+        <member name="M:System.Linq.Observable.GroupJoin``5(System.IObservable{``0},System.IObservable{``1},System.Func{``0,System.IObservable{``2}},System.Func{``1,System.IObservable{``3}},System.Func{``0,System.IObservable{``1},``4})">
+            <summary>
+            Correlates the elements of two sequences based on overlapping durations, and groups the results.
             </summary>
         </member>
         <member name="M:System.Linq.Observable.Interval(System.TimeSpan)">
@@ -2403,6 +2298,21 @@
         <member name="P:System.Linq.Observable.Provider">
             <summary>
             Gets the local Qbservable provider.
+            </summary>
+        </member>
+        <member name="T:System.Linq.ObservableAwaiter`1">
+            <summary>
+            Represents an awaiter that lists all values of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Linq.ObservableAwaiter`1.BeginAwait(System.Action)">
+            <summary>
+            Starts the subscription of the underlying observable sequence and calls callback upon completion of the observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Linq.ObservableAwaiter`1.EndAwait">
+            <summary>
+            Returns a list containing all values of the underlying observable sequence.
             </summary>
         </member>
         <member name="T:System.ObservableExtensions">
@@ -2630,6 +2540,46 @@
         <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToObservable``1(System.Threading.Tasks.Task{``0})">
             <summary>
             Returns an observable sequence that contains the values of the underlying task.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTaskLast``1(System.IObservable{``0})">
+            <summary>
+            Returns a task that contains the last value of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTaskLast``1(System.IObservable{``0},System.Object)">
+            <summary>
+            Returns a task that contains the last value of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTaskLast``1(System.IObservable{``0},System.Threading.CancellationToken)">
+            <summary>
+            Returns a task that contains the last value of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTaskLast``1(System.IObservable{``0},System.Threading.CancellationToken,System.Object)">
+            <summary>
+            Returns a task that contains the last value of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTask``1(System.IObservable{``0})">
+            <summary>
+            Returns a task that contains all values of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTask``1(System.IObservable{``0},System.Object)">
+            <summary>
+            Returns a task that contains all values of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTask``1(System.IObservable{``0},System.Threading.CancellationToken)">
+            <summary>
+            Returns a task that contains all values of the underlying observable sequence.
+            </summary>
+        </member>
+        <member name="M:System.Threading.Tasks.TaskObservableExtensions.ToTask``1(System.IObservable{``0},System.Threading.CancellationToken,System.Object)">
+            <summary>
+            Returns a task that contains all values of the underlying observable sequence.
             </summary>
         </member>
         <member name="T:System.Windows.Forms.ControlObservableExtensions">

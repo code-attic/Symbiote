@@ -31,8 +31,6 @@ namespace Symbiote.Lucene
         protected ILuceneServiceFactory serviceFactory { get; set; }
         protected Action<string> writeIndexToDisk { get; set; }
 
-        #region ILuceneIndexingService Members
-
         public void IndexObservable<TObservable, TEvent>( string indexName, TObservable observable )
             where TObservable : IObservable<TEvent>
         {
@@ -44,8 +42,6 @@ namespace Symbiote.Lucene
                 .BufferWithTime( TimeSpan.FromMinutes( 2 ) )
                 .Do( x => WriteIndex( indexName ) );
         }
-
-        #endregion
 
         protected void IndexEvent<T>( ILuceneIndexer indexer, T newEvent )
         {

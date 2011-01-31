@@ -28,8 +28,6 @@ namespace Symbiote.Couch.Impl.Http
         protected bool _pollForChanges;
         protected ICouchConfiguration configuration { get; set; }
 
-        #region IHttpAction Members
-
         public virtual string GetResponse( CouchUri uri, string method, string body )
         {
             var request = WebRequest.Create( uri.ToString() );
@@ -172,8 +170,6 @@ namespace Symbiote.Couch.Impl.Http
         {
             return GetResponse( uri, "DELETE", "" );
         }
-
-        #endregion
 
         public HttpAction( ICouchConfiguration configuration )
         {

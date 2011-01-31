@@ -25,8 +25,6 @@ namespace Symbiote.Messaging.Impl.Channels
         public Dictionary<Type, Func<object, string>> RoutingMethods { get; set; }
         public Dictionary<Type, Func<object, string>> CorrelationMethods { get; set; }
 
-        #region IChannelDefinition Members
-
         public string Name { get; set; }
 
         public virtual Type ChannelType
@@ -45,10 +43,6 @@ namespace Symbiote.Messaging.Impl.Channels
         }
 
         public Type SerializerType { get; set; }
-
-        #endregion
-
-        #region IConfigureChannel Members
 
         public IConfigureChannel Named( string channelName )
         {
@@ -79,8 +73,6 @@ namespace Symbiote.Messaging.Impl.Channels
             RoutingMethods.Add( typeof( TMessage ), o => messageProperty( (TMessage) o ) );
             return this;
         }
-
-        #endregion
 
         public string GetCorrelationId<TMessage>( TMessage message )
         {

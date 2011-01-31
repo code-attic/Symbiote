@@ -29,8 +29,6 @@ namespace Symbiote.Messaging.Impl.Channels
 
         protected IDispatcher MessageDispatcher { get; set; }
 
-        #region IChannel Members
-
         public string Name
         {
             get { return Definition.Name; }
@@ -89,8 +87,6 @@ namespace Symbiote.Messaging.Impl.Channels
 
             MessageDispatcher.Send( envelope );
         }
-
-        #endregion
 
         public LocalChannel( IDispatcher messageDispatcher, LocalChannelDefinition definition )
         {

@@ -13,9 +13,81 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
+using System.Collections.Generic;
+using System.IO;
+using Symbiote.Core.Utility;
+using Symbiote.Daemon.BootStrap.Config;
+using System.Linq;
+using Symbiote.Messaging;
+
 namespace Symbiote.Daemon.BootStrap
 {
-    internal class Watcher
+    public class Watcher
     {
+        public BootStrapConfiguration Configuration { get; set; }
+        public IList<FileSystemWatcher> SystemEvents { get; set; }
+        public IList<IObservable<IEvent<FileSystemEventArgs>>> SystemObservers { get; set; }
+        public IBus Bus { get; set; }
+
+        public Watcher( BootStrapConfiguration configuration )
+        {
+            Configuration = configuration;
+            var patterns = DelimitedBuilder.Construct( Configuration.FileExtensions, "; " );
+            SystemEvents = Configuration.WatchPaths.Select( x => ConfigureWatcher(x, patterns) ).ToList();
+            
+        }
+        
+        public FileSystemWatcher ConfigureWatcher(string path, string patterns)
+        {
+            var watcher = new FileSystemWatcher(path, patterns);
+            watcher.IncludeSubdirectories = true;
+            Observable
+                .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
+                    c => c.Invoke,
+                    h =>
+                    {
+                        watcher.Created += h;
+                        watcher.Changed += h;
+                        watcher.Deleted += h;
+                    },
+                    h =>
+                    {
+                        watcher.Created -= h;
+                        watcher.Changed -= h;
+                        watcher.Deleted -= h;
+                    })
+                .BufferWithTime(TimeSpan.FromMinutes(1))
+                .Subscribe(l =>
+                {
+                    var e = l.FirstOrDefault();
+                    if (e != null)
+                        OnSystemChange(
+                            e.Sender,
+                            e.EventArgs);
+                });
+            return watcher;
+        }
+
+        public string IsPathToAFile(FileSystemEventArgs e)
+        {
+            return Path.GetExtension(e.Name);
+        }
+
+        public void OnSystemChange(object sender, FileSystemEventArgs args)
+        {
+            switch( args.ChangeType )
+            {
+                case WatcherChangeTypes.Changed:
+                    Bus.Publish("local", new ApplicationChanged() { DirectoryPath = args.FullPath });
+                    break;
+                case WatcherChangeTypes.Created:
+                    Bus.Publish("local", new NewApplication() { DirectoryPath = args.FullPath });
+                    break;
+                case WatcherChangeTypes.Deleted:
+                    Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = args.FullPath });
+                    break;
+            }
+        }
     }
 }

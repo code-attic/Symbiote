@@ -26,8 +26,6 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         public IChannelAdapter Adapter { get; set; }
         public ChannelDefinition ChannelDefinition { get; set; }
 
-        #region IChannel Members
-
         public string Name { get; set; }
 
         public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message )
@@ -49,8 +47,6 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         {
             Adapter.Send( message, modifyEnvelope );
         }
-
-        #endregion
 
         public HttpChannel( ChannelDefinition channelDefinition )
         {

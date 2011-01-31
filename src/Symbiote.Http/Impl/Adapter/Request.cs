@@ -27,8 +27,6 @@ namespace Symbiote.Http.Impl.Adapter
     {
         public Stream Stream { get; set; }
 
-        #region IRequest Members
-
         public IPEndPoint ClientEndpoint { get; set; }
         public string Method { get; set; }
         public string Scheme { get; set; }
@@ -45,8 +43,6 @@ namespace Symbiote.Http.Impl.Adapter
             return Future
                 .Of( () => Stream.ReadToEnd( 1000 ) );
         }
-
-        #endregion
 
         public Request()
         {

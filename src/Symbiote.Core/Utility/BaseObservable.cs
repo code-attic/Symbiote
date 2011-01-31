@@ -24,8 +24,6 @@ namespace Symbiote.Core.Utility
     {
         protected ConcurrentBag<IObserver<TNotification>> observers { get; set; }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             while ( observers.Count > 0 )
@@ -35,18 +33,12 @@ namespace Symbiote.Core.Utility
             }
         }
 
-        #endregion
-
-        #region IObservable<TNotification> Members
-
         public virtual IDisposable Subscribe( IObserver<TNotification> observer )
         {
             var disposable = this as IDisposable;
             observers.Add( observer );
             return disposable;
         }
-
-        #endregion
 
         public virtual void Notify( TNotification notification )
         {

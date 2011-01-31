@@ -28,8 +28,6 @@ namespace Symbiote.Http.Impl
     {
         public List<Tuple<Predicate<IRequest>, IApplicationFactory>> Routes { get; set; }
 
-        #region IRegisterApplication Members
-
         public IRegisterApplication DefineApplication<TApplication>( Predicate<IRequest> route )
             where TApplication : IApplication
         {
@@ -63,10 +61,6 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
-        #endregion
-
-        #region IRouteRequest Members
-
         public IApplication GetApplicationFor( IRequest request )
         {
             var route = Routes.FirstOrDefault( x => x.Item1( request ) );
@@ -77,8 +71,6 @@ namespace Symbiote.Http.Impl
             }
             return route.Item2.CreateApplication();
         }
-
-        #endregion
 
         public ApplicationRouter()
         {

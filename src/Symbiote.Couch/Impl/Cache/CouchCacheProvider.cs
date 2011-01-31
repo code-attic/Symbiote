@@ -26,8 +26,6 @@ namespace Symbiote.Couch.Impl.Cache
         protected ICacheProvider _cache;
         protected ICacheKeyBuilder _keyBuilder;
 
-        #region ICouchCacheProvider Members
-
         public void AddCrossReference( string key, string cacheKey )
         {
             _associationManager.AddKeyAssociation( key, cacheKey );
@@ -163,8 +161,6 @@ namespace Symbiote.Couch.Impl.Cache
                                   CacheSavedModel( x, cacheKey, cacheRevKey );
                               } );
         }
-
-        #endregion
 
         protected virtual void CacheSavedModel<TModel>( TModel model, string cacheKey, string cacheRevKey )
         {

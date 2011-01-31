@@ -24,8 +24,6 @@ namespace Symbiote.Couch.Impl
         protected IDocumentRepository repository { get; set; }
         protected CouchCommandFactory commandFactory { get; set; }
 
-        #region ICouchServer Members
-
         public void CleanViews<TModel>()
         {
             var command = commandFactory.CreateServerCommand();
@@ -104,8 +102,6 @@ namespace Symbiote.Couch.Impl
         {
             repository.Dispose();
         }
-
-        #endregion
 
         public CouchDbServer( IDocumentRepository repository, CouchCommandFactory commandFactory )
         {

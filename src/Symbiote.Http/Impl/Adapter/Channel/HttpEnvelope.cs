@@ -70,8 +70,6 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         HttpEnvelope,
         IEnvelope<TMessage>
     {
-        #region IEnvelope<TMessage> Members
-
         [DataMember( Order = 10 )]
         public new TMessage Message
         {
@@ -105,8 +103,6 @@ namespace Symbiote.Http.Impl.Adapter.Channel
                     x.ContentType( typeof( TResponse ).AssemblyQualifiedName ).ContentEncoding( "application/json" ) )
                 .Submit( HttpStatus.Ok );
         }
-
-        #endregion
 
         public HttpEnvelope()
         {

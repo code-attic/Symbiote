@@ -32,8 +32,6 @@ namespace Symbiote.Messaging.Impl.Channels
         public NamedPipeClientStream ClientStream { get; set; }
         public MessageOptimizedSerializer SerializationProvider { get; set; }
 
-        #region IChannel Members
-
         public string Name { get; set; }
 
         public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message )
@@ -73,8 +71,6 @@ namespace Symbiote.Messaging.Impl.Channels
             ClientStream.Write( envelopeBuffer, 0, envelopeBuffer.Length );
             ClientStream.Flush();
         }
-
-        #endregion
 
         public TReply GetReply<TReply>()
         {

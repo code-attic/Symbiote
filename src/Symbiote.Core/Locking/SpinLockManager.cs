@@ -21,8 +21,6 @@ namespace Symbiote.Core.Locking
     public abstract class SpinLockManager
         : ILockManager
     {
-        #region ILockManager Members
-
         public virtual bool AcquireLock<T>( T lockId )
         {
             var newId = Guid.NewGuid();
@@ -40,8 +38,6 @@ namespace Symbiote.Core.Locking
         {
             Release( lockId );
         }
-
-        #endregion
 
         protected virtual bool AttemptAcquisition<T>( T lockId, Guid value )
         {

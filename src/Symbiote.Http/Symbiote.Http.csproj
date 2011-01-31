@@ -115,6 +115,12 @@
   <ItemGroup>
     <Folder Include="Impl\Adapter\IISHandler\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Symbiote.Http.nuspec">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Choose>
     <When Condition=" '$(Configuration)'=='Development' ">
       <ItemGroup>

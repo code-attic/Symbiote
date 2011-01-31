@@ -19,8 +19,6 @@ namespace Symbiote.Core.UnitOfWork
 {
     public abstract class EventListenerBase<T> : IEventListener<T> where T : IEvent
     {
-        #region IEventListener<T> Members
-
         public bool ListenSubTypesOfEvent { get; private set; }
 
         public Type EventType
@@ -45,8 +43,6 @@ namespace Symbiote.Core.UnitOfWork
         public abstract void OnError( Exception error );
 
         public abstract void OnNext( T value );
-
-        #endregion
 
         protected EventListenerBase( bool listenToSubTypesOfEvent )
         {

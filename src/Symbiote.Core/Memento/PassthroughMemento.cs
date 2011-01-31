@@ -26,8 +26,6 @@ namespace Symbiote.Core.Memento
         [DataMember( Order = 1 )]
         public TActor Actor { get; set; }
 
-        #region IMemento<TActor> Members
-
         public void Capture( TActor instance )
         {
             Actor = instance;
@@ -42,7 +40,5 @@ namespace Symbiote.Core.Memento
         {
             return Actor;
         }
-
-        #endregion
     }
 }

@@ -32,8 +32,6 @@ namespace Symbiote.Eidetic.Impl
                     {StoreMode.Set, Enyim.Caching.Memcached.StoreMode.Set},
                 };
 
-        #region IRemember Members
-
         public void Dispose()
         {
         }
@@ -214,8 +212,6 @@ namespace Symbiote.Eidetic.Impl
         {
             return _client.PerformMultiGet( keys, collector );
         }
-
-        #endregion
 
         public MemcachedAdapter( MemcachedClient client )
         {

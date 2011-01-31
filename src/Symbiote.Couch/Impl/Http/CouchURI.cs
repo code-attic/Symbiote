@@ -30,14 +30,10 @@ namespace Symbiote.Couch.Impl.Http
 
         public string DatabaseName { get; set; }
 
-        #region ICloneable Members
-
         public object Clone()
         {
             return new CouchUri( ToString(), _hasArguments );
         }
-
-        #endregion
 
         public static CouchUri Build( string prefix, string server, int port, string database )
         {

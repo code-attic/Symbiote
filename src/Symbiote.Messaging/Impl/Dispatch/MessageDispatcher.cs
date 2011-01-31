@@ -28,8 +28,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
         protected IHandle<TMessage> Handler { get; set; }
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
 
-        #region IDispatchMessage<TMessage> Members
-
         public Type ActorType
         {
             get { return null; }
@@ -68,8 +66,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 throw;
             }
         }
-
-        #endregion
 
         private IEnumerable<Type> GetMessageChain()
         {

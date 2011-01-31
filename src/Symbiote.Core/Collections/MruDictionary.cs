@@ -47,14 +47,10 @@ namespace Symbiote.Core.Collections
             get { return Dictionary.Values.Select( x => (V) x ).ToList(); }
         }
 
-        #region IDisposable Members
-
         public void Dispose()
         {
             Clear();
         }
-
-        #endregion
 
         public void Clear()
         {

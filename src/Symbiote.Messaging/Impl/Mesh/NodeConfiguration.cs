@@ -23,8 +23,6 @@ namespace Symbiote.Messaging.Impl.Mesh
     {
         protected readonly string NODE_FORMAT = "node.{0}";
 
-        #region INodeConfiguration Members
-
         public INodeIdentityProvider IdentityProvider { get; set; }
         public TimeSpan HealthMonitorFrequency { get; set; }
         public bool AsProxy { get; set; }
@@ -36,8 +34,6 @@ namespace Symbiote.Messaging.Impl.Mesh
         {
             return NODE_FORMAT.AsFormat( nodeId );
         }
-
-        #endregion
 
         public NodeConfiguration( INodeIdentityProvider identityProvider )
         {

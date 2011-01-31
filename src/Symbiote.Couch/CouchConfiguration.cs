@@ -22,7 +22,6 @@ using Symbiote.Couch.Impl;
 using Symbiote.Couch.Impl.Cache;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Repository;
-using Symbiote.Couch.Impl.Serialization;
 
 namespace Symbiote.Couch
 {
@@ -64,7 +63,6 @@ namespace Symbiote.Couch
                                              c.For<ICouchServer>().Use<CouchDbServer>();
                                              c.For<IKeyAssociationManager>().Use<DefaultKeyAssociationManager>().
                                                  AsSingleton();
-                                             c.For<DocumentConventions>().Use( configuration.Conventions );
                                              if ( configuration.Cache )
                                              {
                                                  if (

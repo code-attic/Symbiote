@@ -21,8 +21,6 @@ namespace Symbiote.Messaging.Impl.Serialization
 {
     public class NetBinarySerializer : IMessageSerializer
     {
-        #region IMessageSerializer Members
-
         public T Deserialize<T>( byte[] message )
         {
             var formatter = new BinaryFormatter();
@@ -54,7 +52,5 @@ namespace Symbiote.Messaging.Impl.Serialization
             formatter.Serialize( stream, body );
             return stream.ToArray();
         }
-
-        #endregion
     }
 }

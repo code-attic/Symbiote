@@ -24,8 +24,6 @@ namespace Symbiote.Core.UnitOfWork
     {
         public IKeyAccessor<T> Accessor { get; set; }
 
-        #region IKeyAccessor Members
-
         public string GetId<TActor>( TActor actor ) where TActor : class
         {
             if ( typeof( T ).IsAssignableFrom( typeof( TActor ) ) )
@@ -48,8 +46,6 @@ namespace Symbiote.Core.UnitOfWork
                     "Key accessor cannot access an actor of {0} as type {1}".AsFormat( typeof( TActor ), typeof( T ) ) );
             }
         }
-
-        #endregion
 
         public KeyAccessAdapter( IKeyAccessor<T> accessor )
         {

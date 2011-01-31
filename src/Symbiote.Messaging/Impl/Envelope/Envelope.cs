@@ -24,8 +24,6 @@ namespace Symbiote.Messaging.Impl.Envelope
     public class Envelope<TMessage>
         : IEnvelope<TMessage>
     {
-        #region IEnvelope<TMessage> Members
-
         [DataMember( Order = 1001, IsRequired = false )]
         public Guid MessageId { get; set; }
 
@@ -58,8 +56,6 @@ namespace Symbiote.Messaging.Impl.Envelope
                 response,
                 x => { x.CorrelationId = MessageId.ToString(); } );
         }
-
-        #endregion
 
         public Envelope()
         {

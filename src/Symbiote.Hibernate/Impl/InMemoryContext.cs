@@ -21,8 +21,6 @@ namespace Symbiote.Hibernate.Impl
     {
         private Dictionary<string, object> _hash = new Dictionary<string, object>();
 
-        #region ISessionContext Members
-
         public bool Contains( string key )
         {
             return _hash.ContainsKey( key );
@@ -39,7 +37,5 @@ namespace Symbiote.Hibernate.Impl
             _hash.TryGetValue( key, out value );
             return value;
         }
-
-        #endregion
     }
 }

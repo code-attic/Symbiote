@@ -25,8 +25,6 @@ namespace Symbiote.Couch.Impl.Commands
         BaseCouchCommand,
         ISaveDocument
     {
-        #region ISaveDocument Members
-
         public virtual CommandResult Save<TModel>( TModel model )
         {
             var databaseName = configuration.GetDatabaseNameForType<TModel>();
@@ -56,8 +54,6 @@ namespace Symbiote.Couch.Impl.Commands
                     );
             }
         }
-
-        #endregion
 
         public SaveDocumentCommand( IHttpAction action, ICouchConfiguration configuration )
             : base( action, configuration )

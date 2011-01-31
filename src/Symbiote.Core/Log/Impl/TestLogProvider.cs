@@ -19,14 +19,10 @@ namespace Symbiote.Core.Log.Impl
     {
         public ILogger Logger { get; set; }
 
-        #region ILogProvider Members
-
         public ILogger GetLoggerForType<T>()
         {
             Logger = Logger ?? new TestLogger();
             return Logger;
         }
-
-        #endregion
     }
 }

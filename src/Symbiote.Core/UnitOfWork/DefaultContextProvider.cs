@@ -26,8 +26,6 @@ namespace Symbiote.Core.UnitOfWork
         public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
 
-        #region IContextProvider Members
-
         public IContext GetContext<TActor>( TActor actor )
             where TActor : class
         {
@@ -61,8 +59,6 @@ namespace Symbiote.Core.UnitOfWork
             return new DefaultContext<TActor>( actor, originalState, keyAccessor, Publisher, listeners, successAction,
                                                failureAction );
         }
-
-        #endregion
 
         public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher )
         {
