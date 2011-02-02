@@ -55,10 +55,10 @@ namespace Symbiote.Rabbit
             using( var channel = connection.CreateModel() )
             {
                 if ( routingKeys.Length == 0 )
-                    channel.ExchangeBind( queue, exchange, "", false, null );
+                    channel.ExchangeBind( queue, exchange, "", null );
                 else
                     routingKeys
-                        .ForEach( x => channel.ExchangeBind( queue, exchange, x, false, null ) );
+                        .ForEach( x => channel.ExchangeBind( queue, exchange, x, null ) );
             }
 
             return bus;

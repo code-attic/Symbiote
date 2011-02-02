@@ -46,18 +46,16 @@ namespace Symbiote.Rabbit.Impl.Endpoint
                 RoutingKeys = new List<string>( new[] {""} );
 
             RoutingKeys
-                .ForEach( x => channel.QueueBind( QueueName, ExchangeName, x, false, null ) );
+                .ForEach( x => channel.QueueBind( QueueName, ExchangeName, x, null ) );
         }
 
         public void BuildQueue( IModel channel )
         {
             channel.QueueDeclare(
                 QueueName,
-                Passive,
                 Durable,
                 Exclusive,
                 AutoDelete,
-                NoWait,
                 Arguments );
         }
 

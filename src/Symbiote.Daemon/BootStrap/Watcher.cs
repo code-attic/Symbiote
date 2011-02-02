@@ -37,7 +37,9 @@ namespace Symbiote.Daemon.BootStrap
         
         public FileSystemWatcher ConfigureWatcher(string path, string patterns)
         {
-            var watcher = new FileSystemWatcher(path, patterns);
+            var fullPath = Path.GetFullPath( path );
+            var watcher = new FileSystemWatcher( );
+            watcher.Path = fullPath;
             watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.LastAccess;
             watcher.IncludeSubdirectories = true;
             Observable
@@ -55,11 +57,12 @@ namespace Symbiote.Daemon.BootStrap
                         watcher.Changed -= h;
                         watcher.Deleted -= h;
                     })
-                .BufferWithTime(TimeSpan.FromMinutes(1))
+                .DistinctUntilChanged()
+                .BufferWithTime(TimeSpan.FromSeconds( 10 ))
                 .Subscribe(l =>
                 {
                     var e = l.FirstOrDefault();
-                    if (e != null)
+                    if ( e != null )
                         OnSystemChange(
                             e.Sender,
                             e.EventArgs);
