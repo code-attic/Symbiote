@@ -37,19 +37,27 @@ namespace Symbiote.Mikado.Impl
         public IList<IEvent> Events { get; set; }
         public BrokenRulesCollection BrokenRules { get; set; }
 
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner)
-            : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, null, null, null)
+        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner )
+            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, null, null, null )
         {
             
         }
 
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner, IEnumerable<IObserver<IEvent>> listeners)
-            : this(actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, null, null)
+        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
+                              IEnumerable<IObserver<IEvent>> listeners )
+            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, null, null )
         {
 
         }
 
-        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner, IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor,Exception> failureAction )
+        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
+                              IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor,Exception> failureAction )
+            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, successAction, failureAction, null)
+        {
+        }
+
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
+                              IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor, Exception> failureAction, Action<TActor> contextAction)
         {
             Actor = actor;
             OriginalState = originalState;
@@ -59,10 +67,11 @@ namespace Symbiote.Mikado.Impl
             BrokenRules = new BrokenRulesCollection();
             Events = new List<IEvent>();
             _rulesRunner.Subscribe(BrokenRules);
-            if(listeners != null)
+            if (listeners != null)
                 listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
             _successAction = successAction;
             _failureAction = failureAction;
+            _contextAction = contextAction;
         }
 
         public void Dispose()
@@ -83,12 +92,16 @@ namespace Symbiote.Mikado.Impl
 
         public void Commit()
         {
-            _rulesRunner.ApplyRules(Actor);
+            if(_contextAction != null)
+            {
+                _contextAction( Actor );
+            }
+            _rulesRunner.ApplyRules( Actor );
             if (BrokenRules.Count == 0)
             {
-                Publisher.PublishEvents(Events);
+                Publisher.PublishEvents( Events );
                 if (_successAction != null)
-                    _successAction(Actor);
+                    _successAction( Actor );
             }
             else
             {
@@ -122,6 +135,7 @@ namespace Symbiote.Mikado.Impl
         public Action<TActor, IList<IBrokenRuleNotification>> OnBrokenRules { get; set; }
 
         private static IContextProvider _provider;
+        private Action<TActor> _contextAction;
 
         protected static IContextProvider ContextProvider
         {
