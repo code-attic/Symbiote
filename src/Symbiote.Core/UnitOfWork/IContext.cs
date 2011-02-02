@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Core.UnitOfWork
 {
@@ -23,5 +24,15 @@ namespace Symbiote.Core.UnitOfWork
         void Commit();
         void PublishOnCommit<TEvent>( Action<TEvent> populateEvent );
         void Rollback();
+    }
+
+    public interface IContext<TActor> : IContext
+    {
+        TActor Actor { get; set; }
+        Action<TActor> CommitAction { get; set; }
+        Action<TActor> SuccessAction { get; set; }
+        Action<TActor, Exception> ExceptionAction { get; set; }
+        IEventPublisher Publisher { get; set; }
+        IList<IDisposable> Disposables { get; set; }
     }
 }

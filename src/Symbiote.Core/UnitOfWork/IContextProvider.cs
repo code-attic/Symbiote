@@ -20,14 +20,6 @@ namespace Symbiote.Core.UnitOfWork
 {
     public interface IContextProvider
     {
-        IContext GetContext<TActor>( TActor actor ) where TActor : class;
-        IContext GetContext<TActor>( TActor actor, IEnumerable<IObserver<IEvent>> listeners ) where TActor : class;
-
-        IContext GetContext<TActor>( TActor actor, IEnumerable<IObserver<IEvent>> listeners,
-                                     Action<TActor> successAction, Action<TActor, Exception> failureAction )
-            where TActor : class;
-
-        IContext GetContext<TActor>( TActor actor, Action<TActor> successAction, Action<TActor, Exception> failureAction )
-            where TActor : class;
+        IContext<TActor> GetContext<TActor>( TActor actor ) where TActor : class;
     }
 }

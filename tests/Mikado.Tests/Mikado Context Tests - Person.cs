@@ -143,7 +143,10 @@ namespace Mikado.Tests
             var runner = Assimilate.GetInstanceOf<IRunRules>();
             var provider = Assimilate.GetInstanceOf<IContextProvider>();
             using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person, x => SuccessActionFired = true, (a, e) => FailureActionFired = true).HandleBrokenRules<Person>((actor,rules) => BrokenRuleAction = true))
+            using (var context = provider.GetContext(Person)
+                                         .OnSuccess(x => SuccessActionFired = true)
+                                         .OnException((a, e) => FailureActionFired = true)
+                                         .HandleBrokenRules<Person>((actor,rules) => BrokenRuleAction = true))
             {
                 Person.Age = -24;
             }
@@ -166,7 +169,10 @@ namespace Mikado.Tests
             var runner = Assimilate.GetInstanceOf<IRunRules>();
             var provider = Assimilate.GetInstanceOf<IContextProvider>();
             using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person, x => SuccessActionFired = true, (a, e) => FailureActionFired = true).HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
+            using (var context = provider.GetContext(Person)
+                                         .OnSuccess(x => SuccessActionFired = true)
+                                         .OnException((a, e) => FailureActionFired = true)
+                                         .HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
             {
                 Person.Age = 35;
             }
@@ -189,7 +195,10 @@ namespace Mikado.Tests
             var runner = Assimilate.GetInstanceOf<IRunRules>();
             var provider = Assimilate.GetInstanceOf<IContextProvider>();
             using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person, x => SuccessActionFired = true, (a, e) => FailureActionFired = true).HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
+            using (var context = provider.GetContext(Person)
+                                         .OnSuccess(x => SuccessActionFired = true)
+                                         .OnException((a, e) => FailureActionFired = true)
+                                         .HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
             {
                 Person.Age = -24;
             }

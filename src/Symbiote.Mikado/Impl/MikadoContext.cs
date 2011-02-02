@@ -23,12 +23,10 @@ using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Mikado.Impl
 {
-    public class MikadoContext<TActor> : IContext where TActor : class
+    public class MikadoContext<TActor> : IContext<TActor> where TActor : class
     {
         private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
         private readonly IRunRules _rulesRunner;
-        private Action<TActor> _successAction;
-        private Action<TActor, Exception> _failureAction;
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
@@ -36,42 +34,22 @@ namespace Symbiote.Mikado.Impl
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
         public BrokenRulesCollection BrokenRules { get; set; }
+        public Action<TActor> SuccessAction { get; set; }
+        public Action<TActor> CommitAction { get; set; }
+        public Action<TActor, Exception> ExceptionAction { get; set; }
+        public IList<IDisposable> Disposables { get; set; }
 
-        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner )
-            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, null, null, null )
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner )
         {
-            
-        }
-
-        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
-                              IEnumerable<IObserver<IEvent>> listeners )
-            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, null, null )
-        {
-
-        }
-
-        public MikadoContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
-                              IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor,Exception> failureAction )
-            : this( actor, originalState, keyAccessor, eventPublisher, rulesRunner, listeners, successAction, failureAction, null)
-        {
-        }
-
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner,
-                              IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor, Exception> failureAction, Action<TActor> contextAction)
-        {
+            BrokenRules = new BrokenRulesCollection();
+            Events = new List<IEvent>(); 
+            Disposables = new List<IDisposable>();
             Actor = actor;
             OriginalState = originalState;
             KeyAccessor = keyAccessor;
             Publisher = eventPublisher;
             _rulesRunner = rulesRunner;
-            BrokenRules = new BrokenRulesCollection();
-            Events = new List<IEvent>();
             _rulesRunner.Subscribe(BrokenRules);
-            if (listeners != null)
-                listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
-            _successAction = successAction;
-            _failureAction = failureAction;
-            _contextAction = contextAction;
         }
 
         public void Dispose()
@@ -83,8 +61,8 @@ namespace Symbiote.Mikado.Impl
             }
             catch (Exception exception)
             {
-                if (_failureAction != null)
-                    _failureAction(Actor, exception);
+                if (ExceptionAction != null)
+                    ExceptionAction(Actor, exception);
                 else
                     throw;
             }
@@ -92,16 +70,16 @@ namespace Symbiote.Mikado.Impl
 
         public void Commit()
         {
-            if(_contextAction != null)
+            if(CommitAction != null)
             {
-                _contextAction( Actor );
+                CommitAction( Actor );
             }
             _rulesRunner.ApplyRules( Actor );
             if (BrokenRules.Count == 0)
             {
                 Publisher.PublishEvents( Events );
-                if (_successAction != null)
-                    _successAction( Actor );
+                if (SuccessAction != null)
+                    SuccessAction( Actor );
             }
             else
             {
@@ -133,23 +111,5 @@ namespace Symbiote.Mikado.Impl
         }
 
         public Action<TActor, IList<IBrokenRuleNotification>> OnBrokenRules { get; set; }
-
-        private static IContextProvider _provider;
-        private Action<TActor> _contextAction;
-
-        protected static IContextProvider ContextProvider
-        {
-            get
-            {
-                _provider = _provider ?? Assimilate.GetInstanceOf<IContextProvider>();
-                return _provider;
-            }
-        }
-
-        public static IContext CreateFor<TActor>(TActor instance)
-            where TActor : class
-        {
-            return ContextProvider.GetContext(instance);
-        }
     }
 }

@@ -14,17 +14,27 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Core.UnitOfWork
 {
     public class ReplayContext<TActor>
-        : IContext
+        : IContext<TActor>
         where TActor : class
     {
-        private Action<TActor, Exception> _failureAction;
-        private Action<TActor> _successAction;
         public TActor Actor { get; set; }
+        public Action<TActor> CommitAction { get; set; }
+        public Action<TActor> SuccessAction { get; set; }
+        public Action<TActor, Exception> ExceptionAction { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
+        public IList<Action<IDisposable>> DisposeActions { get; set; }
+        public IEventPublisher Publisher
+        {
+            get { throw new NotImplementedException();}
+            set { throw new NotImplementedException();}
+        }
+
+        public IList<IDisposable> Disposables { get; set; }
 
         public void Commit()
         {
@@ -46,29 +56,22 @@ namespace Symbiote.Core.UnitOfWork
             try
             {
                 Commit();
-                if ( _successAction != null )
-                    _successAction( Actor );
+                if ( SuccessAction != null )
+                    SuccessAction( Actor );
             }
             catch ( Exception exception )
             {
-                if ( _failureAction != null )
-                    _failureAction( Actor, exception );
+                if ( ExceptionAction != null )
+                    ExceptionAction( Actor, exception );
                 else
                     throw;
             }
         }
 
-        public ReplayContext( TActor actor, IMemento<TActor> originalState ) : this( actor, originalState, null, null )
-        {
-        }
-
-        public ReplayContext( TActor actor, IMemento<TActor> originalState, Action<TActor> successAction,
-                              Action<TActor, Exception> failureAction )
+        public ReplayContext( TActor actor, IMemento<TActor> originalState )
         {
             Actor = actor;
             OriginalState = originalState;
-            _successAction = successAction;
-            _failureAction = failureAction;
         }
     }
 }

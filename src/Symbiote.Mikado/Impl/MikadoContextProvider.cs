@@ -38,22 +38,7 @@ namespace Symbiote.Mikado.Impl
             _rulesRunner = rulesRunner;
         }
 
-        public IContext GetContext<TActor>(TActor actor) where TActor : class
-        {
-            return GetContext(actor, null, null, null);
-        }
-
-        public IContext GetContext<TActor>(TActor actor, IEnumerable<IObserver<IEvent>> listeners) where TActor : class
-        {
-            return GetContext( actor, listeners, null, null );
-        }
-
-        public IContext GetContext<TActor>(TActor actor, Action<TActor> successAction, Action<TActor, Exception> failureAction) where TActor : class
-        {
-            return GetContext( actor, null, successAction, failureAction );
-        }
-
-        public IContext GetContext<TActor>( TActor actor, IEnumerable<IObserver<IEvent>> listeners, Action<TActor> successAction, Action<TActor, Exception> failureAction ) where TActor : class
+        public IContext<TActor> GetContext<TActor>( TActor actor ) where TActor : class
         {
             var originalState = Memoizer.GetMemento(actor);
             if (Configuration.Replay)
@@ -61,7 +46,7 @@ namespace Symbiote.Mikado.Impl
                 return new ReplayContext<TActor>(actor, originalState);
             }
             var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<TActor>>();
-            return new MikadoContext<TActor>(actor, originalState, keyAccessor, Publisher, _rulesRunner, listeners, successAction, failureAction);
+            return new MikadoContext<TActor>(actor, originalState, keyAccessor, Publisher, _rulesRunner);
         }
     }
 }

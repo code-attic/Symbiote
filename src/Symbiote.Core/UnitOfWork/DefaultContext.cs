@@ -19,63 +19,46 @@ using System.Linq;
 
 namespace Symbiote.Core.UnitOfWork
 {
-    public class DefaultContext
-    {
-        private static IContextProvider _provider;
-
-        protected static IContextProvider ContextProvider
-        {
-            get
-            {
-                _provider = _provider ?? Assimilate.GetInstanceOf<IContextProvider>();
-                return _provider;
-            }
-        }
-
-        public static IContext CreateFor<TActr>( TActr instance )
-            where TActr : class
-        {
-            return ContextProvider.GetContext( instance );
-        }
-    }
-
-    public class DefaultContext<TActor> : IContext
+    public class DefaultContext<TActor> : IContext<TActor>
         where TActor : class
     {
-        private readonly Action<TActor, Exception> _failureAction;
-        private readonly List<IDisposable> _subscriptionTokens = new List<IDisposable>();
-        private readonly Action<TActor> _successAction;
-        private Action<TActor> _contextAction;
-
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
         public IKeyAccessor<TActor> KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
+        public Action<TActor> CommitAction { get; set; }
+        public Action<TActor> SuccessAction { get; set; }
+        public Action<TActor, Exception> ExceptionAction { get; set; }
+        public IList<IDisposable> Disposables { get; set; }
 
         public void Dispose()
         {
             try
             {
                 Commit();
-                _subscriptionTokens.ForEach( a => a.Dispose() );
-                if ( _successAction != null )
-                    _successAction( Actor );
+                if ( SuccessAction != null )
+                    SuccessAction( Actor );
+                
             }
             catch ( Exception exception )
             {
-                if ( _failureAction != null )
-                    _failureAction( Actor, exception );
+                if ( ExceptionAction != null )
+                    ExceptionAction( Actor, exception );
                 else
                     throw;
+            }
+            finally
+            {
+                Disposables.ToList().ForEach(a => a.Dispose());
             }
         }
 
         public void Commit()
         {
-            if(_contextAction != null)
+            if(CommitAction != null)
             {
-                _contextAction( Actor );
+                CommitAction( Actor );
             }
             Publisher.PublishEvents( Events );
         }
@@ -101,45 +84,14 @@ namespace Symbiote.Core.UnitOfWork
             baseEvent.UtcTimeStamp = DateTime.UtcNow;
         }
 
-        public DefaultContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor,
-                               IEventPublisher eventPublisher, IEnumerable<IObserver<IEvent>> listeners )
-            : this( actor, originalState, keyAccessor, eventPublisher, listeners, null, null, null )
-        {
-        }
-
-        public DefaultContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor,
-                               IEventPublisher eventPublisher )
-            : this( actor, originalState, keyAccessor, eventPublisher, null, null, null, null )
-        {
-        }
-
-        public DefaultContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor,
-                               IEventPublisher eventPublisher, Action<TActor> successAction,
-                               Action<TActor, Exception> failureAction )
-            : this( actor, originalState, keyAccessor, eventPublisher, null, successAction, failureAction, null )
-        {
-        }
-
-        public DefaultContext( TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor,
-                               IEventPublisher eventPublisher, IEnumerable<IObserver<IEvent>> listeners,
-                               Action<TActor> successAction, Action<TActor, Exception> failureAction )
-            : this( actor, originalState, keyAccessor, eventPublisher, listeners, successAction, failureAction, null )
-        {}
-
-        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor,
-                               IEventPublisher eventPublisher, IEnumerable<IObserver<IEvent>> listeners,
-                               Action<TActor> successAction, Action<TActor, Exception> failureAction, Action<TActor> contextAction)
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher)
         {
             Actor = actor;
             OriginalState = originalState;
-            Events = new List<IEvent>();
             KeyAccessor = keyAccessor;
             Publisher = eventPublisher;
-            if (listeners != null)
-                listeners.ToList().ForEach(a => _subscriptionTokens.Add(Publisher.Subscribe(a)));
-            _successAction = successAction;
-            _failureAction = failureAction;
-            _contextAction = contextAction;
+            Events = new List<IEvent>();
+            Disposables = new List<IDisposable>();
         }
     }
 }
