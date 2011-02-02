@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Daemon.BootStrap;
 
 namespace Symbiote.Daemon.Host
 {
@@ -29,10 +30,12 @@ namespace Symbiote.Daemon.Host
         private bool _disposed;
         protected IList<IServiceController> Services { get; set; }
         protected DaemonConfiguration Configuration { get; set; }
+        public IBootStrapper BootStrap { get; set; }
 
         public void Start()
         {
             Services.ForEach( x => x.Start() );
+            BootStrap.Start();
         }
 
         public void Stop()
@@ -134,11 +137,12 @@ namespace Symbiote.Daemon.Host
             return Assimilate.GetInstanceOf( type ) as IServiceController;
         }
 
-        public ServiceCoordinator( DaemonConfiguration configuration )
+        public ServiceCoordinator( DaemonConfiguration configuration, IBootStrapper bootStrapper )
         {
             Services = new List<IServiceController>();
             Configuration = configuration;
             RegisterServices();
+            BootStrap = bootStrapper;
         }
     }
 }

@@ -61,7 +61,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         {
             var typedEnvelope = envelope as IEnvelope<TMessage>;
             var actor = Agent.GetActor( envelope.CorrelationId );
-            Saga.Process( actor, typedEnvelope );
+            Saga.Process( actor, typedEnvelope.Message );
             Agent.Memoize( actor );
         }
 

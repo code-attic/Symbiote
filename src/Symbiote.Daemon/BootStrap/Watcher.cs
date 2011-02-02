@@ -33,14 +33,12 @@ namespace Symbiote.Daemon.BootStrap
         public Watcher( BootStrapConfiguration configuration )
         {
             Configuration = configuration;
-            var patterns = DelimitedBuilder.Construct( Configuration.FileExtensions, "; " );
-            SystemEvents = Configuration.WatchPaths.Select( x => ConfigureWatcher(x, patterns) ).ToList();
-            
         }
         
         public FileSystemWatcher ConfigureWatcher(string path, string patterns)
         {
             var watcher = new FileSystemWatcher(path, patterns);
+            watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.LastAccess;
             watcher.IncludeSubdirectories = true;
             Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
@@ -66,6 +64,7 @@ namespace Symbiote.Daemon.BootStrap
                             e.Sender,
                             e.EventArgs);
                 });
+            watcher.EnableRaisingEvents = true;
             return watcher;
         }
 
@@ -88,6 +87,12 @@ namespace Symbiote.Daemon.BootStrap
                     Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = args.FullPath });
                     break;
             }
+        }
+
+        public void Start()
+        {
+            var patterns = DelimitedBuilder.Construct(Configuration.FileExtensions, "; ");
+            SystemEvents = Configuration.WatchPaths.Select(x => ConfigureWatcher(x, "")).ToList();
         }
     }
 }

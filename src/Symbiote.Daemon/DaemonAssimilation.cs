@@ -18,6 +18,8 @@ using System.Diagnostics;
 using System.Linq;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Daemon.BootStrap;
+using Symbiote.Daemon.BootStrap.Config;
 using Symbiote.Daemon.Host;
 using Symbiote.Daemon.Installation;
 
@@ -50,6 +52,12 @@ namespace Symbiote.Daemon
                                              x.For<ICheckPermission>().Use<CredentialCheck>();
                                              x.For( typeof( ServiceController<> ) ).Use( typeof( ServiceController<> ) );
                                              x.For<IHost>().Use( hostType );
+                                             x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
+                                             x.For<IMinionLocator>().Use<MinionLocator>();
+
+                                             if (daemonConfiguration.Configuration.BootStrapConfiguration != null)
+                                                x.For<BootStrapConfiguration>().Use(
+                                                    daemonConfiguration.Configuration.BootStrapConfiguration);
                                          } );
             return assimilate;
         }
@@ -59,15 +67,18 @@ namespace Symbiote.Daemon
             try
             {
                 "Waking the Daemon..."
-                    .ToInfo<IHost>();
-                var factory = Assimilate.GetInstanceOf<CommandFactory>();
-                var command = factory.GetCommand();
+                    .ToInfo<IDaemon>();
+
+                
+
+                var factory = Assimilate.GetInstanceOf<CommandProvider>();
+                var command = factory.GetServiceCommand();
                 command.Execute();
             }
             catch ( Exception e )
             {
                 "No host configured. Wah. \r\n\t {0}"
-                    .ToError<IHost>( e );
+                    .ToError<IDaemon>( e );
             }
         }
     }

@@ -243,8 +243,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             _endpoint = endpointConfiguration;
             if ( _endpoint.Transactional )
                 channel.TxSelect();
-            _onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
-            _channel.BasicReturn += new BasicReturnEventHandler( _onReturn );
+            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
+            //_channel.BasicReturn += new BasicReturnEventHandler( _onReturn );
             _channel.ModelShutdown += ChannelShutdown;
         }
 
@@ -256,8 +256,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channelDefinition = channelDefinition;
             if ( _channelDefinition.Transactional )
                 channel.TxSelect();
-            _onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
-            _channel.BasicReturn += new BasicReturnEventHandler( _onReturn );
+            //_onReturn = Assimilate.GetInstanceOf<Action<IModel, BasicReturnEventArgs>>();
+            //_channel.BasicReturn += new BasicReturnEventHandler( _onReturn );
             _channel.ModelShutdown += ChannelShutdown;
             _deliveryMode =
                 (byte) (ChannelDefinition.PersistentDelivery ? DeliveryMode.Persistent : DeliveryMode.Volatile);

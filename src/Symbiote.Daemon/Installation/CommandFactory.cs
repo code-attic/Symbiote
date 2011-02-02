@@ -17,11 +17,11 @@ using Symbiote.Core;
 
 namespace Symbiote.Daemon.Installation
 {
-    public class CommandFactory
+    public class CommandProvider
     {
         public DaemonConfiguration Configuration { get; set; }
 
-        public IDaemonCommand GetCommand()
+        public IDaemonCommand GetServiceCommand()
         {
             IDaemonCommand command;
             if ( Configuration.Arguments.Install )
@@ -39,7 +39,7 @@ namespace Symbiote.Daemon.Installation
             return command;
         }
 
-        public CommandFactory( DaemonConfiguration configuration )
+        public CommandProvider( DaemonConfiguration configuration )
         {
             Configuration = configuration;
         }

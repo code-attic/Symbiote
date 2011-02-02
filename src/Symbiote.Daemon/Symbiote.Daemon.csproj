@@ -72,18 +72,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
-    <Reference Include="System.CoreEx, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Interactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-    </Reference>
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
@@ -100,9 +88,17 @@
     <Compile Include="Args\Arguments.cs" />
     <Compile Include="BootStrap\ApplicationChanged.cs" />
     <Compile Include="BootStrap\ApplicationDeleted.cs" />
-    <Compile Include="BootStrap\AssemblyLoader.cs" />
+    <Compile Include="BootStrap\MinionLocator.cs" />
+    <Compile Include="BootStrap\BootStrapper.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfiguration.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfigurator.cs" />
+    <Compile Include="BootStrap\IBootStrapper.cs" />
+    <Compile Include="BootStrap\IMinionLocator.cs" />
+    <Compile Include="BootStrap\Minion.cs" />
+    <Compile Include="BootStrap\MinionFactory.cs" />
+    <Compile Include="BootStrap\MinionHost.cs" />
+    <Compile Include="BootStrap\MinionKeyAccessor.cs" />
+    <Compile Include="BootStrap\MinionSaga.cs" />
     <Compile Include="BootStrap\NewApplication.cs" />
     <Compile Include="BootStrap\Watcher.cs" />
     <Compile Include="DaemonAssimilation.cs" />
@@ -123,6 +119,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="IDaemon.cs" />
+    <Compile Include="IMinion.cs" />
     <Compile Include="Installation\CommandFactory.cs" />
     <Compile Include="Installation\CredentialCheck.cs" />
     <Compile Include="Installation\DaemonInstaller.cs">

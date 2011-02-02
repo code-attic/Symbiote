@@ -18,12 +18,9 @@ using System.Runtime.Serialization;
 
 namespace Symbiote.Core.Memento
 {
-    [Serializable]
-    [DataContract]
     public class PassthroughMemento<TActor> :
         IMemento<TActor>
     {
-        [DataMember( Order = 1 )]
         public TActor Actor { get; set; }
 
         public void Capture( TActor instance )

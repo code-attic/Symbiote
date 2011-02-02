@@ -28,7 +28,7 @@ namespace Symbiote.Core.Utility
         public int[] PreviousStepLookup { get; set; }
         public RingBufferCell Head { get; set; }
         public RingBufferCell[] Steps { get; set; }
-        public List<Func<object, object>> Transforms { get; protected set; }
+        public List<Tuple<int, Func<object, object>>> Transforms { get; protected set; }
         public List<Task> Tasks { get; set; }
         public object WriteLock { get; set; }
 
@@ -46,6 +46,9 @@ namespace Symbiote.Core.Utility
 
         public void Write<T>( T value )
         {
+            if (Transforms.Count == 0)
+                throw new InvalidOperationException(
+                    "The ring buffer must not be written to until transforms have been configured." );
             if ( !Running )
                 Start();
             lock(WriteLock)
@@ -54,7 +57,9 @@ namespace Symbiote.Core.Utility
 
         public void AddTransform( Func<object, object> transform )
         {
-            Transforms.Add( transform );
+            if(Running)
+                throw new InvalidOperationException( "Transforms may not be modified once the ring buffer has started.");
+            Transforms.Add( Tuple.Create(Transforms.Count + 1, transform) );
             var transformCount = Transforms.Count;
             SetLastWrite( transformCount );
         }
@@ -84,7 +89,7 @@ namespace Symbiote.Core.Utility
             Running = true;
             int step = 1;
             Tasks = Transforms
-                .Select( f => Task.Factory.StartNew( () => Process( step++, f ), TaskCreationOptions.LongRunning ) )
+                .Select( f => Task.Factory.StartNew( () => Process( f.Item1, f.Item2 ), TaskCreationOptions.LongRunning ) )
                 .ToList();
         }
 
@@ -96,7 +101,7 @@ namespace Symbiote.Core.Utility
 
         public RingBuffer( int size )
         {
-            Transforms = new List<Func<object, object>>();
+            Transforms = new List<Tuple<int, Func<object, object>>>();
             Size = size;
             Head = RingBufferCell.Build( this, Size );
             Steps = Enumerable.Repeat( Head, 10 ).ToArray();

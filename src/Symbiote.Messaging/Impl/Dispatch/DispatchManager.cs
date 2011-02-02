@@ -40,7 +40,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             Fibers.SendTo(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId )
-                    ? (RandomMailbox.Next(1000000, 1001000)).ToString()
+                    ? (envelope.MessageId.GetHashCode() % 100).ToString()
                     : envelope.CorrelationId,
                 envelope );
         }

@@ -25,6 +25,7 @@ namespace Symbiote.Daemon.BootStrap.Config
 
         public BootStrapConfigurator HostApplicationsFrom(string path)
         {
+            var fullPath = Path.GetFullPath( path );
             if(!Directory.Exists(path))
             {
                 throw new AssimilationException( 
