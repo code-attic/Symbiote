@@ -26,7 +26,7 @@ namespace Symbiote.Daemon.BootStrap.Config
 
         public BootStrapConfiguration( )
         {
-            WatchPaths = new List<string>() { @"\HotLoad"};
+            WatchPaths = new List<string>();
             FileExtensions = new List<string>( new[] {"*.dll", "*.pdb", "*.config"});
             ShadowFolder = @"\Shadows";
             FolderPerApplication = true;

@@ -28,15 +28,32 @@ namespace Symbiote.Messaging
 
         public static IBus AddLocalChannel( this IBus bus )
         {
-            Index.AddDefinition( new LocalChannelDefinition {Name = "local"} );
+            bool hasChannelFor = Index.HasChannelFor( "local" );
+
+            LocalChannelDefinition definition =
+                hasChannelFor
+                    ? Index.GetDefinition("local") as LocalChannelDefinition
+                    : new LocalChannelDefinition {Name = "local"};
+            
+            if(!hasChannelFor)
+                Index.AddDefinition( definition );
+            
             return bus;
         }
 
         public static IBus AddLocalChannel( this IBus bus, Action<IConfigureChannel> configure )
         {
-            var localChannelDefinition = new LocalChannelDefinition {Name = "local"};
-            configure( localChannelDefinition );
-            Index.AddDefinition( localChannelDefinition );
+            bool hasChannelFor = Index.HasChannelFor("local");
+
+            LocalChannelDefinition definition =
+                hasChannelFor
+                    ? Index.GetDefinition("local") as LocalChannelDefinition
+                    : new LocalChannelDefinition { Name = "local" };
+
+            configure(definition);
+
+            if (!hasChannelFor)
+                Index.AddDefinition(definition);
             return bus;
         }
     }

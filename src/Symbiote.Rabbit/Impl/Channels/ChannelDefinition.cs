@@ -59,11 +59,8 @@ namespace Symbiote.Rabbit.Impl.Channels
             channel.ExchangeDeclare(
                 Exchange,
                 ExchangeTypeName,
-                Passive,
                 Durable,
                 AutoDelete,
-                Internal,
-                NoWait,
                 null );
         }
 

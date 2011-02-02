@@ -33,14 +33,14 @@ namespace Symbiote.Daemon.BootStrap
         public Watcher( BootStrapConfiguration configuration )
         {
             Configuration = configuration;
-            var patterns = DelimitedBuilder.Construct( Configuration.FileExtensions, "; " );
-            SystemEvents = Configuration.WatchPaths.Select( x => ConfigureWatcher(x, patterns) ).ToList();
-            
         }
         
         public FileSystemWatcher ConfigureWatcher(string path, string patterns)
         {
-            var watcher = new FileSystemWatcher(path, patterns);
+            var fullPath = Path.GetFullPath( path );
+            var watcher = new FileSystemWatcher( );
+            watcher.Path = fullPath;
+            watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.LastAccess;
             watcher.IncludeSubdirectories = true;
             Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
@@ -57,15 +57,17 @@ namespace Symbiote.Daemon.BootStrap
                         watcher.Changed -= h;
                         watcher.Deleted -= h;
                     })
-                .BufferWithTime(TimeSpan.FromMinutes(1))
+                .DistinctUntilChanged()
+                .BufferWithTime(TimeSpan.FromSeconds( 10 ))
                 .Subscribe(l =>
                 {
                     var e = l.FirstOrDefault();
-                    if (e != null)
+                    if ( e != null )
                         OnSystemChange(
                             e.Sender,
                             e.EventArgs);
                 });
+            watcher.EnableRaisingEvents = true;
             return watcher;
         }
 
@@ -88,6 +90,12 @@ namespace Symbiote.Daemon.BootStrap
                     Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = args.FullPath });
                     break;
             }
+        }
+
+        public void Start()
+        {
+            var patterns = DelimitedBuilder.Construct(Configuration.FileExtensions, "; ");
+            SystemEvents = Configuration.WatchPaths.Select(x => ConfigureWatcher(x, "")).ToList();
         }
     }
 }

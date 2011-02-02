@@ -16,6 +16,7 @@
 using System;
 using System.ServiceProcess;
 using Symbiote.Daemon.Args;
+using Symbiote.Daemon.BootStrap.Config;
 
 namespace Symbiote.Daemon
 {
@@ -79,6 +80,14 @@ namespace Symbiote.Daemon
         public DaemonConfigurator TimeoutIn( int seconds )
         {
             Configuration.StartupTimeout = TimeSpan.FromSeconds( seconds );
+            return this;
+        }
+
+        public DaemonConfigurator WithBootStraps(Action<BootStrapConfigurator> bootstrapper)
+        {
+            var configurator = new BootStrapConfigurator();
+            bootstrapper( configurator );
+            Configuration.BootStrapConfiguration = configurator.Configuration;
             return this;
         }
 

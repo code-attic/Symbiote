@@ -48,8 +48,11 @@ namespace Symbiote.Core.Actor
         public void Memoize( TActor actor )
         {
             var memento = Memoizer.GetMemento( actor );
-            Cache.Store( memento );
-            Store.Store( memento );
+            if ( !(memento is PassthroughMemento<TActor>) )
+            {
+                Cache.Store( memento );
+                Store.Store( memento );
+            }
         }
 
         public DefaultAgent(

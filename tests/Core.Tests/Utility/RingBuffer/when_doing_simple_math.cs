@@ -9,14 +9,15 @@ namespace ringbuffer
     public class when_doing_simple_math
         : with_buffer
     {
-        private static int TOTAL_WRITES = 1000000;
+        private static int TOTAL_WRITES = 1000;
         public static List<int> Counts;
         public static Stopwatch Watch { get; set; }
         private Because of = () =>
         {
             Counts = new List<int>(TOTAL_WRITES);
-            Buffer.AddTransform(x => (int)x + 45);
-            Buffer.AddTransform(x => (int)x + 45);
+            Buffer.Write( 10 );
+            Buffer.AddTransform(x => (int)x + 5);
+            Buffer.AddTransform(x => (int)x * 10);
             Buffer.AddTransform(x =>
             {
                 Counts.Add((int)x);
@@ -27,7 +28,7 @@ namespace ringbuffer
             Enumerable
                 .Range(0, TOTAL_WRITES)
                 .AsParallel()
-                .ForAll(x => Buffer.Write(10));
+                .ForAll(x => Buffer.Write(5));
             
             Thread.Sleep( 10 );
             Buffer.Stop();

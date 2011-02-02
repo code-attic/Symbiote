@@ -25,12 +25,11 @@ namespace Actor.Tests.Agent
         public static void WireupAgentMocks()
         {
             MockActorCache = new Mock<IActorCache<DummyActor>>();
-
             ActorCache = MockActorCache.Object;
 
             MockActorStore = new Mock<IActorStore<DummyActor>>();
-
             ActorStore = MockActorStore.Object;
+
             Agent = new DefaultAgent<DummyActor>(ActorCache, ActorStore, ActorFactory, new Memoizer());
         }
     }

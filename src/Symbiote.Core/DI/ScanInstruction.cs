@@ -186,7 +186,8 @@ namespace Symbiote.Core.DI
         protected void RegisterSingleImplementations( IEnumerable<Type> filteredTypes, IDependencyRegistry registry )
         {
             var interfaces = filteredTypes
-                .Where( t => t.IsInterface );
+                .Where( t => t.IsInterface )
+                .Distinct();
             var lookups = interfaces.ToDictionary(
                 x => x,
                 x => filteredTypes.Where( f => f.IsConcreteAndAssignableTo( x ) ) );

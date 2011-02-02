@@ -14,56 +14,15 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
-using Symbiote.Core;
 using Symbiote.Core.Actor;
 using Symbiote.Core.Saga;
-using Symbiote.Messaging;
 
 namespace Symbiote.Daemon.BootStrap
 {
-    public class AssemblyLoader
+    public class MinionSaga
+        : Saga<Minion>
     {
-
-    }
-
-    public class DaemonApplication
-    {
-        public string Name { get; set; }
-        public AppDomain DomainHandle { get; set; }
-        public bool Running { get; set; }
-        public bool Starting { get; set; }
-        public bool Stopping { get; set; }
-
-        public void StartUp()
-        {
-            
-        }
-
-        public void ShutItDown()
-        {
-            
-        }
-    }
-
-    public class DaemonApplicationKeyAccessor
-        : IKeyAccessor<DaemonApplication>
-    {
-        public string GetId( DaemonApplication actor )
-        {
-            return actor.Name;
-        }
-
-        public void SetId<TKey>( DaemonApplication actor, TKey id )
-        {
-            actor.Name = id.ToString();
-        }
-    }
-
-    public class ApplicationSaga
-        : Saga<DaemonApplication>
-    {
-        public override Action<StateMachine<DaemonApplication>> Setup()
+        public override Action<StateMachine<Minion>> Setup()
         {
             return x =>
                        {
@@ -77,16 +36,14 @@ namespace Symbiote.Daemon.BootStrap
                            x.When( a => !a.Running )
                                .On<ApplicationChanged>( ( a, h ) => a.StartUp() )
                                .On<NewApplication>( ( a, h ) => a.StartUp() );
+
+                           x.When( a => true )
+                               .On<NewApplication>( ( a, h ) => a.StartUp() );
                        };
         }
 
-        public ApplicationSaga( StateMachine<DaemonApplication> stateMachine ) : base( stateMachine )
+        public MinionSaga( StateMachine<Minion> stateMachine ) : base( stateMachine )
         {
         }
-    }
-
-    public class ApplicationBootStapper
-    {
-        
     }
 }

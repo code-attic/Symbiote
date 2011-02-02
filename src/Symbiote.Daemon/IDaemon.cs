@@ -20,19 +20,4 @@ namespace Symbiote.Daemon
         void Start();
         void Stop();
     }
-
-    public interface IDaemonArguments
-    {
-        string[] Arguments { get; set; }
-    }
-
-    public class DaemonArguments
-        : IDaemonArguments
-    {
-        #region IDaemonArguments Members
-
-        public string[] Arguments { get; set; }
-
-        #endregion
-    }
 }

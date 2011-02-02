@@ -18,6 +18,7 @@ using System.Text;
 using RabbitMQ.Client;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Reflection;
 using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;

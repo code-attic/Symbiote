@@ -34,7 +34,7 @@ namespace Symbiote.Daemon.Host
 
             Console.CancelKeyPress += delegate
                                           {
-                                              "Exiting.".ToInfo<IHost>();
+                                              "Exiting.".ToInfo<IDaemon>();
                                               ServiceCoordinator.Stop();
                                               ServiceCoordinator.Dispose();
                                               externalTriggeredTerminatation.Set();
@@ -42,7 +42,7 @@ namespace Symbiote.Daemon.Host
 
             ServiceCoordinator.Start();
             "Daemon started, press Control+C to exit."
-                .ToInfo<IHost>();
+                .ToInfo<IDaemon>();
             WaitHandle.WaitAny( waitHandles );
         }
 

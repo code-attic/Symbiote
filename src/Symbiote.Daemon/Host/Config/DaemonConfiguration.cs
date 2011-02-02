@@ -16,6 +16,7 @@
 using System;
 using System.ServiceProcess;
 using Symbiote.Daemon.Args;
+using Symbiote.Daemon.BootStrap.Config;
 
 namespace Symbiote.Daemon
 {
@@ -30,15 +31,13 @@ namespace Symbiote.Daemon
         public ServiceAccount PrincipalType { get; set; }
         public ServiceStartMode StartMode { get; set; }
         public TimeSpan StartupTimeout { get; set; }
-        public string RunFrom { get; set; }
-        public string WatchDirectory { get; set; }
+        public BootStrapConfiguration BootStrapConfiguration { get; set; }
+        public bool RunBootStrapper { get { return BootStrapConfiguration != null; } }
 
         public DaemonConfiguration()
         {
             Principal = "";
             Password = "";
-            RunFrom = @"./Running";
-            WatchDirectory = @"./Services";
             Arguments = new Arguments();
             StartupTimeout = TimeSpan.FromSeconds( 30 );
             StartMode = ServiceStartMode.Automatic;

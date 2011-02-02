@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using Symbiote.Daemon.BootStrap;
 using Symbiote.Daemon.Host;
 
 namespace Symbiote.Daemon.Installation
@@ -21,13 +22,13 @@ namespace Symbiote.Daemon.Installation
         : IDaemonCommand
     {
         public IHost Host { get; set; }
-
+        
         public void Execute()
         {
             HostRunner.Start( Host );
         }
 
-        public RunCommand( IHost host )
+        public RunCommand( IHost host, IBootStrapper bootStrapper )
         {
             Host = host;
         }
