@@ -17,8 +17,8 @@ using System;
 using System.Collections.Generic;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
-using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Futures;
 using Symbiote.Messaging;
 using Symbiote.Rabbit.Impl.Endpoint;
 
@@ -78,8 +78,9 @@ namespace Symbiote.Rabbit.Impl.Channels
         // TODO: Rewrite this, it's stupid.
         public void Acknowledge( ulong tag, bool multiple )
         {
-            Action<ulong, bool> call = ActualAck;
-            call.BeginInvoke( tag, multiple, null, null );
+            Future.WithoutResult( () => ActualAck( tag, multiple ) );
+            //Action<ulong, bool> call = ActualAck;
+            //call.BeginInvoke( tag, multiple, null, null );
         }
 
         public void Send<T>( RabbitEnvelope<T> envelope )
@@ -119,7 +120,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channel.BasicConsume(
                 EndpointConfiguration.QueueName,
                 EndpointConfiguration.NoAck,
-                null,
                 consumer );
 
             return consumer;
@@ -130,7 +130,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             _channel.BasicConsume(
                 EndpointConfiguration.QueueName,
                 EndpointConfiguration.NoAck,
-                null,
                 consumer );
         }
 

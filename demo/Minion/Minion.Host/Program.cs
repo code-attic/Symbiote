@@ -36,10 +36,10 @@ namespace Minion.Host
             {
                 Bus.AddLocalChannel();
                 Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
-                Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Host").ExchangeName("Host").StartSubscription());
+                Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Host").ExchangeName("Host").StartSubscription().NoAck());
 
                 Bus.AddRabbitChannel(x => x.Direct("Hosted").AutoDelete());
-                Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Hosted").ExchangeName("Hosted"));
+                Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Hosted").ExchangeName("Hosted").NoAck());
             }
 
             public void Stop()
@@ -63,7 +63,7 @@ namespace Minion.Host
                     .ToInfo<IDaemon>( envelope.Message.Text );
 
                 Enumerable
-                    .Range(0, 100)
+                    .Range(0, 1000)
                     .ForEach( x => Bus.Publish( "Hosted", new MinionDoThis() { Text = "Command {0}".AsFormat( x )} ) );
             }
 

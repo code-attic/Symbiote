@@ -64,7 +64,7 @@ namespace Minion.Hosted
             Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
 
             Bus.AddRabbitChannel(x => x.Direct("Hosted").AutoDelete());
-            Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Hosted").ExchangeName("Hosted").StartSubscription());
+            Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Hosted").ExchangeName("Hosted").StartSubscription().NoAck());
 
             Bus.Publish( "Host", new MinionUp() { Text = "You rang?"} );
         }
