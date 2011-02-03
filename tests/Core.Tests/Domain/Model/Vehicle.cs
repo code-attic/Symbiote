@@ -2,7 +2,7 @@
 
 namespace Core.Tests.Domain.Model
 {
-    public class Vehicle
+    public class Vehicle : IHaveTestKey
     {
         public string VIN { get; protected set; }
         public string Make { get; protected set; }

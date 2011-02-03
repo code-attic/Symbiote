@@ -126,7 +126,7 @@
     <Compile Include="Collections\MruList.cs" />
     <Compile Include="Config\FromConfig.cs" />
     <Compile Include="UnitOfWork\Context.cs" />
-    <Compile Include="UnitOfWork\IContextExtensions.cs" />
+    <Compile Include="UnitOfWork\ContextExtensions.cs" />
     <Compile Include="Utility\DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>

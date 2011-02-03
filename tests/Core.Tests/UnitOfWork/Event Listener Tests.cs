@@ -133,8 +133,7 @@ namespace Core.Tests.UnitOfWork
 
         private Because of = () =>
         {
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var context = provider.GetContext(Vehicle))
+            using (var context = Context.CreateFor(Vehicle))
             {
                 context.PublishOnCommit<VehicleGenericEvent>(x =>
                 {
