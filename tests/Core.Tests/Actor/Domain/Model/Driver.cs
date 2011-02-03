@@ -56,7 +56,7 @@ namespace Actor.Tests.Domain.Model
 
         public void ChangeName(string firstName, string lastName)
         {
-            using(var context = DefaultContext.CreateFor( this ))
+            using(var context = Context.CreateFor( this ))
             {
                 FirstName = firstName;
                 LastName = lastName;

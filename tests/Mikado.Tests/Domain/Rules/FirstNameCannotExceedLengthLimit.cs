@@ -4,7 +4,7 @@ using Symbiote.Mikado.Impl;
 
 namespace Mikado.Tests.Domain.Rules
 {
-    public class FirstNameCannotExceedLengthLimit : Rule<Person>
+    public class FirstNameCannotExceedLengthLimit : Rule<IHaveFirstName>
     {
         public FirstNameCannotExceedLengthLimit( ICustomerService service )
             :base(x => x.FirstName.Length <= service.GetNameLengthLimit( x ), s => String.Format("FirstName cannot exceed {0} characters.", service.GetNameLengthLimit( s )))
@@ -15,14 +15,14 @@ namespace Mikado.Tests.Domain.Rules
 
     public interface ICustomerService
     {
-        int GetNameLengthLimit( Person person );
+        int GetNameLengthLimit( IHaveFirstName instance );
     }
 
     public class CustomerService : ICustomerService
     {
-        public int GetNameLengthLimit( Person person )
+        public int GetNameLengthLimit( IHaveFirstName instance )
         {
-            if( person is Manager )
+            if( instance is Manager )
             {
                 return 25;
             }

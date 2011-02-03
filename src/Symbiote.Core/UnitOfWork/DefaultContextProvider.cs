@@ -38,8 +38,6 @@ namespace Symbiote.Core.UnitOfWork
             return new DefaultContext<TActor>(actor, originalState, keyAccessor, Publisher);
         }
 
-        public void 
-
         public DefaultContextProvider( IEventConfiguration configuration, IMemoizer memoizer, IEventPublisher publisher )
         {
             Configuration = configuration;

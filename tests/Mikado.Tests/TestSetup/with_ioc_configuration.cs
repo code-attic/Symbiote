@@ -12,11 +12,6 @@ namespace Mikado.Tests.TestSetup
     {
         private Establish context = () => Assimilate
                                             .Core<StructureMapAdapter>()
-                                            .Mikado()
-                                            .Dependencies(x =>
-                                                                {
-                                                                    x.For<IKeyAccessor<Person>>().Use<DefaultKeyAccessor<Person>>();
-                                                                    x.For<IKeyAccessor<Manager>>().Use<DefaultKeyAccessor<Manager>>();
-                                                                });
+                                            .Mikado();
     }
 }

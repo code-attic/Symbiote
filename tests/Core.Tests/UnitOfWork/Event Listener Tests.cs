@@ -67,8 +67,7 @@ namespace Core.Tests.UnitOfWork
 
         private Because of = () =>
                                  {
-                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
-                                     using (var context = provider.GetContext(Driver))
+                                     using (var context = Context.CreateFor(Driver))
                                      {
                                          context.PublishOnCommit<DriverGenericEvent>(x =>
                                                                                          {

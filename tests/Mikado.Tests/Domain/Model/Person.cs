@@ -3,7 +3,55 @@ using Symbiote.Core;
 
 namespace Mikado.Tests.Domain.Model
 {
-    public class Person
+    public interface ITestKey
+    {
+        Guid Id { get; set; }
+    }
+
+    public class TestKeyAccessor : IKeyAccessor<ITestKey>
+    {
+        public string GetId( ITestKey actor )
+        {
+            return actor.Id.ToString();
+        }
+
+        public void SetId<TKey>( ITestKey actor, TKey id )
+        {
+            actor.Id = Guid.Parse(id.ToString());
+        }
+    }
+
+    public interface IHaveFirstName
+    {
+        string FirstName { get; set; }
+    }
+
+    public interface IHaveLastName
+    {
+        string LastName { get; set; }
+    }
+
+    public interface IHaveAge
+    {
+        int Age { get; set; }
+    }
+
+    public interface IHaveDepartment
+    {
+        string Department { get; set; }
+    }
+
+    public interface IPerson : IHaveAge, IHaveFirstName, IHaveLastName, ITestKey
+    {
+        
+    }
+
+    public interface IManager : IPerson, IHaveDepartment
+    {
+        
+    }
+
+    public class Person : IPerson
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -17,7 +65,7 @@ namespace Mikado.Tests.Domain.Model
         }
     }
 
-    public class Manager : Person
+    public class Manager : Person, IManager
     {
         public string Department { get; set; }
     }

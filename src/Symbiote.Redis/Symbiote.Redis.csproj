@@ -40,9 +40,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Symbiote.Core">
-      <HintPath>..\..\..\SymbioteLib\Symbiote.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -140,6 +137,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>

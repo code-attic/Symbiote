@@ -22,9 +22,8 @@ namespace Mikado.Tests
         private Because of = () =>
                                  {
                                      var runner = Assimilate.GetInstanceOf<IRunRules>();
-                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
                                      using (var subscription = runner.Subscribe( Subscriber ))
-                                     using (var context = provider.GetContext( Person ))
+                                     using (var context = Context.CreateFor( Person ))
                                      {
                                          Person.Age = 24;
                                          Person.FirstName = "Bugs";
@@ -46,9 +45,8 @@ namespace Mikado.Tests
         private Because of = () =>
         {
             var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
+            using ( var subscription = runner.Subscribe( Subscriber ) )
+            using ( var context = Context.CreateFor( Person ) )
             {
                 Person.Age = -24;
                 Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
@@ -56,7 +54,10 @@ namespace Mikado.Tests
             }
         };
 
-        private It should_have_three_broken_rules = () => Subscriber.BrokenRules.Count.ShouldEqual(3);
+        private It should_have_three_broken_rules = () =>
+                                                        {
+                                                            Subscriber.BrokenRules.Count.ShouldEqual( 3 );
+                                                        };
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
