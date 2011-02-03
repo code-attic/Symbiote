@@ -78,7 +78,7 @@ namespace Symbiote.Core
             container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );
             container.For<ILockManager>().Use<NullLockManager>();
             container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
-            container.For<IKeyAccessor>().Use<KeyAccessManager>();
+            container.For<IKeyAccessor>().Use<KeyAccessManager>().AsSingleton();
             container.For<IMemoizer>().Use<Memoizer>();
             container.For( typeof( IMemento<> ) ).Use( typeof( PassthroughMemento<> ) );
             container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();

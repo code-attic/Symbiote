@@ -107,7 +107,6 @@
     <Compile Include="Actor\with_assimilation.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
-    <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
     <Compile Include="Domain\DriverFactory.cs" />
     <Compile Include="Domain\Listeners\Test Listeners and Events.cs" />

@@ -9,13 +9,12 @@ namespace ringbuffer
     public class when_doing_simple_math
         : with_buffer
     {
-        private static int TOTAL_WRITES = 1000;
+        private static int TOTAL_WRITES = 1000000;
         public static List<int> Counts;
         public static Stopwatch Watch { get; set; }
         private Because of = () =>
         {
             Counts = new List<int>(TOTAL_WRITES);
-            Buffer.Write( 10 );
             Buffer.AddTransform(x => (int)x + 5);
             Buffer.AddTransform(x => (int)x * 10);
             Buffer.AddTransform(x =>
@@ -37,6 +36,6 @@ namespace ringbuffer
 
         private It should_have_completed_all_steps = () => ShouldExtensionMethods.ShouldBeTrue( Counts.All(x => x == 100) );
         private It should_have_all_items = () => Counts.Count.ShouldEqual(TOTAL_WRITES);
-        private It should_take_300ms = () => Watch.ElapsedMilliseconds.ShouldEqual(300);
+        private It should_take_1_second = () => Watch.ElapsedMilliseconds.ShouldBeLessThan(1000);
     }
 }

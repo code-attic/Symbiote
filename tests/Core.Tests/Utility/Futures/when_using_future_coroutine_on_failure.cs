@@ -8,7 +8,7 @@ namespace Core.Tests.Utility
     {
         private Because of = () =>
         {
-            expected = -1;
+            expected = 5;
             waitFor = 10;
             result = Future.Of<int>(GetResult).WaitFor(1).OnFailure( () => expected );
         };
