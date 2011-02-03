@@ -178,7 +178,7 @@ namespace Symbiote.Core.DI
             foreach( var pluginType in pluginTypes )
             {
                 var dependencyExpression = DependencyExpression.For( pluginType );
-                dependencyExpression.Use( match );
+                dependencyExpression.Add( match );
                 registry.Register( dependencyExpression );
             }
         }

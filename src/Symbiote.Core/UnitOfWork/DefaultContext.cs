@@ -24,7 +24,7 @@ namespace Symbiote.Core.UnitOfWork
     {
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
-        public IKeyAccessor<TActor> KeyAccessor { get; set; }
+        public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
         public Action<TActor> CommitAction { get; set; }
@@ -84,7 +84,7 @@ namespace Symbiote.Core.UnitOfWork
             baseEvent.UtcTimeStamp = DateTime.UtcNow;
         }
 
-        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher)
+        public DefaultContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor keyAccessor, IEventPublisher eventPublisher)
         {
             Actor = actor;
             OriginalState = originalState;

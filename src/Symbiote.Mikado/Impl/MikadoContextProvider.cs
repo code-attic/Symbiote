@@ -45,7 +45,7 @@ namespace Symbiote.Mikado.Impl
             {
                 return new ReplayContext<TActor>(actor, originalState);
             }
-            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<TActor>>();
+            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor>();
             return new MikadoContext<TActor>(actor, originalState, keyAccessor, Publisher, _rulesRunner);
         }
     }

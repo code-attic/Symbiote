@@ -34,7 +34,7 @@ namespace Symbiote.Core.UnitOfWork
             {
                 return new ReplayContext<TActor>(actor, originalState);
             }
-            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<TActor>>();
+            var keyAccessor = Assimilate.GetInstanceOf<IKeyAccessor>();
             return new DefaultContext<TActor>(actor, originalState, keyAccessor, Publisher);
         }
 

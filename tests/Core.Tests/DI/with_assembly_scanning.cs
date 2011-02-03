@@ -57,7 +57,7 @@ namespace Core.Tests.DI
 
         private Because of = () =>
         {
-            compatible = typeof(AClassOf<>).IsConcreteAndAssignableTo( typeof(AnInterfaceOf) );
+            compatible = typeof(AClassOf<string>).IsConcreteAndAssignableTo( typeof(AnInterfaceOf) );
             genericMatch = typeof(AClassOf<>).GetGenericCardinality() == typeof(AnInterfaceOf).GetGenericCardinality();
         };
 

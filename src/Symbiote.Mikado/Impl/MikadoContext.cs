@@ -30,7 +30,7 @@ namespace Symbiote.Mikado.Impl
 
         public TActor Actor { get; set; }
         public IMemento<TActor> OriginalState { get; set; }
-        public IKeyAccessor<TActor> KeyAccessor { get; set; }
+        public IKeyAccessor KeyAccessor { get; set; }
         public IEventPublisher Publisher { get; set; }
         public IList<IEvent> Events { get; set; }
         public BrokenRulesCollection BrokenRules { get; set; }
@@ -39,7 +39,7 @@ namespace Symbiote.Mikado.Impl
         public Action<TActor, Exception> ExceptionAction { get; set; }
         public IList<IDisposable> Disposables { get; set; }
 
-        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor<TActor> keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner )
+        public MikadoContext(TActor actor, IMemento<TActor> originalState, IKeyAccessor keyAccessor, IEventPublisher eventPublisher, IRunRules rulesRunner )
         {
             BrokenRules = new BrokenRulesCollection();
             Events = new List<IEvent>(); 

@@ -13,18 +13,17 @@ namespace Watcher.Test
         {
             var file = Path.GetFullPath( @"..\..\..\..\Test" );
             Console.WriteLine( "Watching: {0}", file );
-            FileSystemWatcher watcher = CreateWatcher( file );
-
-            watcher.EnableRaisingEvents = true;
+            FileSystemWatcher watcher = CreateDirectoryWatcher(file);
+            FileSystemWatcher watcher2 = CreateFileWatcher(file);
 
             Console.ReadKey();
         }
 
-        private static FileSystemWatcher CreateWatcher( string file ) 
+        private static FileSystemWatcher CreateDirectoryWatcher( string file ) 
         {
             var watcher = new FileSystemWatcher( );
             watcher.Path = file;
-            watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.DirectoryName;
+            watcher.NotifyFilter = NotifyFilters.DirectoryName;
             watcher.IncludeSubdirectories = true;
             Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
@@ -41,40 +40,60 @@ namespace Watcher.Test
                         watcher.Changed -= h;
                         watcher.Deleted -= h;
                     } )
-                .BufferWithTime( TimeSpan.FromSeconds( 10 ) )
-                .Do( o =>
-                     o.DistinctUntilChanged( x =>
-                     {
-                         var f = Path.GetFileName(x.EventArgs.FullPath);
-                         var p =
-                             string.IsNullOrEmpty(Path.GetExtension(f)) ?
-                                                                            x.EventArgs.FullPath :
-                                                                                                     x.EventArgs.FullPath.Replace(f, "").TrimEnd(Path.DirectorySeparatorChar);
-                         return p;
-                     } )
-                         .Do( x =>
-                         {
-                             var f = Path.GetFileName(x.EventArgs.FullPath);
-                             var p =
-                                 string.IsNullOrEmpty(Path.GetExtension(f)) ?
-                                                                                x.EventArgs.FullPath :
-                                                                                                         x.EventArgs.FullPath.Replace(f, "").TrimEnd(Path.DirectorySeparatorChar);
-                             Console.WriteLine( p );
-                         } )
-                         .Subscribe(  )
-                )
+                .Do( x =>
+                {
+                    var f = Path.GetFileName( x.EventArgs.FullPath );
+                    var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
+                                ? x.EventArgs.FullPath
+                                : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
+                    Console.WriteLine( p );
+                } )
                 .Subscribe();
+            watcher.EnableRaisingEvents = true;
             return watcher;
         }
 
-        static void watcher_Error(object sender, ErrorEventArgs e)
+        private static FileSystemWatcher CreateFileWatcher(string file)
         {
-            Console.WriteLine("BOOOOO");
-        }
-
-        private static void OnSystemChange( object sender, FileSystemEventArgs eventArgs )
-        {
-            Console.WriteLine("CHANGE");
+            var watcher = new FileSystemWatcher();
+            watcher.Path = file;
+            watcher.NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size;
+            watcher.IncludeSubdirectories = true;
+            Observable
+                .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
+                    c => c.Invoke,
+                    h =>
+                    {
+                        watcher.Created += h;
+                        watcher.Changed += h;
+                        watcher.Deleted += h;
+                    },
+                    h =>
+                    {
+                        watcher.Created -= h;
+                        watcher.Changed -= h;
+                        watcher.Deleted -= h;
+                    } )
+                .Where( x => !string.IsNullOrEmpty( Path.GetExtension( x.EventArgs.FullPath ) ) )
+                .DistinctUntilChanged( x =>
+                {
+                    var f = Path.GetFileName( x.EventArgs.FullPath );
+                    var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
+                                ? x.EventArgs.FullPath
+                                : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
+                    return p;
+                } )
+                .Do( x =>
+                {
+                    var f = Path.GetFileName( x.EventArgs.FullPath );
+                    var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
+                                ? x.EventArgs.FullPath
+                                : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
+                    Console.WriteLine( p );
+                } )
+                .Subscribe();
+            watcher.EnableRaisingEvents = true;
+            return watcher;
         }
     }
 }
