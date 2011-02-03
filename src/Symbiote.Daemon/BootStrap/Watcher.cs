@@ -20,55 +20,109 @@ using Symbiote.Core.Utility;
 using Symbiote.Daemon.BootStrap.Config;
 using System.Linq;
 using Symbiote.Messaging;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
 {
     public class Watcher
+        : IDisposable
     {
         public BootStrapConfiguration Configuration { get; set; }
         public IList<FileSystemWatcher> SystemEvents { get; set; }
-        public IList<IObservable<IEvent<FileSystemEventArgs>>> SystemObservers { get; set; }
+        public IList<IDisposable> SystemObservers { get; set; }
+        public IList<FileSystemWatcher> Watchers { get; set; }
         public IBus Bus { get; set; }
 
-        public Watcher( BootStrapConfiguration configuration )
+        public Watcher( BootStrapConfiguration configuration, IBus bus )
         {
             Configuration = configuration;
+            SystemObservers = new List<IDisposable>();
+            Watchers = new List<FileSystemWatcher>();
+            Bus = bus;
         }
         
-        public FileSystemWatcher ConfigureWatcher(string path, string patterns)
+        public void ConfigureWatcher(string path)
         {
-            var fullPath = Path.GetFullPath( path );
-            var watcher = new FileSystemWatcher( );
-            watcher.Path = fullPath;
-            watcher.NotifyFilter = NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.DirectoryName | NotifyFilters.FileName | NotifyFilters.LastAccess;
+            Watchers.Add( CreateDirectoryWatcher( path ) );
+            Watchers.Add( CreateFileWatcher( path ) );
+        }
+
+        public FileSystemWatcher CreateDirectoryWatcher(string file)
+        {
+            var watcher = new FileSystemWatcher();
+            watcher.Path = file;
+            watcher.NotifyFilter = NotifyFilters.DirectoryName;
             watcher.IncludeSubdirectories = true;
-            Observable
+            var observer = Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
                     c => c.Invoke,
                     h =>
                     {
-                        watcher.Created += h;
                         watcher.Changed += h;
                         watcher.Deleted += h;
                     },
                     h =>
                     {
-                        watcher.Created -= h;
                         watcher.Changed -= h;
                         watcher.Deleted -= h;
                     })
-                .DistinctUntilChanged()
-                .BufferWithTime(TimeSpan.FromSeconds( 10 ))
-                .Subscribe(l =>
+                .Do(x =>
                 {
-                    var e = l.FirstOrDefault();
-                    if ( e != null )
-                        OnSystemChange(
-                            e.Sender,
-                            e.EventArgs);
-                });
+                    var path = GetPathFromEvent(x);
+                    if(x.EventArgs.ChangeType == WatcherChangeTypes.Deleted)
+                    {
+                        OnApplicationDeletion( path );
+                    }
+                    else
+                    {
+                        OnNewApplication( path );
+                    }
+                })
+                .Subscribe();
+            SystemObservers.Add( observer );
             watcher.EnableRaisingEvents = true;
             return watcher;
+        }
+
+        public FileSystemWatcher CreateFileWatcher(string file)
+        {
+            var watcher = new FileSystemWatcher();
+            watcher.Path = file;
+            watcher.NotifyFilter = NotifyFilters.LastWrite;
+            watcher.IncludeSubdirectories = true;
+            var observer = Observable
+                .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
+                    c => c.Invoke,
+                    h =>
+                    {
+                        watcher.Changed += h;
+                    },
+                    h =>
+                    {
+                        watcher.Changed -= h;
+                    })
+                .Where(x => !string.IsNullOrEmpty(Path.GetExtension(x.EventArgs.FullPath)))
+                .BufferWithTime(TimeSpan.FromMinutes(1))
+                .Do(o => o
+                    .DistinctUntilChanged(GetPathFromEvent)
+                    .Do(x =>
+                        {
+                            var path = GetPathFromEvent( x );
+                            OnApplicationChange( path );
+                        })
+                    .Subscribe())
+                .Subscribe();
+            SystemObservers.Add(observer);
+            watcher.EnableRaisingEvents = true;
+            return watcher;
+        }
+
+        public string GetPathFromEvent( IEvent<FileSystemEventArgs> fileSystemEvent )
+        {
+            var fileName = Path.GetFileName(fileSystemEvent.EventArgs.FullPath);
+            return string.IsNullOrEmpty(Path.GetExtension(fileName))
+                       ? fileSystemEvent.EventArgs.FullPath
+                       : fileSystemEvent.EventArgs.FullPath.Replace(fileName, "").TrimEnd(Path.DirectorySeparatorChar);
         }
 
         public string IsPathToAFile(FileSystemEventArgs e)
@@ -76,26 +130,35 @@ namespace Symbiote.Daemon.BootStrap
             return Path.GetExtension(e.Name);
         }
 
-        public void OnSystemChange(object sender, FileSystemEventArgs args)
+        public void OnNewApplication(string path)
         {
-            switch( args.ChangeType )
-            {
-                case WatcherChangeTypes.Changed:
-                    Bus.Publish("local", new ApplicationChanged() { DirectoryPath = args.FullPath });
-                    break;
-                case WatcherChangeTypes.Created:
-                    Bus.Publish("local", new NewApplication() { DirectoryPath = args.FullPath });
-                    break;
-                case WatcherChangeTypes.Deleted:
-                    Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = args.FullPath });
-                    break;
-            }
+            Bus.Publish("local", new NewApplication() { DirectoryPath = path });
+        }
+
+        public void OnApplicationChange(string path)
+        {
+            Bus.Publish("local", new ApplicationChanged() { DirectoryPath = path });
+        }
+
+        public void OnApplicationDeletion(string path)
+        {
+            Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = path });
         }
 
         public void Start()
         {
-            var patterns = DelimitedBuilder.Construct(Configuration.FileExtensions, "; ");
-            SystemEvents = Configuration.WatchPaths.Select(x => ConfigureWatcher(x, "")).ToList();
+            Configuration.WatchPaths.ForEach(ConfigureWatcher);
+        }
+
+        public void Dispose()
+        {
+            SystemObservers.Clear();
+            Watchers.ForEach( x =>
+                                  {
+                                      x.EnableRaisingEvents = false;
+                                      x.Dispose();
+                                  } );
+            Watchers.Clear();
         }
     }
 }

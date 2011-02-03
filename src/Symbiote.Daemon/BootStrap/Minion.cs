@@ -58,7 +58,7 @@ namespace Symbiote.Daemon.BootStrap
             Locator = new MinionLocator();
             DomainManager = new AppDomainManager();
 
-            var minion = Locator.FindPrimaryAssembly( path );
+            var minion = Locator.GetMinionFromPath( path );
             MinionPath = minion.Item1;
             PrimaryAssembly = minion.Item2;
             MinionType = minion.Item3;
