@@ -18,7 +18,7 @@ using Symbiote.Core.Futures;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging.Impl.Channels.Local
 {
     public class LocalChannel
         : IChannel

@@ -132,7 +132,7 @@ namespace Symbiote.Rabbit
             Proxy.Acknowledge( DeliveryTag, all );
         }
 
-        public void Reject()
+        public void Reject( string reason )
         {
             Proxy.Reject( DeliveryTag, true );
         }

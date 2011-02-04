@@ -15,9 +15,12 @@
 // */
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Fibers;
 
@@ -68,9 +71,18 @@ namespace Symbiote.Messaging.Impl.Dispatch
             {
                 dispatcher.Dispatch( envelope );
             }
-            else // message is a response to a request message
+            else
             {
-                if ( ResponseDispatchers.TryRemove( envelope.CorrelationId, out dispatcher ) )
+                IEnumerable<Type> inheritanceChain = Reflector.GetInheritanceChain(envelope.MessageType);
+                Type key = null;
+                if ( ( key = Dispatchers.Keys.FirstOrDefault( k => inheritanceChain.Contains( k ) ) ) != null )
+                {
+                    dispatcher = Dispatchers[key];
+                    Dispatchers.AddOrUpdate( envelope.MessageType, x => dispatcher, ( x, y ) => dispatcher );
+                    dispatcher.Dispatch( envelope );
+                }
+                // message is a response to a request message
+                else if ( ResponseDispatchers.TryRemove( envelope.CorrelationId, out dispatcher ) )
                 {
                     dispatcher.Dispatch( envelope );
                 }

@@ -48,6 +48,21 @@ namespace Symbiote.Messaging.Impl.Envelope
         [DataMember( Order = 1008, IsRequired = false )]
         public bool SequenceEnd { get; set; }
 
+        object IEnvelope.Message 
+        {
+            get { return this.Message; }
+        }
+
+        public void Acknowledge()
+        {
+            // we don't need to do anything for now
+        }
+
+        public void Reject( string reason )
+        {
+            // there's no transport, nothing to do here 
+        }
+
         public void Reply<TResponse>( TResponse response )
         {
             var bus = Assimilate.GetInstanceOf<IBus>();

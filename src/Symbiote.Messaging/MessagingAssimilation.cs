@@ -19,7 +19,6 @@ using System.Linq;
 using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Saga;
 using Symbiote.Core.UnitOfWork;
 using Symbiote.Messaging.Config;
 using Symbiote.Messaging.Impl;
@@ -27,6 +26,7 @@ using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Eventing;
 using Symbiote.Messaging.Impl.Mesh;
+using Symbiote.Messaging.Impl.Saga;
 using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging
@@ -192,7 +192,7 @@ namespace Symbiote.Messaging
             Assimilate.GetInstanceOf<IDispatcher>();
         }
 
-        private static void ScanAssemblies( IScanInstruction s )
+        private static void ScanAssemblies( IScanInstruction scan )
         {
             AppDomain
                 .CurrentDomain
@@ -201,14 +201,16 @@ namespace Symbiote.Messaging
                         a.GetReferencedAssemblies().Any(
                             r => r.FullName.Contains( "Symbiote.Messaging" ) ) ||
                         a.FullName.Contains( "Symbiote.Messaging" ) )
-                .ForEach( s.Assembly );
+                .ForEach( scan.Assembly );
 
-            s.ConnectImplementationsToTypesClosing(
+            scan.ConnectImplementationsToTypesClosing(
                 typeof( IHandle<> ) );
-            s.ConnectImplementationsToTypesClosing(
+            scan.ConnectImplementationsToTypesClosing(
                 typeof( IHandle<,> ) );
-            s.AddAllTypesOf<INodeHealthBroadcaster>();
-            s.AddAllTypesOf<INodeChannelManager>();
+            scan.AddAllTypesOf<INodeHealthBroadcaster>();
+            scan.AddAllTypesOf<INodeChannelManager>();
+            scan.AddAllTypesOf<ISaga>();
+            scan.ConnectImplementationsToTypesClosing(typeof(ISaga<>));
         }
     }
 }

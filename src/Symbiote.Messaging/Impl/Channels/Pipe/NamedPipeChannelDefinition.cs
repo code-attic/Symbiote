@@ -17,7 +17,7 @@ using System;
 using System.IO.Pipes;
 using System.Security.Principal;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
     public class NamedPipeChannelDefinition : BaseChannelDefinition
     {

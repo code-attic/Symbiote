@@ -26,15 +26,18 @@ namespace Symbiote.Messaging
         long Position { get; set; }
         bool SequenceEnd { get; set; }
 
+        object Message { get; }
         Guid MessageId { get; set; }
         Type MessageType { get; }
+
+        void Acknowledge();
+        void Reply<TResponse>(TResponse response);
+        void Reject( string reason );
     }
 
     public interface IEnvelope<TMessage>
         : IEnvelope
     {
-        TMessage Message { get; set; }
-
-        void Reply<TResponse>( TResponse response );
+        new TMessage Message { get; set; }
     }
 }

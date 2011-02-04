@@ -14,70 +14,64 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Symbiote.Core.Collections;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
 {
-    public class MinionLocator : IMinionLocator
+    [Serializable]
+    public class MinionLocator : MarshalByRefObject
     {
-        public ExclusiveConcurrentDictionary<string, Assembly> LoadedAssemblies { get; set; }
-        public ExclusiveConcurrentDictionary<string, string> FoundMinions { get; set; }
-
-        public Tuple<string, string, string> GetMinionFromPath(string fullPath)
+        public object GetMinionHost(string fullPath)
         {
             var match = AnalyzeAssembliesInPath( fullPath );
             if(!match.Item1)
             {
                 throw new Exception("No assemblies containing a type implementing IMinion were found at path '{0}'".AsFormat( fullPath ));
             }
-            return Tuple.Create(fullPath, Path.Combine(fullPath, Path.GetFileName(match.Item2)), match.Item3);
+            var minionHost = Activator.CreateInstance( match.Item3 );
+            return minionHost;
         }
 
-        public Tuple<bool, string, string> AnalyzeAssembliesInPath(string path)
+        public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
         {
             return Directory.GetFiles( path )
-                .Where( x => x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) )
+                .Where( x => 
+                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) 
+                    && !x.Contains( "Symbiote.Daemon" ) )
                 .Select( x =>
-                    {
-                        var assemblyFileName = Path.GetFileName( x );
-                        var fullPath = Path.GetFullPath( x );
-                        var minion = "";
-                        try
-                        {
-                            var assembly = LoadedAssemblies.ReadOrWrite( assemblyFileName,
-                                                                    () => Assembly.LoadFile(fullPath));
-                            if ( assembly != null )
-                            {
-                                minion = FoundMinions.ReadOrWrite( 
-                                    assemblyFileName, 
-                                    () => GetMinionTypeFullName( assembly ) );
-                            }
-                        }
-                        catch ( Exception e )
-                        {
-                            var ex = e;
-                        }
-                        return Tuple.Create(!string.IsNullOrEmpty(minion), assemblyFileName, minion);
+                             {
+                                Assembly assembly = null;
+                                Type minion = null;
+                                var fullPath = Path.GetFullPath( x );
+                                try
+                                {
+                                    assembly = Assembly.LoadFile(fullPath);
+                                    if ( assembly != null )
+                                    {
+                                        minion = GetMinion( assembly );
+                                    }
+                                }
+                                catch ( Exception e )
+                                {
+                                    var ex = e;
+                                }
+                                return Tuple.Create(minion != null, assembly, minion);
                     } )
                 .FirstOrDefault(x => x.Item1);
         }
 
-        public string GetMinionTypeFullName( Assembly assembly )
+        public Type GetMinion( Assembly assembly )
         {
             var types = assembly.GetTypes();
             var minion = types.FirstOrDefault( t => t.GetInterface( "IMinion" ) != null );
-            return minion == null ? null : minion.FullName;
+            return minion;
         }
 
         public MinionLocator()
         {
-            LoadedAssemblies = new ExclusiveConcurrentDictionary<string, Assembly>();
-            FoundMinions = new ExclusiveConcurrentDictionary<string, string>();
         }
     }
 }

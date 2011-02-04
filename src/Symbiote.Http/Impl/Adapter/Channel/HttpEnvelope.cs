@@ -104,6 +104,20 @@ namespace Symbiote.Http.Impl.Adapter.Channel
                 .Submit( HttpStatus.Ok );
         }
 
+        public void Acknowledge()
+        {
+            Callback
+                .Build()
+                .Submit(HttpStatus.Ok);
+        }
+
+        public void Reject( string reason )
+        {
+            Callback
+                .Build()
+                .Submit(HttpStatus.InternalServerError);
+        }
+
         public HttpEnvelope()
         {
         }

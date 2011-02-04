@@ -61,7 +61,6 @@
     <Compile Include="Impl\Channels\ChannelConfigurator.cs" />
     <Compile Include="Impl\Node\RabbitNodeInitializer.cs" />
     <Compile Include="Impl\Subscription\QueueSubscriptionFactory.cs" />
-    <Compile Include="RabbitActorHandler.cs" />
     <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />
@@ -89,7 +88,6 @@
     <Compile Include="Impl\Connection\IConnectionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RabbitExtensions.cs" />
-    <Compile Include="RabbitMessageHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

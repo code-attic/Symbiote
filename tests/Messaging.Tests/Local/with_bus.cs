@@ -5,13 +5,14 @@ using Symbiote.Messaging;
 namespace Messaging.Tests.Local
 {
     public class with_bus
-        : with_simple_actor_cache
+        : with_assimilation
     {
         protected static IBus bus { get; set; }
 
         private Establish context = () =>
                                         {
                                             bus = Assimilate.GetInstanceOf<IBus>();
+                                            bus.AddLocalChannel();
                                         };
     }
 }

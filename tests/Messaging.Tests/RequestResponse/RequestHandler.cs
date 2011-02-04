@@ -1,12 +1,13 @@
-﻿using Symbiote.Messaging;
+﻿using System;
+using Symbiote.Messaging;
 
 namespace Messaging.Tests.RequestResponse
 {
     public class RequestHandler : IHandle<Request>
     {
-        public void Handle( IEnvelope<Request> envelope )
+        public Action<IEnvelope> Handle( Request message )
         {
-            envelope.Reply( new Reply()
+            return x => x.Reply( new Reply()
             {
                 Text = "I have an answer!"
             } );

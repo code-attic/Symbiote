@@ -15,7 +15,7 @@
 // */
 using Symbiote.Messaging.Impl.Dispatch;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging.Impl.Channels.Local
 {
     public class LocalChannelFactory
         : IChannelFactory

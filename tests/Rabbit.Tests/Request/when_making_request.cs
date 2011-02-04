@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using Machine.Specifications;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
@@ -14,7 +15,7 @@ namespace Rabbit.Tests.Request
         {
             Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
-            Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 55 );
+            Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 75 );
         };
         
         private It should_have_response = () => Reply.Text.ShouldEqual("I have an answer!");
@@ -36,9 +37,9 @@ namespace Rabbit.Tests.Request
 
     public class RequestHandler : IHandle<Request>
     {
-        public void Handle(IEnvelope<Request> envelope)
+        public Action<IEnvelope> Handle(Request envelope)
         {
-            envelope.Reply(new Reply()
+            return x => x.Reply(new Reply()
             {
                 Text = "I have an answer!"
             });

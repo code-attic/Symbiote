@@ -15,6 +15,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using Symbiote.Messaging.Impl.Channels.Local;
 using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels

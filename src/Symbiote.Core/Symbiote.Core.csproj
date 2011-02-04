@@ -121,7 +121,6 @@
     <Compile Include="Actor\IAgency.cs" />
     <Compile Include="Actor\IAgent.cs" />
     <Compile Include="Actor\IAgentFactory.cs" />
-    <Compile Include="Actor\Saga.cs" />
     <Compile Include="Cache\ICacheProvider.cs" />
     <Compile Include="Collections\MruList.cs" />
     <Compile Include="Config\FromConfig.cs" />
@@ -139,12 +138,6 @@
     <Compile Include="Actor\NullActorStore.cs" />
     <Compile Include="Futures\CallbackResult.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
-    <Compile Include="Saga\Condition.cs" />
-    <Compile Include="Saga\ConditionalTransition.cs" />
-    <Compile Include="Saga\ICondition.cs" />
-    <Compile Include="Saga\IConditionalTransition.cs" />
-    <Compile Include="Saga\ISaga.cs" />
-    <Compile Include="Saga\StateMachine.cs" />
     <Compile Include="Trees\AvlTreeBase.cs" />
     <Compile Include="Hashing\Distributor.cs" />
     <Compile Include="Trees\HashedAvlLeaf.cs" />

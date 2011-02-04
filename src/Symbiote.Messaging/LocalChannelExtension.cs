@@ -16,6 +16,7 @@
 using System;
 using Symbiote.Core;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Channels.Local;
 
 namespace Symbiote.Messaging
 {

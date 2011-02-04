@@ -34,6 +34,8 @@ namespace Minion.Host
 
             public void Start()
             {
+                "Host has started."
+                    .ToInfo<IDaemon>();
                 Bus.AddLocalChannel();
                 Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
                 Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Host").ExchangeName("Host").StartSubscription().NoAck());

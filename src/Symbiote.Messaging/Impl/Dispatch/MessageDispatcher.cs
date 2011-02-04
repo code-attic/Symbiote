@@ -54,15 +54,15 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Dispatch( IEnvelope envelope )
         {
-            var typedEnvelope = envelope as IEnvelope<TMessage>;
             try
             {
                 var handler = Assimilate.GetInstanceOf<IHandle<TMessage>>();
-                handler.Handle( typedEnvelope );
+                var message = (TMessage) envelope.Message;
+                handler.Handle( message )( envelope );
             }
             catch ( Exception e )
             {
-                //envelope.Reject();
+                envelope.Reject( e.ToString() );
                 throw;
             }
         }

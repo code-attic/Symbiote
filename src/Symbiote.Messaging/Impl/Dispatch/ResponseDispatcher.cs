@@ -48,8 +48,8 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Dispatch( IEnvelope envelope )
         {
-            var typedEnvelope = envelope as IEnvelope<TResponse>;
-            Handle( typedEnvelope.Message );
+            var message = (TResponse) envelope.Message;
+            Handle( message );
         }
 
         #endregion

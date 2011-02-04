@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core.Actor;
 using Symbiote.Core.Reflection;
-using Symbiote.Core.Saga;
 using Symbiote.Messaging.Extensions;
 
 namespace Symbiote.Messaging.Impl.Dispatch
@@ -31,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         protected IEnumerable<Type> HandlesMessagesOf { get; set; }
         protected IAgency Agency { get; set; }
         protected IAgent<TActor> Agent { get; set; }
-        protected ISaga<TActor> Saga { get; set; }
+        protected Saga.ISaga<TActor> Saga { get; set; }
 
         public Type ActorType
         {
@@ -59,9 +58,9 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Dispatch( IEnvelope envelope )
         {
-            var typedEnvelope = envelope as IEnvelope<TMessage>;
             var actor = Agent.GetActor( envelope.CorrelationId );
-            Saga.Process( actor, typedEnvelope.Message );
+            var message = (TMessage)envelope.Message;
+            Saga.Process( actor, message );
             Agent.Memoize( actor );
         }
 
@@ -79,7 +78,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             yield break;
         }
 
-        public SagaMessageDispatcher( IAgency agency, ISaga<TActor> saga )
+        public SagaMessageDispatcher( IAgency agency, Saga.ISaga<TActor> saga )
         {
             Agency = agency;
             Agent = Agency.GetAgentFor<TActor>();
