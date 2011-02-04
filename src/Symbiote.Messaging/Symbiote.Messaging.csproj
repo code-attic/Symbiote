@@ -114,6 +114,13 @@
     <Compile Include="Impl\Mesh\NodeRegistry.cs" />
     <Compile Include="Impl\Mesh\NodeUp.cs" />
     <Compile Include="Impl\Mesh\INodeRegistry.cs" />
+    <Compile Include="Impl\Saga\Condition.cs" />
+    <Compile Include="Impl\Saga\ConditionalTransition.cs" />
+    <Compile Include="Impl\Saga\ICondition.cs" />
+    <Compile Include="Impl\Saga\IConditionalTransition.cs" />
+    <Compile Include="Impl\Saga\ISaga.cs" />
+    <Compile Include="Saga.cs" />
+    <Compile Include="Impl\Saga\StateMachine.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\MessageSerializerExtensions.cs" />
@@ -128,7 +135,7 @@
     <Compile Include="Impl\Serialization\IMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\JsonMessageSerializer.cs" />
     <Compile Include="Impl\Serialization\NetBinarySerializer.cs" />
-    <Compile Include="Exception\InvalidChannelDefinitionException.cs" />
+    <Compile Include="InvalidChannelDefinitionException.cs" />
     <Compile Include="LocalChannelExtension.cs" />
     <Compile Include="Impl\Envelope\Envelope.cs" />
     <Compile Include="MessagingAssimilation.cs" />
@@ -142,8 +149,8 @@
     <Compile Include="IHandle.cs" />
     <Compile Include="Impl\Channels\Local\LocalChannel.cs" />
     <Compile Include="Impl\Dispatch\MessageDispatcher.cs" />
-    <Compile Include="Exception\MessagingException.cs" />
-    <Compile Include="Exception\MissingChannelDefinitionException.cs" />
+    <Compile Include="MessagingException.cs" />
+    <Compile Include="MissingChannelDefinitionException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Choose>

@@ -53,7 +53,6 @@ namespace Symbiote.Daemon
                                              x.For( typeof( ServiceController<> ) ).Use( typeof( ServiceController<> ) );
                                              x.For<IHost>().Use( hostType );
                                              x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
-                                             x.For<IMinionLocator>().Use<MinionLocator>();
 
                                              if (daemonConfiguration.Configuration.BootStrapConfiguration != null)
                                                 x.For<BootStrapConfiguration>().Use(

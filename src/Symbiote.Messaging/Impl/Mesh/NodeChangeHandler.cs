@@ -25,32 +25,36 @@ namespace Symbiote.Messaging.Impl.Mesh
         protected INodeRegistry Registry { get; set; }
         protected INodeChannelManager NodeChannelManager { get; set; }
 
-        public void Handle( IEnvelope<NodeDown> envelope )
+        public Action<IEnvelope> Handle( NodeDown message )
         {
-            Registry.RemoveNode( envelope.Message.NodeId );
+            Registry.RemoveNode( message.NodeId );
+            return x => x.Acknowledge();
         }
 
-        public void Handle( IEnvelope<NodeHealth> envelope )
+        public Action<IEnvelope> Handle( NodeHealth message )
         {
             try
             {
-                var nodeId = envelope.Message.NodeId;
+                var nodeId = message.NodeId;
                 if ( !Registry.HasNode( nodeId ) )
                 {
                     NodeChannelManager.AddNewOutgoingChannel( nodeId );
                     Registry.AddNode( nodeId );
                 }
-                Registry.RebalanceNode( nodeId, envelope.Message.LoadScore );
+                Registry.RebalanceNode( nodeId, message.LoadScore );
+                return x => x.Acknowledge();
             }
             catch ( Exception e )
             {
                 Console.WriteLine( e );
+                return x => x.Reject( e.ToString() );
             }
         }
 
-        public void Handle( IEnvelope<NodeUp> envelope )
+        public Action<IEnvelope> Handle( NodeUp message )
         {
-            Registry.AddNode( envelope.Message.NodeId );
+            Registry.AddNode( message.NodeId );
+            return x => x.Acknowledge();
         }
 
         public NodeChangeHandler( INodeRegistry registry, INodeChannelManager nodeChannelManager )

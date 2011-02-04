@@ -1,4 +1,7 @@
-﻿namespace Actor.Tests.Domain.Model
+﻿using System;
+using Symbiote.Core;
+
+namespace Actor.Tests.Domain.Model
 {
     public class Vehicle
     {
@@ -34,6 +37,19 @@
             Make = vehicleMemento.Make;
             Model = vehicleMemento.Model;
             Year = vehicleMemento.Year;
+        }
+    }
+
+    public class VehicleKeyAccessor : IKeyAccessor<Vehicle>
+    {
+        public string GetId( Vehicle actor )
+        {
+            return actor.VIN;
+        }
+
+        public void SetId<TKey>( Vehicle actor, TKey id )
+        {
+            // won't get used due to factory
         }
     }
 }

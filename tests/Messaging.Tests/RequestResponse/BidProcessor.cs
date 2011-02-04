@@ -1,22 +1,20 @@
-﻿using Symbiote.Messaging;
+﻿using System;
+using Symbiote.Messaging;
 
 namespace Messaging.Tests.RequestResponse
 {
     public class BidProcessor
         : IHandle<Auction, MakeBid>
     {
-        public void Handle( Auction actor, IEnvelope<MakeBid> envelope )
+        public Action<IEnvelope> Handle( Auction actor, MakeBid message )
         {
             var bid = new Bid(
-                envelope.Message.User,
-                envelope.Message.Item,
-                envelope.Message.Amount,
-                envelope.Message.MadeOn );
+                message.User,
+                message.Item,
+                message.Amount,
+                message.MadeOn );
             var accepted = actor.AcceptBid(bid);
-
-
+            return x => x.Acknowledge();
         }
-
-
     }
 }

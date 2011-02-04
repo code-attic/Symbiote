@@ -19,6 +19,6 @@ namespace Symbiote.Daemon.BootStrap
 {
     public interface IMinionLocator
     {
-        Tuple<string, string, string> FindPrimaryAssembly(string fullPath);
+        Tuple<string, string, string> GetMinionFromPath(string fullPath);
     }
 }

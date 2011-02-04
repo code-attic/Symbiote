@@ -13,7 +13,7 @@ namespace Actor.Tests.Domain
 
         public void SetId<TKey>(Driver actor, TKey id)
         {
-            // this isn't necessary with a customer factory
+            // this isn't necessary with a custom factory
         }
     }
 }

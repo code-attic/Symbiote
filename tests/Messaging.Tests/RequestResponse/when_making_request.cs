@@ -15,7 +15,7 @@ namespace Messaging.Tests.RequestResponse
         private Because of = () =>
         {
             bus.AddLocalChannel();
-            Reply = bus.Request<Request, Reply>("local", new Request()).WaitFor( 10 );
+            Reply = bus.Request<Request, Reply>("local", new Request()).WaitFor( 20 );
         };
 
         private It should_have_response = () => Reply.Text.ShouldEqual( "I have an answer!" );

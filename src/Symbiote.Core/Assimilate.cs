@@ -24,7 +24,6 @@ using Symbiote.Core.Locking;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Core.Memento;
-using Symbiote.Core.Saga;
 using Symbiote.Core.Serialization;
 using Symbiote.Core.UnitOfWork;
 
@@ -78,7 +77,7 @@ namespace Symbiote.Core
             container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );
             container.For<ILockManager>().Use<NullLockManager>();
             container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
-            container.For<IKeyAccessor>().Use<KeyAccessManager>();
+            container.For<IKeyAccessor>().Use<KeyAccessManager>().AsSingleton();
             container.For<IMemoizer>().Use<Memoizer>();
             container.For( typeof( IMemento<> ) ).Use( typeof( PassthroughMemento<> ) );
             container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
@@ -104,15 +103,13 @@ namespace Symbiote.Core
                 scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
                 scan.AddAllTypesOf<IEventListener>();
                 scan.AddSingleImplementations();
-                scan.AddAllTypesOf<ISaga>();
+                
                 scan.ConnectImplementationsToTypesClosing(
                     typeof( IActorFactory<> ) );
                 scan.ConnectImplementationsToTypesClosing(
                     typeof( IActorCache<> ) );
                 scan.ConnectImplementationsToTypesClosing(
                     typeof( IActorStore<> ) );
-                scan.ConnectImplementationsToTypesClosing(
-                    typeof( ISaga<> ) );
             }
         }
 

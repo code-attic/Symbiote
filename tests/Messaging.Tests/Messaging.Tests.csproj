@@ -69,24 +69,11 @@
     <Compile Include="Extensions\InterfaceType.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_compatible_types.cs" />
     <Compile Include="Extensions\when_checking_type_compatibility_for_incompatible_types.cs" />
-    <Compile Include="Local\Actor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\KickRobotAss.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\T3Director.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\when_sending_15000_messages_to_actor.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\when_sending_400000_messages_to_60_actors.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\when_sending_message_to_actor.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Local\HandleInterface\HandleMessages.cs" />
+    <Compile Include="Local\HandleInterface\IAmAMessage.cs" />
+    <Compile Include="Local\HandleInterface\MessageA.cs" />
+    <Compile Include="Local\HandleInterface\MessageB.cs" />
+    <Compile Include="Local\HandleInterface\when_testing_handling_messages_with_common_interface.cs" />
     <Compile Include="MessageSerializers\BinaryAndJsonMessage.cs" />
     <Compile Include="MessageSerializers\IncompatibleMessage.cs" />
     <Compile Include="MessageSerializers\JsonOnlyMessage.cs" />
@@ -104,13 +91,11 @@
     <Compile Include="RequestResponse\Reply.cs" />
     <Compile Include="RequestResponse\Request.cs" />
     <Compile Include="RequestResponse\RequestHandler.cs" />
+    <Compile Include="Sagas\when_requesting_saga.cs" />
     <Compile Include="with_assimilation.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Local\with_bus.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Local\with_simple_actor_cache.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MessageSerializers\CompatibleMessage.cs" />

@@ -23,7 +23,7 @@ using Symbiote.Core.Futures;
 using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Messaging.Impl.Serialization;
 
-namespace Symbiote.Messaging.Impl.Channels
+namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
     public class NamedPipeChannel
         : IChannel

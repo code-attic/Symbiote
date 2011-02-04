@@ -14,8 +14,8 @@
 // limitations under the License.
 // */
 using System;
-using Symbiote.Core.Actor;
-using Symbiote.Core.Saga;
+using Symbiote.Messaging;
+using Symbiote.Messaging.Impl.Saga;
 
 namespace Symbiote.Daemon.BootStrap
 {

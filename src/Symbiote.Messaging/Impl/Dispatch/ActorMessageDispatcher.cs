@@ -58,10 +58,10 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Dispatch( IEnvelope envelope )
         {
-            var typedEnvelope = envelope as IEnvelope<TMessage>;
             var actor = Agent.GetActor( envelope.CorrelationId );
+            var message = (TMessage)envelope.Message;
             Handler = Handler ?? Assimilate.GetInstanceOf<IHandle<TActor, TMessage>>();
-            Handler.Handle( actor, typedEnvelope );
+            Handler.Handle( actor, message )( envelope );
             Agent.Memoize( actor );
         }
 

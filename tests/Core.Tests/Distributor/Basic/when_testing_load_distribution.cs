@@ -6,7 +6,7 @@ using Symbiote.Core.Hashing;
 
 namespace Core.Tests.Utility.distributor
 {
-    public class when_testing_distribution_under_million_record_load
+    public class when_testing_distribution_under_load
         : with_simple_distributor_of_lists
     {
         protected static double standardDeviation { get; set; }
@@ -18,7 +18,7 @@ namespace Core.Tests.Utility.distributor
                                  {
                                      HashProvider = new MD5HashProvider();
                                      var rnd = new Random();
-                                     for (int i = 0; i < 1000000; i++)
+                                     for (int i = 0; i < 10000; i++)
                                      {
                                          var bytes = Guid.NewGuid().ToByteArray();
                                          var newInt = BitConverter.ToInt64(bytes, 0) + BitConverter.ToInt64(bytes, 8);

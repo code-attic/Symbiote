@@ -1,4 +1,5 @@
-﻿using Actor.Tests.Domain.Model;
+﻿using System;
+using Actor.Tests.Domain.Model;
 using Symbiote.Core.Actor;
 using Symbiote.Messaging;
 
@@ -16,11 +17,11 @@ namespace Actor.Tests.Domain
             Factory = factory;
         }
 
-        public void Handle(IEnvelope<NewMotoristMessage> envelope)
+        public Action<IEnvelope> Handle(NewMotoristMessage message)
         {
-            var message = envelope.Message;
             var driver = Factory.CreateNewDriver(message.SSN, message.FirstName, message.LastName, message.DateOfBirth);
             Drivers.RegisterActor(driver.SSN, driver);
+            return x => x.Acknowledge();
         }
     }
 }

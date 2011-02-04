@@ -137,16 +137,17 @@ namespace Rabbit.Tests
     }
 
     public class MessageHandler
-        : RabbitActorHandler<Actor, Message>
+        : IHandle<Actor, Message>
     {
-        public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
+        public Action<IEnvelope> Handle(Actor actor, Message message)
         {
-            actor.Received(envelope.Message.Id);
+            actor.Received(message.Id);
             //envelope.Acknowledge();
             //if (Actor.MessageIds.Count % 100 == 0)
             //{
             //    envelope.AcknowledgeAll();
             //}
+            return x => x.Acknowledge();
         }
     }
 

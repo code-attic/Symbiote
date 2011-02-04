@@ -14,15 +14,13 @@
 // limitations under the License.
 // */
 using System;
-using Symbiote.Core.Actor;
-using Symbiote.Core.Saga;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
     public class DirectorSaga
         : Saga<DispatchManager>
     {
-        public override Action<StateMachine<DispatchManager>> Setup()
+        public override Action<Saga.StateMachine<DispatchManager>> Setup()
         {
             return machine =>
                        {
@@ -32,7 +30,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
                        };
         }
 
-        public DirectorSaga( StateMachine<DispatchManager> stateMachine ) : base( stateMachine )
+        public DirectorSaga( Saga.StateMachine<DispatchManager> stateMachine ) : base( stateMachine )
         {
         }
     }

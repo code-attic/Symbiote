@@ -13,22 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
+
 namespace Symbiote.Messaging
 {
     public interface IHandle
     {
     }
 
-    public interface IHandle<TMessage>
+    public interface IHandle<in TMessage>
         : IHandle
     {
-        void Handle( IEnvelope<TMessage> envelope );
+        Action<IEnvelope> Handle( TMessage message );
     }
 
-    public interface IHandle<in TActor, TMessage>
+    public interface IHandle<in TActor, in TMessage>
         : IHandle
         where TActor : class
     {
-        void Handle( TActor actor, IEnvelope<TMessage> envelope );
+        Action<IEnvelope> Handle(TActor actor, TMessage message);
     }
 }

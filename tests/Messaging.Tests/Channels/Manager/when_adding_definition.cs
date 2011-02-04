@@ -4,6 +4,7 @@ using Machine.Specifications;
 using Moq;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
+using Symbiote.Messaging.Impl.Channels.Local;
 using It = Machine.Specifications.It;
 
 namespace Messaging.Tests.Channels.Manager

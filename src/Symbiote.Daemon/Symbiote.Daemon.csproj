@@ -93,7 +93,6 @@
     <Compile Include="BootStrap\Config\BootStrapConfiguration.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfigurator.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
-    <Compile Include="BootStrap\IMinionLocator.cs" />
     <Compile Include="BootStrap\Minion.cs" />
     <Compile Include="BootStrap\MinionFactory.cs" />
     <Compile Include="BootStrap\MinionHost.cs" />

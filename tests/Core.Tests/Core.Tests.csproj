@@ -102,12 +102,10 @@
     <Compile Include="Actor\DummyKeyAccessor.cs" />
     <Compile Include="Actor\Events\when_capturing_events.cs" />
     <Compile Include="Actor\KeyAccess\KeyAccess.cs" />
-    <Compile Include="Actor\Sagas\when_requesting_saga.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
-    <Compile Include="Distributor\Messaging\when_redistributing_load.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
     <Compile Include="Domain\DriverFactory.cs" />
     <Compile Include="Domain\Listeners\Test Listeners and Events.cs" />

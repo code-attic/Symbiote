@@ -18,19 +18,18 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
 {
     public class Minion
     {
         public AppDomain DomainHandle { get; set; }
-        public AppDomainManager DomainManager { get; set; }
         public AppDomainSetup Setup { get; set; }
-        public MinionLocator Locator { get; set; }
         public Evidence MinionEvidence { get; set; }
+        public IMinion Instance { get; set; }
+        public string DaemonDisplayName { get; set; }
         public string MinionPath { get; set; }
-        public string MinionType { get; set; }
-        public string PrimaryAssembly { get; set; }
         public bool Running { get; set; }
         public bool Starting { get; set; }
         public bool Stopping { get; set; }
@@ -39,11 +38,13 @@ namespace Symbiote.Daemon.BootStrap
         {
             if(!Starting && !Running)
             {
-                DomainHandle = AppDomain.CreateDomain(MinionPath, null, Setup);
-                var host =
-                    (IMinion)
-                    DomainHandle.CreateInstanceFromAndUnwrap( Path.Combine( MinionPath, PrimaryAssembly ),
-                                                              MinionType, false, 0, null, null, null, null );
+                DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
+                //var locator = (MinionLocator) daemon.CreateInstance(typeof(MinionLocator).FullName);
+                var daemon = DomainHandle.Load( DaemonDisplayName );
+                var locator =
+                    (MinionLocator)
+                    DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
+                var host = (IMinion) locator.GetMinionHost(MinionPath);
                 host.Start( null );
             }
         }
@@ -55,23 +56,21 @@ namespace Symbiote.Daemon.BootStrap
 
         public Minion( string path )
         {
-            Locator = new MinionLocator();
-            DomainManager = new AppDomainManager();
-
-            var minion = Locator.FindPrimaryAssembly( path );
-            MinionPath = minion.Item1;
-            PrimaryAssembly = minion.Item2;
-            MinionType = minion.Item3;
-
+            MinionPath = Path.GetFullPath( path );
             Setup = new AppDomainSetup();
-            Setup.LoaderOptimization = LoaderOptimization.MultiDomain;
+            //Setup.LoaderOptimization = LoaderOptimization.MultiDomain;
             Setup.ShadowCopyFiles = "true";
             Setup.ShadowCopyDirectories = MinionPath;
-            Setup.CachePath = @"/shadows";
+            Setup.CachePath = @"c:\shadows";
             Setup.ApplicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
             Setup.ApplicationBase = MinionPath;
             Setup.PrivateBinPath = MinionPath;
-            MinionEvidence = AppDomain.CurrentDomain.Evidence;
+            //MinionEvidence = AppDomain.CurrentDomain.Evidence;
+            DaemonDisplayName = AppDomain
+                .CurrentDomain
+                .GetAssemblies()
+                .First(x => x.FullName.Contains("Symbiote.Daemon"))
+                .FullName;
         }
     }
 }

@@ -14,59 +14,64 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Symbiote.Core.DI;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
 {
-    public class MinionLocator : IMinionLocator
+    [Serializable]
+    public class MinionLocator : MarshalByRefObject
     {
-        public Tuple<string, string, string> FindPrimaryAssembly(string fullPath)
+        public object GetMinionHost(string fullPath)
         {
-            var assemblies = GetAssembliesFromPath( fullPath ).ToList();
-            Type minionType = null;
-            var primary = assemblies
-                .FirstOrDefault( x =>
-                                     {
-                                         try
-                                         {
-                                             var types = x.GetTypes();
-                                             minionType =
-                                                 types.FirstOrDefault(
-                                                     t => t.GetInterface( "IMinion" ) != null );
-                                         }
-                                         catch ( Exception )
-                                         {
-                                         }
-                                         return minionType != null;
-                                     });
-            return Tuple.Create( fullPath, primary.Location, minionType.FullName );
+            var match = AnalyzeAssembliesInPath( fullPath );
+            if(!match.Item1)
+            {
+                throw new Exception("No assemblies containing a type implementing IMinion were found at path '{0}'".AsFormat( fullPath ));
+            }
+            var minionHost = Activator.CreateInstance( match.Item3 );
+            return minionHost;
         }
 
-        public IEnumerable<Assembly> GetAssembliesFromPath(string path)
+        public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
         {
-            //if (!Directory.Exists(path))
-            //    return new Assembly[] { };
+            return Directory.GetFiles( path )
+                .Where( x => 
+                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) 
+                    && !x.Contains( "Symbiote.Daemon" ) )
+                .Select( x =>
+                             {
+                                Assembly assembly = null;
+                                Type minion = null;
+                                var fullPath = Path.GetFullPath( x );
+                                try
+                                {
+                                    assembly = Assembly.LoadFile(fullPath);
+                                    if ( assembly != null )
+                                    {
+                                        minion = GetMinion( assembly );
+                                    }
+                                }
+                                catch ( Exception e )
+                                {
+                                    var ex = e;
+                                }
+                                return Tuple.Create(minion != null, assembly, minion);
+                    } )
+                .FirstOrDefault(x => x.Item1);
+        }
 
-            return Directory.GetFiles(path)
-                .Where(x => x.ToLower().EndsWith(".dll") || x.ToLower().EndsWith(".exe"))
-                .Select(x =>
-                {
-                    Assembly assembly = null;
-                    try
-                    {
-                        assembly = Assembly.ReflectionOnlyLoadFrom( x );
-                    }
-                    catch( Exception e )
-                    {
-                        var ex = e;
-                    }
-                    return assembly;
-                })
-                .Where(x => x != null);
+        public Type GetMinion( Assembly assembly )
+        {
+            var types = assembly.GetTypes();
+            var minion = types.FirstOrDefault( t => t.GetInterface( "IMinion" ) != null );
+            return minion;
+        }
+
+        public MinionLocator()
+        {
         }
     }
 }
