@@ -39,8 +39,8 @@ namespace Symbiote.Daemon.BootStrap
         {
             return Directory.GetFiles( path )
                 .Where( x => 
-                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) 
-                    && !x.Contains( "Symbiote.Daemon" ) )
+                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
+                    //&& !x.Contains( "Symbiote.Daemon" ) )
                 .Select( x =>
                              {
                                 Assembly assembly = null;

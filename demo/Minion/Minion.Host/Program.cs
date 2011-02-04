@@ -59,14 +59,15 @@ namespace Minion.Host
         {
             public IBus Bus { get; set; }
 
-            public void Handle( IEnvelope<MinionUp> envelope )
+            public Action<IEnvelope> Handle( MinionUp message )
             {
                 "Minion says: {0}"
-                    .ToInfo<IDaemon>( envelope.Message.Text );
+                    .ToInfo<IDaemon>( message.Text );
 
                 Enumerable
                     .Range(0, 1000)
                     .ForEach( x => Bus.Publish( "Hosted", new MinionDoThis() { Text = "Command {0}".AsFormat( x )} ) );
+                return x => x.Acknowledge();
             }
 
             public NotificationHandler( IBus bus )

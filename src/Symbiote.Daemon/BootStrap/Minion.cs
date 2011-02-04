@@ -24,6 +24,7 @@ namespace Symbiote.Daemon.BootStrap
 {
     public class Minion
     {
+        public string Name { get; set; }
         public AppDomain DomainHandle { get; set; }
         public AppDomainSetup Setup { get; set; }
         public Evidence MinionEvidence { get; set; }

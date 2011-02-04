@@ -10,6 +10,8 @@ namespace RabbitDemo.Messages
         public string CorrelationId { get; set; }
         [DataMember(Order = 2)]
         public int MessageId { get; set; }
+        [DataMember(Order = 3)]
+        public DateTime TimeStamp { get; set; }
 
         public Message() {}
 
@@ -17,6 +19,7 @@ namespace RabbitDemo.Messages
         {
             CorrelationId = correlationId;
             MessageId = id;
+            TimeStamp = DateTime.UtcNow;
         }
     }
 }

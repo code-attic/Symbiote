@@ -186,7 +186,7 @@ namespace Symbiote.Core
 #endif
         }
 
-        private static void RegisterSymbioteLibrary(string sliverName)
+        private static void RegisterSymbioteLibrary(string libraryName)
         {
 #if !SILVERLIGHT
             _assimilationLock.EnterWriteLock();
@@ -197,8 +197,8 @@ namespace Symbiote.Core
 #endif
             try
             {
-                if ( !_assimilated.Contains( sliverName ) )
-                    _assimilated.Add( sliverName );
+                if ( !_assimilated.Contains( libraryName ) )
+                    _assimilated.Add( libraryName );
             }
             finally
             {
