@@ -20,15 +20,10 @@ namespace Symbiote.Core
 {
     public class Assimilation : IAssimilate
     {
-        public List<string> AssemblyBlacklist { get; set; }
-        public List<string> AssemblyWhitelist { get; set; }
-
-        public IDependencyAdapter DependencyAdapter { get; set; }
+       public IDependencyAdapter DependencyAdapter { get; set; }
 
         public Assimilation()
         {
-            AssemblyBlacklist = new List<string>();
-            AssemblyWhitelist = new List<string>();
         }
     }
 }

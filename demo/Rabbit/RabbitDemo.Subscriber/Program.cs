@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using RabbitDemo.Messages;
-using Symbiote.Actor;
 using Symbiote.Core;
+using Symbiote.Core.Actor;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Impl.UnitOfWork;
 using Symbiote.Daemon;
 using Symbiote.Daemon.Host;
 using Symbiote.Log4Net;
@@ -23,7 +19,6 @@ namespace RabbitDemo.Subscriber
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Actors()
                 .Messaging()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
@@ -67,22 +62,20 @@ namespace RabbitDemo.Subscriber
     }
 
     public class ForActorMessage
-        : RabbitActorHandler<Actor, Message>
+        : IHandle<Actor, Message>
     {
         public int Total { get; set; }
         public double Cumulative { get; set; }
         public double Average { get; set; }
-        public override void Handle(Actor actor, RabbitEnvelope<Message> envelope)
+        public Action<IEnvelope> Handle(Actor actor, Message message)
         {
-            envelope.Acknowledge();
-            //actor.AddMessageId(envelope.Message.MessageId);
             if(++Total%1000==0)
             {
-                Cumulative += DateTime.UtcNow.Subtract( envelope.TimeStamp ).TotalMilliseconds;
+                Cumulative += DateTime.UtcNow.Subtract( message.TimeStamp ).TotalMilliseconds;
                 "Avg Latency: {0}"
                     .ToInfo<Subscriber>(Cumulative / Total);
             }
-            
+            return x => x.Acknowledge();
         }
     }
 

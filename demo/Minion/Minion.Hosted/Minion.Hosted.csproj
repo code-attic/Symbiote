@@ -38,7 +38,8 @@
     <Reference Include="Symbiote.Core">
       <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Daemon">
+    <Reference Include="Symbiote.Daemon, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net">

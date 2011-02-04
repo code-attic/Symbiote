@@ -83,9 +83,10 @@ namespace Minion.Hosted
 
     public class CommandHandler : IHandle<MinionDoThis>
     {
-        public void Handle( IEnvelope<MinionDoThis> envelope )
+        public Action<IEnvelope> Handle( MinionDoThis message )
         {
-            "Received: {0}".ToInfo<IDaemon>( envelope.Message.Text );
+            "Received: {0}".ToInfo<IDaemon>( message.Text );
+            return x => x.Acknowledge();
         }
     }
 }

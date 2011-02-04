@@ -78,9 +78,7 @@ namespace Symbiote.Rabbit.Impl.Channels
         // TODO: Rewrite this, it's stupid.
         public void Acknowledge( ulong tag, bool multiple )
         {
-            Future.WithoutResult( () => ActualAck( tag, multiple ) );
-            //Action<ulong, bool> call = ActualAck;
-            //call.BeginInvoke( tag, multiple, null, null );
+            ActualAck( tag, multiple );
         }
 
         public void Send<T>( RabbitEnvelope<T> envelope )
