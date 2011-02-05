@@ -17,6 +17,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Symbiote.Core;
+using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon.BootStrap;
 using Symbiote.Daemon.BootStrap.Config;
@@ -29,36 +30,46 @@ namespace Symbiote.Daemon
     {
         public static IAssimilate Daemon( this IAssimilate assimilate, Action<DaemonConfigurator> config )
         {
-            assimilate.Dependencies( x => x.Scan( s =>
-                                                      {
-                                                          s.TheCallingAssembly();
-                                                          s.AssembliesFromApplicationBaseDirectory(
-                                                              a =>
-                                                              a.GetReferencedAssemblies().Any(
-                                                                  r => r.Name.Contains( "Symbiote" ) ) );
-                                                          s.AddAllTypesOf<IDaemon>();
-                                                      } ) );
-
             var daemonConfiguration = new DaemonConfigurator();
-            config( daemonConfiguration );
+            config(daemonConfiguration);
             var hostType = Process.GetCurrentProcess().Parent().ProcessName == "services"
-                               ? typeof( DaemonHost )
-                               : typeof( ConsoleHost );
-
-            assimilate.Dependencies( x =>
-                                         {
-                                             x.For<DaemonConfiguration>().Use( daemonConfiguration.Configuration );
-                                             x.For<IServiceCoordinator>().Use<ServiceCoordinator>();
-                                             x.For<ICheckPermission>().Use<CredentialCheck>();
-                                             x.For( typeof( ServiceController<> ) ).Use( typeof( ServiceController<> ) );
-                                             x.For<IHost>().Use( hostType );
-                                             x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
-
-                                             if (daemonConfiguration.Configuration.BootStrapConfiguration != null)
-                                                x.For<BootStrapConfiguration>().Use(
-                                                    daemonConfiguration.Configuration.BootStrapConfiguration);
-                                         } );
+                               ? typeof(DaemonHost)
+                               : typeof(ConsoleHost);
+            assimilate.Dependencies(x => x.Scan(DefineScan));
+            assimilate.Dependencies( x => DefineDependencies( x, daemonConfiguration, hostType  ) );
             return assimilate;
+        }
+
+        private static void DefineDependencies(DependencyConfigurator x, DaemonConfigurator daemonConfiguration, Type hostType)
+        {
+            x.For<DaemonConfiguration>().Use( daemonConfiguration.Configuration );
+            x.For<IServiceCoordinator>().Use<ServiceCoordinator>();
+            x.For<ICheckPermission>().Use<CredentialCheck>();
+            x.For(typeof(ServiceController<>)).Use(typeof(ServiceController<>));
+            x.For<IHost>().Use(hostType);
+            x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
+
+            if (daemonConfiguration.Configuration.BootStrapConfiguration != null)
+                x.For<BootStrapConfiguration>().Use(
+                    daemonConfiguration.Configuration.BootStrapConfiguration);
+        }
+
+        private static void DefineScan(IScanInstruction scan)
+        {
+            {
+                AppDomain
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .Where(a =>
+                            a.GetReferencedAssemblies()
+                                .Any(r => r.FullName.Contains("Symbiote.Daemon"))
+                                || a.FullName.Contains("Symbiote.Daemon"))
+                    .ForEach(scan.Assembly);
+
+                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "Rabbit", "System.Interactive", "System.CoreEx" };
+                scan.Exclude(x => exclusions.Any(e => x.Namespace == null || x.Namespace.Contains(e)));
+                scan.AddAllTypesOf<IDaemon>();
+            }
         }
 
         public static void RunDaemon( this IAssimilate assimilate )

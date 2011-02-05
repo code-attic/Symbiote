@@ -7,7 +7,7 @@ using Symbiote.Daemon;
 using Symbiote.Log4Net;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Minion.Hosted
 {
@@ -35,9 +35,9 @@ namespace Minion.Hosted
             {
                 Assimilate
                     .Core<StructureMapAdapter>()
+                    .Daemon(x => x.Arguments(args))
                     .Messaging()
                     .AddConsoleLogger<IDaemon>(l => l.Info().MessageLayout(m => m.Message().Newline()))
-                    .Daemon(x => x.Arguments(args))
                     .Rabbit(x => x.AddBroker(r => r.Defaults()))
                     .RunDaemon();
             }

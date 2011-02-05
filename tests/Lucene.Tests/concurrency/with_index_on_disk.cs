@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Lucene;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Lucene.Tests.concurrency
 {

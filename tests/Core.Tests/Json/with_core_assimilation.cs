@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Core.Tests
 {

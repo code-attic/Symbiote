@@ -4,7 +4,7 @@ using Symbiote.Core;
 using Symbiote.Core.UnitOfWork;
 using Symbiote.Mikado;
 using Symbiote.Mikado.Impl;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Mikado.Tests.TestSetup
 {

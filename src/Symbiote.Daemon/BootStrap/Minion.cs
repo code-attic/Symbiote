@@ -34,19 +34,32 @@ namespace Symbiote.Daemon.BootStrap
         public bool Running { get; set; }
         public bool Starting { get; set; }
         public bool Stopping { get; set; }
+        public object MinionLock { get; set; }
 
         public void StartUp()
         {
+            lock(MinionLock)
             if(!Starting && !Running)
             {
-                DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
-                //var locator = (MinionLocator) daemon.CreateInstance(typeof(MinionLocator).FullName);
-                var daemon = DomainHandle.Load( DaemonDisplayName );
-                var locator =
-                    (MinionLocator)
-                    DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
-                var host = (IMinion) locator.GetMinionHost(MinionPath);
-                host.Start( null );
+                try
+                {
+                    Starting = true;
+                    DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
+                    var locator =
+                        (MinionLocator)
+                        DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
+                    var host = (IMinion) locator.GetMinionHost(MinionPath);
+                    host.Start( null );
+                    Running = true;
+                    Starting = false;
+                }
+                catch ( Exception e )
+                {
+                    "An error occurred attempting to start the minion at {0}. \r\n\t {1}"
+                        .ToError<IDaemon>(MinionPath, e);
+                    Running = false;
+                    Starting = false;
+                }
             }
         }
 
@@ -59,19 +72,15 @@ namespace Symbiote.Daemon.BootStrap
         {
             MinionPath = Path.GetFullPath( path );
             Setup = new AppDomainSetup();
-            //Setup.LoaderOptimization = LoaderOptimization.MultiDomain;
+            Setup.LoaderOptimization = LoaderOptimization.SingleDomain;
             Setup.ShadowCopyFiles = "true";
             Setup.ShadowCopyDirectories = MinionPath;
             Setup.CachePath = @"c:\shadows";
             Setup.ApplicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
             Setup.ApplicationBase = MinionPath;
             Setup.PrivateBinPath = MinionPath;
-            //MinionEvidence = AppDomain.CurrentDomain.Evidence;
-            DaemonDisplayName = AppDomain
-                .CurrentDomain
-                .GetAssemblies()
-                .First(x => x.FullName.Contains("Symbiote.Daemon"))
-                .FullName;
+            MinionEvidence = AppDomain.CurrentDomain.Evidence;
+            MinionLock = new object();
         }
     }
 }

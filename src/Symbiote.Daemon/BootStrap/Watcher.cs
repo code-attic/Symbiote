@@ -102,15 +102,13 @@ namespace Symbiote.Daemon.BootStrap
                         watcher.Changed -= h;
                     })
                 .Where(x => !string.IsNullOrEmpty(Path.GetExtension(x.EventArgs.FullPath)))
-                .BufferWithTime(TimeSpan.FromMinutes(1))
-                .Do(o => o
-                    .DistinctUntilChanged(GetPathFromEvent)
-                    .Do(x =>
-                        {
-                            var path = GetPathFromEvent( x );
-                            OnApplicationChange( path );
-                        })
-                    .Subscribe())
+                .Throttle( TimeSpan.FromSeconds( 3 ) )
+                .DistinctUntilChanged(GetPathFromEvent)
+                .Do(x =>
+                    {
+                        var path = GetPathFromEvent( x );
+                        OnApplicationChange( path );
+                    })
                 .Subscribe();
             SystemObservers.Add(observer);
             watcher.EnableRaisingEvents = true;
@@ -132,17 +130,17 @@ namespace Symbiote.Daemon.BootStrap
 
         public void OnNewApplication(string path)
         {
-            Bus.Publish("local", new NewApplication() { DirectoryPath = path });
+            Bus.Publish("local", new NewApplication() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void OnApplicationChange(string path)
         {
-            Bus.Publish("local", new ApplicationChanged() { DirectoryPath = path });
+            Bus.Publish("local", new ApplicationChanged() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void OnApplicationDeletion(string path)
         {
-            Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = path });
+            Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void Start()

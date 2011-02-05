@@ -70,6 +70,7 @@
     <Compile Include="Actor\Agency\with_mock_agent_factory.cs" />
     <Compile Include="Actor\Agent\DummyActorFactory.cs" />
     <Compile Include="Actor\Agent\when_creating_actor_instance_with_default_factory.cs" />
+    <Compile Include="Actor\Agent\when_instantiating_from_actor.cs" />
     <Compile Include="Actor\Agent\when_requesting_agent_with_preloading.cs" />
     <Compile Include="Actor\Agent\when_requesting_cached_actor.cs" />
     <Compile Include="Actor\Agent\when_requesting_same_actor_under_race_condition.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Domain\Model\IDriverMemento.cs" />
     <Compile Include="Domain\Model\IVehicleMemento.cs" />
     <Compile Include="Domain\Model\Vehicle.cs" />
+    <Compile Include="Extensions\lambda.cs" />
     <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
     <Compile Include="Json\Decorator\when_serializing_decorator.cs" />
     <Compile Include="Json\Performance\when_serializing_one_thousand_items.cs" />

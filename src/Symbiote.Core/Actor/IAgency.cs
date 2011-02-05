@@ -21,5 +21,6 @@ namespace Symbiote.Core.Actor
     {
         IAgent<TActor> GetAgentFor<TActor>() where TActor : class;
         IAgent GetAgentFor( Type actorType );
+        void RegisterActorOf<TActor>( string id, TActor actor ) where TActor : class;
     }
 }

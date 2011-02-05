@@ -75,7 +75,6 @@ namespace Symbiote.Rabbit.Impl.Channels
             get { return _endpoint.QueueName ?? ""; }
         }
 
-        // TODO: Rewrite this, it's stupid.
         public void Acknowledge( ulong tag, bool multiple )
         {
             ActualAck( tag, multiple );
@@ -138,7 +137,8 @@ namespace Symbiote.Rabbit.Impl.Channels
 
         protected void ActualAck( ulong tag, bool multiple )
         {
-            Channel.BasicAck( tag, multiple );
+            if(!EndpointConfiguration.NoAck)
+                Channel.BasicAck( tag, multiple );
         }
 
         protected IBasicProperties CreatePublishingProperties<T>( string contentType, RabbitEnvelope<T> envelope )
@@ -197,8 +197,8 @@ namespace Symbiote.Rabbit.Impl.Channels
         {
             "Shutting down rabbit channel. \r\n\t Exchange: {0} \r\n\t Queue: {1} \r\n\t Class {2} \r\n\t Method {3} \r\n\t Cause {4} \r\n\t ReplyCode {5} : {6}"
                 .ToInfo<IBus>(
-                    _endpoint.ExchangeName,
-                    _endpoint.QueueName,
+                    _endpoint == null ? ChannelDefinition.Exchange : _endpoint.ExchangeName,
+                    _endpoint == null ? "": _endpoint.QueueName,
                     reason.ClassId,
                     reason.MethodId,
                     reason.Cause,

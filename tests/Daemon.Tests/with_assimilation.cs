@@ -5,8 +5,7 @@ using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Daemon;
-using Symbiote.Daemon.BootStrap;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Daemon.Tests
 {
@@ -19,18 +18,4 @@ namespace Daemon.Tests
                                                 .Daemon( x => x.Arguments( new string[] {} ) );
                                         };
     }
-
-    public class when_checking_for_minion_key_accessor
-        : with_assimilation
-    {
-        public static IKeyAccessor<Minion> MinionKeyAccessor { get; set; }
-
-        private Because of = () =>
-                                 {
-                                     MinionKeyAccessor = Assimilate.GetInstanceOf<IKeyAccessor<Minion>>();
-                                 };
-
-        private It should_have_accessor = () => MinionKeyAccessor.ShouldNotBeNull();
-    }
-
 }

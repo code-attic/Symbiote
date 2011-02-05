@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using System.Diagnostics;
+using Machine.Specifications;
 using Symbiote.Core.Memento;
 
 namespace Actor.Tests.Agent

@@ -8,10 +8,10 @@ using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
 using Symbiote.Daemon.BootStrap;
-using Symbiote.StructureMap;
 using Symbiote.Messaging;
 using Symbiote.Log4Net;
 using Symbiote.Rabbit;
+using Symbiote.StructureMapAdapter;
 
 namespace Minion.Host
 {
@@ -23,7 +23,7 @@ namespace Minion.Host
                 .Core<StructureMapAdapter>()
                 .Messaging()
                 .AddConsoleLogger<IDaemon>( l => l.Info().MessageLayout( m => m.Message().Newline() ) )
-                .Daemon( x => x.Arguments( args ).WithBootStraps( b => b.HostApplicationsFrom( @"..\..\..\Test" ) ) )
+                .Daemon( x => x.Arguments( args ).WithBootStraps( b => b.HostApplicationsFrom( @"C:\git\Symbiote\demo\Minion\Minions" ) ) )
                 .Rabbit( x => x.AddBroker( r => r.Defaults() ) )
                 .RunDaemon();
         }
@@ -65,7 +65,7 @@ namespace Minion.Host
                     .ToInfo<IDaemon>( message.Text );
 
                 Enumerable
-                    .Range(0, 1000)
+                    .Range(0, 10)
                     .ForEach( x => Bus.Publish( "Hosted", new MinionDoThis() { Text = "Command {0}".AsFormat( x )} ) );
                 return x => x.Acknowledge();
             }

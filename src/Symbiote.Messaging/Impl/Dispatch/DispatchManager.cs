@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Symbiote.Core;
+using Symbiote.Core.Actor;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Envelope;
@@ -97,9 +98,11 @@ namespace Symbiote.Messaging.Impl.Dispatch
                 dispatchers
                     .ForEach( x => x.Handles.ForEach( y => Dispatchers.AddOrUpdate( y, x, ( t, m ) => x ) ) );
             }
-
-            //prime director
-            Fibers.SendTo( "", new Envelope<PrimeDirector>( new PrimeDirector() ) {CorrelationId = ""} );
+            // prevent duplicate instantiations
+            var agency = Assimilate.GetInstanceOf<IAgency>();
+            agency.RegisterActorOf( "", this );
+            // prime director
+            Fibers.SendTo("", new Envelope<PrimeDirector>(new PrimeDirector()) { CorrelationId = "" });
             Signal.Wait( 100 );
         }
 

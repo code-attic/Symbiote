@@ -14,12 +14,16 @@
 // limitations under the License.
 // */
 using System;
+using System.Diagnostics;
+using System.Linq.Expressions;
 
 namespace Symbiote.Messaging.Impl.Saga
 {
+    [DebuggerDisplay("Transition with guard: {GuardExpression}")]
     public class ConditionalTransition<TActor, TMessage> :
         IConditionalTransition<TActor>
     {
+        public Expression<Predicate<TActor>> GuardExpression { get; set; }
         public Predicate<TActor> Guard { get; set; }
         public Action<TActor> Transition { get; set; }
         public Action<TActor, TMessage> Process { get; set; }
@@ -38,6 +42,7 @@ namespace Symbiote.Messaging.Impl.Saga
         public ConditionalTransition()
         {
             Guard = x => true;
+            GuardExpression = x => true;
             Process = ( x, y ) => { };
             Transition = x => { };
         }

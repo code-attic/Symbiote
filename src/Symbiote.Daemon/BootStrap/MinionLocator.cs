@@ -17,6 +17,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
@@ -37,29 +38,30 @@ namespace Symbiote.Daemon.BootStrap
 
         public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
         {
+            var tries = 0;
+            while(!Directory.Exists( path ) && tries < 10)
+            {
+                Thread.Sleep( 1000 );
+                tries++;
+            }
             return Directory.GetFiles( path )
-                .Where( x => 
-                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
-                    //&& !x.Contains( "Symbiote.Daemon" ) )
+                .Where( x => ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
                 .Select( x =>
-                             {
-                                Assembly assembly = null;
-                                Type minion = null;
-                                var fullPath = Path.GetFullPath( x );
-                                try
-                                {
-                                    assembly = Assembly.LoadFile(fullPath);
-                                    if ( assembly != null )
-                                    {
-                                        minion = GetMinion( assembly );
-                                    }
-                                }
-                                catch ( Exception e )
-                                {
-                                    var ex = e;
-                                }
-                                return Tuple.Create(minion != null, assembly, minion);
-                    } )
+                {
+                    var fullPath = Path.GetFullPath(x);
+                    Assembly assembly = null;
+                    Type minion = null;
+                    try
+                    {
+                        assembly = Assembly.LoadFile(fullPath);
+                        minion = GetMinion( assembly );
+                    }
+                    catch ( Exception e )
+                    {
+                        var ex = e;
+                    }
+                    return Tuple.Create(minion != null, assembly, minion);
+                } )
                 .FirstOrDefault(x => x.Item1);
         }
 
