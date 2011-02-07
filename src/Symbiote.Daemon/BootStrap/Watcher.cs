@@ -43,7 +43,7 @@ namespace Symbiote.Daemon.BootStrap
         
         public void ConfigureWatcher(string path)
         {
-            Watchers.Add( CreateDirectoryWatcher( path ) );
+            //Watchers.Add( CreateDirectoryWatcher( path ) );
             Watchers.Add( CreateFileWatcher( path ) );
         }
 
@@ -96,18 +96,27 @@ namespace Symbiote.Daemon.BootStrap
                     h =>
                     {
                         watcher.Changed += h;
+                        watcher.Deleted += h;
                     },
                     h =>
                     {
                         watcher.Changed -= h;
+                        watcher.Deleted -= h;
                     })
                 .Where(x => !string.IsNullOrEmpty(Path.GetExtension(x.EventArgs.FullPath)))
-                .Throttle( TimeSpan.FromSeconds( 3 ) )
+                .Throttle( TimeSpan.FromSeconds( 5 ) )
                 .DistinctUntilChanged(GetPathFromEvent)
                 .Do(x =>
                     {
                         var path = GetPathFromEvent( x );
-                        OnApplicationChange( path );
+                        if (x.EventArgs.ChangeType == WatcherChangeTypes.Deleted)
+                        {
+                            OnApplicationDeletion(path);
+                        }
+                        else
+                        {
+                            OnApplicationChange(path);
+                        }
                     })
                 .Subscribe();
             SystemObservers.Add(observer);

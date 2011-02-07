@@ -45,6 +45,7 @@ namespace Symbiote.Daemon.BootStrap
                 {
                     Starting = true;
                     DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
+                    //DomainHandle.Load( AssemblyName.GetAssemblyName( "Symbiote.Daemon.dll" ) );
                     var locator =
                         (MinionLocator)
                         DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
@@ -75,7 +76,7 @@ namespace Symbiote.Daemon.BootStrap
             Setup.LoaderOptimization = LoaderOptimization.SingleDomain;
             Setup.ShadowCopyFiles = "true";
             Setup.ShadowCopyDirectories = MinionPath;
-            Setup.CachePath = @"c:\shadows";
+            //Setup.CachePath = @"c:\shadows";
             Setup.ApplicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
             Setup.ApplicationBase = MinionPath;
             Setup.PrivateBinPath = MinionPath;

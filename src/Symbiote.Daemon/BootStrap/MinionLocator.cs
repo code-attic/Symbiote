@@ -44,24 +44,28 @@ namespace Symbiote.Daemon.BootStrap
                 Thread.Sleep( 1000 );
                 tries++;
             }
-            return Directory.GetFiles( path )
+            var files = Directory.GetFiles( path );
+            return files
                 .Where( x => ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
                 .Select( x =>
-                {
-                    var fullPath = Path.GetFullPath(x);
-                    Assembly assembly = null;
-                    Type minion = null;
-                    try
                     {
-                        assembly = Assembly.LoadFile(fullPath);
-                        minion = GetMinion( assembly );
-                    }
-                    catch ( Exception e )
+                        var fullPath = Path.GetFullPath( x );
+                        return AppDomain.CurrentDomain.Load( AssemblyName.GetAssemblyName( x ) );
+                    })
+                .ToList()
+                .Select( x =>
                     {
-                        var ex = e;
-                    }
-                    return Tuple.Create(minion != null, assembly, minion);
-                } )
+                        Type minion = null;
+                        try
+                        {
+                            minion = GetMinion(x);
+                        }
+                        catch (Exception e)
+                        {
+                            var ex = e;
+                        }
+                        return Tuple.Create(minion != null, x, minion);
+                    })
                 .FirstOrDefault(x => x.Item1);
         }
 

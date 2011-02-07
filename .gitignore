@@ -6,4 +6,5 @@ obj*
 *.cache
 *.user
 *.suo
+Minions*
 *~HEAD
