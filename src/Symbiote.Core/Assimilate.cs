@@ -107,8 +107,8 @@ namespace Symbiote.Core
                                 || a.FullName.Contains("Symbiote.Core"))
                     .ForEach(scan.Assembly);
 
-                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "Rabbit", "System.Interactive", "System.CoreEx" };
-                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.Contains( e ) ) );
+                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
+                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
 
                 scan.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
                 scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );

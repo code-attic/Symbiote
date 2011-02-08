@@ -9,7 +9,7 @@ using Symbiote.Daemon.Host;
 using Symbiote.Log4Net;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace RabbitDemo.Subscriber
 {
@@ -22,7 +22,7 @@ namespace RabbitDemo.Subscriber
                 .Messaging()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
-                .AddConsoleLogger<IHost>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
+                .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("subscriber").Arguments(args))
                 .RunDaemon();
         }

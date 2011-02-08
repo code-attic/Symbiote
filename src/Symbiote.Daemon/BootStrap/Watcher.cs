@@ -27,6 +27,7 @@ namespace Symbiote.Daemon.BootStrap
     public class Watcher
         : IDisposable
     {
+        private const int BUFFER_64K = 64*1064;
         public BootStrapConfiguration Configuration { get; set; }
         public IList<FileSystemWatcher> SystemEvents { get; set; }
         public IList<IDisposable> SystemObservers { get; set; }
@@ -43,7 +44,7 @@ namespace Symbiote.Daemon.BootStrap
         
         public void ConfigureWatcher(string path)
         {
-            //Watchers.Add( CreateDirectoryWatcher( path ) );
+            Watchers.Add( CreateDirectoryWatcher( path ) );
             Watchers.Add( CreateFileWatcher( path ) );
         }
 
@@ -58,12 +59,12 @@ namespace Symbiote.Daemon.BootStrap
                     c => c.Invoke,
                     h =>
                     {
-                        watcher.Changed += h;
+                        watcher.Created += h;
                         watcher.Deleted += h;
                     },
                     h =>
                     {
-                        watcher.Changed -= h;
+                        watcher.Created -= h;
                         watcher.Deleted -= h;
                     })
                 .Do(x =>
@@ -90,6 +91,7 @@ namespace Symbiote.Daemon.BootStrap
             watcher.Path = file;
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.IncludeSubdirectories = true;
+            watcher.InternalBufferSize = BUFFER_64K;
             var observer = Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
                     c => c.Invoke,
@@ -105,15 +107,10 @@ namespace Symbiote.Daemon.BootStrap
                     })
                 .Where(x => !string.IsNullOrEmpty(Path.GetExtension(x.EventArgs.FullPath)))
                 .Throttle( TimeSpan.FromSeconds( 5 ) )
-                .DistinctUntilChanged(GetPathFromEvent)
                 .Do(x =>
                     {
                         var path = GetPathFromEvent( x );
-                        if (x.EventArgs.ChangeType == WatcherChangeTypes.Deleted)
-                        {
-                            OnApplicationDeletion(path);
-                        }
-                        else
+                        if (x.EventArgs.ChangeType != WatcherChangeTypes.Deleted)
                         {
                             OnApplicationChange(path);
                         }

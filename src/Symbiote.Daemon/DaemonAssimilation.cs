@@ -14,8 +14,8 @@
 // limitations under the License.
 // */
 using System;
-using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
@@ -32,9 +32,9 @@ namespace Symbiote.Daemon
         {
             var daemonConfiguration = new DaemonConfigurator();
             config(daemonConfiguration);
-            var hostType = Process.GetCurrentProcess().Parent().ProcessName == "services"
-                               ? typeof(DaemonHost)
-                               : typeof(ConsoleHost);
+            var hostType = Environment.UserInteractive
+                               ? typeof(ConsoleHost)
+                               : typeof(DaemonHost);
             assimilate.Dependencies(x => x.Scan(DefineScan));
             assimilate.Dependencies( x => DefineDependencies( x, daemonConfiguration, hostType  ) );
             return assimilate;
@@ -66,8 +66,8 @@ namespace Symbiote.Daemon
                                 || a.FullName.Contains("Symbiote.Daemon"))
                     .ForEach(scan.Assembly);
 
-                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "Rabbit", "System.Interactive", "System.CoreEx" };
-                scan.Exclude(x => exclusions.Any(e => x.Namespace == null || x.Namespace.Contains(e)));
+                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
+                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
                 scan.AddAllTypesOf<IDaemon>();
             }
         }
@@ -78,16 +78,19 @@ namespace Symbiote.Daemon
             {
                 "Waking the Daemon..."
                     .ToInfo<IDaemon>();
-
-                
-
                 var factory = Assimilate.GetInstanceOf<CommandProvider>();
                 var command = factory.GetServiceCommand();
                 command.Execute();
             }
+            catch ( ThreadAbortException threadAbortException )
+            {
+                "The Daemon's thread has been aborted."
+                    .ToWarn<IDaemon>();
+                Thread.ResetAbort(); // Stops propagation here. The Daemon is dead.
+            }
             catch ( Exception e )
             {
-                "No host configured. Wah. \r\n\t {0}"
+                "No host configured. \r\n\t {0}"
                     .ToError<IDaemon>( e );
             }
         }

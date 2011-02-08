@@ -27,18 +27,20 @@ namespace Symbiote.Daemon.BootStrap
         {
             return x =>
                        {
-                           x.When( a => a.Running )
-                               .On<ApplicationDeleted>( ( a, h ) => a.ShutItDown() )
+                            x.When( a => a.Running )
+                               .On<ApplicationDeleted>( ( a, h ) => a.ShutItDown() );
+
+                            x.When( a => a.Running && !a.Starting )
                                .On<ApplicationChanged>( ( a, h ) =>
                                                             {
                                                                 a.ShutItDown();
                                                                 a.StartUp();
                                                             } );
-                           x.When( a => !a.Running )
+                            x.When( a => !a.Running )
                                .On<ApplicationChanged>( ( a, h ) => a.StartUp() )
                                .On<NewApplication>( ( a, h ) => a.StartUp() );
 
-                           x.When( a => true )
+                            x.When( a => true )
                                .On<NewApplication>( ( a, h ) => a.StartUp() );
                        };
         }

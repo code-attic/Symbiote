@@ -16,9 +16,10 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Security.Policy;
+using System.Threading;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Futures;
 
 namespace Symbiote.Daemon.BootStrap
 {
@@ -43,20 +44,34 @@ namespace Symbiote.Daemon.BootStrap
             {
                 try
                 {
+                    "The Minion running at '{0}' has received a start command."
+                        .ToInfo<IDaemon>(MinionPath);
                     Starting = true;
                     DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
-                    //DomainHandle.Load( AssemblyName.GetAssemblyName( "Symbiote.Daemon.dll" ) );
                     var locator =
                         (MinionLocator)
                         DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
                     var host = (IMinion) locator.GetMinionHost(MinionPath);
-                    host.Start( null );
+                    Future.WithoutResult(() => host.Start( null )).Start();
                     Running = true;
-                    Starting = false;
+                    
+                    // Create a cool-down period where the service cannot be
+                    // reloaded due to files changing
+                    Future.WithoutResult(() =>
+                                             {
+                                                 Thread.Sleep( TimeSpan.FromSeconds( 30 ) );
+                                                 Starting = false;
+                                             })
+                          .Start();
+                }
+                catch ( AppDomainUnloadedException dying )
+                {
+                    "The Minion running at '{0}' has stopped running."
+                        .ToInfo<IDaemon>( MinionPath );
                 }
                 catch ( Exception e )
                 {
-                    "An error occurred attempting to start the minion at {0}. \r\n\t {1}"
+                    "An error occurred attempting to start the minion at '{0}'. \r\n\t {1}"
                         .ToError<IDaemon>(MinionPath, e);
                     Running = false;
                     Starting = false;
@@ -66,22 +81,39 @@ namespace Symbiote.Daemon.BootStrap
 
         public void ShutItDown()
         {
-            AppDomain.Unload( DomainHandle );
+            "The Minion running at '{0}' has received a shutdown command."
+                        .ToInfo<IDaemon>(MinionPath);
+            try
+            {
+                Stopping = true;
+                Running = false;
+                AppDomain.Unload( DomainHandle );
+            }
+            catch ( Exception e )
+            {
+                "An exception occurred while shutting down the minion at '{0}' \r\n\t"
+                    .ToError<IDaemon>(MinionPath);
+            }
+            Stopping = false;
         }
 
         public Minion( string path )
         {
             MinionPath = Path.GetFullPath( path );
             Setup = new AppDomainSetup();
-            Setup.LoaderOptimization = LoaderOptimization.SingleDomain;
+            Setup.LoaderOptimization = LoaderOptimization.MultiDomain;
             Setup.ShadowCopyFiles = "true";
             Setup.ShadowCopyDirectories = MinionPath;
-            //Setup.CachePath = @"c:\shadows";
+            Setup.CachePath = @"c:\shadows";
             Setup.ApplicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
-            Setup.ApplicationBase = MinionPath;
             Setup.PrivateBinPath = MinionPath;
             MinionEvidence = AppDomain.CurrentDomain.Evidence;
             MinionLock = new object();
+
+            // It is important NOT to set the ApplicationBase property.
+            // Setting it creates a system-level handle on the directory
+            // effectively locking it so that nothing can delete/change
+            // the directory itself.
         }
     }
 }

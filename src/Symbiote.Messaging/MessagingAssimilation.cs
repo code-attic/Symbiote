@@ -59,7 +59,7 @@ namespace Symbiote.Messaging
         {
             assimilate.Dependencies( x =>
                                          {
-                                             x.Scan( ScanAssemblies );
+                                             x.Scan( DefineScan );
                                              DefineDependencies( x );
                                          } );
 
@@ -196,19 +196,19 @@ namespace Symbiote.Messaging
             Assimilate.GetInstanceOf<IDispatcher>();
         }
 
-        private static void ScanAssemblies( IScanInstruction scan )
+        private static void DefineScan( IScanInstruction scan )
         {
             AppDomain
-                .CurrentDomain
-                .GetAssemblies()
-                .Where(a =>
-                        a.GetReferencedAssemblies().Any(
-                            r => r.FullName.Contains("Symbiote.Messaging")) ||
-                        a.FullName.Contains("Symbiote.Messaging"))
-                .ForEach(scan.Assembly);
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .Where(a =>
+                            a.GetReferencedAssemblies()
+                                .Any(r => r.FullName.Contains("Symbiote.Messaging"))
+                                || a.FullName.Contains("Symbiote.Messaging"))
+                    .ForEach(scan.Assembly);
 
-            var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "Rabbit", "System.Interactive", "System.CoreEx" };
-            scan.Exclude(x => exclusions.Any(e => x.Namespace == null || x.Namespace.Contains(e)));
+            var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
+            scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
 
             scan.ConnectImplementationsToTypesClosing(
                 typeof( IHandle<> ) );

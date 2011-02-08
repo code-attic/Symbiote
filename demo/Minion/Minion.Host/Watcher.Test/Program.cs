@@ -11,7 +11,7 @@ namespace Watcher.Test
     {
         static void Main(string[] args)
         {
-            var file = Path.GetFullPath( @"..\..\..\..\Test" );
+            var file = Path.GetFullPath( @"..\..\..\..\Minions" );
             Console.WriteLine( "Watching: {0}", file );
             FileSystemWatcher watcher = CreateDirectoryWatcher(file);
             FileSystemWatcher watcher2 = CreateFileWatcher(file);

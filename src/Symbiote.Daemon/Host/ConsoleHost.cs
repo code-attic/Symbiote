@@ -28,7 +28,7 @@ namespace Symbiote.Daemon.Host
         public void Start()
         {
             CheckToSeeIfWinServiceRunning();
-            "Daemon loading in console...".ToDebug<IHost>();
+            "Daemon loading in console...".ToDebug<IDaemon>();
             var externalTriggeredTerminatation = new ManualResetEvent( false );
             var waitHandles = new WaitHandle[] {externalTriggeredTerminatation};
 

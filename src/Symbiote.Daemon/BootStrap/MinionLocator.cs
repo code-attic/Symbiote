@@ -39,33 +39,31 @@ namespace Symbiote.Daemon.BootStrap
         public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
         {
             var tries = 0;
+            // An obnoxious hack to get around the fact that many times
+            // the directory exists method will return false until
+            // some time after the directory has been created
             while(!Directory.Exists( path ) && tries < 10)
             {
-                Thread.Sleep( 1000 );
+                Thread.Sleep( 500 );
                 tries++;
             }
             var files = Directory.GetFiles( path );
             return files
                 .Where( x => ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
                 .Select( x =>
+                {
+                    var assembly = AppDomain.CurrentDomain.Load( AssemblyName.GetAssemblyName( x ) );
+                    Type minion = null;
+                    try
                     {
-                        var fullPath = Path.GetFullPath( x );
-                        return AppDomain.CurrentDomain.Load( AssemblyName.GetAssemblyName( x ) );
-                    })
-                .ToList()
-                .Select( x =>
+                        minion = GetMinion(assembly );
+                    }
+                    catch (Exception e)
                     {
-                        Type minion = null;
-                        try
-                        {
-                            minion = GetMinion(x);
-                        }
-                        catch (Exception e)
-                        {
-                            var ex = e;
-                        }
-                        return Tuple.Create(minion != null, x, minion);
-                    })
+                        var ex = e;
+                    }
+                    return Tuple.Create(minion != null, assembly, minion);
+                })
                 .FirstOrDefault(x => x.Item1);
         }
 

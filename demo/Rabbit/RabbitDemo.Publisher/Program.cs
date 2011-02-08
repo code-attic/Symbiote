@@ -3,7 +3,7 @@ using System.Linq;
 using RabbitDemo.Messages;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
 using Symbiote.Log4Net;
@@ -20,6 +20,7 @@ namespace RabbitDemo.Publisher
                 .Messaging()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
+                .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("publisher").Arguments(args))
                 .RunDaemon();
         }
@@ -36,7 +37,7 @@ namespace RabbitDemo.Publisher
         {
             "Starting Publisher".ToInfo<Publisher>();
             "Configuring Rabbit...".ToInfo<Publisher>();
-            Bus.AddRabbitChannel(x => x.Fanout("test").AutoDelete().PersistentDelivery());
+            Bus.AddRabbitChannel(x => x.Fanout("test").AutoDelete().PersistentDelivery().CorrelateBy<Message>( m => m.CorrelationId ));
 
             "Creating {0} messages for {1} actors...".ToInfo<Publisher>(MessageCount, ActorCount);
             var messages = Enumerable.Range(1, MessageCount)
