@@ -15,29 +15,12 @@
 // */
 using System;
 
-namespace Symbiote.Messaging
+namespace Symbiote.Messaging.Impl.Endpoint
 {
-    public interface IEnvelope
+    public class ConfigurationException : Exception
     {
-        string CorrelationId { get; set; }
-        string RoutingKey { get; set; }
-
-        long Sequence { get; set; }
-        long Position { get; set; }
-        bool SequenceEnd { get; set; }
-
-        object Message { get; set; }
-        Guid MessageId { get; set; }
-        Type MessageType { get; }
-
-        void Acknowledge();
-        void Reply<TResponse>(TResponse response);
-        void Reject( string reason );
-    }
-
-    public interface IEnvelope<TMessage>
-        : IEnvelope
-    {
-        new TMessage Message { get; set; }
+        public ConfigurationException( string message ) : base( message )
+        {
+        }
     }
 }

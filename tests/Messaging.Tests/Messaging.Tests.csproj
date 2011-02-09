@@ -81,6 +81,7 @@
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_incompatible_message.cs" />
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_json_and_binary_message.cs" />
     <Compile Include="MessageSerializers\when_detecting_serialization_options_for_json_only_message.cs" />
+    <Compile Include="Pipes\with_named_pipes.cs" />
     <Compile Include="RequestResponse\Auction.cs" />
     <Compile Include="RequestResponse\AuctionFactory.cs" />
     <Compile Include="RequestResponse\AuctionKeyAccessor.cs" />
@@ -150,7 +151,6 @@
   </Choose>
   <ItemGroup>
     <Folder Include="Dispatcher\Mesh\" />
-    <Folder Include="Pipes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

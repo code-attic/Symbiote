@@ -51,6 +51,7 @@ namespace Symbiote.Messaging.Impl.Envelope
         object IEnvelope.Message 
         {
             get { return this.Message; }
+            set { this.Message = (TMessage) value; }
         }
 
         public void Acknowledge()

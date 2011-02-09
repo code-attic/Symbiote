@@ -16,12 +16,11 @@
 using System;
 using System.IO;
 using System.IO.Pipes;
-using System.Linq;
-using System.Text;
-using Symbiote.Core.Extensions;
+using System.Threading;
 using Symbiote.Core.Futures;
 using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Messaging.Impl.Serialization;
+using Symbiote.Core.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
@@ -29,7 +28,7 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
         : IChannel
     {
         public NamedPipeChannelDefinition Definition { get; set; }
-        public NamedPipeClientStream ClientStream { get; set; }
+        public PipeStream Pipe { get; set; }
         public MessageOptimizedSerializer SerializationProvider { get; set; }
 
         public string Name { get; set; }
@@ -41,16 +40,19 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
 
         public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
-            var envelope = new Envelope<TMessage>( message )
+            var envelope = new NamedPipeTransportEnvelope( )
                                {
                                    CorrelationId = Definition.GetCorrelationId( message ),
-                                   RoutingKey = Definition.GetRoutingKey( message )
+                                   RoutingKey = Definition.GetRoutingKey( message ),
+                                   Message = SerializationProvider.Serialize( message ),
+                                   MessageType = typeof(TMessage).AssemblyQualifiedName
                                };
-            modifyEnvelope( envelope );
-            var envelopeBuffer = SerializeEnvelope( envelope );
-            ClientStream.Write( envelopeBuffer, 0, envelopeBuffer.Length );
-            ClientStream.Flush();
 
+            //modifyEnvelope( envelope );
+            var envelopeBuffer = envelope.ToProtocolBuffer();
+            Pipe.Write( envelopeBuffer, 0, envelopeBuffer.Length );
+            Pipe.Flush();
+            Pipe.WaitForPipeDrain();
             return Future.Of( GetReply<TReply> );
         }
 
@@ -61,55 +63,81 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
 
         public void Send<TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
-            var envelope = new Envelope<TMessage>( message )
+            var envelope = new NamedPipeTransportEnvelope( )
                                {
                                    CorrelationId = Definition.GetCorrelationId( message ),
-                                   RoutingKey = Definition.GetRoutingKey( message )
+                                   RoutingKey = Definition.GetRoutingKey( message ),
+                                   Message = SerializationProvider.Serialize(message),
+                                   MessageType = typeof(TMessage).AssemblyQualifiedName
                                };
-            modifyEnvelope( envelope );
-            var envelopeBuffer = SerializeEnvelope( envelope );
-            ClientStream.Write( envelopeBuffer, 0, envelopeBuffer.Length );
-            ClientStream.Flush();
+            //modifyEnvelope( envelope );
+            var envelopeBuffer = envelope.ToProtocolBuffer();
+            Pipe.Write( envelopeBuffer, 0, envelopeBuffer.Length );
+            Pipe.Flush();
+        }
+
+        public IEnvelope GetEnvelope(NamedPipeTransportEnvelope transportEnvelope)
+        {
+            var messageTypeName = transportEnvelope.MessageType;
+            var messageType = Type.GetType(messageTypeName);
+            var envelopeType = typeof(NamedPipeEnvelope<>).MakeGenericType(messageType);
+            return Activator.CreateInstance(envelopeType) as IEnvelope;
         }
 
         public TReply GetReply<TReply>()
         {
-            var readBuffer = ClientStream.ReadToEnd( 1000 );
-            var typeHeaderLength = BitConverter.ToInt32( readBuffer, 0 );
-            var typeHeader = BitConverter.ToString( readBuffer, 4, typeHeaderLength );
-            var type = Type.GetType( typeHeader );
-            var envelopeType = typeof( Envelope<> ).MakeGenericType( type );
-            var envelope = SerializationProvider.Deserialize( envelopeType,
-                                                              readBuffer.Skip( 4 + typeHeaderLength ).ToArray() );
-            return (envelope as IEnvelope<TReply>).Message;
+            byte[] buffer = ReadResponse( Pipe, 1000 );
+
+            try
+            {
+                var transportEnvelope = buffer.FromProtocolBuffer<NamedPipeTransportEnvelope>();
+                var pipeEnvelope = GetEnvelope(transportEnvelope);
+                return (TReply) SerializationProvider.Deserialize(pipeEnvelope.MessageType, transportEnvelope.Message);
+            }
+            catch (Exception e)
+            {
+                
+            }
+            return default(TReply);
         }
 
-        public byte[] SerializeEnvelope<TMessage>( Envelope<TMessage> envelope )
+        public byte[] ReadResponse(PipeStream stream, int timeout)
         {
-            var messageType = typeof( TMessage );
-            var typeName = messageType.AssemblyQualifiedName;
-            var typeBuffer = Encoding.UTF8.GetBytes( typeName );
-            var headerLength = typeBuffer.Length;
-            var messageBuffer = SerializationProvider.Serialize( envelope );
-            int messageLength = messageBuffer.Length;
-            using( var stream = new MemoryStream( 4 + headerLength + messageLength ) )
+            var buffer = new byte[8 * 1024];
+            var read = 0;
+            if ( stream.CanTimeout )
+                stream.ReadTimeout = timeout;
+            
+            using(var memoryStream = new MemoryStream())
             {
-                stream.Write( BitConverter.GetBytes( headerLength ), 0, 4 );
-                stream.Write( typeBuffer, 0, headerLength );
-                stream.Write( messageBuffer, 0, messageLength );
-                return stream.ToArray();
+                do
+                {
+                    read = stream.Read( buffer, 0, 0 );
+                    if ( read > 0 )
+                        memoryStream.Write( buffer, 0, buffer.Length );
+                } while ( !stream.IsMessageComplete || memoryStream.Length == 0 );
+                return memoryStream.ToArray();
+            }
+        }
+
+        public void WaitForMessage(NamedPipeClientStream stream)
+        {
+            while (stream.IsMessageComplete)
+            {
+                Thread.Sleep(5);
             }
         }
 
         public void ConfigurePipe()
         {
-            ClientStream = new NamedPipeClientStream(
+            Pipe = new NamedPipeClientStream(
+                Definition.Machine,
                 Definition.Name,
-                Definition.Server,
                 Definition.Direction,
-                Definition.Options );
-            ClientStream.ReadMode = Definition.Mode;
-            ClientStream.Connect( Definition.ConnectionTimeout );
+                Definition.Options,
+                Definition.Impersonation);
+            Pipe.Connect( Definition.ConnectionTimeout );
+            Pipe.ReadMode = Definition.Mode;
         }
 
         public NamedPipeChannel( NamedPipeChannelDefinition definition )

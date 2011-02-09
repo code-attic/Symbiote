@@ -14,40 +14,46 @@
 // limitations under the License.
 // */
 using System;
+using System.Threading;
 
 namespace Symbiote.Core.Futures
 {
-    public class FutureResult<T>
+    public class FutureAsyncCallback<T>
         : Future<T>
     {
-        protected Func<T> Call { get; set; }
-        protected Action<IAsyncResult> OnResult { get; set; }
+        protected Func<AsyncCallback, IAsyncResult> Call { get; set; }
+        protected Func<IAsyncResult, T> End { get; set; }
+        protected Func<T> GetResult { get; set; }
 
         protected override void InvokeCall()
         {
-            Call.BeginInvoke( CloseHandle, null );
+            AsyncResult = Call( Callback );
         }
 
-        protected void CloseHandle( IAsyncResult result )
+        public void Callback(IAsyncResult result)
         {
-            if ( result != null )
+            if(result != null)
             {
-                var value = Call.EndInvoke( result );
-                if ( !HasResult )
-                {
-                    Result = value;
-                    HasResult = true;
-                    ResetTrigger.Set();
-                }
+                Result = End(result);
+                HasResult = true;
+                ((ManualResetEvent)ResetTrigger.AsyncWaitHandle).Set();
+                if(Coroutine != null)
+                    Coroutine( Result );
             }
         }
 
-        public FutureResult( Func<T> call )
+        public static implicit operator Func<T>(FutureAsyncCallback<T> future)
+        {
+            return () => future.Value;
+        }
+
+        public FutureAsyncCallback(Func<AsyncCallback, IAsyncResult> call, Func<IAsyncResult, T> callback)
         {
             Init();
             Call = call;
+            End = callback;
+            GetResult = () => default(T);
             ResetTrigger = new CallbackResult();
-            AsyncResult = ResetTrigger;
         }
     }
 }

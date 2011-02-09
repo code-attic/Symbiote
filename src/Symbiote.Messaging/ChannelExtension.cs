@@ -17,10 +17,12 @@ using System;
 using Symbiote.Core;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Channels.Local;
+using Symbiote.Messaging.Impl.Channels.Pipe;
+using Symbiote.Messaging.Impl.Endpoint;
 
 namespace Symbiote.Messaging
 {
-    public static class LocalChannelExtension
+    public static class ChannelExtension
     {
         private static IChannelIndex Index
         {
@@ -39,6 +41,29 @@ namespace Symbiote.Messaging
             if(!hasChannelFor)
                 Index.AddDefinition( definition );
             
+            return bus;
+        }
+
+        public static IBus AddNamedPipeChannel( this IBus bus, Action<NamedPipeChannelConfigurator> configure )
+        {
+            var configurator = new NamedPipeChannelConfigurator();
+            configure( configurator );
+            var definition = configurator.Definition;
+
+            bool hasChannelFor = Index.HasChannelFor( definition.Name );
+
+            if(!hasChannelFor)
+            {
+                Index.AddDefinition( definition );
+            }
+
+            return bus;
+        }
+
+        public static IBus AddNamedPipeListener(this IBus bus, Action<EndpointConfigurator> configure)
+        {
+            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
+            endpoints.ConfigureEndpoint(configure);
             return bus;
         }
 

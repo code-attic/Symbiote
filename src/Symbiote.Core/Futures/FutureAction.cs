@@ -21,7 +21,6 @@ namespace Symbiote.Core.Futures
         : Future<object>
     {
         protected Action Call { get; set; }
-        protected CallbackResult ResetTrigger { get; set; }
 
         protected override void InvokeCall()
         {
@@ -50,7 +49,6 @@ namespace Symbiote.Core.Futures
         : Future<T>
     {
         protected Action Call { get; set; }
-        protected CallbackResult ResetTrigger { get; set; }
 
         protected override void InvokeCall()
         {

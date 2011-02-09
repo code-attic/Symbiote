@@ -95,7 +95,7 @@ namespace Symbiote.Riak.Impl
         {
             var command = CommandFactory.CreateListKeys( bucket );
             var list = command.Execute();
-            return list.Keys.Select( x => ByteExtensions.FromBytes( x ) );
+            return list.Keys.Select( x => ByteExtensions.FromBytes( x ) ).ToList();
         }
 
         public bool Persist<T>( string bucket, string key, string vectorClock, Document<T> document, uint writeQuorum,
@@ -157,7 +157,10 @@ namespace Symbiote.Riak.Impl
             var bucket = Configuration.GetBucketForType<T>();
             var command = CommandFactory.CreateListKeys( bucket.BucketName );
             var keys = command.Execute();
-            return keys.Keys.Select( x => Get<T>( ByteExtensions.FromBytes( x ) ) );
+            return keys
+                .Keys
+                .Select( x => Get<T>( ByteExtensions.FromBytes( x ) ) )
+                .ToList();
         }
 
         public bool Persist<T>( string key, T instance )

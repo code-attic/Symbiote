@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System.Collections.Generic;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Messaging.Impl.Subscriptions
 {
@@ -24,6 +25,9 @@ namespace Symbiote.Messaging.Impl.Subscriptions
 
         public void Dispose()
         {
+            Subscriptions
+                .Values
+                .ForEach( x => x.Stop() );
         }
 
         public void AddSubscription( ISubscription subscription )

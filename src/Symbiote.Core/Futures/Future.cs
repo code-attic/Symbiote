@@ -30,6 +30,11 @@ namespace Symbiote.Core.Futures
             return new FutureCallback<T>( call );
         }
 
+        public static FutureAsyncCallback<T> Of<T>(Func<AsyncCallback, IAsyncResult> call, Func<IAsyncResult, T> callback)
+        {
+            return new FutureAsyncCallback<T>( call, callback );
+        }
+
         public static FutureAction WithoutResult( Action call )
         {
             return new FutureAction( call );
@@ -47,10 +52,12 @@ namespace Symbiote.Core.Futures
         protected IAsyncResult AsyncResult { get; set; }
         protected int Attempts { get; set; }
         protected Action<T> Coroutine { get; set; }
+        protected Func<bool> CycleWhile { get; set; }
+        protected Action<Exception> ExceptionHandler { get; set; }
         protected bool HasResult { get; set; }
         protected int Limit { get; set; }
         protected Func<T> OnFail { get; set; }
-        protected Action<Exception> ExceptionHandler { get; set; }
+        protected CallbackResult ResetTrigger { get; set; }
         protected T Result { get; set; }
         protected TimeSpan Timeout { get; set; }
         protected TimeSpan TimeBetweenTries { get; set; }
@@ -76,6 +83,9 @@ namespace Symbiote.Core.Futures
                 if ( Coroutine != null && HasResult )
                     Coroutine( Result );
 
+                if (CycleWhile())
+                    Loop();
+
                 return Result;
             }
         }
@@ -84,6 +94,7 @@ namespace Symbiote.Core.Futures
         {
             if (!ActiveCall)
             {
+                ActiveCall = true;
                 InvokeCall();
                 Attempts++;
             }
@@ -98,6 +109,16 @@ namespace Symbiote.Core.Futures
         }
 
         protected abstract void InvokeCall();
+
+        protected void Loop()
+        {
+            Attempts = 0;
+            Result = default(T);
+            HasResult = false;
+            ActiveCall = false;
+            ResetTrigger = new CallbackResult();
+            GetResult();
+        }
 
         public Future<T> MaxRetries( int retries )
         {
@@ -155,9 +176,20 @@ namespace Symbiote.Core.Futures
             return this;
         }
 
+        public Future<T> LoopWhile(Func<bool> condition)
+        {
+            CycleWhile = condition;
+            return this;
+        }
+
         public static implicit operator T( Future<T> future )
         {
             return future.Value;
+        }
+
+        protected Future()
+        {
+            CycleWhile = () => false;
         }
     }
 }
