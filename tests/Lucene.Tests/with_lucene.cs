@@ -2,7 +2,7 @@
 using Symbiote.Core;
 using Symbiote.Lucene;
 using Symbiote.Lucene.Impl;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Lucene.Tests
 {

@@ -61,12 +61,12 @@ namespace Symbiote.Core.Futures
             {
                 while ( Attempts < Limit && !HasResult )
                 {
-                    InvokeCall();
+                    GetResult();
                     if ( !AsyncResult.IsCompleted )
                     {
                         AsyncResult.AsyncWaitHandle.WaitOne( Timeout );
+                        ActiveCall = false;
                     }
-                    Attempts++;
                     Thread.Sleep( TimeBetweenTries );
                 }
 
@@ -77,6 +77,15 @@ namespace Symbiote.Core.Futures
                     Coroutine( Result );
 
                 return Result;
+            }
+        }
+
+        protected void GetResult()
+        {
+            if (!ActiveCall)
+            {
+                InvokeCall();
+                Attempts++;
             }
         }
 
@@ -98,7 +107,7 @@ namespace Symbiote.Core.Futures
 
         public Future<T> Start()
         {
-            var value = Value;
+            GetResult();
             return this;
         }
 

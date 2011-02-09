@@ -29,6 +29,6 @@ namespace Symbiote.Messaging.Impl.Saga
         where TActor : class
     {
         Action<StateMachine<TActor>> Setup();
-        bool Process<TMessage>( TActor actor, TMessage message );
+        void Process<TMessage>( TActor actor, TMessage message );
     }
 }

@@ -11,7 +11,7 @@ using Symbiote.Riak.Impl.Data;
 using Symbiote.Riak.Impl.ProtoBuf;
 using Symbiote.Riak.Impl.ProtoBuf.Request;
 using Symbiote.Riak.Impl.ProtoBuf.Response;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using Symbiote.Riak;
 
 namespace Riak.Tests

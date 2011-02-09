@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using Symbiote.Wcf;
 using Symbiote.Wcf.Client;
 using WcfClientAssimilation = Symbiote.Wcf.WcfClientAssimilation;

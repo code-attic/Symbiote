@@ -133,16 +133,16 @@ namespace Symbiote.Rabbit.Impl.Adapter
 
         public RabbitQueueListener( IChannelProxy proxy, IDispatcher dispatch, RabbitEndpoint endpoint )
         {
+            Serializer = Assimilate.GetInstanceOf(endpoint.SerializerType) as IMessageSerializer;
+            RingBuffer = new RingBuffer(10000);
+            RingBuffer.AddTransform(DeserializeMessage);
+            RingBuffer.AddTransform(DispatchResult);
+            RingBuffer.Start();
+            Running = true;
             Proxy = proxy;
             Dispatch = dispatch;
             RabbitEndpoint = endpoint;
             proxy.InitConsumer( this );
-            Running = true;
-            RingBuffer = new RingBuffer( 10000 );
-            Serializer = Assimilate.GetInstanceOf( endpoint.SerializerType ) as IMessageSerializer;
-            RingBuffer.AddTransform( DeserializeMessage );
-            RingBuffer.AddTransform( DispatchResult );
-            RingBuffer.Start();
         }
     }
 }

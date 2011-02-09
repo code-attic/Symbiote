@@ -15,14 +15,18 @@
 // */
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Symbiote.Messaging.Impl.Saga
 {
+    [DebuggerDisplay("Transitions with guard: {GuardExpression}")]
     public class Condition<TActor>
         : ICondition<TActor>
     {
-        protected Predicate<TActor> Guard { get; set; }
+        public Expression<Predicate<TActor>> GuardExpression { get; set; }
+        public Predicate<TActor> Guard { get; protected set; }
         public Dictionary<Type, IConditionalTransition<TActor>> Transitions { get; set; }
 
         public List<Type> Handles
@@ -35,7 +39,8 @@ namespace Symbiote.Messaging.Impl.Saga
             var onMessage = new ConditionalTransition<TActor, TMessage>
                                 {
                                     Process = processMessage,
-                                    Guard = Guard
+                                    Guard = Guard,
+                                    GuardExpression = GuardExpression
                                 };
             Transitions.Add( typeof( TMessage ), onMessage );
             return this;
@@ -46,7 +51,8 @@ namespace Symbiote.Messaging.Impl.Saga
             var onMessage = new ConditionalTransition<TActor, TMessage>
                                 {
                                     Transition = transition,
-                                    Guard = Guard
+                                    Guard = Guard,
+                                    GuardExpression = GuardExpression
                                 };
             Transitions.Add( typeof( TMessage ), onMessage );
             return this;
@@ -58,7 +64,8 @@ namespace Symbiote.Messaging.Impl.Saga
                                 {
                                     Transition = transition,
                                     Process = processMessage,
-                                    Guard = Guard
+                                    Guard = Guard,
+                                    GuardExpression = GuardExpression
                                 };
             Transitions.Add( typeof( TMessage ), onMessage );
             return this;
@@ -69,9 +76,10 @@ namespace Symbiote.Messaging.Impl.Saga
         {
         }
 
-        public Condition( Predicate<TActor> guard )
+        public Condition( Expression<Predicate<TActor>> guard )
         {
-            Guard = guard;
+            GuardExpression = guard;
+            Guard = guard.Compile();
             Transitions = new Dictionary<Type, IConditionalTransition<TActor>>();
         }
     }

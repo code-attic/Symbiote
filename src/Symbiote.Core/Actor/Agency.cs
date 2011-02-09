@@ -34,6 +34,12 @@ namespace Symbiote.Core.Actor
             return Agents.ReadOrWrite( actorType, () => AgentFactory.GetAgentFor( actorType ) );
         }
 
+        public void RegisterActorOf<TActor>( string id, TActor actor ) where TActor : class
+        {
+            var agent = GetAgentFor<TActor>();
+            agent.RegisterActor( id, actor );
+        }
+
         public Agency( IAgentFactory agentFactory )
         {
             AgentFactory = agentFactory;

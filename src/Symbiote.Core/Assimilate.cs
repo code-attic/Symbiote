@@ -20,6 +20,7 @@ using System.Linq;
 using System.Threading;
 using Symbiote.Core.Actor;
 using Symbiote.Core.DI;
+using Symbiote.Core.Extensions;
 using Symbiote.Core.Locking;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
@@ -89,7 +90,7 @@ namespace Symbiote.Core
             container.For<IAgency>().Use<Agency>().AsSingleton();
             container.For(typeof(IActorCache<>)).Use(typeof(NullActorCache<>));
             container.For(typeof(IAgentFactory)).Use<DefaultAgentFactory>();
-            container.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>));
+            container.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>)).AsSingleton();
             container.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
             container.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
         }
@@ -97,8 +98,18 @@ namespace Symbiote.Core
         private static void DefineScan(IScanInstruction scan)
         {
             {
-                scan.AssembliesFromApplicationBaseDirectory(
-                    a => { return a.GetReferencedAssemblies().Any( r => r.Name.Contains( "Symbiote" ) ); } );
+                AppDomain
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .Where(a =>
+                            a.GetReferencedAssemblies()
+                                .Any(r => r.FullName.Contains("Symbiote.Core"))
+                                || a.FullName.Contains("Symbiote.Core"))
+                    .ForEach(scan.Assembly);
+
+                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
+                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
+
                 scan.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
                 scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
                 scan.AddAllTypesOf<IEventListener>();

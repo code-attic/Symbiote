@@ -8,7 +8,7 @@ using Machine.Specifications;
 using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Core.Locking;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using Symbiote.Eidetic;
 using Symbiote.Core.Extensions;
 

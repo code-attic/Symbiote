@@ -17,6 +17,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
@@ -37,29 +38,32 @@ namespace Symbiote.Daemon.BootStrap
 
         public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
         {
-            return Directory.GetFiles( path )
-                .Where( x => 
-                    ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
-                    //&& !x.Contains( "Symbiote.Daemon" ) )
+            var tries = 0;
+            // An obnoxious hack to get around the fact that many times
+            // the directory exists method will return false until
+            // some time after the directory has been created
+            while(!Directory.Exists( path ) && tries < 10)
+            {
+                Thread.Sleep( 500 );
+                tries++;
+            }
+            var files = Directory.GetFiles( path );
+            return files
+                .Where( x => ( x.ToLower().EndsWith( ".dll" ) || x.ToLower().EndsWith( ".exe" ) ) )
                 .Select( x =>
-                             {
-                                Assembly assembly = null;
-                                Type minion = null;
-                                var fullPath = Path.GetFullPath( x );
-                                try
-                                {
-                                    assembly = Assembly.LoadFile(fullPath);
-                                    if ( assembly != null )
-                                    {
-                                        minion = GetMinion( assembly );
-                                    }
-                                }
-                                catch ( Exception e )
-                                {
-                                    var ex = e;
-                                }
-                                return Tuple.Create(minion != null, assembly, minion);
-                    } )
+                {
+                    var assembly = AppDomain.CurrentDomain.Load( AssemblyName.GetAssemblyName( x ) );
+                    Type minion = null;
+                    try
+                    {
+                        minion = GetMinion(assembly );
+                    }
+                    catch (Exception e)
+                    {
+                        var ex = e;
+                    }
+                    return Tuple.Create(minion != null, assembly, minion);
+                })
                 .FirstOrDefault(x => x.Item1);
         }
 

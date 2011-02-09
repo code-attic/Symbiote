@@ -51,7 +51,8 @@
     <Reference Include="Symbiote.Rabbit">
       <HintPath>..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.StructureMap">
+    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />

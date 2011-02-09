@@ -24,14 +24,11 @@ namespace Symbiote.Daemon.Host
         private static void UnhandledException( object sender, UnhandledExceptionEventArgs e )
         {
             "Host encountered an unhandled exception."
-                .ToFatal<IHost>( (Exception) e.ExceptionObject );
+                .ToFatal<IDaemon>( (Exception) e.ExceptionObject );
         }
 
         public static void Start( IHost host )
         {
-            //Assimilate
-            //    .GetAllInstancesOf<INodeChannelManager>()
-            //    .ForEach(x => x.InitializeChannels());
             host.Start();
         }
 

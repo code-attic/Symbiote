@@ -7,7 +7,7 @@ using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.UnitOfWork;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
 using Symbiote.Messaging.Impl.Dispatch;

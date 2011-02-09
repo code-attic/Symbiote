@@ -11,7 +11,7 @@ namespace Watcher.Test
     {
         static void Main(string[] args)
         {
-            var file = Path.GetFullPath( @"..\..\..\..\Test" );
+            var file = Path.GetFullPath( @"..\..\..\..\Minions" );
             Console.WriteLine( "Watching: {0}", file );
             FileSystemWatcher watcher = CreateDirectoryWatcher(file);
             FileSystemWatcher watcher2 = CreateFileWatcher(file);
@@ -71,25 +71,24 @@ namespace Watcher.Test
                         watcher.Changed -= h;
                     } )
                 .Where( x => !string.IsNullOrEmpty( Path.GetExtension( x.EventArgs.FullPath ) ) )
-                .BufferWithTime( TimeSpan.FromMinutes( 1 ) )
-                .Do(o => o
-                    .DistinctUntilChanged( x =>
-                    {
-                        var f = Path.GetFileName( x.EventArgs.FullPath );
-                        var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
-                                    ? x.EventArgs.FullPath
-                                    : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
-                        return p;
-                    } )
-                    .Do( x =>
-                    {
-                        var f = Path.GetFileName( x.EventArgs.FullPath );
-                        var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
-                                    ? x.EventArgs.FullPath
-                                    : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
-                        Console.WriteLine( p );
-                    } )
-                    .Subscribe())
+
+                .Throttle( TimeSpan.FromSeconds( 3 ) )
+                .DistinctUntilChanged( x =>
+                {
+                    var f = Path.GetFileName( x.EventArgs.FullPath );
+                    var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
+                                ? x.EventArgs.FullPath
+                                : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
+                    return p;
+                } )
+                .Do( x =>
+                {
+                    var f = Path.GetFileName( x.EventArgs.FullPath );
+                    var p = string.IsNullOrEmpty( Path.GetExtension( f ) )
+                                ? x.EventArgs.FullPath
+                                : x.EventArgs.FullPath.Replace( f, "" ).TrimEnd( Path.DirectorySeparatorChar );
+                    Console.WriteLine( p );
+                } )
                 .Subscribe();
             watcher.EnableRaisingEvents = true;
             return watcher;

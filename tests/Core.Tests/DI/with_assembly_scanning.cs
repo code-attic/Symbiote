@@ -8,7 +8,7 @@ using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.DI;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Core.Tests.DI
 {
@@ -135,7 +135,8 @@ namespace Core.Tests.DI
                                      instances = Assimilate.GetAllInstancesOf<IAmAnInterface>();
                                  };
 
-        private It should_only_provide_concrete_instance = () => instances.Count().ShouldEqual(1);
+        private It should_only_provide_concrete_instance = () => 
+            instances.Count().ShouldEqual(1);
         private It should_have_type_of_concrete = () => instances.First().ShouldBeOfType<InheritsBaseClass>();
     }
 }

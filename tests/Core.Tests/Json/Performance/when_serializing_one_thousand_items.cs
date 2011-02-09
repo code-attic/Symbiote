@@ -9,7 +9,7 @@ using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 
 namespace Core.Tests.Json.Performance
 {

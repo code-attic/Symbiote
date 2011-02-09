@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
+using Symbiote.Core.Actor;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.UnitOfWork;
@@ -58,7 +59,7 @@ namespace Symbiote.Messaging
         {
             assimilate.Dependencies( x =>
                                          {
-                                             x.Scan( ScanAssemblies );
+                                             x.Scan( DefineScan );
                                              DefineDependencies( x );
                                          } );
 
@@ -70,23 +71,26 @@ namespace Symbiote.Messaging
             var simpleInterface = typeof( IDispatchMessage );
             Assimilate.Dependencies( x =>
                                          {
-                                             dispatcherPairs.ForEach( p =>
-                                                                          {
-                                                                              x.For( p.Item1 ).Use( p.Item2 );
-                                                                              x.For( simpleInterface ).Add( p.Item2 );
-                                                                          } );
+                                             dispatcherPairs
+                                                 .ForEach( p =>
+                                                            {
+                                                                x.For( p.Item1 ).Use( p.Item2 );
+                                                                x.For( simpleInterface ).Add( p.Item2 );
+                                                            } );
 
-                                             actorDispatcherPairs.ForEach( p =>
-                                                                               {
-                                                                                   x.For( p.Item1 ).Use( p.Item2 );
-                                                                                   x.For( simpleInterface ).Add( p.Item2 );
-                                                                               } );
+                                             actorDispatcherPairs
+                                                 .ForEach( p =>
+                                                            {
+                                                                x.For( p.Item1 ).Use( p.Item2 );
+                                                                x.For( simpleInterface ).Add( p.Item2 );
+                                                            } );
 
-                                             sagaPairs.ForEach( p =>
-                                                                    {
-                                                                        x.For( p.Item1 ).Use( p.Item2 );
-                                                                        x.For( simpleInterface ).Add( p.Item2 );
-                                                                    } );
+                                             sagaPairs
+                                                 .ForEach( p =>
+                                                            {
+                                                                x.For( p.Item1 ).Use( p.Item2 );
+                                                                x.For( simpleInterface ).Add( p.Item2 );
+                                                            } );
                                          } );
             // Pre-load expensive instances
             Preload();
@@ -192,16 +196,19 @@ namespace Symbiote.Messaging
             Assimilate.GetInstanceOf<IDispatcher>();
         }
 
-        private static void ScanAssemblies( IScanInstruction scan )
+        private static void DefineScan( IScanInstruction scan )
         {
             AppDomain
-                .CurrentDomain
-                .GetAssemblies()
-                .Where( a =>
-                        a.GetReferencedAssemblies().Any(
-                            r => r.FullName.Contains( "Symbiote.Messaging" ) ) ||
-                        a.FullName.Contains( "Symbiote.Messaging" ) )
-                .ForEach( scan.Assembly );
+                    .CurrentDomain
+                    .GetAssemblies()
+                    .Where(a =>
+                            a.GetReferencedAssemblies()
+                                .Any(r => r.FullName.Contains("Symbiote.Messaging"))
+                                || a.FullName.Contains("Symbiote.Messaging"))
+                    .ForEach(scan.Assembly);
+
+            var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
+            scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
 
             scan.ConnectImplementationsToTypesClosing(
                 typeof( IHandle<> ) );

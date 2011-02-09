@@ -27,6 +27,7 @@ namespace Symbiote.Daemon.BootStrap
     public class Watcher
         : IDisposable
     {
+        private const int BUFFER_64K = 64*1064;
         public BootStrapConfiguration Configuration { get; set; }
         public IList<FileSystemWatcher> SystemEvents { get; set; }
         public IList<IDisposable> SystemObservers { get; set; }
@@ -58,12 +59,12 @@ namespace Symbiote.Daemon.BootStrap
                     c => c.Invoke,
                     h =>
                     {
-                        watcher.Changed += h;
+                        watcher.Created += h;
                         watcher.Deleted += h;
                     },
                     h =>
                     {
-                        watcher.Changed -= h;
+                        watcher.Created -= h;
                         watcher.Deleted -= h;
                     })
                 .Do(x =>
@@ -90,27 +91,30 @@ namespace Symbiote.Daemon.BootStrap
             watcher.Path = file;
             watcher.NotifyFilter = NotifyFilters.LastWrite;
             watcher.IncludeSubdirectories = true;
+            watcher.InternalBufferSize = BUFFER_64K;
             var observer = Observable
                 .FromEvent<FileSystemEventHandler, FileSystemEventArgs>(
                     c => c.Invoke,
                     h =>
                     {
                         watcher.Changed += h;
+                        watcher.Deleted += h;
                     },
                     h =>
                     {
                         watcher.Changed -= h;
+                        watcher.Deleted -= h;
                     })
                 .Where(x => !string.IsNullOrEmpty(Path.GetExtension(x.EventArgs.FullPath)))
-                .BufferWithTime(TimeSpan.FromMinutes(1))
-                .Do(o => o
-                    .DistinctUntilChanged(GetPathFromEvent)
-                    .Do(x =>
+                .Throttle( TimeSpan.FromSeconds( 5 ) )
+                .Do(x =>
+                    {
+                        var path = GetPathFromEvent( x );
+                        if (x.EventArgs.ChangeType != WatcherChangeTypes.Deleted)
                         {
-                            var path = GetPathFromEvent( x );
-                            OnApplicationChange( path );
-                        })
-                    .Subscribe())
+                            OnApplicationChange(path);
+                        }
+                    })
                 .Subscribe();
             SystemObservers.Add(observer);
             watcher.EnableRaisingEvents = true;
@@ -132,17 +136,17 @@ namespace Symbiote.Daemon.BootStrap
 
         public void OnNewApplication(string path)
         {
-            Bus.Publish("local", new NewApplication() { DirectoryPath = path });
+            Bus.Publish("local", new NewApplication() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void OnApplicationChange(string path)
         {
-            Bus.Publish("local", new ApplicationChanged() { DirectoryPath = path });
+            Bus.Publish("local", new ApplicationChanged() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void OnApplicationDeletion(string path)
         {
-            Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = path });
+            Bus.Publish("local", new ApplicationDeleted() { DirectoryPath = Path.GetFullPath(path) });
         }
 
         public void Start()

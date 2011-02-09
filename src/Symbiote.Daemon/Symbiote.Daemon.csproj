@@ -107,7 +107,6 @@
     <Compile Include="Host\IHost.cs" />
     <Compile Include="Host\IServiceController.cs" />
     <Compile Include="Host\IServiceCoordinator.cs" />
-    <Compile Include="Host\ProcessExtensions.cs" />
     <Compile Include="Host\ServiceController.cs" />
     <Compile Include="Host\ServiceCoordinator.cs" />
     <Compile Include="Host\ServiceInformation.cs" />

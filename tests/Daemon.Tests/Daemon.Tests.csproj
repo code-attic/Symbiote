@@ -52,8 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Locator\when_loading_assembly_from_new_app.cs" />
+    <Compile Include="with_assimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_checking_for_minion_key_accessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">

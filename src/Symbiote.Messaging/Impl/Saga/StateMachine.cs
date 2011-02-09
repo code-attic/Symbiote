@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace Symbiote.Messaging.Impl.Saga
 {
@@ -41,7 +42,7 @@ namespace Symbiote.Messaging.Impl.Saga
             return unconditionally;
         }
 
-        public ICondition<TActor> When( Predicate<TActor> predicate )
+        public ICondition<TActor> When( Expression<Predicate<TActor>> predicate )
         {
             var condition = new Condition<TActor>( predicate );
             ConditionalTransitions.Add( condition );
