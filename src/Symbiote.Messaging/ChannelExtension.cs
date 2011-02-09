@@ -18,7 +18,6 @@ using Symbiote.Core;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Channels.Local;
 using Symbiote.Messaging.Impl.Channels.Pipe;
-using Symbiote.Messaging.Impl.Endpoint;
 
 namespace Symbiote.Messaging
 {
@@ -27,6 +26,11 @@ namespace Symbiote.Messaging
         private static IChannelIndex Index
         {
             get { return Assimilate.GetInstanceOf<IChannelIndex>(); }
+        }
+
+        private static IChannelManager Manager
+        {
+            get { return Assimilate.GetInstanceOf<IChannelManager>(); }
         }
 
         public static IBus AddLocalChannel( this IBus bus )
@@ -55,18 +59,12 @@ namespace Symbiote.Messaging
             if(!hasChannelFor)
             {
                 Index.AddDefinition( definition );
+                Manager.GetChannelFor( definition.Name );
             }
 
             return bus;
         }
-
-        public static IBus AddNamedPipeListener(this IBus bus, Action<EndpointConfigurator> configure)
-        {
-            var endpoints = Assimilate.GetInstanceOf<IEndpointManager>();
-            endpoints.ConfigureEndpoint(configure);
-            return bus;
-        }
-
+        
         public static IBus AddLocalChannel( this IBus bus, Action<IConfigureChannel> configure )
         {
             bool hasChannelFor = Index.HasChannelFor("local");

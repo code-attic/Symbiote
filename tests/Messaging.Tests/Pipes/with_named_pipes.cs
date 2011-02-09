@@ -15,12 +15,12 @@ namespace Messaging.Tests.Pipes
         private Establish context = () =>
                                         {
                                             bus = Assimilate.GetInstanceOf<IBus>();
-
-                                            bus.AddNamedPipeListener( x => x.Named( "test" ).StartSubscription() );
-                                            bus.AddNamedPipeChannel( x => x.Name( "test" ) );
+                                            bus.AddNamedPipeChannel( x => x.Name( "server" ).Pipe( "test").AsServer() );
+                                            bus.AddNamedPipeChannel( x => x.Name( "client" ).Pipe( "test") );
                                         };
     }
 
+    [Serializable]
     public class TestMessage
     {
         public string Text { get; set; }
@@ -30,7 +30,7 @@ namespace Messaging.Tests.Pipes
     {
         public Action<IEnvelope> Handle( TestMessage message )
         {
-            return x => x.Reply( "I got your mesage." );
+            return x => x.Reply( "I got your message." );
         }
     }
 
@@ -41,7 +41,7 @@ namespace Messaging.Tests.Pipes
 
         private Because of = () =>
                                  {
-                                     result = bus.Request<TestMessage, string>( "test", new TestMessage() {Text = "Hi."} ).WaitFor( 10000 );
+                                     result = bus.Request<TestMessage, string>("client", new TestMessage() { Text = "Hi." }).WaitFor( 500 );
                                  };
         
         private It should_get_response = () => result.ShouldEqual( "I got your message." );

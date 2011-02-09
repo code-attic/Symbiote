@@ -16,162 +16,21 @@ limitations under the License.
 using System;
 using System.IO;
 using System.IO.Pipes;
+using System.Text;
 using Symbiote.Core.Futures;
 using Symbiote.Core.Serialization;
 using Symbiote.Core.Utility;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Messaging.Impl.Serialization;
+using System.Linq;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
-    public interface IPipeEndpoint
-        : IDisposable
-    {
-        PipeStream Stream { get; }
-        bool Connected { get; set; }
-        void Connect( Action onConnect, Action onFailure );
-        void Close();
-    }
-
-    public class ServerPipeEndpoint
-        : IPipeEndpoint
-    {
-        public NamedPipeServerStream Server { get; set; }
-        public bool Running { get; set; }
-
-        public PipeStream Stream { get { return Server; } }
-
-        public bool Connected { get; set; }
-
-        public void Connect( Action onConnect, Action onFailure )
-        {
-            Future.Of(
-                x =>
-                    Server.BeginWaitForConnection(x, null),
-                x =>
-                {
-                    Server.EndWaitForConnection(x);
-                    return true;
-                })
-                .OnValue(x =>
-                {
-                    if (x)
-                    {
-                        Connected = true;
-                        Running = true;
-                        onConnect();
-                    }
-                    else
-                        Connect( onConnect, onFailure );
-                })
-                .OnFailure(() =>
-                {
-                    onFailure();
-                    return true;
-                })
-                .Start()
-                .LoopWhile( () => Running );
-        }
-
-        public void Close()
-        {
-            Connected = false;
-            Running = false;
-            Server.Close();
-        }
-
-        public ServerPipeEndpoint( NamedPipeServerStream serverStream )
-        {
-            Server = serverStream;
-        }
-
-        public void Dispose()
-        {
-            if(Connected)
-                Close();
-        }
-    }
-
-    public class ClientPipeEndpoint
-        : IPipeEndpoint
-    {
-        public NamedPipeChannelDefinition Definition { get; set; }
-        public NamedPipeClientStream Client { get; set; }
-        public bool Running { get; set; }
-
-        public PipeStream Stream { get { return Client; } }
-
-        public bool Connected { get; set; }
-
-        public void Connect( Action onConnect, Action onFailure )
-        {
-            Client = new NamedPipeClientStream(
-                    Definition.Machine,
-                    Definition.Name,
-                    Definition.Direction,
-                    Definition.Options,
-                    Definition.Impersonation);
-
-            try
-            {
-                Client.Connect(Definition.ConnectionTimeout);
-                Client.ReadMode = Definition.Mode;
-                Connected = true;
-                onConnect();
-            }
-            catch ( TimeoutException timeoutException )
-            {
-                onFailure();
-            }
-        }
-
-        public void Close()
-        {
-            Connected = false;
-            Client.Close();
-        }
-
-        public ClientPipeEndpoint( NamedPipeChannelDefinition definition )
-        {
-            Definition = definition;
-        }
-
-        public void Dispose()
-        {
-            if( Connected )
-                Close();
-        }
-    }
-
-    public class PipeEndpointFactory
-    {
-        public IPipeEndpoint CreateEndpointForChannel(NamedPipeChannelDefinition definition)
-        {
-            if ( definition.IsServer )
-            {
-                var stream = new NamedPipeServerStream(
-                definition.Name, 
-                PipeDirection.InOut,
-                1024, // this is arbitrary, apparently 0 doesn't = infinte 
-                PipeTransmissionMode.Message, 
-                PipeOptions.Asynchronous,
-                definition.BufferSize,
-                definition.BufferSize);
-
-                return new ServerPipeEndpoint( stream );
-            }
-            else
-            {
-                return new ClientPipeEndpoint( definition );
-            }
-        }
-    }
-
     public class PipeProxy
     {
         public NamedPipeChannelDefinition Definition { get; set; }
-        public IDispatcher Dispatch { get; set; }
+        public IDispatcher Dispatcher { get; set; }
         public IPipeEndpoint Pipe { get; set; }
         public PipeEndpointFactory PipeFactory { get; set; }
         public RingBuffer RingBuffer { get; set; }
@@ -179,12 +38,17 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
         public PipeStream Stream { get { return Pipe.Stream; } }
         public IMessageSerializer Serializer { get; set; }
 
+        public void Connect()
+        {
+            Pipe.Connect(Listen, () => { Running = false; });
+        }
+
         public object DispatchResult(object translatedEnvelope)
         {
             var envelope = translatedEnvelope as IEnvelope;
             if (envelope != null)
             {
-                Dispatch.Send(envelope);
+                Dispatcher.Send(envelope);
             }
             else
             {
@@ -196,27 +60,29 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
         public object DeserializeMessage(object value)
         {
             var buffer = (byte[])value;
+            var typeHeaderLength = BitConverter.ToInt32( buffer.Take( 4 ).ToArray(), 0 );
+            var typeHeader = Encoding.UTF8.GetString( buffer, 4, typeHeaderLength );
+            var messageType = Type.GetType( typeHeader );
+            var envelopeType = typeof( NamedPipeEnvelope<> ).MakeGenericType( messageType );
+
             NamedPipeEnvelope pipeEnvelope = null;
-            NamedPipeTransportEnvelope transportEnvelope = null;
             try
             {
-                transportEnvelope = buffer.FromProtocolBuffer<NamedPipeTransportEnvelope>();
-                pipeEnvelope = GetEnvelope( transportEnvelope );
-                pipeEnvelope.Message = Serializer.Deserialize( pipeEnvelope.MessageType, transportEnvelope.Message );
+                pipeEnvelope = Serializer.Deserialize( envelopeType, buffer.Skip(4 + typeHeaderLength).ToArray() ) as NamedPipeEnvelope;
+                pipeEnvelope.ReplyStream = this;
                 if ( pipeEnvelope.Message == null )
-                    HandlePoisonMessage( transportEnvelope );
+                    HandlePoisonMessage( value );
             }
             catch ( Exception e )
             {
-                HandlePoisonMessage( transportEnvelope );
+                HandlePoisonMessage( value );
             }
             return pipeEnvelope;
         }
 
         public void HandlePoisonMessage(object message)
         {
-            var envelope = message as NamedPipeTransportEnvelope;
-            if (envelope != null)
+            if (message != null)
             {
                 //"Received bad message from \r\n\t Exchange: {0} \r\n\t Queue: {1} \r\n\t MessageId: {2} \r\n\t CorrelationId: {3} \r\n\t Type: {4}"
                 //    .ToInfo<RabbitQueueListener>(
@@ -273,32 +139,33 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
                 .Start();
         }
 
-        public void Connect()
+        public void Send(NamedPipeEnvelope envelope)
         {
-            Pipe.Connect( Listen, () => { Running = false; } );
+            var envelopeBuffer = Serializer.Serialize( envelope );
+            var header = Encoding.UTF8.GetBytes( envelope.MessageType.AssemblyQualifiedName );
+            var buffer = BitConverter
+                .GetBytes( header.Length )
+                .Concat( header )
+                .Concat( envelopeBuffer )
+                .ToArray();
+
+            Future.Of(
+                x => Pipe.Stream.BeginWrite( buffer, 0, buffer.Length, x, null ),
+                x =>
+                    {
+                        Pipe.Stream.EndWrite( x );
+                        Pipe.Stream.Flush();
+                        Pipe.Stream.WaitForPipeDrain();
+                        return true;
+                    }
+                ).Start();
         }
 
-        public NamedPipeEnvelope GetEnvelope(NamedPipeTransportEnvelope transportEnvelope)
-        {
-            var messageTypeName = transportEnvelope.MessageType;
-            var messageType = Type.GetType(messageTypeName);
-            var envelopeType = typeof(NamedPipeEnvelope<>).MakeGenericType(messageType);
-            var envelope = Activator.CreateInstance(envelopeType) as NamedPipeEnvelope;
-            envelope.ReplyStream = Stream;
-            envelope.MessageId = transportEnvelope.MessageId;
-            envelope.CorrelationId = transportEnvelope.CorrelationId;
-            envelope.Position = transportEnvelope.Position;
-            envelope.RoutingKey = transportEnvelope.RoutingKey;
-            envelope.Sequence = transportEnvelope.Sequence;
-            envelope.SequenceEnd = transportEnvelope.SequenceEnd;
-            return envelope;
-        }
-
-        public PipeProxy( NamedPipeChannelDefinition definition, IDispatcher dispatch, IMessageSerializer serializer )
+        public PipeProxy( NamedPipeChannelDefinition definition, IDispatcher dispatch, IMessageSerializer messageSerializer )
         {
             Definition = definition;
-            Dispatch = dispatch;
-            Serializer = serializer;
+            Dispatcher = dispatch;
+            Serializer = messageSerializer;
             PipeFactory = new PipeEndpointFactory();
             Pipe = PipeFactory.CreateEndpointForChannel( definition );
             

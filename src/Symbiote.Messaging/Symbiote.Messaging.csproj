@@ -76,9 +76,10 @@
     <Compile Include="Config\EventChannelConfiguration.cs" />
     <Compile Include="Config\EventChannelConfigurator.cs" />
     <Compile Include="Config\IEventChannelConfiguration.cs" />
-    <Compile Include="Impl\Adapter\NamedPipeListener.cs" />
+    <Compile Include="Impl\Channels\Pipe\ClientPipeEndpoint.cs" />
+    <Compile Include="Impl\Channels\Pipe\IPipeEndpoint.cs" />
+    <Compile Include="Impl\Channels\Pipe\PipeEndpointFactory.cs" />
     <Compile Include="Impl\Channels\Pipe\PipeProxy.cs" />
-    <Compile Include="Impl\Subscriptions\PipeSubscription.cs" />
     <Compile Include="Impl\Channels\BaseChannelDefinition.cs" />
     <Compile Include="Extensions\MessagingExtensions.cs" />
     <Compile Include="Impl\Channels\ChannelIndex.cs" />
@@ -91,19 +92,13 @@
     <Compile Include="Impl\Channels\Pipe\NamedPipeChannelConfigurator.cs" />
     <Compile Include="Impl\Channels\Pipe\NamedPipeChannelDefinition.cs" />
     <Compile Include="Impl\Channels\Pipe\NamedPipeChannelFactory.cs" />
+    <Compile Include="Impl\Channels\Pipe\ServerPipeEndpoint.cs" />
     <Compile Include="Impl\Dispatch\DirectorSaga.cs" />
     <Compile Include="Impl\Dispatch\DispatcherKeyAccessor.cs" />
     <Compile Include="Impl\Dispatch\IDispatchToSaga.cs" />
     <Compile Include="Impl\Dispatch\PrimeDirector.cs" />
     <Compile Include="Impl\Dispatch\ResponseDispatcher.cs" />
     <Compile Include="Impl\Dispatch\SagaMessageDispatcher.cs" />
-    <Compile Include="Impl\Endpoint\ConfigurationException.cs" />
-    <Compile Include="Impl\Endpoint\EndpointConfigurator.cs" />
-    <Compile Include="Impl\Endpoint\EndpointIndex.cs" />
-    <Compile Include="Impl\Endpoint\EndpointManager.cs" />
-    <Compile Include="Impl\Endpoint\IEndpointIndex.cs" />
-    <Compile Include="Impl\Endpoint\IEndpointManager.cs" />
-    <Compile Include="Impl\Endpoint\NamedPipeEndpoint.cs" />
     <Compile Include="Impl\Eventing\EventChannel.cs" />
     <Compile Include="Impl\Mesh\DefaultNodeIdentityProvider.cs" />
     <Compile Include="Impl\Mesh\INodeChannelManager.cs" />
@@ -129,7 +124,6 @@
     <Compile Include="Impl\Saga\ICondition.cs" />
     <Compile Include="Impl\Saga\IConditionalTransition.cs" />
     <Compile Include="Impl\Saga\ISaga.cs" />
-    <Compile Include="Impl\Subscriptions\NamedPipeSubscriptionFactory.cs" />
     <Compile Include="Saga.cs" />
     <Compile Include="Impl\Saga\StateMachine.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />
@@ -185,6 +179,9 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Impl\Adapter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" Condition=" '$(Configuration)'!='Development' " />

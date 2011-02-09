@@ -14,13 +14,10 @@
 // limitations under the License.
 // */
 using System;
-using System.IO;
-using System.IO.Pipes;
-using System.Threading;
 using Symbiote.Core.Futures;
+using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Envelope;
 using Symbiote.Messaging.Impl.Serialization;
-using Symbiote.Core.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
@@ -28,8 +25,8 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
         : IChannel
     {
         public NamedPipeChannelDefinition Definition { get; set; }
-        public PipeStream Pipe { get; set; }
-        public MessageOptimizedSerializer SerializationProvider { get; set; }
+        public IDispatcher Dispatcher { get; set; }
+        public PipeProxy Pipe { get; set; }
 
         public string Name { get; set; }
 
@@ -40,20 +37,18 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
 
         public Future<TReply> ExpectReply<TReply, TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
-            var envelope = new NamedPipeTransportEnvelope( )
+            var envelope = new NamedPipeEnvelope( )
                                {
                                    CorrelationId = Definition.GetCorrelationId( message ),
                                    RoutingKey = Definition.GetRoutingKey( message ),
-                                   Message = SerializationProvider.Serialize( message ),
-                                   MessageType = typeof(TMessage).AssemblyQualifiedName
+                                   Message = message,
+                                   MessageType = typeof( TMessage )
                                };
 
-            //modifyEnvelope( envelope );
-            var envelopeBuffer = envelope.ToProtocolBuffer();
-            Pipe.Write( envelopeBuffer, 0, envelopeBuffer.Length );
-            Pipe.Flush();
-            Pipe.WaitForPipeDrain();
-            return Future.Of( GetReply<TReply> );
+            modifyEnvelope( envelope );
+            var future = Future.Of<TReply>( () => Pipe.Send( envelope ) );
+            Dispatcher.ExpectResponse<TReply>( envelope.MessageId.ToString(), future );
+            return future;
         }
 
         public void Send<TMessage>( TMessage message )
@@ -63,89 +58,24 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
 
         public void Send<TMessage>( TMessage message, Action<IEnvelope> modifyEnvelope )
         {
-            var envelope = new NamedPipeTransportEnvelope( )
+            var envelope = new NamedPipeEnvelope( )
                                {
                                    CorrelationId = Definition.GetCorrelationId( message ),
                                    RoutingKey = Definition.GetRoutingKey( message ),
-                                   Message = SerializationProvider.Serialize(message),
-                                   MessageType = typeof(TMessage).AssemblyQualifiedName
+                                   Message =  message,
+                                   MessageType = typeof( TMessage )
                                };
-            //modifyEnvelope( envelope );
-            var envelopeBuffer = envelope.ToProtocolBuffer();
-            Pipe.Write( envelopeBuffer, 0, envelopeBuffer.Length );
-            Pipe.Flush();
+            modifyEnvelope( envelope );
+            Pipe.Send( envelope );
         }
 
-        public IEnvelope GetEnvelope(NamedPipeTransportEnvelope transportEnvelope)
-        {
-            var messageTypeName = transportEnvelope.MessageType;
-            var messageType = Type.GetType(messageTypeName);
-            var envelopeType = typeof(NamedPipeEnvelope<>).MakeGenericType(messageType);
-            return Activator.CreateInstance(envelopeType) as IEnvelope;
-        }
-
-        public TReply GetReply<TReply>()
-        {
-            byte[] buffer = ReadResponse( Pipe, 1000 );
-
-            try
-            {
-                var transportEnvelope = buffer.FromProtocolBuffer<NamedPipeTransportEnvelope>();
-                var pipeEnvelope = GetEnvelope(transportEnvelope);
-                return (TReply) SerializationProvider.Deserialize(pipeEnvelope.MessageType, transportEnvelope.Message);
-            }
-            catch (Exception e)
-            {
-                
-            }
-            return default(TReply);
-        }
-
-        public byte[] ReadResponse(PipeStream stream, int timeout)
-        {
-            var buffer = new byte[8 * 1024];
-            var read = 0;
-            if ( stream.CanTimeout )
-                stream.ReadTimeout = timeout;
-            
-            using(var memoryStream = new MemoryStream())
-            {
-                do
-                {
-                    read = stream.Read( buffer, 0, 0 );
-                    if ( read > 0 )
-                        memoryStream.Write( buffer, 0, buffer.Length );
-                } while ( !stream.IsMessageComplete || memoryStream.Length == 0 );
-                return memoryStream.ToArray();
-            }
-        }
-
-        public void WaitForMessage(NamedPipeClientStream stream)
-        {
-            while (stream.IsMessageComplete)
-            {
-                Thread.Sleep(5);
-            }
-        }
-
-        public void ConfigurePipe()
-        {
-            Pipe = new NamedPipeClientStream(
-                Definition.Machine,
-                Definition.Name,
-                Definition.Direction,
-                Definition.Options,
-                Definition.Impersonation);
-            Pipe.Connect( Definition.ConnectionTimeout );
-            Pipe.ReadMode = Definition.Mode;
-        }
-
-        public NamedPipeChannel( NamedPipeChannelDefinition definition )
+        public NamedPipeChannel( NamedPipeChannelDefinition definition, PipeProxy pipe, IDispatcher dispatcher )
         {
             Definition = definition;
             Name = definition.Name;
-            ConfigurePipe();
-            SerializationProvider = new MessageOptimizedSerializer();
+            Dispatcher = dispatcher;
+            Pipe = pipe;
+            Pipe.Connect();
         }
     }
 }

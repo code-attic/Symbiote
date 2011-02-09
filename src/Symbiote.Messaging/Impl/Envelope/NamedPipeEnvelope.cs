@@ -3,23 +3,31 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Pipes;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using Symbiote.Core.Futures;
 using Symbiote.Core.Serialization;
+using Symbiote.Messaging.Impl.Channels.Pipe;
 
 namespace Symbiote.Messaging.Impl.Envelope
 {
     [Serializable]
     [DataContract]
-    public class NamedPipeTransportEnvelope
+    public class NamedPipeEnvelope
+        : IEnvelope
     {
+        [IgnoreDataMember]
+        [JsonIgnore]
+        [NonSerialized]
+        private PipeProxy _proxy;
+
         [DataMember(Order = 1001, IsRequired = false)]
         public Guid MessageId { get; set; }
 
         [DataMember(Order = 1002, IsRequired = false)]
-        public string MessageType { get; set; }
+        public Type MessageType { get; set; }
 
         [DataMember(Order = 1003, IsRequired = false)]
-        public byte[] Message { get; set; }
+        public object Message { get; set; }
 
         [DataMember(Order = 1004, IsRequired = false)]
         public string CorrelationId { get; set; }
@@ -36,33 +44,13 @@ namespace Symbiote.Messaging.Impl.Envelope
         [DataMember(Order = 1008, IsRequired = false)]
         public bool SequenceEnd { get; set; }
 
-        public NamedPipeTransportEnvelope()
+        [IgnoreDataMember]
+        [JsonIgnore]
+        public PipeProxy ReplyStream
         {
+            get { return _proxy; }
+            set { _proxy = value; }
         }
-    }
-
-    [Serializable]
-    [DataContract]
-    public class NamedPipeEnvelope
-        : IEnvelope
-    {
-        public Guid MessageId { get; set; }
-
-        public Type MessageType { get; protected set; }
-
-        public string CorrelationId { get; set; }
-
-        public string RoutingKey { get; set; }
-
-        public long Sequence { get; set; }
-
-        public long Position { get; set; }
-
-        public bool SequenceEnd { get; set; }
-
-        public PipeStream ReplyStream { get; set; }
-
-        public object Message { get; set; }
 
         public void Acknowledge()
         {
@@ -76,32 +64,24 @@ namespace Symbiote.Messaging.Impl.Envelope
 
         public void Reply<TResponse>(TResponse response)
         {
-            if(ReplyStream != null)
+            if (ReplyStream != null)
             {
-                var envelope = new NamedPipeTransportEnvelope()
+                var envelope = new NamedPipeEnvelope()
                 {
                     CorrelationId = MessageId.ToString(),
-                    MessageType = typeof(TResponse).AssemblyQualifiedName,
-                    Message = response.ToProtocolBuffer()
+                    MessageType = typeof(TResponse),
+                    Message = response
                 };
-                var envelopeBuffer = envelope.ToProtocolBuffer();
-                ReplyStream.Write( envelopeBuffer, 0, envelopeBuffer.Length );
-                ReplyStream.Flush();
+                ReplyStream.Send( envelope );
             }
         }
 
         public NamedPipeEnvelope()
         {
         }
-
-        public NamedPipeEnvelope(object message)
-        {
-            Message = message;
-            MessageType = message.GetType();
-            MessageId = Guid.NewGuid();
-        }
     }
 
+    
     [Serializable]
     [DataContract]
     public class NamedPipeEnvelope<TMessage> :

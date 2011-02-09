@@ -13,11 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using System.Collections.Generic;
 using System.IO.Pipes;
-using System.Linq;
-using System.Text;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
@@ -28,6 +24,12 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
         public NamedPipeChannelConfigurator Name( string name )
         {
             Definition.Name = name;
+            return this;
+        }
+
+        public NamedPipeChannelConfigurator Pipe( string pipeName )
+        {
+            Definition.PipeName = pipeName;
             return this;
         }
 
@@ -45,7 +47,8 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
 
         public NamedPipeChannelConfigurator AsServer()
         {
-            
+            Definition.IsServer = true;
+            return this;
         }
 
         public NamedPipeChannelConfigurator()

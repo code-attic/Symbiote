@@ -16,22 +16,23 @@
 using System;
 using System.IO.Pipes;
 using System.Security.Principal;
+using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
     public class NamedPipeChannelDefinition : BaseChannelDefinition
     {
-        public const int DEFAULT_BUFFER_SIZE = 8 * 1024;
-        public Type SerializerType { get; set; }
         public int BufferSize { get; set; }
-        public string Machine { get; set; }
+        public int ConnectionTimeout { get; set; }
+        public const int DEFAULT_BUFFER_SIZE = 8 * 1024;
         public PipeDirection Direction { get; set; }
-        public PipeAccessRights Rights { get; set; }
+        public TokenImpersonationLevel Impersonation { get; set; }
+        public bool IsServer { get; set; }
+        public string Machine { get; set; }
         public PipeTransmissionMode Mode { get; set; }
         public PipeOptions Options { get; set; }
-        public TokenImpersonationLevel Impersonation { get; set; }
-        public int ConnectionTimeout { get; set; }
-        public bool IsServer { get; set; }
+        public string PipeName { get; set; }
+        public PipeAccessRights Rights { get; set; }
 
         public override Type ChannelType
         {
