@@ -21,6 +21,5 @@ namespace Symbiote.Daemon.Host
         Stopped,
         Started,
         Paused
-        //Complete
     }
 }

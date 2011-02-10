@@ -83,9 +83,6 @@ namespace Symbiote.Core.Futures
                 if ( Coroutine != null && HasResult )
                     Coroutine( Result );
 
-                if (CycleWhile())
-                    Loop();
-
                 return Result;
             }
         }

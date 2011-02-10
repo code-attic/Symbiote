@@ -33,7 +33,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             request.Method = origin.HttpMethod;
             request.Scheme = origin.Url.Scheme;
             request.Server = origin.Url.Host;
-            request.Stream = origin.InputStream;
+            request.RequestStream = origin.InputStream;
             request.Uri = origin.Url.GetLeftPart( UriPartial.Path );
             request.Url = origin.Url.PathAndQuery.Split( '?' )[0];
             request.Version = origin.ProtocolVersion.ToString();

@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using Symbiote.Core.Futures;
 
@@ -28,6 +29,7 @@ namespace Symbiote.Http.Owin
         string Scheme { get; }
         string Server { get; }
         string Version { get; }
+        Stream RequestStream { get; set; }
 
         IDictionary<string, string> Parameters { get; }
         IDictionary<string, IEnumerable<string>> Headers { get; }

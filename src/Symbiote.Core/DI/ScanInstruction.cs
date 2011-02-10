@@ -28,6 +28,10 @@ namespace Symbiote.Core.DI
         protected bool ShouldAddSingleImplementations { get; set; }
         public IList<Type> AutoWireupTypesOf { get; set; }
         public IList<Type> AutoWireupClosersOf { get; set; }
+        public IList<Type> AutoWireupNamedTypesOf { get; set; }
+        public IList<Type> AutoWireupNamedClosersOf { get; set; }
+        public Func<Type, string> NamingStrategy { get; set; }
+        public bool HasNamingStrategy { get { return NamingStrategy != null; } }
 
         public ScanInstruction()
         {
@@ -136,7 +140,10 @@ namespace Symbiote.Core.DI
                 .Where( t => t.IsConcreteAndAssignableTo( type ) )
                 .ForEach( m =>
                               {
-                                  var dependencyExpression = DependencyExpression.For( type );
+                                  var name = HasNamingStrategy ? NamingStrategy( m ) : string.Empty;
+                                  var dependencyExpression = HasNamingStrategy
+                                      ? DependencyExpression.For( name, type)
+                                      : DependencyExpression.For( type );
                                   dependencyExpression.Add( m );
                                   registry.Register( dependencyExpression );
                               } );
@@ -163,7 +170,10 @@ namespace Symbiote.Core.DI
             }
             if ( pluginType != null )
             {
-                var dependencyExpression = DependencyExpression.For( pluginType );
+                var name = HasNamingStrategy ? NamingStrategy( pluginType ) : string.Empty;
+                var dependencyExpression = HasNamingStrategy
+                                      ? DependencyExpression.For( name, pluginType )
+                                      : DependencyExpression.For( pluginType );
                 dependencyExpression.Use( match );
                 registry.Register( dependencyExpression );
             }
@@ -177,7 +187,10 @@ namespace Symbiote.Core.DI
 
             foreach( var pluginType in pluginTypes )
             {
-                var dependencyExpression = DependencyExpression.For( pluginType );
+                var name = HasNamingStrategy ? NamingStrategy(pluginType) : string.Empty;
+                var dependencyExpression = HasNamingStrategy
+                                      ? DependencyExpression.For( name, pluginType )
+                                      : DependencyExpression.For( pluginType);
                 dependencyExpression.Add( match );
                 registry.Register( dependencyExpression );
             }
@@ -230,6 +243,11 @@ namespace Symbiote.Core.DI
         public void ConnectImplementationsToTypesClosing( Type openGenericType )
         {
             AutoWireupClosersOf.Add( openGenericType );
+        }
+
+        public void UseNamingStrategyForMultiples( Func<Type, string> strategy )
+        {
+            NamingStrategy = strategy;
         }
     }
 }

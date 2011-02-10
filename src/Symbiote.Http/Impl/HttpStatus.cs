@@ -42,48 +42,51 @@ namespace Symbiote.Http.Impl
         public static readonly HttpStatus NotImplemented = new HttpStatus( 501, "Not Implemented" );
         public static readonly HttpStatus ServiceNotAvailable = new HttpStatus( 503, "Service Not Available" );
 
-        public static readonly Dictionary<string, HttpStatus> Lookup = new Dictionary<string, HttpStatus>
-                                                                           {
-                                                                               {Continue.ToString(), Continue},
-                                                                               {
-                                                                                   SwitchingProtocols.ToString(),
-                                                                                   SwitchingProtocols
-                                                                                   },
-                                                                               {Ok.ToString(), Ok},
-                                                                               {Created.ToString(), Created},
-                                                                               {Accepted.ToString(), Accepted},
-                                                                               {NoContent.ToString(), NoContent},
-                                                                               {
-                                                                                   MultipleChoices.ToString(),
-                                                                                   MultipleChoices
-                                                                                   },
-                                                                               {
-                                                                                   MovedPermanently.ToString(),
-                                                                                   MovedPermanently
-                                                                                   },
-                                                                               {UseProxy.ToString(), UseProxy},
-                                                                               {BadRequest.ToString(), BadRequest},
-                                                                               {Unauthorized.ToString(), Unauthorized},
-                                                                               {Forbidden.ToString(), Forbidden},
-                                                                               {NotFound.ToString(), NotFound},
-                                                                               {
-                                                                                   MethodNotAllowed.ToString(),
-                                                                                   MethodNotAllowed
-                                                                                   },
-                                                                               {
-                                                                                   RequestTimeout.ToString(),
-                                                                                   RequestTimeout
-                                                                                   },
-                                                                               {Conflict.ToString(), Conflict},
-                                                                               {
-                                                                                   InternalServerError.ToString(),
-                                                                                   InternalServerError
-                                                                                   },
-                                                                               {
-                                                                                   ServiceNotAvailable.ToString(),
-                                                                                   ServiceNotAvailable
-                                                                                   },
-                                                                           };
+        public static readonly Dictionary<string, HttpStatus> Lookup = 
+            new Dictionary<string, HttpStatus>
+            {
+                { Continue.ToString(), Continue },
+                { SwitchingProtocols.ToString(), SwitchingProtocols },
+                { Ok.ToString(), Ok },
+                { Created.ToString(), Created },
+                { Accepted.ToString(), Accepted },
+                { NoContent.ToString(), NoContent },
+                { MultipleChoices.ToString(), MultipleChoices },
+                { MovedPermanently.ToString(), MovedPermanently },
+                { UseProxy.ToString(), UseProxy },
+                { BadRequest.ToString(), BadRequest },
+                { Unauthorized.ToString(), Unauthorized },
+                { Forbidden.ToString(), Forbidden },
+                { NotFound.ToString(), NotFound },
+                { MethodNotAllowed.ToString(), MethodNotAllowed },
+                { RequestTimeout.ToString(), RequestTimeout },
+                { Conflict.ToString(), Conflict },
+                { InternalServerError.ToString(), InternalServerError },
+                { ServiceNotAvailable.ToString(), ServiceNotAvailable },
+            };
+
+        public static readonly Dictionary<int, HttpStatus> CodeLookup =
+            new Dictionary<int, HttpStatus>
+            {
+                { Continue.Code, Continue },
+                { SwitchingProtocols.Code, SwitchingProtocols },
+                { Ok.Code, Ok },
+                { Created.Code, Created },
+                { Accepted.Code, Accepted },
+                { NoContent.Code, NoContent },
+                { MultipleChoices.Code, MultipleChoices },
+                { MovedPermanently.Code, MovedPermanently },
+                { UseProxy.Code, UseProxy },
+                { BadRequest.Code, BadRequest },
+                { Unauthorized.Code, Unauthorized },
+                { Forbidden.Code, Forbidden },
+                { NotFound.Code, NotFound },
+                { MethodNotAllowed.Code, MethodNotAllowed },
+                { RequestTimeout.Code, RequestTimeout },
+                { Conflict.Code, Conflict },
+                { InternalServerError.Code, InternalServerError },
+                { ServiceNotAvailable.Code, ServiceNotAvailable },
+            };
 
         public int Code { get; set; }
         public string Description { get; set; }

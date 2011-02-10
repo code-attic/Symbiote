@@ -52,7 +52,7 @@ namespace Symbiote.Http.Config
                 throw new AssimilationException(
                     "Symbiote.Http host can't start up without any assigned ports. Please us the AddPort call during configuration." );
 
-            return Ports.Select( x => @"{0}://localhost:{1}/"
+            return Ports.Select( x => @"{0}://*:{1}/"
                                           .AsFormat( UseHttps ? "https" : "http", x ) )
                 .ToList();
         }

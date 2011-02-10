@@ -35,6 +35,8 @@ namespace Symbiote.Core.Futures
             if(result != null)
             {
                 Result = End(result);
+                if (CycleWhile())
+                    Loop();
                 HasResult = true;
                 ((ManualResetEvent)ResetTrigger.AsyncWaitHandle).Set();
                 if(Coroutine != null)

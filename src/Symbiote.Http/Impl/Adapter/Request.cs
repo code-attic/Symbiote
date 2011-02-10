@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -25,8 +26,6 @@ namespace Symbiote.Http.Impl.Adapter
     public class Request
         : IRequest
     {
-        public Stream Stream { get; set; }
-
         public IPEndPoint ClientEndpoint { get; set; }
         public string Method { get; set; }
         public string Scheme { get; set; }
@@ -37,11 +36,12 @@ namespace Symbiote.Http.Impl.Adapter
         public IDictionary<string, string> Parameters { get; set; }
         public IDictionary<string, IEnumerable<string>> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
+        public Stream RequestStream { get; set; }
 
         public Future<byte[]> Read()
         {
             return Future
-                .Of( () => Stream.ReadToEnd( 1000 ) );
+                .Of( () => RequestStream.ReadToEnd( 1000 ) );
         }
 
         public Request()

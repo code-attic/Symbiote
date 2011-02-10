@@ -35,44 +35,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CommandLine">
-      <HintPath>..\..\..\lib\CommandLineParser\CommandLine.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net">
-      <HintPath>..\..\..\lib\log4net\log4net.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\bin\dev\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="protobuf-net">
-      <HintPath>..\..\..\bin\dev\protobuf-net.dll</HintPath>
-    </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Actor">
-      <HintPath>..\..\..\bin\dev\Symbiote.Actor.dll</HintPath>
-    </Reference>
     <Reference Include="Symbiote.Core">
-      <HintPath>..\..\..\bin\dev\Symbiote.Core.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon">
-      <HintPath>..\..\..\bin\dev\Symbiote.Daemon.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Fibers">
-      <HintPath>..\..\..\bin\dev\Symbiote.Fibers.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Http">
-      <HintPath>..\..\..\bin\dev\Symbiote.Http.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.Http.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net">
-      <HintPath>..\..\..\bin\dev\Symbiote.Log4Net.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Messaging">
-      <HintPath>..\..\..\bin\dev\Symbiote.Messaging.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.StructureMap">
-      <HintPath>..\..\..\bin\dev\Symbiote.StructureMap.dll</HintPath>
+      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

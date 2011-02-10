@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Symbiote.Actor;
 using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Http;
 using Symbiote.Http.Impl;
 using Symbiote.Messaging;
-using Symbiote.StructureMap;
+using Symbiote.StructureMapAdapter;
 using DaemonAssimilation = Symbiote.Daemon.DaemonAssimilation;
 
 namespace HelloHttp
@@ -17,7 +16,6 @@ namespace HelloHttp
             Assimilate
                                 .Core<StructureMapAdapter>()
                                 .Daemon(x => x.Arguments(args))
-                                .Actors()
                                 .Messaging()
                                 .HttpHost(x => x
                                                    .ConfigureHttpListener(l => l.AddPort(8989))
