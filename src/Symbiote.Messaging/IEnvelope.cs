@@ -26,7 +26,7 @@ namespace Symbiote.Messaging
         long Position { get; set; }
         bool SequenceEnd { get; set; }
 
-        object Message { get; }
+        object Message { get; set; }
         Guid MessageId { get; set; }
         Type MessageType { get; }
 

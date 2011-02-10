@@ -10,9 +10,9 @@ namespace HelloHttp
     public class MessageHandler
         : IHandle<Message>
     {
-        public void Handle(IEnvelope<Message> envelope)
+        public Action<IEnvelope> Handle(Message envelope)
         {
-            envelope.Reply( new Message() { Text = "Hey there, how goes it?"} );
+            return x => x.Reply( new Message() { Text = "Hey there, how goes it?"} );
         }
     }
 }

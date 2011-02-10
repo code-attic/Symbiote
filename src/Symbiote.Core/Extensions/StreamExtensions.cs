@@ -13,13 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using System.IO;
+using Symbiote.Core.Futures;
 
 namespace Symbiote.Core.Extensions
 {
     public static class StreamExtensions
     {
-        public static byte[] ReadToEnd( this Stream stream, int timeOut )
+        public static byte[] ReadToEnd(this Stream stream, int timeOut)
         {
             int read;
             var buffer = new byte[8*1024];
@@ -33,6 +35,35 @@ namespace Symbiote.Core.Extensions
                 }
                 return memoryStream.ToArray();
             }
+        }
+
+        public static void ReadAsync(this Stream stream, int timeout, Action<byte[]> onComplete )
+        {
+            var memoryStream = new MemoryStream();
+            var buffer = new byte[8 * 1024];
+            var read = 0;
+            if (stream.CanTimeout)
+                stream.ReadTimeout = timeout;
+
+            Future.Of(
+                x => stream.BeginRead(buffer, 0, buffer.Length, x, null),
+                x =>
+                    {
+                        read = stream.EndRead(x);
+                        if (read > 0)
+                        {
+                            memoryStream.Write(buffer, 0, read);
+                        }
+                        else
+                        {
+                            onComplete(memoryStream.ToArray());
+                            memoryStream.Close();
+                            memoryStream.Dispose();
+                        }
+                        return read;
+                })
+                .LoopWhile( () => read > 0)
+                .Start();
         }
     }
 }

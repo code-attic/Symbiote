@@ -21,7 +21,6 @@ namespace Symbiote.Core.Futures
         : Future<T>
     {
         protected Func<T> Call { get; set; }
-        protected CallbackResult ResetTrigger { get; set; }
         protected Action<IAsyncResult> OnResult { get; set; }
 
         protected override void InvokeCall()

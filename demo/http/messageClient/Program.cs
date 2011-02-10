@@ -2,11 +2,10 @@
 using System.Diagnostics;
 using Messages;
 using Symbiote.Core;
-using Symbiote.StructureMap;
-using Symbiote.Actor;
 using Symbiote.Messaging;
 using Symbiote.Daemon;
 using Symbiote.Http;
+using Symbiote.StructureMapAdapter;
 
 namespace messageClient
 {
@@ -16,7 +15,6 @@ namespace messageClient
         {
             Assimilate
                 .Core<StructureMapAdapter>()
-                .Actors()
                 .Messaging()
                 .HttpHost( x => x.ConfigureHttpListener( s => {} ) )
                 .Daemon( x => x.Arguments( args ) )

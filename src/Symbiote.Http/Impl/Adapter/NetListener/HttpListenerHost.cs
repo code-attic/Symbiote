@@ -15,6 +15,8 @@
 // */
 using System;
 using System.Net;
+using Symbiote.Core.Extensions;
+using Symbiote.Core.Futures;
 using Symbiote.Http.Config;
 using Symbiote.Http.Owin;
 
@@ -41,27 +43,29 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
         public void Start()
         {
             Listener.Start();
-            Listener.BeginGetContext( GetRequest, null );
+            Running = true;
+            Future.Of(
+                x => Listener.BeginGetContext( x, null ),
+                x =>
+                    {
+                        var context = Listener.EndGetContext( x );
+                        ProcessRequest( context );
+                        return true;
+                    }
+                ).Start()
+                 .LoopWhile( () => Running )
+                 .OnException( x => "An exception occurred attempting to get a request context.\r\n\t {0}".ToError<IHost>(x) );
         }
 
         public void Stop()
         {
             Listener.Stop();
+            Running = false;
         }
 
-        public void GetRequest( IAsyncResult result )
+        public void OnContext(IAsyncResult result, object state)
         {
-            try
-            {
-                var context = Listener.EndGetContext( result );
-                ProcessRequest( context );
-            }
-            catch ( Exception exception )
-            {
-                Console.WriteLine( "Well, this is bad: \r\n {0}", exception );
-                throw;
-            }
-            Listener.BeginGetContext( GetRequest, null );
+            var context = Listener.EndGetContext( result );
         }
 
         public void ProcessRequest( HttpListenerContext listenerContext )

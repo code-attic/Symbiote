@@ -16,18 +16,23 @@
 using System;
 using System.IO.Pipes;
 using System.Security.Principal;
+using Symbiote.Messaging.Impl.Serialization;
 
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
     public class NamedPipeChannelDefinition : BaseChannelDefinition
     {
-        public string Server { get; set; }
+        public int BufferSize { get; set; }
+        public int ConnectionTimeout { get; set; }
+        public const int DEFAULT_BUFFER_SIZE = 8 * 1024;
         public PipeDirection Direction { get; set; }
-        public PipeAccessRights Rights { get; set; }
+        public TokenImpersonationLevel Impersonation { get; set; }
+        public bool IsServer { get; set; }
+        public string Machine { get; set; }
         public PipeTransmissionMode Mode { get; set; }
         public PipeOptions Options { get; set; }
-        public TokenImpersonationLevel Impersonation { get; set; }
-        public int ConnectionTimeout { get; set; }
+        public string PipeName { get; set; }
+        public PipeAccessRights Rights { get; set; }
 
         public override Type ChannelType
         {
@@ -39,15 +44,16 @@ namespace Symbiote.Messaging.Impl.Channels.Pipe
             get { return typeof( NamedPipeChannelFactory ); }
         }
 
-        public NamedPipeChannelDefinition( string name )
+        public NamedPipeChannelDefinition( )
         {
-            Name = name;
-            Server = "Symbiote.Pipes.Host";
+            Name = "symbiote.pipe";
+            Machine = ".";
             Direction = PipeDirection.InOut;
             Rights = PipeAccessRights.FullControl;
             Mode = PipeTransmissionMode.Message;
             Options = PipeOptions.Asynchronous;
             Impersonation = TokenImpersonationLevel.Anonymous;
+            BufferSize = DEFAULT_BUFFER_SIZE;
             ConnectionTimeout = 1000;
         }
     }

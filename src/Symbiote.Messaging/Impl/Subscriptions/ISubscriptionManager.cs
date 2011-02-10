@@ -25,5 +25,6 @@ namespace Symbiote.Messaging.Impl.Subscriptions
         bool HasSubscription( string subscriptionName );
         void StartSubscription( string subscriptionName );
         void StopSubscription( string subscriptionName );
+        void StopAllSubscriptions();
     }
 }

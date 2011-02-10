@@ -13,14 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using Symbiote.Core;
+using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Serialization;
+
 namespace Symbiote.Messaging.Impl.Channels.Pipe
 {
     public class NamedPipeChannelFactory
         : IChannelFactory
     {
+        public IDispatcher Dispatcher { get; set; }
+
         public IChannel CreateChannel( IChannelDefinition definition )
         {
-            return new NamedPipeChannel( definition as NamedPipeChannelDefinition );
+            var namedPipeChannelDefinition = definition as NamedPipeChannelDefinition;
+            var serializer = Assimilate.GetInstanceOf( definition.SerializerType ) as IMessageSerializer;
+            var proxy = new PipeProxy( namedPipeChannelDefinition, Dispatcher, serializer );
+            var namedPipeChannel = new NamedPipeChannel( namedPipeChannelDefinition, proxy, Dispatcher );
+            return namedPipeChannel;
+        }
+
+        public NamedPipeChannelFactory( IDispatcher dispatcher )
+        {
+            Dispatcher = dispatcher;
         }
     }
 }

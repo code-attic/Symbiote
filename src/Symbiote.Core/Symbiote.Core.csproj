@@ -124,6 +124,7 @@
     <Compile Include="Cache\ICacheProvider.cs" />
     <Compile Include="Collections\MruList.cs" />
     <Compile Include="Config\FromConfig.cs" />
+    <Compile Include="Futures\FutureAsyncCallback.cs" />
     <Compile Include="Persistence\IDeleteByKey.cs" />
     <Compile Include="Persistence\IGetAll.cs" />
     <Compile Include="Persistence\IGetByKey.cs" />

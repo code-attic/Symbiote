@@ -35,6 +35,7 @@ namespace Symbiote.Core.DI
         void ExcludeNamespaceContainingType<T>();
         void ExcludeType<T>();
         void Execute( IDependencyRegistry registry );
+        void UseNamingStrategyForMultiples( Func<Type, string> strategy );
 
 #if !SILVERLIGHT
         void AssembliesFromPath( string path );
