@@ -22,8 +22,7 @@ namespace Symbiote.Http
 {
     public static class ConvenienceExtensions
     {
-        public static IBuildResponse Build(
-            this Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond )
+        public static IBuildResponse Build( this OwinResponse respond )
         {
             return new ResponseHelper( respond );
         }

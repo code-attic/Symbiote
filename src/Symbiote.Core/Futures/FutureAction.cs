@@ -33,12 +33,16 @@ namespace Symbiote.Core.Futures
             {
                 Call.EndInvoke( result );
                 ResetTrigger.Set();
+                if ( Coroutine != null && HasResult )
+                    Coroutine( Result );
+                Loop();
             }
+            if ( !HasResult && Attempts >= Limit )
+                    Result = OnFail();
         }
 
         public FutureAction( Action call )
         {
-            Init();
             Call = call;
             ResetTrigger = new CallbackResult();
             AsyncResult = ResetTrigger;
@@ -61,6 +65,8 @@ namespace Symbiote.Core.Futures
             {
                 Call.EndInvoke( result );
             }
+            if ( !HasResult && Attempts >= Limit )
+                Result = OnFail();
         }
 
         public void Callback( T value )
@@ -68,6 +74,9 @@ namespace Symbiote.Core.Futures
             Result = value;
             HasResult = true;
             ResetTrigger.Set();
+            if ( Coroutine != null && HasResult )
+                    Coroutine( Result );
+            Loop();
         }
 
         public static implicit operator Action<T>( FutureAction<T> future )
@@ -77,7 +86,6 @@ namespace Symbiote.Core.Futures
 
         public FutureAction( Action call )
         {
-            Init();
             Call = call;
             ResetTrigger = new CallbackResult();
             AsyncResult = ResetTrigger;

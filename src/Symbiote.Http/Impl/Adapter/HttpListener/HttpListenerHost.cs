@@ -15,6 +15,7 @@
 // */
 using System;
 using System.Net;
+using System.Threading;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Futures;
 using Symbiote.Http.Config;
@@ -30,6 +31,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
         public HttpListener Listener { get; set; }
         public HttpContextTransform ContextTransformer { get; set; }
         public bool Running { get; set; }
+        public SemaphoreSlim ConcurrencyGuard { get; set; }
 
         public void Dispose()
         {
@@ -42,30 +44,29 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
 
         public void Start()
         {
-            Listener.Start();
             Running = true;
-            Future.Of(
-                x => Listener.BeginGetContext( x, null ),
-                x =>
-                    {
-                        var context = Listener.EndGetContext( x );
-                        ProcessRequest( context );
-                        return true;
-                    }
-                ).Start()
-                 .LoopWhile( () => Running )
-                 .OnException( x => "An exception occurred attempting to get a request context.\r\n\t {0}".ToError<IHost>(x) );
+            Listener.Start();
+            Listen();
+        }
+
+        public void Listen()
+        {
+            Future
+                .Of( () => Listener.BeginGetContext( OnContext, null ) )
+                .Start();
         }
 
         public void Stop()
         {
-            Listener.Stop();
             Running = false;
+            Listener.Stop();
         }
 
-        public void OnContext(IAsyncResult result, object state)
+        public void OnContext(IAsyncResult result)
         {
             var context = Listener.EndGetContext( result );
+            Listen();
+            ProcessRequest( context );
         }
 
         public void ProcessRequest( HttpListenerContext listenerContext )
@@ -89,6 +90,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             RequestRouter = router;
             Configuration = configuration;
             ContextTransformer = new HttpContextTransform();
+            ConcurrencyGuard = new SemaphoreSlim( 128 );//Environment.ProcessorCount );
             Listener = new HttpListener();
             Listener.AuthenticationSchemes = Configuration.AuthSchemes;
             Configuration.HostedUrls.ForEach( x => { Listener.Prefixes.Add( x ); } );

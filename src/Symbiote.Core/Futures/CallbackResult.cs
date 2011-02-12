@@ -20,13 +20,13 @@ namespace Symbiote.Core.Futures
 {
     public class CallbackResult : IAsyncResult
     {
-        protected ManualResetEvent Reset { get; set; }
+        protected ManualResetEvent ResetEvent { get; set; }
 
         public bool IsCompleted { get; set; }
 
         public WaitHandle AsyncWaitHandle
         {
-            get { return Reset; }
+            get { return ResetEvent; }
         }
 
         public object AsyncState
@@ -41,12 +41,17 @@ namespace Symbiote.Core.Futures
 
         public void Set()
         {
-            Reset.Set();
+            ResetEvent.Set();
+        }
+
+        public void Reset()
+        {
+            ResetEvent.Reset();
         }
 
         public CallbackResult()
         {
-            Reset = new ManualResetEvent( false );
+            ResetEvent = new ManualResetEvent( false );
         }
     }
 }

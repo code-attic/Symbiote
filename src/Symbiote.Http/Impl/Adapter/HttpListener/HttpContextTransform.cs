@@ -17,11 +17,9 @@ using System.Net;
 
 namespace Symbiote.Http.Impl.Adapter.NetListener
 {
-    public class HttpContextTransform : IConextTransformer<HttpListenerContext>
+    public class HttpContextTransform : IContextTransformer<HttpListenerContext>
     {
         public HttpRequestTransform RequestTransform { get; set; }
-
-        #region IConextTransformer<HttpListenerContext> Members
 
         public Context From<T>( T context )
         {
@@ -37,8 +35,6 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
                 responseAdapter
                 );
         }
-
-        #endregion
 
         public HttpContextTransform()
         {

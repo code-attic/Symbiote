@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
@@ -21,8 +22,10 @@ namespace Messaging.Tests.Pipes
     }
 
     [Serializable]
+    [DataContract]
     public class TestMessage
     {
+        [DataMember(Order = 1)]
         public string Text { get; set; }
     }
 
@@ -41,7 +44,7 @@ namespace Messaging.Tests.Pipes
 
         private Because of = () =>
                                  {
-                                     result = bus.Request<TestMessage, string>("client", new TestMessage() { Text = "Hi." }).WaitFor( 500 );
+                                     result = bus.Request<TestMessage, string>("client", new TestMessage() { Text = "Hi." }).WaitFor( 250 );
                                  };
         
         private It should_get_response = () => result.ShouldEqual( "I got your message." );

@@ -49,12 +49,7 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
-        public IRegisterApplication DefineApplication( Predicate<IRequest> route,
-                                                       Action
-                                                           <IDictionary<string, object>,
-                                                           Action
-                                                           <string, IDictionary<string, IList<string>>,
-                                                           IEnumerable<object>>, Action<Exception>> application )
+        public IRegisterApplication DefineApplication( Predicate<IRequest> route, OwinApplication application )
         {
             IApplicationFactory applicationFactory = new DelegateApplicationFactory( application );
             Routes.Add( Tuple.Create( route, applicationFactory ) );

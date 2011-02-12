@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using Nancy;
 using Nancy.Bootstrapper;

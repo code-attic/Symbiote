@@ -26,8 +26,8 @@ namespace Symbiote.Http.Impl
         : IBuildResponse
     {
         public string FileTemplate = @"..\..{0}";
-        public Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> Respond { get; set; }
-        public IDictionary<string, IList<string>> ResponseHeaders { get; set; }
+        public OwinResponse Respond { get; set; }
+        public IDictionary<string, string> ResponseHeaders { get; set; }
         public List<object> ResponseChunks { get; set; }
         public Func<string, byte[]> Encoder { get; set; }
         public IDefineHeaders HeaderDefinitions { get; set; }
@@ -104,16 +104,15 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
-        public static implicit operator ResponseHelper(
-            Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond )
+        public static implicit operator ResponseHelper( OwinResponse respond )
         {
             return new ResponseHelper( respond );
         }
 
-        public ResponseHelper( Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond )
+        public ResponseHelper( OwinResponse respond )
         {
             Respond = respond;
-            ResponseHeaders = new Dictionary<string, IList<string>>();
+            ResponseHeaders = new Dictionary<string, string>();
             ResponseChunks = new List<object>();
             Encoder = x => Encoding.UTF8.GetBytes( x );
             HeaderDefinitions = new HeaderBuilder( ResponseHeaders );

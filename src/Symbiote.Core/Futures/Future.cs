@@ -62,6 +62,19 @@ namespace Symbiote.Core.Futures
         protected TimeSpan Timeout { get; set; }
         protected TimeSpan TimeBetweenTries { get; set; }
 
+        protected void Loop()
+        {
+            if( CycleWhile() )
+            {
+                Attempts = 0;
+                Result = default(T);
+                HasResult = false;
+                ActiveCall = false;
+                ResetTrigger = new CallbackResult();
+                GetResult();
+            }
+        }
+
         protected T Value
         {
             get
@@ -76,12 +89,8 @@ namespace Symbiote.Core.Futures
                     }
                     Thread.Sleep( TimeBetweenTries );
                 }
-
                 if ( !HasResult && Attempts >= Limit )
                     Result = OnFail();
-
-                if ( Coroutine != null && HasResult )
-                    Coroutine( Result );
 
                 return Result;
             }
@@ -97,9 +106,10 @@ namespace Symbiote.Core.Futures
             }
         }
 
-        protected void Init()
+        protected Future()
         {
             Limit = 1;
+            CycleWhile = () => false;
             TimeBetweenTries = TimeSpan.Zero;
             Timeout = TimeSpan.FromMilliseconds( -1 );
             OnFail = () => default(T);
@@ -107,31 +117,15 @@ namespace Symbiote.Core.Futures
 
         protected abstract void InvokeCall();
 
-        protected void Loop()
+        public Future<T> LoopWhile(Func<bool> condition)
         {
-            Attempts = 0;
-            Result = default(T);
-            HasResult = false;
-            ActiveCall = false;
-            ResetTrigger = new CallbackResult();
-            GetResult();
+            CycleWhile = condition;
+            return this;
         }
 
         public Future<T> MaxRetries( int retries )
         {
             Limit = retries;
-            return this;
-        }
-
-        public Future<T> Start()
-        {
-            GetResult();
-            return this;
-        }
-
-        public Future<T> OnFailure( Func<T> onFailure )
-        {
-            OnFail = onFailure;
             return this;
         }
 
@@ -141,11 +135,23 @@ namespace Symbiote.Core.Futures
             return this;
         }
 
+        public Future<T> OnFailure( Func<T> onFailure )
+        {
+            OnFail = onFailure;
+            return this;
+        }
+
         public Future<T> OnValue( Action<T> handle )
         {
             Coroutine = handle;
             if ( HasResult )
                 handle( Value );
+            return this;
+        }
+
+        public Future<T> Start()
+        {
+            GetResult();
             return this;
         }
 
@@ -173,20 +179,10 @@ namespace Symbiote.Core.Futures
             return this;
         }
 
-        public Future<T> LoopWhile(Func<bool> condition)
-        {
-            CycleWhile = condition;
-            return this;
-        }
-
         public static implicit operator T( Future<T> future )
         {
             return future.Value;
         }
 
-        protected Future()
-        {
-            CycleWhile = () => false;
-        }
     }
 }

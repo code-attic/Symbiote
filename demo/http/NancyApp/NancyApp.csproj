@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Nancy">
-      <HintPath>..\..\..\bin\Nancy.dll</HintPath>
+      <HintPath>..\..\..\lib\Nancy\Nancy.dll</HintPath>
     </Reference>
     <Reference Include="Nancy.ViewEngines.Razor">
       <HintPath>..\..\..\lib\Nancy\Nancy.ViewEngines.Razor.dll</HintPath>
@@ -53,7 +53,8 @@
     <Reference Include="Symbiote.Daemon">
       <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Http">
+    <Reference Include="Symbiote.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Symbiote.Http.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net">

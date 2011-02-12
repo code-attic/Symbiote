@@ -18,6 +18,7 @@ using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Http.Config;
 using Symbiote.Http.Impl;
+using Symbiote.Http.Impl.Adapter.SocketListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http
@@ -40,6 +41,7 @@ namespace Symbiote.Http
             container.For<HttpListenerConfiguration>().Use<HttpListenerConfiguration>().AsSingleton();
             container.For<IRegisterApplication>().Use( router );
             container.For<IRouteRequest>().Use( router );
+            container.For<IHost>().Use<SocketServer>();
         }
     }
 }

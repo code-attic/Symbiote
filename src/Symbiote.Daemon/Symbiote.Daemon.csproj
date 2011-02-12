@@ -42,7 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\Symbiote.Daemon.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\dev\Symbiote.Daemon.xml</DocumentationFile>
     <DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

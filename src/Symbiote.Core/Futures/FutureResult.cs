@@ -39,12 +39,16 @@ namespace Symbiote.Core.Futures
                     HasResult = true;
                     ResetTrigger.Set();
                 }
+                if ( Coroutine != null && HasResult )
+                    Coroutine( Result );
+                Loop();
             }
+            if ( !HasResult && Attempts >= Limit )
+                Result = OnFail();
         }
 
         public FutureResult( Func<T> call )
         {
-            Init();
             Call = call;
             ResetTrigger = new CallbackResult();
             AsyncResult = ResetTrigger;

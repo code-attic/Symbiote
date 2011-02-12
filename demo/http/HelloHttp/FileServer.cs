@@ -9,7 +9,7 @@ namespace HelloHttp
 {
     public class FileServer : IApplication
     {
-        public void Process(IDictionary<string, object> requestItems, Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond, Action<Exception> onException)
+        public void Process(IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException)
         {
 
             //After helper

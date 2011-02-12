@@ -13,10 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Utility;
 using Symbiote.Http.Owin;
@@ -27,32 +26,17 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
     {
         public HttpListenerResponse Response { get; set; }
 
-        public void Respond( string status, IDictionary<string, IList<string>> headers, IEnumerable<object> body )
+        public void Respond( string status, IDictionary<string, string> headers, IEnumerable<object> body )
         {
             var httpStatus = HttpStatus.Lookup[status];
             Response.StatusCode = httpStatus.Code;
             Response.StatusDescription = httpStatus.Description;
 
-            headers.ForEach( x => Response.AddHeader( x.Key, DelimitedBuilder.Construct( x.Value, ";" ) ) );
+            headers.ForEach( x => Response.AddHeader( x.Key, x.Value ) );
             Response.ProtocolVersion = HttpVersion.Version11;
-            body
-                .Select( Serialize )
-                .Where( x => x.Length > 0 )
-                .ForEach( x => Response.OutputStream.Write( x, 0, x.Length ) );
+            body.ForEach( x => ResponseEncoder.Write( x, Response.OutputStream ) );
 
             Response.Close();
-        }
-
-        public byte[] Serialize( object o )
-        {
-            byte[] buffer;
-            if ( o == null )
-                buffer = new byte[] {};
-            else if ( o is byte[] )
-                buffer = o as byte[];
-            else
-                buffer = Encoding.UTF8.GetBytes( o.ToString() );
-            return buffer;
         }
 
         public HttpResponseAdapter( HttpListenerContext context )
