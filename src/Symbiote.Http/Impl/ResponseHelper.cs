@@ -28,6 +28,18 @@ namespace Symbiote.Http.Impl
         : IBuildResponse
     {
         public string FileTemplate = @"..\..{0}";
+        public readonly string RENDER_EXCEPTION_TEMPLATE = @"
+<html>
+    <head>
+        <title>Symbiote.Http View Rendering Engine Exception</title>
+        <h1>Wow, this is so embarassing...</h1>
+        <p>
+        <pre>
+        {0}
+        </pre>
+        </p>
+    </head>
+";
         public OwinResponse Respond { get; set; }
         public IDictionary<string, string> ResponseHeaders { get; set; }
         public List<object> ResponseChunks { get; set; }
@@ -87,12 +99,47 @@ namespace Symbiote.Http.Impl
             using( var stream = new MemoryStream() )
             using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
             {
-                engine.Render( viewName, model, streamWriter );
+                try
+                {
+                    engine.Render( viewName, model, streamWriter );
+                }
+                catch ( Exception e )
+                {
+                    streamWriter.Write( RENDER_EXCEPTION_TEMPLATE.AsFormat( e ) );
+                    streamWriter.Flush();
+                }
                 streamWriter.Flush();
                 DefineHeaders( x => x.ContentType( ContentType.Html ).ContentLength( stream.Length ) );
                 AppendToBody( stream.GetBuffer() );
             }
             return this;
+        }
+
+        public IBuildResponse RenderView<TModel>( TModel model, string viewName, string layoutName )
+        {
+            var engine = Assimilate.GetInstanceOf<IViewEngine>();
+            using( var stream = new MemoryStream() )
+            using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
+            {
+                try
+                {
+                    engine.Render( viewName, layoutName, model, streamWriter );
+                }
+                catch ( Exception e )
+                {
+                    streamWriter.Write( RENDER_EXCEPTION_TEMPLATE.AsFormat( e ) );
+                    streamWriter.Flush();
+                }
+                streamWriter.Flush();
+                DefineHeaders( x => x.ContentType( ContentType.Html ).ContentLength( stream.Length ) );
+                AppendToBody( stream.GetBuffer() );
+            }
+            return this;
+        }
+
+        public void RenderException( Exception ex, Stream stream )
+        {
+
         }
 
         public void Submit( string status )

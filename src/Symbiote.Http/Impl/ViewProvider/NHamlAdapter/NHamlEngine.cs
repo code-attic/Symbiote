@@ -17,40 +17,22 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using System.Web.Mvc;
 using NHaml;
 using NHaml.Compilers.CSharp4;
 using NHaml.TemplateResolution;
 using Symbiote.Core.Collections;
-using System.Linq;
 using Symbiote.Http.Config;
-using Symbiote.Core.Extensions;
 
 namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter 
 {
     public class NHamlEngine : ITemplateContentProvider, IViewEngine
     {
-        public HttpWebConfiguration Configuration { get; set; }
+        public readonly string EXTENSION = "haml";
         public TemplateEngine TemplateEngine { get; set; }
-        public string DefaultMaster { get; set; }
-        public IList<string> PathSources { get; set; }
         public Type BaseTemplateType { get; set; }
         public ExclusiveConcurrentDictionary<Tuple<string, Type>, CompiledTemplate> CompiledTemplates { get; set; }
-        public const string typedPathTemplate = @"{0}/{1}/{2}/{3}.haml";
-        public const string pathTemplate = @"{0}/{1}/{2}.haml";
-
-        public string GetViewPath( string templateName )
-        {
-            return PathSources.FirstOrDefault( x => 
-                File.Exists( pathTemplate.AsFormat( Configuration.BaseContentPath, x, templateName ) ) );
-        }
-
-        public string GetViewPath<TModel>( string templateName )
-        {
-            var viewPath = typeof(TModel).Name;
-            var potentialPaths = PathSources.Select( x => Path.Combine( Configuration.BaseContentPath, x, viewPath, templateName ) + ".haml" );
-            return potentialPaths.FirstOrDefault( File.Exists );
-        }
+        public IViewLocator ViewLocator { get; set; }
+        public IList<string> PathSources { get; set; }
 
         public IViewSource GetViewSource( string templateFile )
         {
@@ -70,7 +52,6 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
 
         private void InitializeTemplateEngine()
         {
-            DefaultMaster = "Application";
             foreach ( var referencedAssembly in Assembly.GetEntryAssembly().GetReferencedAssemblies() )
             {
                 TemplateEngine.Options.AddReference( Assembly.Load(referencedAssembly).Location );
@@ -93,22 +74,43 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
                 () => TemplateEngine.Compile( view, typeof( NHamlView<> ).MakeGenericType( type ) ) );
         }
 
+        public CompiledTemplate GetCompiledTemplateFor<TModel>(string view, string layout)
+        {
+            Type type = typeof(TModel);
+            var combineView = string.Join( "-", layout, view );
+            return CompiledTemplates.ReadOrWrite( Tuple.Create( combineView, type ),
+                () => TemplateEngine.Compile( new[] {layout, view} , typeof( NHamlView<> ).MakeGenericType( type ) ) );
+        }
+
         public void Render<TModel>(string view, TModel model, TextWriter writer )
         {
-            var viewPath = GetViewPath<TModel>( view );
-            CompiledTemplate template = GetCompiledTemplateFor<TModel>(viewPath);
+            var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
+            var layoutPath = ViewLocator.GetDefaultLayout<TModel>( EXTENSION );
+            CompiledTemplate template = layoutPath == null 
+                ? GetCompiledTemplateFor<TModel>( viewPath )
+                : GetCompiledTemplateFor<TModel>( viewPath, layoutPath );
             var instance = ( IView ) template.CreateInstance();
             instance.SetModel( model );
             instance.Render( writer );
         }
 
-        public NHamlEngine( HttpWebConfiguration configuration )
+        public void Render<TModel>(string view, string layout, TModel model, TextWriter writer )
         {
+            var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
+            var layoutPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
+            CompiledTemplate template = GetCompiledTemplateFor<TModel>(viewPath, layoutPath);
+            var instance = ( IView ) template.CreateInstance();
+            instance.SetModel( model );
+            instance.Render( writer );
+        }
+
+        public NHamlEngine( IViewLocator viewLocator )
+        {
+            ViewLocator = viewLocator;
             PathSources = new List<string>();
             CompiledTemplates = new ExclusiveConcurrentDictionary<Tuple<string, Type>, CompiledTemplate>();
             BaseTemplateType = typeof(NHamlView<>);
             TemplateEngine = new TemplateEngine();
-            Configuration = configuration;
             InitializeTemplateEngine();
             PathSources.Add( "Views" );
             PathSources.Add( "Shared" );

@@ -26,6 +26,18 @@ namespace Symbiote.Http.Config
             return this;
         }
 
+        public HttpWebConfigurator DefaultLayoutTemplate( string layoutName )
+        {
+            Configuration.DefaultLayoutTemplate = layoutName;
+            return this;
+        }
+
+        public HttpWebConfigurator AddViewSearchFolder( string path )
+        {
+            Configuration.PathSources.Add( path );
+            return this;
+        }
+
         public HttpWebConfigurator()
         {
             Configuration = new HttpWebConfiguration();

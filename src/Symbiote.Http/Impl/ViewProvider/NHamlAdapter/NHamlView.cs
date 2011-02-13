@@ -13,12 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System.Web.Mvc;
 using NHaml;
 
 namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
 {
     public class NHamlView<TModel> : Template, IView
-    {   
+    {
         public TModel Model { get; set; }
 
         public void SetModel( object model )

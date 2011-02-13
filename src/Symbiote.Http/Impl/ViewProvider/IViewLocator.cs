@@ -13,22 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-
-using System.Collections.Generic;
-
-namespace Symbiote.Http.Config
+namespace Symbiote.Http.Impl.ViewProvider
 {
-    public class HttpWebConfiguration
+    public interface IViewLocator 
     {
-        public string BaseContentPath { get; set; }
-        public string DefaultLayoutTemplate { get; set; }
-        public List<string> PathSources { get; set; }
-
-        public HttpWebConfiguration()
-        {
-            BaseContentPath = @"../../";
-            DefaultLayoutTemplate = "Application";
-            PathSources = new List<string>() { "Views", "Shared" };
-        }
+        string GetDefaultLayout<TModel>( string extension );
+        string GetViewPath( string viewName, string extension );
+        string GetViewPath<TModel>( string viewName, string extension );
     }
 }
