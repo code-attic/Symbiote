@@ -17,8 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
+using Symbiote.Http.Impl.ViewProvider;
 
 namespace Symbiote.Http.Impl
 {
@@ -76,6 +78,20 @@ namespace Symbiote.Http.Impl
         public IBuildResponse DefineHeaders( Action<IDefineHeaders> headerDefinition )
         {
             headerDefinition( HeaderDefinitions );
+            return this;
+        }
+
+        public IBuildResponse RenderView<TModel>( TModel model, string viewName )
+        {
+            var engine = Assimilate.GetInstanceOf<IViewEngine>();
+            using( var stream = new MemoryStream() )
+            using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
+            {
+                engine.Render( viewName, model, streamWriter );
+                streamWriter.Flush();
+                DefineHeaders( x => x.ContentType( ContentType.Html ).ContentLength( stream.Length ) );
+                AppendToBody( stream.GetBuffer() );
+            }
             return this;
         }
 

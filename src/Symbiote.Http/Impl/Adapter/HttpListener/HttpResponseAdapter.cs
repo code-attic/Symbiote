@@ -13,14 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
 using System.Collections.Generic;
 using System.Net;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Utility;
 using Symbiote.Http.Owin;
 
-namespace Symbiote.Http.Impl.Adapter.NetListener
+namespace Symbiote.Http.Impl.Adapter.HttpListener
 {
     public class HttpResponseAdapter : IResponseAdapter
     {

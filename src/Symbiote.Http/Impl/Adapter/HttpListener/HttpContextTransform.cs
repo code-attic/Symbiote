@@ -15,7 +15,7 @@
 // */
 using System.Net;
 
-namespace Symbiote.Http.Impl.Adapter.NetListener
+namespace Symbiote.Http.Impl.Adapter.HttpListener
 {
     public class HttpContextTransform : IContextTransformer<HttpListenerContext>
     {

@@ -13,21 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using Symbiote.Http.Impl;
+using System.IO;
 
-namespace Symbiote.Http
+namespace Symbiote.Http.Impl.ViewProvider
 {
-    public interface IBuildResponse
+    public interface IView
     {
-        IBuildResponse AppendToBody( byte[] bytes );
-        IBuildResponse AppendToBody( string text );
-        IBuildResponse AppendFileContentToBody( string path );
-        IBuildResponse AppendJson<T>( T item );
-        IBuildResponse AppendProtocolBuffer<T>( T item );
-        IBuildResponse DefineHeaders( Action<IDefineHeaders> headerDefinition );
-        IBuildResponse RenderView<TModel>( TModel model, string viewName );
-        void Submit( string status );
-        void Submit( HttpStatus status );
+        void SetModel( object model );
+        void Render( TextWriter writer );
+    }
+
+    public interface IViewEngine
+    {
+        void Render<TModel>(string view, TModel model, TextWriter writer );
     }
 }

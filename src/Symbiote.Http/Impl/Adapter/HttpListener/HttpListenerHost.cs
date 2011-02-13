@@ -16,19 +16,18 @@
 using System;
 using System.Net;
 using System.Threading;
-using Symbiote.Core.Extensions;
 using Symbiote.Core.Futures;
 using Symbiote.Http.Config;
 using Symbiote.Http.Owin;
 
-namespace Symbiote.Http.Impl.Adapter.NetListener
+namespace Symbiote.Http.Impl.Adapter.HttpListener
 {
     public class HttpListenerHost
         : IHost, IDisposable
     {
         public IRouteRequest RequestRouter { get; set; }
         public HttpListenerConfiguration Configuration { get; set; }
-        public HttpListener Listener { get; set; }
+        public System.Net.HttpListener Listener { get; set; }
         public HttpContextTransform ContextTransformer { get; set; }
         public bool Running { get; set; }
         public SemaphoreSlim ConcurrencyGuard { get; set; }
@@ -91,7 +90,7 @@ namespace Symbiote.Http.Impl.Adapter.NetListener
             Configuration = configuration;
             ContextTransformer = new HttpContextTransform();
             ConcurrencyGuard = new SemaphoreSlim( 128 );//Environment.ProcessorCount );
-            Listener = new HttpListener();
+            Listener = new System.Net.HttpListener();
             Listener.AuthenticationSchemes = Configuration.AuthSchemes;
             Configuration.HostedUrls.ForEach( x => { Listener.Prefixes.Add( x ); } );
         }

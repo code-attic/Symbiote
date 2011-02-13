@@ -18,7 +18,8 @@ using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Http.Config;
 using Symbiote.Http.Impl;
-using Symbiote.Http.Impl.Adapter.SocketListener;
+using Symbiote.Http.Impl.ViewProvider;
+using Symbiote.Http.Impl.ViewProvider.NHamlAdapter;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http
@@ -38,10 +39,9 @@ namespace Symbiote.Http
         {
             var router = new ApplicationRouter();
             container.For<HttpConfigurator>().Use<HttpConfigurator>();
-            container.For<HttpListenerConfiguration>().Use<HttpListenerConfiguration>().AsSingleton();
             container.For<IRegisterApplication>().Use( router );
             container.For<IRouteRequest>().Use( router );
-            container.For<IHost>().Use<SocketServer>();
+            container.For<IViewEngine>().Use<NHamlEngine>().AsSingleton();
         }
     }
 }

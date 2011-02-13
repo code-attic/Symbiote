@@ -18,7 +18,7 @@ namespace HelloHttp
             Host.Stop();
         }
 
-        public HostService(SocketServer host)
+        public HostService(IHost host)
         {
             Host = host;
         }

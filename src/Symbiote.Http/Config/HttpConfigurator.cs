@@ -15,7 +15,8 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Http.Impl.Adapter.NetListener;
+using Symbiote.Http.Impl.Adapter.HttpListener;
+using Symbiote.Http.Impl.Adapter.SocketListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Config
@@ -23,7 +24,15 @@ namespace Symbiote.Http.Config
     public class HttpConfigurator
     {
         public HttpListenerConfigurator ListenerConfigurator { get; set; }
+        public HttpServerConfigurator SocketConfigurator { get; set; }
         public IRegisterApplication RegisterApplication { get; set; }
+        public HttpWebConfigurator WebConfigurator {get; set; }
+
+        public HttpConfigurator ConfigureWebAppSettings( Action<HttpWebConfigurator> configurator )
+        {
+            configurator( WebConfigurator );
+            return this;
+        }
 
         public HttpConfigurator RegisterApplications( Action<IRegisterApplication> register )
         {
@@ -34,7 +43,22 @@ namespace Symbiote.Http.Config
         public HttpConfigurator ConfigureHttpListener( Action<HttpListenerConfigurator> configurator )
         {
             configurator( ListenerConfigurator );
-            Assimilate.Dependencies( x => x.For<IHost>().Use<HttpListenerHost>().AsSingleton() );
+            Assimilate.Dependencies( x => 
+                { 
+                    x.For<IHost>().Use<HttpListenerHost>().AsSingleton();
+                    x.For<HttpListenerConfiguration>().Use( ListenerConfigurator.GetConfiguration() );
+                } );
+            return this;
+        }
+
+        public HttpConfigurator ConfigureSocketServer( Action<HttpServerConfigurator> configurator )
+        {
+            configurator( SocketConfigurator );
+            Assimilate.Dependencies( x => 
+                { 
+                    x.For<IHost>().Use<SocketServer>();
+                    x.For<HttpServerConfiguration>().Use( SocketConfigurator.GetConfiguration() );
+                } );
             return this;
         }
 
@@ -42,6 +66,14 @@ namespace Symbiote.Http.Config
         {
             ListenerConfigurator = listenerConfigurator;
             RegisterApplication = registerApplication;
+            SocketConfigurator = new HttpServerConfigurator();
+            WebConfigurator = new HttpWebConfigurator();
+
+            Assimilate
+                .Dependencies( x => 
+                {
+                    x.For<HttpWebConfiguration>().Use( WebConfigurator.Configuration );
+                } );
         }
     }
 }

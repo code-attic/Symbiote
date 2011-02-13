@@ -13,21 +13,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using Symbiote.Http.Impl;
 
-namespace Symbiote.Http
+namespace Symbiote.Http.Config
 {
-    public interface IBuildResponse
+    public class HttpWebConfiguration
     {
-        IBuildResponse AppendToBody( byte[] bytes );
-        IBuildResponse AppendToBody( string text );
-        IBuildResponse AppendFileContentToBody( string path );
-        IBuildResponse AppendJson<T>( T item );
-        IBuildResponse AppendProtocolBuffer<T>( T item );
-        IBuildResponse DefineHeaders( Action<IDefineHeaders> headerDefinition );
-        IBuildResponse RenderView<TModel>( TModel model, string viewName );
-        void Submit( string status );
-        void Submit( HttpStatus status );
+        public string BaseContentPath { get; set; }
+
+        public HttpWebConfiguration()
+        {
+            BaseContentPath = @"../../";
+        }
     }
 }

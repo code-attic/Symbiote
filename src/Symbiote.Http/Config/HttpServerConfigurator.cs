@@ -17,15 +17,14 @@ limitations under the License.
 using System;
 using System.Net;
 using Symbiote.Core;
-using Symbiote.Http.Impl.Adapter.TcpListener;
 
 namespace Symbiote.Http.Config
 {
     public class HttpServerConfigurator
     {
-        private IHttpServerConfiguration _configuration;
+        private HttpServerConfiguration _configuration;
 
-        public IHttpServerConfiguration GetConfiguration()
+        public HttpServerConfiguration GetConfiguration()
         {
             return _configuration;
         }
@@ -68,9 +67,9 @@ namespace Symbiote.Http.Config
             return this;
         }
 
-        public HttpServerConfigurator(IHttpServerConfiguration configuration)
+        public HttpServerConfigurator()
         {
-            _configuration = configuration;
+            _configuration = new HttpServerConfiguration();
         }
     }
 }

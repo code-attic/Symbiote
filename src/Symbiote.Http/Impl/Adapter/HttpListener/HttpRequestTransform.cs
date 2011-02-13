@@ -20,7 +20,7 @@ using System.Linq;
 using System.Net;
 using Symbiote.Http.Owin;
 
-namespace Symbiote.Http.Impl.Adapter.NetListener
+namespace Symbiote.Http.Impl.Adapter.HttpListener
 {
     public class HttpRequestTransform
     {

@@ -13,21 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using Symbiote.Http.Impl;
+using NHaml;
 
-namespace Symbiote.Http
+namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
 {
-    public interface IBuildResponse
-    {
-        IBuildResponse AppendToBody( byte[] bytes );
-        IBuildResponse AppendToBody( string text );
-        IBuildResponse AppendFileContentToBody( string path );
-        IBuildResponse AppendJson<T>( T item );
-        IBuildResponse AppendProtocolBuffer<T>( T item );
-        IBuildResponse DefineHeaders( Action<IDefineHeaders> headerDefinition );
-        IBuildResponse RenderView<TModel>( TModel model, string viewName );
-        void Submit( string status );
-        void Submit( HttpStatus status );
+    public class NHamlView<TModel> : Template, IView
+    {   
+        public TModel Model { get; set; }
+
+        public void SetModel( object model )
+        {
+            Model = (TModel) model;
+        }
     }
 }
