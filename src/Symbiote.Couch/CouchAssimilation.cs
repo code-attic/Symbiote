@@ -25,7 +25,7 @@ namespace Symbiote.Couch
         {
             var config = new CouchConfigurator();
             var configuration = config.GetConfiguration();
-            CouchConfiguration.Configure( configuration );
+            Symbiote.Couch.Couch.Configure( configuration );
             return assimilate;
         }
 
@@ -34,7 +34,7 @@ namespace Symbiote.Couch
             var config = new CouchConfigurator();
             configure( config );
             var configuration = config.GetConfiguration();
-            CouchConfiguration.Configure( configuration );
+            Symbiote.Couch.Couch.Configure( configuration );
             return assimilate;
         }
     }

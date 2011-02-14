@@ -36,7 +36,7 @@ namespace Symbiote.Wcf
         {
             Assimilate.Dependencies( x => x
                                               .For<IServiceClientConfigurationStrategy<TContract>>()
-                                              .CreateWithDelegate(
+                                              .CreateWith(
                                                   () =>
                                                   new DelegateConfigurationStrategy<TContract>( configurationDelegate ) ) );
             return this;

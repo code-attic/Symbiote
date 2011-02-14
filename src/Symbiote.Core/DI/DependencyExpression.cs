@@ -109,7 +109,7 @@ namespace Symbiote.Core.DI
             return this;
         }
 
-        public virtual IPluginConfiguration CreateWithDelegate<TConcrete>( Func<TConcrete> factory )
+        public virtual IPluginConfiguration CreateWith<TConcrete>( Func<TConcrete> factory )
             where TConcrete : TPlugin
         {
             HasDelegate = true;

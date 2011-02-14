@@ -25,7 +25,7 @@ using Symbiote.Couch.Impl.Repository;
 
 namespace Symbiote.Couch
 {
-    public class CouchConfiguration
+    public class Couch
     {
         public static void Configure<TDepedencyAdapter>()
             where TDepedencyAdapter : class, IDependencyAdapter, new()
