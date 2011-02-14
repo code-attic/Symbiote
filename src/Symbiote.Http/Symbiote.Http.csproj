@@ -101,6 +101,7 @@
     <Compile Include="Impl\ViewProvider\IView.cs" />
     <Compile Include="Impl\ViewProvider\DefaultViewLocator.cs" />
     <Compile Include="Impl\ViewProvider\IViewLocator.cs" />
+    <Compile Include="Impl\ViewProvider\NHamlAdapter\CompiledTemplateWrapper.cs" />
     <Compile Include="Impl\ViewProvider\NHamlAdapter\NHamlEngine.cs" />
     <Compile Include="Impl\ViewProvider\NHamlAdapter\NHamlView.cs" />
     <Compile Include="MessagingApplication.cs" />

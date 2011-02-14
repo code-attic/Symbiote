@@ -34,12 +34,15 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
         public void ProcessRequest( Socket clientSocket )
         {
             var context = ContextTransformer.From( clientSocket );
-            var application = RequestRouter.GetApplicationFor( context.Request );
-            application.Process(
-                context.Request.Items,
-                context.Response.Respond,
-                OnApplicationException
-                );
+            if( context != null )
+            {
+                var application = RequestRouter.GetApplicationFor( context.Request );
+                application.Process(
+                    context.Request.Items,
+                    context.Response.Respond,
+                    OnApplicationException
+                    );
+            }
         }
 
         public void OnApplicationException( Exception exception )

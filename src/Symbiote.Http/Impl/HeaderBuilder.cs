@@ -25,135 +25,136 @@ namespace Symbiote.Http.Impl
     {
         public IDictionary<string, string> ResponseHeaders { get; set; }
 
-        #region IDefineHeaders Members
+        public void WriteHeader( string header, string value )
+        {
+            ResponseHeaders[ header ] = value;
+        }
 
         public IDefineHeaders Accept( params string[] contentTypes )
         {
-            ResponseHeaders.Add( "Accept", string.Join( ", ", contentTypes ) );
+            WriteHeader( "Accept", string.Join( ", ", contentTypes ) );
             return this;
         }
 
         public IDefineHeaders AcceptCharset( params string[] charSets )
         {
-            ResponseHeaders.Add( "Accept-Charset", string.Join( ", ", charSets ) );
+            WriteHeader( "Accept-Charset", string.Join( ", ", charSets ) );
             return this;
         }
 
         public IDefineHeaders AcceptEncoding( params string[] encodings )
         {
-            ResponseHeaders.Add( "Accept-Encoding", string.Join( ", ", encodings ) );
+            WriteHeader( "Accept-Encoding", string.Join( ", ", encodings ) );
             return this;
         }
 
         public IDefineHeaders AcceptLanguage( params string[] languages )
         {
-            ResponseHeaders.Add( "Accept-Language", string.Join( ", ", languages ) );
+            WriteHeader( "Accept-Language", string.Join( ", ", languages ) );
             return this;
         }
 
         public IDefineHeaders Age( int seconds )
         {
-            ResponseHeaders.Add( "Age", seconds.ToString() );
+            WriteHeader( "Age", seconds.ToString() );
             return this;
         }
 
         public IDefineHeaders Allow( params string[] methods )
         {
-            ResponseHeaders.Add( "Allow", string.Join( ", ", methods ) );
+            WriteHeader( "Allow", string.Join( ", ", methods ) );
             return this;
         }
 
         public IDefineHeaders Authorization( string credentials )
         {
-            ResponseHeaders.Add( "Authorization", credentials );
+            WriteHeader( "Authorization", credentials );
             return this;
         }
 
         public IDefineHeaders ContentEncoding( string encoding )
         {
-            ResponseHeaders.Add( "Content-Encoding", encoding );
+            WriteHeader( "Content-Encoding", encoding );
             return this;
         }
 
         public IDefineHeaders ContentLanguage( string language )
         {
-            ResponseHeaders.Add( "Content-Language", language );
+            WriteHeader( "Content-Language", language );
             return this;
         }
 
         public IDefineHeaders ContentLength( long length )
         {
-            ResponseHeaders.Add( "ContentLength", length.ToString() );
+            WriteHeader( "ContentLength", length.ToString() );
             return this;
         }
 
         public IDefineHeaders ContentMD5( byte[] md5 )
         {
-            ResponseHeaders.Add( "Content-MD5", Encoding.UTF8.GetString( md5 ) );
+            WriteHeader( "Content-MD5", Encoding.UTF8.GetString( md5 ) );
             return this;
         }
 
         public IDefineHeaders ContentType( string mediatype )
         {
-            ResponseHeaders.Add( "Content-Type", mediatype );
+            WriteHeader( "Content-Type", mediatype );
             return this;
         }
 
         public IDefineHeaders Date( DateTime generated )
         {
-            ResponseHeaders.Add( "Date", generated.ToString() );
+            WriteHeader( "Date", generated.ToString() );
             return this;
         }
 
         public IDefineHeaders RedirectTo( string locationUri )
         {
-            ResponseHeaders.Add( "Redirect-To", locationUri );
+            WriteHeader( "Redirect-To", locationUri );
             return this;
         }
 
         public IDefineHeaders MaxForwards( int forwardLimit )
         {
-            ResponseHeaders.Add( "Max-Forwards", forwardLimit.ToString() );
+            WriteHeader( "Max-Forwards", forwardLimit.ToString() );
             return this;
         }
 
         public IDefineHeaders ProxyAuthenticate( string challenge )
         {
-            ResponseHeaders.Add( "Proxy-Authenticate", challenge );
+            WriteHeader( "Proxy-Authenticate", challenge );
             return this;
         }
 
         public IDefineHeaders ProxyAuthorization( string credentials )
         {
-            ResponseHeaders.Add( "Proxy-Authorization", credentials );
+            WriteHeader( "Proxy-Authorization", credentials );
             return this;
         }
 
         public IDefineHeaders Server( string product )
         {
-            ResponseHeaders.Add( "Server", product );
+            WriteHeader( "Server", product );
             return this;
         }
 
         public IDefineHeaders TransferEncoding( string transferEncoding )
         {
-            ResponseHeaders.Add( "Transfer-Encoding", transferEncoding );
+            WriteHeader( "Transfer-Encoding", transferEncoding );
             return this;
         }
 
         public IDefineHeaders Upgrade( params string[] protocols )
         {
-            ResponseHeaders.Add( "Upgrade", string.Join(", ", protocols ) );
+            WriteHeader( "Upgrade", string.Join(", ", protocols ) );
             return this;
         }
 
         public IDefineHeaders WwwAuthenticate( string challenge )
         {
-            ResponseHeaders.Add( "WWW-Authentication", challenge );
+            WriteHeader( "WWW-Authentication", challenge );
             return this;
         }
-
-        #endregion
 
         public HeaderBuilder( IDictionary<string, string> responseHeaders )
         {

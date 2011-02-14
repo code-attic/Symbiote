@@ -105,6 +105,7 @@
     <Compile Include="Actor\KeyAccess\KeyAccess.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
+    <Compile Include="Collections\when_attempting_writes_in_parallel_to_exclusive_dictionary.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />

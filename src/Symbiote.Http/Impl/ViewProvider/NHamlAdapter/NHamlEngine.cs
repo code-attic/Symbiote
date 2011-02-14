@@ -22,6 +22,7 @@ using NHaml.Compilers.CSharp4;
 using NHaml.TemplateResolution;
 using Symbiote.Core.Collections;
 using Symbiote.Http.Config;
+using System.Linq;
 
 namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter 
 {
@@ -30,10 +31,11 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
         public readonly string EXTENSION = "haml";
         public TemplateEngine TemplateEngine { get; set; }
         public Type BaseTemplateType { get; set; }
-        public ExclusiveConcurrentDictionary<Tuple<string, Type>, CompiledTemplate> CompiledTemplates { get; set; }
+        public ExclusiveConcurrentDictionary<string, CompiledTemplateWrapper> CompiledTemplates { get; set; }
         public IViewLocator ViewLocator { get; set; }
         public IList<string> PathSources { get; set; }
-
+        public object Lock { get; set; }
+        
         public IViewSource GetViewSource( string templateFile )
         {
             var info = new FileInfo( templateFile );
@@ -42,7 +44,23 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
 
         public IViewSource GetViewSource( string templatePath, IList<IViewSource> parentViewSourceList )
         {
-            return GetViewSource( templatePath );   
+            var file = Path.HasExtension( templatePath ) ? templatePath : string.Join( ".", templatePath, EXTENSION );
+            var newPath = file;
+            if ( parentViewSourceList.Count > 0 )
+            {
+                newPath = parentViewSourceList
+                    .Select( x => 
+                    { 
+                        var path = x.Path;
+                        var directory = path.Replace( Path.GetFileName( path ), "" );
+                        var templateFile = Path.Combine( directory, file );
+                        if ( File.Exists( templateFile ) )
+                            return templateFile;
+                        return null;
+                    } ).FirstOrDefault( x => x != null) ?? newPath;
+
+            }
+            return GetViewSource( newPath );
         }
 
         public void AddPathSource( string pathSource )
@@ -67,53 +85,45 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
             TemplateEngine.Options.TemplateCompiler = new CSharp4TemplateCompiler();
         }
 
-        public CompiledTemplate GetCompiledTemplateFor<TModel>(string view)
+        public CompiledTemplateWrapper GetCompiledTemplateFor<TModel>(string view, string layout)
         {
             Type type = typeof(TModel);
-            return CompiledTemplates.ReadOrWrite( Tuple.Create( view, type ),
-                () => TemplateEngine.Compile( view, typeof( NHamlView<> ).MakeGenericType( type ) ) );
+            var combineView = string.Join( "-", layout, view, type.FullName );
+            return CompiledTemplates.ReadOrWrite( 
+                combineView, () => Compile<TModel>( view, layout ) );
         }
 
-        public CompiledTemplate GetCompiledTemplateFor<TModel>(string view, string layout)
+        public CompiledTemplateWrapper Compile<TModel>( string view, string layout )
         {
-            Type type = typeof(TModel);
-            var combineView = string.Join( "-", layout, view );
-            return CompiledTemplates.ReadOrWrite( Tuple.Create( combineView, type ),
-                () => TemplateEngine.Compile( new[] {layout, view} , typeof( NHamlView<> ).MakeGenericType( type ) ) );
+            return CompiledTemplateWrapper.Create<TModel>( TemplateEngine, view, layout );
         }
 
         public void Render<TModel>(string view, TModel model, TextWriter writer )
         {
             var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
             var layoutPath = ViewLocator.GetDefaultLayout<TModel>( EXTENSION );
-            CompiledTemplate template = layoutPath == null 
-                ? GetCompiledTemplateFor<TModel>( viewPath )
-                : GetCompiledTemplateFor<TModel>( viewPath, layoutPath );
-            var instance = ( IView ) template.CreateInstance();
-            instance.SetModel( model );
+            CompiledTemplateWrapper template = GetCompiledTemplateFor<TModel>( viewPath, layoutPath );
+            var instance = template.CreateInstance( model );
             instance.Render( writer );
         }
 
         public void Render<TModel>(string view, string layout, TModel model, TextWriter writer )
         {
             var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
-            var layoutPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
-            CompiledTemplate template = GetCompiledTemplateFor<TModel>(viewPath, layoutPath);
-            var instance = ( IView ) template.CreateInstance();
-            instance.SetModel( model );
+            var layoutPath = ViewLocator.GetViewPath<TModel>( layout, EXTENSION );
+            CompiledTemplateWrapper template = GetCompiledTemplateFor<TModel>(viewPath, layoutPath);
+            var instance = template.CreateInstance( model );
             instance.Render( writer );
         }
 
-        public NHamlEngine( IViewLocator viewLocator )
+        public NHamlEngine( IViewLocator viewLocator, HttpWebConfiguration configuration )
         {
             ViewLocator = viewLocator;
             PathSources = new List<string>();
-            CompiledTemplates = new ExclusiveConcurrentDictionary<Tuple<string, Type>, CompiledTemplate>();
+            CompiledTemplates = new ExclusiveConcurrentDictionary<string, CompiledTemplateWrapper>();
             BaseTemplateType = typeof(NHamlView<>);
             TemplateEngine = new TemplateEngine();
             InitializeTemplateEngine();
-            PathSources.Add( "Views" );
-            PathSources.Add( "Shared" );
         }
     }
 }

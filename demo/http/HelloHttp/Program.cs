@@ -19,7 +19,8 @@ namespace HelloHttp
                                 .Daemon(x => x.Arguments(args))
                                 .Messaging()
                                 .HttpHost(x => x
-                                                   .ConfigureHttpListener( l => l.AddPort(8988))
+                                                   //.ConfigureHttpListener( l => l.AddPort(8988))
+                                                   .ConfigureSocketServer( s => s.Port( 8988 ) )
                                                    .ConfigureWebAppSettings( w => w.BasePath( @"C:\git\Symbiote\demo\http\HelloHttp" ) )
                                                    .RegisterApplications( a => a.DefineApplication(r => r.Url.Equals(@"/"), (rq, rsp, ex) => rsp.Build().AppendToBody( "You should fiddle around with the site. It's fun." ).Submit( HttpStatus.Ok )))
                                                    .RegisterApplications( a => a.DefineApplication<MessagingApplication>(r => r.Url.StartsWith("/message")))
@@ -28,7 +29,6 @@ namespace HelloHttp
                                                    .RegisterApplications( a => a.DefineApplication<FileServer>(r => r.Url.StartsWith("/file")))
                                                    .RegisterApplications( a => a.DefineApplication<PersonApp>( r => r.Url.Equals(@"/haml") ) )
                                                    .RegisterApplications( a => a.DefineApplication((r => true), (rq, rsp, ex) => rsp(Owin.HttpStatus.NO_CONTENT, new Dictionary<string, string>(), new string[]{})))
-                                                   
                                 ).RunDaemon();
         }
     }

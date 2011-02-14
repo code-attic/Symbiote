@@ -49,6 +49,11 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 }
             } while ( read == buffer.Length );
 
+            if ( memory.Length == 0 )
+            {
+                return null;
+            }
+
             var headers = Encoding.UTF8
                 .GetString(memory.GetBuffer(), 0, headerIndex - 1)
                 .Split( new [] { "\r\n" }, StringSplitOptions.None );
