@@ -26,7 +26,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             return "";
         }
 
-        public void SetId<TKey>( DispatchManager actor, TKey id )
+        public void SetId<TKey>( DispatchManager actor, TKey key )
         {
         }
     }

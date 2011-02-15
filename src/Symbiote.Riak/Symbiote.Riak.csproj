@@ -56,13 +56,8 @@
     <Compile Include="Config\IConfigureBucket.cs" />
     <Compile Include="Impl\Data\BucketProperties.cs" />
     <Compile Include="Impl\Data\Link.cs" />
-    <Compile Include="Impl\IDeleteByKey.cs" />
     <Compile Include="IDocumentRepository.cs" />
-    <Compile Include="Impl\IGetAll.cs" />
-    <Compile Include="Impl\IGetByKey.cs" />
-    <Compile Include="IKeyValueStore.cs" />
     <Compile Include="Impl\ProtoBuf\RequestCode.cs" />
-    <Compile Include="IRepository.cs" />
     <Compile Include="IRiakClient.cs" />
     <Compile Include="Impl\ITrackVectors.cs" />
     <Compile Include="Impl\ProtoBuf\BigEndianExtensions.cs" />

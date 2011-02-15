@@ -61,6 +61,12 @@ namespace Symbiote.Couch.Config
             return this;
         }
 
+        public CouchConfigurator LimitMetadataCachingTo( int itemCount )
+        {
+            _config.MetadataCacheLimit = itemCount;
+            return this;
+        }
+
         public CouchConfigurator Port( int port )
         {
             _config.Port = port;

@@ -13,12 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System.Collections.Generic;
+using Symbiote.Couch.Impl.Model;
 
-namespace Symbiote.Riak.Impl
+namespace Symbiote.Couch.Impl.Metadata
 {
-    public interface IGetAll
+    public interface IProvideDocumentMetadata
     {
-        IEnumerable<T> GetAll<T>();
+        DocumentMetadata GetMetadata( string key );
+        void SetMetadata( string key, DocumentMetadata metadata );
     }
 }

@@ -42,6 +42,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -62,6 +70,7 @@
     <Compile Include="Impl\Commands\ISaveDocument.cs" />
     <Compile Include="Impl\Commands\ISaveDocuments.cs" />
     <Compile Include="Impl\Commands\SaveDocumentListCommand.cs" />
+    <Compile Include="Impl\CouchProxy.cs" />
     <Compile Include="Impl\DocumentUtility.cs" />
     <Compile Include="Impl\Commands\DeleteAttachmentCommand.cs" />
     <Compile Include="Impl\Commands\BaseCouchCommand.cs" />
@@ -76,8 +85,17 @@
     <Compile Include="Impl\Commands\SaveDocumentCommand.cs" />
     <Compile Include="Impl\Commands\ServerCommand.cs" />
     <Compile Include="Impl\IDocumentSearchProvider.cs" />
+    <Compile Include="Impl\IMetadataProvider.cs" />
     <Compile Include="Impl\Json\DesignDocumentFilter.cs" />
     <Compile Include="Impl\Json\JsonUrlEncoder.cs" />
+    <Compile Include="Impl\Metadata\SerializationStrategy.cs" />
+    <Compile Include="Impl\Metadata\DocumentContractResolver.cs" />
+    <Compile Include="Impl\Metadata\DocumentMetadataProvider.cs" />
+    <Compile Include="Impl\Metadata\IProvideDocumentMetadata.cs" />
+    <Compile Include="Impl\Metadata\ISerializeDocument.cs" />
+    <Compile Include="Impl\Metadata\IValueProviderCache.cs" />
+    <Compile Include="Impl\Metadata\MetadataValueProvider.cs" />
+    <Compile Include="Impl\Metadata\MetadataValueProviderCache.cs" />
     <Compile Include="Impl\Model\DocumentMetadata.cs" />
     <Compile Include="Impl\UtilityExtensions.cs" />
     <Compile Include="Impl\Model\DesignView.cs" />

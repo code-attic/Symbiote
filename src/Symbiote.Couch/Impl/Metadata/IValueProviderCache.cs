@@ -13,13 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Riak.Impl;
-
-namespace Symbiote.Riak
+namespace Symbiote.Couch.Impl.Metadata
 {
-    public interface IKeyValueStore :
-        IDeleteByKey, IGetByKey, IGetAll
+    public interface IValueProviderCache
     {
-        bool Persist<T>( string key, T instance );
+        MetadataValueProvider GetValueProviderFor( string memberName );
     }
 }

@@ -11,9 +11,9 @@ namespace Actor.Tests.Cache
             return actor.Id.ToString();
         }
 
-        public void SetId<TKey>( CacheItem actor, TKey id )
+        public void SetId<TKey>( CacheItem actor, TKey key )
         {
-            actor.Id = int.Parse( id.ToString() );
+            actor.Id = int.Parse( key.ToString() );
         }
     }
 }

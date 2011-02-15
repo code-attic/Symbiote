@@ -104,6 +104,7 @@
     <Compile Include="Impl\Connection\PooledConnectionHandle.cs" />
     <Compile Include="Impl\Connection\PooledConnectionProvider.cs" />
     <Compile Include="Impl\Connection\SingleConnectionProvider.cs" />
+    <Compile Include="Impl\RedisProxy.cs" />
     <Compile Include="Impl\Serialization\ProtobufCacheSerializer.cs" />
     <Compile Include="IRedisClient.cs" />
     <Compile Include="Impl\Serialization\ICacheSerializer.cs" />

@@ -17,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -38,8 +39,8 @@ namespace Symbiote.Couch.Impl.Commands
             return SaveEnumerable( models );
         }
 
-        public SaveDocumentListCommand( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        public SaveDocumentListCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+            : base( action, configuration, serializer )
         {
         }
     }

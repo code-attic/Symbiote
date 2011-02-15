@@ -16,6 +16,7 @@
 using System.Collections.Generic;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Cache;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Repository
 {
@@ -26,14 +27,14 @@ namespace Symbiote.Couch.Impl.Repository
         protected ICouchCacheProvider _cache;
         protected IDocumentRepository _repository;
 
-        public override void DeleteDocument<TModel>( object id, string rev )
+        public override bool DeleteDocument<TModel>( object id, string rev )
         {
-            _cache.Delete<TModel>( id, rev, base.DeleteDocument<TModel> );
+            return _cache.Delete<TModel>( id, rev, base.DeleteDocument<TModel> );
         }
 
-        public override void DeleteDocument<TModel>( object id )
+        public override bool DeleteDocument<TModel>( object id )
         {
-            _cache.Delete<TModel>( id, base.DeleteDocument<TModel> );
+            return _cache.Delete<TModel>( id, base.DeleteDocument<TModel> );
         }
 
         public override TModel Get<TModel>( object id, string revision )
@@ -61,18 +62,18 @@ namespace Symbiote.Couch.Impl.Repository
             return _cache.GetAllInRange( startingWith, endingWith, base.GetAllBetweenKeys<TModel> );
         }
 
-        public override void Save<TModel>( TModel model )
+        public override bool Save<TModel>( TModel model )
         {
-            _cache.Save( model, base.Save );
+            return _cache.Save( model, base.Save );
         }
 
-        public override void SaveAll<TModel>( IEnumerable<TModel> list )
+        public override bool SaveAll<TModel>( IEnumerable<TModel> list )
         {
-            _cache.SaveAll( list, base.SaveAll );
+            return _cache.SaveAll( list, base.SaveAll );
         }
 
-        public CachedDocumentRepository( ICouchCacheProvider cacheProvider, ICouchConfiguration configuration )
-            : base( configuration )
+        public CachedDocumentRepository( ICouchCacheProvider cacheProvider, ICouchConfiguration configuration, ISerializeDocument serializer )
+            : base( configuration, serializer )
         {
             _cache = cacheProvider;
         }

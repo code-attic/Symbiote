@@ -19,20 +19,21 @@ namespace Symbiote.Couch.Config
 {
     public interface ICouchConfiguration
     {
-        int Port { get; set; }
-        bool Preauthorize { get; set; }
-        string DefaultDatabaseName { get; set; }
-        int TimeOut { get; set; }
-        string Protocol { get; set; }
-        string Server { get; set; }
-        string User { get; set; }
-        string Password { get; set; }
         bool Cache { get; set; }
         DateTime CacheExpiration { get; set; }
         TimeSpan CacheLimit { get; set; }
-        bool Throw404Exceptions { get; set; }
-        bool IncludeTypeSpecification { get; set; }
         string CouchQueryServiceUrl { get; set; }
+        string DefaultDatabaseName { get; set; }
+        bool IncludeTypeSpecification { get; set; }
+        int MetadataCacheLimit { get; set; }
+        string Password { get; set; }
+        int Port { get; set; }
+        bool Preauthorize { get; set; }
+        string Protocol { get; set; }
+        string Server { get; set; }
+        bool Throw404Exceptions { get; set; }
+        int TimeOut { get; set; }
+        string User { get; set; }
         string GetDatabaseNameForType<T>();
         void SetDatabaseNameForType<T>( string databaseName );
     }

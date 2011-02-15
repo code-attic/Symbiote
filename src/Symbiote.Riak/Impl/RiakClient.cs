@@ -15,7 +15,9 @@
 // */
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.Persistence;
 using Symbiote.Core.Serialization;
 using Symbiote.Riak.Config;
 using Symbiote.Riak.Impl.Data;
@@ -34,6 +36,7 @@ namespace Symbiote.Riak.Impl
         public ICommandFactory CommandFactory { get; set; }
         public ITrackVectors VectorClockLookup { get; set; }
         public IRiakConfiguration Configuration { get; set; }
+        public IKeyAccessor KeyAccessor { get; set; }
 
         public RiakClient( ICommandFactory commandFactory, ITrackVectors vectorClockLookup,
                            IRiakConfiguration configuration )
@@ -176,16 +179,14 @@ namespace Symbiote.Riak.Impl
                 bucket.QuorumWriteNodes, bucket.QuorumWriteNodes );
         }
 
-        public bool Delete<T>( T instance )
+        public bool Delete<T>( T instance ) where T : class
         {
-            //do nuffin
-            return false;
+            return Delete<T>( KeyAccessor.GetId( instance ) );
         }
 
-        public bool Persist<T>( T instance )
+        public bool Persist<T>( T instance ) where T : class
         {
-            // do nuffin
-            return false;
+            return Persist( KeyAccessor.GetId( instance ), instance );
         }
 
         public bool DeleteDocument<T>( string key )

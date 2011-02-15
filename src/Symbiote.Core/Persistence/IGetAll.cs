@@ -13,10 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-namespace Symbiote.Riak.Impl
+using System.Collections.Generic;
+
+namespace Symbiote.Core.Persistence
 {
-    public interface IDeleteByKey
+    public interface IGetAll
     {
-        bool Delete<T>( string key );
+        IEnumerable<T> GetAll<T>();
     }
 }

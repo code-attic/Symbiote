@@ -16,6 +16,7 @@
 using System;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -72,8 +73,8 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetDocumentCommand( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        public GetDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+            : base( action, configuration, serializer )
         {
         }
     }

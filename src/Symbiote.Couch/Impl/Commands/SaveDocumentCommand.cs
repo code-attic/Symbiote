@@ -18,6 +18,7 @@ using Symbiote.Core.Serialization;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -55,8 +56,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public SaveDocumentCommand( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        public SaveDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) : base( action, configuration, serializer )
         {
         }
     }

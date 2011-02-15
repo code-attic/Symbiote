@@ -13,17 +13,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-namespace Symbiote.Couch.Impl.Serialization
-{
-    public class DocumentConventions
-    {
-        public string IdPropertyName { get; set; }
-        public string RevisionPropertyName { get; set; }
+using System.IO;
 
-        public DocumentConventions()
-        {
-            IdPropertyName = "Id";
-            RevisionPropertyName = "Rev";
-        }
+namespace Symbiote.Couch.Impl.Metadata
+{
+    public interface ISerializeDocument
+    {
+        void Serialize<T>( T instance, TextWriter writer );
+        T Deserialize<T>( string reader );
     }
 }

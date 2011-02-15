@@ -13,18 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
+
 namespace Symbiote.Core
 {
     public interface IKeyAccessor
     {
+        string GetId( object actor, Type type );
         string GetId<TActor>( TActor actor ) where TActor : class;
-        void SetId<TActor, TKey>( TActor actor, TKey id ) where TActor : class;
+        void SetId( object actor, object key, Type type );
+        void SetId<TActor, TKey>( TActor actor, TKey key ) where TActor : class;
     }
 
     public interface IKeyAccessor<in TActor>
         where TActor : class
     {
         string GetId( TActor actor );
-        void SetId<TKey>( TActor actor, TKey id );
+        void SetId<TKey>( TActor actor, TKey key );
     }
 }

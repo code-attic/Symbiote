@@ -13,21 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Core;
-
-namespace Symbiote.Daemon.BootStrap
+namespace Symbiote.Core.Persistence
 {
-    public class MinionKeyAccessor
-        : IKeyAccessor<Minion>
+    public interface IGetByKey
     {
-        public string GetId( Minion actor )
-        {
-            return actor.MinionPath;
-        }
-
-        public void SetId<TKey>( Minion actor, TKey key )
-        {
-            actor.MinionPath = key.ToString();
-        }
+        T Get<T>( string key );
     }
 }

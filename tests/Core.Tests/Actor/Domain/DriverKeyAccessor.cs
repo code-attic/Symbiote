@@ -11,7 +11,7 @@ namespace Actor.Tests.Domain
             return actor.SSN;
         }
 
-        public void SetId<TKey>(Driver actor, TKey id)
+        public void SetId<TKey>(Driver actor, TKey key)
         {
             // this isn't necessary with a custom factory
         }

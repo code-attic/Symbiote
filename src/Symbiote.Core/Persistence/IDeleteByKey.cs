@@ -13,14 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Riak.Impl;
-
-namespace Symbiote.Riak
+namespace Symbiote.Core.Persistence
 {
-    public interface IRepository :
-        IDeleteByKey, IGetByKey, IGetAll
+    public interface IDeleteByKey
     {
-        bool Delete<T>( T instance );
-        bool Persist<T>( T instance );
+        bool Delete<T>( string key );
     }
 }

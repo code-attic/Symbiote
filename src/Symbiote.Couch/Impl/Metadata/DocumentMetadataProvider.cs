@@ -13,28 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using Symbiote.Core;
-using Symbiote.Core.Serialization;
-using Newtonsoft.Json.Serialization;
+using Symbiote.Core.Collections;
+using Symbiote.Couch.Impl.Model;
 
-namespace Symbiote.Couch.Impl.Serialization
+namespace Symbiote.Couch.Impl.Metadata
 {
-    public class ConventionSerializationContractResolverStrategy : IContractResolverStrategy
+    public class DocumentMetadataProvider : IProvideDocumentMetadata
     {
-        public IContractResolver Resolver
+        public MruDictionary<object, DocumentMetadata> Cache { get; set; }
+
+        public DocumentMetadata GetMetadata( string key )
         {
-            get { return Assimilate.GetInstanceOf<ConventionSerializationContractResolver>(); }
+            return Cache[ key ];
         }
 
-        public bool ResolverAppliesForSerialization( Type type )
+        public void SetMetadata( string key, DocumentMetadata metadata )
         {
-            return type.GetInterface( "ICouchDocument`1" ) == null;
+            Cache[ key ] = metadata;
         }
 
-        public bool ResolverAppliesForDeserialization( Type type )
+        public DocumentMetadataProvider()
         {
-            return false;
+            Cache = new MruDictionary<object, DocumentMetadata>( 100000 );
         }
     }
 }

@@ -47,7 +47,7 @@ namespace Actor.Tests.Domain.Model
             return actor.VIN;
         }
 
-        public void SetId<TKey>( Vehicle actor, TKey id )
+        public void SetId<TKey>( Vehicle actor, TKey key )
         {
             // won't get used due to factory
         }

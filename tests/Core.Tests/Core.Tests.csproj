@@ -44,14 +44,32 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="ServiceStack.Text">
       <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.CoreEx, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Interactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Async, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Linq.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
@@ -152,6 +170,8 @@
     <Compile Include="Distributor\Basic\with_mod_wheel.cs" />
     <Compile Include="Distributor\Basic\with_simple_distributor_of_lists.cs" />
     <Compile Include="Distributor\Basic\with_value_list.cs" />
+    <Compile Include="Serialization\JsonSerializer.cs" />
+    <Compile Include="Serialization\when_building_serializer_for_type.cs" />
     <Compile Include="StateMachine\when_transitioning_state.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine_invoked_immediately.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine_on_failure.cs" />

@@ -30,9 +30,9 @@ namespace Actor.Tests.Sagas
             return actor.Id.ToString();
         }
 
-        public void SetId<TKey>( Person actor, TKey id )
+        public void SetId<TKey>( Person actor, TKey key )
         {
-            actor.Id = Guid.Parse( id.ToString() );
+            actor.Id = Guid.Parse( key.ToString() );
         }
     }
 

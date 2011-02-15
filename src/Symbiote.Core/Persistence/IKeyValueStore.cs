@@ -13,10 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-namespace Symbiote.Riak.Impl
+namespace Symbiote.Core.Persistence
 {
-    public interface IGetByKey
+    public interface IKeyValueStore :
+        IDeleteByKey, IGetByKey, IGetAll
     {
-        T Get<T>( string key );
+        bool Persist<T>( string key, T instance );
     }
 }

@@ -17,6 +17,7 @@ using System;
 using Symbiote.Core.Extensions;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -25,6 +26,7 @@ namespace Symbiote.Couch.Impl.Commands
         public virtual CouchUri Uri { get; protected set; }
         protected virtual IHttpAction action { get; set; }
         protected ICouchConfiguration configuration { get; set; }
+        protected ISerializeDocument serializer { get; set; }
 
         public virtual CommandResult Get()
         {
@@ -74,16 +76,22 @@ namespace Symbiote.Couch.Impl.Commands
             return Uri;
         }
 
+        public virtual TModel Deserialize<TModel>( string json )
+        {
+            return serializer.Deserialize<TModel>( json );
+        }
+
         public virtual CouchException Exception( Exception ex, string format, params object[] args )
         {
             format.ToError<IDocumentRepository>( args );
             return new CouchException( format.AsFormat( args ), ex );
         }
 
-        protected BaseCouchCommand( IHttpAction action, ICouchConfiguration configuration )
+        protected BaseCouchCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer )
         {
             this.action = action;
             this.configuration = configuration;
+            this.serializer = serializer;
         }
     }
 }

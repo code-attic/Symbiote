@@ -44,6 +44,9 @@
     <Reference Include="Nancy.ViewEngines.Spark">
       <HintPath>..\..\..\lib\Nancy\Nancy.ViewEngines.Spark.dll</HintPath>
     </Reference>
+    <Reference Include="NHaml">
+      <HintPath>..\..\..\lib\NHaml\NHaml.dll</HintPath>
+    </Reference>
     <Reference Include="Spark">
       <HintPath>..\..\..\lib\Nancy\Spark.dll</HintPath>
     </Reference>

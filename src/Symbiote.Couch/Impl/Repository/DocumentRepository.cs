@@ -14,13 +14,14 @@
 // limitations under the License.
 // */
 using Symbiote.Couch.Config;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Repository
 {
     public class DocumentRepository
         : BaseDocumentRepository
     {
-        public DocumentRepository( ICouchConfiguration configuration ) : base( configuration )
+        public DocumentRepository( ICouchConfiguration configuration, ISerializeDocument serializer ) : base( configuration, serializer )
         {
         }
     }

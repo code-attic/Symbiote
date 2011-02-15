@@ -35,9 +35,9 @@ namespace Core.Tests.Json.Decorator
             return actor.Id;
         }
 
-        public void SetId<TKey>( IHaveKey actor, TKey id )
+        public void SetId<TKey>( IHaveKey actor, TKey key )
         {
-            actor.Id = id.ToString();
+            actor.Id = key.ToString();
         }
     }
 

@@ -43,9 +43,9 @@ namespace Core.Tests.Actor.KeyAccess
             return actor.Id;
         }
 
-        public void SetId<TKey>( ConcreteType actor, TKey id )
+        public void SetId<TKey>( ConcreteType actor, TKey key )
         {
-            actor.Id = id.ToString();
+            actor.Id = key.ToString();
         }
     }
 
@@ -56,9 +56,9 @@ namespace Core.Tests.Actor.KeyAccess
             return actor.Id;
         }
 
-        public void SetId<TKey>( IHaveId actor, TKey id )
+        public void SetId<TKey>( IHaveId actor, TKey key )
         {
-            actor.SetId( id.ToString() );
+            actor.SetId( key.ToString() );
         }
     }
 

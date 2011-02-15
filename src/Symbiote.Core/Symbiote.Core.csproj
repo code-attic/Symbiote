@@ -125,6 +125,11 @@
     <Compile Include="Collections\MruList.cs" />
     <Compile Include="Config\FromConfig.cs" />
     <Compile Include="Futures\FutureAsyncCallback.cs" />
+    <Compile Include="Persistence\IDeleteByKey.cs" />
+    <Compile Include="Persistence\IGetAll.cs" />
+    <Compile Include="Persistence\IGetByKey.cs" />
+    <Compile Include="Persistence\IKeyValueStore.cs" />
+    <Compile Include="Persistence\IRepository.cs" />
     <Compile Include="UnitOfWork\Context.cs" />
     <Compile Include="UnitOfWork\ContextExtensions.cs" />
     <Compile Include="Utility\DelimitedBuilder.cs">
@@ -243,7 +248,9 @@
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Serialization\Json\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" Condition=" '$(Configuration)'!='Development' " />
   <Target Name="_CopyFilesMarkedCopyLocal" />
