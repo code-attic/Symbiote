@@ -113,6 +113,7 @@
     <Compile Include="AssimilationException.cs" />
     <Compile Include="Collections\MruDictionary.cs" />
     <Compile Include="Collections\MruNode.cs" />
+    <Compile Include="DI\ScanCache.cs" />
     <Compile Include="Extensions\StreamExtensions.cs" />
     <Compile Include="Actor\Agency.cs" />
     <Compile Include="Actor\IActorCache.cs" />

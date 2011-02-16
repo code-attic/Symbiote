@@ -124,6 +124,8 @@ namespace Symbiote.Core
             }
         }
 
+        #region DI
+
         public static IEnumerable<T> GetAllInstancesOf<T>()
         {
             return Assimilation.DependencyAdapter.GetAllInstances<T>();
@@ -154,6 +156,9 @@ namespace Symbiote.Core
             return Assimilation.DependencyAdapter.GetInstance( type, name );
         }
 
+        #endregion
+
+
         public static IAssimilate Dependencies( this IAssimilate assimilate, Action<DependencyConfigurator> configurator )
         {
             var config = new DependencyConfigurator();
@@ -168,58 +173,6 @@ namespace Symbiote.Core
             configurator( config );
             config.RegisterDependencies( Assimilation.DependencyAdapter );
             return Assimilation;
-        }
-
-        public static void Require( string prerequisite, Exception exception )
-        {
-#if !SILVERLIGHT
-            _assimilationLock.EnterReadLock();
-#endif
-#if SILVERLIGHT
-        lock(_assimilationLock)
-        {
-#endif
-            try
-            {
-                if ( !_assimilated.Contains( prerequisite ) )
-                {
-                    throw exception;
-                }
-            }
-            finally
-            {
-#if !SILVERLIGHT
-                _assimilationLock.ExitReadLock();
-#endif
-            }
-#if SILVERLIGHT
-        }
-#endif
-        }
-
-        private static void RegisterSymbioteLibrary(string libraryName)
-        {
-#if !SILVERLIGHT
-            _assimilationLock.EnterWriteLock();
-#endif
-#if SILVERLIGHT
-        lock(_assimilationLock)
-        {
-#endif
-            try
-            {
-                if ( !_assimilated.Contains( libraryName ) )
-                    _assimilated.Add( libraryName );
-            }
-            finally
-            {
-#if !SILVERLIGHT
-                _assimilationLock.ExitWriteLock();
-#endif
-            }
-#if SILVERLIGHT
-        }
-#endif
         }
 
         public static IAssimilate UseTestLogAdapter( this IAssimilate assimilate )
