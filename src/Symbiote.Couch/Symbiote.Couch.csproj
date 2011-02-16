@@ -87,6 +87,8 @@
     <Compile Include="Impl\IDocumentSearchProvider.cs" />
     <Compile Include="Impl\Json\DesignDocumentFilter.cs" />
     <Compile Include="Impl\Json\JsonUrlEncoder.cs" />
+    <Compile Include="Impl\Persistence\KeyValueStore.cs" />
+    <Compile Include="Impl\Persistence\SimpleRepository.cs" />
     <Compile Include="Impl\Serialization\SerializationProvider.cs" />
     <Compile Include="Impl\Serialization\DocumentContractResolver.cs" />
     <Compile Include="Impl\Serialization\DocumentMetadataProvider.cs" />
