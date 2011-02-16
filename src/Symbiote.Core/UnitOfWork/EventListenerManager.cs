@@ -25,6 +25,7 @@ namespace Symbiote.Core.UnitOfWork
     public class EventListenerManager : IEventListenerManager
     {
         public ConcurrentDictionary<Type, List<IEventListener>> Listeners { get; set; }
+        public static int Instance { get; set; }
 
         public void PublishEvent( IEvent evnt )
         {
@@ -71,6 +72,7 @@ namespace Symbiote.Core.UnitOfWork
         {
             Listeners = new ConcurrentDictionary<Type, List<IEventListener>>();
             WireUpListeners();
+            ++Instance;
         }
     }
 }

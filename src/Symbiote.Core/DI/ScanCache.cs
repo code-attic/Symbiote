@@ -12,15 +12,16 @@ namespace Symbiote.Core.DI {
     public class ScanIndex 
     {
         public ConcurrentBag<Assembly> CompleteAssemblyList { get; set; }
-        public ConcurrentBag<Type> CompleteTypeList { get; set; }
-
         public ConcurrentDictionary<Assembly, List<Type>> AssemblyTypes { get; set; }
         public ConcurrentDictionary<Type, Assembly> TypeAssemblies { get; set; }
         public ConcurrentDictionary<Type, List<Type>> ImplementorsOfType { get; set; }
         public ConcurrentDictionary<Type, List<Type>> TypeHierarchies { get; set; }
         public ConcurrentDictionary<Type, List<Type>> Closers { get; set; }
+        public ConcurrentDictionary<Type, Type> SingleImplementations { get; set; }
 
         public TypeScanner Scanner { get; set; }
+
+        public List<string> AssemblyExclusionList { get; set; }
 
         public void Start()
         {
@@ -32,52 +33,92 @@ namespace Symbiote.Core.DI {
         public void LoadTypeList( Assembly assembly )
         {
             var types = assembly.GetTypes().ToList();
+            var objectType = typeof( Object );
             AssemblyTypes[assembly] = types;
             types.ForEach( t =>
                                {
                                    TypeAssemblies[t] = assembly;
-                                   var parents = Reflector.GetInheritanceChain( t ).ToList();
+                                   var parents = Reflector.GetInheritanceChain( t ).Where( o => !o.Equals( objectType ) ).ToList();
                                    TypeHierarchies[t] = parents;
                                    parents.ForEach( p =>
-                                                        {
-                                                            ImplementorsOfType.AddOrUpdate( p,
-                                                                                            c =>
-                                                                                            new List<Type>( new[] {c} ),
-                                                                                            ( c, l ) =>
-                                                                                                {
-                                                                                                    l.Add( c );
-                                                                                                    return l;
-                                                                                                } );
-                                                            if ( p.IsOpenGeneric() && t.Closes( p ) )
-                                                                Closers.AddOrUpdate( p,
-                                                                                     c => new List<Type>( new[] {c} ),
-                                                                                     ( c, l ) =>
-                                                                                         {
-                                                                                             l.Add( c );
-                                                                                             return l;
-                                                                                         } );
-                                                        } );
+                                            {
+                                                ImplementorsOfType
+                                                    .AddOrUpdate( p,
+                                                        c =>
+                                                            { 
+                                                                var l = new List<Type>(6000);
+                                                                l.Add( t );
+                                                                return l;
+                                                            },
+                                                        ( c, l ) =>
+                                                            {
+                                                                l.Add( t );
+                                                                return l;
+                                                            } );
+                                                var closes = 
+                                                    p.IsOpenGeneric()
+                                                    && t.Closes( p );
+                                                if ( closes )
+                                                    Closers.AddOrUpdate( p,
+                                                        c => 
+                                                            { 
+                                                                var l = new List<Type>(6000);
+                                                                l.Add( t );
+                                                                return l;
+                                                            },
+                                                        ( c, l ) =>
+                                                            {
+                                                                l.Add( t );
+                                                                return l;
+                                                            } );
+                                            } );
                                } );
 
+            SingleImplementations = new ConcurrentDictionary<Type, Type>(
+                ImplementorsOfType
+                    .Where( x => x.Value.Count == 1 )
+                    .Select( x => new KeyValuePair<Type, Type>( x.Key, x.Value.First() ) ) );
+
+            
         }
 
+        public void InitExclusions()
+        {
+            AssemblyExclusionList
+                .AddRange( new string[] 
+                {
+                    "System",
+                    "Microsoft",
+                    "mscorlib",
+                    "FSharp.Core",
+                    "Moq",
+                    "Machine.Specifications",
+                    "StructureMap"
+                } );
+        }
 
         public ScanIndex()
         {
-            Scanner = new TypeScanner();
-
-            CompleteAssemblyList = new ConcurrentBag<Assembly>( Scanner.GetAssembliesFromBaseDirectory().ToList() );
-            CompleteAssemblyList.ForEach( x => 
-                { 
-
-                } ); 
-            CompleteTypeList = new ConcurrentBag<Type>(  );
-
             AssemblyTypes = new ConcurrentDictionary<Assembly, List<Type>>();
             TypeAssemblies = new ConcurrentDictionary<Type, Assembly>();
             ImplementorsOfType = new ConcurrentDictionary<Type, List<Type>>();
             TypeHierarchies = new ConcurrentDictionary<Type, List<Type>>();
             Closers = new ConcurrentDictionary<Type, List<Type>>();
+            AssemblyExclusionList = new List<string>();
+            Scanner = new TypeScanner();
+            
+            InitExclusions();
+
+            var initialList = new List<Assembly>( Scanner.GetAssembliesFromBaseDirectory().ToList() );
+            var references = initialList
+                .SelectMany( x => x.GetReferencedAssemblies().Select( Assembly.Load ) )
+                .ToList();
+            initialList.AddRange( references );
+
+            var uniqueList = initialList.Distinct();
+            var filtered = uniqueList.Where( x => !AssemblyExclusionList.Any( e => x.FullName.StartsWith( e ) ) );
+            CompleteAssemblyList = new ConcurrentBag<Assembly>( filtered.ToList() );
+            
         }
     }
 }

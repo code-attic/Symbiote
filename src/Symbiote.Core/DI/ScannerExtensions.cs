@@ -21,14 +21,15 @@ namespace Symbiote.Core.DI
     {
         public static bool Closes( this Type type, Type openType )
         {
-            if ( !openType.IsGenericType && !openType.IsGenericTypeDefinition )
+            if ( !openType.IsGenericType && openType.IsGenericTypeDefinition )
                 return false;
 
             bool closes = false;
 
             if ( openType.IsInterface )
             {
-                closes = type.ImplementsInterfaceTemplate( openType ) && type.IsGenericTypeDefinition == false;
+                closes = type.ImplementsInterfaceTemplate( openType ) 
+                    && !type.IsGenericTypeDefinition;
             }
             else
             {
@@ -39,7 +40,7 @@ namespace Symbiote.Core.DI
                         closes = type.BaseType == openType;
             }
             if ( closes ) return true;
-            return type.BaseType == null ? false : type.BaseType.Closes( openType );
+            return type.BaseType == null || type.BaseType == typeof( object ) ? false : type.BaseType.Closes( openType );
         }
 
         public static bool IsOpenGeneric( this Type type )

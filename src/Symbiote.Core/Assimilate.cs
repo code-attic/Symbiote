@@ -65,8 +65,8 @@ namespace Symbiote.Core
             Assimilation.DependencyAdapter = adapter;
             Assimilation.Dependencies( x =>
                                            {
-                                               DefineDependencies( x );
                                                x.Scan( DefineScan );
+                                               DefineDependencies( x );
                                            } );
             return Assimilation;
         }

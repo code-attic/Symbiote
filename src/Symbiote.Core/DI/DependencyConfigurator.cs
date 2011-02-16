@@ -63,11 +63,11 @@ namespace Symbiote.Core.DI
 
         public void RegisterDependencies( IDependencyRegistry registry )
         {
-            Dependencies
-                .ForEach( registry.Register );
-
             ScanInstructions
                 .ForEach( registry.Scan );
+
+            Dependencies
+                .ForEach( registry.Register );
         }
 
         public DependencyConfigurator()
