@@ -62,7 +62,7 @@ namespace Symbiote.Couch
                                              c.For<ICouchCacheProvider>().Use<CouchCacheProvider>();
                                              c.For<ICacheKeyBuilder>().Use<CacheKeyBuilder>();
                                              c.For<ICouchServer>().Use<CouchDbServer>();
-                                             c.For<ISerializeDocument>().Use<SerializationStrategy>().AsSingleton();
+                                             c.For<ISerializationProvider>().Use<SerializationProvider>().AsSingleton();
                                              c.For<IProvideDocumentMetadata>().Use<DocumentMetadataProvider>().AsSingleton();
                                              c.For<IValueProviderCache>().Use<MetadataValueProviderCache>();
                                              c.For<IKeyAssociationManager>().Use<DefaultKeyAssociationManager>().

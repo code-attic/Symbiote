@@ -55,7 +55,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetDocumentsByIdsCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public GetDocumentsByIdsCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

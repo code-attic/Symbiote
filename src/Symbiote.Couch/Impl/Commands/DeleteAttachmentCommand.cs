@@ -51,7 +51,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public DeleteAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public DeleteAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

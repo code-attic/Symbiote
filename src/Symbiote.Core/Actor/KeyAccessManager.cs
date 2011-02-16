@@ -27,6 +27,11 @@ namespace Symbiote.Core.Actor
         public ConcurrentDictionary<Type, IKeyAccessor> Adapters { get; set; }
         public List<Type> AccessorAvailabilityList { get; set; }
 
+        public bool HasAccessFor( Type type )
+        {
+            return Adapters.ContainsKey( type );
+        }
+
         public string GetId( object actor, Type type )
         {
             var accessor = GetAdapterFor( actor );

@@ -52,7 +52,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetDocumentsPagedCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public GetDocumentsPagedCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

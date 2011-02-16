@@ -52,7 +52,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public SaveAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public SaveAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

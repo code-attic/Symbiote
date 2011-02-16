@@ -38,7 +38,7 @@ namespace Symbiote.Couch.Impl.Commands
             return action;
         }
 
-        public ChangeStreamCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public ChangeStreamCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

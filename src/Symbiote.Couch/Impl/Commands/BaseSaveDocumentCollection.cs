@@ -67,7 +67,7 @@ namespace Symbiote.Couch.Impl.Commands
             return jBlob.ToString();
         }
 
-        protected BaseSaveDocumentCollection( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        protected BaseSaveDocumentCollection( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

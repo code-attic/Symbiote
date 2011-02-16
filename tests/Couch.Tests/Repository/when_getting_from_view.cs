@@ -13,8 +13,10 @@ namespace Couch.Tests.Repository
         private Because of = () =>
                                  {
                                      exception =
-                                         Catch.Exception(
-                                             () => result = repository.FromView<TestDoc>("test", "test", x => x.NoReduce()));
+                                         Catch.Exception( () =>
+                                             {
+                                                 result = repository.FromView<TestDoc>( "test", "test", x => x.NoReduce() );
+                                             } );
                                  };
         
         private It should_get_view_result_without_exception = () => exception.ShouldBeNull();

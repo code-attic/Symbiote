@@ -65,7 +65,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
             var command = commandFactory.CreateGetFromViewCommand();
             var response = command.GetFromView<TModel>( designDocument, viewName, query );
-            var docs = command.Deserialize<ViewResult<TModel>>( response.Json ).GetList().ToList();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
             return docs;
         }
 
@@ -89,7 +89,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
             var command = commandFactory.CreateGetAllDocumentsCommand();
             var response = command.GetDocuments<TModel>();
-            var docs = command.Deserialize<ViewResult<TModel>>( response.Json ).GetList().ToList();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
             return docs;
         }
 
@@ -97,7 +97,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
             var command = commandFactory.CreateGetDocumentsPagedCommand();
             var response = command.GetDocumentsPaged<TModel>( pageSize, pageNumber );
-            var docs = command.Deserialize<ViewResult<TModel>>( response.Json ).GetList().ToList();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
             return docs;
         }
 
@@ -105,7 +105,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
             var command = commandFactory.CreateGetDocumentsByIdsCommand();
             var response = command.GetDocuments<TModel>( ids );
-             var docs = command.Deserialize<ViewResult<TModel>>( response.Json ).GetList().ToList();
+             var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
             return docs;
         }
 
@@ -113,7 +113,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
             var command = commandFactory.CreateGetDocumentsInRangeCommand();
             var response = command.GetDocumentsInRange<TModel>( startingWith, endingWith );
-            var docs = command.Deserialize<ViewResult<TModel>>( response.Json ).GetList().ToList();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
             return docs;
         }
 
@@ -196,7 +196,7 @@ namespace Symbiote.Couch.Impl.Repository
         {
         }
 
-        protected BaseDocumentRepository( ICouchConfiguration configuration, ISerializeDocument serializer )
+        protected BaseDocumentRepository( ICouchConfiguration configuration, ISerializationProvider serializer )
         {
             this.configuration = configuration;
             commandFactory = new CouchCommandFactory( configuration, serializer );

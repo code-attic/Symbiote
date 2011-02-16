@@ -46,7 +46,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public GetAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

@@ -69,7 +69,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public DeleteDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public DeleteDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

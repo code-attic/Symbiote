@@ -24,6 +24,11 @@ namespace Symbiote.Core.Actor
     {
         public IKeyAccessor<T> Accessor { get; set; }
 
+        public bool HasAccessFor( Type type )
+        {
+            return type.IsAssignableFrom( typeof( T ) );
+        }
+
         public string GetId( object actor, Type type )
         {
             var actorType = actor.GetType();

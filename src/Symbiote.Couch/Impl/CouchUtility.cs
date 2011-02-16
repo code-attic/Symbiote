@@ -148,7 +148,7 @@ namespace Symbiote.Couch.Impl
             return configuration.GetDatabaseNameForType<TModel>();
         }
 
-        public CouchUtility( ICouchConfiguration couchConfiguration, ISerializeDocument serializer )
+        public CouchUtility( ICouchConfiguration couchConfiguration, ISerializationProvider serializer )
         {
             configuration = couchConfiguration;
             commandFactory = new CouchCommandFactory( couchConfiguration, serializer );

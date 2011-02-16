@@ -56,7 +56,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public SaveDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) : base( action, configuration, serializer )
+        public SaveDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) : base( action, configuration, serializer )
         {
         }
     }

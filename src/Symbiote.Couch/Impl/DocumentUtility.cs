@@ -13,14 +13,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Symbiote.Core;
-using Symbiote.Core.Collections;
-using Symbiote.Core.Reflection;
-using Symbiote.Core.Utility;
 using Symbiote.Couch.Config;
+using Symbiote.Couch.Impl.Metadata;
 using Symbiote.Couch.Impl.Model;
 
 namespace Symbiote.Couch.Impl
@@ -29,7 +24,7 @@ namespace Symbiote.Couch.Impl
     {
         protected ICouchConfiguration configuration { get; set; }
         protected IKeyAccessor KeyAccessor { get; set; }
-        protected MruDictionary<string, DocumentMetadata> MetadataStore { get; set; }
+        protected IProvideDocumentMetadata MetadataProvider { get; set; }
 
         public virtual string GetDocumentIdAsJson( object instance )
         {
@@ -40,7 +35,7 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                return KeyAccessor.GetId( instance );
+                return KeyAccessor.GetId( instance, instance.GetType() );
             }
         }
 
@@ -53,7 +48,7 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                return KeyAccessor.GetId( instance );
+                return KeyAccessor.GetId( instance, instance.GetType() );
             }
         }
 
@@ -66,10 +61,9 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                //var documentRevision =
-                //    Reflector.ReadMember( instance, configuration.Conventions.RevisionPropertyName ).ToString();
-                //return string.IsNullOrEmpty( documentRevision ) ? null : documentRevision;
-                return null;
+                var key = KeyAccessor.GetId( instance, instance.GetType() );
+                var metadata = MetadataProvider.GetMetadata( key );
+                return metadata == null ? null : metadata._rev;
             }
         }
 
@@ -82,7 +76,10 @@ namespace Symbiote.Couch.Impl
             }
             else
             {
-                //Reflector.WriteMember( instance, configuration.Conventions.RevisionPropertyName, revision );
+                var key = KeyAccessor.GetId( instance, instance.GetType() );
+                var metadata = MetadataProvider.GetMetadata( key ) ??
+                               new DocumentMetadata() { _id = key, _rev = revision };
+                MetadataProvider.SetMetadata( key, metadata );
             }
         }
 
@@ -91,10 +88,11 @@ namespace Symbiote.Couch.Impl
             return instance.GetType().GetInterface( "ICouchDocument`1" ) != null;
         }
 
-        public DocumentUtility( ICouchConfiguration couchConfiguration, IKeyAccessor keyAccessor )
+        public DocumentUtility( ICouchConfiguration couchConfiguration, IKeyAccessor keyAccessor, IProvideDocumentMetadata metadataProvider )
         {
             configuration = couchConfiguration;
             KeyAccessor = keyAccessor;
+            MetadataProvider = metadataProvider;
         }
     }
 }

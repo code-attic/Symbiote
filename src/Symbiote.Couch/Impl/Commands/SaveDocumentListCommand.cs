@@ -39,7 +39,7 @@ namespace Symbiote.Couch.Impl.Commands
             return SaveEnumerable( models );
         }
 
-        public SaveDocumentListCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public SaveDocumentListCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

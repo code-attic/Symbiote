@@ -50,7 +50,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetFromViewCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public GetFromViewCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

@@ -30,6 +30,6 @@ namespace Couch.Tests.Commands.SaveCommand
         private It should_not_produce_null = () => deserialized.ShouldNotBeNull();
         private It should_correctly_deserialize_documents = () => deserializedDocument.ShouldNotBeNull();
         private It should_have_simple_docs_array = () => scrubbedJsonObject["docs"].ShouldNotContain(new [] {new JProperty("$values")});
-        private It should_take_less_than_25ms = () => timer.ElapsedMilliseconds.ShouldBeLessThan(25);
+        private It should_take_less_than_45ms = () => timer.ElapsedMilliseconds.ShouldBeLessThan(45);
     }
 }

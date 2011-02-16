@@ -73,7 +73,7 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public GetDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) 
+        public GetDocumentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
             : base( action, configuration, serializer )
         {
         }

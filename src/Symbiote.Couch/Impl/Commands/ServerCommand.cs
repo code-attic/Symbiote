@@ -153,7 +153,7 @@ namespace Symbiote.Couch.Impl.Commands
             Post( body );
         }
 
-        public ServerCommand( IHttpAction action, ICouchConfiguration configuration, ISerializeDocument serializer ) : base( action, configuration, serializer )
+        public ServerCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) : base( action, configuration, serializer )
         {
         }
     }

@@ -22,7 +22,7 @@ namespace Symbiote.Couch.Impl.Commands
     public class CouchCommandFactory
     {
         protected ICouchConfiguration configuration { get; set; }
-        protected ISerializeDocument Serializer { get; set; }
+        protected ISerializationProvider Serializer { get; set; }
 
         protected TCommand CreateCommand<TCommand>()
         {
@@ -114,7 +114,7 @@ namespace Symbiote.Couch.Impl.Commands
             return CreateCommand<ChangeStreamCommand>();
         }
 
-        public CouchCommandFactory( ICouchConfiguration configuration, ISerializeDocument serializer )
+        public CouchCommandFactory( ICouchConfiguration configuration, ISerializationProvider serializer )
         {
             this.configuration = configuration;
             this.Serializer = serializer;

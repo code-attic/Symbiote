@@ -13,16 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Couch.Config;
-using Symbiote.Couch.Impl.Metadata;
-
-namespace Symbiote.Couch.Impl.Repository
+namespace Symbiote.Couch.Impl.Metadata
 {
-    public class DocumentRepository
-        : BaseDocumentRepository
+    public interface IValueProviderCache
     {
-        public DocumentRepository( ICouchConfiguration configuration, ISerializationProvider serializer ) : base( configuration, serializer )
-        {
-        }
+        MetadataValueProvider GetValueProviderFor( string memberName );
     }
 }

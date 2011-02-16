@@ -72,7 +72,7 @@ namespace Symbiote.Couch.Impl.Repository
             return _cache.SaveAll( list, base.SaveAll );
         }
 
-        public CachedDocumentRepository( ICouchCacheProvider cacheProvider, ICouchConfiguration configuration, ISerializeDocument serializer )
+        public CachedDocumentRepository( ICouchCacheProvider cacheProvider, ICouchConfiguration configuration, ISerializationProvider serializer )
             : base( configuration, serializer )
         {
             _cache = cacheProvider;

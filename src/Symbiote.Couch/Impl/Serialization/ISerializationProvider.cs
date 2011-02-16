@@ -13,16 +13,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Couch.Config;
-using Symbiote.Couch.Impl.Metadata;
+using System.Collections.Generic;
+using System.IO;
+using Symbiote.Couch.Impl.Json;
 
-namespace Symbiote.Couch.Impl.Repository
+namespace Symbiote.Couch.Impl.Metadata
 {
-    public class DocumentRepository
-        : BaseDocumentRepository
+    public interface ISerializationProvider
     {
-        public DocumentRepository( ICouchConfiguration configuration, ISerializationProvider serializer ) : base( configuration, serializer )
-        {
-        }
+        void Serialize<T>( T instance, TextWriter writer );
+        //void Serialize<T>( BulkPersist bulkPersist, TextWriter writer );
+        T Deserialize<T>( string json );
+        ViewResult<T> DeserializeList<T>( string json );
     }
 }

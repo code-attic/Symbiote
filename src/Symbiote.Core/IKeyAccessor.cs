@@ -19,6 +19,7 @@ namespace Symbiote.Core
 {
     public interface IKeyAccessor
     {
+        bool HasAccessFor( Type type );
         string GetId( object actor, Type type );
         string GetId<TActor>( TActor actor ) where TActor : class;
         void SetId( object actor, object key, Type type );
