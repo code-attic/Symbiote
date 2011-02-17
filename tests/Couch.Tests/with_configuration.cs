@@ -12,7 +12,7 @@ namespace Couch.Tests
         protected static ICouchConfiguration configuration;
         private Establish context = () =>
                                         {
-                                            Assimilate.Core<StructureMapAdapter>().Couch();
+                                            Assimilate.Initialize();
                                             configuration = new CouchConfiguration();
                                         };
 

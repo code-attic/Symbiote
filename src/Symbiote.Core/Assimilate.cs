@@ -63,19 +63,32 @@ namespace Symbiote.Core
             var dependencies = GetDependencies( assembly );
             dependencies.ForEach( InitializeSymbiote );
 
-            var scanInstructionType = ScanIndex.ScanningInstructions.First( x => x.Assembly.Equals( assembly ) );
-            var dependencyDefinitionType = ScanIndex.DependencyDefinitions.First( x => x.Assembly.Equals( assembly ) );
+            var scanInstructionType = ScanIndex.ScanningInstructions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
+            var dependencyDefinitionType = ScanIndex.DependencyDefinitions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
+            var initializerType = ScanIndex.SymbioteInitializers.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
 
-            var scanInstructions = 
-                Activator.CreateInstance( scanInstructionType ) as IDefineScanningInstructions;
-            var dependencyDefinitions =
-                Activator.CreateInstance( dependencyDefinitionType ) as IDefineStandardDependencies;
+            var scanInstructions = scanInstructionType != null 
+                ? Activator.CreateInstance( scanInstructionType ) as IDefineScanningInstructions
+                : null;
+
+            var dependencyDefinitions = dependencyDefinitionType != null
+                ? Activator.CreateInstance( dependencyDefinitionType ) as IDefineStandardDependencies
+                : null;
+
+            var initializer = initializerType != null
+                ? Activator.CreateInstance( initializerType ) as IInitializeSymbiote
+                : null;
 
             Assimilation.Dependencies( x =>
                 {
-                    x.Scan( scanInstructions.Scan() );
-                    dependencyDefinitions.DefineDependencies()( x );
+                    if( scanInstructions != null )
+                        x.Scan( scanInstructions.Scan() );
+                    
+                    if ( dependencyDefinitions != null )
+                        dependencyDefinitions.DefineDependencies()( x );
                 } );
+            if ( initializer != null )
+                initializer.Initialize();
         }
 
         public static List<Assembly> GetDependencies( Assembly assembly )

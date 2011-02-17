@@ -120,7 +120,15 @@
     <Compile Include="Actor\DummyActor.cs" />
     <Compile Include="Actor\DummyKeyAccessor.cs" />
     <Compile Include="Actor\Events\when_capturing_events.cs" />
-    <Compile Include="Actor\KeyAccess\KeyAccess.cs" />
+    <Compile Include="Actor\KeyAccess\Class1.cs" />
+    <Compile Include="Actor\KeyAccess\Class2.cs" />
+    <Compile Include="Actor\KeyAccess\ConcreteKeyAccessor.cs" />
+    <Compile Include="Actor\KeyAccess\IHaveId.cs" />
+    <Compile Include="Actor\KeyAccess\InterfaceKeyAccessor.cs" />
+    <Compile Include="Actor\KeyAccess\ConcreteType.cs" />
+    <Compile Include="Actor\KeyAccess\when_accessing_key_by_concrete_accessor.cs" />
+    <Compile Include="Actor\KeyAccess\when_accessing_key_by_inherited_accessor.cs" />
+    <Compile Include="Actor\KeyAccess\with_key_accessor.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
     <Compile Include="Collections\when_attempting_writes_in_parallel_to_exclusive_dictionary.cs" />

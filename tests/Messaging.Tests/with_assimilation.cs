@@ -10,8 +10,7 @@ namespace Messaging.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging()
+                                                .Initialize()
                                                 .UseTestLogAdapter();
                                         };    
     }

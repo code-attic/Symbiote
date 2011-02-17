@@ -28,7 +28,7 @@ namespace Core.Tests.DI {
             var singleInterfaces = index.SingleImplementations;
         };
         
-        private It should_take_3_seconds = () => 
+        private It should_take_1_seconds = () => 
             watch.ElapsedMilliseconds.ShouldBeLessThan( 1001 );
     }
 

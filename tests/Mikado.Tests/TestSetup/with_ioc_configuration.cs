@@ -10,8 +10,6 @@ namespace Mikado.Tests.TestSetup
 {
     public class with_ioc_configuration
     {
-        private Establish context = () => Assimilate
-                                            .Core<StructureMapAdapter>()
-                                            .Mikado();
+        private Establish context = () => Assimilate.Initialize();
     }
 }

@@ -11,7 +11,7 @@ namespace Couch.Tests.Configuration
         private Establish context = () =>
                                         {
                                             configurator = new CouchConfigurator();
-                                            Assimilate.Core<StructureMapAdapter>();
+                                            Assimilate.Initialize();
                                         };
     }
 }

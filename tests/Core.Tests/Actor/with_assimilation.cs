@@ -10,8 +10,7 @@ namespace Actor.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging();
+                                                .Initialize();
                                             Bus = Assimilate.GetInstanceOf<IBus>();
                                         };
 

@@ -9,7 +9,7 @@ namespace Couch.Tests.Commands
     {
         private Establish context = () =>
                                         {
-                                            Assimilate.Core<StructureMapAdapter>().Couch();
+                                            Assimilate.Initialize();
                                         };
     }
 }

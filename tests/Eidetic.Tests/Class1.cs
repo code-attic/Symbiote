@@ -19,7 +19,7 @@ namespace Eidetic.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
+                                                .Initialize()
                                                 .Eidetic(x => x.AddLocalServer().UseForDistributedLockManagement());
                                         };
     }

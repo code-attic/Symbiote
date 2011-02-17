@@ -6,9 +6,6 @@ namespace Core.Tests
 {
     public abstract class with_core_assimilation
     {
-        private Establish context = () =>
-                                        {
-                                            Assimilate.Core<StructureMapAdapter>();
-                                        };
+        private Establish context = () => Assimilate.Initialize();
     }
 }

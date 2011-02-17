@@ -17,7 +17,7 @@ namespace Couch.Tests.Assimilation
         {
             var rememberMock = new Mock<ICacheProvider>().Object;
             ObjectFactory.Configure(x => x.For<ICacheProvider>().Use(rememberMock));
-            Symbiote.Couch.Couch.Configure<StructureMapAdapter>(x => x.Cache());
+            Symbiote.Couch.CouchInit.Configure(x => x.Cache());
         };
 
         private It should_use_CouchConfiguration_for_ICouchConfiguration =

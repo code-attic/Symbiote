@@ -10,7 +10,7 @@ namespace Couch.Tests.Document
 
         private Establish context = () =>
                                         {
-                                            Assimilate.Core<StructureMapAdapter>();
+                                            Assimilate.Initialize();
                                             driver = new Driver(person);
                                         };
     }

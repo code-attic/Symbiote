@@ -114,6 +114,9 @@
     <Compile Include="Impl\Saga\ICondition.cs" />
     <Compile Include="Impl\Saga\IConditionalTransition.cs" />
     <Compile Include="Impl\Saga\ISaga.cs" />
+    <Compile Include="Config\MessagingDependencies.cs" />
+    <Compile Include="Config\MessagingInitializer.cs" />
+    <Compile Include="Config\MessagingScan.cs" />
     <Compile Include="Saga.cs" />
     <Compile Include="Impl\Saga\StateMachine.cs" />
     <Compile Include="Impl\Serialization\MessageOptimizedSerializer.cs" />

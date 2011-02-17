@@ -16,7 +16,7 @@ namespace Couch.Tests.Caching
 
         private Because of = () =>
                                  {
-                                     Assimilate.Core<StructureMapAdapter>().Couch();
+                                     Assimilate.Initialize();
                                      document = new TestDocument() {DocumentId = _documentId, DocumentRevision = "1"};
 
                                      cacheKeyBuilderMock

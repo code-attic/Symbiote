@@ -127,6 +127,7 @@
     <Compile Include="Impl\Command\RenameCommand.cs" />
     <Compile Include="Impl\UnImplementedCommands.cs" />
     <Compile Include="RedisConfigurator.cs" />
+    <Compile Include="Impl\Config\RedisDependencies.cs" />
     <Compile Include="ResponseException.cs" />
     <Compile Include="Impl\Command\SaveDatabaseCommand.cs" />
     <Compile Include="Impl\Command\SetDatabaseCommand.cs" />

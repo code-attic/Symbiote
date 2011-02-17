@@ -21,20 +21,12 @@ namespace Symbiote.Couch
 {
     public static class CouchAssimilation
     {
-        public static IAssimilate Couch( this IAssimilate assimilate )
-        {
-            var config = new CouchConfigurator();
-            var configuration = config.GetConfiguration();
-            Symbiote.Couch.Couch.Configure( configuration );
-            return assimilate;
-        }
-
         public static IAssimilate Couch( this IAssimilate assimilate, Action<CouchConfigurator> configure )
         {
             var config = new CouchConfigurator();
             configure( config );
-            var configuration = config.GetConfiguration();
-            Symbiote.Couch.Couch.Configure( configuration );
+            var configuration = config.Configuration;
+            Symbiote.Couch.CouchInit.Configure( configuration );
             return assimilate;
         }
     }

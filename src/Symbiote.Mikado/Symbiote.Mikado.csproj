@@ -50,6 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\MikadoInitialization.cs" />
+    <Compile Include="Configuration\MikadoScan.cs" />
     <Compile Include="Extensions\MikadoContextExtensions.cs" />
     <Compile Include="IBrokenRuleNotification.cs" />
     <Compile Include="Impl\BrokenRuleNotification.cs" />
@@ -63,7 +65,7 @@
     <Compile Include="IRule.cs" />
     <Compile Include="IRulesIndex.cs" />
     <Compile Include="IRunRules.cs" />
-    <Compile Include="MikadoAssimilation.cs" />
+    <Compile Include="Configuration\MikadoDependencies.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,8 +17,7 @@ namespace Couch.Tests.Document
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Couch();
+                                                .Initialize();
                                             simpleDocument = new TestDocument() {Message = "test"};
                                         };
 

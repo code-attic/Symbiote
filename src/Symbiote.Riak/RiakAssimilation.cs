@@ -15,11 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Core.Persistence;
 using Symbiote.Riak.Config;
-using Symbiote.Riak.Impl;
-using Symbiote.Riak.Impl.ProtoBuf;
-using Symbiote.Riak.Impl.ProtoBuf.Connection;
 
 namespace Symbiote.Riak
 {
@@ -29,20 +25,7 @@ namespace Symbiote.Riak
         {
             var configurator = new RiakConfigurator();
             configurate( configurator );
-
-            Assimilate.Dependencies( x =>
-                                         {
-                                             x.For<IRiakConfiguration>().Use( configurator.Configuration );
-                                             x.For<IConnectionFactory>().Use<ConnectionFactory>();
-                                             x.For<IConnectionProvider>().Use<PooledConnectionProvider>().AsSingleton();
-                                             x.For<ICommandFactory>().Use<ProtoBufCommandFactory>().AsSingleton();
-                                             x.For<IConnectionPool>().Use<LockingConnectionPool>();
-                                             x.For<IRiakClient>().Use<RiakClient>();
-                                             x.For<IDocumentRepository>().Use<RiakClient>();
-                                             x.For<IKeyValueStore>().Use<RiakClient>();
-                                             x.For<ITrackVectors>().Use<VectorRegistry>().AsSingleton();
-                                         } );
-
+            Assimilate.Dependencies( x => x.For<IRiakConfiguration>().Use( configurator.Configuration ) );
             return assimilate;
         }
     }

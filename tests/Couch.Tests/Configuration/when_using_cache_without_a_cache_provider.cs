@@ -17,7 +17,7 @@ namespace Couch.Tests.Configuration
                                  {
                                      ObjectFactory.EjectAllInstancesOf<ICacheProvider>();
 
-                                     exception = Catch.Exception(() => Assimilate.Core<StructureMapAdapter>().Couch( x => x.Https().Port( 1234 ).Server( "couchdb" ).TimeOut( 1000 ).Cache() ));
+                                     exception = Catch.Exception(() => Assimilate.Initialize().Couch( x => x.Https().Port( 1234 ).Server( "couchdb" ).TimeOut( 1000 ).Cache() ));
                                  };
 
         private It should_produce_Couch_configuration_exception = () => exception.ShouldBe(typeof(CouchConfigurationException));

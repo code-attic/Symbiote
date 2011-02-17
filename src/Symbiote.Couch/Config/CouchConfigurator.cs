@@ -22,6 +22,8 @@ namespace Symbiote.Couch.Config
     {
         private CouchConfiguration _config = new CouchConfiguration();
 
+        public CouchConfiguration Configuration { get; internal set; }
+
         public CouchConfigurator Cache()
         {
             _config.Cache = true;
@@ -116,11 +118,6 @@ namespace Symbiote.Couch.Config
         {
             _config.DatabaseResolver = Assimilate.GetInstanceOf<T>();
             return this;
-        }
-
-        public ICouchConfiguration GetConfiguration()
-        {
-            return _config;
         }
     }
 }

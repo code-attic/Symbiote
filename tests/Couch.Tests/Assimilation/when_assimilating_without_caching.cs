@@ -10,7 +10,7 @@ namespace Couch.Tests.Assimilation
     [Subject("Assimilation")]
     public class when_assimilating_without_caching
     {
-        private Because of = () => Assimilate.Core<StructureMapAdapter>().Couch();
+        private Because of = () => Assimilate.Initialize();
 
         private It should_use_CouchConfiguration_for_ICouchConfiguration = 
             () => ObjectFactory

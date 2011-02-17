@@ -20,8 +20,7 @@ namespace Rabbit.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging()
+                                                .Initialize()
                                                 .Rabbit(x => x.AddBroker(r => r.Defaults().Address("localhost")));
                                             Bus = Assimilate.GetInstanceOf<IBus>();
                                         };

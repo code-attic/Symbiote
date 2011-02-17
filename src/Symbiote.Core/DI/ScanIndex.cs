@@ -36,6 +36,7 @@ namespace Symbiote.Core.DI {
         public Dictionary<Assembly, List<Assembly>> ReferenceLookup { get; set; }
         public List<Type> DependencyDefinitions { get; set; }
         public List<Type> ScanningInstructions { get; set; }
+        public List<Type> SymbioteInitializers { get; set; }
 
         public TypeScanner Scanner { get; set; }
 
@@ -53,6 +54,8 @@ namespace Symbiote.Core.DI {
         {
             DependencyDefinitions = ImplementorsOfType[typeof( IDefineStandardDependencies )];
             ScanningInstructions = ImplementorsOfType[typeof( IDefineScanningInstructions )];
+            SymbioteInitializers = ImplementorsOfType[typeof( IInitializeSymbiote )];
+
             var containingAssemblies =
                 DependencyDefinitions.Select( x => x.Assembly )
                     .Concat( ScanningInstructions.Select( x => x.Assembly ) )
@@ -109,6 +112,7 @@ namespace Symbiote.Core.DI {
             SingleImplementations = new ConcurrentDictionary<Type, Type>(
                 ImplementorsOfType
                     .Where( x => x.Value.Count == 1 )
+                    .Where( x => x.Value.First().IsConcreteAndAssignableTo( x.Key ) )
                     .Select( x => new KeyValuePair<Type, Type>( x.Key, x.Value.First() ) ) );
         }
 

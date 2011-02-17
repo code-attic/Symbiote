@@ -19,10 +19,9 @@ namespace Core.Tests.DI
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
+                                                .Initialize()
                                                 .Dependencies(x => x.Scan(s =>
                                                                               {
-                                                                                  s.AssemblyContainingType<IAmAnInterface>();
                                                                                   s.AddAllTypesOf<IAmAnInterface>();
                                                                                   s.AddSingleImplementations();
                                                                               }));

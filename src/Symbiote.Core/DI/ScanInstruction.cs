@@ -67,7 +67,10 @@ namespace Symbiote.Core.DI
 
         protected void RegisterClosingTypes( Type type, IDependencyRegistry registry )
         {
-            var matches = Assimilate.ScanIndex.Closers[type].Where( x => !x.IsAbstract && !x.IsInterface );
+            var list = Assimilate.ScanIndex.Closers.TryGet( type );
+            if ( !list.Item1 )
+                return;
+            var matches = list.Item2.Where( x => !x.IsAbstract && !x.IsInterface );
 
             foreach( var match in matches )
             {
@@ -84,17 +87,20 @@ namespace Symbiote.Core.DI
 
         protected void RegisterAllTypesOf( Type type, IDependencyRegistry registry )
         {
-            Assimilate.ScanIndex.ImplementorsOfType[ type ]
-                .Where( x => x.IsConcrete() )
-                .ForEach( m =>
-                              {
-                                  var name = HasNamingStrategy ? NamingStrategy( m ) : string.Empty;
-                                  var dependencyExpression = HasNamingStrategy
-                                      ? DependencyExpression.For( name, type)
-                                      : DependencyExpression.For( type );
-                                  dependencyExpression.Add( m );
-                                  registry.Register( dependencyExpression );
-                              } );
+            var list = Assimilate.ScanIndex.ImplementorsOfType.TryGet( type );
+
+            if( list.Item1 )
+                list.Item2
+                    .Where( x => x.IsConcrete() )
+                    .ForEach( m =>
+                                  {
+                                      var name = HasNamingStrategy ? NamingStrategy( m ) : string.Empty;
+                                      var dependencyExpression = HasNamingStrategy
+                                          ? DependencyExpression.For( name, type)
+                                          : DependencyExpression.For( type );
+                                      dependencyExpression.Add( m );
+                                      registry.Register( dependencyExpression );
+                                  } );
         }
 
         protected void RegisterClosingType( Type type, Type match, IDependencyRegistry registry )

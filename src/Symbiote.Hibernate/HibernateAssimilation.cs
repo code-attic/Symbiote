@@ -14,10 +14,7 @@
 // limitations under the License.
 // */
 using System;
-using FluentNHibernate.Cfg;
-using NHibernate;
 using Symbiote.Core;
-using Symbiote.Hibernate.Impl;
 
 namespace Symbiote.Hibernate
 {
@@ -25,36 +22,9 @@ namespace Symbiote.Hibernate
     {
         public static IAssimilate Hibernate( this IAssimilate assimilate, Action<HibernateConfigurator> config )
         {
-            var configurator = new HibernateConfigurator( assimilate );
+            var configurator = new HibernateConfigurator();
             config( configurator );
             return assimilate;
-        }
-    }
-
-    public class HibernateConfigurator
-    {
-        private IAssimilate _assimilate;
-
-        public HibernateConfigurator FromFactory( Action<FluentConfiguration> config )
-        {
-            var configuration = Fluently.Configure();
-            config( configuration );
-            _assimilate.Dependencies(
-                x => x.For<ISessionFactory>().Use( configuration.BuildSessionFactory() ).AsSingleton() );
-            return this;
-        }
-
-        public HibernateConfigurator( IAssimilate assimilate )
-        {
-            _assimilate = assimilate;
-            assimilate.Dependencies( x =>
-                                         {
-                                             x.For<ISessionContext>().Use<InMemoryContext>();
-                                             x.For<ISessionManager>().Use<SessionManager>();
-                                             x.For<ISessionModule>().Use<SessionModule>();
-                                             x.For( typeof( IRepository<> ) ).Use( typeof( Repository<> ) );
-                                         } );
-            //HibernatingRhinos.Profiler.Appender.NHibernate.NHibernateProfiler.Initialize();
         }
     }
 }

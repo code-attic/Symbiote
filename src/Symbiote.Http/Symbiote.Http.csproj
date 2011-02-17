@@ -66,6 +66,7 @@
     <Compile Include="ContentType.cs" />
     <Compile Include="Config\HttpConfigurator.cs" />
     <Compile Include="Config\HttpListenerConfigurator.cs" />
+    <Compile Include="Config\HttpDependencies.cs" />
     <Compile Include="Impl\Adapter\Channel\ChannelConfigurator.cs" />
     <Compile Include="Impl\Adapter\Channel\ChannelDefinition.cs" />
     <Compile Include="Impl\Adapter\Channel\HttpChannel.cs" />

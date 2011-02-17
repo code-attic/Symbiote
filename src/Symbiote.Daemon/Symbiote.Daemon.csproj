@@ -102,6 +102,8 @@
     <Compile Include="BootStrap\NewApplication.cs" />
     <Compile Include="BootStrap\Watcher.cs" />
     <Compile Include="DaemonAssimilation.cs" />
+    <Compile Include="Host\Config\DaemonDependencies.cs" />
+    <Compile Include="Host\Config\DaemonScan.cs" />
     <Compile Include="Host\Config\DaemonConfiguration.cs" />
     <Compile Include="Host\Config\DaemonConfigurator.cs" />
     <Compile Include="Host\HostRunner.cs" />

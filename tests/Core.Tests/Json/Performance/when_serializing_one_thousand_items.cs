@@ -19,7 +19,7 @@ namespace Core.Tests.Json.Performance
         protected static List<SerializationTarget> deserialized { get; set; }
         private Because of = () =>
                                  {
-                                     Assimilate.Core<StructureMapAdapter>();
+                                     Assimilate.Initialize();
                                      var list =
                                          Enumerable.Range(0, 1000).Select(x =>
                                              new SerializationTarget() {Id = x, Message = "This is a message! YAR!"});
@@ -42,7 +42,7 @@ namespace Core.Tests.Json.Performance
         protected static List<SerializationTarget> deserialized { get; set; }
         private Because of = () =>
         {
-            Assimilate.Core<StructureMapAdapter>();
+            Assimilate.Initialize();
             var list =
                 Enumerable.Range(0, 1000).Select(x =>
                     new SerializationTarget() { Id = x, Message = "This is a message! YAR!" });

@@ -14,14 +14,9 @@
 // limitations under the License.
 // */
 using System;
-using System.Linq;
 using System.Threading;
 using Symbiote.Core;
-using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
-using Symbiote.Daemon.BootStrap;
-using Symbiote.Daemon.BootStrap.Config;
-using Symbiote.Daemon.Host;
 using Symbiote.Daemon.Installation;
 
 namespace Symbiote.Daemon
@@ -32,44 +27,9 @@ namespace Symbiote.Daemon
         {
             var daemonConfiguration = new DaemonConfigurator();
             config(daemonConfiguration);
-            var hostType = Environment.UserInteractive
-                               ? typeof(ConsoleHost)
-                               : typeof(DaemonHost);
-            assimilate.Dependencies(x => x.Scan(DefineScan));
-            assimilate.Dependencies( x => DefineDependencies( x, daemonConfiguration, hostType  ) );
+            assimilate
+                .Dependencies( container => container.For<DaemonConfiguration>().Use( daemonConfiguration.Configuration ) );
             return assimilate;
-        }
-
-        private static void DefineDependencies(DependencyConfigurator x, DaemonConfigurator daemonConfiguration, Type hostType)
-        {
-            x.For<DaemonConfiguration>().Use( daemonConfiguration.Configuration );
-            x.For<IServiceCoordinator>().Use<ServiceCoordinator>();
-            x.For<ICheckPermission>().Use<CredentialCheck>();
-            x.For(typeof(ServiceController<>)).Use(typeof(ServiceController<>));
-            x.For<IHost>().Use(hostType);
-            x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
-
-            if (daemonConfiguration.Configuration.BootStrapConfiguration != null)
-                x.For<BootStrapConfiguration>().Use(
-                    daemonConfiguration.Configuration.BootStrapConfiguration);
-        }
-
-        private static void DefineScan(IScanInstruction scan)
-        {
-            {
-                AppDomain
-                    .CurrentDomain
-                    .GetAssemblies()
-                    .Where(a =>
-                            a.GetReferencedAssemblies()
-                                .Any(r => r.FullName.Contains("Symbiote.Daemon"))
-                                || a.FullName.Contains("Symbiote.Daemon"))
-                    .ForEach(scan.Assembly);
-
-                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
-                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
-                scan.AddAllTypesOf<IDaemon>();
-            }
         }
 
         public static void RunDaemon( this IAssimilate assimilate )

@@ -10,8 +10,7 @@ namespace Rabbit.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging()
+                                                .Initialize()
                                                 .UseTestLogAdapter();
                                         };    
     }

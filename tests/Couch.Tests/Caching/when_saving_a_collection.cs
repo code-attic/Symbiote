@@ -21,7 +21,7 @@ namespace Couch.Tests.Caching
 
         private Because of = () =>
                                  {
-                                     Assimilate.Core<StructureMapAdapter>().Couch();
+                                     Assimilate.Initialize();
                                      document1 = new TestDocument
                                                      {
                                                          Message = "Doc 1",

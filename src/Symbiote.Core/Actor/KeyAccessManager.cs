@@ -64,13 +64,13 @@ namespace Symbiote.Core.Actor
         
         public void SetId( object actor, object key, Type type )
         {
-            var accessor = GetAdapterFor(actor);
+            var accessor = GetAdapterFor( actor );
             accessor.SetId( actor, key, type );
         }
 
         public void SetId<TActor, TKey>( TActor actor, TKey key ) where TActor : class
         {
-            var accessor = GetAdapterFor(actor);
+            var accessor = GetAdapterFor( actor );
             accessor.SetId( actor, key );
         }
 

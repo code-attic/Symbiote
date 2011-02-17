@@ -57,12 +57,7 @@ namespace Symbiote.Http.Config
             where T : class
         {
             Assimilate.Dependencies(
-                x => x.Scan(s =>
-                    {
-                        s.AssembliesFromApplicationBaseDirectory();
-                        s.TheCallingAssembly();
-                        s.AddAllTypesOf<T>();
-                    }));
+                x => x.Scan(s => s.AddAllTypesOf<T>() ));
             _configuration.RegisteredServices.Add(Tuple.Create(typeof(T), Assimilate.Assimilation.DependencyAdapter.GetDefaultTypeFor<T>()));
             return this;
         }
