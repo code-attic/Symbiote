@@ -87,4 +87,15 @@ namespace Symbiote.Couch
                                          } );
         }
     }
+
+    public class CouchDependencies : IDefineStandardDependencies
+    {
+        public Action<DependencyConfigurator> DefineDependencies()
+        {
+            return c =>
+                {
+
+                };
+        }
+    }
 }

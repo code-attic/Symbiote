@@ -26,10 +26,6 @@ namespace Core.Tests.DI {
             var assemblyCount = index.CompleteAssemblyList.Count;
             var closers = index.Closers.Where( x => x.Value.Count == 1 ).ToList();
             var singleInterfaces = index.SingleImplementations;
-
-            var isOpen = typeof( IHandle<> ).IsOpenGeneric();
-
-            int f = 0;
         };
         
         private It should_take_3_seconds = () => 

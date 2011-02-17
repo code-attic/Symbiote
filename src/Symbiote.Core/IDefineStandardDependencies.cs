@@ -14,17 +14,12 @@
 // limitations under the License.
 // */
 using System;
-using System.Reflection;
+using Symbiote.Core.DI;
 
-namespace Symbiote.Core.DI
+namespace Symbiote.Core
 {
-    public interface IScanInstruction
+    public interface IDefineStandardDependencies
     {
-        void AddAllTypesOf<TPlugin>();
-        void AddAllTypesOf( Type pluginType );
-        void AddSingleImplementations();
-        void ConnectImplementationsToTypesClosing( Type openGenericType );
-        void Execute( IDependencyRegistry registry );
-        void UseNamingStrategyForMultiples( Func<Type, string> strategy );
+        Action<DependencyConfigurator> DefineDependencies();
     }
 }

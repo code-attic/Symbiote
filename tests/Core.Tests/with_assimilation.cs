@@ -8,8 +8,13 @@ namespace Core.Tests
     {
         private Establish context = () =>
                                         {
-                                            Assimilate
-                                                .Core<StructureMapAdapter>();
+                                            Assimilate.Initialize();
                                         };
+    }
+
+    public class when_initializing_symbiote
+        : with_assimilation
+    {
+        
     }
 }

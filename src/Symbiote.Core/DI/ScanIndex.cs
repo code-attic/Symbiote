@@ -1,9 +1,23 @@
-﻿using System;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 
@@ -18,6 +32,10 @@ namespace Symbiote.Core.DI {
         public ConcurrentDictionary<Type, List<Type>> TypeHierarchies { get; set; }
         public ConcurrentDictionary<Type, List<Type>> Closers { get; set; }
         public ConcurrentDictionary<Type, Type> SingleImplementations { get; set; }
+        public Dictionary<Assembly, bool> ConfiguredSymbiotes { get; set; }
+        public Dictionary<Assembly, List<Assembly>> ReferenceLookup { get; set; }
+        public List<Type> DependencyDefinitions { get; set; }
+        public List<Type> ScanningInstructions { get; set; }
 
         public TypeScanner Scanner { get; set; }
 
@@ -26,24 +44,38 @@ namespace Symbiote.Core.DI {
         public void Start()
         {
             CompleteAssemblyList
-                .AsParallel()
-                .ForAll( LoadTypeList );
+                .ForEach( LoadTypeList );
+
+            PopulateSymbioteList();
+        }
+
+        public void PopulateSymbioteList()
+        {
+            DependencyDefinitions = ImplementorsOfType[typeof( IDefineStandardDependencies )];
+            ScanningInstructions = ImplementorsOfType[typeof( IDefineScanningInstructions )];
+            var containingAssemblies =
+                DependencyDefinitions.Select( x => x.Assembly )
+                    .Concat( ScanningInstructions.Select( x => x.Assembly ) )
+                    .Distinct();
+            ConfiguredSymbiotes = containingAssemblies.ToDictionary( x => x, x => false );
         }
 
         public void LoadTypeList( Assembly assembly )
         {
             var types = assembly.GetTypes().ToList();
-            var objectType = typeof( Object );
             AssemblyTypes[assembly] = types;
             types.ForEach( t =>
                                {
                                    TypeAssemblies[t] = assembly;
-                                   var parents = Reflector.GetInheritanceChain( t ).Where( o => !o.Equals( objectType ) ).ToList();
+                                   var parents = Reflector.GetInheritanceChain( t ).ToList();
                                    TypeHierarchies[t] = parents;
                                    parents.ForEach( p =>
                                             {
+                                                var parent = p.IsGenericType
+                                                                 ? p.GetGenericTypeDefinition()
+                                                                 : p;
                                                 ImplementorsOfType
-                                                    .AddOrUpdate( p,
+                                                    .AddOrUpdate( parent,
                                                         c =>
                                                             { 
                                                                 var l = new List<Type>(6000);
@@ -56,10 +88,10 @@ namespace Symbiote.Core.DI {
                                                                 return l;
                                                             } );
                                                 var closes = 
-                                                    p.IsOpenGeneric()
-                                                    && t.Closes( p );
+                                                    parent.IsOpenGeneric()
+                                                    && t.Closes( parent );
                                                 if ( closes )
-                                                    Closers.AddOrUpdate( p,
+                                                    Closers.AddOrUpdate( parent,
                                                         c => 
                                                             { 
                                                                 var l = new List<Type>(6000);
@@ -78,8 +110,6 @@ namespace Symbiote.Core.DI {
                 ImplementorsOfType
                     .Where( x => x.Value.Count == 1 )
                     .Select( x => new KeyValuePair<Type, Type>( x.Key, x.Value.First() ) ) );
-
-            
         }
 
         public void InitExclusions()
@@ -93,7 +123,11 @@ namespace Symbiote.Core.DI {
                     "FSharp.Core",
                     "Moq",
                     "Machine.Specifications",
-                    "StructureMap"
+                    "StructureMap",
+                    "Newtonsoft",
+                    "protobuf-net",
+                    "ServiceStack",
+                    "WindowsBase"
                 } );
         }
 
@@ -105,20 +139,29 @@ namespace Symbiote.Core.DI {
             TypeHierarchies = new ConcurrentDictionary<Type, List<Type>>();
             Closers = new ConcurrentDictionary<Type, List<Type>>();
             AssemblyExclusionList = new List<string>();
+            ReferenceLookup = new Dictionary<Assembly, List<Assembly>>();
+            ConfiguredSymbiotes = new Dictionary<Assembly, bool>();
             Scanner = new TypeScanner();
             
             InitExclusions();
 
             var initialList = new List<Assembly>( Scanner.GetAssembliesFromBaseDirectory().ToList() );
             var references = initialList
-                .SelectMany( x => x.GetReferencedAssemblies().Select( Assembly.Load ) )
+                .SelectMany( x =>
+                    {
+                        var assemblyReferences = x
+                            .GetReferencedAssemblies()
+                            .Select( Assembly.Load )
+                            .ToList();
+                        ReferenceLookup[x] = assemblyReferences;
+                        return assemblyReferences;
+                    } )
                 .ToList();
             initialList.AddRange( references );
 
             var uniqueList = initialList.Distinct();
             var filtered = uniqueList.Where( x => !AssemblyExclusionList.Any( e => x.FullName.StartsWith( e ) ) );
             CompleteAssemblyList = new ConcurrentBag<Assembly>( filtered.ToList() );
-            
         }
     }
 }

@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core;
-using Symbiote.Core.Actor;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.UnitOfWork;
@@ -57,12 +56,6 @@ namespace Symbiote.Messaging
 
         public static IAssimilate Messaging( this IAssimilate assimilate )
         {
-            assimilate.Dependencies( x =>
-                                         {
-                                             x.Scan( DefineScan );
-                                             DefineDependencies( x );
-                                         } );
-
             var handlerInterfaces = GetHandlerInterfaces().ToList();
             var dispatcherPairs = GetMessageDispatcherPairs( handlerInterfaces );
             var actorDispatcherPairs = GetActorDispatcherPairs( handlerInterfaces );
@@ -96,20 +89,6 @@ namespace Symbiote.Messaging
             Preload();
 
             return assimilate;
-        }
-
-        private static void DefineDependencies( DependencyConfigurator x )
-        {
-            x.For<IBus>().Use<Bus>();
-            x.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
-            x.For<IChannelIndex>().Use<ChannelIndex>().AsSingleton();
-            x.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
-            x.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
-            x.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
-            x.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
-            x.For<INodeConfiguration>().Use<NodeConfiguration>().AsSingleton();
-            x.For<INode>().Use<Node>().AsSingleton();
-            x.For<INodeHealthMonitor>().Use<NodeHealthMonitor>().AsSingleton();
         }
 
         private static IEnumerable<Tuple<Type, Type>> GetSagaDispatcherPairs()
@@ -195,29 +174,43 @@ namespace Symbiote.Messaging
         {
             Assimilate.GetInstanceOf<IDispatcher>();
         }
+    }
 
-        private static void DefineScan( IScanInstruction scan )
+    public class MessagingDependencies : IDefineStandardDependencies
+    {
+        public Action<DependencyConfigurator> DefineDependencies()
         {
-            AppDomain
-                    .CurrentDomain
-                    .GetAssemblies()
-                    .Where(a =>
-                            a.GetReferencedAssemblies()
-                                .Any(r => r.FullName.Contains("Symbiote.Messaging"))
-                                || a.FullName.Contains("Symbiote.Messaging"))
-                    .ForEach(scan.Assembly);
+            return container =>
+                {
+                    container.For<IBus>().Use<Bus>();
+                    container.For<IChannelManager>().Use<ChannelManager>().AsSingleton();
+                    container.For<IChannelIndex>().Use<ChannelIndex>().AsSingleton();
+                    container.For<IDispatcher>().Use<DispatchManager>().AsSingleton();
+                    container.For<ISubscriptionManager>().Use<SubscriptionManager>().AsSingleton();
+                    container.For<INodeRegistry>().Use<NodeRegistry>().AsSingleton();
+                    container.For<INodeIdentityProvider>().Use<DefaultNodeIdentityProvider>().AsSingleton();
+                    container.For<INodeConfiguration>().Use<NodeConfiguration>().AsSingleton();
+                    container.For<INode>().Use<Node>().AsSingleton();
+                    container.For<INodeHealthMonitor>().Use<NodeHealthMonitor>().AsSingleton();
+                };
+        }
+    }
 
-            var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
-            scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
-
-            scan.ConnectImplementationsToTypesClosing(
-                typeof( IHandle<> ) );
-            scan.ConnectImplementationsToTypesClosing(
-                typeof( IHandle<,> ) );
-            scan.AddAllTypesOf<INodeHealthBroadcaster>();
-            scan.AddAllTypesOf<INodeChannelManager>();
-            scan.AddAllTypesOf<ISaga>();
-            scan.ConnectImplementationsToTypesClosing(typeof(ISaga<>));
+    public class MessagingScan : IDefineScanningInstructions
+    {
+        public Action<IScanInstruction> Scan()
+        {
+            return scan =>
+                {
+                    scan.ConnectImplementationsToTypesClosing(
+                        typeof( IHandle<> ) );
+                    scan.ConnectImplementationsToTypesClosing(
+                        typeof( IHandle<,> ) );
+                    scan.AddAllTypesOf<INodeHealthBroadcaster>();
+                    scan.AddAllTypesOf<INodeChannelManager>();
+                    scan.AddAllTypesOf<ISaga>();
+                    scan.ConnectImplementationsToTypesClosing(typeof(ISaga<>));
+                };
         }
     }
 }

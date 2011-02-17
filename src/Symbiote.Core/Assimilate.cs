@@ -17,114 +17,74 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using Symbiote.Core.Actor;
+using System.Reflection;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Locking;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
-using Symbiote.Core.Memento;
-using Symbiote.Core.Serialization;
-using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core
 {
     public static class Assimilate
     {
         public static IAssimilate Assimilation { get; set; }
-        private static List<string> _assimilated = new List<string>();
-
-#if !SILVERLIGHT
-        private static ReaderWriterLockSlim _assimilationLock = new ReaderWriterLockSlim();
-#endif
-
-#if SILVERLIGHT
-        private static object _assimilationLock = new object();
-#endif
-
+        public static ScanIndex ScanIndex { get; set; }
         private static bool Initialized { get; set; }
 
         static Assimilate()
         {
             Assimilation = new Assimilation();
+            ScanIndex = new ScanIndex();
+            ScanIndex.Start();
         }
 
-        public static IAssimilate Core<TDepedencyAdapter>()
-            where TDepedencyAdapter : class, IDependencyAdapter, new()
+        public static IAssimilate Initialize()
         {
-            var adapter = Activator.CreateInstance<TDepedencyAdapter>();
-            return Core( adapter );
-        }
-
-        public static IAssimilate Core( IDependencyAdapter adapter )
-        {
-            if ( Initialized )
+            if( Initialized )
                 return Assimilation;
+            Wireup();
             Initialized = true;
-            Assimilation.DependencyAdapter = adapter;
-            Assimilation.Dependencies( x =>
-                                           {
-                                               x.Scan( DefineScan );
-                                               DefineDependencies( x );
-                                           } );
             return Assimilation;
         }
 
-        private static void DefineDependencies( DependencyConfigurator container )
+        private static void Wireup()
         {
-            container.For<ILogProvider>().Use<NullLogProvider>();
-            container.For<ILogger>().Use<NullLogger>();
-            container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );
-            container.For<ILockManager>().Use<NullLockManager>();
-            container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
-            container.For<IKeyAccessor>().Use<KeyAccessManager>().AsSingleton();
-            container.For<IMemoizer>().Use<Memoizer>();
-            container.For( typeof( IMemento<> ) ).Use( typeof( PassthroughMemento<> ) );
-            container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
-            container.For<IContextProvider>().Use<DefaultContextProvider>();
-            container.For<IEventConfiguration>().Use<EventConfiguration>();
-            container.For<IJsonSerializerFactory>().Use<JsonSerializerFactory>().AsSingleton();
-            container.For<IDependencyAdapter>().Use( Assimilation.DependencyAdapter );
-            container.For<IEventListenerManager>().Use<EventListenerManager>().AsSingleton();
-            container.For<IAgency>().Use<Agency>().AsSingleton();
-            container.For(typeof(IActorCache<>)).Use(typeof(NullActorCache<>));
-            container.For(typeof(IAgentFactory)).Use<DefaultAgentFactory>();
-            container.For(typeof(IAgent<>)).Use(typeof(DefaultAgent<>)).AsSingleton();
-            container.For(typeof(IActorStore<>)).Use(typeof(NullActorStore<>));
-            container.For(typeof(IActorFactory<>)).Use(typeof(DefaultActorFactory<>));
+            var dependencyAdapterType = ScanIndex.ImplementorsOfType[typeof( IDependencyAdapter )].First();
+            var dependencyAdapter = Activator.CreateInstance( dependencyAdapterType ) as IDependencyAdapter;
+            Assimilation.DependencyAdapter = dependencyAdapter;
+            ScanIndex.ConfiguredSymbiotes.ForEach( x => InitializeSymbiote( x.Key ) );
         }
 
-        private static void DefineScan(IScanInstruction scan)
+        private static void InitializeSymbiote( Assembly assembly )
         {
-            {
-                AppDomain
-                    .CurrentDomain
-                    .GetAssemblies()
-                    .Where(a =>
-                            a.GetReferencedAssemblies()
-                                .Any(r => r.FullName.Contains("Symbiote.Core"))
-                                || a.FullName.Contains("Symbiote.Core"))
-                    .ForEach(scan.Assembly);
+            if ( ScanIndex.ConfiguredSymbiotes[assembly] )
+                return;
 
-                var exclusions = new[] { "Newtonsoft.Json", "Protobuf-net", "Symbiote.Fibers", "System.Reactive", "RabbitMQ", "System.Interactive", "System.CoreEx" };
-                scan.Exclude( x => exclusions.Any( e => x.Namespace == null || x.Namespace.StartsWith( e ) ) );
+            var dependencies = GetDependencies( assembly );
+            dependencies.ForEach( InitializeSymbiote );
 
-                scan.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
-                scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
-                scan.AddAllTypesOf<IEventListener>();
-                scan.AddSingleImplementations();
-                
-                scan.ConnectImplementationsToTypesClosing(
-                    typeof( IActorFactory<> ) );
-                scan.ConnectImplementationsToTypesClosing(
-                    typeof( IActorCache<> ) );
-                scan.ConnectImplementationsToTypesClosing(
-                    typeof( IActorStore<> ) );
-            }
+            var scanInstructionType = ScanIndex.ScanningInstructions.First( x => x.Assembly.Equals( assembly ) );
+            var dependencyDefinitionType = ScanIndex.DependencyDefinitions.First( x => x.Assembly.Equals( assembly ) );
+
+            var scanInstructions = 
+                Activator.CreateInstance( scanInstructionType ) as IDefineScanningInstructions;
+            var dependencyDefinitions =
+                Activator.CreateInstance( dependencyDefinitionType ) as IDefineStandardDependencies;
+
+            Assimilation.Dependencies( x =>
+                {
+                    x.Scan( scanInstructions.Scan() );
+                    dependencyDefinitions.DefineDependencies()( x );
+                } );
         }
 
-        #region DI
+        public static List<Assembly> GetDependencies( Assembly assembly )
+        {
+            return ScanIndex
+                .ReferenceLookup[assembly]
+                .Where( x => ScanIndex.ConfiguredSymbiotes.Keys.Any( r => r.Equals( x ) ) )
+                .ToList();
+        }
 
         public static IEnumerable<T> GetAllInstancesOf<T>()
         {
@@ -155,9 +115,6 @@ namespace Symbiote.Core
         {
             return Assimilation.DependencyAdapter.GetInstance( type, name );
         }
-
-        #endregion
-
 
         public static IAssimilate Dependencies( this IAssimilate assimilate, Action<DependencyConfigurator> configurator )
         {

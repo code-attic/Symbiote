@@ -16,72 +16,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.DI
 {
-    public class ScanInstruction :
-        IScanInstruction
+    public class ScanInstruction
+        : IScanInstruction
     {
-        protected TypeScanner scanner { get; set; }
         protected bool ShouldAddSingleImplementations { get; set; }
         public IList<Type> AutoWireupTypesOf { get; set; }
         public IList<Type> AutoWireupClosersOf { get; set; }
-        public IList<Type> AutoWireupNamedTypesOf { get; set; }
-        public IList<Type> AutoWireupNamedClosersOf { get; set; }
         public Func<Type, string> NamingStrategy { get; set; }
         public bool HasNamingStrategy { get { return NamingStrategy != null; } }
 
         public ScanInstruction()
         {
-            scanner = new TypeScanner();
             AutoWireupTypesOf = new List<Type>();
             AutoWireupClosersOf = new List<Type>();
-        }
-
-        public void Assembly( Assembly assembly )
-        {
-            scanner.AddAssembly( assembly );
-        }
-
-        public void TheCallingAssembly()
-        {
-            scanner.AddCallingAssembly();
-        }
-
-        public void AssemblyContainingType<T>()
-        {
-            scanner.AddAssemblyContaining<T>();
-        }
-
-        public void AssemblyContainingType( Type type )
-        {
-            scanner.AddAssemblyContaining( type );
-        }
-
-#if !SILVERLIGHT
-        public void AssembliesFromPath( string path )
-        {
-            scanner.AddAssembliesFromPath( path );
-        }
-
-        public void AssembliesFromPath( string path, Predicate<Assembly> assemblyFilter )
-        {
-            scanner.AddAssembliesFromPath( path );
-            scanner.AssemblyFilters.Add( assemblyFilter );
-        }
-#endif
-
-        public void AssembliesFromApplicationBaseDirectory()
-        {
-            scanner.AddAssembliesFromBaseDirectory();
-        }
-
-        public void AssembliesFromApplicationBaseDirectory( Predicate<Assembly> assemblyFilter )
-        {
-            scanner.AddAssembliesFromBaseDirectory();
-            scanner.AssemblyFilters.Add( assemblyFilter );
         }
 
         public void AddAllTypesOf<TPlugin>()
@@ -101,25 +52,22 @@ namespace Symbiote.Core.DI
 
         public void Execute( IDependencyRegistry registry )
         {
-            var filteredTypes = scanner.GetMatchingTypes();
-
             AutoWireupTypesOf
-                .ForEach( x => RegisterAllTypesOf( x, filteredTypes, registry ) );
+                .ForEach( x => RegisterAllTypesOf( x, registry ) );
 
             AutoWireupClosersOf
                 .Where( x => x.IsOpenGeneric() )
-                .ForEach( x => RegisterClosingTypes( x, filteredTypes, registry ) );
+                .ForEach( x => RegisterClosingTypes( x, registry ) );
 
             if ( ShouldAddSingleImplementations )
             {
-                RegisterSingleImplementations( filteredTypes, registry );
+                RegisterSingleImplementations( registry );
             }
         }
 
-        protected void RegisterClosingTypes( Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry )
+        protected void RegisterClosingTypes( Type type, IDependencyRegistry registry )
         {
-            var matches =
-                filteredTypes.Where( t => t.Closes( type ) && !t.IsAbstract && !t.IsInterface );
+            var matches = Assimilate.ScanIndex.Closers[type].Where( x => !x.IsAbstract && !x.IsInterface );
 
             foreach( var match in matches )
             {
@@ -134,10 +82,10 @@ namespace Symbiote.Core.DI
             }
         }
 
-        protected void RegisterAllTypesOf( Type type, IEnumerable<Type> filteredTypes, IDependencyRegistry registry )
+        protected void RegisterAllTypesOf( Type type, IDependencyRegistry registry )
         {
-            filteredTypes
-                .Where( t => t.IsConcreteAndAssignableTo( type ) )
+            Assimilate.ScanIndex.ImplementorsOfType[ type ]
+                .Where( x => x.IsConcrete() )
                 .ForEach( m =>
                               {
                                   var name = HasNamingStrategy ? NamingStrategy( m ) : string.Empty;
@@ -151,93 +99,97 @@ namespace Symbiote.Core.DI
 
         protected void RegisterClosingType( Type type, Type match, IDependencyRegistry registry )
         {
-            Type pluginType = null;
-            Type baseType = match.BaseType;
-            while ( pluginType == null && baseType != typeof( object ) )
-            {
-                if ( baseType != null && baseType.IsGenericType )
-                {
-                    var genericTypeDefinition = baseType.GetGenericTypeDefinition();
-                    if ( genericTypeDefinition.Equals( type ) )
-                    {
-                        pluginType = baseType;
-                    }
-                    else
-                    {
-                        baseType = baseType.BaseType;
-                    }
-                }
-            }
-            if ( pluginType != null )
-            {
-                var name = HasNamingStrategy ? NamingStrategy( pluginType ) : string.Empty;
+            //Type pluginType = null;
+            //Type baseType = match.BaseType;
+            //while ( pluginType == null && baseType != typeof( object ) )
+            //{
+            //    if ( baseType != null && baseType.IsGenericType )
+            //    {
+            //        var genericTypeDefinition = baseType.GetGenericTypeDefinition();
+            //        if ( genericTypeDefinition.Equals( type ) )
+            //        {
+            //            pluginType = baseType;
+            //        }
+            //        else
+            //        {
+            //            baseType = baseType.BaseType;
+            //        }
+            //    }
+            //}
+            //if ( pluginType != null )
+            //{
+            //    var name = HasNamingStrategy ? NamingStrategy( pluginType ) : string.Empty;
+            //    var dependencyExpression = HasNamingStrategy
+            //                          ? DependencyExpression.For( name, pluginType )
+            //                          : DependencyExpression.For( pluginType );
+            //    dependencyExpression.Use( match );
+            //    registry.Register( dependencyExpression );
+            //}
+            var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
                 var dependencyExpression = HasNamingStrategy
-                                      ? DependencyExpression.For( name, pluginType )
-                                      : DependencyExpression.For( pluginType );
+                                      ? DependencyExpression.For( name, type )
+                                      : DependencyExpression.For( type );
                 dependencyExpression.Use( match );
                 registry.Register( dependencyExpression );
-            }
         }
 
         protected void RegisterTypeClosingInterface( Type type, Type match, IDependencyRegistry registry )
         {
-            var pluginTypes = match
-                .GetInterfaces()
-                .Where( y => y.IsGenericType && y.GetGenericTypeDefinition().Equals( type ) );
+            //var pluginTypes = match
+            //    .GetInterfaces()
+            //    .Where( y => y.IsGenericType && y.GetGenericTypeDefinition().Equals( type ) );
 
-            foreach( var pluginType in pluginTypes )
-            {
-                var name = HasNamingStrategy ? NamingStrategy(pluginType) : string.Empty;
+            //foreach( var pluginType in pluginTypes )
+            //{
+            //    var name = HasNamingStrategy ? NamingStrategy(pluginType) : string.Empty;
+            //    var dependencyExpression = HasNamingStrategy
+            //                          ? DependencyExpression.For( name, pluginType )
+            //                          : DependencyExpression.For( pluginType);
+            //    dependencyExpression.Add( match );
+            //    registry.Register( dependencyExpression );
+            //}
+
+            var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
                 var dependencyExpression = HasNamingStrategy
-                                      ? DependencyExpression.For( name, pluginType )
-                                      : DependencyExpression.For( pluginType);
+                                      ? DependencyExpression.For( name, type )
+                                      : DependencyExpression.For( type );
                 dependencyExpression.Add( match );
                 registry.Register( dependencyExpression );
-            }
         }
 
-        protected void RegisterSingleImplementations( IEnumerable<Type> filteredTypes, IDependencyRegistry registry )
+        protected void RegisterSingleImplementations( IDependencyRegistry registry )
         {
-            var interfaces = filteredTypes
-                .Where( t => t.IsInterface )
-                .Distinct();
-            var lookups = interfaces.ToDictionary(
-                x => x,
-                x => filteredTypes.Where( f => f.IsConcreteAndAssignableTo( x ) ) );
-            lookups
-                .Where( kp => kp.Value.Count() == 1 )
-                .ForEach( kp =>
-                              {
-                                  try
-                                  {
-                                      var dependencyExpression = DependencyExpression.For( kp.Key );
-                                      dependencyExpression.Use( kp.Value.First() );
-                                      registry.Register( dependencyExpression );
-                                  }
-                                  catch ( Exception e )
-                                  {
-                                  }
-                              } );
-        }
+            //var interfaces = filteredTypes
+            //    .Where( t => t.IsInterface )
+            //    .Distinct();
+            //var lookups = interfaces.ToDictionary(
+            //    x => x,
+            //    x => filteredTypes.Where( f => f.IsConcreteAndAssignableTo( x ) ) );
+            //lookups
+            //    .Where( kp => kp.Value.Count() == 1 )
+            //    .ForEach( kp =>
+            //                  {
+            //                      try
+            //                      {
+            //                          var dependencyExpression = DependencyExpression.For( kp.Key );
+            //                          dependencyExpression.Use( kp.Value.First() );
+            //                          registry.Register( dependencyExpression );
+            //                      }
+            //                      catch ( Exception e )
+            //                      {
+            //                      }
+            //                  } );
 
-        public void Exclude( Predicate<Type> exclude )
-        {
-            scanner.TypeFilters.Add( exclude );
-        }
-
-        public void ExcludeNamespace( string nameSpace )
-        {
-            scanner.TypeFilters.Add( x => x.Namespace.Contains( nameSpace ) );
-        }
-
-        public void ExcludeNamespaceContainingType<T>()
-        {
-            scanner.TypeFilters.Add( x => x.Namespace.Contains( x.Namespace ) );
-        }
-
-        public void ExcludeType<T>()
-        {
-            scanner.TypeFilters.Add( x => x.Equals( typeof( T ) ) );
+            Assimilate
+                .ScanIndex
+                .SingleImplementations
+                .Where( x => x.Value.IsConcrete() )
+                .ForEach( x =>
+                    {
+                        var dependencyExpression = DependencyExpression.For( x.Key );
+                        dependencyExpression.Use( x.Value );
+                        registry.Register( dependencyExpression );
+                    } );
         }
 
         public void ConnectImplementationsToTypesClosing( Type openGenericType )
