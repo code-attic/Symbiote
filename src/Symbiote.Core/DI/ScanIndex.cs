@@ -111,7 +111,7 @@ namespace Symbiote.Core.DI {
 
             SingleImplementations = new ConcurrentDictionary<Type, Type>(
                 ImplementorsOfType
-                    .Where( x => x.Value.Count == 1 )
+                    .Where( x => !x.Key.IsConcrete() && x.Value.Count == 1 )
                     .Where( x => x.Value.First().IsConcreteAndAssignableTo( x.Key ) )
                     .Select( x => new KeyValuePair<Type, Type>( x.Key, x.Value.First() ) ) );
         }

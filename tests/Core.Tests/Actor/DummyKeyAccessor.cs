@@ -1,7 +1,6 @@
 ﻿using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests
+namespace Core.Tests.Actor
 {
     public class DummyKeyAccessor : IKeyAccessor<DummyActor>
     {

@@ -3,7 +3,7 @@ using Moq;
 using Symbiote.Core.Actor;
 using Symbiote.Core.Memento;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class with_agent_setup
         : with_assimilation

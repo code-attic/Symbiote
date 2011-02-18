@@ -2,7 +2,7 @@
 using Machine.Specifications;
 using Symbiote.Core.Futures;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Utility.Futures
 {
     public class when_using_future_coroutine_invoked_immediately
         : with_callback

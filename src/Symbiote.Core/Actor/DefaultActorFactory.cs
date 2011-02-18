@@ -21,7 +21,7 @@ namespace Symbiote.Core.Actor
         : IActorFactory<TActor>
         where TActor : class
     {
-        protected IKeyAccessor<TActor> KeyAccessor { get; set; }
+        protected IKeyAccessor KeyAccessor { get; set; }
 
         public TActor CreateInstance<TKey>( TKey id )
         {
@@ -30,7 +30,7 @@ namespace Symbiote.Core.Actor
             return actor;
         }
 
-        public DefaultActorFactory( IKeyAccessor<TActor> keyAccessor )
+        public DefaultActorFactory( IKeyAccessor keyAccessor )
         {
             KeyAccessor = keyAccessor;
         }

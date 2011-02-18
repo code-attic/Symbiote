@@ -52,7 +52,8 @@ namespace Symbiote.Core
             var dependencyAdapterType = ScanIndex.ImplementorsOfType[typeof( IDependencyAdapter )].First();
             var dependencyAdapter = Activator.CreateInstance( dependencyAdapterType ) as IDependencyAdapter;
             Assimilation.DependencyAdapter = dependencyAdapter;
-            ScanIndex.ConfiguredSymbiotes.ForEach( x => InitializeSymbiote( x.Key ) );
+            
+            ScanIndex.ConfiguredSymbiotes.Keys.ToList().ForEach( x => InitializeSymbiote( x ) );
         }
 
         private static void InitializeSymbiote( Assembly assembly )
@@ -89,6 +90,8 @@ namespace Symbiote.Core
                 } );
             if ( initializer != null )
                 initializer.Initialize();
+
+            ScanIndex.ConfiguredSymbiotes[ assembly ] = true;
         }
 
         public static List<Assembly> GetDependencies( Assembly assembly )

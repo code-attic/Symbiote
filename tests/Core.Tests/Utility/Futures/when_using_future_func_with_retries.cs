@@ -1,8 +1,7 @@
-﻿using System;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using Symbiote.Core.Futures;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Utility.Futures
 {
     public class when_using_future_func_with_retries
         : with_function_call

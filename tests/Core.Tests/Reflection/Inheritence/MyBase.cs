@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Tests.Reflection.Inheritance
+﻿namespace Core.Tests.Reflection.Inheritence
 {
     public abstract class MyBase : InterfaceB
     {

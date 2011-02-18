@@ -11,10 +11,4 @@ namespace Core.Tests
                                             Assimilate.Initialize();
                                         };
     }
-
-    public class when_initializing_symbiote
-        : with_assimilation
-    {
-        
-    }
 }

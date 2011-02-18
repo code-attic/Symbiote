@@ -2,7 +2,7 @@
 using Moq;
 using Symbiote.Core.Actor;
 
-namespace Actor.Tests.Agency
+namespace Core.Tests.Actor.Agency
 {
     public class with_mock_agent_factory :
         with_assimilation

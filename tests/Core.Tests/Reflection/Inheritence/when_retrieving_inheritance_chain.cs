@@ -2,9 +2,8 @@
 using System.Linq;
 using Machine.Specifications;
 using Symbiote.Core.Reflection;
-using Enumerable = System.Linq.Enumerable;
 
-namespace Core.Tests.Reflection.Inheritance
+namespace Core.Tests.Reflection.Inheritence
 {
     public class when_retrieving_inheritance_chain
     {

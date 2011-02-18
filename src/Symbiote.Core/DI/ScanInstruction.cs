@@ -92,6 +92,7 @@ namespace Symbiote.Core.DI
             if( list.Item1 )
                 list.Item2
                     .Where( x => x.IsConcrete() )
+                    .Where( x => x.GetGenericCardinality() == type.GetGenericCardinality() )
                     .ForEach( m =>
                                   {
                                       var name = HasNamingStrategy ? NamingStrategy( m ) : string.Empty;
@@ -155,10 +156,14 @@ namespace Symbiote.Core.DI
             //    registry.Register( dependencyExpression );
             //}
 
+            var pluginType = type.MakeGenericType( match.GetInterfaces()
+                .First( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ))
+                .GetGenericArguments() );
+
             var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
                 var dependencyExpression = HasNamingStrategy
-                                      ? DependencyExpression.For( name, type )
-                                      : DependencyExpression.For( type );
+                                      ? DependencyExpression.For( name, pluginType )
+                                      : DependencyExpression.For( pluginType );
                 dependencyExpression.Add( match );
                 registry.Register( dependencyExpression );
         }

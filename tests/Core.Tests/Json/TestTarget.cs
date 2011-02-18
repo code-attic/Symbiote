@@ -3,7 +3,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Core.Tests
+namespace Core.Tests.Json
 {
     public class TestTarget
     {

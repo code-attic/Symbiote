@@ -26,11 +26,10 @@ namespace Symbiote.Core
         {
             return scan =>
                 {
+                    scan.AddSingleImplementations();
                     scan.ConnectImplementationsToTypesClosing( typeof( IKeyAccessor<> ) );
                     scan.ConnectImplementationsToTypesClosing( typeof( IMemento<> ) );
                     scan.AddAllTypesOf<IEventListener>();
-                    scan.AddSingleImplementations();
-                
                     scan.ConnectImplementationsToTypesClosing(
                         typeof( IActorFactory<> ) );
                     scan.ConnectImplementationsToTypesClosing(

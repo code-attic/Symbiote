@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Actor.Tests.Domain
+namespace Core.Tests.Actor.Domain
 {
     public class NewMotoristMessage
     {

@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace ringbuffer
+namespace Core.Tests.Utility.RingBuffer
 {
     public class when_instantiating_buffer
         : with_buffer

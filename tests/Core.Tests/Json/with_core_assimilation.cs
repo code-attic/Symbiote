@@ -1,8 +1,7 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.StructureMapAdapter;
 
-namespace Core.Tests
+namespace Core.Tests.Json
 {
     public abstract class with_core_assimilation
     {

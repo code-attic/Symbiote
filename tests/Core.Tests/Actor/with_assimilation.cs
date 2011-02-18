@@ -1,9 +1,8 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Messaging;
-using Symbiote.StructureMapAdapter;
 
-namespace Actor.Tests
+namespace Core.Tests.Actor
 {
     public class with_assimilation
     {

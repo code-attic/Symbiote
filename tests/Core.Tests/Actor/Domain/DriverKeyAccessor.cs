@@ -1,8 +1,7 @@
-﻿using Actor.Tests.Domain.Model;
+﻿using Core.Tests.Actor.Domain.Model;
 using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests.Domain
+namespace Core.Tests.Actor.Domain
 {
     public class DriverKeyAccessor : IKeyAccessor<Driver>
     {

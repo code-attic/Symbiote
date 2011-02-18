@@ -1,4 +1,4 @@
-﻿namespace Actor.Tests.Domain.Model
+﻿namespace Core.Tests.Actor.Domain.Model
 {
     public interface IVehicleMemento
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Machine.Specifications;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Distributor.Basic
 {
     public abstract class with_value_list
     {

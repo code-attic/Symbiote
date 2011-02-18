@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using Machine.Specifications;
-using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 
-namespace Core.Tests
+namespace Core.Tests.Json
 {
     [Subject("JSON Deserialization")]
     public class when_deserializing_attachments : with_core_assimilation

@@ -1,7 +1,6 @@
 ﻿using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests.Cache
+namespace Core.Tests.Actor.Cache
 {
     public class TestKeyAccessor
         : IKeyAccessor<CacheItem>

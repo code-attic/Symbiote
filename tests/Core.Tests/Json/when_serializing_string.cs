@@ -1,11 +1,8 @@
-﻿using System;
-using System.Text;
-using Machine.Specifications;
-using Newtonsoft.Json.Serialization;
+﻿using Machine.Specifications;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 
-namespace Core.Tests
+namespace Core.Tests.Json
 {
     [Subject("JSON Serialization")]
     public class when_serializing_string : with_core_assimilation

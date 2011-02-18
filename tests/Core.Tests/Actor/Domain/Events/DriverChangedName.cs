@@ -1,6 +1,6 @@
 ﻿
 
-namespace Actor.Tests.Domain.Events
+namespace Core.Tests.Actor.Domain.Events
 {
     public class DriverChangedName
     {

@@ -1,9 +1,8 @@
 ﻿using System.Linq;
 using Machine.Specifications;
-using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 
-namespace Core.Tests
+namespace Core.Tests.Json
 {
     public class when_adding_attachment_stub : with_core_assimilation
     {

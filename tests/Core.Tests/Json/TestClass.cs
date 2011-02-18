@@ -1,4 +1,4 @@
-﻿namespace Core.Tests
+﻿namespace Core.Tests.Json
 {
     public class TestClass
     {

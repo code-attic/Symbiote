@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core.Memento;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class with_stored_actor
         : with_agent_setup

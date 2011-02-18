@@ -1,7 +1,7 @@
 ﻿using System;
-using Actor.Tests.Domain.Model;
+using Core.Tests.Actor.Domain.Model;
 
-namespace Actor.Tests.Domain
+namespace Core.Tests.Actor.Domain
 {
     public class DriverFactory
     {

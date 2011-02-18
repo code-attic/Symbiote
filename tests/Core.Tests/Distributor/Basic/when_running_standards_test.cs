@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using Core.Tests.Utility.distributor;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using Symbiote.Core.Trees;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Distributor.Basic
 {
     public class when_running_standards_test
     {
@@ -20,29 +17,5 @@ namespace Core.Tests.Utility
                                  };
 
         private It tree_should_have_correct_node_count = () => 12.ShouldEqual(tree.Count);
-    }
-
-    public class when_rebalancing_tree
-        : with_simple_distributor_of_lists
-    {
-        protected static int rebalance_to = 100;
-
-        private Because of = () =>
-                                {
-                                    for (int i = 0; i < listCount; i++)
-                                    {
-                                        try
-                                        {
-                                            distributor.RebalanceNodeTo( i.ToString(), rebalance_to );
-                                        }
-                                        catch (Exception e)
-                                        {
-                                            Console.WriteLine( e );
-                                        }
-                                    }
-                                };
-
-        private It all_nodes_should_have_100_virtual_nodes = () => 
-            distributor.Nodes.Keys.Select( x => distributor.AliasLookup[x].Count ).All( x => x == rebalance_to ).ShouldBeTrue();
     }
 }

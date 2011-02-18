@@ -1,28 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Symbiote.Core;
 
 namespace Core.Tests.Domain.Model
 {
-    public interface IHaveTestKey
-    {
-        Guid Id { get; set; }
-    }
-
-    public class DriverKeyAccessor : IKeyAccessor<IHaveTestKey>
-    {
-        public string GetId( IHaveTestKey actor )
-        {
-            return actor.Id.ToString();
-        }
-
-        public void SetId<TKey>( IHaveTestKey actor, TKey key )
-        {
-            actor.Id = Guid.Parse( key.ToString() );
-        }
-    }
-
     public class Driver : IHaveTestKey
     {
         public string SSN { get; protected set; }

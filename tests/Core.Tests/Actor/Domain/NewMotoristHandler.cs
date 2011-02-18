@@ -1,9 +1,9 @@
 ﻿using System;
-using Actor.Tests.Domain.Model;
+using Core.Tests.Actor.Domain.Model;
 using Symbiote.Core.Actor;
 using Symbiote.Messaging;
 
-namespace Actor.Tests.Domain
+namespace Core.Tests.Actor.Domain
 {
     public class NewMotoristHandler
         : IHandle<NewMotoristMessage>
