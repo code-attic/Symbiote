@@ -43,7 +43,13 @@ namespace Symbiote.Couch.Config
             _databaseForType[typeof( T )] = databaseName.ToLower();
         }
 
-        public bool Cache { get; set; }
+        protected bool cache { get; set; }
+
+        public bool Cache { 
+            get { return cache; } 
+            set { 
+                cache = value; 
+            } }
         public DateTime CacheExpiration { get; set; }
         public TimeSpan CacheLimit { get; set; }
         public string CouchQueryServiceUrl { get; set; }

@@ -148,6 +148,12 @@ namespace Symbiote.Core
             return Assimilation;
         }
 
+        public static void Reset()
+        {
+            Initialized = false;
+            Assimilation.DependencyAdapter.Reset();
+        }
+
         public static IAssimilate UseTestLogAdapter( this IAssimilate assimilate )
         {
             assimilate.Dependencies( x => { x.For<ILogProvider>().Use<TestLogProvider>().AsSingleton(); } );

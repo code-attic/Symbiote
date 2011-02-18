@@ -20,104 +20,107 @@ namespace Symbiote.Couch.Config
 {
     public class CouchConfigurator
     {
-        private CouchConfiguration _config = new CouchConfiguration();
-
         public CouchConfiguration Configuration { get; internal set; }
 
         public CouchConfigurator Cache()
         {
-            _config.Cache = true;
-            _config.CacheExpiration = DateTime.MaxValue;
+            Configuration.Cache = true;
+            Configuration.CacheExpiration = DateTime.MaxValue;
             return this;
         }
 
         public CouchConfigurator Cache( DateTime expiration )
         {
-            _config.Cache = true;
-            _config.CacheExpiration = expiration;
+            Configuration.Cache = true;
+            Configuration.CacheExpiration = expiration;
             return this;
         }
 
         public CouchConfigurator Cache( TimeSpan timeLimit )
         {
-            _config.Cache = true;
-            _config.CacheLimit = timeLimit;
+            Configuration.Cache = true;
+            Configuration.CacheLimit = timeLimit;
             return this;
         }
 
         public CouchConfigurator ExcludeTypeSpecificationFromJson()
         {
-            _config.IncludeTypeSpecification = false;
+            Configuration.IncludeTypeSpecification = false;
             return this;
         }
 
         public CouchConfigurator FailedGetShouldThrowException()
         {
-            _config.Throw404Exceptions = true;
+            Configuration.Throw404Exceptions = true;
             return this;
         }
 
         public CouchConfigurator Https()
         {
-            _config.Protocol = "https";
+            Configuration.Protocol = "https";
             return this;
         }
 
         public CouchConfigurator LimitMetadataCachingTo( int itemCount )
         {
-            _config.MetadataCacheLimit = itemCount;
+            Configuration.MetadataCacheLimit = itemCount;
             return this;
         }
 
         public CouchConfigurator Port( int port )
         {
-            _config.Port = port;
+            Configuration.Port = port;
             return this;
         }
 
         public CouchConfigurator Preauthorize( string username, string password )
         {
-            _config.Preauthorize = true;
-            _config.User = username;
-            _config.Password = password;
+            Configuration.Preauthorize = true;
+            Configuration.User = username;
+            Configuration.Password = password;
             return this;
         }
 
         public CouchConfigurator CouchQueryServiceUrl( string url )
         {
-            _config.CouchQueryServiceUrl = url;
+            Configuration.CouchQueryServiceUrl = url;
             return this;
         }
 
         public CouchConfigurator Server( string server )
         {
-            _config.Server = server;
+            Configuration.Server = server;
             return this;
         }
 
         public CouchConfigurator TimeOut( int timeOut )
         {
-            _config.TimeOut = timeOut;
+            Configuration.TimeOut = timeOut;
             return this;
         }
 
         public CouchConfigurator DefaultDatabase( string databaseName )
         {
-            _config.DefaultDatabaseName = databaseName;
+            Configuration.DefaultDatabaseName = databaseName;
             return this;
         }
 
         public CouchConfigurator AssignDatabaseToType<T>( string databaseName )
         {
-            _config.SetDatabaseNameForType<T>( databaseName );
+            Configuration.SetDatabaseNameForType<T>( databaseName );
             return this;
         }
 
         public CouchConfigurator UseDatabaseTypeResolver<T>()
             where T : IResolveDatabaseNames
         {
-            _config.DatabaseResolver = Assimilate.GetInstanceOf<T>();
+            Configuration.DatabaseResolver = Assimilate.GetInstanceOf<T>();
             return this;
+        }
+
+        public CouchConfigurator()
+        {
+            Configuration = new CouchConfiguration();
         }
     }
 }

@@ -2,8 +2,10 @@
 using Moq;
 using Symbiote.Core;
 using Symbiote.Couch;
+using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Repository;
 
 namespace Couch.Tests.Server
 {
@@ -16,6 +18,9 @@ namespace Couch.Tests.Server
         {
             get
             {
+                //var config = Assimilate.GetInstanceOf<ICouchConfiguration>();
+                //config.Cache = false;
+                Assimilate.Dependencies(x => x.For<IDocumentRepository>().Use<DocumentRepository>());
                 return Moq.It.Is<CouchUri>(u => u.ToString().Equals(uri.ToString()));
             }
         }

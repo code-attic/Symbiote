@@ -32,15 +32,12 @@ namespace Symbiote.Couch
 
                            if ( configuration.Cache )
                            {
-                               if (
-                                   !Assimilate.Assimilation.DependencyAdapter.HasPluginFor
-                                        <ICacheProvider>() )
+                               if (!Assimilate.Assimilation.DependencyAdapter.HasPluginFor<ICacheProvider>() )
                                {
                                    throw new CouchConfigurationException(
                                        "You must have an implementation of ICacheProvider configured to use caching in Couch. Consider referencing Symbiote.Eidetic and adding the .Eidetic() call before this in your assimilation to utilize memcached or memcachedb as the cache provider for Couch."
                                        );
                                }
-
                                container.For<IDocumentRepository>().Use<CachedDocumentRepository>();
                            }
                            else

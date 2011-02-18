@@ -115,6 +115,11 @@ namespace Symbiote.StructureMapAdapter
             }
         }
 
+        public void Reset()
+        {
+            ObjectFactory.Container.Model.EjectAndRemoveTypes( x => true );
+        }
+
         public void Scan( IScanInstruction instruction )
         {
             instruction.Execute( this );
@@ -171,10 +176,6 @@ namespace Symbiote.StructureMapAdapter
                                 try
                                 {
                                     var forExpression = x.For( dependency.PluginType );
-
-                                    //ObjectFactory.Model.EjectAndRemove(dependency.PluginType);
-                                    //ObjectFactory.Model.EjectAndRemovePluginTypes(
-                                    //    t => t.Equals(dependency.PluginType));
 
                                     Instance instance;
                                     if ( dependency.IsSingleton )

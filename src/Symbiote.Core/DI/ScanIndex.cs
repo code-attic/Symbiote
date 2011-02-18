@@ -52,9 +52,21 @@ namespace Symbiote.Core.DI {
 
         public void PopulateSymbioteList()
         {
-            DependencyDefinitions = ImplementorsOfType[typeof( IDefineStandardDependencies )];
-            ScanningInstructions = ImplementorsOfType[typeof( IDefineScanningInstructions )];
-            SymbioteInitializers = ImplementorsOfType[typeof( IInitializeSymbiote )];
+            var dependencies = ImplementorsOfType.TryGet( typeof( IDefineStandardDependencies ) );
+            var scanners = ImplementorsOfType.TryGet( typeof( IDefineScanningInstructions ) );
+            var initializers = ImplementorsOfType.TryGet( typeof( IInitializeSymbiote ) );
+
+            DependencyDefinitions = dependencies.Item1
+                ? dependencies.Item2
+                : new List<Type>();
+
+            ScanningInstructions = scanners.Item1
+                ? scanners.Item2
+                : new List<Type>();
+            
+            SymbioteInitializers = initializers.Item1
+                ? initializers.Item2
+                : new List<Type>();
 
             var containingAssemblies =
                 DependencyDefinitions.Select( x => x.Assembly )

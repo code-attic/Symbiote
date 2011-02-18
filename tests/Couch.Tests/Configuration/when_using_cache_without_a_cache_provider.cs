@@ -1,15 +1,17 @@
 ﻿using System;
+using Couch.Tests.Caching;
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Couch.Config;
 using Symbiote.Core.Cache;
+using Symbiote.Couch.Impl.Cache;
 using Symbiote.StructureMapAdapter;
 using Symbiote.Couch;
 using StructureMap;
 
 namespace Couch.Tests.Configuration
 {
-    public class when_using_cache_without_a_cache_provider : with_couch_configuration
+    public class when_using_cache_without_a_cache_provider : with_couch_cache_provider
     {
         private static Exception exception;
 
@@ -18,6 +20,8 @@ namespace Couch.Tests.Configuration
                                      ObjectFactory.EjectAllInstancesOf<ICacheProvider>();
 
                                      exception = Catch.Exception(() => Assimilate.Initialize().Couch( x => x.Https().Port( 1234 ).Server( "couchdb" ).TimeOut( 1000 ).Cache() ));
+
+                                     ObjectFactory.Configure( x => x.For<ICacheProvider>().Use( cacheProviderMock.Object ) );
                                  };
 
         private It should_produce_Couch_configuration_exception = () => exception.ShouldBe(typeof(CouchConfigurationException));
