@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using Minion.Messages;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Daemon;
-using Symbiote.Daemon.BootStrap;
 using Symbiote.Messaging;
 using Symbiote.Log4Net;
 using Symbiote.Rabbit;
-using Symbiote.StructureMapAdapter;
 
 namespace Minion.Host
 {
@@ -20,8 +15,7 @@ namespace Minion.Host
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
-                .Messaging()
+                .Initialize()
                 .AddConsoleLogger<IDaemon>( l => l.Info().MessageLayout( m => m.Message().Newline() ) )
                 .Daemon( x => x.Arguments( args ).WithBootStraps( b => b.HostApplicationsFrom( @"C:\git\Symbiote\demo\Minion\Minions" ) ) )
                 .Rabbit( x => x.AddBroker( r => r.Defaults() ) )
