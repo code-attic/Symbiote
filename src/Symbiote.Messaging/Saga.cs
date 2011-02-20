@@ -38,7 +38,7 @@ namespace Symbiote.Messaging
 
         public abstract Action<StateMachine<TActor>> Setup();
 
-        public void Process<TMessage>( TActor actor, TMessage message )
+        public Action<IEnvelope> Process<TMessage>( TActor actor, TMessage message )
         {
             var transitions = StateMachine
                 .ConditionalTransitions
@@ -46,8 +46,16 @@ namespace Symbiote.Messaging
                 .Select( x => x.Transitions[typeof( TMessage )] )
                 .ToList();
 
-            transitions
-                .FirstOrDefault( x => x.Execute( actor, message ) );
+            if ( StateMachine.MutuallyExclusive )
+            {
+                var reply = transitions.FirstOrDefault( x => x.Execute( actor, message ) )
+            }
+            else
+            {
+                
+            }
+
+            var replies = transitions.Select( x => x.Execute( actor, message ) );
         }
 
         protected Saga( StateMachine<TActor> stateMachine )

@@ -22,12 +22,12 @@ namespace Symbiote.Messaging.Impl.Dispatch
     {
         public override Action<Saga.StateMachine<DispatchManager>> Setup()
         {
-            return machine =>
-                       {
-                           machine.Unconditionally()
-                               .On<PrimeDirector>( director =>
-                                                   director.Signal.Set() );
-                       };
+            return machine => machine.Unconditionally()
+                                  .On<PrimeDirector>( director =>
+                                      {
+                                          director.Signal.Set();
+                                          return x => x.Acknowledge();
+                                      } );
         }
 
         public DirectorSaga( Saga.StateMachine<DispatchManager> stateMachine ) : base( stateMachine )

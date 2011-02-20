@@ -15,13 +15,25 @@ namespace Core.Tests.DecisionTree
             return x => 
                        { 
                            x.When( t => t.Flag1 )
-                               .On<ProcessThingy>( t => Hit1 = true );
+                               .On<ProcessThingy>( t => 
+                               {
+                                   Hit1 = true;
+                                   return e => e.Acknowledge();
+                               } );
 
-                           x.When( t => t.Flag2 )
-                               .On<ProcessThingy>( t => Hit2 = true );
+                           x.When(t => t.Flag2)
+                               .On<ProcessThingy>(t =>
+                               {
+                                   Hit2 = true;
+                                   return e => e.Acknowledge();
+                               });
 
-                           x.When( t => t.Flag3 )
-                               .On<ProcessThingy>( t => Hit3 = true );
+                           x.When(t => t.Flag3)
+                               .On<ProcessThingy>(t =>
+                               {
+                                   Hit3 = true;
+                                   return e => e.Acknowledge();
+                               });
                        };
         }
 

@@ -25,6 +25,7 @@ namespace Symbiote.Messaging.Impl.Saga
     {
         protected List<Type> MessagesHandled { get; set; }
         public List<Condition<TActor>> ConditionalTransitions { get; set; }
+        public bool MutuallyExclusive { get; set; }
 
         public List<Type> Handles
         {
@@ -33,6 +34,11 @@ namespace Symbiote.Messaging.Impl.Saga
                 MessagesHandled = MessagesHandled ?? ConditionalTransitions.SelectMany( x => x.Handles ).ToList();
                 return MessagesHandled;
             }
+        }
+
+        public void ConditionsAreMutuallyExclusive()
+        {
+            MutuallyExclusive = true;
         }
 
         public ICondition<TActor> Unconditionally()
