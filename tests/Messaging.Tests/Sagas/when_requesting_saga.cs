@@ -67,11 +67,15 @@ namespace Actor.Tests.Sagas
                                                        {
                                                            p.Name = m.Name;
                                                            p.Initialized = true;
+                                                           return e => e.Acknowledge();
                                                        });
 
                            x.When( p => p.Initialized )
-                               .On<SetPersonName>( ( p, m ) => 
-                                   p.Name = "Reset" );
+                               .On<SetPersonName>( ( p, m ) =>
+                                   {
+                                       p.Name = "Reset";
+                                       return e => e.Acknowledge();
+                                   } );
                        };
         }
 

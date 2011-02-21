@@ -35,6 +35,11 @@ namespace Symbiote.Messaging.Impl.Saga
             get { return Transitions.Keys.ToList(); }
         }
 
+        public bool IsValid(TActor instance)
+        {
+            return Guard( instance );
+        }
+
         public ICondition<TActor> On<TMessage>( Func<TActor, TMessage, Action<IEnvelope>> processMessage )
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>
