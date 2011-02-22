@@ -68,7 +68,6 @@ namespace Symbiote.Core.Collections
                 {
                     SlimLock.EnterWriteLock();
                     UpdateWaiting();
-                    Console.WriteLine(  );
                     if ( !Dictionary.TryGetValue( key, out value ) )
                         value = Dictionary.GetOrAdd( key, valueProvider() );
                 }
