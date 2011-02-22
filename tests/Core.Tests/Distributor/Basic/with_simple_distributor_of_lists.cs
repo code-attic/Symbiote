@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Machine.Specifications;
 using Symbiote.Core.Hashing;
 
-namespace Core.Tests.Utility.distributor
+namespace Core.Tests.Distributor.Basic
 {
     public abstract class with_simple_distributor_of_lists
     {

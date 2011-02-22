@@ -38,16 +38,29 @@ namespace Symbiote.Messaging
 
         public abstract Action<StateMachine<TActor>> Setup();
 
-        public void Process<TMessage>( TActor actor, TMessage message )
+        public Action<IEnvelope> Process<TMessage>( TActor actor, TMessage message )
         {
+            Action<IEnvelope> reject = e => e.Reject( "No conditions were met for the current actor's state" );
+
             var transitions = StateMachine
                 .ConditionalTransitions
                 .Where( x => x.Handles.Contains( typeof( TMessage ) ) )
+                .Where( x => StateMachine.MutuallyExclusive ? x.IsValid( actor ) : true )
                 .Select( x => x.Transitions[typeof( TMessage )] )
                 .ToList();
 
-            transitions
-                .FirstOrDefault( x => x.Execute( actor, message ) );
+            Action<IEnvelope> reply = null;
+            if ( StateMachine.MutuallyExclusive )
+            {
+                reply = transitions.First().Execute( actor, message );
+            }
+            else
+            {
+                var replies = transitions.Select(x => x.Execute(actor, message)).ToList();
+                reply = replies.FirstOrDefault() ?? reject;
+            }
+
+            return reply;
         }
 
         protected Saga( StateMachine<TActor> stateMachine )

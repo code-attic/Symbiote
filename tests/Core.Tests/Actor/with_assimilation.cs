@@ -1,17 +1,15 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Messaging;
-using Symbiote.StructureMapAdapter;
 
-namespace Actor.Tests
+namespace Core.Tests.Actor
 {
     public class with_assimilation
     {
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging();
+                                                .Initialize();
                                             Bus = Assimilate.GetInstanceOf<IBus>();
                                         };
 

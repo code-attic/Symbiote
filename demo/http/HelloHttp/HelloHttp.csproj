@@ -35,13 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHaml">
+      <HintPath>..\..\..\lib\NHaml\NHaml.dll</HintPath>
+    </Reference>
     <Reference Include="Symbiote.Core">
       <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon">
       <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Http">
+    <Reference Include="Symbiote.Http, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\Symbiote.Http.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Log4Net">
@@ -83,6 +87,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Views\Person\Detail.haml" />
+    <None Include="Views\Person\_Name.haml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="file\smile.bmp" />

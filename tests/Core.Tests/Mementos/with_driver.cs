@@ -1,5 +1,5 @@
 ﻿using System;
-using Core.Tests.Domain.Model;
+using Core.Tests.Actor.Domain.Model;
 using Machine.Specifications;
 
 namespace Core.Tests.Mementos

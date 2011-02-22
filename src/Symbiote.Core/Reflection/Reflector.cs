@@ -173,23 +173,46 @@ namespace Symbiote.Core.Reflection
                                              BindingFlags.NonPublic |
                                              BindingFlags.Instance |
                                              BindingFlags.FlattenHierarchy ).First();
-            var memberType = GetMemberInfoType( memberInfo );
-            var param1 = Expression.Parameter( typeof( object ), "container" );
-            var param2 = Expression.Parameter( typeof( object ), "value" );
+            if( CanWrite( memberInfo ) )
+            {
+                var memberType = GetMemberInfoType( memberInfo );
+                var param1 = Expression.Parameter( typeof( object ), "container" );
+                var param2 = Expression.Parameter( typeof( object ), "value" );
 
-            var instanceConversion = Expression.Convert( param1, type );
-            var propertyOrField = Expression.PropertyOrField( instanceConversion, member );
-            var valueConversion = Expression.Convert( param2, memberType );
-            var assignment = Expression.Assign( propertyOrField, valueConversion );
+                var instanceConversion = Expression.Convert( param1, type );
+                var propertyOrField = Expression.PropertyOrField( instanceConversion, member );
+                var valueConversion = Expression.Convert( param2, memberType );
+                var assignment = Expression.Assign( propertyOrField, valueConversion );
 
-            var func = Expression.Lambda<Action<object, object>>( assignment, param1, param2 );
-            return func.Compile();
+                var func = Expression.Lambda<Action<object, object>>( assignment, param1, param2 );
+                return func.Compile();
+            }
+            return (x, y) => { };
         }
 
         public static Type GetMemberType( Type type, string memberName )
         {
             CreateLookupsForType( type );
             return memberCache[Tuple.Create( type, memberName )].Item1;
+        }
+
+        public static bool CanWrite( MemberInfo memberInfo )
+        {
+            if( memberInfo.MemberType == MemberTypes.Field )
+                return true;
+            else if( memberInfo.MemberType == MemberTypes.Property )
+                return GetPropertyInfo( memberInfo.DeclaringType, memberInfo.Name ).CanWrite;
+            return false;
+        }
+
+        public static FieldInfo GetFieldInfo( Type type, string field )
+        {
+            return type.GetField( field, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy );
+        }
+
+        public static PropertyInfo GetPropertyInfo( Type type, string property )
+        {
+            return type.GetProperty( property, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.FlattenHierarchy );
         }
 
         public static IEnumerable<PropertyInfo> GetProperties( Type type )

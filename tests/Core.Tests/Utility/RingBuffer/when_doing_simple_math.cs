@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading;
 using Machine.Specifications;
 
-namespace ringbuffer
+namespace Core.Tests.Utility.RingBuffer
 {
     public class when_doing_simple_math
         : with_buffer

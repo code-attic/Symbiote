@@ -63,7 +63,7 @@ namespace Symbiote.Http.Impl.Adapter.Channel
         public bool SequenceEnd { get; set; }
 
         [IgnoreDataMember]
-        public Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> Callback { get; set; }
+        public OwinResponse Callback { get; set; }
     }
 
     public class HttpEnvelope<TMessage> :

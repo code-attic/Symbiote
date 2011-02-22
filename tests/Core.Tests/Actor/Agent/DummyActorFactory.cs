@@ -1,6 +1,6 @@
 ﻿using Symbiote.Core.Actor;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class DummyActorFactory
         : IActorFactory<DummyActor>

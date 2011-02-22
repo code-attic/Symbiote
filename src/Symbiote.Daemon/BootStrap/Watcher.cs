@@ -34,9 +34,9 @@ namespace Symbiote.Daemon.BootStrap
         public IList<FileSystemWatcher> Watchers { get; set; }
         public IBus Bus { get; set; }
 
-        public Watcher( BootStrapConfiguration configuration, IBus bus )
+        public Watcher( DaemonConfiguration configuration, IBus bus )
         {
-            Configuration = configuration;
+            Configuration = configuration.BootStrapConfiguration;
             SystemObservers = new List<IDisposable>();
             Watchers = new List<FileSystemWatcher>();
             Bus = bus;

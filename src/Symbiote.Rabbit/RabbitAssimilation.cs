@@ -17,10 +17,6 @@ using System;
 using Symbiote.Core;
 using Symbiote.Messaging.Impl.Mesh;
 using Symbiote.Rabbit.Config;
-using Symbiote.Rabbit.Impl.Channels;
-using Symbiote.Rabbit.Impl.Endpoint;
-using Symbiote.Rabbit.Impl.Node;
-using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit
 {
@@ -30,35 +26,14 @@ namespace Symbiote.Rabbit
         {
             var configuration = Assimilate.GetInstanceOf<RabbitConfiguration>();
             configurate( configuration );
-            ConfigureStandardDependencies( assimilate, configuration );
-            return assimilate;
-        }
-
-        private static void ConfigureStandardDependencies( IAssimilate assimilate, RabbitConfiguration configuration )
-        {
-            Assimilate.Dependencies( x =>
-                                         {
-                                             x.For<IConnectionManager>()
-                                                 .Use<ConnectionManager>()
-                                                 .AsSingleton();
-                                             x.For<RabbitConfiguration>()
-                                                 .Use( configuration );
-                                             x.For<IChannelProxyFactory>()
-                                                 .Use<ChannelProxyFactory>();
-                                             x.For<IEndpointManager>()
-                                                 .Use<EndpointManager>();
-                                             x.For<IConnectionManager>()
-                                                 .Use<ConnectionManager>();
-                                             x.For<IEndpointIndex>()
-                                                 .Use( new EndpointIndex() );
-                                             x.For<INodeChannelManager>()
-                                                 .Use<RabbitNodeChannelManager>().AsSingleton();
-                                         } );
+            Assimilate.Dependencies( x => x.For<RabbitConfiguration>()
+                                              .Use( configuration ) );
             if ( configuration.AsNode )
             {
                 var initializer = Assimilate.GetInstanceOf<INodeChannelManager>();
                 initializer.InitializeChannels();
             }
+            return assimilate;
         }
     }
 }

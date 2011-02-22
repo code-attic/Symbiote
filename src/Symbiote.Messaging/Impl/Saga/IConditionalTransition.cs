@@ -13,10 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
+
 namespace Symbiote.Messaging.Impl.Saga
 {
     public interface IConditionalTransition<TActor>
     {
-        bool Execute( TActor actor, object message );
+        Action<IEnvelope> Execute( TActor actor, object message );
     }
 }

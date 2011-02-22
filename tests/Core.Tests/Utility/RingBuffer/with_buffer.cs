@@ -1,15 +1,14 @@
 ﻿using Machine.Specifications;
-using Symbiote.Core.Utility;
 
-namespace ringbuffer
+namespace Core.Tests.Utility.RingBuffer
 {
     public class with_buffer
     {
         public static int Size = 10000;
-        public static RingBuffer Buffer { get; set; }
+        public static Symbiote.Core.Utility.RingBuffer Buffer { get; set; }
         private Establish context = () =>
         {
-            Buffer = new RingBuffer(Size);
+            Buffer = new Symbiote.Core.Utility.RingBuffer(Size);
         };
     }
 }

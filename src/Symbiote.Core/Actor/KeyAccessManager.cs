@@ -27,6 +27,17 @@ namespace Symbiote.Core.Actor
         public ConcurrentDictionary<Type, IKeyAccessor> Adapters { get; set; }
         public List<Type> AccessorAvailabilityList { get; set; }
 
+        public bool HasAccessFor( Type type )
+        {
+            return Adapters.ContainsKey( type );
+        }
+
+        public string GetId( object actor, Type type )
+        {
+            var accessor = GetAdapterFor( actor );
+            return accessor.GetId( actor, type );
+        }
+
         public string GetId<TActor>( TActor actor ) where TActor : class
         {
             var accessor = GetAdapterFor( actor );
@@ -50,11 +61,17 @@ namespace Symbiote.Core.Actor
             }
             return accessor;
         }
-
-        public void SetId<TActor, TKey>( TActor actor, TKey id ) where TActor : class
+        
+        public void SetId( object actor, object key, Type type )
         {
-            var accessor = GetAdapterFor(actor);
-            accessor.SetId( actor, id );
+            var accessor = GetAdapterFor( actor );
+            accessor.SetId( actor, key, type );
+        }
+
+        public void SetId<TActor, TKey>( TActor actor, TKey key ) where TActor : class
+        {
+            var accessor = GetAdapterFor( actor );
+            accessor.SetId( actor, key );
         }
 
         public KeyAccessManager()

@@ -27,21 +27,41 @@ namespace Symbiote.Daemon.BootStrap
         {
             return x =>
                        {
+                            x.ConditionsAreMutuallyExclusive();
+
                             x.When( a => a.Running )
-                               .On<ApplicationDeleted>( ( a, h ) => a.ShutItDown() );
+                               .On<ApplicationDeleted>( ( a, h ) =>
+                                   {
+                                       a.ShutItDown();
+                                       return e => e.Acknowledge();
+                                   } );
 
                             x.When( a => a.Running && !a.Starting )
                                .On<ApplicationChanged>( ( a, h ) =>
-                                                            {
-                                                                a.ShutItDown();
-                                                                a.StartUp();
-                                                            } );
+                                    {
+                                        a.ShutItDown();
+                                        a.StartUp();
+                                        return e => e.Acknowledge();
+                                    } );
+
                             x.When( a => !a.Running )
-                               .On<ApplicationChanged>( ( a, h ) => a.StartUp() )
-                               .On<NewApplication>( ( a, h ) => a.StartUp() );
+                               .On<ApplicationChanged>( ( a, h ) =>
+                                   {
+                                       a.StartUp();
+                                       return e => e.Acknowledge();
+                                   } )
+                               .On<NewApplication>( ( a, h ) =>
+                                   {
+                                       a.StartUp();
+                                       return e => e.Acknowledge();
+                                   } );
 
                             x.When( a => true )
-                               .On<NewApplication>( ( a, h ) => a.StartUp() );
+                               .On<NewApplication>( ( a, h ) =>
+                                   {
+                                       a.StartUp();
+                                       return e => e.Acknowledge();
+                                   } );
                        };
         }
 

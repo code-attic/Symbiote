@@ -26,6 +26,7 @@ namespace Symbiote.Core.DI
         IEnumerable<Type> GetTypesRegisteredFor( Type type );
         bool HasPluginFor<T>();
         void Register( IDependencyDefinition dependency );
+        void Reset();
         void Scan( IScanInstruction scanInstruction );
     }
 }

@@ -13,13 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-
 namespace Symbiote.Core.Persistence
 {
     public interface IRepository :
         IDeleteByKey, IGetByKey, IGetAll
     {
-        bool Delete<T>( T instance );
-        bool Persist<T>( T instance );
+        bool Delete<T>( T instance ) where T : class;
+        bool Persist<T>( T instance ) where T : class;
     }
 }

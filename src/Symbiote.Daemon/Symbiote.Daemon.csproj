@@ -42,7 +42,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <DocumentationFile>..\..\bin\Symbiote.Daemon.xml</DocumentationFile>
+    <DocumentationFile>..\..\bin\dev\Symbiote.Daemon.xml</DocumentationFile>
     <DevOnly>True</DevOnly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -100,8 +100,11 @@
     <Compile Include="BootStrap\MinionKeyAccessor.cs" />
     <Compile Include="BootStrap\MinionSaga.cs" />
     <Compile Include="BootStrap\NewApplication.cs" />
+    <Compile Include="BootStrap\NulloBootStrapper.cs" />
     <Compile Include="BootStrap\Watcher.cs" />
     <Compile Include="DaemonAssimilation.cs" />
+    <Compile Include="Host\Config\DaemonDependencies.cs" />
+    <Compile Include="Host\Config\DaemonScan.cs" />
     <Compile Include="Host\Config\DaemonConfiguration.cs" />
     <Compile Include="Host\Config\DaemonConfigurator.cs" />
     <Compile Include="Host\HostRunner.cs" />

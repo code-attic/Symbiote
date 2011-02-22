@@ -20,8 +20,7 @@ namespace Rabbit.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
-                                                .Messaging()
+                                                .Initialize()
                                                 .Rabbit(x => x.AddBroker(r => r.Defaults().Address("localhost")));
                                             Bus = Assimilate.GetInstanceOf<IBus>();
                                         };
@@ -158,9 +157,9 @@ namespace Rabbit.Tests
             return actor.Id;
         }
 
-        public void SetId<TKey>( Actor actor, TKey id )
+        public void SetId<TKey>( Actor actor, TKey key )
         {
-            actor.Id = id.ToString();
+            actor.Id = key.ToString();
         }
     }
 }

@@ -20,31 +20,22 @@ namespace Symbiote.Http.Impl
 {
     public class DelegateApplication : IApplication
     {
-        public Action<
-            IDictionary<string, object>,
-            Action<string, IDictionary<string, IList<string>>, IEnumerable<object>>,
-            Action<Exception>
-            > Application;
+        public OwinApplication Application;
 
         public void Process( IDictionary<string, object> requestItems,
-                             Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond,
+                             OwinResponse respond,
                              Action<Exception> onException )
         {
+            
             Application( requestItems, respond, onException );
         }
 
-        public static implicit operator DelegateApplication(
-            Action
-                <IDictionary<string, object>, Action<string, IDictionary<string, IList<string>>, IEnumerable<object>>,
-                Action<Exception>> application )
+        public static implicit operator DelegateApplication( OwinApplication application )
         {
             return new DelegateApplication( application );
         }
 
-        public DelegateApplication(
-            Action
-                <IDictionary<string, object>, Action<string, IDictionary<string, IList<string>>, IEnumerable<object>>,
-                Action<Exception>> application )
+        public DelegateApplication( OwinApplication application )
         {
             Application = application;
         }

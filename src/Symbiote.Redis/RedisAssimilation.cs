@@ -15,10 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Redis.Impl;
 using Symbiote.Redis.Impl.Config;
-using Symbiote.Redis.Impl.Connection;
-using Symbiote.Redis.Impl.Serialization;
 
 namespace Symbiote.Redis
 {
@@ -28,17 +25,7 @@ namespace Symbiote.Redis
         {
             var configurator = new RedisConfigurator();
             configure( configurator );
-
-            Assimilate
-                .Dependencies( x =>
-                                   {
-                                       x.For<RedisConfiguration>().Use( configurator.Configuration );
-                                       x.For<IConnectionPool>().Use<LockingConnectionPool>().AsSingleton();
-                                       x.For<IRedisClient>().Use<RedisClient>();
-                                       x.For<ICacheSerializer>().Use<ProtobufCacheSerializer>();
-                                       x.For<IConnectionProvider>().Use<PooledConnectionProvider>();
-                                       x.For<IConnectionFactory>().Use<ConnectionFactory>();
-                                   } );
+            Assimilate.Dependencies( x => x.For<RedisConfiguration>().Use( configurator.Configuration ) );
             return assimilate;
         }
     }

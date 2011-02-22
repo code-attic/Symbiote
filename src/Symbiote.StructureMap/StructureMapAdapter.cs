@@ -115,6 +115,11 @@ namespace Symbiote.StructureMapAdapter
             }
         }
 
+        public void Reset()
+        {
+            ObjectFactory.Container.Model.EjectAndRemoveTypes( x => true );
+        }
+
         public void Scan( IScanInstruction instruction )
         {
             instruction.Execute( this );
@@ -168,33 +173,36 @@ namespace Symbiote.StructureMapAdapter
             ObjectFactory
                 .Configure( x =>
                             {
-                                var forExpression = x.For( dependency.PluginType );
-
-                                ObjectFactory.Model.EjectAndRemove(dependency.PluginType);
-                                //ObjectFactory.Model.EjectAndRemovePluginTypes(
-                                //    t => t.Equals(dependency.PluginType));
-
-                                Instance instance;
-                                if ( dependency.IsSingleton )
+                                try
                                 {
-                                    if ( dependency.HasSingleton )
+                                    var forExpression = x.For( dependency.PluginType );
+
+                                    Instance instance;
+                                    if ( dependency.IsSingleton )
+                                    {
+                                        if ( dependency.HasSingleton )
+                                            instance =
+                                                forExpression.Singleton().Use( dependency.ConcreteInstance );
+                                        else
+                                            instance = forExpression.Singleton().Use( dependency.ConcreteType );
+                                    }
+                                    else if ( dependency.HasDelegate )
+                                    {
                                         instance =
-                                            forExpression.Singleton().Use( dependency.ConcreteInstance );
+                                            forExpression.Use( f => dependency.CreatorDelegate.DynamicInvoke() );
+                                    }
                                     else
-                                        instance = forExpression.Singleton().Use( dependency.ConcreteType );
-                                }
-                                else if ( dependency.HasDelegate )
-                                {
-                                    instance =
-                                        forExpression.Use( f => dependency.CreatorDelegate.DynamicInvoke() );
-                                }
-                                else
-                                {
-                                    instance = forExpression.Use( dependency.ConcreteType );
-                                }
+                                    {
+                                        instance = forExpression.Use( dependency.ConcreteType );
+                                    }
 
-                                if ( dependency.IsNamed )
-                                    instance.Name = dependency.PluginName;
+                                    if ( dependency.IsNamed )
+                                        instance.Name = dependency.PluginName;
+                                }
+                                catch ( Exception e )
+                                {
+                                    Console.WriteLine( e );
+                                }
                             }
                 );
         }

@@ -15,10 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Core.DI;
 using Symbiote.Http.Config;
-using Symbiote.Http.Impl;
-using Symbiote.Http.Owin;
 
 namespace Symbiote.Http
 {
@@ -26,20 +23,9 @@ namespace Symbiote.Http
     {
         public static IAssimilate HttpHost( this IAssimilate assimilate, Action<HttpConfigurator> httpConfigurator )
         {
-            Assimilate.Dependencies( x => { SetupDependencies( x ); } );
-
             var configurator = Assimilate.GetInstanceOf<HttpConfigurator>();
             httpConfigurator( configurator );
             return assimilate;
-        }
-
-        public static void SetupDependencies( DependencyConfigurator container )
-        {
-            var router = new ApplicationRouter();
-            container.For<HttpConfigurator>().Use<HttpConfigurator>();
-            container.For<HttpListenerConfiguration>().Use<HttpListenerConfiguration>().AsSingleton();
-            container.For<IRegisterApplication>().Use( router );
-            container.For<IRouteRequest>().Use( router );
         }
     }
 }

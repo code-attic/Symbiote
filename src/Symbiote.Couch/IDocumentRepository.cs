@@ -23,11 +23,11 @@ namespace Symbiote.Couch
 {
     public interface IDocumentRepository : IDisposable
     {
-        void DeleteDocument<TModel>( object id );
+        bool DeleteDocument<TModel>( object id );
 
-        void DeleteDocument<TModel>( object id, string rev );
+        bool DeleteDocument<TModel>( object id, string rev );
 
-        void DeleteAttachment<TModel>( TModel model, string attachmentName )
+        bool DeleteAttachment<TModel>( TModel model, string attachmentName )
             where TModel : IHaveAttachments;
 
         IList<TModel> FromView<TModel>( string designDocument, string viewName, Action<ViewQuery> query );
@@ -49,11 +49,13 @@ namespace Symbiote.Couch
 
         IList<TModel> GetAllByCriteria<TModel>( Expression<Func<TModel, bool>> criteria );
 
-        void Save<TModel>( TModel model );
+        bool Save<TModel>( object id, TModel model );
 
-        void SaveAll<TModel>( IEnumerable<TModel> list );
+        bool Save<TModel>( TModel model );
 
-        void SaveAttachment<TModel>( TModel model, string attachmentName, string contentType, byte[] content )
+        bool SaveAll<TModel>( IEnumerable<TModel> list );
+
+        bool SaveAttachment<TModel>( TModel model, string attachmentName, string contentType, byte[] content )
             where TModel : IHaveAttachments;
 
         void HandleUpdates<TModel>( int since, Action<string, ChangeRecord> onUpdate, AsyncCallback updatesInterrupted );

@@ -21,6 +21,7 @@ using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;
 using Newtonsoft.Json.Linq;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -66,8 +67,8 @@ namespace Symbiote.Couch.Impl.Commands
             return jBlob.ToString();
         }
 
-        protected BaseSaveDocumentCollection( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        protected BaseSaveDocumentCollection( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
+            : base( action, configuration, serializer )
         {
         }
     }

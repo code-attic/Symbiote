@@ -35,12 +35,11 @@ namespace Symbiote.Core.Futures
             if(result != null)
             {
                 Result = End(result);
-                if (CycleWhile())
-                    Loop();
                 HasResult = true;
                 ((ManualResetEvent)ResetTrigger.AsyncWaitHandle).Set();
                 if(Coroutine != null)
                     Coroutine( Result );
+                Loop();
             }
         }
 
@@ -51,7 +50,6 @@ namespace Symbiote.Core.Futures
 
         public FutureAsyncCallback(Func<AsyncCallback, IAsyncResult> call, Func<IAsyncResult, T> callback)
         {
-            Init();
             Call = call;
             End = callback;
             GetResult = () => default(T);

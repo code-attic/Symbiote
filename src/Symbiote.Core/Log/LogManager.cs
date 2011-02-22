@@ -53,6 +53,12 @@ namespace Symbiote.Core.Log
             return _provider.GetLoggerForType<T>();
         }
 
+        public static void Initialize()
+        {
+            Initialized = true;
+             _provider = Assimilate.GetInstanceOf<ILogProvider>();
+        }
+
         static LogManager()
         {
             try

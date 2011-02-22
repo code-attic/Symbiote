@@ -1,7 +1,6 @@
-﻿using System;
-using Symbiote.Core.Actor;
+﻿using Symbiote.Core.Actor;
 
-namespace Actor.Tests.Agency
+namespace Core.Tests.Actor.Agency
 {
     public class DummyAgent : IAgent<DummyActor>
     {

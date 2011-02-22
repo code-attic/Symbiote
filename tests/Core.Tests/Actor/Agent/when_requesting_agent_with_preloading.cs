@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Actor;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class when_requesting_agent_with_preloading
         : with_assimilation

@@ -44,14 +44,32 @@
     <Reference Include="Machine.Specifications">
       <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Moq">
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="ServiceStack.Text">
       <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.CoreEx, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Interactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq.Async, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Linq.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
@@ -80,6 +98,9 @@
     <Compile Include="Actor\Agent\with_no_actor.cs" />
     <Compile Include="Actor\Agent\with_stored_actor.cs" />
     <Compile Include="Actor\Cache\CacheItem.cs" />
+    <Compile Include="Actor\Cache\CacheMemento.cs" />
+    <Compile Include="Actor\Cache\MemoryCache.cs" />
+    <Compile Include="Actor\Cache\MemoryStore.cs" />
     <Compile Include="Actor\Cache\TestKeyAccessor.cs" />
     <Compile Include="Actor\Cache\when_caching_actor.cs" />
     <Compile Include="Actor\Cache\with_cache.cs" />
@@ -97,32 +118,85 @@
     <Compile Include="Actor\Domain\Model\IDriverMemento.cs" />
     <Compile Include="Actor\Domain\Model\IVehicleMemento.cs" />
     <Compile Include="Actor\Domain\Model\Vehicle.cs" />
+    <Compile Include="Actor\Domain\Model\VehicleKeyAccessor.cs" />
     <Compile Include="Actor\Domain\NewMotoristHandler.cs" />
     <Compile Include="Actor\Domain\NewMotoristMessage.cs" />
     <Compile Include="Actor\DummyActor.cs" />
     <Compile Include="Actor\DummyKeyAccessor.cs" />
     <Compile Include="Actor\Events\when_capturing_events.cs" />
-    <Compile Include="Actor\KeyAccess\KeyAccess.cs" />
+    <Compile Include="Actor\KeyAccess\Class1.cs" />
+    <Compile Include="Actor\KeyAccess\Class2.cs" />
+    <Compile Include="Actor\KeyAccess\ConcreteKeyAccessor.cs" />
+    <Compile Include="Actor\KeyAccess\IHaveId.cs" />
+    <Compile Include="Actor\KeyAccess\InterfaceKeyAccessor.cs" />
+    <Compile Include="Actor\KeyAccess\ConcreteType.cs" />
+    <Compile Include="Actor\KeyAccess\when_accessing_key_by_concrete_accessor.cs" />
+    <Compile Include="Actor\KeyAccess\when_accessing_key_by_inherited_accessor.cs" />
+    <Compile Include="Actor\KeyAccess\with_key_accessor.cs" />
     <Compile Include="Actor\when_caching_actor.cs" />
+    <Compile Include="Actor\when_requesting_new_actor_from_agent.cs" />
     <Compile Include="Actor\with_assimilation.cs" />
+    <Compile Include="Collections\when_attempting_writes_in_parallel_to_exclusive_dictionary.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
+    <Compile Include="DecisionTree\ProcessThingy.cs" />
+    <Compile Include="DecisionTree\ThingyFactory.cs" />
+    <Compile Include="DecisionTree\ThingySaga.cs" />
+    <Compile Include="DecisionTree\Thingy.cs" />
+    <Compile Include="DecisionTree\when_running_thingy_saga.cs" />
+    <Compile Include="Distributor\Basic\when_rebalancing_tree.cs" />
+    <Compile Include="DI\AClassOf.cs" />
+    <Compile Include="DI\AnInterfaceOf.cs" />
+    <Compile Include="DI\BaseClass.cs" />
+    <Compile Include="DI\ClosedClass.cs" />
+    <Compile Include="DI\IAmAnInterface.cs" />
+    <Compile Include="DI\InheritsBaseClass.cs" />
+    <Compile Include="DI\when_loading_auto_wired_types.cs" />
+    <Compile Include="DI\when_loading_scan_index.cs" />
+    <Compile Include="DI\when_retrieving_scanned_types.cs" />
+    <Compile Include="DI\when_testing_compatibility_of_closed_class.cs" />
+    <Compile Include="DI\when_testing_compatibility_of_open_class.cs" />
+    <Compile Include="DI\when_test_closing_aclassof.cs" />
+    <Compile Include="DI\when_test_closing_aninterfaceof.cs" />
     <Compile Include="DI\with_assembly_scanning.cs" />
+    <Compile Include="DI\with_assembly_scanning_for_marker_interface.cs" />
     <Compile Include="Domain\DriverFactory.cs" />
-    <Compile Include="Domain\Listeners\Test Listeners and Events.cs" />
-    <Compile Include="Domain\Memoization\AddressMemento.cs" />
-    <Compile Include="Domain\Memoization\DriverMemento.cs" />
-    <Compile Include="Domain\Memoization\VehicleMemento.cs" />
-    <Compile Include="Domain\Model\Address.cs" />
-    <Compile Include="Domain\Model\Driver.cs" />
-    <Compile Include="Domain\Model\IAddressMemento.cs" />
-    <Compile Include="Domain\Model\IDriverMemento.cs" />
-    <Compile Include="Domain\Model\IVehicleMemento.cs" />
-    <Compile Include="Domain\Model\Vehicle.cs" />
-    <Compile Include="Extensions\lambda.cs" />
+    <Compile Include="Domain\Listeners\DriverGenericEventChild.cs" />
+    <Compile Include="Domain\Listeners\StaticDriverEventListener.cs" />
+    <Compile Include="Domain\Listeners\StaticListenerForEverything.cs" />
+    <Compile Include="Domain\Listeners\StaticVehicleEventListener.cs" />
+    <Compile Include="Domain\Listeners\DriverGenericEvent.cs" />
+    <Compile Include="Domain\Listeners\VehicleGenericEvent.cs" />
+    <Compile Include="Domain\Listeners\VehicleGenericEventChild.cs" />
+    <Compile Include="Extensions\when_parsing_a_lambda.cs" />
+    <Compile Include="Extensions\when_enumerable_has_four_elements.cs" />
+    <Compile Include="Extensions\when_enumerable_has_one_element.cs" />
+    <Compile Include="Extensions\when_enumerable_has_three_elements.cs" />
+    <Compile Include="Extensions\when_enumerable_has_two_elements.cs" />
+    <Compile Include="Extensions\when_enumerable_is_empty.cs" />
+    <Compile Include="Extensions\when_enumerable_is_null.cs" />
+    <Compile Include="Extensions\with_empty_enumerable.cs" />
+    <Compile Include="Extensions\with_four_elements.cs" />
+    <Compile Include="Extensions\with_null_enumerable.cs" />
+    <Compile Include="Extensions\with_one_element.cs" />
+    <Compile Include="Extensions\with_permutations.cs" />
+    <Compile Include="Extensions\with_three_elements.cs" />
+    <Compile Include="Extensions\with_two_elements.cs" />
+    <Compile Include="Json\Collections\Car.cs" />
+    <Compile Include="Json\Collections\IGotsaNameYo.cs" />
+    <Compile Include="Json\Collections\Person.cs" />
+    <Compile Include="Json\Collections\Stuff.cs" />
+    <Compile Include="Json\Collections\when_serializing_interface_collection.cs" />
     <Compile Include="Json\Collections\with_collection_of_interface_type.cs" />
+    <Compile Include="Json\Decorator\Decorator.cs" />
+    <Compile Include="Json\Decorator\HaveIdKeyAccessor.cs" />
+    <Compile Include="Json\Decorator\IHaveKey.cs" />
+    <Compile Include="Json\Decorator\Underlying.cs" />
     <Compile Include="Json\Decorator\when_serializing_decorator.cs" />
-    <Compile Include="Json\Performance\when_serializing_one_thousand_items.cs" />
+    <Compile Include="Json\Performance\IGotMessageForYou.cs" />
+    <Compile Include="Json\Performance\SerializationTarget.cs" />
+    <Compile Include="Json\Performance\when_serializing_one_thousand_items_with_jsondotnet.cs" />
+    <Compile Include="Json\Performance\when_serializing_one_thousand_items_with_binary.cs" />
     <Compile Include="Json\when_serializing_string.cs" />
     <Compile Include="Json\TestClass.cs" />
     <Compile Include="Json\TestTarget.cs" />
@@ -130,10 +204,13 @@
     <Compile Include="Json\when_deserializing_attachments.cs" />
     <Compile Include="Json\when_serializing_objects.cs" />
     <Compile Include="Json\with_core_assimilation.cs" />
-    <Compile Include="Extensions\Permutations.cs" />
+    <Compile Include="Extensions\with_exception.cs" />
     <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtoBuf\Base.cs" />
+    <Compile Include="ProtoBuf\Class.cs" />
     <Compile Include="ProtoBuf\when_serializaing_inherited_class.cs" />
+    <Compile Include="Reflection\ChildTestClass.cs" />
     <Compile Include="Reflection\Inheritence\InterfaceA.cs" />
     <Compile Include="Reflection\Inheritence\InterfaceB.cs" />
     <Compile Include="Reflection\Inheritence\MyClass.cs" />
@@ -147,21 +224,42 @@
     <Compile Include="Reflection\when_writing_dynamically.cs" />
     <Compile Include="Distributor\Basic\when_loading_tree.cs" />
     <Compile Include="Distributor\Basic\when_running_standards_test.cs" />
-    <Compile Include="Distributor\Basic\when_testing_load_distribution.cs" />
+    <Compile Include="Distributor\Basic\when_testing_distribution_under_load.cs" />
     <Compile Include="Distributor\Basic\with_mod_wheel.cs" />
     <Compile Include="Distributor\Basic\with_simple_distributor_of_lists.cs" />
     <Compile Include="Distributor\Basic\with_value_list.cs" />
+    <Compile Include="Serialization\Additive.cs" />
+    <Compile Include="Serialization\IHazId.cs" />
+    <Compile Include="Serialization\JsonSerializer.cs" />
+    <Compile Include="Serialization\JsonTypeSerializationBuilder.cs" />
+    <Compile Include="Serialization\Level1a.cs" />
+    <Compile Include="Serialization\Level1b.cs" />
+    <Compile Include="Serialization\Level2a.cs" />
+    <Compile Include="Serialization\Level2b.cs" />
+    <Compile Include="Serialization\Level2c.cs" />
+    <Compile Include="Serialization\Level3.cs" />
+    <Compile Include="Serialization\Root.cs" />
+    <Compile Include="Serialization\IHazIdKeyAccessor.cs" />
+    <Compile Include="Serialization\with_ridiculous_model_instance.cs" />
     <Compile Include="StateMachine\when_transitioning_state.cs" />
+    <Compile Include="UnitOfWork\when_testing_lifecycle.cs" />
+    <Compile Include="UnitOfWork\when_testing_Static_Event_Listeners.cs" />
+    <Compile Include="UnitOfWork\when_testing_that_a_StaticDriverEventListener_receives_Events.cs" />
+    <Compile Include="UnitOfWork\when_testing_that_a_StaticVehicleEventListener_receives_Events.cs" />
+    <Compile Include="Utility\Futures\AsyncFakeOut.cs" />
+    <Compile Include="Utility\Futures\when_using_future_async_call_in_loop.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine_invoked_immediately.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine_on_failure.cs" />
     <Compile Include="Utility\Futures\when_using_future_func.cs" />
     <Compile Include="Utility\Futures\when_using_future_coroutine.cs" />
+    <Compile Include="Utility\Futures\when_using_future_func_in_loop.cs" />
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
     <Compile Include="Utility\Futures\with_callback.cs" />
     <Compile Include="Utility\Futures\with_function_call.cs" />
     <Compile Include="Utility\RingBuffer\when_doing_simple_math.cs" />
     <Compile Include="Utility\RingBuffer\when_instantiating_buffer.cs" />
     <Compile Include="Utility\RingBuffer\with_buffer.cs" />
+    <Compile Include="when_initializing_symbiote.cs" />
     <Compile Include="with_assimilation.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,7 +314,7 @@
   </Choose>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="UnitOfWork\Event Listener Tests.cs" />
+    <Compile Include="UnitOfWork\with_EventListenerManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

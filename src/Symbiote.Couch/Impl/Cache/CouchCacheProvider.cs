@@ -38,18 +38,18 @@ namespace Symbiote.Couch.Impl.Cache
                 .ForEach( x => _cache.Remove( x ) );
         }
 
-        public virtual void Delete<TModel>( object key, Action<object> delete )
+        public virtual bool Delete<TModel>( object key, Func<object, bool> delete )
         {
             var cacheKey = _keyBuilder.GetKey<TModel>( key );
             InvalidateItem( cacheKey );
-            delete( key );
+            return delete( key );
         }
 
-        public virtual void Delete<TModel>( object key, string rev, Action<object, string> delete )
+        public virtual bool Delete<TModel>( object key, string rev, Func<object, string, bool> delete )
         {
             var cacheKey = _keyBuilder.GetKey<TModel>( key, rev );
             InvalidateItem( cacheKey );
-            delete( key, rev );
+            return delete( key, rev );
         }
 
         public virtual TModel Get<TModel>( object key, string rev, Func<object, string, TModel> retrieve )
@@ -138,19 +138,20 @@ namespace Symbiote.Couch.Impl.Cache
             return result;
         }
 
-        public virtual void Save<TModel>( TModel model, Action<TModel> save )
+        public virtual bool Save<TModel>( TModel model, Func<TModel, bool> save )
         {
             var cacheKey = _keyBuilder.GetKey<TModel>( model.GetDocumentId() );
             var cacheRevKey = _keyBuilder.GetKey<TModel>( model.GetDocumentId(), model.GetDocumentRevision() );
             InvalidateItem( cacheKey );
             InvalidateItem( cacheRevKey );
-            save( model );
+            var success = save( model );
             CacheSavedModel( model, cacheKey, cacheRevKey );
+            return success;
         }
 
-        public virtual void SaveAll<TModel>( IEnumerable<TModel> list, Action<IEnumerable<TModel>> save )
+        public virtual bool SaveAll<TModel>( IEnumerable<TModel> list, Func<IEnumerable<TModel>, bool> save )
         {
-            save( list );
+            var success = save( list );
             list.ForEach( x =>
                               {
                                   var cacheKey = _keyBuilder.GetKey<TModel>( x.GetDocumentId() );
@@ -160,6 +161,7 @@ namespace Symbiote.Couch.Impl.Cache
                                   InvalidateItem( cacheRevKey );
                                   CacheSavedModel( x, cacheKey, cacheRevKey );
                               } );
+            return success;
         }
 
         protected virtual void CacheSavedModel<TModel>( TModel model, string cacheKey, string cacheRevKey )

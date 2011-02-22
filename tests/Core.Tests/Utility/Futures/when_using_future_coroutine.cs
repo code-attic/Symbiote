@@ -1,7 +1,7 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core.Futures;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Utility.Futures
 {
     public class when_using_future_coroutine
         : with_callback

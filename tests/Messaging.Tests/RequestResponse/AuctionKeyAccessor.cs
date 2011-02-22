@@ -11,9 +11,9 @@ namespace Messaging.Tests.RequestResponse
             return actor.Item;
         }
 
-        public void SetId<TKey>( Auction actor, TKey id )
+        public void SetId<TKey>( Auction actor, TKey key )
         {
-            actor.Item = id.ToString();
+            actor.Item = key.ToString();
         }
     }
 }

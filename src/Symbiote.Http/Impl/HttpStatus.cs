@@ -96,6 +96,11 @@ namespace Symbiote.Http.Impl
             return TEMPLATE.AsFormat( Code, Description );
         }
 
+        public static implicit operator HttpStatus(System.Net.HttpStatusCode code)
+        {
+            return CodeLookup[(int)code];
+        }
+
         public HttpStatus( int code, string description )
         {
             Code = code;

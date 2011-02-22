@@ -35,6 +35,8 @@ namespace Symbiote.Core.Futures
             {
                 Call.EndInvoke( result );
             }
+            if ( !HasResult && Attempts >= Limit )
+                Result = OnFail();
         }
 
         public void Callback( T value )
@@ -42,6 +44,9 @@ namespace Symbiote.Core.Futures
             Result = value;
             HasResult = true;
             ((ManualResetEvent) AsyncResult.AsyncWaitHandle).Set();
+            if ( Coroutine != null && HasResult )
+                    Coroutine( Result );
+            Loop();
         }
 
         public static implicit operator Action<T>( FutureCallback<T> future )
@@ -51,7 +56,6 @@ namespace Symbiote.Core.Futures
 
         public FutureCallback( Action<Action<T>> call )
         {
-            Init();
             Call = call;
             GetResult = () => default(T);
         }

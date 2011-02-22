@@ -28,13 +28,19 @@ namespace Symbiote.Messaging.Impl.Saga
         public Expression<Predicate<TActor>> GuardExpression { get; set; }
         public Predicate<TActor> Guard { get; protected set; }
         public Dictionary<Type, IConditionalTransition<TActor>> Transitions { get; set; }
-
+        public bool Exclusive { get; set; }
+        
         public List<Type> Handles
         {
             get { return Transitions.Keys.ToList(); }
         }
 
-        public ICondition<TActor> On<TMessage>( Action<TActor, TMessage> processMessage )
+        public bool IsValid(TActor instance)
+        {
+            return Guard( instance );
+        }
+
+        public ICondition<TActor> On<TMessage>( Func<TActor, TMessage, Action<IEnvelope>> processMessage )
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>
                                 {
@@ -46,7 +52,7 @@ namespace Symbiote.Messaging.Impl.Saga
             return this;
         }
 
-        public ICondition<TActor> On<TMessage>( Action<TActor> transition )
+        public ICondition<TActor> On<TMessage>( Func<TActor, Action<IEnvelope>> transition)
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>
                                 {
@@ -58,7 +64,7 @@ namespace Symbiote.Messaging.Impl.Saga
             return this;
         }
 
-        public ICondition<TActor> On<TMessage>( Action<TActor, TMessage> processMessage, Action<TActor> transition )
+        public ICondition<TActor> On<TMessage>( Func<TActor, TMessage, Action<IEnvelope>> processMessage, Func<TActor, Action<IEnvelope>> transition )
         {
             var onMessage = new ConditionalTransition<TActor, TMessage>
                                 {

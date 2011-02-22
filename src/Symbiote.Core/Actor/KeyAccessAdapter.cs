@@ -24,6 +24,25 @@ namespace Symbiote.Core.Actor
     {
         public IKeyAccessor<T> Accessor { get; set; }
 
+        public bool HasAccessFor( Type type )
+        {
+            return type.IsAssignableFrom( typeof( T ) );
+        }
+
+        public string GetId( object actor, Type type )
+        {
+            var actorType = actor.GetType();
+            try
+            {
+                return Accessor.GetId( actor as T );
+            }
+            catch ( Exception )
+            {
+                throw new InvalidCastException(
+                    "Key accessor cannot access an actor of {0} as type {1}".AsFormat( actorType, type ) );
+            }
+        }
+
         public string GetId<TActor>( TActor actor ) where TActor : class
         {
             if ( typeof( T ).IsAssignableFrom( typeof( TActor ) ) )
@@ -34,11 +53,25 @@ namespace Symbiote.Core.Actor
                 "Key accessor cannot access an actor of {0} as type {1}".AsFormat( typeof( TActor ), typeof( T ) ) );
         }
 
-        public void SetId<TActor, TKey>( TActor actor, TKey id ) where TActor : class
+        public void SetId( object actor, object key, Type type )
+        {
+            var actorType = actor.GetType();
+            try
+            {
+                Accessor.SetId( actor as T, key );
+            }
+            catch ( Exception )
+            {
+                throw new InvalidCastException(
+                    "Key accessor cannot access an actor of {0} as type {1}".AsFormat( actorType, type ) );
+            }
+        }
+
+        public void SetId<TActor, TKey>( TActor actor, TKey key ) where TActor : class
         {
             if ( typeof( T ).IsAssignableFrom( typeof( TActor ) ) )
             {
-                Accessor.SetId( actor as T, id );
+                Accessor.SetId( actor as T, key );
             }
             else
             {

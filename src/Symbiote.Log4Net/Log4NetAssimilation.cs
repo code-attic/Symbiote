@@ -19,29 +19,15 @@ using log4net.Appender;
 using log4net.Config;
 using log4net.Repository.Hierarchy;
 using Symbiote.Core;
-using Symbiote.Core.Log;
-using Symbiote.Core.Log.Impl;
+using Symbiote.Log4Net.Config;
 using Symbiote.Log4Net.Impl;
 
 namespace Symbiote.Log4Net
 {
     public static class Log4NetAssimilation
     {
-        private static IAssimilate Log4Net( this IAssimilate assimilate )
-        {
-            assimilate
-                .Dependencies( x =>
-                                   {
-                                       x.For<ILogProvider>().Use<Log4NetProvider>();
-                                       x.For<ILogger>().Use<Log4NetLogger>();
-                                   } );
-            LogManager.Initialized = true;
-            return assimilate;
-        }
-
         public static IAssimilate LoadLog4NetConfig( this IAssimilate assimilate, string configFile )
         {
-            assimilate.Log4Net();
             if ( !File.Exists( configFile ) )
                 throw new Exception( string.Format( "There was no log4net configuration file found at {0}", configFile ) );
             XmlConfigurator.Configure( new FileInfo( configFile ) );
@@ -81,7 +67,6 @@ namespace Symbiote.Log4Net
             where TAppender : AppenderSkeleton, new()
         {
             string name = typeof( TLog ).FullName;
-            assimilate.Log4Net();
             var configurator = new TConfigurator();
             action( configurator );
             configurator.Activate();

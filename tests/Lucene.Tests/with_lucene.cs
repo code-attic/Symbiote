@@ -14,7 +14,7 @@ namespace Lucene.Tests
 
         private Establish context = () =>
                                         {
-                                            Assimilate.Core<StructureMapAdapter>().Lucene();
+                                            Assimilate.Initialize();
                                             factory = Assimilate.GetInstanceOf<ILuceneServiceFactory>();
                                             indexer = factory.GetIndexingObserverForIndex("default");
                                             searchProvider = factory.GetSearchProviderForIndex("default");

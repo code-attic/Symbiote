@@ -68,6 +68,7 @@ namespace Symbiote.Core.Collections
                 {
                     SlimLock.EnterWriteLock();
                     UpdateWaiting();
+                    Console.WriteLine(  );
                     if ( !Dictionary.TryGetValue( key, out value ) )
                         value = Dictionary.GetOrAdd( key, valueProvider() );
                 }
@@ -90,6 +91,7 @@ namespace Symbiote.Core.Collections
         public ExclusiveConcurrentDictionary()
         {
             SlimLock = new ReaderWriterLockSlim( LockRecursionPolicy.SupportsRecursion );
+
             Dictionary = new ConcurrentDictionary<TKey, TValue>();
         }
     }

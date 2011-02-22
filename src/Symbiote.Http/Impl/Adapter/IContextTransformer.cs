@@ -19,4 +19,9 @@ namespace Symbiote.Http.Impl.Adapter
     {
         Context From<T>( T context );
     }
+
+    public interface IContextTransformer<T> : IContextTransformer
+    {
+        Context From( T context );
+    }
 }

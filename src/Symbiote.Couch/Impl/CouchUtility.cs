@@ -20,6 +20,7 @@ using Symbiote.Core.Extensions;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Commands;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl
 {
@@ -147,10 +148,10 @@ namespace Symbiote.Couch.Impl
             return configuration.GetDatabaseNameForType<TModel>();
         }
 
-        public CouchUtility( ICouchConfiguration couchConfiguration )
+        public CouchUtility( ICouchConfiguration couchConfiguration, ISerializationProvider serializer )
         {
             configuration = couchConfiguration;
-            commandFactory = new CouchCommandFactory( couchConfiguration );
+            commandFactory = new CouchCommandFactory( couchConfiguration, serializer );
         }
     }
 }

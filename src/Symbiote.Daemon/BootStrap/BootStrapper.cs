@@ -39,15 +39,15 @@ namespace Symbiote.Daemon.BootStrap
             paths.ForEach( x => Bus.Publish( "local", new NewApplication() {DirectoryPath = Path.GetFullPath(x)} ) );
         }
 
-        public BootStrapper(BootStrapConfiguration configuration, IBus bus, Watcher minionWatcher)
+        public BootStrapper( DaemonConfiguration configuration, IBus bus, Watcher minionWatcher )
         {
-            Configuration = configuration;
+            Configuration = configuration.BootStrapConfiguration;
             Bus = bus;
             MinionWatcher = minionWatcher;
             bus.AddLocalChannel( x => x
-                                          .CorrelateBy<NewApplication>( m => m.DirectoryPath )
-                                          .CorrelateBy<ApplicationChanged>( m => m.DirectoryPath )
-                                          .CorrelateBy<ApplicationDeleted>( m => m.DirectoryPath ) );
+                                .CorrelateBy<NewApplication>( m => m.DirectoryPath )
+                                .CorrelateBy<ApplicationChanged>( m => m.DirectoryPath )
+                                .CorrelateBy<ApplicationDeleted>( m => m.DirectoryPath ) );
         }
     }
 }

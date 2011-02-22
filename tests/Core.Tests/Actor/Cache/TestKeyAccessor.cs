@@ -1,7 +1,6 @@
 ﻿using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests.Cache
+namespace Core.Tests.Actor.Cache
 {
     public class TestKeyAccessor
         : IKeyAccessor<CacheItem>
@@ -11,9 +10,9 @@ namespace Actor.Tests.Cache
             return actor.Id.ToString();
         }
 
-        public void SetId<TKey>( CacheItem actor, TKey id )
+        public void SetId<TKey>( CacheItem actor, TKey key )
         {
-            actor.Id = int.Parse( id.ToString() );
+            actor.Id = int.Parse( key.ToString() );
         }
     }
 }

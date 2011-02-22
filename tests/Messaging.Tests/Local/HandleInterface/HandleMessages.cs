@@ -44,7 +44,7 @@ namespace Messaging.Tests.Local.HandleInterface
             return actor.Id.ToString();
         }
 
-        public void SetId<TKey>( Person actor, TKey id )
+        public void SetId<TKey>( Person actor, TKey key )
         {
             
         }

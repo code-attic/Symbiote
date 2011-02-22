@@ -86,6 +86,11 @@ namespace Symbiote.Core.DI
             throw new AssimilationException( _msg );
         }
 
+        public void Reset()
+        {
+            throw new AssimilationException( _msg );
+        }
+
         public void Scan( IScanInstruction scanInstruction )
         {
             throw new AssimilationException( _msg );

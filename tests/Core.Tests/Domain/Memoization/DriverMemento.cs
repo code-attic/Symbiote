@@ -14,8 +14,8 @@ namespace Core.Tests.Domain.Memoization
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public IAddressMemento CurrentAddress { get; set; }
-        public IList<IAddressMemento> FormerAddresses { get; set; }
-        public IList<IVehicleMemento> Vehicles { get; set; }
+        public IList<AddressMemento> FormerAddresses { get; set; }
+        public IList<VehicleMemento> Vehicles { get; set; }
 
         public void Capture( Driver instance )
         {
@@ -47,8 +47,8 @@ namespace Core.Tests.Domain.Memoization
         public DriverMemento( DriverFactory factory )
         {
             Factory = factory;
-            FormerAddresses = new List<IAddressMemento>();
-            Vehicles = new List<IVehicleMemento>();
+            FormerAddresses = new List<AddressMemento>();
+            Vehicles = new List<VehicleMemento>();
         }
     }
 }

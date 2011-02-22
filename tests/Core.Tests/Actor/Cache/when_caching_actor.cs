@@ -1,6 +1,6 @@
 ﻿using Machine.Specifications;
 
-namespace Actor.Tests.Cache
+namespace Core.Tests.Actor.Cache
 {
     public class when_caching_actor
         : with_cache
@@ -15,6 +15,7 @@ namespace Actor.Tests.Cache
             retrieved = Memoizer.GetFromMemento(Cache.Get( 1 ));
         };
 
-        private It should_store_and_retrieve_by_key = () => instance.Id.ShouldEqual( retrieved.Id );
+        private It should_store_and_retrieve_by_key = () => 
+            instance.Id.ShouldEqual( retrieved.Id );
     }
 }

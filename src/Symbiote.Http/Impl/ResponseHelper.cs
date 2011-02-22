@@ -17,8 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
+using Symbiote.Http.Impl.ViewProvider;
 
 namespace Symbiote.Http.Impl
 {
@@ -26,8 +28,20 @@ namespace Symbiote.Http.Impl
         : IBuildResponse
     {
         public string FileTemplate = @"..\..{0}";
-        public Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> Respond { get; set; }
-        public IDictionary<string, IList<string>> ResponseHeaders { get; set; }
+        public readonly string RENDER_EXCEPTION_TEMPLATE = @"
+<html>
+    <head>
+        <title>Symbiote.Http View Rendering Engine Exception</title>
+        <h1>Wow, this is so embarassing...</h1>
+        <p>
+        <pre>
+        {0}
+        </pre>
+        </p>
+    </head>
+";
+        public OwinResponse Respond { get; set; }
+        public IDictionary<string, string> ResponseHeaders { get; set; }
         public List<object> ResponseChunks { get; set; }
         public Func<string, byte[]> Encoder { get; set; }
         public IDefineHeaders HeaderDefinitions { get; set; }
@@ -79,6 +93,55 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
+        public IBuildResponse RenderView<TModel>( TModel model, string viewName )
+        {
+            var engine = Assimilate.GetInstanceOf<IViewEngine>();
+            using( var stream = new MemoryStream() )
+            using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
+            {
+                try
+                {
+                    engine.Render( viewName, model, streamWriter );
+                }
+                catch ( Exception e )
+                {
+                    streamWriter.Write( RENDER_EXCEPTION_TEMPLATE.AsFormat( e ) );
+                    streamWriter.Flush();
+                }
+                streamWriter.Flush();
+                DefineHeaders( x => x.ContentType( ContentType.Html ).ContentLength( stream.Length ) );
+                AppendToBody( stream.GetBuffer() );
+            }
+            return this;
+        }
+
+        public IBuildResponse RenderView<TModel>( TModel model, string viewName, string layoutName )
+        {
+            var engine = Assimilate.GetInstanceOf<IViewEngine>();
+            using( var stream = new MemoryStream() )
+            using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
+            {
+                try
+                {
+                    engine.Render( viewName, layoutName, model, streamWriter );
+                }
+                catch ( Exception e )
+                {
+                    streamWriter.Write( RENDER_EXCEPTION_TEMPLATE.AsFormat( e ) );
+                    streamWriter.Flush();
+                }
+                streamWriter.Flush();
+                DefineHeaders( x => x.ContentType( ContentType.Html ).ContentLength( stream.Length ) );
+                AppendToBody( stream.GetBuffer() );
+            }
+            return this;
+        }
+
+        public void RenderException( Exception ex, Stream stream )
+        {
+
+        }
+
         public void Submit( string status )
         {
             Respond( status, ResponseHeaders, ResponseChunks );
@@ -104,16 +167,15 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
-        public static implicit operator ResponseHelper(
-            Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond )
+        public static implicit operator ResponseHelper( OwinResponse respond )
         {
             return new ResponseHelper( respond );
         }
 
-        public ResponseHelper( Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond )
+        public ResponseHelper( OwinResponse respond )
         {
             Respond = respond;
-            ResponseHeaders = new Dictionary<string, IList<string>>();
+            ResponseHeaders = new Dictionary<string, string>();
             ResponseChunks = new List<object>();
             Encoder = x => Encoding.UTF8.GetBytes( x );
             HeaderDefinitions = new HeaderBuilder( ResponseHeaders );

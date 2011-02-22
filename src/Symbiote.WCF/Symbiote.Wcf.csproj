@@ -105,6 +105,7 @@
     <Compile Include="Server\WcfServiceConfigurator.cs" />
     <Compile Include="Server\WcfServiceHost.cs" />
     <Compile Include="Server\WcfServiceHostFactory.cs" />
+    <Compile Include="WcfDependencies.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

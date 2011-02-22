@@ -3,9 +3,9 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Actor.Tests.Agency
+namespace Core.Tests.Actor.Agency
 {
-    class when_requesting_agents_in_parallel
+    public class when_requesting_agents_in_parallel
         : with_mock_agent_factory
     {
         private static int requestsToMake = 20;

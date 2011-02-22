@@ -63,6 +63,8 @@
     <Compile Include="Config\NancyConfiguration.cs" />
     <Compile Include="Config\NancyConfigurator.cs" />
     <Compile Include="Impl\NancyExtensions.cs" />
+    <Compile Include="Config\NancyDependencies.cs" />
+    <Compile Include="Config\NancyScan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Impl\SymbioteModuleCatalog.cs" />
     <Compile Include="Impl\SymbioteRouteCacheProvider.cs" />

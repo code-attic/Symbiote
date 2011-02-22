@@ -27,7 +27,7 @@ namespace Riak.Tests
         private Establish context = () =>
         {
             Assimilate
-                .Core<StructureMapAdapter>()
+                .Initialize()
                 .Riak( x => x.AddNode( r => r.Address( Ip ).ForProtocolBufferPort( 8087 ) ) );
         };
     }

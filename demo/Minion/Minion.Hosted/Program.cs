@@ -7,7 +7,6 @@ using Symbiote.Daemon;
 using Symbiote.Log4Net;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
-using Symbiote.StructureMapAdapter;
 
 namespace Minion.Hosted
 {
@@ -34,10 +33,9 @@ namespace Minion.Hosted
             try
             {
                 Assimilate
-                    .Core<StructureMapAdapter>()
+                    .Initialize()
                     .Daemon(x => x.Arguments(args))
-                    .Messaging()
-                    .AddConsoleLogger<IDaemon>(l => l.Info().MessageLayout(m => m.Message().Newline()))
+                    .AddConsoleLogger<IMinion>(l => l.Info().MessageLayout(m => m.Message().Newline()))
                     .Rabbit(x => x.AddBroker(r => r.Defaults()))
                     .RunDaemon();
             }
@@ -59,7 +57,7 @@ namespace Minion.Hosted
         public void Start()
         {
             "Hosted Daemon has been summoned!"
-                .ToInfo<IDaemon>();
+                .ToInfo<IMinion>();
             Bus.AddLocalChannel();
             Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
 
@@ -72,7 +70,7 @@ namespace Minion.Hosted
         public void Stop()
         {
             "Alas, I am dead fellah!"
-                .ToInfo<IDaemon>();
+                .ToInfo<IMinion>();
         }
 
         public Hosted(IBus bus)
@@ -85,7 +83,7 @@ namespace Minion.Hosted
     {
         public Action<IEnvelope> Handle( MinionDoThis message )
         {
-            "Received: {0}".ToInfo<IDaemon>( message.Text );
+            "Received: {0}".ToInfo<IMinion>( message.Text );
             return x => x.Acknowledge();
         }
     }

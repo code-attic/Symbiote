@@ -14,7 +14,7 @@ namespace Daemon.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
+                                                .Initialize()
                                                 .Daemon( x => x.Arguments( new string[] {} ) );
                                         };
     }

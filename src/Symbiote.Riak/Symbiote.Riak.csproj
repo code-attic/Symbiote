@@ -118,6 +118,7 @@
     <Compile Include="Config\RiakConfiguration.cs" />
     <Compile Include="Config\RiakConfigurator.cs" />
     <Compile Include="Impl\RiakNode.cs" />
+    <Compile Include="Config\RiakDependencies.cs" />
     <Compile Include="RiakException.cs" />
   </ItemGroup>
   <ItemGroup>

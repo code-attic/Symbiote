@@ -25,9 +25,9 @@ namespace Symbiote.Daemon.BootStrap
             return actor.MinionPath;
         }
 
-        public void SetId<TKey>( Minion actor, TKey id )
+        public void SetId<TKey>( Minion actor, TKey key )
         {
-            actor.MinionPath = id.ToString();
+            actor.MinionPath = key.ToString();
         }
     }
 }

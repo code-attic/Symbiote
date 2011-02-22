@@ -1,8 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Text;
-
-namespace Core.Tests.Utility.distributor
+﻿namespace Core.Tests.Distributor.Basic
 {
     public abstract class with_mod_wheel
     {

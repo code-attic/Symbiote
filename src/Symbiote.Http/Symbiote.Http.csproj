@@ -44,11 +44,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHaml">
+      <HintPath>..\..\lib\NHaml\NHaml.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -57,9 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ActionExtension.cs" />
+    <Compile Include="Config\HttpWebConfiguration.cs" />
+    <Compile Include="Config\HttpWebConfigurator.cs" />
     <Compile Include="ContentType.cs" />
     <Compile Include="Config\HttpConfigurator.cs" />
     <Compile Include="Config\HttpListenerConfigurator.cs" />
+    <Compile Include="Config\HttpDependencies.cs" />
     <Compile Include="Impl\Adapter\Channel\ChannelConfigurator.cs" />
     <Compile Include="Impl\Adapter\Channel\ChannelDefinition.cs" />
     <Compile Include="Impl\Adapter\Channel\HttpChannel.cs" />
@@ -67,6 +74,37 @@
     <Compile Include="Impl\Adapter\Channel\HttpChannelFactory.cs" />
     <Compile Include="Impl\Adapter\Channel\HttpEnvelope.cs" />
     <Compile Include="Impl\Adapter\Channel\IChannelAdapter.cs" />
+    <Compile Include="Impl\Adapter\ResponseWriter.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\HttpSocketTransform.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\SocketResponseAdapter.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\SocketServer.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\AuthRequiredResponse.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\BasicAuthRequiredResponse.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\ClientFactory.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpBasicAuthChallenger.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpContext.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpRequest.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpResponse.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpServer.cs" />
+    <Compile Include="Config\HttpServerConfiguration.cs" />
+    <Compile Include="Config\HttpServerConfigurator.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpServerException.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\HttpStreamReader.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\IAuthenticationValidator.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\IHttpAuthChallenger.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\IHttpClient.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\IHttpServer.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\IHttpServerConfiguration.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\NoAuthChallenger.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\SecureHttpClient.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\SimpleHttpClient.cs" />
+    <Compile Include="Impl\Adapter\TcpListener\WorthlessAuthenticationValidator.cs" />
+    <Compile Include="Impl\ViewProvider\IView.cs" />
+    <Compile Include="Impl\ViewProvider\DefaultViewLocator.cs" />
+    <Compile Include="Impl\ViewProvider\IViewLocator.cs" />
+    <Compile Include="Impl\ViewProvider\NHamlAdapter\CompiledTemplateWrapper.cs" />
+    <Compile Include="Impl\ViewProvider\NHamlAdapter\NHamlEngine.cs" />
+    <Compile Include="Impl\ViewProvider\NHamlAdapter\NHamlView.cs" />
     <Compile Include="MessagingApplication.cs" />
     <Compile Include="Impl\Adapter\Channel\WebClientChannelAdapter.cs" />
     <Compile Include="Impl\HeaderBuilder.cs" />
@@ -81,15 +119,15 @@
     <Compile Include="Impl\HttpStatusCode.cs" />
     <Compile Include="Impl\IApplicationFactory.cs" />
     <Compile Include="MissingApplicationException.cs" />
+    <Compile Include="OwinApplicationDelegate.cs" />
     <Compile Include="Owin\IRouteRequest.cs" />
-    <Compile Include="Impl\Adapter\IConextTransformer.cs" />
     <Compile Include="Impl\Adapter\IContextTransformer.cs" />
     <Compile Include="Impl\Adapter\IResponseProvider.cs" />
     <Compile Include="Impl\Adapter\Request.cs" />
-    <Compile Include="Impl\Adapter\NetListener\HttpContextTransform.cs" />
-    <Compile Include="Impl\Adapter\NetListener\HttpListenerHost.cs" />
-    <Compile Include="Impl\Adapter\NetListener\HttpResponseAdapter.cs" />
-    <Compile Include="Impl\Adapter\NetListener\HttpRequestTransform.cs" />
+    <Compile Include="Impl\Adapter\HttpListener\HttpContextTransform.cs" />
+    <Compile Include="Impl\Adapter\HttpListener\HttpListenerHost.cs" />
+    <Compile Include="Impl\Adapter\HttpListener\HttpResponseAdapter.cs" />
+    <Compile Include="Impl\Adapter\HttpListener\HttpRequestTransform.cs" />
     <Compile Include="Impl\ApplicationRouter.cs" />
     <Compile Include="Impl\HttpStatus.cs" />
     <Compile Include="Impl\Owin.cs" />
@@ -115,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Impl\Adapter\IISHandler\" />
+    <Folder Include="Impl\ViewProvider\Spark\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Symbiote.Http.nuspec">

@@ -26,6 +26,7 @@ namespace Symbiote.Http
         IBuildResponse AppendJson<T>( T item );
         IBuildResponse AppendProtocolBuffer<T>( T item );
         IBuildResponse DefineHeaders( Action<IDefineHeaders> headerDefinition );
+        IBuildResponse RenderView<TModel>( TModel model, string viewName );
         void Submit( string status );
         void Submit( HttpStatus status );
     }

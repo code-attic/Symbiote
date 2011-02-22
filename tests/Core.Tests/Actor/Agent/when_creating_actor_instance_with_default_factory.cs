@@ -2,7 +2,7 @@
 using Symbiote.Core;
 using Symbiote.Core.Actor;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class when_creating_actor_instance_with_default_factory
         : with_assimilation

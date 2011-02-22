@@ -16,6 +16,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Messaging.Impl.Saga
 {
@@ -25,26 +26,34 @@ namespace Symbiote.Messaging.Impl.Saga
     {
         public Expression<Predicate<TActor>> GuardExpression { get; set; }
         public Predicate<TActor> Guard { get; set; }
-        public Action<TActor> Transition { get; set; }
-        public Action<TActor, TMessage> Process { get; set; }
+        public Func<TActor, Action<IEnvelope>> Transition { get; set; }
+        public Func<TActor, TMessage, Action<IEnvelope>> Process { get; set; }
 
-        public bool Execute( TActor instance, object message )
+        public Action<IEnvelope> Execute( TActor instance, object message )
         {
+            Action<IEnvelope> response = x => { };
+
             var passed = Guard( instance );
             if ( passed )
             {
-                Process( instance, (TMessage) message );
-                Transition( instance );
+                var processResponse = Process( instance, (TMessage) message );
+                var transitionResponse = Transition( instance );
+                response = x =>
+                    {
+                        processResponse( x );
+                        transitionResponse( x );
+                    };
             }
-            return passed;
+
+            return response;
         }
 
         public ConditionalTransition()
         {
             Guard = x => true;
             GuardExpression = x => true;
-            Process = ( x, y ) => { };
-            Transition = x => { };
+            Process = (x, y) => { return e => { }; };
+            Transition = x => { return e => { }; };
         }
     }
 }

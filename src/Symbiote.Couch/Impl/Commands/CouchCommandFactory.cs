@@ -15,12 +15,14 @@
 // */
 using Symbiote.Core;
 using Symbiote.Couch.Config;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
     public class CouchCommandFactory
     {
         protected ICouchConfiguration configuration { get; set; }
+        protected ISerializationProvider Serializer { get; set; }
 
         protected TCommand CreateCommand<TCommand>()
         {
@@ -112,9 +114,10 @@ namespace Symbiote.Couch.Impl.Commands
             return CreateCommand<ChangeStreamCommand>();
         }
 
-        public CouchCommandFactory( ICouchConfiguration configuration )
+        public CouchCommandFactory( ICouchConfiguration configuration, ISerializationProvider serializer )
         {
             this.configuration = configuration;
+            this.Serializer = serializer;
         }
     }
 }

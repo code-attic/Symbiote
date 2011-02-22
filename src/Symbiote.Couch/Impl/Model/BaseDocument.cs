@@ -23,23 +23,22 @@ namespace Symbiote.Couch.Impl.Model
 {
     public abstract class BaseDocument : IHaveAttachments
     {
-        [JsonProperty( "_attachments" )]
-        private JObject attachments { get; set; }
+        public JObject _attachments { get; set; }
 
-        [JsonProperty( PropertyName = "$doc_type" )]
-        internal virtual string UnderlyingDocumentType
-        {
-            get { return GetType().Name; }
-            set
-            {
-                //do nothing, this is effectively read only in the model
-            }
-        }
+        //[JsonProperty( PropertyName = "$doc_type" )]
+        //internal virtual string UnderlyingDocumentType
+        //{
+        //    get { return GetType().Name; }
+        //    set
+        //    {
+        //        //do nothing, this is effectively read only in the model
+        //    }
+        //}
 
         [JsonIgnore]
         public virtual IEnumerable<string> Attachments
         {
-            get { return attachments.Root.Children().Select( x => (x as JProperty).Name ); }
+            get { return _attachments.Root.Children().Select( x => (x as JProperty).Name ); }
         }
 
         public virtual void AddAttachment( string attachmentName, string contentType, long contentLength )
@@ -51,28 +50,28 @@ namespace Symbiote.Couch.Impl.Model
                                      ContentLength = contentLength
                                  };
 
-            if ( !attachments.Properties().Any( x => x.Name == attachmentName ) )
+            if ( !_attachments.Properties().Any( x => x.Name == attachmentName ) )
             {
                 var jsonStub = new JProperty( attachmentName, JToken.FromObject( attachment ) );
-                attachments.Add( jsonStub );
+                _attachments.Add( jsonStub );
             }
             else
             {
-                attachments.Property( attachmentName ).Value = JToken.FromObject( attachment );
+                _attachments.Property( attachmentName ).Value = JToken.FromObject( attachment );
             }
         }
 
         public virtual void RemoveAttachment( string attachmentName )
         {
-            if ( attachments.Properties().Any( x => x.Name == attachmentName ) )
+            if ( _attachments.Properties().Any( x => x.Name == attachmentName ) )
             {
-                attachments.Remove( attachmentName );
+                _attachments.Remove( attachmentName );
             }
         }
 
         protected BaseDocument()
         {
-            attachments = JObject.FromObject( new object() );
+            _attachments = JObject.FromObject( new object() );
         }
     }
 }

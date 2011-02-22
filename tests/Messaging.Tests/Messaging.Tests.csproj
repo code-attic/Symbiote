@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Channels\Manager\when_adding_definition.cs" />
+    <Compile Include="Dispatcher\when_loading_dispatch_memento.cs" />
     <Compile Include="Extensions\BaseType.cs" />
     <Compile Include="Extensions\ChildType.cs" />
     <Compile Include="Extensions\IndependentType.cs" />

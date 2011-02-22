@@ -16,6 +16,7 @@
 using System;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 using Symbiote.Couch.Impl.Model;
 
 namespace Symbiote.Couch.Impl.Commands
@@ -51,8 +52,8 @@ namespace Symbiote.Couch.Impl.Commands
             }
         }
 
-        public SaveAttachmentCommand( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        public SaveAttachmentCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
+            : base( action, configuration, serializer )
         {
         }
     }

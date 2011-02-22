@@ -20,8 +20,6 @@ namespace Symbiote.Http
 {
     public interface IApplication
     {
-        void Process( IDictionary<string, object> requestItems,
-                      Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond,
-                      Action<Exception> onException );
+        void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException );
     }
 }

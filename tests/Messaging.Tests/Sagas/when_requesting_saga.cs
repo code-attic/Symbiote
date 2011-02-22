@@ -30,9 +30,9 @@ namespace Actor.Tests.Sagas
             return actor.Id.ToString();
         }
 
-        public void SetId<TKey>( Person actor, TKey id )
+        public void SetId<TKey>( Person actor, TKey key )
         {
-            actor.Id = Guid.Parse( id.ToString() );
+            actor.Id = Guid.Parse( key.ToString() );
         }
     }
 
@@ -67,11 +67,15 @@ namespace Actor.Tests.Sagas
                                                        {
                                                            p.Name = m.Name;
                                                            p.Initialized = true;
+                                                           return e => e.Acknowledge();
                                                        });
 
                            x.When( p => p.Initialized )
-                               .On<SetPersonName>( ( p, m ) => 
-                                   p.Name = "Reset" );
+                               .On<SetPersonName>( ( p, m ) =>
+                                   {
+                                       p.Name = "Reset";
+                                       return e => e.Acknowledge();
+                                   } );
                        };
         }
 

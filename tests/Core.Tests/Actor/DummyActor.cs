@@ -1,7 +1,4 @@
-﻿using System;
-using Symbiote.Core.Actor;
-
-namespace Actor.Tests
+﻿namespace Core.Tests.Actor
 {
     public class DummyActor
     {

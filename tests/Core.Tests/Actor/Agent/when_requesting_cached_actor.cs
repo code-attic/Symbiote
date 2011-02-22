@@ -3,7 +3,7 @@ using Machine.Specifications;
 using Moq;
 using It = Machine.Specifications.It;
 
-namespace Actor.Tests.Agent
+namespace Core.Tests.Actor.Agent
 {
     public class when_requesting_cached_actor
         : with_cached_actor

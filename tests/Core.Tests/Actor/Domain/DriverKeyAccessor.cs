@@ -1,8 +1,7 @@
-﻿using Actor.Tests.Domain.Model;
+﻿using Core.Tests.Actor.Domain.Model;
 using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests.Domain
+namespace Core.Tests.Actor.Domain
 {
     public class DriverKeyAccessor : IKeyAccessor<Driver>
     {
@@ -11,7 +10,7 @@ namespace Actor.Tests.Domain
             return actor.SSN;
         }
 
-        public void SetId<TKey>(Driver actor, TKey id)
+        public void SetId<TKey>(Driver actor, TKey key)
         {
             // this isn't necessary with a custom factory
         }

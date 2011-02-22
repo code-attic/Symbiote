@@ -28,6 +28,7 @@ namespace Symbiote.Core.Memento
         public IMemento<T> GetMemento<T>( T instance )
         {
             var memento = Assimilate.GetInstanceOf<IMemento<T>>();
+            //TODO: Add exception handling for null mememnto instance
             memento.Capture( instance );
             return memento;
         }

@@ -22,6 +22,7 @@ using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Commands;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;
+using Symbiote.Couch.Impl.Metadata;
 using Symbiote.Couch.Impl.Model;
 
 namespace Symbiote.Couch.Impl.Repository
@@ -34,76 +35,86 @@ namespace Symbiote.Couch.Impl.Repository
         protected ICouchConfiguration configuration { get; set; }
         protected CouchCommandFactory commandFactory { get; set; }
 
-        public virtual void DeleteAttachment<TModel>( TModel model, string attachmentName )
+        public virtual bool DeleteAttachment<TModel>( TModel model, string attachmentName )
             where TModel : IHaveAttachments
         {
             var command = commandFactory.CreateDeleteAttachmentCommand();
             var response = command.DeleteAttachment( model, attachmentName );
+            return true;
         }
 
-        public virtual void DeleteDocument<TModel>( object id )
+        public virtual bool DeleteDocument<TModel>( object id )
         {
             var deleteCommand = commandFactory.CreateDeleteCommand();
             var getCommand = commandFactory.CreateGetDocumentCommand();
 
             var getResult = getCommand.GetDocument<TModel>( id );
-            var doc = getResult.GetResultAs<TModel>();
+            var doc = getCommand.Deserialize<TModel>( getResult.Json );
             deleteCommand.DeleteDocument( doc );
+            return true;
         }
 
-        public virtual void DeleteDocument<TModel>( object id, string rev )
+        public virtual bool DeleteDocument<TModel>( object id, string rev )
         {
             var deleteCommand = commandFactory.CreateDeleteCommand();
             deleteCommand.DeleteDocument<TModel>( id, rev );
+            return true;
         }
 
         public virtual IList<TModel> FromView<TModel>( string designDocument, string viewName, Action<ViewQuery> query )
         {
             var command = commandFactory.CreateGetFromViewCommand();
             var response = command.GetFromView<TModel>( designDocument, viewName, query );
-            return response.GetResultAs<ViewResult<TModel>>().GetList().ToList();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
+            return docs;
         }
 
         public virtual TModel Get<TModel>( object id, string revision )
         {
             var command = commandFactory.CreateGetDocumentCommand();
-            var result = command.GetDocument<TModel>( id, revision );
-            return result.GetResultAs<TModel>();
+            var response = command.GetDocument<TModel>( id, revision );
+            var doc = command.Deserialize<TModel>( response.Json );
+            return doc;
         }
 
         public virtual TModel Get<TModel>( object id )
         {
             var command = commandFactory.CreateGetDocumentCommand();
-            var result = command.GetDocument<TModel>( id );
-            return result.GetResultAs<TModel>();
+            var response = command.GetDocument<TModel>( id );
+            var doc = command.Deserialize<TModel>( response.Json );
+            return doc;
         }
 
         public virtual IList<TModel> GetAll<TModel>()
         {
             var command = commandFactory.CreateGetAllDocumentsCommand();
-            var result = command.GetDocuments<TModel>();
-            return result.GetResultAs<ViewResult<TModel>>().GetList().ToList();
+            var response = command.GetDocuments<TModel>();
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
+            return docs;
         }
 
         public virtual IList<TModel> GetAll<TModel>( int pageSize, int pageNumber )
         {
             var command = commandFactory.CreateGetDocumentsPagedCommand();
-            var result = command.GetDocumentsPaged<TModel>( pageSize, pageNumber );
-            return result.GetResultAs<ViewResult<TModel>>().GetList().ToList();
+            var response = command.GetDocumentsPaged<TModel>( pageSize, pageNumber );
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
+            return docs;
         }
 
         public virtual IList<TModel> GetAllByKeys<TModel>( object[] ids )
         {
             var command = commandFactory.CreateGetDocumentsByIdsCommand();
-            var result = command.GetDocuments<TModel>( ids );
-            return result.GetResultAs<ViewResult<TModel>>().GetList().ToList();
+            var response = command.GetDocuments<TModel>( ids );
+             var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
+            return docs;
         }
 
         public virtual IList<TModel> GetAllBetweenKeys<TModel>( object startingWith, object endingWith )
         {
             var command = commandFactory.CreateGetDocumentsInRangeCommand();
-            var result = command.GetDocumentsInRange<TModel>( startingWith, endingWith );
-            return result.GetResultAs<ViewResult<TModel>>().GetList().ToList();
+            var response = command.GetDocumentsInRange<TModel>( startingWith, endingWith );
+            var docs = command.DeserializeView<TModel>( response.Json ).GetList().ToList();
+            return docs;
         }
 
         public IList<TModel> GetAllByCriteria<TModel>( Expression<Func<TModel, bool>> criteria )
@@ -117,28 +128,38 @@ namespace Symbiote.Couch.Impl.Repository
             where TModel : IHaveAttachments
         {
             var command = commandFactory.CreateGetAttachmentCommand();
-            var result = command.GetAttachment<TModel>( id, attachmentName );
-            return result;
+            var response = command.GetAttachment<TModel>( id, attachmentName );
+            return response;
         }
 
-        public virtual void Save<TModel>( TModel model )
+        public virtual bool Save<TModel>( TModel model )
         {
             var command = commandFactory.CreateSaveDocumentCommand();
-            var result = command.Save( model );
+            var response = command.Save( model );
+            return true;
         }
 
-        public virtual void SaveAll<TModel>( IEnumerable<TModel> list )
+        public virtual bool Save<TModel>( object id, TModel model )
+        {
+            var command = commandFactory.CreateSaveDocumentCommand();
+            var response = command.Save( model );
+            return true;
+        }
+
+        public virtual bool SaveAll<TModel>( IEnumerable<TModel> list )
         {
             var command = commandFactory.CreateSaveDocumentsCommand();
-            var result = command.SaveAll( list );
+            var response = command.SaveAll( list );
+            return true;
         }
 
-        public virtual void SaveAttachment<TModel>( TModel model, string attachmentName, string contentType,
+        public virtual bool SaveAttachment<TModel>( TModel model, string attachmentName, string contentType,
                                                     byte[] content )
             where TModel : IHaveAttachments
         {
             var command = commandFactory.CreateSaveAttachmentCommand();
-            var result = command.SaveAttachment( model, attachmentName, contentType, content );
+            var response = command.SaveAttachment( model, attachmentName, contentType, content );
+            return true;
         }
 
         public virtual void HandleUpdates<TModel>( int since, Action<string, ChangeRecord> onUpdate,
@@ -175,10 +196,10 @@ namespace Symbiote.Couch.Impl.Repository
         {
         }
 
-        protected BaseDocumentRepository( ICouchConfiguration configuration )
+        protected BaseDocumentRepository( ICouchConfiguration configuration, ISerializationProvider serializer )
         {
             this.configuration = configuration;
-            commandFactory = new CouchCommandFactory( configuration );
+            commandFactory = new CouchCommandFactory( configuration, serializer );
         }
     }
 }

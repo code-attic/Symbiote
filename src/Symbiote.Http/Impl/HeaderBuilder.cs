@@ -23,184 +23,140 @@ namespace Symbiote.Http.Impl
     public class HeaderBuilder
         : IDefineHeaders
     {
-        public IDictionary<string, IList<string>> ResponseHeaders { get; set; }
+        public IDictionary<string, string> ResponseHeaders { get; set; }
 
-        #region IDefineHeaders Members
+        public void WriteHeader( string header, string value )
+        {
+            ResponseHeaders[ header ] = value;
+        }
 
         public IDefineHeaders Accept( params string[] contentTypes )
         {
-            ResponseHeaders.Add( "Accept", contentTypes.ToList() );
+            WriteHeader( "Accept", string.Join( ", ", contentTypes ) );
             return this;
         }
 
         public IDefineHeaders AcceptCharset( params string[] charSets )
         {
-            ResponseHeaders.Add( "Accept-Charset", charSets.ToList() );
+            WriteHeader( "Accept-Charset", string.Join( ", ", charSets ) );
             return this;
         }
 
         public IDefineHeaders AcceptEncoding( params string[] encodings )
         {
-            ResponseHeaders.Add( "Accept-Encoding", encodings.ToList() );
+            WriteHeader( "Accept-Encoding", string.Join( ", ", encodings ) );
             return this;
         }
 
         public IDefineHeaders AcceptLanguage( params string[] languages )
         {
-            ResponseHeaders.Add( "Accept-Language", languages.ToList() );
+            WriteHeader( "Accept-Language", string.Join( ", ", languages ) );
             return this;
         }
 
         public IDefineHeaders Age( int seconds )
         {
-            ResponseHeaders.Add( "Age", new List<string>
-                                            {
-                                                seconds.ToString()
-                                            } );
+            WriteHeader( "Age", seconds.ToString() );
             return this;
         }
 
         public IDefineHeaders Allow( params string[] methods )
         {
-            ResponseHeaders.Add( "Allow", methods.ToList() );
+            WriteHeader( "Allow", string.Join( ", ", methods ) );
             return this;
         }
 
         public IDefineHeaders Authorization( string credentials )
         {
-            ResponseHeaders.Add( "Authorization", new List<string>
-                                                      {
-                                                          credentials
-                                                      } );
+            WriteHeader( "Authorization", credentials );
             return this;
         }
 
         public IDefineHeaders ContentEncoding( string encoding )
         {
-            ResponseHeaders.Add( "Content-Encoding", new List<string>
-                                                         {
-                                                             encoding
-                                                         } );
+            WriteHeader( "Content-Encoding", encoding );
             return this;
         }
 
         public IDefineHeaders ContentLanguage( string language )
         {
-            ResponseHeaders.Add( "Content-Language", new List<string>
-                                                         {
-                                                             language
-                                                         } );
+            WriteHeader( "Content-Language", language );
             return this;
         }
 
         public IDefineHeaders ContentLength( long length )
         {
-            ResponseHeaders.Add( "ContentLength", new List<string>
-                                                      {
-                                                          length.ToString()
-                                                      } );
+            WriteHeader( "ContentLength", length.ToString() );
             return this;
         }
 
         public IDefineHeaders ContentMD5( byte[] md5 )
         {
-            ResponseHeaders.Add( "Content-MD5", new List<string>
-                                                    {
-                                                        Encoding.UTF8.GetString( md5 )
-                                                    } );
+            WriteHeader( "Content-MD5", Encoding.UTF8.GetString( md5 ) );
             return this;
         }
 
         public IDefineHeaders ContentType( string mediatype )
         {
-            ResponseHeaders.Add( "Content-Type", new List<string>
-                                                     {
-                                                         mediatype
-                                                     } );
+            WriteHeader( "Content-Type", mediatype );
             return this;
         }
 
         public IDefineHeaders Date( DateTime generated )
         {
-            ResponseHeaders.Add( "Date", new List<string>
-                                             {
-                                                 generated.ToString()
-                                             } );
+            WriteHeader( "Date", generated.ToString() );
             return this;
         }
 
         public IDefineHeaders RedirectTo( string locationUri )
         {
-            ResponseHeaders.Add( "Redirect-To", new List<string>
-                                                    {
-                                                        locationUri
-                                                    } );
+            WriteHeader( "Redirect-To", locationUri );
             return this;
         }
 
         public IDefineHeaders MaxForwards( int forwardLimit )
         {
-            ResponseHeaders.Add( "Max-Forwards", new List<string>
-                                                     {
-                                                         forwardLimit.ToString()
-                                                     } );
+            WriteHeader( "Max-Forwards", forwardLimit.ToString() );
             return this;
         }
 
         public IDefineHeaders ProxyAuthenticate( string challenge )
         {
-            ResponseHeaders.Add( "Proxy-Authenticate", new List<string>
-                                                           {
-                                                               challenge
-                                                           } );
+            WriteHeader( "Proxy-Authenticate", challenge );
             return this;
         }
 
         public IDefineHeaders ProxyAuthorization( string credentials )
         {
-            ResponseHeaders.Add( "Proxy-Authorization", new List<string>
-                                                            {
-                                                                credentials
-                                                            } );
+            WriteHeader( "Proxy-Authorization", credentials );
             return this;
         }
 
         public IDefineHeaders Server( string product )
         {
-            ResponseHeaders.Add( "Server", new List<string>
-                                               {
-                                                   product
-                                               } );
+            WriteHeader( "Server", product );
             return this;
         }
 
         public IDefineHeaders TransferEncoding( string transferEncoding )
         {
-            ResponseHeaders.Add( "Transfer-Encoding", new List<string>
-                                                          {
-                                                              transferEncoding
-                                                          } );
+            WriteHeader( "Transfer-Encoding", transferEncoding );
             return this;
         }
 
         public IDefineHeaders Upgrade( params string[] protocols )
         {
-            ResponseHeaders.Add( "Upgrade", protocols.ToList() );
+            WriteHeader( "Upgrade", string.Join(", ", protocols ) );
             return this;
         }
 
         public IDefineHeaders WwwAuthenticate( string challenge )
         {
-            ResponseHeaders.Add( "WWW-Authentication", new List<string>
-                                                           {
-                                                               challenge
-                                                           } );
+            WriteHeader( "WWW-Authentication", challenge );
             return this;
         }
 
-        #endregion
-
-        public HeaderBuilder( IDictionary<string, IList<string>> responseHeaders )
+        public HeaderBuilder( IDictionary<string, string> responseHeaders )
         {
             ResponseHeaders = responseHeaders;
         }

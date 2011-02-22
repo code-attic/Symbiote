@@ -19,6 +19,6 @@ namespace Symbiote.Http.Owin
 {
     public interface IResponseAdapter
     {
-        void Respond( string status, IDictionary<string, IList<string>> headers, IEnumerable<object> body );
+        void Respond( string status, IDictionary<string, string> headers, IEnumerable<object> body );
     }
 }

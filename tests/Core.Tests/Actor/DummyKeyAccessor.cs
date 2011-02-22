@@ -1,7 +1,6 @@
 ﻿using Symbiote.Core;
-using Symbiote.Core.UnitOfWork;
 
-namespace Actor.Tests
+namespace Core.Tests.Actor
 {
     public class DummyKeyAccessor : IKeyAccessor<DummyActor>
     {
@@ -10,9 +9,9 @@ namespace Actor.Tests
             return actor.Id;
         }
 
-        public void SetId<TKey>( DummyActor actor, TKey id )
+        public void SetId<TKey>( DummyActor actor, TKey key )
         {
-            actor.Id = id.ToString();
+            actor.Id = key.ToString();
         }
     }
 }

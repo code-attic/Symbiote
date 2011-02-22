@@ -25,11 +25,6 @@ namespace Symbiote.Http.Owin
 
         IRegisterApplication DefineApplication( Predicate<IRequest> route, Type applicationType );
 
-        IRegisterApplication DefineApplication( Predicate<IRequest> route,
-                                                Action
-                                                    <IDictionary<string, object>,
-                                                    Action
-                                                    <string, IDictionary<string, IList<string>>, IEnumerable<object>>,
-                                                    Action<Exception>> application );
+        IRegisterApplication DefineApplication( Predicate<IRequest> route, OwinApplication application );
     }
 }

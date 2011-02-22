@@ -13,18 +13,18 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Newtonsoft.Json;
 
 namespace Symbiote.Couch.Impl.Model
 {
     public class DocumentMetadata : BaseDocument
     {
-        [JsonProperty(PropertyName = "_rev")]
-        public virtual string DocumentRevision { get; set; }
+        public virtual string _id { get; set; }
+
+        public virtual string _rev { get; set; }
 
         public virtual void UpdateRevFromJson( string jsonRev )
         {
-            DocumentRevision = jsonRev;
+            _rev = jsonRev;
         }
     }
 }

@@ -25,10 +25,4 @@ namespace Core.Tests.Reflection
             val5 = new ChildTestClass();
         }
     }
-
-    public class ChildTestClass
-    {
-        public string val5a = "child";
-        public decimal val5b = 10.1m;
-    }
 }

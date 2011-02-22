@@ -29,9 +29,7 @@ namespace Symbiote.Http
     {
         public IDispatcher Dispatcher { get; set; }
 
-        public void Process( IDictionary<string, object> requestItems,
-                             Action<string, IDictionary<string, IList<string>>, IEnumerable<object>> respond,
-                             Action<Exception> onException )
+        public void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException )
         {
             var request = requestItems.ExtractRequest();
             byte[] readBuffer = request.Read();

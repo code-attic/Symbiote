@@ -1,9 +1,8 @@
-﻿using System;
-using Machine.Specifications;
+﻿using Machine.Specifications;
 using System.Linq;
 using Symbiote.Core.Trees;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Distributor.Basic
 {
     public class when_loading_tree
         : with_value_list

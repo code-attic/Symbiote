@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Core.Tests.Domain.Memoization;
 
 namespace Core.Tests.Domain.Model
 {
@@ -10,8 +11,8 @@ namespace Core.Tests.Domain.Model
         string LastName { get; set; }
         DateTime DateOfBirth { get; set; }
         IAddressMemento CurrentAddress { get; set; }
-        IList<IAddressMemento> FormerAddresses { get; set; }
-        IList<IVehicleMemento> Vehicles { get; set; }
+        IList<AddressMemento> FormerAddresses { get; set; }
+        IList<VehicleMemento> Vehicles { get; set; }
 
         IAddressMemento CreateAddressMemento();
         IVehicleMemento CreateVehicleMemento();

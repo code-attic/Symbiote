@@ -24,9 +24,9 @@ namespace Symbiote.Couch.Impl.Cache
 
         void InvalidateItem( string affectedKey );
 
-        void Delete<TModel>( object key, Action<object> delete );
+        bool Delete<TModel>( object key, Func<object, bool> delete );
 
-        void Delete<TModel>( object key, string rev, Action<object, string> delete );
+        bool Delete<TModel>( object key, string rev, Func<object, string, bool> delete );
 
         TModel Get<TModel>( object key, string rev, Func<object, string, TModel> retrieve );
 
@@ -39,8 +39,8 @@ namespace Symbiote.Couch.Impl.Cache
         IList<TModel> GetAllInRange<TModel>( object startingWith, object endingWith,
                                              Func<object, object, IList<TModel>> retrieve );
 
-        void Save<TModel>( TModel model, Action<TModel> save );
+        bool Save<TModel>( TModel model, Func<TModel, bool> save );
 
-        void SaveAll<TModel>( IEnumerable<TModel> list, Action<IEnumerable<TModel>> save );
+        bool SaveAll<TModel>( IEnumerable<TModel> list, Func<IEnumerable<TModel>, bool> save );
     }
 }

@@ -19,8 +19,8 @@ namespace Symbiote.Messaging.Impl.Saga
 {
     public interface ICondition<TActor>
     {
-        ICondition<TActor> On<TMessage>( Action<TActor, TMessage> processMessage );
-        ICondition<TActor> On<TMessage>( Action<TActor> transition );
-        ICondition<TActor> On<TMessage>( Action<TActor, TMessage> processMessage, Action<TActor> transition );
+        ICondition<TActor> On<TMessage>( Func<TActor, TMessage, Action<IEnvelope>> processMessage );
+        ICondition<TActor> On<TMessage>( Func<TActor, Action<IEnvelope>> transition);
+        ICondition<TActor> On<TMessage>( Func<TActor, TMessage, Action<IEnvelope>> processMessage, Func<TActor, Action<IEnvelope>> transition );
     }
 }

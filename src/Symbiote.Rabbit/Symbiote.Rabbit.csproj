@@ -61,6 +61,7 @@
     <Compile Include="Impl\Channels\ChannelConfigurator.cs" />
     <Compile Include="Impl\Node\RabbitNodeInitializer.cs" />
     <Compile Include="Impl\Subscription\QueueSubscriptionFactory.cs" />
+    <Compile Include="Config\RabbitDependencies.cs" />
     <Compile Include="RabbitEnvelope.cs" />
     <Compile Include="Impl\Adapter\RabbitQueueListener.cs" />
     <Compile Include="RabbitAssimilation.cs" />

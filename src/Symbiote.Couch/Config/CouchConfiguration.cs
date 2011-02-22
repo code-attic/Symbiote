@@ -43,20 +43,27 @@ namespace Symbiote.Couch.Config
             _databaseForType[typeof( T )] = databaseName.ToLower();
         }
 
-        public string DefaultDatabaseName { get; set; }
-        public string Protocol { get; set; }
-        public string Server { get; set; }
-        public int Port { get; set; }
-        public bool Preauthorize { get; set; }
-        public string User { get; set; }
-        public string Password { get; set; }
-        public int TimeOut { get; set; }
-        public bool Cache { get; set; }
+        protected bool cache { get; set; }
+
+        public bool Cache { 
+            get { return cache; } 
+            set { 
+                cache = value; 
+            } }
         public DateTime CacheExpiration { get; set; }
         public TimeSpan CacheLimit { get; set; }
-        public bool Throw404Exceptions { get; set; }
-        public bool IncludeTypeSpecification { get; set; }
         public string CouchQueryServiceUrl { get; set; }
+        public string DefaultDatabaseName { get; set; }
+        public bool IncludeTypeSpecification { get; set; }
+        public int MetadataCacheLimit { get; set; }
+        public string Password { get; set; }
+        public int Port { get; set; }
+        public bool Preauthorize { get; set; }
+        public string Protocol { get; set; }
+        public string Server { get; set; }
+        public bool Throw404Exceptions { get; set; }
+        public int TimeOut { get; set; }
+        public string User { get; set; }
 
         public CouchConfiguration()
         {
@@ -65,6 +72,7 @@ namespace Symbiote.Couch.Config
             Port = 5984;
             Preauthorize = false;
             TimeOut = 6000;
+            MetadataCacheLimit = 5000;
             IncludeTypeSpecification = true;
             CouchQueryServiceUrl = @"http://localhost:8420/";
             DefaultDatabaseName =

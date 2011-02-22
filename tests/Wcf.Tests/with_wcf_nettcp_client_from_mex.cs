@@ -16,7 +16,7 @@ namespace Wcf.Tests
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Core<StructureMapAdapter>()
+                                                .Initialize()
                                                 .WcfClient(x => 
                                                            x.RegisterService<ITestService>(s =>
                                                                 {

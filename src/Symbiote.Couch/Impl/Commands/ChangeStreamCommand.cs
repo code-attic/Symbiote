@@ -16,6 +16,7 @@
 using System;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
+using Symbiote.Couch.Impl.Metadata;
 
 namespace Symbiote.Couch.Impl.Commands
 {
@@ -37,8 +38,8 @@ namespace Symbiote.Couch.Impl.Commands
             return action;
         }
 
-        public ChangeStreamCommand( IHttpAction action, ICouchConfiguration configuration )
-            : base( action, configuration )
+        public ChangeStreamCommand( IHttpAction action, ICouchConfiguration configuration, ISerializationProvider serializer ) 
+            : base( action, configuration, serializer )
         {
         }
     }

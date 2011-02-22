@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 
-namespace Core.Tests.Utility
+namespace Core.Tests.Utility.Futures
 {
     public class with_callback
     {
