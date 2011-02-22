@@ -161,11 +161,11 @@ namespace Symbiote.Core.DI
                 .GetGenericArguments() );
 
             var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
-                var dependencyExpression = HasNamingStrategy
-                                      ? DependencyExpression.For( name, pluginType )
-                                      : DependencyExpression.For( pluginType );
-                dependencyExpression.Add( match );
-                registry.Register( dependencyExpression );
+            var dependencyExpression = HasNamingStrategy
+                                    ? DependencyExpression.For( name, pluginType )
+                                    : DependencyExpression.For( pluginType );
+            dependencyExpression.Add( match );
+            registry.Register( dependencyExpression );
         }
 
         protected void RegisterSingleImplementations( IDependencyRegistry registry )

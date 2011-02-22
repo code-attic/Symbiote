@@ -1,7 +1,6 @@
 ﻿using System;
 using Symbiote.Core;
 using Symbiote.Core.DI;
-using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Log4Net.Impl;
 
@@ -11,7 +10,6 @@ namespace Symbiote.Log4Net.Config
     {
         public Action<DependencyConfigurator> DefineDependencies()
         {
-            LogManager.Initialized = true;
             return container =>
                        {
                            container.For<ILogProvider>().Use<Log4NetProvider>();

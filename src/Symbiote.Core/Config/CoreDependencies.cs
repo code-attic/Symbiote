@@ -38,6 +38,7 @@ namespace Symbiote.Core
                     container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
                     container.For<IKeyAccessor>().Use<KeyAccessManager>().AsSingleton();
                     container.For<IMemoizer>().Use<Memoizer>();
+                    container.For(typeof( IMemento<> ) ).Use( typeof( PassthroughMemento<> ) );
                     container.For<IEventPublisher>().Use<EventPublisher>().AsSingleton();
                     container.For<IContextProvider>().Use<DefaultContextProvider>();
                     container.For<IEventConfiguration>().Use<EventConfiguration>();

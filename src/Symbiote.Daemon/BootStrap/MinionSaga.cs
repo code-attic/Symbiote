@@ -27,13 +27,14 @@ namespace Symbiote.Daemon.BootStrap
         {
             return x =>
                        {
+                            x.ConditionsAreMutuallyExclusive();
+
                             x.When( a => a.Running )
                                .On<ApplicationDeleted>( ( a, h ) =>
                                    {
                                        a.ShutItDown();
                                        return e => e.Acknowledge();
-                                   } )
-                                .Exclusively();
+                                   } );
 
                             x.When( a => a.Running && !a.Starting )
                                .On<ApplicationChanged>( ( a, h ) =>
@@ -41,8 +42,7 @@ namespace Symbiote.Daemon.BootStrap
                                         a.ShutItDown();
                                         a.StartUp();
                                         return e => e.Acknowledge();
-                                    } )
-                                .Exclusively();
+                                    } );
 
                             x.When( a => !a.Running )
                                .On<ApplicationChanged>( ( a, h ) =>
@@ -54,8 +54,7 @@ namespace Symbiote.Daemon.BootStrap
                                    {
                                        a.StartUp();
                                        return e => e.Acknowledge();
-                                   } )
-                                .Exclusively();
+                                   } );
 
                             x.When( a => true )
                                .On<NewApplication>( ( a, h ) =>

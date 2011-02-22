@@ -53,31 +53,31 @@ namespace Symbiote.Core
             var dependencyAdapter = Activator.CreateInstance( dependencyAdapterType ) as IDependencyAdapter;
             Assimilation.DependencyAdapter = dependencyAdapter;
             
-            ScanIndex.ConfiguredSymbiotes.Keys.ToList().ForEach( x => InitializeSymbiote( x ) );
+            var initializers = new List<Type>();
+            ScanIndex.ConfiguredSymbiotes.Keys.ToList().ForEach( x => LoadSymbioteDependencies( x, initializers ) );
+            initializers
+                .Distinct()
+                .ForEach( InitializeSymbiote );
         }
 
-        private static void InitializeSymbiote( Assembly assembly )
+        private static List<Type> LoadSymbioteDependencies( Assembly assembly, List<Type> initializers )
         {
             if ( ScanIndex.ConfiguredSymbiotes[assembly] )
-                return;
+                return initializers;
 
             var dependencies = GetDependencies( assembly );
-            dependencies.ForEach( InitializeSymbiote );
+            var types = dependencies.SelectMany( x => LoadSymbioteDependencies( x, initializers ) ).ToList();
+            initializers.AddRange( types );
 
             var scanInstructionType = ScanIndex.ScanningInstructions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
             var dependencyDefinitionType = ScanIndex.DependencyDefinitions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
-            var initializerType = ScanIndex.SymbioteInitializers.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
-
+            
             var scanInstructions = scanInstructionType != null 
                 ? Activator.CreateInstance( scanInstructionType ) as IDefineScanningInstructions
                 : null;
 
             var dependencyDefinitions = dependencyDefinitionType != null
                 ? Activator.CreateInstance( dependencyDefinitionType ) as IDefineStandardDependencies
-                : null;
-
-            var initializer = initializerType != null
-                ? Activator.CreateInstance( initializerType ) as IInitializeSymbiote
                 : null;
 
             Assimilation.Dependencies( x =>
@@ -88,10 +88,21 @@ namespace Symbiote.Core
                     if ( dependencyDefinitions != null )
                         dependencyDefinitions.DefineDependencies()( x );
                 } );
-            if ( initializer != null )
-                initializer.Initialize();
 
             ScanIndex.ConfiguredSymbiotes[ assembly ] = true;
+            var initializerType = ScanIndex.SymbioteInitializers.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
+            initializers.Add( initializerType );
+            return initializers;
+        }
+
+        private static void InitializeSymbiote( Type initializerType )
+        {
+            var initializer = initializerType != null
+                ? Activator.CreateInstance( initializerType ) as IInitializeSymbiote
+                : null;
+
+            if ( initializer != null )
+                initializer.Initialize();
         }
 
         public static List<Assembly> GetDependencies( Assembly assembly )

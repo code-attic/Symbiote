@@ -16,8 +16,7 @@ namespace RabbitDemo.Publisher
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
-                .Messaging()
+                .Initialize()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))

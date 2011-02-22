@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Minion.Messages;
 using Symbiote.Core;
@@ -12,12 +13,15 @@ namespace Minion.Host
 {
     class Program
     {
+        static Stopwatch watch;
         static void Main(string[] args)
         {
+            watch = Stopwatch.StartNew();
+
             Assimilate
                 .Initialize()
-                .AddConsoleLogger<IDaemon>( l => l.Info().MessageLayout( m => m.Message().Newline() ) )
-                .Daemon( x => x.Arguments( args ).WithBootStraps( b => b.HostApplicationsFrom( @"C:\git\Symbiote\demo\Minion\Minions" ) ) )
+                .AddConsoleLogger<IMinion>( l => l.Info().MessageLayout( m => m.Message().Newline() ) )
+                .Daemon( x => x.Arguments( args ).AsDynamicHost( b => b.HostApplicationsFrom( @"C:\git\Symbiote\demo\Minion\Minions" ) ) )
                 .Rabbit( x => x.AddBroker( r => r.Defaults() ) )
                 .RunDaemon();
         }
@@ -28,8 +32,10 @@ namespace Minion.Host
 
             public void Start()
             {
+                watch.Stop();
+                Console.WriteLine( "{0}", watch.ElapsedMilliseconds );
                 "Host has started."
-                    .ToInfo<IDaemon>();
+                    .ToInfo<IMinion>();
                 Bus.AddLocalChannel();
                 Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
                 Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Host").ExchangeName("Host").StartSubscription().NoAck());
@@ -56,7 +62,7 @@ namespace Minion.Host
             public Action<IEnvelope> Handle( MinionUp message )
             {
                 "Minion says: {0}"
-                    .ToInfo<IDaemon>( message.Text );
+                    .ToInfo<IMinion>( message.Text );
 
                 Enumerable
                     .Range(0, 10)

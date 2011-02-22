@@ -13,23 +13,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Daemon.Host;
 
-namespace Symbiote.Daemon.Installation
+namespace Symbiote.Daemon.BootStrap
 {
-    public class RunCommand
-        : IDaemonCommand
+    public class NulloBootStrapper
+        : IBootStrapper
     {
-        public IHost Host { get; set; }
-        
-        public void Execute()
+        public void Start()
         {
-            HostRunner.Start( Host );
-        }
-
-        public RunCommand( IHost host )
-        {
-            Host = host;
+            //do nothing. This instance is not configured for dynamic hosting.
         }
     }
 }

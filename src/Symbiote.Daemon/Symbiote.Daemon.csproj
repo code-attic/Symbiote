@@ -100,6 +100,7 @@
     <Compile Include="BootStrap\MinionKeyAccessor.cs" />
     <Compile Include="BootStrap\MinionSaga.cs" />
     <Compile Include="BootStrap\NewApplication.cs" />
+    <Compile Include="BootStrap\NulloBootStrapper.cs" />
     <Compile Include="BootStrap\Watcher.cs" />
     <Compile Include="DaemonAssimilation.cs" />
     <Compile Include="Host\Config\DaemonDependencies.cs" />

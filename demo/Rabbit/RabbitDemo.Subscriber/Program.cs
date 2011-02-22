@@ -18,8 +18,7 @@ namespace RabbitDemo.Subscriber
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
-                .Messaging()
+                .Initialize()
                 .Rabbit(x => x.AddBroker(r => r.Defaults()))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))

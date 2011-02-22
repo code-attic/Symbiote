@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="Config\AppenderConfigurator.cs" />
     <Compile Include="Config\ColorConsoleConfigurator.cs" />
+    <Compile Include="Config\Log4NetInitializer.cs" />
     <Compile Include="Impl\ColorDefinition.cs" />
     <Compile Include="Impl\ColorMap.cs" />
     <Compile Include="Config\ConsoleConfigurator.cs" />

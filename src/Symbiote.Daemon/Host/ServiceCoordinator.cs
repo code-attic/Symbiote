@@ -96,7 +96,6 @@ namespace Symbiote.Daemon.Host
         public void Dispose()
         {
             Dispose( true );
-            GC.SuppressFinalize( this );
         }
 
         private void Dispose( bool disposing )
@@ -109,11 +108,6 @@ namespace Symbiote.Daemon.Host
                 Services.Clear();
             }
             _disposed = true;
-        }
-
-        ~ServiceCoordinator()
-        {
-            Dispose( false );
         }
 
         public void AddNewService( IServiceController controller )

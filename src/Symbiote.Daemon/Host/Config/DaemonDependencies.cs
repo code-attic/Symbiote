@@ -22,7 +22,7 @@ namespace Symbiote.Daemon
                            container.For<ICheckPermission>().Use<CredentialCheck>();
                            container.For(typeof(ServiceController<>)).Use(typeof(ServiceController<>));
                            container.For<IHost>().Use(hostType);
-                           container.For<IBootStrapper>().Use<BootStrapper>().AsSingleton();
+                           container.For<IBootStrapper>().Use<NulloBootStrapper>().AsSingleton();
                        };
         }
     }

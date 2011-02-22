@@ -15,7 +15,9 @@
 // */
 using System;
 using System.ServiceProcess;
+using Symbiote.Core;
 using Symbiote.Daemon.Args;
+using Symbiote.Daemon.BootStrap;
 using Symbiote.Daemon.BootStrap.Config;
 
 namespace Symbiote.Daemon
@@ -83,11 +85,12 @@ namespace Symbiote.Daemon
             return this;
         }
 
-        public DaemonConfigurator WithBootStraps(Action<BootStrapConfigurator> bootstrapper)
+        public DaemonConfigurator AsDynamicHost(Action<BootStrapConfigurator> bootstrapper)
         {
             var configurator = new BootStrapConfigurator();
             bootstrapper( configurator );
             Configuration.BootStrapConfiguration = configurator.Configuration;
+            Assimilate.Dependencies( x => x.For<IBootStrapper>().Use<BootStrapper>().AsSingleton() );
             return this;
         }
 
