@@ -68,36 +68,24 @@
   <ItemGroup>
     <Reference Include="Antlr3.Runtime">
       <HintPath>..\..\lib\NHibernate\Antlr3.Runtime.dll</HintPath>
-      <IlMerge>True</IlMerge>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Castle.Core">
       <HintPath>..\..\lib\NHibernate\Castle.Core.dll</HintPath>
-      <IlMerge>True</IlMerge>
-      <Private>True</Private>
     </Reference>
     <Reference Include="FluentNHibernate">
       <HintPath>..\..\lib\NHibernate\FluentNHibernate.dll</HintPath>
-      <IlMerge>True</IlMerge>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Iesi.Collections">
       <HintPath>..\..\lib\NHibernate\Iesi.Collections.dll</HintPath>
-      <IlMerge>True</IlMerge>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate">
       <HintPath>..\..\lib\NHibernate\NHibernate.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="NHibernate.ByteCode.Castle">
       <HintPath>..\..\lib\NHibernate\NHibernate.ByteCode.Castle.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Remotion.Data.Linq">
       <HintPath>..\..\lib\NHibernate\Remotion.Data.Linq.dll</HintPath>
-      <IlMerge>True</IlMerge>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
