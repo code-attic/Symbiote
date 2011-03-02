@@ -15,9 +15,8 @@ namespace HelloHttp
         static void Main(string[] args)
         {
             Assimilate
-                                .Core<StructureMapAdapter>()
+                                .Initialize()
                                 .Daemon(x => x.Arguments(args))
-                                .Messaging()
                                 .HttpHost(x => x
                                                    //.ConfigureHttpListener( l => l.AddPort(8988))
                                                    .ConfigureSocketServer( s => s.Port( 8988 ) )

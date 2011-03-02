@@ -86,7 +86,7 @@ namespace Symbiote.Http.Impl
 
         public IDefineHeaders ContentLength( long length )
         {
-            WriteHeader( "ContentLength", length.ToString() );
+            WriteHeader( "Content-Length", length.ToString() );
             return this;
         }
 

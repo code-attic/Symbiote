@@ -73,9 +73,10 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
             Console.WriteLine( Count );
             var type = typeof( TModel );
             var templateType = typeof( NHamlView<> ).MakeGenericType( type );
-            var templates = new List<string>() { templatePath };
+            var templates = new List<string>();
             if ( !string.IsNullOrEmpty( layoutPath ) )
                 templates.Add( layoutPath );
+            templates.Add( templatePath );
 
             var template = engine.Compile( templates , templateType );
             var wrapper = new CompiledTemplateWrapper( template ) 

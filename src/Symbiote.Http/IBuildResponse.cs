@@ -29,5 +29,6 @@ namespace Symbiote.Http
         IBuildResponse RenderView<TModel>( TModel model, string viewName );
         void Submit( string status );
         void Submit( HttpStatus status );
+        IBuildResponse RenderView<TModel>( TModel model, string viewName, string layoutName );
     }
 }
