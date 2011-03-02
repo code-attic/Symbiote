@@ -182,6 +182,7 @@
     <Compile Include="Extensions\with_permutations.cs" />
     <Compile Include="Extensions\with_three_elements.cs" />
     <Compile Include="Extensions\with_two_elements.cs" />
+    <Compile Include="Fibers\Fibers.cs" />
     <Compile Include="Json\Collections\Car.cs" />
     <Compile Include="Json\Collections\IGotsaNameYo.cs" />
     <Compile Include="Json\Collections\Person.cs" />

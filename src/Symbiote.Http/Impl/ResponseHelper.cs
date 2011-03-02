@@ -20,6 +20,7 @@ using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
+using Symbiote.Http.Config;
 using Symbiote.Http.Impl.ViewProvider;
 
 namespace Symbiote.Http.Impl
@@ -27,7 +28,6 @@ namespace Symbiote.Http.Impl
     public class ResponseHelper
         : IBuildResponse
     {
-        public string FileTemplate = @"..\..{0}";
         public readonly string RENDER_EXCEPTION_TEMPLATE = @"
 <html>
     <head>
@@ -40,6 +40,7 @@ namespace Symbiote.Http.Impl
         </p>
     </head>
 ";
+        public HttpWebConfiguration Configuration { get; set; }
         public OwinResponse Respond { get; set; }
         public IDictionary<string, string> ResponseHeaders { get; set; }
         public List<object> ResponseChunks { get; set; }
@@ -59,7 +60,7 @@ namespace Symbiote.Http.Impl
 
         public IBuildResponse AppendFileContentToBody( string path )
         {
-            var fullPath = FileTemplate.AsFormat( path.Replace( "/", @"\" ) );
+            var fullPath = path.Replace('/', Path.DirectorySeparatorChar);
             if ( !File.Exists( fullPath ) )
             {
                 throw new FileNotFoundException( "Requested file could not be found: '{0}'".AsFormat( fullPath ) );
@@ -95,6 +96,9 @@ namespace Symbiote.Http.Impl
 
         public IBuildResponse RenderView<TModel>( TModel model, string viewName )
         {
+            if( !string.IsNullOrEmpty( Configuration.DefaultLayoutTemplate ) )
+                RenderView( model, viewName, Configuration.DefaultLayoutTemplate );
+
             var engine = Assimilate.GetInstanceOf<IViewEngine>();
             using( var stream = new MemoryStream() )
             using( var streamWriter = new StreamWriter( stream, Encoding.UTF8 ) )
@@ -167,13 +171,14 @@ namespace Symbiote.Http.Impl
             return this;
         }
 
-        public static implicit operator ResponseHelper( OwinResponse respond )
-        {
-            return new ResponseHelper( respond );
-        }
+        //public static implicit operator ResponseHelper( OwinResponse respond )
+        //{
+        //    return new ResponseHelper( respond, configuration );
+        //}
 
-        public ResponseHelper( OwinResponse respond )
+        public ResponseHelper( OwinResponse respond, HttpWebConfiguration configuration )
         {
+            Configuration = configuration;
             Respond = respond;
             ResponseHeaders = new Dictionary<string, string>();
             ResponseChunks = new List<object>();

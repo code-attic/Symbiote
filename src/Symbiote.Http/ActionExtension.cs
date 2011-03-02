@@ -15,6 +15,8 @@
 // */
 using System;
 using System.Collections.Generic;
+using Symbiote.Core;
+using Symbiote.Http.Config;
 using Symbiote.Http.Impl;
 using Symbiote.Http.Owin;
 
@@ -22,9 +24,19 @@ namespace Symbiote.Http
 {
     public static class ConvenienceExtensions
     {
+        private static HttpWebConfiguration _configuration;
+        public static HttpWebConfiguration Configuration
+        {
+            get
+            {
+                _configuration = _configuration 
+                    ?? Assimilate.GetInstanceOf<HttpWebConfiguration>();
+                return _configuration;
+            }
+        }
         public static IBuildResponse Build( this OwinResponse respond )
         {
-            return new ResponseHelper( respond );
+            return new ResponseHelper( respond, Configuration );
         }
 
         public static IRequest ExtractRequest( this IDictionary<string, object> dictionary )

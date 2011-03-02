@@ -27,10 +27,8 @@ namespace NancyApp
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
-                .Messaging()
+                .Initialize()
                 .Daemon(x => x.Arguments(args).Name("Nancy"))
-                .Nancy(x => { } )
                 .HttpHost( x => x
                     .ConfigureHttpListener(h => h.AddPort(8989))
                     .RegisterApplications(h => h

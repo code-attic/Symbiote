@@ -30,7 +30,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 headerBuilder.Date( DateTime.UtcNow );
 
                 headers.ForEach( x => builder.AppendFormat( "{0}: {1}", x.Key, x.Value ) );
-                builder.Append( "\r\n\r\n" );
+                builder.Append( "\r\n" );
                 var header = builder.ToString();
                 var headerBuffer = Encoding.UTF8.GetBytes( header );
                 var bodyBuffer = responseBody.GetBuffer();

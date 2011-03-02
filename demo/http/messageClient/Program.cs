@@ -14,8 +14,7 @@ namespace messageClient
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
-                .Messaging()
+                .Initialize()
                 .HttpHost( x => x.ConfigureHttpListener( s => {} ) )
                 .Daemon( x => x.Arguments( args ) )
                 .RunDaemon();
