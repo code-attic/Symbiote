@@ -97,7 +97,7 @@ namespace Symbiote.Http.Impl
         public IBuildResponse RenderView<TModel>( TModel model, string viewName )
         {
             if( !string.IsNullOrEmpty( Configuration.DefaultLayoutTemplate ) )
-                RenderView( model, viewName, Configuration.DefaultLayoutTemplate );
+                return RenderView( model, viewName, Configuration.DefaultLayoutTemplate );
 
             var engine = Assimilate.GetInstanceOf<IViewEngine>();
             using( var stream = new MemoryStream() )

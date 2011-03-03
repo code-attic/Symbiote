@@ -89,7 +89,7 @@ namespace Symbiote.Http.Impl.Adapter.HttpListener
             RequestRouter = router;
             Configuration = configuration;
             ContextTransformer = new HttpContextTransform();
-            ConcurrencyGuard = new SemaphoreSlim( 128 );//Environment.ProcessorCount );
+            ConcurrencyGuard = new SemaphoreSlim( 128 );
             Listener = new System.Net.HttpListener();
             Listener.AuthenticationSchemes = Configuration.AuthSchemes;
             Configuration.HostedUrls.ForEach( x => { Listener.Prefixes.Add( x ); } );

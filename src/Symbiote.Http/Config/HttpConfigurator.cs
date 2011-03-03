@@ -56,7 +56,7 @@ namespace Symbiote.Http.Config
             configurator( SocketConfigurator );
             Assimilate.Dependencies( x => 
                 { 
-                    x.For<IHost>().Use<SocketServer>();
+                    x.For<IHost>().Use<SocketServer>().AsSingleton();
                     x.For<HttpServerConfiguration>().Use( SocketConfigurator.GetConfiguration() );
                 } );
             return this;

@@ -21,6 +21,7 @@ using Symbiote.Core.Serialization;
 using Symbiote.Http.Impl.Adapter.Channel;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
+using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Http
 {

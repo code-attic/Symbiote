@@ -89,6 +89,8 @@
     <Compile Include="Args\Arguments.cs" />
     <Compile Include="BootStrap\ApplicationChanged.cs" />
     <Compile Include="BootStrap\ApplicationDeleted.cs" />
+    <Compile Include="BootStrap\HaltMinion.cs" />
+    <Compile Include="BootStrap\HaltMinionHandler.cs" />
     <Compile Include="BootStrap\MinionLocator.cs" />
     <Compile Include="BootStrap\BootStrapper.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfiguration.cs" />
