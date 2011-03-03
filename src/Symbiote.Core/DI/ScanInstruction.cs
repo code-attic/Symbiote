@@ -156,16 +156,30 @@ namespace Symbiote.Core.DI
             //    registry.Register( dependencyExpression );
             //}
 
-            var pluginType = type.MakeGenericType( match.GetInterfaces()
-                .First( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ))
-                .GetGenericArguments() );
+            ////var pluginType = type.MakeGenericType( match.GetInterfaces()
+            ////    .First( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ))
+            ////    .GetGenericArguments() );
 
-            var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
-            var dependencyExpression = HasNamingStrategy
-                                    ? DependencyExpression.For( name, pluginType )
-                                    : DependencyExpression.For( pluginType );
-            dependencyExpression.Add( match );
-            registry.Register( dependencyExpression );
+            ////var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
+            ////var dependencyExpression = HasNamingStrategy
+            ////                        ? DependencyExpression.For( name, pluginType )
+            ////                        : DependencyExpression.For( pluginType );
+            ////dependencyExpression.Add( match );
+            ////registry.Register( dependencyExpression );
+
+            match.GetInterfaces()
+                .Where( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ) )
+                .ForEach( x =>
+                    {
+                        var pluginType = type.MakeGenericType( x.GetGenericArguments() );
+
+                        var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
+                        var dependencyExpression = HasNamingStrategy
+                                                ? DependencyExpression.For( name, pluginType )
+                                                : DependencyExpression.For( pluginType );
+                        dependencyExpression.Add( match );
+                        registry.Register( dependencyExpression );
+                    } );
         }
 
         protected void RegisterSingleImplementations( IDependencyRegistry registry )
