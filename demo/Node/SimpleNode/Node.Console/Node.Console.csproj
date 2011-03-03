@@ -53,10 +53,6 @@
     <Reference Include="StructureMap">
       <HintPath>..\..\..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Actor, Version=0.1.0.72, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\dev\Symbiote.Actor.dll</HintPath>
-    </Reference>
     <Reference Include="Symbiote.Core, Version=0.1.0.72, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\dev\Symbiote.Core.dll</HintPath>

@@ -13,24 +13,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Symbiote.Messaging;
 
-namespace Symbiote.Daemon.BootStrap 
+namespace Symbiote.Core.Fibers
 {
-    public class HaltMinionHandler 
-        : IHandle<HaltMinion>
+    public interface IDirector<T>
     {
-        public Action<IEnvelope> Handle( HaltMinion message )
-        {
-            return x => x.Acknowledge();
-        }
-
-        public HaltMinionHandler()
-        {
-        }
+        void Send( T message );
+        void Send( string id, T message );
     }
 }

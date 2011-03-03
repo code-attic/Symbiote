@@ -23,7 +23,7 @@ using Symbiote.Core.Actor;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Envelope;
-using Symbiote.Fibers;
+using Symbiote.Core.Fibers;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -41,7 +41,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Send<TMessage>( IEnvelope<TMessage> envelope )
         {
             Count++;
-            Fibers.SendTo(
+            Fibers.Send(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId )
                     ? (envelope.MessageId.GetHashCode() % 100).ToString()
@@ -52,7 +52,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
         public void Send( IEnvelope envelope )
         {
             Count++;
-            Fibers.SendTo(
+            Fibers.Send(
                 string.IsNullOrEmpty(
                     envelope.CorrelationId )
                     ? (envelope.MessageId.GetHashCode() % 100).ToString()
@@ -102,7 +102,7 @@ namespace Symbiote.Messaging.Impl.Dispatch
             var agency = Assimilate.GetInstanceOf<IAgency>();
             agency.RegisterActorOf( "", this );
             // prime director
-            Fibers.SendTo("", new Envelope<PrimeDirector>(new PrimeDirector()) { CorrelationId = "" });
+            Fibers.Send("", new Envelope<PrimeDirector>(new PrimeDirector()) { CorrelationId = "" });
             Signal.Wait( 100 );
         }
 

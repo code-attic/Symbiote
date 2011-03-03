@@ -116,6 +116,10 @@
     <Compile Include="Collections\MruNode.cs" />
     <Compile Include="Config\CoreDependencies.cs" />
     <Compile Include="Config\CoreScan.cs" />
+    <Compile Include="Fibers\Director.cs" />
+    <Compile Include="Fibers\IDirector.cs" />
+    <Compile Include="Fibers\Mailbox.cs" />
+    <Compile Include="Fibers\MailboxNode.cs" />
     <Compile Include="IDefineScanningInstructions.cs" />
     <Compile Include="IDefineStandardDependencies.cs" />
     <Compile Include="DI\ScanIndex.cs" />
@@ -241,13 +245,6 @@
     <Compile Include="IKeyAccessor.cs" />
     <Compile Include="Actor\KeyAccessAdapter.cs" />
     <Compile Include="UnitOfWork\ReplayContext.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
-      <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
-      <Name>Symbiote.Fibers</Name>
-      <IlMerge>True</IlMerge>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Symbiote.Core.nuspec">

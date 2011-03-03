@@ -83,10 +83,6 @@
   <Choose>
     <When Condition=" '$(Configuration)'=='Development' ">
       <ItemGroup>
-        <ProjectReference Include="..\Symbiote.Fibers\Symbiote.Fibers.fsproj">
-          <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
-          <Name>Symbiote.Fibers</Name>
-        </ProjectReference>
         <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
           <SpecificVersion>False</SpecificVersion>
           <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
