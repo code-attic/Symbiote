@@ -10,10 +10,19 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
 {
     public class HttpSocketTransform : IContextTransformer<Socket>
     {
-
-        const byte Cr = 0x0d;
-        const byte Lf = 0x0a;
-        const int CrLfCrLf =  218762506;
+        const byte CR = 0x0d;
+		const byte LF = 0x0a;
+		const byte DOT = 0x2e;
+		const byte SPACE = 0x20;
+		const byte SEMI = 0x3b;
+		const byte COLON = 0x3a;
+		const byte HASH = 0x23;
+		const byte QMARK = 0x3f;
+		const byte SLASH = 0x2f;
+		const byte DASH = 0x2d;
+		const byte NULL = 0x00;
+        readonly byte[] LINE_TERMINATOR = new [] { CR, LF };
+        readonly byte[] HEADER_TERMINATOR = new[] { CR, LF, CR, LF };
 
         public Context From<T>( T context )
         {
@@ -34,19 +43,19 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 memory.Write( buffer, 0, read );
 
                 //check for the request body separator
-                var index = -1;
-                while ( index++ < buffer.Length && bodyIndex == 0 )
-                {
-                    if ( index < buffer.Length - 5 
-                         && buffer[index] == Cr 
-                         && buffer[index + 1] == Lf
-                         && buffer[index + 2] == Cr
-                         && buffer[index + 3] == Lf)
-                    {
-                        headerIndex = index;
-                        bodyIndex = index + 4;
-                    }
-                }
+                //var index = -1;
+                //while ( index++ < buffer.Length && bodyIndex == 0 )
+                //{
+                //    if ( index < buffer.Length - 5 
+                //         && buffer[index] == Cr 
+                //         && buffer[index + 1] == Lf
+                //         && buffer[index + 2] == Cr
+                //         && buffer[index + 3] == Lf)
+                //    {
+                //        headerIndex = index;
+                //        bodyIndex = index + 4;
+                //    }
+                //}
             } while ( read == buffer.Length );
 
             if ( memory.Length == 0 )
