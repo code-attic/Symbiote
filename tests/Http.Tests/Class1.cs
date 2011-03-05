@@ -41,7 +41,7 @@ Host: localhost:8080
         private Establish context = () =>
             {
                 request_body =
-@"GET http://localhost:8080/fun/times?id=1&rev=2 HTTP/1.1
+@"GET http://localhost:8080/fun/times?id=101&rev=234 HTTP/1.1
 ";
                 bytes = Encoding.UTF8.GetBytes( request_body );
             };
@@ -62,6 +62,7 @@ Host: localhost:8080
             };
         
         private It should_have_correct_method = () => request.Method.ShouldEqual( "GET" );
+        private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"http://localhost:8080" );
         private It should_have_correct_url = () => request.FullUri.ToString().ShouldEqual( @"http://localhost:8080/fun/times?id=1&rev=2" );
         private It should_have_correct_request_uri = () => request.RequestUri.ShouldEqual( @"/fun/times" );
         private It should_have_first_parameter = () => request.Parameters["id"].ShouldEqual( "101" );
@@ -86,8 +87,11 @@ Host: localhost:8080
             };
 
         private It should_have_correct_method = () => request.Method.ShouldEqual( "GET" );
+        private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"http://localhost:8080" );
         private It should_have_correct_url = () => request.FullUri.ToString().ShouldEqual( @"http://localhost:8080/fun/times?id=1&rev=2" );
         private It should_have_correct_request_uri = () => request.RequestUri.ShouldEqual( @"/fun/times" );
+        private It should_have_first_parameter = () => request.Parameters["id"].ShouldEqual( "101" );
+        private It should_have_second_parameter = () => request.Parameters["rev"].ShouldEqual( "234" );
         private It should_have_correct_scheme = () => request.Scheme.ShouldEqual( "HTTP" );
         private It should_have_version = () => request.Version.ShouldEqual( "1.1" );
         private It should_be_very_fast = () => Timer.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 1 );
@@ -130,7 +134,7 @@ Host: localhost:8080
             return lastRead;
         }
 
-        public string ProcessValue( byte stopCharacter, int start, ref int index )
+        public string ParseValue( byte stopCharacter, int start, ref int index )
         {
             var length = 1;
             while ( ++index < Buffer.Count && Buffer.Array[ index + Buffer.Offset ] != stopCharacter )
@@ -141,10 +145,25 @@ Host: localhost:8080
             return Encoding.UTF8.GetString( Buffer.Array, start, length );
         }
 
+        public string ParseBaseUri( int start, ref int index )
+        {
+            var length = 1;
+            var count = 0;
+            while 
+            ( 
+                ++index < Buffer.Count && 
+                ( ( count += Buffer.Array[ index + Buffer.Offset ] == SLASH ? 1 : 0 ) < 3 )
+            )
+            {
+                length++;
+            }
+            return Encoding.UTF8.GetString( Buffer.Array, start, length );
+        }
+
         public int GetMethod( int start )
         {
             var index = start;
-            Request.Method = ProcessValue( SPACE, start, ref index );
+            Request.Method = ParseValue( SPACE, start, ref index );
             return index;
         }
 
@@ -158,9 +177,9 @@ Host: localhost:8080
         public int GetRelativeUri( int start )
         {
             var index = start;
-            Request.RequestUri = ProcessValue( QMARK, start, ref index );
+            Request.RequestUri = ParseValue( QMARK, start, ref index );
 
-            var queryString = ProcessValue( SPACE, index, ref index );
+            var queryString = ParseValue( SPACE, index, ref index );
             Request.Parameters = GetParameters( queryString );
 
             return index;
@@ -168,7 +187,15 @@ Host: localhost:8080
 
         public int GetAbsoluteUri( int start )
         {
-            return start;
+            var index = start;
+
+            Request.BaseUri = ParseBaseUri( start, ref index );
+            Request.RequestUri = ParseValue( QMARK, index, ref index );
+            //Request.FullUri = Request.BaseUri + Request.RequestUri;
+            var queryString = ParseValue( SPACE, index, ref index );
+            Request.Parameters = GetParameters( queryString );
+
+            return index;
         }
 
         private IDictionary<string, string> GetParameters( string query )
@@ -216,8 +243,8 @@ Host: localhost:8080
         public int GetVersion( int start )
         {
             var index = start;
-            Request.Scheme = ProcessValue( SLASH, start, ref index );
-            Request.Version = ProcessValue( CR, index, ref index );
+            Request.Scheme = ParseValue( SLASH, start, ref index );
+            Request.Version = ParseValue( CR, index, ref index );
             return index + 1;
         }
     }
