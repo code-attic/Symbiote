@@ -13,7 +13,7 @@ namespace Symbiote.Nancy.Impl
         {
             var request = requestItems.ExtractRequest();
             var parameters = DelimitedBuilder.Construct( request.Parameters.Select( x => "{0}={1}".AsFormat( x.Key, x.Value ) ), "&" );
-            return new Request( request.Method, request.Url, request.Headers, request.RequestStream, request.Scheme, parameters );
+            return new Request( request.Method, request.RequestUri, request.Headers, request.RequestStream, request.Scheme, parameters );
         }
     }
 }

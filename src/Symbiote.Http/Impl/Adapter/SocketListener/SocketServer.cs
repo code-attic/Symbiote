@@ -1,5 +1,19 @@
-﻿using System;
-using System.IO;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System;
 using System.Net;
 using System.Net.Sockets;
 using Symbiote.Core.Futures;
@@ -7,88 +21,6 @@ using Symbiote.Http.Impl.Adapter.TcpListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener {
-    
-    public class ClientSocket
-        : IDisposable
-    {
-        public string Id { get; set; }
-        public Socket Socket { get; set; }
-        public ClientSocket Next { get; set; }
-        public ClientSocket Previous { get; set; }
-
-        public Action OnError { get; set; }
-        public Action<ArraySegment<byte>> OnData { get; set; }
-        public Action Remove { get; set; }
-
-        public byte[] Buffer { get; set; }
-        public readonly int BufferSize = 8 * 1024;
-
-        public void Disconnect()
-        {
-            Socket.Close();
-            Socket = null;
-            if( !Next.Id.Equals( Id ) )
-                Previous.Next = Next;
-            if( !Previous.Id.Equals( Id ) )
-                Next.Previous = Previous;
-            Remove();
-        }
-
-        public ClientSocket Add( string id, 
-            Socket socket,
-            Action remove, 
-            Action<ArraySegment<byte>> onData,
-            Action onError )
-        {
-            var newNode = new ClientSocket( id, socket, Next, this, onError, onData, remove );
-            Next.Previous = newNode;
-            Next = newNode;
-            return newNode;
-        }
-
-        public void WaitForReceive()
-        {
-            if( !Socket.Connected )
-                Disconnect();
-
-            Socket.BeginReceive( Buffer, 0, BufferSize, SocketFlags.OutOfBand, OnReceive, null );
-        }
-
-        public void OnReceive( IAsyncResult result )
-        {
-            var total = Socket.EndReceive( result );
-            if( total > 0 )
-            {
-                OnData( new ArraySegment<byte>( Buffer, 0, total ) );
-            }
-            WaitForReceive();
-        }
-
-        public ClientSocket( string id, 
-            Socket socket, 
-            ClientSocket next, 
-            ClientSocket previous, 
-            Action onError, 
-            Action<ArraySegment<byte>> onData, 
-            Action remove )
-        {
-            Id = id;
-            Socket = socket;
-            Next = next;
-            Previous = previous;
-            OnError = onError;
-            OnData = onData;
-            Remove = remove;
-
-            WaitForReceive();
-        }
-
-        public void Dispose()
-        {
-            Socket.Dispose();
-        }
-    }
-    
     public class SocketServer :
         IHost, IDisposable
     {

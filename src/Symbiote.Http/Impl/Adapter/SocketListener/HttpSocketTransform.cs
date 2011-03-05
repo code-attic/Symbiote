@@ -1,4 +1,19 @@
-﻿using System;
+﻿// /* 
+// Copyright 2008-2011 Alex Robson
+// 
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+// 
+//    http://www.apache.org/licenses/LICENSE-2.0
+// 
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+// */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,6 +23,11 @@ using System.Text;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener
 {
+    public class HttpSocketAdapter
+    {
+        
+    }
+
     public class HttpSocketTransform : IContextTransformer<Socket>
     {
         const byte CR = 0x0d;
@@ -42,20 +62,20 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 read = context.Receive( buffer, 0, buffer.Length, SocketFlags.None );
                 memory.Write( buffer, 0, read );
 
-                //check for the request body separator
-                //var index = -1;
-                //while ( index++ < buffer.Length && bodyIndex == 0 )
-                //{
-                //    if ( index < buffer.Length - 5 
-                //         && buffer[index] == Cr 
-                //         && buffer[index + 1] == Lf
-                //         && buffer[index + 2] == Cr
-                //         && buffer[index + 3] == Lf)
-                //    {
-                //        headerIndex = index;
-                //        bodyIndex = index + 4;
-                //    }
-                //}
+                // check for the request body separator
+                var index = -1;
+                while ( index++ < buffer.Length && bodyIndex == 0 )
+                {
+                    if ( index < buffer.Length - 5 
+                         && buffer[index] == CR 
+                         && buffer[index + 1] == LF
+                         && buffer[index + 2] == CR
+                         && buffer[index + 3] == LF)
+                    {
+                        headerIndex = index;
+                        bodyIndex = index + 4;
+                    }
+                }
             } while ( read == buffer.Length );
 
             if ( memory.Length == 0 )
@@ -85,9 +105,9 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                                   Headers = BuildHeaders( headers.Skip( 1 ) ),
                                   RequestStream = bodyIndex == memory.Length ? null : new MemoryStream( memory.GetBuffer(), bodyIndex, (int) memory.Length ),
                                   Method = requestSegments[0],
-                                  Uri = requestSegments[1],
+                                  BaseUri = requestSegments[1],
                                   Parameters = parameters,
-                                  Url = parameterList[0],
+                                  RequestUri = parameterList[0],
                               };
 
             request.Items = ProcessItems( request );
@@ -110,9 +130,9 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
             return new[]
                        {
                            Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_METHOD, origin.Method ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_URI, origin.Url ),
+                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_URI, origin.RequestUri ),
                            Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_HEADERS, origin.Headers ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.BASE_URI, origin.Uri ),
+                           Tuple.Create<string, object>( Owin.ItemKeys.BASE_URI, origin.BaseUri ),
                            Tuple.Create<string, object>( Owin.ItemKeys.SERVER_NAME, origin.Server ),
                            Tuple.Create<string, object>( Owin.ItemKeys.URI_SCHEME, origin.Scheme ),
                            Tuple.Create<string, object>( Owin.ItemKeys.REMOTE_ENDPOINT, origin.ClientEndpoint ),

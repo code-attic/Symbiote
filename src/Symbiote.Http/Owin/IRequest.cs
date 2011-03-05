@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -24,8 +25,9 @@ namespace Symbiote.Http.Owin
     {
         IPEndPoint ClientEndpoint { get; }
         string Method { get; }
-        string Uri { get; }
-        string Url { get; }
+        string BaseUri { get; }
+        string RequestUri { get; }
+        Uri FullUri { get; }
         string Scheme { get; }
         string Server { get; }
         string Version { get; }

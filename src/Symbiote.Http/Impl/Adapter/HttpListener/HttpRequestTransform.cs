@@ -34,8 +34,9 @@ namespace Symbiote.Http.Impl.Adapter.HttpListener
             request.Scheme = origin.Url.Scheme;
             request.Server = origin.Url.Host;
             request.RequestStream = origin.InputStream;
-            request.Uri = origin.Url.GetLeftPart( UriPartial.Path );
-            request.Url = origin.Url.PathAndQuery.Split( '?' )[0];
+            request.BaseUri = origin.Url.GetLeftPart( UriPartial.Authority );
+            request.RequestUri = origin.Url.PathAndQuery.Split( '?' )[0];
+            request.FullUri = origin.Url;
             request.Version = origin.ProtocolVersion.ToString();
 
             request.Items = ProcessItems( request );
@@ -61,9 +62,9 @@ namespace Symbiote.Http.Impl.Adapter.HttpListener
             return new[]
                        {
                            Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_METHOD, origin.Method ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_URI, origin.Url ),
+                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_URI, origin.RequestUri ),
                            Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_HEADERS, origin.Headers ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.BASE_URI, origin.Uri ),
+                           Tuple.Create<string, object>( Owin.ItemKeys.BASE_URI, origin.BaseUri ),
                            Tuple.Create<string, object>( Owin.ItemKeys.SERVER_NAME, origin.Server ),
                            Tuple.Create<string, object>( Owin.ItemKeys.URI_SCHEME, origin.Scheme ),
                            Tuple.Create<string, object>( Owin.ItemKeys.REMOTE_ENDPOINT, origin.ClientEndpoint ),

@@ -62,7 +62,7 @@ namespace Symbiote.Http.Impl
             if ( route == null )
             {
                 throw new MissingApplicationException(
-                    "No application route existed for request: {0}".AsFormat( request.Uri ) );
+                    "No application route existed for request: {0}".AsFormat( request.BaseUri ) );
             }
             return route.Item2.CreateApplication();
         }
