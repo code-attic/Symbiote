@@ -37,12 +37,15 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
         public void Disconnect()
         {
             if(Socket != null && Socket.Connected)
+            {
+                Socket.Disconnect( true );
                 Socket.Close();
-            if( !ReferenceEquals( Next.Id, Id ) )
-                Previous.Next = Next;
-            if( !ReferenceEquals( Previous.Id, Id ) )
-                Next.Previous = Previous;
-            Socket.Dispose();
+                Socket.Dispose();
+            }
+            Previous.Next = Next;
+            Next.Previous = Previous;
+            Next = null;
+            Previous = null;
         }
 
         public ClientSocketAdapter Add( string id, Socket socket, Action<IContext> launchApplication )
@@ -61,7 +64,14 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 return;
             }
             Bytes = new byte[BufferSize];
-            Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, OnReceive, null );
+            try
+            {
+                Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, OnReceive, null );
+            }
+            catch ( Exception e )
+            {
+                Disconnect();
+            }
         }
 
         public void OnReceive( IAsyncResult result )
@@ -105,6 +115,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
         {
             if( Socket != null )
                 Socket.Dispose();
+            LaunchApplication = null;
         }
     }
 }

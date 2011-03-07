@@ -102,6 +102,8 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
         {
             var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
             var layoutPath = ViewLocator.GetDefaultLayout<TModel>( EXTENSION );
+            if ( viewPath == null )
+                return;
             CompiledTemplateWrapper template = GetCompiledTemplateFor<TModel>( viewPath, layoutPath );
             var instance = template.CreateInstance( model );
             instance.Render( writer );
@@ -111,6 +113,8 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
         {
             var viewPath = ViewLocator.GetViewPath<TModel>( view, EXTENSION );
             var layoutPath = ViewLocator.GetViewPath<TModel>( layout, EXTENSION );
+            if ( viewPath == null )
+                return;
             CompiledTemplateWrapper template = GetCompiledTemplateFor<TModel>(viewPath, layoutPath);
             var instance = template.CreateInstance( model );
             instance.Render( writer );

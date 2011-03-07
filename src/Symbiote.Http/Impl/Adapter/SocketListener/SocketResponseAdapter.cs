@@ -51,11 +51,13 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 var bodyBuffer = responseBody.GetBuffer();
                 Response.Send( headerBuffer );
                 Response.Send( bodyBuffer );
+                Response.Disconnect(true);
                 Response.Close();
             }
             catch ( SocketException socketException )
             {
-                
+                Response.Disconnect(true);
+                Response.Close();
             }
         }
 
