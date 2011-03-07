@@ -22,10 +22,4 @@ namespace Symbiote.Http.Impl.ViewProvider
         void SetModel( object model );
         void Render( TextWriter writer );
     }
-
-    public interface IViewEngine
-    {
-        void Render<TModel>(string view, TModel model, TextWriter writer );
-        void Render<TModel>(string view, string layout, TModel model, TextWriter writer );
-    }
 }

@@ -19,6 +19,7 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core.Serialization;
 using Symbiote.Http.Impl.Adapter.Channel;
+using Symbiote.Http.Owin;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Subscriptions;
@@ -33,27 +34,31 @@ namespace Symbiote.Http
         public void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException )
         {
             var request = requestItems.ExtractRequest();
-            byte[] readBuffer = request.Read();
-            var contentType = request.Headers["Content-Type"].FirstOrDefault() ?? "";
-            var encoding = request.Headers["Content-Encoding"].FirstOrDefault() ?? "";
-            var type = Type.GetType( contentType );
-            var envelopeType = typeof( HttpEnvelope<> ).MakeGenericType( type );
-            HttpEnvelope result;
-            switch( encoding.Trim() )
-            {
-                case "application/json":
-                    result = Encoding.UTF8.GetString( readBuffer ).FromJson( envelopeType ) as HttpEnvelope;
-                    break;
-                case "application/protocol-buffer":
-                    result = readBuffer.FromProtocolBuffer( envelopeType ) as HttpEnvelope;
-                    break;
-                default:
-                    result = null;
-                    break;
-            }
+            request.ReadNext( 
+                x => {
+                    var contentType = request.Headers["Content-Type"] ?? "";
+                    var encoding = request.Headers["Content-Encoding"] ?? "";
+                    var type = Type.GetType( contentType );
+                    var envelopeType = typeof( HttpEnvelope<> ).MakeGenericType( type );
+                    HttpEnvelope result;
+                    switch( encoding.Trim() )
+                    {
+                        case "application/json":
+                            result = Encoding.UTF8.GetString( x.Array ).FromJson( envelopeType ) as HttpEnvelope;
+                            break;
+                        case "application/protocol-buffer":
+                            result = x.Array.FromProtocolBuffer( envelopeType ) as HttpEnvelope;
+                            break;
+                        default:
+                            result = null;
+                            break;
+                    }
 
-            result.Callback = respond;
-            Dispatcher.Send( result as IEnvelope );
+                    result.Callback = respond;
+                    Dispatcher.Send( result as IEnvelope );
+                },
+                x => { }
+                );
         }
 
         public MessagingApplication( IDispatcher dispatcher )

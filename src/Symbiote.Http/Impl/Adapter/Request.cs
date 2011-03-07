@@ -15,10 +15,8 @@
 // */
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using Symbiote.Core.Extensions;
-using Symbiote.Core.Futures;
+using Symbiote.Http.Impl.Adapter.SocketListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter
@@ -26,30 +24,60 @@ namespace Symbiote.Http.Impl.Adapter
     public class Request
         : IRequest
     {
+        public bool Initialized { get; set; }
         public IPEndPoint ClientEndpoint { get; set; }
         public string Method { get; set; }
         public string Scheme { get; set; }
         public string Server { get; set; }
         public string BaseUri { get; set; }
         public string RequestUri { get; set; }
-        public Uri FullUri { get; set; }
+        public List<string> PathSegments { get; set; }
         public string Version { get; set; }
         public IDictionary<string, string> Parameters { get; set; }
-        public IDictionary<string, IEnumerable<string>> Headers { get; set; }
+        public IDictionary<string, string> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
-        public Stream RequestStream { get; set; }
+        public Queue<ArraySegment<byte>> RequestChunks { get; set; }
+        public Action<ArraySegment<byte>> OnData { get; set; }
+        public Action<Exception> OnException { get; set; }
 
-        public Future<byte[]> Read()
+        public void BytesReceived( byte[] bytes )
         {
-            return Future
-                .Of( () => RequestStream.ReadToEnd( 1000 ) );
+            OnData( new ArraySegment<byte>( bytes ) );
+            OnData = CacheBytes;
+        }
+
+        public void CacheBytes( ArraySegment<byte> bytes )
+        {
+            RequestChunks.Enqueue( bytes );
+        }
+
+        public void ReadNext( Action<ArraySegment<byte>> onData, Action<Exception> onException )
+        {
+            if ( RequestChunks.Count > 0 )
+            {
+                onData( RequestChunks.Dequeue() );
+            }
+            else
+            {
+                OnData = onData;
+                OnException = onException;
+            }
         }
 
         public Request()
         {
             Parameters = new Dictionary<string, string>();
-            Headers = new Dictionary<string, IEnumerable<string>>();
+            Headers = new Dictionary<string, string>();
             Items = new Dictionary<string, object>();
+            RequestChunks = new Queue<ArraySegment<byte>>();
+            OnData = Initialize;
+        }
+
+        private void Initialize( ArraySegment<byte> arraySegment )
+        {
+            Initialized = true;
+            OnData = CacheBytes;
+            RequestParser.PopulateRequest( this, arraySegment );
         }
     }
 }

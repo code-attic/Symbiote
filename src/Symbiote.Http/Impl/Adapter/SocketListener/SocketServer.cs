@@ -26,12 +26,11 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
     {
         public IHttpServerConfiguration Configuration { get; set; }
         public IRouteRequest RequestRouter { get; set; }
-        public HttpSocketTransform ContextTransformer {get; set; }
         public bool Running { get; set; }
         public IPAddress ServerAddress { get; set; }
         public IPEndPoint ServerEndpoint { get; set; }
         public Socket HttpSocket { get; set; }
-        public ClientSocket Root { get; set; }
+        public ClientSocketAdapter Root { get; set; }
 
         public void Listen()
         {
@@ -40,37 +39,22 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
                 .Start();
         }
 
-        public void AddClient( Socket socket )
-        {
-
-        }
-
-        public void OnClient(IAsyncResult result)
+        public void OnClient( IAsyncResult result )
         {
             var client = HttpSocket.EndAccept( result );
             Listen();
-            AddClient( client );
+            Root.Add( "", client, OnContext );
         }
 
-        public void ProcessRequest( Socket clientSocket )
+        public void OnContext( IContext context )
         {
-            var context = ContextTransformer.From( clientSocket );
-            if( context != null )
-            {
-                var application = RequestRouter.GetApplicationFor( context.Request );
-                application.Process(
-                    context.Request.Items,
-                    context.Response.Respond,
-                    OnApplicationException
-                    );
-            }
+            context.SpawnApplication( OnApplicationException );
         }
 
         public void OnApplicationException( Exception exception )
         {
             Console.WriteLine( "Well, this is bad: \r\n {0}", exception );
         }
-
 
         public void Start()
         {
@@ -92,7 +76,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
             ServerAddress = IPAddress.Any;
             ServerEndpoint = new IPEndPoint( ServerAddress, configuration.Port );
             RequestRouter = router;
-            ContextTransformer = new HttpSocketTransform();
+            Root = new ClientSocketAdapter();
         }
 
         public void Dispose()

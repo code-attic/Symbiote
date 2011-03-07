@@ -15,42 +15,39 @@
 // */
 using System;
 using System.Net.Sockets;
+using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener
 {
-    public class ClientSocket
-        : IDisposable
+    public class ClientSocketAdapter :
+        IContext,
+        IDisposable
     {
+        protected Request ConcreteRequest { get; set; }
+        public readonly int BufferSize = 8 * 1024;
+        public byte[] Bytes { get; set; }
         public string Id { get; set; }
         public Socket Socket { get; set; }
-        public ClientSocket Next { get; set; }
-        public ClientSocket Previous { get; set; }
-
-        public Action OnError { get; set; }
-        public Action<ArraySegment<byte>> OnData { get; set; }
-        public Action Remove { get; set; }
-
-        public byte[] Bytes { get; set; }
-        public readonly int BufferSize = 8 * 1024;
+        public ClientSocketAdapter Next { get; set; }
+        public ClientSocketAdapter Previous { get; set; }
+        public IRequest Request { get { return ConcreteRequest; } }
+        public IResponseAdapter Response { get; set; }
+        public Action<IContext> LaunchApplication { get; set; }
 
         public void Disconnect()
         {
-            Socket.Close();
-            Socket = null;
-            if( !Next.Id.Equals( Id ) )
+            if(Socket != null && Socket.Connected)
+                Socket.Close();
+            if( !ReferenceEquals( Next.Id, Id ) )
                 Previous.Next = Next;
-            if( !Previous.Id.Equals( Id ) )
+            if( !ReferenceEquals( Previous.Id, Id ) )
                 Next.Previous = Previous;
-            Remove();
+            Socket.Dispose();
         }
 
-        public ClientSocket Add( string id, 
-                                 Socket socket,
-                                 Action remove, 
-                                 Action<ArraySegment<byte>> onData,
-                                 Action onError )
+        public ClientSocketAdapter Add( string id, Socket socket, Action<IContext> launchApplication )
         {
-            var newNode = new ClientSocket( id, socket, Next, this, onError, onData, remove );
+            var newNode = new ClientSocketAdapter( id, socket, Next, this, launchApplication );
             Next.Previous = newNode;
             Next = newNode;
             return newNode;
@@ -59,9 +56,12 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
         public void WaitForReceive()
         {
             if( !Socket.Connected )
+            {
                 Disconnect();
+                return;
+            }
             Bytes = new byte[BufferSize];
-            Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.OutOfBand, OnReceive, null );
+            Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, OnReceive, null );
         }
 
         public void OnReceive( IAsyncResult result )
@@ -71,33 +71,40 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
             if( total > 0 )
             {
                 Buffer.BlockCopy( Bytes, 0, buffer, 0, total );
-                OnData( new ArraySegment<byte>( Bytes, 0, total ) );
+                ConcreteRequest.BytesReceived( buffer );
+                LaunchApplication( this );
+                LaunchApplication = x => { };
             }
             WaitForReceive();
         }
 
-        public ClientSocket( string id, 
-                             Socket socket, 
-                             ClientSocket next, 
-                             ClientSocket previous, 
-                             Action onError, 
-                             Action<ArraySegment<byte>> onData, 
-                             Action remove )
+        public ClientSocketAdapter()
+        {
+            Next = this;
+            Previous = this;
+        }
+
+        public ClientSocketAdapter( string id, 
+                             Socket socket,
+                             ClientSocketAdapter next, 
+                             ClientSocketAdapter previous,
+                             Action<IContext> launchApplication
+            )
         {
             Id = id;
             Socket = socket;
-            Next = next;
-            Previous = previous;
-            OnError = onError;
-            OnData = onData;
-            Remove = remove;
-
+            LaunchApplication = launchApplication;
+            ConcreteRequest = new Request();
+            Response = new SocketResponseAdapter( socket );
+            Next = next ?? this;
+            Previous = previous ?? this;
             WaitForReceive();
         }
 
         public void Dispose()
         {
-            Socket.Dispose();
+            if( Socket != null )
+                Socket.Dispose();
         }
     }
 }

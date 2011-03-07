@@ -27,15 +27,16 @@ namespace Symbiote.Http.Owin
         string Method { get; }
         string BaseUri { get; }
         string RequestUri { get; }
-        Uri FullUri { get; }
+        List<string> PathSegments { get; }
         string Scheme { get; }
         string Server { get; }
         string Version { get; }
-        Stream RequestStream { get; set; }
+        //Stream RequestStream { get; set; }
 
         IDictionary<string, string> Parameters { get; }
-        IDictionary<string, IEnumerable<string>> Headers { get; }
+        IDictionary<string, string> Headers { get; }
         IDictionary<string, object> Items { get; }
-        Future<byte[]> Read();
+        //Future<byte[]> Read();
+        void ReadNext( Action<ArraySegment<byte>> onData, Action<Exception> onException );
     }
 }

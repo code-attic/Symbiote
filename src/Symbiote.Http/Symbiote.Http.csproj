@@ -74,9 +74,11 @@
     <Compile Include="Impl\Adapter\Channel\HttpChannelFactory.cs" />
     <Compile Include="Impl\Adapter\Channel\HttpEnvelope.cs" />
     <Compile Include="Impl\Adapter\Channel\IChannelAdapter.cs" />
-    <Compile Include="Impl\Adapter\ResponseWriter.cs" />
+    <Compile Include="Impl\Adapter\ResponseEncoder.cs" />
     <Compile Include="Impl\Adapter\SocketListener\ClientSocket.cs" />
-    <Compile Include="Impl\Adapter\SocketListener\HttpSocketTransform.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\HeaderKeyEqualityComparer.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\HttpConstants.cs" />
+    <Compile Include="Impl\Adapter\SocketListener\RequestParser.cs" />
     <Compile Include="Impl\Adapter\SocketListener\SocketResponseAdapter.cs" />
     <Compile Include="Impl\Adapter\SocketListener\SocketServer.cs" />
     <Compile Include="Impl\Adapter\TcpListener\AuthRequiredResponse.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Impl\Adapter\TcpListener\WorthlessAuthenticationValidator.cs" />
     <Compile Include="Impl\ViewProvider\IView.cs" />
     <Compile Include="Impl\ViewProvider\DefaultViewLocator.cs" />
+    <Compile Include="Impl\ViewProvider\IViewEngine.cs" />
     <Compile Include="Impl\ViewProvider\IViewLocator.cs" />
     <Compile Include="Impl\ViewProvider\NHamlAdapter\CompiledTemplateWrapper.cs" />
     <Compile Include="Impl\ViewProvider\NHamlAdapter\NHamlEngine.cs" />

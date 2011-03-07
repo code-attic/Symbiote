@@ -102,7 +102,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
             var request = new Request()
                               {
                                   ClientEndpoint = (IPEndPoint) context.RemoteEndPoint,
-                                  Headers = BuildHeaders( headers.Skip( 1 ) ),
+                                  //Headers = BuildHeaders( headers.Skip( 1 ) ),
                                   RequestStream = bodyIndex == memory.Length ? null : new MemoryStream( memory.GetBuffer(), bodyIndex, (int) memory.Length ),
                                   Method = requestSegments[0],
                                   BaseUri = requestSegments[1],
@@ -127,19 +127,21 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
 
         public IDictionary<string, object> ProcessItems( Request origin )
         {
-            return new[]
-                       {
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_METHOD, origin.Method ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_URI, origin.RequestUri ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_HEADERS, origin.Headers ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.BASE_URI, origin.BaseUri ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.SERVER_NAME, origin.Server ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.URI_SCHEME, origin.Scheme ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REMOTE_ENDPOINT, origin.ClientEndpoint ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.VERSION, origin.Version ),
-                           Tuple.Create<string, object>( Owin.ItemKeys.REQUEST, origin ),
-                           //Tuple.Create<string, object>( Owin.ItemKeys.REQUEST_BODY, ( (b, o, l, c, e) => origin.Read(b, o, l, c, e) ),
-                       }.ToDictionary( x => x.Item1, x => x.Item2 );
+            var requestBody = new Action<Action<ArraySegment<byte>>, Action<Exception>>( origin.ReadNext );
+
+            return new Dictionary<string, object>()
+                {
+                    { Owin.ItemKeys.REQUEST_METHOD, origin.Method },   
+                    { Owin.ItemKeys.REQUEST_URI, origin.RequestUri },
+                    { Owin.ItemKeys.REQUEST_HEADERS, origin.Headers },
+                    { Owin.ItemKeys.BASE_URI, origin.BaseUri },
+                    { Owin.ItemKeys.SERVER_NAME, origin.Server },
+                    { Owin.ItemKeys.URI_SCHEME, origin.Scheme },
+                    { Owin.ItemKeys.REMOTE_ENDPOINT, origin.ClientEndpoint },
+                    { Owin.ItemKeys.VERSION, origin.Version },
+                    { Owin.ItemKeys.REQUEST, origin },
+                    { Owin.ItemKeys.REQUEST_BODY, requestBody },
+                };
         }
     }
 }

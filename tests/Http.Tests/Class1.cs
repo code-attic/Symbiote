@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Http.Impl.Adapter;
+using Symbiote.Http.Impl.Adapter.SocketListener;
 using Symbiote.Http.Owin;
 
 namespace Http.Tests
@@ -32,6 +33,26 @@ Host: localhost:8080
             };
     }
 
+        public abstract class with_relative_put_request
+        : with_timer
+    {
+        public static string request_body;
+        public static byte[] bytes;
+
+        private Establish context = () =>
+            {
+                request_body =
+@"PUT /fun/times/100 HTTP/1.1
+Host: localhost:8080
+Content-Type: text/plain
+Content-Length: 11
+
+This is fun";
+
+                bytes = Encoding.UTF8.GetBytes( request_body );
+            };
+    }
+
     public abstract class with_full_uri_get_request
         : with_timer
     {
@@ -42,6 +63,7 @@ Host: localhost:8080
             {
                 request_body =
 @"GET http://localhost:8080/fun/times?id=101&rev=234 HTTP/1.1
+Content-Type: text/plain
 ";
                 bytes = Encoding.UTF8.GetBytes( request_body );
             };
@@ -55,20 +77,20 @@ Host: localhost:8080
         private Because of = () =>
             {
                 Timer = Stopwatch.StartNew();
-                request = new Request();
-                var parser = new RequestLineParser();
-                parser.ParseLine( request, new ArraySegment<byte>( bytes ) );
+                request = RequestParser.CreateRequest( new ArraySegment<byte>( bytes ) );
                 Timer.Stop();
             };
         
         private It should_have_correct_method = () => request.Method.ShouldEqual( "GET" );
-        private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"http://localhost:8080" );
-        private It should_have_correct_url = () => request.FullUri.ToString().ShouldEqual( @"http://localhost:8080/fun/times?id=1&rev=2" );
+        private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"HTTP://localhost:8080" );
+        private It should_have_first_segment = () => request.PathSegments[0].ShouldEqual( @"fun" );
+        private It should_have_second_segment = () => request.PathSegments[1].ShouldEqual( @"times" );
         private It should_have_correct_request_uri = () => request.RequestUri.ShouldEqual( @"/fun/times" );
         private It should_have_first_parameter = () => request.Parameters["id"].ShouldEqual( "101" );
         private It should_have_second_parameter = () => request.Parameters["rev"].ShouldEqual( "234" );
         private It should_have_correct_scheme = () => request.Scheme.ShouldEqual( "HTTP" );
         private It should_have_version = () => request.Version.ShouldEqual( "1.1" );
+        private It should_have_host_header = () => request.Headers["Host"].ShouldEqual( "localhost:8080" );
         private It should_be_very_fast = () => Timer.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 1 );
     }
 
@@ -80,172 +102,52 @@ Host: localhost:8080
         private Because of = () =>
             {
                 Timer = Stopwatch.StartNew();
-                request = new Request();
-                var parser = new RequestLineParser();
-                parser.ParseLine( request, new ArraySegment<byte>( bytes ) );
+                request = RequestParser.CreateRequest( new ArraySegment<byte>( bytes ) );
                 Timer.Stop();
             };
 
         private It should_have_correct_method = () => request.Method.ShouldEqual( "GET" );
         private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"http://localhost:8080" );
-        private It should_have_correct_url = () => request.FullUri.ToString().ShouldEqual( @"http://localhost:8080/fun/times?id=1&rev=2" );
+        private It should_have_first_segment = () => request.PathSegments[0].ShouldEqual( @"fun" );
+        private It should_have_second_segment = () => request.PathSegments[1].ShouldEqual( @"times" );
         private It should_have_correct_request_uri = () => request.RequestUri.ShouldEqual( @"/fun/times" );
         private It should_have_first_parameter = () => request.Parameters["id"].ShouldEqual( "101" );
         private It should_have_second_parameter = () => request.Parameters["rev"].ShouldEqual( "234" );
         private It should_have_correct_scheme = () => request.Scheme.ShouldEqual( "HTTP" );
         private It should_have_version = () => request.Version.ShouldEqual( "1.1" );
+        private It should_have_host_header = () => request.Headers["Content-Type"].ShouldEqual( "text/plain" );
         private It should_be_very_fast = () => Timer.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 1 );
     }
 
-
-    public class HttpConstants
+    public class when_parsing_relative_put_request
+        : with_relative_put_request
     {
-        protected const byte CR = 0x0d;
-		protected const byte LF = 0x0a;
-		protected const byte DOT = 0x2e;
-		protected const byte SPACE = 0x20;
-		protected const byte SEMI = 0x3b;
-		protected const byte COLON = 0x3a;
-		protected const byte HASH = 0x23;
-		protected const byte QMARK = 0x3f;
-		protected const byte SLASH = 0x2f;
-		protected const byte DASH = 0x2d;
-		protected const byte NULL = 0x00;
-        protected readonly byte[] LINE_TERMINATOR = new [] { CR, LF };
-    }
+        public static Request request;
+        public static string requestBody;
 
-    public class RequestLineParser
-        : HttpConstants
-    {
-        public Request Request { get; set; }
-        public ArraySegment<byte> Buffer { get; set; }
-        public bool HasMethod { get; set; }
-        public bool HasUri { get; set; }
-        public bool HasVersion { get; set; }
-
-        public int ParseLine( Request request, ArraySegment<byte> bytes )
-        {
-            var lastRead = 0;
-            Request = request;
-            Buffer = bytes;
-            lastRead = GetMethod( lastRead );
-            lastRead = GetUri( lastRead );
-            lastRead = GetVersion( lastRead );
-            return lastRead;
-        }
-
-        public string ParseValue( byte stopCharacter, int start, ref int index )
-        {
-            var length = 1;
-            while ( ++index < Buffer.Count && Buffer.Array[ index + Buffer.Offset ] != stopCharacter )
+        private Because of = () =>
             {
-                length++;
-            }
-            index++;
-            return Encoding.UTF8.GetString( Buffer.Array, start, length );
-        }
+                Timer = Stopwatch.StartNew();
+                request = RequestParser.CreateRequest( new ArraySegment<byte>( bytes ) );
+                var arraySegment = request.RequestChunks.Dequeue();
+                var bodyBytes = new byte[arraySegment.Count];
+                Buffer.BlockCopy( arraySegment.Array, arraySegment.Offset, bodyBytes, 0, arraySegment.Count );
+                requestBody = Encoding.UTF8.GetString( bodyBytes );
+                Timer.Stop();
+            };
 
-        public string ParseBaseUri( int start, ref int index )
-        {
-            var length = 1;
-            var count = 0;
-            while 
-            ( 
-                ++index < Buffer.Count && 
-                ( ( count += Buffer.Array[ index + Buffer.Offset ] == SLASH ? 1 : 0 ) < 3 )
-            )
-            {
-                length++;
-            }
-            return Encoding.UTF8.GetString( Buffer.Array, start, length );
-        }
+        private It should_have_correct_method = () => request.Method.ShouldEqual( "PUT" );
+        private It should_have_correct_base_url = () => request.BaseUri.ShouldEqual( @"HTTP://localhost:8080" );
+        private It should_have_first_segment = () => request.PathSegments[0].ShouldEqual( @"fun" );
+        private It should_have_second_segment = () => request.PathSegments[1].ShouldEqual( @"times" );
+        private It should_have_third_segment = () => request.PathSegments[2].ShouldEqual( @"100" );
+        private It should_have_correct_request_uri = () => request.RequestUri.ShouldEqual( @"/fun/times/100" );
+        private It should_have_correct_scheme = () => request.Scheme.ShouldEqual( "HTTP" );
+        private It should_have_version = () => request.Version.ShouldEqual( "1.1" );
+        private It should_have_content_type = () => request.Headers["Content-Type"].ShouldEqual( "text/plain" );
+        private It should_have_content_length = () => request.Headers["Content-Length"].ShouldEqual( "11" );
+        private It should_have_request_body = () => requestBody.ShouldEqual( "This is fun" );
 
-        public int GetMethod( int start )
-        {
-            var index = start;
-            Request.Method = ParseValue( SPACE, start, ref index );
-            return index;
-        }
-
-        public int GetUri( int start )
-        {
-            return Buffer.Array[start + Buffer.Offset] == SLASH
-                       ? GetRelativeUri( start )
-                       : GetAbsoluteUri( start );
-        }
-
-        public int GetRelativeUri( int start )
-        {
-            var index = start;
-            Request.RequestUri = ParseValue( QMARK, start, ref index );
-
-            var queryString = ParseValue( SPACE, index, ref index );
-            Request.Parameters = GetParameters( queryString );
-
-            return index;
-        }
-
-        public int GetAbsoluteUri( int start )
-        {
-            var index = start;
-
-            Request.BaseUri = ParseBaseUri( start, ref index );
-            Request.RequestUri = ParseValue( QMARK, index, ref index );
-            //Request.FullUri = Request.BaseUri + Request.RequestUri;
-            var queryString = ParseValue( SPACE, index, ref index );
-            Request.Parameters = GetParameters( queryString );
-
-            return index;
-        }
-
-        private IDictionary<string, string> GetParameters( string query )
-        {
-            if( string.IsNullOrEmpty( query ))
-                return new Dictionary<string, string>();
-
-            var index = 0;
-            var length = 0;
-            var start = 0;
-            var parameters = new Dictionary<string, string>();
-            while( index < query.Length )
-            {
-                while ( index < query.Length && query[index] != '=' )
-                {
-                    length++;
-                    index++;
-                }
-                
-                if( index >= query.Length)
-                    break;
-
-                var key = query.Substring( start, length );
-                length = 0;
-                index++;
-                start = index;
-
-                while ( index < query.Length && query[index] != '&' && query[index] != CR )
-                {   
-                    length++;
-                    index++;
-                }
-
-                var value = query.Substring( start, length );
-                length = 0;
-                index++;
-                start = index;
-
-                parameters.Add( key, value );
-            }
-
-            return parameters;
-        }
-
-        public int GetVersion( int start )
-        {
-            var index = start;
-            Request.Scheme = ParseValue( SLASH, start, ref index );
-            Request.Version = ParseValue( CR, index, ref index );
-            return index + 1;
-        }
+        private It should_be_very_fast = () => Timer.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 1 );
     }
 }
