@@ -14,8 +14,10 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Concurrent;
 using System.Net;
 using System.Net.Sockets;
+using System.Timers;
 using Symbiote.Core.Futures;
 using Symbiote.Http.Impl.Adapter.TcpListener;
 using Symbiote.Http.Owin;
@@ -30,7 +32,9 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
         public IPAddress ServerAddress { get; set; }
         public IPEndPoint ServerEndpoint { get; set; }
         public Socket HttpSocket { get; set; }
-        public ClientSocketAdapter Root { get; set; }
+        public int Connections { get; set; }
+        public int Disconnects { get; set; }
+        public Timer Timer { get; set; }
 
         public void Listen()
         {
@@ -41,9 +45,15 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
 
         public void OnClient( IAsyncResult result )
         {
+            Connections ++;
             var client = HttpSocket.EndAccept( result );
             Listen();
-            Root.Add( "", client, OnContext );
+            new ClientSocketAdapter( client, RemoveClient, OnContext );
+        }
+
+        public void RemoveClient( string id )
+        {
+            Disconnects ++;
         }
 
         public void OnContext( IContext context )
@@ -76,11 +86,22 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
             ServerAddress = IPAddress.Any;
             ServerEndpoint = new IPEndPoint( ServerAddress, configuration.Port );
             RequestRouter = router;
-            Root = new ClientSocketAdapter();
+            Timer = new Timer(1000);
+            Timer.Elapsed += Timer_Elapsed;
+            Timer.Enabled = true;
+            Timer.Start();
+        }
+
+        void Timer_Elapsed(object sender,ElapsedEventArgs e) 
+        {
+            Console.WriteLine( "{0} - {1}", Connections, Disconnects );
         }
 
         public void Dispose()
         {
+            Timer.Enabled = false;
+            Timer.Stop();
+            Timer.Elapsed -= Timer_Elapsed;
             if( HttpSocket.Connected )
                 Stop();
         }

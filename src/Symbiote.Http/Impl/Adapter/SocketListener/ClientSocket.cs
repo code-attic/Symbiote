@@ -14,64 +14,47 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Net.Sockets;
+using System.Text;
+using Symbiote.Core.Extensions;
+using Symbiote.Core.Utility;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener
 {
     public class ClientSocketAdapter :
         IContext,
+        IResponseAdapter,
         IDisposable
     {
         protected Request ConcreteRequest { get; set; }
         public readonly int BufferSize = 8 * 1024;
         public byte[] Bytes { get; set; }
         public string Id { get; set; }
+        public bool Disposed { get; set; }
         public Socket Socket { get; set; }
-        public ClientSocketAdapter Next { get; set; }
-        public ClientSocketAdapter Previous { get; set; }
         public IRequest Request { get { return ConcreteRequest; } }
-        public IResponseAdapter Response { get; set; }
+        public IResponseAdapter Response { get { return this; } }
         public Action<IContext> LaunchApplication { get; set; }
+        public Action<string> Remove { get; set; }
 
-        public void Disconnect()
+        public void Close()
         {
-            if(Socket != null && Socket.Connected)
+            if ( !Disposed )
             {
-                Socket.Disconnect( true );
-                Socket.Close();
-                Socket.Dispose();
+                Disposed = true;
+                Remove( Id );
+                Socket.BeginDisconnect( true, OnDisconnect, null );
+                LaunchApplication = null;
+                Remove = null;
             }
-            Previous.Next = Next;
-            Next.Previous = Previous;
-            Next = null;
-            Previous = null;
         }
 
-        public ClientSocketAdapter Add( string id, Socket socket, Action<IContext> launchApplication )
+        public void OnDisconnect( IAsyncResult result )
         {
-            var newNode = new ClientSocketAdapter( id, socket, Next, this, launchApplication );
-            Next.Previous = newNode;
-            Next = newNode;
-            return newNode;
-        }
-
-        public void WaitForReceive()
-        {
-            if( !Socket.Connected )
-            {
-                Disconnect();
-                return;
-            }
-            Bytes = new byte[BufferSize];
-            try
-            {
-                Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, OnReceive, null );
-            }
-            catch ( Exception e )
-            {
-                Disconnect();
-            }
+            Socket.EndDisconnect( result );
         }
 
         public void OnReceive( IAsyncResult result )
@@ -85,37 +68,74 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 LaunchApplication( this );
                 LaunchApplication = x => { };
             }
-            WaitForReceive();
+
+            if( !Disposed )
+                WaitForReceive();
         }
 
-        public ClientSocketAdapter()
+        public void Respond( string status, IDictionary<string, string> headers, IEnumerable<object> body )
         {
-            Next = this;
-            Previous = this;
+            try
+            {
+                var builder = new DelimitedBuilder("\r\n");
+                var headerBuilder = new HeaderBuilder( headers );
+                var responseBody = new MemoryStream();
+
+                body.ForEach( x => ResponseEncoder.Write( x, responseBody ) );
+
+                builder.AppendFormat( "HTTP/1.1 {0}", status );
+                headerBuilder.ContentLength( responseBody.Length );
+                headerBuilder.Date( DateTime.UtcNow );
+
+                headers.ForEach( x => builder.AppendFormat( "{0}: {1}", x.Key, x.Value ) );
+                builder.Append( "\r\n" );
+                var header = builder.ToString();
+                var headerBuffer = Encoding.UTF8.GetBytes( header );
+                var bodyBuffer = responseBody.GetBuffer();
+                Socket.Send( headerBuffer );
+                Socket.Send( bodyBuffer );
+                Close();
+            }
+            catch ( SocketException socketException )
+            {
+                Close();
+            }
         }
 
-        public ClientSocketAdapter( string id, 
+        public void WaitForReceive()
+        {
+            try
+            {
+                if ( Socket.Connected && !Disposed )
+                {
+                    Bytes = new byte[BufferSize];
+                    SocketError error;
+                    Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, out error, OnReceive, null );
+                }
+            }
+            catch
+            {
+                Close();
+            }
+        }
+
+        public ClientSocketAdapter( 
                              Socket socket,
-                             ClientSocketAdapter next, 
-                             ClientSocketAdapter previous,
+                             Action<string> remove,
                              Action<IContext> launchApplication
             )
         {
-            Id = id;
+            Id = socket.Handle.ToString();
             Socket = socket;
             LaunchApplication = launchApplication;
             ConcreteRequest = new Request();
-            Response = new SocketResponseAdapter( socket );
-            Next = next ?? this;
-            Previous = previous ?? this;
+            Remove = remove;
             WaitForReceive();
         }
 
         public void Dispose()
         {
-            if( Socket != null )
-                Socket.Dispose();
-            LaunchApplication = null;
+            Close();
         }
     }
 }
