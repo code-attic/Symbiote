@@ -39,11 +39,14 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
         public IResponseAdapter Response { get { return this; } }
         public Action<IContext> LaunchApplication { get; set; }
         public Action<string> Remove { get; set; }
+        public IAsyncResult PendingReceive { get; set; }
 
         public void Close()
         {
             if ( !Disposed )
             {
+                if( PendingReceive != null && PendingReceive.AsyncWaitHandle != null )
+                    PendingReceive.AsyncWaitHandle.Dispose();
                 Disposed = true;
                 Remove( Id );
                 Socket.BeginDisconnect( true, OnDisconnect, null );
@@ -54,7 +57,14 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
 
         public void OnDisconnect( IAsyncResult result )
         {
-            Socket.EndDisconnect( result );
+            try
+            {
+                Socket.EndDisconnect( result );
+                Socket.Close();
+            }
+            catch ( Exception e )
+            {
+            }
         }
 
         public void OnReceive( IAsyncResult result )
@@ -68,9 +78,6 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 LaunchApplication( this );
                 LaunchApplication = x => { };
             }
-
-            if( !Disposed )
-                WaitForReceive();
         }
 
         public void Respond( string status, IDictionary<string, string> headers, IEnumerable<object> body )
@@ -110,7 +117,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 {
                     Bytes = new byte[BufferSize];
                     SocketError error;
-                    Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, out error, OnReceive, null );
+                    PendingReceive = Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, out error, OnReceive, null );
                 }
             }
             catch
