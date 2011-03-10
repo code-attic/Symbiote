@@ -15,12 +15,16 @@
 // */
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using Symbiote.Core.Futures;
 using Symbiote.Http.Impl.Adapter.TcpListener;
 using Symbiote.Http.Owin;
+using Timer = System.Timers.Timer;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener {
     public class SocketServer :
@@ -35,6 +39,8 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
         public int Connections { get; set; }
         public int Disconnects { get; set; }
         public Timer Timer { get; set; }
+        public ClientSocketNode Root { get; set; }
+        public List<Task> Tasks { get; set; }
 
         public void Listen()
         {
@@ -45,10 +51,19 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
 
         public void OnClient( IAsyncResult result )
         {
-            Connections ++;
-            var client = HttpSocket.EndAccept( result );
-            Listen();
-            new ClientSocketAdapter( client, RemoveClient, OnContext );
+            try
+            {
+                Connections ++;
+                var client = HttpSocket.EndAccept( result );
+                Listen();
+                var adapter = new ClientSocketAdapter( client, RemoveClient, OnContext );
+                Root.Add( adapter );
+            }
+            finally
+            {
+                Listen();
+            }
+            //new ClientSocketAdapter( client, RemoveClient, OnContext );
         }
 
         public void RemoveClient( string id )
@@ -72,6 +87,7 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
             HttpSocket.Bind( ServerEndpoint );
             HttpSocket.Listen( 5000 );
             Running = true;
+            Tasks.Add( SpawnTask() );
             Listen();
         }
 
@@ -79,6 +95,26 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
         {
             HttpSocket.Close();
         }
+
+
+        public void Process()
+        {
+            var node = Root;
+            while(Running)
+            {
+                node.Process();
+                node = node.Next;
+                Thread.Sleep(0);
+            }
+        }
+
+        public Task SpawnTask()
+        {
+            var task = new Task( Process, TaskCreationOptions.LongRunning | TaskCreationOptions.PreferFairness );
+            task.Start();
+            return task;
+        }
+
 
         public SocketServer( IHttpServerConfiguration configuration, IRouteRequest router )
         {
@@ -90,6 +126,8 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
             Timer.Elapsed += Timer_Elapsed;
             Timer.Enabled = true;
             Timer.Start();
+            Tasks = new List<Task>();
+            Root = new ClientSocketNode();
         }
 
         void Timer_Elapsed(object sender,ElapsedEventArgs e) 

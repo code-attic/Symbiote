@@ -24,60 +24,164 @@ using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Impl.Adapter.SocketListener
 {
+    public class ClientSocketNode
+    {
+        public string Id { get { return ClientSocket == null ? "" : ClientSocket.Id; } }
+        public ClientSocketNode Next { get; set; }
+        public ClientSocketNode Previous { get; set; }
+        public IClientSocketAdapter ClientSocket { get; set; }
+        public Action<string> Remove { get; set; }
+        public static readonly object ChangeLock = new object();
+
+        public void Delete( string id )
+        {
+            lock( ChangeLock )
+            {
+                Previous.Next = Next;
+                Next.Previous = Previous;
+                ClientSocket = null;
+                if( Remove != null )
+                    Remove( id );
+            }
+        }
+
+        public void Process()
+        {
+            try
+            {
+                if( ClientSocket != null && !ClientSocket.Read() )
+                {
+                    Delete( Id );
+                }
+            }
+            catch ( Exception e )
+            {
+                Console.WriteLine( e );
+            }
+        }
+
+        public ClientSocketNode Add( IClientSocketAdapter adapter )
+        {
+            lock( ChangeLock )
+            {
+                return new ClientSocketNode( Previous, this, adapter );
+            }
+        }
+
+        public ClientSocketNode()
+        {
+            Next = this;
+            Previous = this;
+            ClientSocket = null;
+        }
+
+        public ClientSocketNode( ClientSocketNode previous, ClientSocketNode next, IClientSocketAdapter clientSocket )
+        {
+            Next = next;
+            Previous = previous;
+            Previous.Next = this;
+            Next.Previous = this;
+            ClientSocket = clientSocket;
+            Remove = ClientSocket.Remove;
+            ClientSocket.Remove = Delete;
+        }
+
+        public override string ToString()
+        {
+            var builder = new DelimitedBuilder("-");
+            var node = this;
+            do
+            {
+                builder.Append( node.Id );
+                node = node.Next;
+            } while ( node.Id != Id );
+            return builder.ToString();
+        }
+    }
+
+    public interface IClientSocketAdapter
+    {
+        string Id { get; }
+        void Close();
+        bool Read();
+        Action<string> Remove { get; set; }
+    }
+
     public class ClientSocketAdapter :
+        IClientSocketAdapter,
         IContext,
         IResponseAdapter,
         IDisposable
     {
+        private object _readLock = new object();
+        protected Socket socket;
         protected Request ConcreteRequest { get; set; }
         public readonly int BufferSize = 8 * 1024;
         public byte[] Bytes { get; set; }
-        public string Id { get; set; }
+        public string Id { get { return socket.Handle.ToString(); } }
         public bool Disposed { get; set; }
-        public Socket Socket { get; set; }
+        public bool Reading { get; set; }
         public IRequest Request { get { return ConcreteRequest; } }
         public IResponseAdapter Response { get { return this; } }
         public Action<IContext> LaunchApplication { get; set; }
         public Action<string> Remove { get; set; }
-        public IAsyncResult PendingReceive { get; set; }
 
         public void Close()
         {
             if ( !Disposed )
             {
-                if( PendingReceive != null && PendingReceive.AsyncWaitHandle != null )
-                    PendingReceive.AsyncWaitHandle.Dispose();
-                Disposed = true;
-                Remove( Id );
-                Socket.BeginDisconnect( true, OnDisconnect, null );
-                LaunchApplication = null;
-                Remove = null;
+                try
+                {
+                    Disposed = true;
+                    Remove( Id );
+                    socket.Shutdown( SocketShutdown.Both );
+                    socket.Disconnect( false );
+                    socket.Close();
+                    LaunchApplication = null;
+                    Remove = null;
+                }
+                catch ( Exception e )
+                {
+                    Console.WriteLine( e );
+                }
             }
         }
 
-        public void OnDisconnect( IAsyncResult result )
+        public bool Read()
         {
-            try
+            if(!Reading)
             {
-                Socket.EndDisconnect( result );
-                Socket.Close();
+                lock( _readLock )
+                {
+                    if ( !Reading )
+                    {
+                        Reading = true;
+                        bool valid = false;
+                        if( !Disposed && socket != null )
+                        {
+                            try
+                            {
+                                var buffer = new byte[BufferSize];
+                                var total = socket.Receive( buffer );
+                                if ( total > 0 )
+                                {
+                                    ConcreteRequest.BytesReceived( buffer );
+                                    LaunchApplication( this );
+                                    LaunchApplication = x => { };
+                                }
+                                valid = true;
+                            }
+                            catch ( Exception e )
+                            {
+                                Console.WriteLine( e );
+                            }
+                        }
+                        Reading = false;
+                        return valid;
+                    }
+                }
             }
-            catch ( Exception e )
-            {
-            }
-        }
-
-        public void OnReceive( IAsyncResult result )
-        {
-            var total = Socket.EndReceive( result );
-            var buffer = new byte[total];
-            if( total > 0 )
-            {
-                Buffer.BlockCopy( Bytes, 0, buffer, 0, total );
-                ConcreteRequest.BytesReceived( buffer );
-                LaunchApplication( this );
-                LaunchApplication = x => { };
-            }
+            return true;
         }
 
         public void Respond( string status, IDictionary<string, string> headers, IEnumerable<object> body )
@@ -99,28 +203,11 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                 var header = builder.ToString();
                 var headerBuffer = Encoding.UTF8.GetBytes( header );
                 var bodyBuffer = responseBody.GetBuffer();
-                Socket.Send( headerBuffer );
-                Socket.Send( bodyBuffer );
+                socket.Send( headerBuffer );
+                socket.Send( bodyBuffer );
                 Close();
             }
             catch ( SocketException socketException )
-            {
-                Close();
-            }
-        }
-
-        public void WaitForReceive()
-        {
-            try
-            {
-                if ( Socket.Connected && !Disposed )
-                {
-                    Bytes = new byte[BufferSize];
-                    SocketError error;
-                    PendingReceive = Socket.BeginReceive( Bytes, 0, BufferSize, SocketFlags.None, out error, OnReceive, null );
-                }
-            }
-            catch
             {
                 Close();
             }
@@ -132,12 +219,10 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener
                              Action<IContext> launchApplication
             )
         {
-            Id = socket.Handle.ToString();
-            Socket = socket;
+            this.socket = socket;
             LaunchApplication = launchApplication;
             ConcreteRequest = new Request();
             Remove = remove;
-            WaitForReceive();
         }
 
         public void Dispose()
