@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Development</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
@@ -40,45 +40,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications">
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="System.Core">
+    </Reference>
+    <Reference Include="Machine.Specifications, Version=0.3.0.0, Culture=neutral, PublicKeyToken=5c474de7a495cff1">
       <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Moq">
+    <Reference Include="Moq, Version=3.1.416.3, Culture=neutral, PublicKeyToken=69f491c39445e920">
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.CoreEx, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="StructureMap, Version=2.6.1.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
+      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Interactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Linq.Async, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.Linq.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    <Reference Include="System.Runtime.Serialization">
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -266,49 +242,19 @@
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
       <Name>Symbiote.StructureMap</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(Configuration)'=='Development' ">
-      <ItemGroup>
-        <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="protobuf-net">
-          <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
-        </Reference>
-        <Reference Include="ServiceStack.Text">
-          <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
-        </Reference>
-        <Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-        </Reference>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-          <IlMerge>True</IlMerge>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <ItemGroup />
   <ItemGroup>
     <Compile Include="UnitOfWork\with_EventListenerManager.cs" />
   </ItemGroup>

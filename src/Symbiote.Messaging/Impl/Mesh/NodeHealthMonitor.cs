@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Timers;
-using Microsoft.VisualBasic.Devices;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Utility;
 
@@ -48,8 +47,9 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public void UpdateHealth( object sender, ElapsedEventArgs e )
         {
-            var computerInfo = new ComputerInfo();
-            var availableRam = computerInfo.AvailablePhysicalMemory/(decimal) computerInfo.TotalPhysicalMemory;
+            //var computerInfo = new ComputerInfo();
+            //var availableRam = computerInfo.AvailablePhysicalMemory/(decimal) computerInfo.TotalPhysicalMemory;
+
             Observers.OnEvent( new NodeHealth {LoadScore = 1, NodeId = Configuration.IdentityProvider.Identity} );
         }
 

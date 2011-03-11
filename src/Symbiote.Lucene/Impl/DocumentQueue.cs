@@ -18,7 +18,6 @@ using System.Collections.Concurrent;
 using System.Linq;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
-using ObservableExtensions = System.ObservableExtensions;
 
 namespace Symbiote.Lucene.Impl
 {

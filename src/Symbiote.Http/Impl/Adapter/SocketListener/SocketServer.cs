@@ -56,14 +56,12 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
                 Connections ++;
                 var client = HttpSocket.EndAccept( result );
                 Listen();
-                var adapter = new ClientSocketAdapter( client, RemoveClient, OnContext );
-                Root.Add( adapter );
+                new ClientSocketAdapter( client, RemoveClient, OnContext ).WaitForReceive();
             }
             finally
             {
                 Listen();
             }
-            //new ClientSocketAdapter( client, RemoveClient, OnContext );
         }
 
         public void RemoveClient( string id )
@@ -85,9 +83,8 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
         {
             HttpSocket = new Socket( AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP );
             HttpSocket.Bind( ServerEndpoint );
-            HttpSocket.Listen( 5000 );
+            HttpSocket.Listen( 50000 );
             Running = true;
-            Tasks.Add( SpawnTask() );
             Listen();
         }
 
@@ -96,50 +93,16 @@ namespace Symbiote.Http.Impl.Adapter.SocketListener {
             HttpSocket.Close();
         }
 
-
-        public void Process()
-        {
-            var node = Root;
-            while(Running)
-            {
-                node.Process();
-                node = node.Next;
-                Thread.Sleep(0);
-            }
-        }
-
-        public Task SpawnTask()
-        {
-            var task = new Task( Process, TaskCreationOptions.LongRunning | TaskCreationOptions.PreferFairness );
-            task.Start();
-            return task;
-        }
-
-
         public SocketServer( IHttpServerConfiguration configuration, IRouteRequest router )
         {
             Configuration = configuration;
             ServerAddress = IPAddress.Any;
             ServerEndpoint = new IPEndPoint( ServerAddress, configuration.Port );
             RequestRouter = router;
-            Timer = new Timer(1000);
-            Timer.Elapsed += Timer_Elapsed;
-            Timer.Enabled = true;
-            Timer.Start();
-            Tasks = new List<Task>();
-            Root = new ClientSocketNode();
-        }
-
-        void Timer_Elapsed(object sender,ElapsedEventArgs e) 
-        {
-            Console.WriteLine( "{0} - {1}", Connections, Disconnects );
         }
 
         public void Dispose()
         {
-            Timer.Enabled = false;
-            Timer.Stop();
-            Timer.Elapsed -= Timer_Elapsed;
             if( HttpSocket.Connected )
                 Stop();
         }
