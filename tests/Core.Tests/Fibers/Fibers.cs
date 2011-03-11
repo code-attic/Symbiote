@@ -43,8 +43,8 @@ namespace Core.Tests.Fibers
                             .ForAll( i => director.Send( x, i ) )
                     );
             };
-
-        private It should_have_created_first_list_in_order = () => Values["one"].ShouldEqual( numbers );
+        
+        private It should_have_created_first_list_in_order = () => Values["one"].ToList().ShouldEqual( numbers );
     }
 
     public class when_writing_high_volume_to_single_mailbox

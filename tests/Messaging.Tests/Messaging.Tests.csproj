@@ -119,34 +119,6 @@
       <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(Configuration)'=='Development' ">
-      <ItemGroup>
-        <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="protobuf-net">
-          <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
-        </Reference>
-        <Reference Include="ServiceStack.Text">
-          <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
-        </Reference>
-        <Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
   <ItemGroup>
     <Folder Include="Dispatcher\Mesh\" />
   </ItemGroup>

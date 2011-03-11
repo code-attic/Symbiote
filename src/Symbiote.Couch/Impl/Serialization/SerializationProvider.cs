@@ -22,7 +22,6 @@ using Symbiote.Couch.Impl.Json;
 using Symbiote.Couch.Impl.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using ServiceStack.Text;
 using JsonSerializer = Newtonsoft.Json.JsonSerializer;
 using Symbiote.Core.Serialization;
 
@@ -40,7 +39,7 @@ namespace Symbiote.Couch.Impl.Metadata
 
         public void Serialize<T>( T instance, TextWriter writer )
         {
-            if( !typeof( T ).IsInstanceOf( typeof( BaseDocument ) ) )
+            if( !typeof( T ).IsInstanceOfType(( typeof( BaseDocument ) )) )
             {
                 PocoSerializer.Serialize( writer, instance );
             }
@@ -58,7 +57,7 @@ namespace Symbiote.Couch.Impl.Metadata
                 document = DocumentSerializer.Deserialize( reader, type );
 
             using ( var reader = new StringReader( json ) )
-                if ( !type.IsInstanceOf( typeof( BaseDocument ) ) )
+                if ( !type.IsInstanceOfType( typeof( BaseDocument ) ) )
                 {
                     var key = KeyAccessor.GetId( document, type );
                     var metadata = (DocumentMetadata) MetadataSerialzier.Deserialize( reader, typeof( DocumentMetadata ) );
@@ -76,7 +75,7 @@ namespace Symbiote.Couch.Impl.Metadata
                 viewResult = (ViewResult<T>) DocumentSerializer.Deserialize( reader, viewType );
 
             using ( var reader = new StringReader( json ) )
-                if ( !type.IsInstanceOf( typeof( BaseDocument ) ) )
+                if ( !type.IsInstanceOfType( typeof( BaseDocument ) ) )
                 {
                     var metadataView = 
                         (ViewResult<DocumentMetadata>)
