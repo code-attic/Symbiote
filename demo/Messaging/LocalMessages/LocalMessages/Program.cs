@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.Messaging.Impl.Actors;
-using Symbiote.StructureMap;
 using Symbiote.Daemon;
 using Symbiote.Log4Net;
 using Symbiote.Messaging;
+using Symbiote.Core.Actor;
 
 namespace LocalMessages
 {
@@ -17,10 +16,9 @@ namespace LocalMessages
         static void Main(string[] args)
         {
             Assimilate
-                .Core<StructureMapAdapter>()
+                .Initialize()
                 .Daemon( x => x.Name( "localChannelTest" ).Arguments( args ) )
                 .AddConsoleLogger<Service>( x => x.Info().MessageLayout( m => m.Message().Newline() ) )
-                .Messaging()
                 .RunDaemon();
         }
     }
@@ -31,7 +29,7 @@ namespace LocalMessages
 
         public void Start()
         {
-            Bus.Publish( new Message("Billy", "Jimmy","Hi") );
+            Bus.Publish( "local", new Message("Billy", "Jimmy","Hi") );
         }
 
         public void Stop()
@@ -73,9 +71,10 @@ namespace LocalMessages
 
     public class PersonMessageHandler : IHandle<Person, Message>
     {
-        public void Handle( Person actor, IEnvelope<Message> envelope )
+        public Action<IEnvelope> Handle( Person actor, Message message )
         {
-            actor.TakeMessage( envelope.Message.From, envelope.Message.Text );
+            actor.TakeMessage( message.From, message.Text );
+			return x => x.Acknowledge();
         }
     }
 
@@ -113,7 +112,7 @@ namespace LocalMessages
 
         public void Send(string to, string from, string message)
         {
-            Bus.Publish( new Message(to, from, message) );
+            Bus.Publish( "local", new Message(to, from, message) );
         }
 
         public ChatService( IBus bus )
