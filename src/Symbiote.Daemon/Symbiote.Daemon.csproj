@@ -169,6 +169,10 @@
   </Target>
   -->
   <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
