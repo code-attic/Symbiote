@@ -21,7 +21,6 @@ namespace Symbiote.Daemon
                 // but under Ubuntu it runs under the actual assembly name
                 var domain = System.IO.Path.GetFileNameWithoutExtension( AppDomain.CurrentDomain.FriendlyName );
 				var processName = Process.GetCurrentProcess().ProcessName;
-				Console.WriteLine( processName );
                 hostType = processName == "mono" || processName == domain
                     ? typeof(ConsoleHost)
                     : typeof(DaemonHost);                
