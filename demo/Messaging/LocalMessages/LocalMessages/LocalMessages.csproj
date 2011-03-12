@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Symbiote.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Daemon, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Symbiote.Daemon.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Log4Net, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Messaging, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Symbiote.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="System">
     </Reference>
     <Reference Include="System.Core">
@@ -80,26 +100,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
-      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
-      <Name>Symbiote.Daemon</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
-      <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
-      <Name>Symbiote.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Symbiote.Core\Symbiote.Core.csproj">
-      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
-      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
-      <Name>Symbiote.StructureMap</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
-      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
-      <Name>Symbiote.Log4Net</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

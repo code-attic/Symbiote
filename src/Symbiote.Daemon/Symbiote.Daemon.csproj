@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -169,10 +169,6 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
-      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
-      <Name>Symbiote.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
