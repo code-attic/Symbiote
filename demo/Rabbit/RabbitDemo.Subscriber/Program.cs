@@ -19,7 +19,7 @@ namespace RabbitDemo.Subscriber
         {
             Assimilate
                 .Initialize()
-                .Rabbit(x => x.AddBroker(r => r.Defaults()))
+                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("192.168.1.103").Port(5672)))
                 .AddConsoleLogger<Subscriber>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("subscriber").Arguments(args))

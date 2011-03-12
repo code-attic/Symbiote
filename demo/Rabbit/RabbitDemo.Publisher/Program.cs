@@ -17,7 +17,7 @@ namespace RabbitDemo.Publisher
         {
             Assimilate
                 .Initialize()
-                .Rabbit(x => x.AddBroker(r => r.Defaults()))
+                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("192.168.1.103").Port(5672)))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .Daemon(x => x.Name("publisher").Arguments(args))

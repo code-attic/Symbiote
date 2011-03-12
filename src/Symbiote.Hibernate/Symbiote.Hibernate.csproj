@@ -151,7 +151,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets" Condition=" '$(Configuration)'!='Development' " />
-  <Target Name="_CopyFilesMarkedCopyLocal">
   </Target>
   <!--<Target Name="_CopyFilesMarkedCopyLocal" /> -->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
