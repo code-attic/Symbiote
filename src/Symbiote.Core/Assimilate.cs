@@ -49,7 +49,7 @@ namespace Symbiote.Core
 
         private static void Wireup()
         {
-            var dependencyAdapterType = ScanIndex.ImplementorsOfType[typeof( IDependencyAdapter )].First();
+            var dependencyAdapterType = ScanIndex.ImplementorsOfType[typeof( IDependencyAdapter )].First( x => !x.Equals( typeof( NullOpDependencyAdapter ) ) );
             var dependencyAdapter = Activator.CreateInstance( dependencyAdapterType ) as IDependencyAdapter;
             Assimilation.DependencyAdapter = dependencyAdapter;
             

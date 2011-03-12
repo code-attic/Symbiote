@@ -4,6 +4,7 @@ using Symbiote.Core.DI;
 using Symbiote.Daemon.BootStrap;
 using Symbiote.Daemon.Host;
 using Symbiote.Daemon.Installation;
+using System.Diagnostics;
 
 namespace Symbiote.Daemon
 {
@@ -11,9 +12,21 @@ namespace Symbiote.Daemon
     {
         public Action<DependencyConfigurator> DefineDependencies()
         {
-            var hostType = Environment.UserInteractive
-                               ? typeof(ConsoleHost)
-                               : typeof(DaemonHost);
+            Type hostType = null;
+            var canHazMono = Type.GetType("Mono.Runtime") != null;
+            if( canHazMono )
+            {
+                hostType = Process.GetCurrentProcess().ProcessName == "mono"
+                    ? typeof(ConsoleHost)
+                    : typeof(DaemonHost);                
+            }
+            else
+            {
+                hostType = Environment.UserInteractive
+                    ? typeof(ConsoleHost)
+                    : typeof(DaemonHost);
+            }
+			
             var daemonConfiguration = new DaemonConfigurator();
             return container => 
                        { 

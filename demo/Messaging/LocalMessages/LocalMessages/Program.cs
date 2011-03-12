@@ -20,6 +20,8 @@ namespace LocalMessages
                 .Daemon( x => x.Name( "localChannelTest" ).Arguments( args ) )
                 .AddConsoleLogger<Service>( x => x.Info().MessageLayout( m => m.Message().Newline() ) )
                 .RunDaemon();
+			
+			Console.ReadKey();
         }
     }
 

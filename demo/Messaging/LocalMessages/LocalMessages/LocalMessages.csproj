@@ -24,6 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -35,27 +37,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Symbiote.Core.dll</HintPath>
+    <Reference Include="System">
     </Reference>
-    <Reference Include="Symbiote.Daemon, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Symbiote.Daemon.dll</HintPath>
+    <Reference Include="System.Core">
     </Reference>
-    <Reference Include="Symbiote.Log4Net, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
+    <Reference Include="System.Xml.Linq">
     </Reference>
-    <Reference Include="Symbiote.Messaging, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Symbiote.Messaging.dll</HintPath>
+    <Reference Include="System.Data.DataSetExtensions">
     </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    <Reference Include="Microsoft.CSharp">
+    </Reference>
+    <Reference Include="System.Data">
+    </Reference>
+    <Reference Include="System.Xml">
     </Reference>
     <Reference Include="CommandLine, Version=1.8.0.0, Culture=neutral, PublicKeyToken=null">
       <SpecificVersion>False</SpecificVersion>
@@ -86,4 +80,26 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
+      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
+      <Name>Symbiote.Daemon</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
+      <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
+      <Name>Symbiote.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
+      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
+      <Name>Symbiote.StructureMap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
+      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
+      <Name>Symbiote.Log4Net</Name>
+    </ProjectReference>
+  </ItemGroup>
 </Project>

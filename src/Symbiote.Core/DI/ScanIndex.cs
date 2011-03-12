@@ -25,13 +25,13 @@ namespace Symbiote.Core.DI {
     
     public class ScanIndex 
     {
-        public ConcurrentBag<Assembly> CompleteAssemblyList { get; set; }
-        public ConcurrentDictionary<Assembly, List<Type>> AssemblyTypes { get; set; }
-        public ConcurrentDictionary<Type, Assembly> TypeAssemblies { get; set; }
-        public ConcurrentDictionary<Type, List<Type>> ImplementorsOfType { get; set; }
-        public ConcurrentDictionary<Type, List<Type>> TypeHierarchies { get; set; }
-        public ConcurrentDictionary<Type, List<Type>> Closers { get; set; }
-        public ConcurrentDictionary<Type, Type> SingleImplementations { get; set; }
+        public List<Assembly> CompleteAssemblyList { get; set; }
+        public Dictionary<Assembly, List<Type>> AssemblyTypes { get; set; }
+        public Dictionary<Type, Assembly> TypeAssemblies { get; set; }
+        public Dictionary<Type, List<Type>> ImplementorsOfType { get; set; }
+        public Dictionary<Type, List<Type>> TypeHierarchies { get; set; }
+        public Dictionary<Type, List<Type>> Closers { get; set; }
+        public Dictionary<Type, Type> SingleImplementations { get; set; }
         public Dictionary<Assembly, bool> ConfiguredSymbiotes { get; set; }
         public Dictionary<Assembly, List<Assembly>> ReferenceLookup { get; set; }
         public List<Type> DependencyDefinitions { get; set; }
@@ -93,7 +93,7 @@ namespace Symbiote.Core.DI {
                                                     .AddOrUpdate( parent,
                                                         c =>
                                                             { 
-                                                                var l = new List<Type>(6000);
+                                                                var l = new List<Type>(1000);
                                                                 l.Add( t );
                                                                 return l;
                                                             },
@@ -109,7 +109,7 @@ namespace Symbiote.Core.DI {
                                                     Closers.AddOrUpdate( parent,
                                                         c => 
                                                             { 
-                                                                var l = new List<Type>(6000);
+                                                                var l = new List<Type>(1000);
                                                                 l.Add( t );
                                                                 return l;
                                                             },
@@ -121,11 +121,13 @@ namespace Symbiote.Core.DI {
                                             } );
                                } );
 
-            SingleImplementations = new ConcurrentDictionary<Type, Type>(
-                ImplementorsOfType
-                    .Where( x => !x.Key.IsConcrete() && x.Value.Count == 1 )
-                    .Where( x => x.Value.First().IsConcreteAndAssignableTo( x.Key ) )
-                    .Select( x => new KeyValuePair<Type, Type>( x.Key, x.Value.First() ) ) );
+            var concreteTypesWithSingleImplementors = ImplementorsOfType
+                .Where( x => !x.Key.IsConcrete() && x.Value.Count == 1 ).ToList();
+
+            var assignable = concreteTypesWithSingleImplementors
+                .Where( x => x.Value.First().IsConcreteAndAssignableTo( x.Key ) ).ToList();
+
+            assignable.ForEach( x => SingleImplementations[x.Key] = x.Value.First() );
         }
 
         public void InitExclusions()
@@ -146,38 +148,49 @@ namespace Symbiote.Core.DI {
                     "WindowsBase"
                 } );
         }
-
+		
+		public List<Assembly> GetReferenceList( Assembly assembly )
+		{
+			List<Assembly> assemblyReferences = new List<Assembly>();
+			try
+			{
+				assemblyReferences = assembly
+                        .GetReferencedAssemblies()
+                        .Select( Assembly.Load )
+                        .ToList();
+            	ReferenceLookup[assembly] = assemblyReferences;	
+			}
+			catch( Exception ex )
+			{
+				Console.WriteLine( ex );
+			}
+		    return assemblyReferences;
+		}
+		
         public ScanIndex()
         {
-            AssemblyTypes = new ConcurrentDictionary<Assembly, List<Type>>();
-            TypeAssemblies = new ConcurrentDictionary<Type, Assembly>();
-            ImplementorsOfType = new ConcurrentDictionary<Type, List<Type>>();
-            TypeHierarchies = new ConcurrentDictionary<Type, List<Type>>();
-            Closers = new ConcurrentDictionary<Type, List<Type>>();
+            AssemblyTypes = new Dictionary<Assembly, List<Type>>();
+            TypeAssemblies = new Dictionary<Type, Assembly>();
+            ImplementorsOfType = new Dictionary<Type, List<Type>>();
+            TypeHierarchies = new Dictionary<Type, List<Type>>();
+            Closers = new Dictionary<Type, List<Type>>();
             AssemblyExclusionList = new List<string>();
             ReferenceLookup = new Dictionary<Assembly, List<Assembly>>();
             ConfiguredSymbiotes = new Dictionary<Assembly, bool>();
+            SingleImplementations = new Dictionary<Type, Type>();
             Scanner = new TypeScanner();
             
             InitExclusions();
 
             var initialList = new List<Assembly>( Scanner.GetAssembliesFromBaseDirectory().ToList() );
             var references = initialList
-                .SelectMany( x =>
-                    {
-                        var assemblyReferences = x
-                            .GetReferencedAssemblies()
-                            .Select( Assembly.Load )
-                            .ToList();
-                        ReferenceLookup[x] = assemblyReferences;
-                        return assemblyReferences;
-                    } )
+                .SelectMany( GetReferenceList )
                 .ToList();
             initialList.AddRange( references );
 
             var uniqueList = initialList.Distinct();
             var filtered = uniqueList.Where( x => !AssemblyExclusionList.Any( e => x.FullName.StartsWith( e ) ) );
-            CompleteAssemblyList = new ConcurrentBag<Assembly>( filtered.ToList() );
+            CompleteAssemblyList = new List<Assembly>( filtered.ToList() );
         }
     }
 }

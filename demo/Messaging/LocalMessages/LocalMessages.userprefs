@@ -1,0 +1,23 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\..\src\Symbiote.Daemon\Host\Config\DaemonDependencies.cs">
+    <Files>
+      <File FileName="LocalMessages\Program.cs" Line="22" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\BootStrap\HaltMinionHandler.cs" Line="31" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\DaemonAssimilation.cs" Line="40" Column="40" />
+      <File FileName="..\..\..\src\Symbiote.Core\DI\ScannerExtensions.cs" Line="81" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Installation\CommandFactory.cs" Line="45" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Installation\RunCommand.cs" Line="28" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\HostRunner.cs" Line="33" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\DaemonHost.cs" Line="29" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\ConsoleHost.cs" Line="22" Column="24" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\ServiceController.cs" Line="1" Column="1" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\IHost.cs" Line="18" Column="23" />
+      <File FileName="..\..\..\src\Symbiote.Daemon\Host\Config\DaemonDependencies.cs" Line="22" Column="19" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

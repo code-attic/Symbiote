@@ -1,13 +1,12 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Development" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Code Metrics" ctype="Workbench">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Development" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="..\..\src\Symbiote.Core\DI\ScanIndex.cs">
     <Files>
-      <File FileName="Code Metrics" />
-      <File FileName="Code Metrics" />
+      <File FileName="..\..\src\Symbiote.Core\DI\ScanIndex.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
