@@ -1,0 +1,19 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 2.10" ctype="Workspace" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/Symbiote.Messaging/Impl/Dispatch/DispatchManager.cs" ctype="Workbench">
+    <Files>
+      <File FileName="../../src/Symbiote.Messaging/Impl/Dispatch/ActorMessageDispatcher.cs" Line="61" Column="66" />
+      <File FileName="../../src/Symbiote.Messaging/Impl/Dispatch/DispatchManager.cs" Line="97" Column="29" />
+      <File FileName="../../src/Symbiote.Messaging/Impl/Subscriptions/SubscriptionManager.cs" Line="43" Column="1" />
+      <File FileName="../../src/Symbiote.Core/Assimilate.cs" Line="30" Column="1" />
+      <File FileName="../../src/Symbiote.Core/Actor/DefaultAgentFactory.cs" Line="20" Column="1" />
+      <File FileName="../../src/Symbiote.Core/Fibers/Mailbox.cs" Line="28" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/git/Symbiote/src/Symbiote.Messaging/Impl/Dispatch/ActorMessageDispatcher.cs" line="61" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+</Properties>

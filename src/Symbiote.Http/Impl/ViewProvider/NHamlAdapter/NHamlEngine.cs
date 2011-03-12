@@ -75,7 +75,7 @@ namespace Symbiote.Http.Impl.ViewProvider.NHamlAdapter
                 TemplateEngine.Options.AddReference( Assembly.Load(referencedAssembly).Location );
             } 
             TemplateEngine.Options.AddReference( typeof( Owin ).Assembly.Location );
-            TemplateEngine.Options.AddReference( typeof( TemplateEngine ).Assembly.Location );
+            //TemplateEngine.Options.AddReference( typeof( TemplateEngine ).Assembly.Location );
 
             TemplateEngine.Options.TemplateBaseType = BaseTemplateType;
             TemplateEngine.Options.TemplateContentProvider = this;

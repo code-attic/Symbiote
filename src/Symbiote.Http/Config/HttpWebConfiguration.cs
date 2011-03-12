@@ -27,8 +27,8 @@ namespace Symbiote.Http.Config
         public HttpWebConfiguration()
         {
             BaseContentPath = @"../../";
-            DefaultLayoutTemplate = "Application";
-            PathSources = new List<string>() { "Views", "Shared" };
+            DefaultLayoutTemplate = "application";
+            PathSources = new List<string>() { "views", "shared" };
         }
     }
 }

@@ -16,7 +16,7 @@ namespace HelloHttp
             var request = requestItems.ExtractRequest();
             respond
                 .Build()
-                .AppendFileContentToBody( request.Url )
+                .AppendFileContentToBody( request.RequestUri )
                 .Submit( HttpStatus.Ok );
 
             //Before Helper

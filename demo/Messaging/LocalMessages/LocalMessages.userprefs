@@ -2,8 +2,7 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" ctype="Workspace" />
   <MonoDevelop.Ide.Workbench ActiveDocument="LocalMessages/Program.cs" ctype="Workbench">
     <Files>
-      <File FileName="LocalMessages/Program.cs" Line="1" Column="1" />
-      <File FileName="Assembly Browser" />
+      <File FileName="LocalMessages/Program.cs" Line="18" Column="23" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

@@ -19,7 +19,7 @@ namespace Symbiote.Daemon
                 // Apparently the Mono runtime behaves differently on Ubuntu vs. Windows
                 // On Windows an interactive user session runs under 'mono'
                 // but under Ubuntu it runs under the actual assembly name
-                var domain = AppDomain.CurrentDomain.FriendlyName.Split('.')[0];
+                var domain = System.IO.Path.GetFileNameWithoutExtension( AppDomain.CurrentDomain.FriendlyName );
 				var processName = Process.GetCurrentProcess().ProcessName;
 				Console.WriteLine( processName );
                 hostType = processName == "mono" || processName == domain
