@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Machine.Specifications;
-using Microsoft.Practices.ServiceLocation;
 using Symbiote.Core;
 using Symbiote.Core.Locking;
 using Symbiote.StructureMapAdapter;
