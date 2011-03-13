@@ -88,7 +88,7 @@ namespace Symbiote.Http.Impl.Adapter.TcpListener
         protected void InitializeListener()
         {
             ServerAddress = IPAddress.Any;
-            ServerEndpoint = new IPEndPoint(ServerAddress, Configuration.Port);
+            ServerEndpoint = new IPEndPoint(ServerAddress, Configuration.Port );
             Listener = new System.Net.Sockets.TcpListener(ServerEndpoint);
             Listener.ExclusiveAddressUse = true;
         }

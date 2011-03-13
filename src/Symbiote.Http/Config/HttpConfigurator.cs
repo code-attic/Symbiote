@@ -17,6 +17,7 @@ using System;
 using Symbiote.Core;
 using Symbiote.Http.Impl.Adapter.HttpListener;
 using Symbiote.Http.Impl.Adapter.SocketListener;
+using Symbiote.Http.Impl.Adapter.TcpListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Config
@@ -57,7 +58,7 @@ namespace Symbiote.Http.Config
             Assimilate.Dependencies( x => 
                 { 
                     x.For<IHost>().Use<SocketServer>().AsSingleton();
-                    x.For<HttpServerConfiguration>().Use( SocketConfigurator.GetConfiguration() );
+                    x.For<IHttpServerConfiguration>().Use( SocketConfigurator.GetConfiguration() );
                 } );
             return this;
         }

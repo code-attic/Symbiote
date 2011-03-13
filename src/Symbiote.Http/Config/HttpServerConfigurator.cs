@@ -29,15 +29,9 @@ namespace Symbiote.Http.Config
             return _configuration;
         }
 
-        public HttpServerConfigurator Port(int port)
+        public HttpServerConfigurator Port( int port )
         {
             _configuration.Port = port;
-            return this;
-        }
-
-        public HttpServerConfigurator BaseUrl(string url)
-        {
-            _configuration.BaseUrl = url;
             return this;
         }
 

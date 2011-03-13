@@ -27,10 +27,9 @@ namespace Symbiote.Http.Config
         public int AllowedPendingRequests { get; set; }
         public AuthenticationSchemes AuthSchemes { get; set; }
         public string BaseUrl { get; set; }
-        private const string DEFAULT_HOST_URL = @"http://localhost:8420/";
         public string DefaultService { get; set; }
         public string DefaultAction { get; set; }
-        public IList<string> HostedUrls { get; set; }
+        public string Host { get; set; }
         public int Port { get; set; }
         public List<Tuple<Type, Type>> RegisteredServices { get; set; }
         public bool UseHttps { get; set; }
@@ -42,19 +41,15 @@ namespace Symbiote.Http.Config
         public void UseDefaults()
         {
             //set defaults
-            Port = 8420;
+            Port = 8420 ;
             AuthSchemes = AuthenticationSchemes.None;
-            BaseUrl = DEFAULT_HOST_URL
-                .Replace(@"http://","")
-                .Split('/')[0]
-                .Split(':')[0];
-            HostedUrls.Add(DEFAULT_HOST_URL);
-            AllowedPendingRequests = 100;
+            BaseUrl = "/";
+            Host = "localhost";
+            AllowedPendingRequests = 10000;
         }
 
         public HttpServerConfiguration()
         {
-            HostedUrls = new List<string>();
             RegisteredServices = new List<Tuple<Type, Type>>();
             UseDefaults();
         }
