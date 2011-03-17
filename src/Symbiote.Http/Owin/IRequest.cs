@@ -31,12 +31,10 @@ namespace Symbiote.Http.Owin
         string Scheme { get; }
         string Server { get; }
         string Version { get; }
-        //Stream RequestStream { get; set; }
 
         IDictionary<string, string> Parameters { get; }
         IDictionary<string, string> Headers { get; }
         IDictionary<string, object> Items { get; }
-        //Future<byte[]> Read();
-        void ReadNext( Action<ArraySegment<byte>> onData, Action<Exception> onException );
+        OwinBody Body { get; set; }
     }
 }

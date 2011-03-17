@@ -15,7 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Http.Impl.Adapter.Channel;
+using Symbiote.Http.NetAdapter.Channel;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 

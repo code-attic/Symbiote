@@ -17,8 +17,8 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Core;
 using Symbiote.Http.Config;
-using Symbiote.Http.Impl;
 using Symbiote.Http.Owin;
+using Symbiote.Http.Owin.Impl;
 
 namespace Symbiote.Http
 {
@@ -41,7 +41,7 @@ namespace Symbiote.Http
 
         public static IRequest ExtractRequest( this IDictionary<string, object> dictionary )
         {
-            return dictionary[Impl.Owin.ItemKeys.REQUEST] as IRequest;
+            return dictionary[Owin.Impl.Owin.ItemKeys.REQUEST] as IRequest;
         }
     }
 }

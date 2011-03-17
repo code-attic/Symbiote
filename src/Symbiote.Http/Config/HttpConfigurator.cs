@@ -15,9 +15,9 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Http.Impl.Adapter.HttpListener;
-using Symbiote.Http.Impl.Adapter.SocketListener;
-using Symbiote.Http.Impl.Adapter.TcpListener;
+using Symbiote.Http.NetAdapter.HttpListener;
+using Symbiote.Http.NetAdapter.SocketListener;
+using Symbiote.Http.NetAdapter.TcpListener;
 using Symbiote.Http.Owin;
 
 namespace Symbiote.Http.Config

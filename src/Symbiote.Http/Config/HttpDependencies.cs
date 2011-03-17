@@ -1,10 +1,10 @@
 ﻿using System;
 using Symbiote.Core;
 using Symbiote.Core.DI;
-using Symbiote.Http.Impl;
-using Symbiote.Http.Impl.ViewProvider;
-using Symbiote.Http.Impl.ViewProvider.NHamlAdapter;
 using Symbiote.Http.Owin;
+using Symbiote.Http.Owin.Impl;
+using Symbiote.Http.ViewAdapter;
+using Symbiote.Http.ViewAdapter.NHamlAdapter;
 
 namespace Symbiote.Http.Config
 {

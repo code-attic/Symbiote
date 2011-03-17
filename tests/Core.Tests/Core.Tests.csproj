@@ -158,7 +158,11 @@
     <Compile Include="Extensions\with_permutations.cs" />
     <Compile Include="Extensions\with_three_elements.cs" />
     <Compile Include="Extensions\with_two_elements.cs" />
-    <Compile Include="Fibers\Fibers.cs" />
+    <Compile Include="Fibers\with_director.cs" />
+    <Compile Include="Fibers\when_throwing_exception_during_mailbox_process.cs" />
+    <Compile Include="Fibers\when_writing_high_volume_to_single_mailbox.cs" />
+    <Compile Include="Fibers\when_writing_in_parallel.cs" />
+    <Compile Include="Fibers\with_director_throwing_exceptions.cs" />
     <Compile Include="Json\Collections\Car.cs" />
     <Compile Include="Json\Collections\IGotsaNameYo.cs" />
     <Compile Include="Json\Collections\Person.cs" />

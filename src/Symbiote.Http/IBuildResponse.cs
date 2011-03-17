@@ -14,7 +14,7 @@
 // limitations under the License.
 // */
 using System;
-using Symbiote.Http.Impl;
+using Symbiote.Http.Owin.Impl;
 
 namespace Symbiote.Http
 {

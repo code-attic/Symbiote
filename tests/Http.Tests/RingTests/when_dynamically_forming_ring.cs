@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading;
 using Machine.Specifications;
 using Symbiote.Core.Utility;
-using Symbiote.Http.Impl.Adapter.SocketListener;
+using Symbiote.Http.NetAdapter.SocketListener;
 
 namespace Http.Tests.RingTests {
     
