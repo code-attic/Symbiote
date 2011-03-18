@@ -18,6 +18,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Text;
+using Symbiote.Net;
 
 namespace Symbiote.Http.NetAdapter.TcpListener
 {
@@ -25,7 +26,7 @@ namespace Symbiote.Http.NetAdapter.TcpListener
         : IHttpAuthChallenger,
           IObserver<string>
     {
-        protected IHttpServerConfiguration Configuration { get; set; }
+        protected SocketConfiguration Configuration { get; set; }
         protected readonly byte[] challenge;
         protected IAuthenticationValidator Validator { get; set; }
         protected HttpStreamReader reader;
@@ -77,10 +78,10 @@ namespace Symbiote.Http.NetAdapter.TcpListener
 
         }
 
-        public HttpBasicAuthChallenger(IHttpServerConfiguration configuration, IAuthenticationValidator authenticationValidator)
+        public HttpBasicAuthChallenger(SocketConfiguration configuration, IAuthenticationValidator authenticationValidator)
         {
             Configuration = configuration;
-            var challengeBody = new BasicAuthRequiredResponse(configuration.BaseUrl).ToString();
+            var challengeBody = new BasicAuthRequiredResponse("baseUrl").ToString();
             challenge = Encoding.UTF8.GetBytes(challengeBody);
             Validator = authenticationValidator;
         }

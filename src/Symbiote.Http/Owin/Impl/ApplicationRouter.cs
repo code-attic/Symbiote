@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Symbiote.Core;
 using Symbiote.Core.DI;
 using Symbiote.Core.Extensions;
 
@@ -49,12 +48,12 @@ namespace Symbiote.Http.Owin.Impl
             return this;
         }
 
-        public IRegisterApplication DefineApplication( Predicate<IRequest> route, OwinApplication application )
-        {
-            IApplicationFactory applicationFactory = new DelegateApplicationFactory( application );
-            Routes.Add( Tuple.Create( route, applicationFactory ) );
-            return this;
-        }
+        //public IRegisterApplication DefineApplication( Predicate<IRequest> route, OwinApplication application )
+        //{
+        //    IApplicationFactory applicationFactory = new DelegateApplicationFactory( application );
+        //    Routes.Add( Tuple.Create( route, applicationFactory ) );
+        //    return this;
+        //}
 
         public IApplication GetApplicationFor( IRequest request )
         {
@@ -70,35 +69,6 @@ namespace Symbiote.Http.Owin.Impl
         public ApplicationRouter()
         {
             Routes = new List<Tuple<Predicate<IRequest>, IApplicationFactory>>();
-        }
-    }
-
-    public static class RequestExtensions
-    {
-        public static void SpawnApplication( this IContext context, Action<Exception> onException )
-        {
-            var router = Assimilate.GetInstanceOf<IRouteRequest>();
-            var application = router.GetApplicationFor( context.Request );
-            application.Process( context.Request.GetOwinDictionary(), context.Response.Respond, onException );
-        }
-
-        public static IDictionary<string, object> GetOwinDictionary( this IRequest request )
-        {
-            var requestBody = new Action<Action<ArraySegment<byte>>, Action<Exception>>( request.ReadNext );
-
-            return new Dictionary<string, object>()
-                {
-                    { Owin.ItemKeys.REQUEST_METHOD, request.Method },   
-                    { Owin.ItemKeys.REQUEST_URI, request.RequestUri },
-                    { Owin.ItemKeys.REQUEST_HEADERS, request.Headers },
-                    { Owin.ItemKeys.BASE_URI, request.BaseUri },
-                    { Owin.ItemKeys.SERVER_NAME, request.Server },
-                    { Owin.ItemKeys.URI_SCHEME, request.Scheme },
-                    { Owin.ItemKeys.REMOTE_ENDPOINT, request.ClientEndpoint },
-                    { Owin.ItemKeys.VERSION, request.Version },
-                    { Owin.ItemKeys.REQUEST, request },
-                    { Owin.ItemKeys.REQUEST_BODY, requestBody },
-                };
         }
     }
 }

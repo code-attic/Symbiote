@@ -1,12 +1,12 @@
 ﻿using Symbiote.Daemon;
+using Symbiote.Http;
 using Symbiote.Http.Owin;
-using Symbiote.Http.Impl.Adapter.SocketListener;
 
 namespace HelloHttp
 {
     public class HostService : IDaemon
     {
-        public IHost Host { get; set; }
+        public IServerAdapter Host { get; set; }
 
         public void Start()
         {
@@ -18,7 +18,7 @@ namespace HelloHttp
             Host.Stop();
         }
 
-        public HostService(IHost host)
+        public HostService(IServerAdapter host)
         {
             Host = host;
         }

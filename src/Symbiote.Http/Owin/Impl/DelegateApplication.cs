@@ -18,22 +18,39 @@ using System.Collections.Generic;
 
 namespace Symbiote.Http.Owin.Impl
 {
-    public class DelegateApplication : IApplication
+    public class DelegateApplication : 
+        Application
     {
         public OwinApplication Application;
-
-        public void Process( IDictionary<string, object> requestItems,
-                             OwinResponse respond,
-                             Action<Exception> onException )
+        
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
         {
             
-            Application( requestItems, respond, onException );
+            return false;
         }
 
-        public static implicit operator DelegateApplication( OwinApplication application )
+        public override void OnError( Exception exception )
         {
-            return new DelegateApplication( application );
+            
         }
+
+        public override void OnComplete()
+        {
+            
+        }
+
+        //public void Process( IDictionary<string, object> requestItems,
+        //                     OwinResponse respond,
+        //                     Action<Exception> onException )
+        //{
+            
+        //    Application( requestItems, respond, onException );
+        //}
+
+        //public static implicit operator DelegateApplication( OwinApplication application )
+        //{
+        //    return new DelegateApplication( application );
+        //}
 
         public DelegateApplication( OwinApplication application )
         {

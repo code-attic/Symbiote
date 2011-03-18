@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,15 +37,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHaml">
+      <HintPath>..\..\..\bin\NHaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Net">
+      <HintPath>..\..\..\bin\Symbiote.Net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="NHaml, Version=1.5.0.2, Culture=neutral, PublicKeyToken=d603208bac452365">
-      <HintPath>..\..\..\lib\NHaml\NHaml.dll</HintPath>
-    </Reference>
     <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
     </Reference>

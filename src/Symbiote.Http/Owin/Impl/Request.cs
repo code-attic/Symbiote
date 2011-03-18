@@ -16,7 +16,6 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using Symbiote.Http.NetAdapter.SocketListener;
 
 namespace Symbiote.Http.Owin.Impl
 {
@@ -35,48 +34,15 @@ namespace Symbiote.Http.Owin.Impl
         public IDictionary<string, string> Parameters { get; set; }
         public IDictionary<string, string> Headers { get; set; }
         public IDictionary<string, object> Items { get; set; }
-        public Queue<ArraySegment<byte>> RequestChunks { get; set; }
-        public Action<ArraySegment<byte>> OnData { get; set; }
         public Action<Exception> OnException { get; set; }
-
-        public void BytesReceived( byte[] bytes )
-        {
-            OnData( new ArraySegment<byte>( bytes ) );
-            OnData = CacheBytes;
-        }
-
-        public void CacheBytes( ArraySegment<byte> bytes )
-        {
-            RequestChunks.Enqueue( bytes );
-        }
-
-        public void ReadNext( Action<ArraySegment<byte>> onData, Action<Exception> onException )
-        {
-            if ( RequestChunks.Count > 0 )
-            {
-                onData( RequestChunks.Dequeue() );
-            }
-            else
-            {
-                OnData = onData;
-                OnException = onException;
-            }
-        }
+        public OwinBody Body { get; set; }
+        public IBuildResponse Response { get; set; }
 
         public Request()
         {
             Parameters = new Dictionary<string, string>();
             Headers = new Dictionary<string, string>();
             Items = new Dictionary<string, object>();
-            RequestChunks = new Queue<ArraySegment<byte>>();
-            OnData = Initialize;
-        }
-
-        private void Initialize( ArraySegment<byte> arraySegment )
-        {
-            Initialized = true;
-            OnData = CacheBytes;
-            RequestParser.PopulateRequest( this, arraySegment );
         }
     }
 }

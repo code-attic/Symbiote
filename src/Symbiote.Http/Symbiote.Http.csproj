@@ -56,7 +56,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActionExtension.cs" />
+    <Compile Include="ConvenienceExtensions.cs" />
+    <Compile Include="BaseApplication.cs" />
     <Compile Include="Config\HttpWebConfiguration.cs" />
     <Compile Include="Config\HttpWebConfigurator.cs" />
     <Compile Include="ContentType.cs" />
@@ -70,36 +71,23 @@
     <Compile Include="NetAdapter\Channel\HttpChannelFactory.cs" />
     <Compile Include="NetAdapter\Channel\HttpEnvelope.cs" />
     <Compile Include="NetAdapter\Channel\IChannelAdapter.cs" />
+    <Compile Include="NetAdapter\Socket\IOwinObservable.cs" />
+    <Compile Include="NetAdapter\Socket\IOwinObserver.cs" />
+    <Compile Include="IServerAdapter.cs" />
+    <Compile Include="NetAdapter\Socket\RequestReader.cs" />
+    <Compile Include="NetAdapter\Socket\ResponseWriter.cs" />
+    <Compile Include="NetAdapter\Socket\SocketApplicationProxy.cs" />
+    <Compile Include="NetAdapter\Socket\SocketServerAdapter.cs" />
+    <Compile Include="OwinBody.cs" />
+    <Compile Include="OwinResponse.cs" />
+    <Compile Include="Owin\Impl\RequestExtensions.cs" />
     <Compile Include="Owin\Impl\ResponseEncoder.cs" />
-    <Compile Include="NetAdapter\SocketListener\ClientSocketNode.cs" />
-    <Compile Include="NetAdapter\SocketListener\ClientSocketAdapter.cs" />
-    <Compile Include="NetAdapter\SocketListener\HeaderKeyEqualityComparer.cs" />
-    <Compile Include="NetAdapter\SocketListener\HttpConstants.cs" />
-    <Compile Include="NetAdapter\SocketListener\IClientSocketAdapter.cs" />
-    <Compile Include="NetAdapter\SocketListener\RequestParser.cs" />
-    <Compile Include="NetAdapter\SocketListener\SocketResponseAdapter.cs" />
-    <Compile Include="NetAdapter\SocketListener\SocketServer.cs" />
-    <Compile Include="NetAdapter\TcpListener\AuthRequiredResponse.cs" />
-    <Compile Include="NetAdapter\TcpListener\BasicAuthRequiredResponse.cs" />
-    <Compile Include="NetAdapter\TcpListener\ClientFactory.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpBasicAuthChallenger.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpContext.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpRequest.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpResponse.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpServer.cs" />
+    <Compile Include="Owin\Impl\HeaderKeyEqualityComparer.cs" />
+    <Compile Include="Owin\Impl\HttpConstants.cs" />
+    <Compile Include="Owin\Impl\RequestParser.cs" />
+    <Compile Include="NetAdapter\Socket\SocketResponseAdapter.cs" />
     <Compile Include="Config\HttpServerConfiguration.cs" />
     <Compile Include="Config\HttpServerConfigurator.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpServerException.cs" />
-    <Compile Include="NetAdapter\TcpListener\HttpStreamReader.cs" />
-    <Compile Include="NetAdapter\TcpListener\IAuthenticationValidator.cs" />
-    <Compile Include="NetAdapter\TcpListener\IHttpAuthChallenger.cs" />
-    <Compile Include="NetAdapter\TcpListener\IHttpClient.cs" />
-    <Compile Include="NetAdapter\TcpListener\IHttpServer.cs" />
-    <Compile Include="NetAdapter\TcpListener\IHttpServerConfiguration.cs" />
-    <Compile Include="NetAdapter\TcpListener\NoAuthChallenger.cs" />
-    <Compile Include="NetAdapter\TcpListener\SecureHttpClient.cs" />
-    <Compile Include="NetAdapter\TcpListener\SimpleHttpClient.cs" />
-    <Compile Include="NetAdapter\TcpListener\WorthlessAuthenticationValidator.cs" />
     <Compile Include="ViewAdapter\IView.cs" />
     <Compile Include="ViewAdapter\DefaultViewLocator.cs" />
     <Compile Include="ViewAdapter\IViewEngine.cs" />
@@ -110,7 +98,7 @@
     <Compile Include="MessagingApplication.cs" />
     <Compile Include="NetAdapter\Channel\WebClientChannelAdapter.cs" />
     <Compile Include="Owin\Impl\HeaderBuilder.cs" />
-    <Compile Include="HttpAssimilation.cs" />
+    <Compile Include="HttpHostAssimilation.cs" />
     <Compile Include="IBuildResponse.cs" />
     <Compile Include="Owin\Impl\IDefineHeaders.cs" />
     <Compile Include="Owin\Impl\Context.cs" />
@@ -121,7 +109,7 @@
     <Compile Include="Owin\Impl\HttpStatusCode.cs" />
     <Compile Include="Owin\Impl\IApplicationFactory.cs" />
     <Compile Include="MissingApplicationException.cs" />
-    <Compile Include="OwinApplicationDelegate.cs" />
+    <Compile Include="OwinApplication.cs" />
     <Compile Include="Owin\IRouteRequest.cs" />
     <Compile Include="Owin\Impl\IContextTransformer.cs" />
     <Compile Include="Owin\Impl\IResponseProvider.cs" />
@@ -151,6 +139,10 @@
     <ProjectReference Include="..\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Symbiote.Net\Symbiote.Net.csproj">
+      <Project>{4FDBCC6D-F199-4A31-A6D1-B5265EA49BA0}</Project>
+      <Name>Symbiote.Net</Name>
     </ProjectReference>
     <Reference Include="NHaml">
       <HintPath>..\..\lib\NHaml\NHaml.dll</HintPath>

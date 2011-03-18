@@ -27,39 +27,55 @@ using Symbiote.Messaging.Impl.Subscriptions;
 namespace Symbiote.Http
 {
     public class MessagingApplication
-        : IApplication
+        : Application
     {
         public IDispatcher Dispatcher { get; set; }
 
-        public void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException )
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
         {
-            var request = requestItems.ExtractRequest();
-            request.ReadNext( 
-                x => {
-                    var contentType = request.Headers["Content-Type"] ?? "";
-                    var encoding = request.Headers["Content-Encoding"] ?? "";
-                    var type = Type.GetType( contentType );
-                    var envelopeType = typeof( HttpEnvelope<> ).MakeGenericType( type );
-                    HttpEnvelope result;
-                    switch( encoding.Trim() )
-                    {
-                        case "application/json":
-                            result = Encoding.UTF8.GetString( x.Array ).FromJson( envelopeType ) as HttpEnvelope;
-                            break;
-                        case "application/protocol-buffer":
-                            result = x.Array.FromProtocolBuffer( envelopeType ) as HttpEnvelope;
-                            break;
-                        default:
-                            result = null;
-                            break;
-                    }
-
-                    result.Callback = respond;
-                    Dispatcher.Send( result as IEnvelope );
-                },
-                x => { }
-                );
+            
+            return false;
         }
+
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            
+        }
+
+        //public void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException )
+        //{
+        //    var request = requestItems.ExtractRequest();
+        //    request.ReadNext( 
+        //        x => {
+        //            var contentType = request.Headers["Content-Type"] ?? "";
+        //            var encoding = request.Headers["Content-Encoding"] ?? "";
+        //            var type = Type.GetType( contentType );
+        //            var envelopeType = typeof( HttpEnvelope<> ).MakeGenericType( type );
+        //            HttpEnvelope result;
+        //            switch( encoding.Trim() )
+        //            {
+        //                case "application/json":
+        //                    result = Encoding.UTF8.GetString( x.Array ).FromJson( envelopeType ) as HttpEnvelope;
+        //                    break;
+        //                case "application/protocol-buffer":
+        //                    result = x.Array.FromProtocolBuffer( envelopeType ) as HttpEnvelope;
+        //                    break;
+        //                default:
+        //                    result = null;
+        //                    break;
+        //            }
+
+        //            result.Callback = respond;
+        //            Dispatcher.Send( result as IEnvelope );
+        //        },
+        //        x => { }
+        //        );
+        //}
 
         public MessagingApplication( IDispatcher dispatcher )
         {

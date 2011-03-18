@@ -1,28 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using Symbiote.Http;
-using Symbiote.Http.Impl;
+using Symbiote.Http.Owin.Impl;
 
 namespace HelloHttp
 {
-    public class SayByeApp : IApplication
+    public class SayByeApp : Application
     {
-        public void Process(IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException)
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
         {
-            // After Helper
-            respond
-                .Build()
+            return false;
+        }
+
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            Response
                 .DefineHeaders( x => x.ContentType( ContentType.Plain ) )
                 .AppendToBody( "See ya!" )
                 .Submit( HttpStatus.Ok );
-
-            // Before Helper
-            //respond
-            //    (
-            //        Owin.HttpStatus.OK, 
-            //        new Dictionary<string, IList<string>>(), 
-            //        new[] { "See ya, {0}!".AsFormat( "dude" )}
-            //    );
         }
     }
 }

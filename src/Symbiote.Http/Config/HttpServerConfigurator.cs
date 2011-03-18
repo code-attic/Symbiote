@@ -29,24 +29,6 @@ namespace Symbiote.Http.Config
             return _configuration;
         }
 
-        public HttpServerConfigurator Port( int port )
-        {
-            _configuration.Port = port;
-            return this;
-        }
-
-        public HttpServerConfigurator UseBasicAuth()
-        {
-            _configuration.AuthSchemes = AuthenticationSchemes.Basic;
-            return this;
-        }
-
-        public HttpServerConfigurator UseDigestAuth()
-        {
-            _configuration.AuthSchemes = AuthenticationSchemes.Digest;
-            return this;
-        }
-
         public HttpServerConfigurator HostService<T>()
             where T : class
         {

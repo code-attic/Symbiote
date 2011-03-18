@@ -20,13 +20,16 @@ using System.Text;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
+using Symbiote.Core.Utility;
 using Symbiote.Http.Config;
+using Symbiote.Http.NetAdapter.Socket;
 using Symbiote.Http.ViewAdapter;
 
 namespace Symbiote.Http.Owin.Impl
 {
-    public class ResponseHelper
-        : IBuildResponse
+    public class ResponseHelper :
+        IBuildResponse,
+        IOwinObservable
     {
         public readonly string RENDER_EXCEPTION_TEMPLATE = @"
 <html>
@@ -41,7 +44,11 @@ namespace Symbiote.Http.Owin.Impl
     </head>
 ";
         public HttpWebConfiguration Configuration { get; set; }
-        public OwinResponse Respond { get; set; }
+        
+        public Func<ArraySegment<byte>, Action, bool> OnNextWrite { get; set; }
+        public Action<Exception> OnWriteError { get; set; }
+        public Action OnWriteComplete { get; set; }
+
         public IDictionary<string, string> ResponseHeaders { get; set; }
         public List<object> ResponseChunks { get; set; }
         public Func<string, byte[]> Encoder { get; set; }
@@ -60,7 +67,8 @@ namespace Symbiote.Http.Owin.Impl
 
         public IBuildResponse AppendFileContentToBody( string path )
         {
-            var fullPath = path.Replace('/', Path.DirectorySeparatorChar);
+            path = path.TrimStart('/').Replace('/', Path.DirectorySeparatorChar);
+            var fullPath = Path.Combine( Configuration.BaseContentPath, path );
             if ( !File.Exists( fullPath ) )
             {
                 throw new FileNotFoundException( "Requested file could not be found: '{0}'".AsFormat( fullPath ) );
@@ -146,9 +154,51 @@ namespace Symbiote.Http.Owin.Impl
 
         }
 
+        public Action Setup( IOwinObserver observer )
+        {
+            return Setup( observer.OnNext, observer.OnError, observer.OnComplete );
+        }
+
+        public Action Setup( Func<ArraySegment<byte>, Action, bool> onNext, Action<Exception> onError, Action complete )
+        {
+            OnNextWrite = onNext;
+            OnWriteError = onError;
+            OnWriteComplete = complete;
+            return Stop;
+        }
+
+        public void Stop()
+        {
+
+        }
+
         public void Submit( string status )
         {
-            Respond( status, ResponseHeaders, ResponseChunks );
+            var httpStatus = HttpStatus.Lookup[status];
+
+            var builder = new DelimitedBuilder("\r\n");
+            var headerBuilder = new HeaderBuilder( ResponseHeaders );
+            var responseBody = new MemoryStream();
+
+            ResponseChunks.ForEach( x => ResponseEncoder.Write( x, responseBody ) );
+
+            builder.AppendFormat( "HTTP/1.1 {0}", status );
+            headerBuilder.ContentLength( responseBody.Length );
+            headerBuilder.Date( DateTime.UtcNow );
+
+            ResponseHeaders.ForEach( x => builder.AppendFormat( "{0}: {1}", x.Key, x.Value ) );
+            builder.Append( "\r\n" );
+            var header = builder.ToString();
+            var headerBuffer = Encoding.UTF8.GetBytes( header );
+            var bodyBuffer = responseBody.GetBuffer();
+
+            OnNextWrite( new ArraySegment<byte>(headerBuffer), () => WriteBody( bodyBuffer ) );
+        }
+
+        private void WriteBody( byte[] bodyBuffer )
+        {
+            OnNextWrite( new ArraySegment<byte>( bodyBuffer ), () => {  } );
+            OnWriteComplete();
         }
 
         public void Submit( HttpStatus status )
@@ -171,15 +221,9 @@ namespace Symbiote.Http.Owin.Impl
             return this;
         }
 
-        //public static implicit operator ResponseHelper( OwinResponse respond )
-        //{
-        //    return new ResponseHelper( respond, configuration );
-        //}
-
-        public ResponseHelper( OwinResponse respond, HttpWebConfiguration configuration )
+        public ResponseHelper( HttpWebConfiguration configuration )
         {
             Configuration = configuration;
-            Respond = respond;
             ResponseHeaders = new Dictionary<string, string>();
             ResponseChunks = new List<object>();
             Encoder = x => Encoding.UTF8.GetBytes( x );

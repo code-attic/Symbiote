@@ -1,4 +1,4 @@
-﻿namespace Symbiote.Http.NetAdapter.SocketListener
+﻿namespace Symbiote.Http.Owin.Impl
 {
     public class HttpConstants
     {

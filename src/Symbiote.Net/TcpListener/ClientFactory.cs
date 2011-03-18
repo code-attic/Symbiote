@@ -15,12 +15,13 @@ limitations under the License.
 */
 
 using System.Net.Sockets;
+using Symbiote.Net;
 
 namespace Symbiote.Http.NetAdapter.TcpListener
 {
     public class ClientFactory
     {
-        protected IHttpServerConfiguration Configuration { get; set; }
+        protected SocketConfiguration Configuration { get; set; }
 
         public IHttpClient GetClient(TcpClient client)
         {
@@ -48,7 +49,7 @@ namespace Symbiote.Http.NetAdapter.TcpListener
             return new SimpleHttpClient(client);
         }
 
-        public ClientFactory(IHttpServerConfiguration configuration)
+        public ClientFactory(SocketConfiguration configuration)
         {
             Configuration = configuration;
         }

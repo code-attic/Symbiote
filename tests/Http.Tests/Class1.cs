@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Machine.Specifications;
-using Symbiote.Http.NetAdapter.SocketListener;
 using Symbiote.Http.Owin;
 using Symbiote.Http.Owin.Impl;
 

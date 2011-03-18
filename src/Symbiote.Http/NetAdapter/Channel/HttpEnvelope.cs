@@ -63,7 +63,7 @@ namespace Symbiote.Http.NetAdapter.Channel
         public bool SequenceEnd { get; set; }
 
         [IgnoreDataMember]
-        public OwinResponse Callback { get; set; }
+        public IBuildResponse Callback { get; set; }
     }
 
     public class HttpEnvelope<TMessage> :
@@ -96,7 +96,6 @@ namespace Symbiote.Http.NetAdapter.Channel
         public void Reply<TResponse>( TResponse response )
         {
             Callback
-                .Build()
                 .AppendJson( response )
                 .DefineHeaders(
                     x =>
@@ -107,14 +106,12 @@ namespace Symbiote.Http.NetAdapter.Channel
         public void Acknowledge()
         {
             Callback
-                .Build()
                 .Submit(HttpStatus.Ok);
         }
 
         public void Reject( string reason )
         {
             Callback
-                .Build()
                 .Submit(HttpStatus.InternalServerError);
         }
 

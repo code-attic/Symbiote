@@ -15,42 +15,21 @@
 // */
 using System;
 using System.Collections.Generic;
+using Symbiote.Core;
+using Symbiote.Http.Config;
+using Symbiote.Http.NetAdapter.Socket;
 using Symbiote.Http.Owin;
 using Symbiote.Http;
+using Symbiote.Http.Owin.Impl;
 
 namespace Symbiote.Http
 {
-    public interface OLD_IApplication
-    {
-        void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException );
-    }
-
     public interface IApplication
+        : IOwinObserver
     {
         Action Cancel { get; set; }
         IRequest Request { get; set; }
-        void Begin( IDictionary<string, object> requestItems );
-        bool OnNext( ArraySegment<byte> data, Action continuation );
-        void OnError( Exception exception );
-        void OnComplete();
-    }
-
-    public abstract class BaseApplication
-        : IApplication
-    {
-        public Action Cancel { get; set; }
-        public IRequest Request { get; set; }
-
-        public virtual void Begin( IDictionary<string, object> requestItems )
-        {
-            Request = requestItems.ExtractRequest();
-
-        }
-
-        public abstract bool OnNext( ArraySegment<byte> data, Action continuation );
-
-        public abstract void OnError( Exception exception );
-
-        public abstract void OnComplete();
+        IBuildResponse Response { get; set; }
+        void Process( IRequest request, IBuildResponse response, Action<Exception> onException );
     }
 }

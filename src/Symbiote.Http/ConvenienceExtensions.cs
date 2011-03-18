@@ -34,10 +34,6 @@ namespace Symbiote.Http
                 return _configuration;
             }
         }
-        public static IBuildResponse Build( this OwinResponse respond )
-        {
-            return new ResponseHelper( respond, Configuration );
-        }
 
         public static IRequest ExtractRequest( this IDictionary<string, object> dictionary )
         {

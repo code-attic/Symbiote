@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Symbiote.Http.NetAdapter.SocketListener
+namespace Symbiote.Http.Owin.Impl
 {
     public class HeaderKeyEqualityComparer
         : IEqualityComparer<string>

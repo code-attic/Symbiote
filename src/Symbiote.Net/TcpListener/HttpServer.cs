@@ -18,6 +18,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Net;
 using System.Linq;
+using Symbiote.Net;
 
 namespace Symbiote.Http.NetAdapter.TcpListener
 {
@@ -25,7 +26,7 @@ namespace Symbiote.Http.NetAdapter.TcpListener
         IHttpServer
     {
         protected System.Net.Sockets.TcpListener Listener { get; set; }
-        protected IHttpServerConfiguration Configuration { get; set; }
+        protected SocketConfiguration Configuration { get; set; }
         protected bool Running { get; set; }
         protected IPAddress ServerAddress { get; set; }
         protected IPEndPoint ServerEndpoint { get; set; }
@@ -93,7 +94,7 @@ namespace Symbiote.Http.NetAdapter.TcpListener
             Listener.ExclusiveAddressUse = true;
         }
 
-        public HttpServer(IHttpServerConfiguration configuration, IHttpAuthChallenger authChallenger)
+        public HttpServer(SocketConfiguration configuration, IHttpAuthChallenger authChallenger)
         {
             Configuration = configuration;
             InitializeListener();

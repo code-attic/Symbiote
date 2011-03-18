@@ -22,36 +22,13 @@ using Symbiote.Http.NetAdapter.TcpListener;
 
 namespace Symbiote.Http.Config
 {
-    public class HttpServerConfiguration : IHttpServerConfiguration
+    public class HttpServerConfiguration 
     {
-        public int AllowedPendingRequests { get; set; }
-        public AuthenticationSchemes AuthSchemes { get; set; }
-        public string BaseUrl { get; set; }
-        public string DefaultService { get; set; }
-        public string DefaultAction { get; set; }
-        public string Host { get; set; }
-        public int Port { get; set; }
         public List<Tuple<Type, Type>> RegisteredServices { get; set; }
-        public bool UseHttps { get; set; }
-
-        public string X509CertName { get; set; }
-        public StoreName X509StoreName { get; set; }
-        public StoreLocation X509StoreLocation { get; set; }
-
-        public void UseDefaults()
-        {
-            //set defaults
-            Port = 8420 ;
-            AuthSchemes = AuthenticationSchemes.None;
-            BaseUrl = "/";
-            Host = "localhost";
-            AllowedPendingRequests = 10000;
-        }
-
+        
         public HttpServerConfiguration()
         {
             RegisteredServices = new List<Tuple<Type, Type>>();
-            UseDefaults();
         }
     }
 }

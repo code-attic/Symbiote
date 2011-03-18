@@ -2,29 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Symbiote.Http.Owin;
-using Symbiote.Http.Owin.Impl;
 
-namespace Symbiote.Http.NetAdapter.SocketListener 
+namespace Symbiote.Http.Owin.Impl 
 {
     public class RequestParser
         : HttpConstants
     {
-        public static Request CreateRequest( ArraySegment<byte> arraySegment )
-        {
-            var request = new Request();
-            request.OnData( arraySegment );
-            return request;
-        }
-
-        public static void PopulateRequest( Request request, ArraySegment<byte> arraySegment )
+        public static void PopulateRequest( Request request, ArraySegment<byte> arraySegment, Action<ArraySegment<byte>> onBody )
         {
             var last = ParseLine( request, arraySegment );
             last = ParseHeaders( request, arraySegment, last ) + 2;
             if( last + arraySegment.Offset < arraySegment.Count )
             {
                 var bodySegment = new ArraySegment<byte>( arraySegment.Array, last, arraySegment.Count - last );
-                request.OnData( bodySegment );
+                onBody( bodySegment );
             }
         }
 
@@ -205,23 +196,23 @@ namespace Symbiote.Http.NetAdapter.SocketListener
             return index + 1;
         }
 
-        public static IDictionary<string, object> GetOwinItems( IRequest request )
-        {
-            var requestBody = new Action<Action<ArraySegment<byte>>, Action<Exception>>( request.ReadNext );
+        //public static IDictionary<string, object> GetOwinItems( IRequest request )
+        //{
+        //    var requestBody = new Action<Action<ArraySegment<byte>>, Action<Exception>>( request.ReadNext );
 
-            return new Dictionary<string, object>()
-                {
-                    { Owin.Impl.Owin.ItemKeys.REQUEST_METHOD, request.Method },   
-                    { Owin.Impl.Owin.ItemKeys.REQUEST_URI, request.RequestUri },
-                    { Owin.Impl.Owin.ItemKeys.REQUEST_HEADERS, request.Headers },
-                    { Owin.Impl.Owin.ItemKeys.BASE_URI, request.BaseUri },
-                    { Owin.Impl.Owin.ItemKeys.SERVER_NAME, request.Server },
-                    { Owin.Impl.Owin.ItemKeys.URI_SCHEME, request.Scheme },
-                    { Owin.Impl.Owin.ItemKeys.REMOTE_ENDPOINT, request.ClientEndpoint },
-                    { Owin.Impl.Owin.ItemKeys.VERSION, request.Version },
-                    { Owin.Impl.Owin.ItemKeys.REQUEST, request },
-                    { Owin.Impl.Owin.ItemKeys.REQUEST_BODY, requestBody },
-                };
-        }
+        //    return new Dictionary<string, object>()
+        //        {
+        //            { Owin.Impl.Owin.ItemKeys.REQUEST_METHOD, request.Method },   
+        //            { Owin.Impl.Owin.ItemKeys.REQUEST_URI, request.RequestUri },
+        //            { Owin.Impl.Owin.ItemKeys.REQUEST_HEADERS, request.Headers },
+        //            { Owin.Impl.Owin.ItemKeys.BASE_URI, request.BaseUri },
+        //            { Owin.Impl.Owin.ItemKeys.SERVER_NAME, request.Server },
+        //            { Owin.Impl.Owin.ItemKeys.URI_SCHEME, request.Scheme },
+        //            { Owin.Impl.Owin.ItemKeys.REMOTE_ENDPOINT, request.ClientEndpoint },
+        //            { Owin.Impl.Owin.ItemKeys.VERSION, request.Version },
+        //            { Owin.Impl.Owin.ItemKeys.REQUEST, request },
+        //            { Owin.Impl.Owin.ItemKeys.REQUEST_BODY, requestBody },
+        //        };
+        //}
     }
 }

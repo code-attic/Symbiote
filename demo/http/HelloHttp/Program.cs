@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using Symbiote.Core;
 using Symbiote.Daemon;
 using Symbiote.Http;
-using Symbiote.Http.Impl;
-using Symbiote.Messaging;
-using Symbiote.StructureMapAdapter;
-using DaemonAssimilation = Symbiote.Daemon.DaemonAssimilation;
+using Symbiote.Http.Owin.Impl;
+using Symbiote.Net;
 
 namespace HelloHttp
 {
@@ -17,28 +15,78 @@ namespace HelloHttp
             Assimilate
                                 .Initialize()
                                 .Daemon(x => x.Arguments(args))
+                                .SocketServer( x => x.ListenOn( 80 ) )
                                 .HttpHost(x => x
                                                    //.ConfigureHttpListener( l => l.AddPort(8988))
-                                                   .ConfigureSocketServer( s => s.Port( 8988 ) )
+                                                   .ConfigureSocketServer( s => { } )
                                                    .ConfigureWebAppSettings( w => w.BasePath( @"C:\git\Symbiote\demo\http\HelloHttp" ) )
-                                                   .RegisterApplications( a => a.DefineApplication(r => r.RequestUri.Equals(@"/"), (rq, rsp, ex) => rsp.Build().AppendToBody( "You should fiddle around with the site. It's fun." ).Submit( HttpStatus.Ok )))
+                                                   .RegisterApplications( a => a.DefineApplication<IndexApp>(r => r.RequestUri == @"/" ) )
                                                    .RegisterApplications( a => a.DefineApplication<MessagingApplication>(r => r.RequestUri.StartsWith("/message")))
                                                    .RegisterApplications( a => a.DefineApplication<HelloHttpApp>(r => r.RequestUri.StartsWith("/hi")))
                                                    .RegisterApplications( a => a.DefineApplication<SayByeApp>(r => r.RequestUri.StartsWith("/bye")))
                                                    .RegisterApplications( a => a.DefineApplication<FileServer>(r => r.RequestUri.StartsWith("/file")))
                                                    .RegisterApplications( a => a.DefineApplication<PersonApp>( r => r.RequestUri.Equals(@"/haml") ) )
-                                                   .RegisterApplications( a => a.DefineApplication((r => true), (rq, rsp, ex) => rsp(Owin.HttpStatus.NO_CONTENT, new Dictionary<string, string>(), new string[]{})))
-                                ).RunDaemon();
+                                                   .RegisterApplications( a => a.DefineApplication<Empty>( r => true ) )
+                                )
+                                .RunDaemon();
         }
     }
 
-    public class PersonApp : IApplication
+    public class Empty : Application
     {
-        public void Process( IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException )
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
         {
-            respond
-                .Build()
+            return false;
+        }
+
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            Response
+                .Submit( HttpStatus.NoContent );
+        }
+    }
+
+    public class PersonApp : Application
+    {
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        {
+            return false;
+        }
+
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            Response
                 .RenderView( new Person() { Id = "1", Name = "Dude Man" }, "Detail" )
+                .Submit( HttpStatus.Ok );
+        }
+    }
+
+    public class IndexApp : Application
+    {
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        {
+            return false;
+        }
+
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            Response
+                .AppendToBody( "You should fiddle around with the site. It's fun." )
                 .Submit( HttpStatus.Ok );
         }
     }

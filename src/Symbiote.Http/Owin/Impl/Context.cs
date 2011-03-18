@@ -17,12 +17,13 @@ namespace Symbiote.Http.Owin.Impl
 {
     public class Context : IContext
     {
-        #region IContext Members
-
         public IRequest Request { get; set; }
         public IResponseAdapter Response { get; set; }
 
-        #endregion
+        public Context( IRequest request )
+        {
+            Request = request;
+        }
 
         public Context( IRequest request, IResponseAdapter response )
         {

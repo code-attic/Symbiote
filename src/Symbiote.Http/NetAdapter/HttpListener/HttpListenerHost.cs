@@ -72,11 +72,12 @@ namespace Symbiote.Http.NetAdapter.HttpListener
         {
             var context = ContextTransformer.From( listenerContext );
             var application = RequestRouter.GetApplicationFor( context.Request );
-            application.Process(
-                context.Request.Items,
-                context.Response.Respond,
-                OnApplicationException
-                );
+            
+            //application.Process(
+            //    context.Request.Items,
+            //    context.Response.Respond,
+            //    OnApplicationException
+            //    );
         }
 
         public void OnApplicationException( Exception exception )

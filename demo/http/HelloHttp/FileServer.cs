@@ -1,54 +1,27 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using Symbiote.Http;
-using Symbiote.Http.Impl;
+using Symbiote.Http.Owin.Impl;
 
 namespace HelloHttp
 {
-    public class FileServer : IApplication
+    public class FileServer : Application
     {
-        public void Process(IDictionary<string, object> requestItems, OwinResponse respond, Action<Exception> onException)
+        public override bool OnNext( ArraySegment<byte> data, Action continuation )
         {
+            return false;
+        }
 
-            //After helper
-            var request = requestItems.ExtractRequest();
-            respond
-                .Build()
-                .AppendFileContentToBody( request.RequestUri )
+        public override void OnError( Exception exception )
+        {
+            
+        }
+
+        public override void OnComplete()
+        {
+            Response
+                .AppendFileContentToBody( Request.RequestUri )
                 .Submit( HttpStatus.Ok );
 
-            //Before Helper
-
-            //var url = requestItems[Owin.ItemKeys.REQUEST_URI].ToString().Replace("/", @"\");
-            //var filePath = @"..\.." + url;
-
-            //if(!File.Exists(filePath))
-            //{
-            //    respond(
-            //        Owin.HttpStatus.NOTFOUND,
-            //        new Dictionary<string, IList<string>>()
-            //            {
-            //                {"content-type", new List<string>() {"text/html"}}
-            //            },
-            //        new[] { "DAMMIT JIM, I'm a file server, not a magician!" });
-            //}
-
-            //using(var memoryStream = new MemoryStream())
-            //using(var stream = new FileStream(filePath, FileMode.Open ))
-            //{
-            //    var bytes = new byte[stream.Length];
-            //    stream.Read(bytes, 0, (int) stream.Length);
-             
-            //    respond(
-            //        Owin.HttpStatus.OK,
-            //        new Dictionary<string, IList<string>>()
-            //            {
-            //                {"content-type", new List<string>() {"text/html"}}
-            //            },
-            //        new [] {bytes});
-            //}
         }
     }
 }
