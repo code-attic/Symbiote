@@ -80,11 +80,13 @@
     <Compile Include="NetAdapter\Socket\SocketServerAdapter.cs" />
     <Compile Include="OwinBody.cs" />
     <Compile Include="OwinResponse.cs" />
+    <Compile Include="Owin\Impl\ConsumableSegment.cs" />
+    <Compile Include="Owin\Impl\RequestParser.cs" />
+    <Compile Include="Owin\Impl\ParseRequestSegment.cs" />
     <Compile Include="Owin\Impl\RequestExtensions.cs" />
     <Compile Include="Owin\Impl\ResponseEncoder.cs" />
     <Compile Include="Owin\Impl\HeaderKeyEqualityComparer.cs" />
     <Compile Include="Owin\Impl\HttpConstants.cs" />
-    <Compile Include="Owin\Impl\RequestParser.cs" />
     <Compile Include="NetAdapter\Socket\SocketResponseAdapter.cs" />
     <Compile Include="Config\HttpServerConfiguration.cs" />
     <Compile Include="Config\HttpServerConfigurator.cs" />

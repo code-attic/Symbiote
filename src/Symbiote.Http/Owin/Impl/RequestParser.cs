@@ -3,120 +3,121 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Symbiote.Http.Owin.Impl 
+namespace Symbiote.Http.Owin.Impl
 {
     public class RequestParser
         : HttpConstants
     {
-        public static void PopulateRequest( Request request, ArraySegment<byte> arraySegment, Action<ArraySegment<byte>> onBody )
+        public static void PopulateRequest( Request request, ConsumableSegment<byte> arraySegment )
         {
-            var last = ParseLine( request, arraySegment );
-            last = ParseHeaders( request, arraySegment, last ) + 2;
-            if( last + arraySegment.Offset < arraySegment.Count )
-            {
-                var bodySegment = new ArraySegment<byte>( arraySegment.Array, last, arraySegment.Count - last );
-                onBody( bodySegment );
-            }
+            while( arraySegment.Count > 0 )
+                request.Parse( request, arraySegment );
         }
 
-        public static int ParseHeaders( Request request, ArraySegment<byte> buffer, int start )
+        public static void PassBodySegmentOn( Request request, ConsumableSegment<byte> buffer )
         {
-            var index = start-1;
+            if( request.OnBody != null )
+                request.OnBody( buffer );
+            buffer.Offset += buffer.Count;
+        }
+
+        public static void ParseHeaders( Request request, ConsumableSegment<byte> buffer )
+        {
             var comparer = new HeaderKeyEqualityComparer();
             request.Headers = new Dictionary<string, string>( comparer );
-            while ( ++index + 4 < buffer.Count && buffer.Array[index] != CR )
+            var length = buffer.Length;
+            
+            while ( buffer.Next() && buffer.Offset + 4 < length && ( buffer.Array[buffer.Offset] != CR && buffer.Array[buffer.Offset + 2] != CR ) )
             {
-                var headerName = ParseValue( buffer, COLON, index, ref index );
-                var value = ParseValue( buffer, CR, index, ref index ).Trim();
+                var headerName = ParseValue( buffer, COLON );
+                var value = ParseValue( buffer, CR ).Trim();
                 request.Headers.Add( headerName, value );
             }
 
             var host = "";
             if( request.Headers.TryGetValue( "Host", out host ) )
                 request.BaseUri = string.Format( "{0}://{1}", request.Scheme, host );
+            
+            while ( buffer.Next() && ( buffer.Array[buffer.Offset] == CR || buffer.Array[buffer.Offset] == LF ) )
+            {
+            }
 
-            return index++;
+            request.HeadersComplete = true;
+            request.Parse = PassBodySegmentOn;
         }
 
-        public static int ParseLine( Request request, ArraySegment<byte> buffer )
+        public static void ParseLine( Request request, ConsumableSegment<byte> buffer )
         {
-            var lastRead = 0;
-            lastRead = GetMethod( request, buffer, lastRead );
-            lastRead = GetUri( request, buffer, lastRead );
-            lastRead = GetVersion( request, buffer, lastRead );
-            return lastRead;
+            GetMethod( request, buffer );
+            GetUri( request, buffer );
+            GetVersion( request, buffer );
+            request.Parse = ParseHeaders;
         }
 
-        public static string ParseValue( ArraySegment<byte> buffer, byte stopCharacter, int start, ref int index )
+        public static string ParseValue( ConsumableSegment<byte> buffer, byte stopCharacter )
         {
             var length = 1;
-            while ( ++index < buffer.Count && buffer.Array[ index + buffer.Offset ] != stopCharacter )
+            var start = buffer.Offset;
+            while ( buffer.Next() && buffer.Array[ buffer.Offset ] != stopCharacter )
             {
                 length++;
             }
-            index++;
+            buffer.Offset++;
             return Encoding.UTF8.GetString( buffer.Array, start, length );
         }
 
-        public static string ParseBaseUri( ArraySegment<byte> buffer, int start, ref int index )
+        public static string ParseBaseUri( ConsumableSegment<byte> buffer )
         {
             var length = 1;
             var count = 0;
-            while 
-            ( 
-                ++index < buffer.Count && 
-                ( ( count += buffer.Array[ index + buffer.Offset ] == SLASH ? 1 : 0 ) < 3 )
-            )
+            var start = buffer.Offset;
+            while( buffer.Next() && 
+                ( ( count += buffer.Array[ buffer.Offset ] == SLASH ? 1 : 0 ) < 3 ) )
             {
                 length++;
             }
             return Encoding.UTF8.GetString( buffer.Array, start, length );
         }
 
-        public static int GetMethod( Request request, ArraySegment<byte> buffer, int start )
+        public static void GetMethod( Request request, ConsumableSegment<byte> buffer )
         {
-            var index = start;
-            request.Method = ParseValue( buffer, SPACE, start, ref index );
-            return index;
+            request.Method = ParseValue( buffer, SPACE );
         }
 
-        public static int GetUri( Request request, ArraySegment<byte> buffer, int start )
+        public static void GetUri( Request request, ConsumableSegment<byte> buffer )
         {
-            return buffer.Array[start + buffer.Offset] == SLASH
-                       ? GetRelativeUri( request, buffer, start )
-                       : GetAbsoluteUri( request, buffer, start );
+            if( buffer.Array[ buffer.Offset ] == SLASH )
+                GetRelativeUri( request, buffer );
+            else
+                GetAbsoluteUri( request, buffer );
         }
 
-        public static int GetRelativeUri( Request request, ArraySegment<byte> buffer, int start )
+        public static void GetRelativeUri( Request request, ConsumableSegment<byte> buffer )
         {
-            var index = start;
-            var pathAndQuery = ParseValue( buffer, SPACE, start, ref index );
+            var pathAndQuery = ParseValue( buffer, SPACE );
             ParsePathAndQuery( request, pathAndQuery );
-            return index;
         }
 
-        public static int GetAbsoluteUri( Request request, ArraySegment<byte> buffer, int start )
+        public static void GetAbsoluteUri( Request request, ConsumableSegment<byte> buffer )
         {
-            var index = start;
-            request.BaseUri = ParseBaseUri( buffer, start, ref index );
-            var pathAndQuery = ParseValue( buffer, SPACE, index, ref index );
+            request.BaseUri = ParseBaseUri( buffer );
+            var pathAndQuery = ParseValue( buffer, SPACE );
             ParsePathAndQuery( request, pathAndQuery );
-
-            return index;
         }
 
         public static void ParsePathAndQuery( Request request, string pathAndQuery )
         {
             var pathLength = 1;
             var index = 0;
-            while( ++index < pathAndQuery.Length && pathAndQuery[index] != QMARK )
+            var length = pathAndQuery.Length;
+            while( ++index < length && pathAndQuery[index] != QMARK )
             {
                 pathLength++;
             }
             request.RequestUri = pathAndQuery.Substring( 0, pathLength );
             request.PathSegments = GetSegments( request ).ToList();
             index++;
-            var queryString = index > pathAndQuery.Length ? "" : pathAndQuery.Substring( index );
+            var queryString = index > length ? "" : pathAndQuery.Substring( index );
             request.Parameters = GetParameters( queryString );
         }
 
@@ -129,15 +130,16 @@ namespace Symbiote.Http.Owin.Impl
             var length = 0;
             var start = 0;
             var parameters = new Dictionary<string, string>();
-            while( index < query.Length )
+            var queryLength = query.Length;
+            while( index < queryLength )
             {
-                while ( index < query.Length && query[index] != '=' )
+                while ( index < queryLength && query[index] != '=' )
                 {
                     length++;
                     index++;
                 }
                 
-                if( index >= query.Length)
+                if( index >= queryLength)
                     break;
 
                 var key = query.Substring( start, length );
@@ -145,7 +147,7 @@ namespace Symbiote.Http.Owin.Impl
                 index++;
                 start = index;
 
-                while ( index < query.Length && query[index] != '&' && query[index] != CR )
+                while ( index < queryLength && query[index] != '&' && query[index] != CR )
                 {   
                     length++;
                     index++;
@@ -165,16 +167,17 @@ namespace Symbiote.Http.Owin.Impl
         public static IEnumerable<string> GetSegments( Request request )
         {
             string requestUri = request.RequestUri;
-            if ( requestUri.Length < 2 )
+            var uriLength = requestUri.Length;
+            if ( uriLength < 2 )
                 yield break;
 
             var index = 1;
             var length = 0;
             var start = index;
 
-            while ( index < requestUri.Length )
+            while ( index < uriLength )
             {
-                while ( index < requestUri.Length && requestUri[index] != SLASH )
+                while ( index < uriLength && requestUri[index] != SLASH )
                 {
                     length++;
                     index++;
@@ -188,31 +191,10 @@ namespace Symbiote.Http.Owin.Impl
             }
         }
 
-        public static int GetVersion( Request request, ArraySegment<byte> buffer, int start )
+        public static void GetVersion( Request request, ConsumableSegment<byte> buffer )
         {
-            var index = start;
-            request.Scheme = ParseValue( buffer, SLASH, start, ref index );
-            request.Version = ParseValue( buffer, CR, index, ref index );
-            return index + 1;
+            request.Scheme = ParseValue( buffer, SLASH );
+            request.Version = ParseValue( buffer, CR );
         }
-
-        //public static IDictionary<string, object> GetOwinItems( IRequest request )
-        //{
-        //    var requestBody = new Action<Action<ArraySegment<byte>>, Action<Exception>>( request.ReadNext );
-
-        //    return new Dictionary<string, object>()
-        //        {
-        //            { Owin.Impl.Owin.ItemKeys.REQUEST_METHOD, request.Method },   
-        //            { Owin.Impl.Owin.ItemKeys.REQUEST_URI, request.RequestUri },
-        //            { Owin.Impl.Owin.ItemKeys.REQUEST_HEADERS, request.Headers },
-        //            { Owin.Impl.Owin.ItemKeys.BASE_URI, request.BaseUri },
-        //            { Owin.Impl.Owin.ItemKeys.SERVER_NAME, request.Server },
-        //            { Owin.Impl.Owin.ItemKeys.URI_SCHEME, request.Scheme },
-        //            { Owin.Impl.Owin.ItemKeys.REMOTE_ENDPOINT, request.ClientEndpoint },
-        //            { Owin.Impl.Owin.ItemKeys.VERSION, request.Version },
-        //            { Owin.Impl.Owin.ItemKeys.REQUEST, request },
-        //            { Owin.Impl.Owin.ItemKeys.REQUEST_BODY, requestBody },
-        //        };
-        //}
     }
 }

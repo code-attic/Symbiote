@@ -14,35 +14,37 @@ namespace Symbiote.Net
         public bool Disposed { get; set; }    
         public string Id { get; protected set; }
         public Action<ArraySegment<byte>> OnBytes { get; set; }
+        public IAsyncResult ReadHandle { get; set; }
         public Stream SocketStream { get; set; }
         public bool WaitingOnBytes { get; set; }
         public bool WaitingOnWrite { get; set; }
         public Action WriteCompleted { get; set; }
-        public SemaphoreSlim ReadLock { get; set; }
         public SemaphoreSlim WriteLock { get; set; }
 
         public void Close()
         {
             if(!Disposed)
             {
-                Disposed = true;
-                ReadLock.Wait();
                 WriteLock.Wait();
+                Disposed = true;
                 try
                 {
-                    if( Connection.Connected )
-                    {
-                        SocketStream.Flush();
-                        Connection.Shutdown( SocketShutdown.Both );
-                    }
-                    Connection.Close();
+                    if( SocketStream != null )
+                        SocketStream.Close();
+
+                    if( Connection != null )
+                        Connection.Close();
+
+                    if( ReadHandle != null )
+                        ReadHandle.AsyncWaitHandle.Dispose();
+
                     Bytes = new byte[0];
                 }
                 finally
                 {
-                    Connection.Close();
+                    SocketStream = null;
                     Connection = null;
-                    ReadLock.Dispose();
+                    WriteLock.Release();
                     WriteLock.Dispose();
                 }
             }
@@ -52,7 +54,6 @@ namespace Symbiote.Net
         {
             WaitingOnBytes = false;
             var read = SocketStream.EndRead( result );
-            ReadLock.Release();
             OnBytes( new ArraySegment<byte>( Bytes, 0, read ));
         }
 
@@ -66,18 +67,17 @@ namespace Symbiote.Net
 
         public bool Read( Action<ArraySegment<byte>> onBytes )
         {
-            if( !WaitingOnBytes && Connection.Available > 0 )
+            if( !WaitingOnBytes )
             {
-                ReadLock.Wait();
+                WaitingOnBytes = true;
                 try
                 {
                     OnBytes = onBytes;
-                    SocketStream.BeginRead( Bytes, 0, Configuration.BufferSize, OnRead, null );
+                    ReadHandle = SocketStream.BeginRead( Bytes, 0, Configuration.BufferSize, OnRead, null );
                     return true;
                 }
                 catch( Exception ex )
                 {
-                    ReadLock.Release();
                 }
             }
             return false;
@@ -85,22 +85,20 @@ namespace Symbiote.Net
 
         public bool Write( ArraySegment<byte> bytes, Action onComplete )
         {
-            if( !WaitingOnWrite )
+            WriteLock.Wait();
+            try
             {
-                WriteLock.Wait();
-                try
-                {
-                    WriteCompleted = onComplete;
-                    SocketStream.BeginWrite( bytes.Array, bytes.Offset, bytes.Count, OnWrite, null );
-                }
-                catch ( IOException ioex )
-                {
-                    WriteLock.Release();
-                }
-                catch ( Exception ex )
-                {
-                    WriteLock.Release();
-                }
+                WriteCompleted = onComplete;
+                SocketStream.BeginWrite( bytes.Array, bytes.Offset, bytes.Count, OnWrite, null );
+                return true;
+            }
+            catch ( IOException ioex )
+            {
+                WriteLock.Release();
+            }
+            catch ( Exception ex )
+            {
+                WriteLock.Release();
             }
             return false;
         }
@@ -111,9 +109,8 @@ namespace Symbiote.Net
             Connection = connection;
             Bytes = new byte[configuration.BufferSize];
             SocketStream = new NetworkStream( connection );
-            ReadLock = new SemaphoreSlim( 1 );
-            WriteLock = new SemaphoreSlim( 1 );
             //Id = Guid.NewGuid().ToString();
+            WriteLock = new SemaphoreSlim( 1 );
         }
 
         public void Dispose()

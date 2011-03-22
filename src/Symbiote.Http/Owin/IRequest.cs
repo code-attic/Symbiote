@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Symbiote.Core.Futures;
+using Symbiote.Http.Owin.Impl;
 
 namespace Symbiote.Http.Owin
 {
@@ -31,10 +32,14 @@ namespace Symbiote.Http.Owin
         string Scheme { get; }
         string Server { get; }
         string Version { get; }
+        bool Complete { get; }
+        bool HeadersComplete { get; }
 
         IDictionary<string, string> Parameters { get; }
         IDictionary<string, string> Headers { get; }
         IDictionary<string, object> Items { get; }
         OwinBody Body { get; set; }
+        ParseRequestSegment Parse { get; set; }
+        Action<ArraySegment<byte>> OnBody { get; set; }
     }
 }

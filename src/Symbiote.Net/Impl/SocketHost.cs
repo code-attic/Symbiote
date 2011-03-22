@@ -29,9 +29,7 @@ namespace Symbiote.Net
 
         public void WaitForConnection()
         {
-            Future
-                .Of( () => Listener.BeginAccept( OnClient, null ) )
-                .Start();
+            Listener.BeginAccept( OnClient, null );
         }
 
         private void OnClient( IAsyncResult result )

@@ -15,7 +15,7 @@ namespace HelloHttp
             Assimilate
                                 .Initialize()
                                 .Daemon(x => x.Arguments(args))
-                                .SocketServer( x => x.ListenOn( 80 ) )
+                                .SocketServer( x => x.ListenOn( 8988 ) )
                                 .HttpHost(x => x
                                                    //.ConfigureHttpListener( l => l.AddPort(8988))
                                                    .ConfigureSocketServer( s => { } )

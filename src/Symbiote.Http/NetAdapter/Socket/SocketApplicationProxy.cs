@@ -3,6 +3,7 @@ using Symbiote.Http.Config;
 using Symbiote.Http.Owin;
 using Symbiote.Http.Owin.Impl;
 using Symbiote.Net;
+using System.Linq;
 
 namespace Symbiote.Http.NetAdapter.Socket
 {
@@ -25,13 +26,22 @@ namespace Symbiote.Http.NetAdapter.Socket
 
         private void OnRequest( ArraySegment<byte> segment )
         {
+            ProxyRequest.OnBody = Reader.CacheBytes;
             var bytes = new byte[ segment.Count ];
             Buffer.BlockCopy( segment.Array, segment.Offset, bytes, 0, segment.Count );
-            RequestParser.PopulateRequest( ProxyRequest, segment, Reader.CacheBytes );
+            RequestParser.PopulateRequest( ProxyRequest, segment );
             ProxyRequest.Body = Reader.Setup;
             var application = Router.GetApplicationFor( ProxyRequest );
             application.Process( ProxyRequest, Response, ApplicationException );
-            Reader.ReadNext();
+
+            if( new [] { "GET", "HEAD", "OPTIONS", "DELETE" }.Any( x => x.Equals( ProxyRequest.Method ) ) && ProxyRequest.HeadersComplete )
+            {
+                application.OnComplete();
+            }
+            else
+            {
+                Reader.ReadNext();   
+            }
         }
 
         public void Start( ISocketAdapter connection, Action<ISocketAdapter> onClose )

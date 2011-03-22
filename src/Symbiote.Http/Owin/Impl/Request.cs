@@ -24,6 +24,8 @@ namespace Symbiote.Http.Owin.Impl
     {
         public bool Initialized { get; set; }
         public IPEndPoint ClientEndpoint { get; set; }
+        public bool Complete { get; set; }
+        public bool HeadersComplete { get; set; }
         public string Method { get; set; }
         public string Scheme { get; set; }
         public string Server { get; set; }
@@ -37,12 +39,21 @@ namespace Symbiote.Http.Owin.Impl
         public Action<Exception> OnException { get; set; }
         public OwinBody Body { get; set; }
         public IBuildResponse Response { get; set; }
+        public ParseRequestSegment Parse { get; set; }
+        public Action<ArraySegment<byte>> OnBody { get; set; }
 
         public Request()
         {
             Parameters = new Dictionary<string, string>();
             Headers = new Dictionary<string, string>();
             Items = new Dictionary<string, object>();
+            Parse = RequestParser.ParseLine;
+        }
+
+        public Request( Action<ArraySegment<byte>> onBody )
+            : this()
+        {
+            OnBody = onBody;
         }
     }
 }
