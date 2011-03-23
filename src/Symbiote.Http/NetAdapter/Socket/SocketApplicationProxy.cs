@@ -31,16 +31,19 @@ namespace Symbiote.Http.NetAdapter.Socket
             Buffer.BlockCopy( segment.Array, segment.Offset, bytes, 0, segment.Count );
             RequestParser.PopulateRequest( ProxyRequest, segment );
             ProxyRequest.Body = Reader.Setup;
-            var application = Router.GetApplicationFor( ProxyRequest );
-            application.Process( ProxyRequest, Response, ApplicationException );
+            if( ProxyRequest.Valid )
+            {
+                var application = Router.GetApplicationFor( ProxyRequest );
+                application.Process( ProxyRequest, Response, ApplicationException );
 
-            if( new [] { "GET", "HEAD", "OPTIONS", "DELETE" }.Any( x => x.Equals( ProxyRequest.Method ) ) && ProxyRequest.HeadersComplete )
-            {
-                application.OnComplete();
-            }
-            else
-            {
-                Reader.ReadNext();   
+                if( new [] { "GET", "HEAD", "OPTIONS", "DELETE" }.Any( x => x.Equals( ProxyRequest.Method ) ) && ProxyRequest.HeadersComplete )
+                {
+                    application.OnComplete();
+                }
+                else
+                {
+                    Reader.ReadNext();   
+                }
             }
         }
 

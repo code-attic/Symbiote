@@ -32,7 +32,7 @@ namespace Symbiote.Http.Owin
         string Scheme { get; }
         string Server { get; }
         string Version { get; }
-        bool Complete { get; }
+        bool Valid { get; }
         bool HeadersComplete { get; }
 
         IDictionary<string, string> Parameters { get; }

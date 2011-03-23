@@ -17,7 +17,7 @@ namespace Symbiote.Net
         public SocketConfiguration()
         {
             Port = 8998;
-            BufferSize = 4 * 1024;
+            BufferSize = 1024;
         }
     }
 }

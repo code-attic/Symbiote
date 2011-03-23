@@ -24,7 +24,6 @@ namespace Symbiote.Http.Owin.Impl
     {
         public bool Initialized { get; set; }
         public IPEndPoint ClientEndpoint { get; set; }
-        public bool Complete { get; set; }
         public bool HeadersComplete { get; set; }
         public string Method { get; set; }
         public string Scheme { get; set; }
@@ -41,6 +40,16 @@ namespace Symbiote.Http.Owin.Impl
         public IBuildResponse Response { get; set; }
         public ParseRequestSegment Parse { get; set; }
         public Action<ArraySegment<byte>> OnBody { get; set; }
+
+        public bool Valid
+        {
+            get
+            {
+                return !string.IsNullOrEmpty( Method ) && 
+                       !string.IsNullOrEmpty( RequestUri ) &&
+                       !string.IsNullOrEmpty( BaseUri );
+            }
+        }
 
         public Request()
         {
