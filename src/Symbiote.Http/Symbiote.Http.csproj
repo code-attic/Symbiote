@@ -71,8 +71,8 @@
     <Compile Include="NetAdapter\Channel\HttpChannelFactory.cs" />
     <Compile Include="NetAdapter\Channel\HttpEnvelope.cs" />
     <Compile Include="NetAdapter\Channel\IChannelAdapter.cs" />
-    <Compile Include="NetAdapter\Socket\IOwinObservable.cs" />
-    <Compile Include="NetAdapter\Socket\IOwinObserver.cs" />
+    <Compile Include="Owin\IOwinObservable.cs" />
+    <Compile Include="Owin\IOwinObserver.cs" />
     <Compile Include="IServerAdapter.cs" />
     <Compile Include="NetAdapter\Socket\RequestReader.cs" />
     <Compile Include="NetAdapter\Socket\ResponseWriter.cs" />
@@ -87,7 +87,6 @@
     <Compile Include="Owin\Impl\ResponseEncoder.cs" />
     <Compile Include="Owin\Impl\HeaderKeyEqualityComparer.cs" />
     <Compile Include="Owin\Impl\HttpConstants.cs" />
-    <Compile Include="NetAdapter\Socket\SocketResponseAdapter.cs" />
     <Compile Include="Config\HttpServerConfiguration.cs" />
     <Compile Include="Config\HttpServerConfigurator.cs" />
     <Compile Include="ViewAdapter\IView.cs" />
@@ -116,10 +115,6 @@
     <Compile Include="Owin\Impl\IContextTransformer.cs" />
     <Compile Include="Owin\Impl\IResponseProvider.cs" />
     <Compile Include="Owin\Impl\Request.cs" />
-    <Compile Include="NetAdapter\HttpListener\HttpContextTransform.cs" />
-    <Compile Include="NetAdapter\HttpListener\HttpListenerHost.cs" />
-    <Compile Include="NetAdapter\HttpListener\HttpResponseAdapter.cs" />
-    <Compile Include="NetAdapter\HttpListener\HttpRequestTransform.cs" />
     <Compile Include="Owin\Impl\ApplicationRouter.cs" />
     <Compile Include="Owin\Impl\HttpStatus.cs" />
     <Compile Include="Owin\Impl\Owin.cs" />

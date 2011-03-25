@@ -12,7 +12,7 @@ namespace Symbiote.Http.NetAdapter.Socket
         public IRouteRequest Router { get; set; }
         public Action<ISocketAdapter> OnClose { get; set; }
         public ISocketAdapter Connection { get; set; }
-        public Request ProxyRequest { get; set; }
+        public Request RequestContext { get; set; }
         public RequestReader Reader { get; set; }
         public ResponseHelper Response { get; set; }
         public ResponseWriter Writer { get; set; }
@@ -26,23 +26,24 @@ namespace Symbiote.Http.NetAdapter.Socket
 
         private void OnRequest( ArraySegment<byte> segment )
         {
-            ProxyRequest.OnBody = Reader.CacheBytes;
             var bytes = new byte[ segment.Count ];
-            Buffer.BlockCopy( segment.Array, segment.Offset, bytes, 0, segment.Count );
-            RequestParser.PopulateRequest( ProxyRequest, segment );
-            ProxyRequest.Body = Reader.Setup;
-            if( ProxyRequest.Valid )
+            if ( segment.Count > 0 )
             {
-                var application = Router.GetApplicationFor( ProxyRequest );
-                application.Process( ProxyRequest, Response, ApplicationException );
+                Buffer.BlockCopy( segment.Array, segment.Offset, bytes, 0, segment.Count );
+                RequestParser.PopulateRequest( RequestContext, segment );
+                if( RequestContext.Valid )
+                {
+                    var application = Router.GetApplicationFor( RequestContext );
+                    application.Process( RequestContext, Response, ApplicationException );
 
-                if( new [] { "GET", "HEAD", "OPTIONS", "DELETE" }.Any( x => x.Equals( ProxyRequest.Method ) ) && ProxyRequest.HeadersComplete )
-                {
-                    application.OnComplete();
-                }
-                else
-                {
-                    Reader.ReadNext();   
+                    if( !RequestContext.CanHaveBody && RequestContext.HeadersComplete )
+                    {
+                        application.OnComplete();
+                    }
+                    else
+                    {   
+                        Reader.ReadNext();
+                    }
                 }
             }
         }
@@ -53,6 +54,8 @@ namespace Symbiote.Http.NetAdapter.Socket
             Reader = new RequestReader( connection, Close );
             Writer = new ResponseWriter( connection, Close );
             Response.Setup( Writer );
+            RequestContext.Body = Reader.Setup;
+            RequestContext.OnBody = Reader.CacheBytes;
             OnClose = onClose;
             Connection = connection;
             Connection.Read( OnRequest );
@@ -67,7 +70,7 @@ namespace Symbiote.Http.NetAdapter.Socket
         {
             WebConfiguration = webConfiguration;
             Router = router;
-            ProxyRequest = new Request();
+            RequestContext = new Request();
         }
     }
 }

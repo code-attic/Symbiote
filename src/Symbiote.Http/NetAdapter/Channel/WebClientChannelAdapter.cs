@@ -68,9 +68,6 @@ namespace Symbiote.Http.NetAdapter.Channel
 
         #endregion
 
-        /// <summary>
-        /// TODO: Implement this with asynchronous methods instead of blocking calls
-        /// </summary>
         public void SendEnvelope<TMessage, TReply>( HttpEnvelope<TMessage> envelope, Action<TReply> callback )
         {
             string requestUriString = Definition.GetUriForEnvelope( envelope );

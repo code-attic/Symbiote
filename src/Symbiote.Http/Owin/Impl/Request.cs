@@ -15,6 +15,7 @@
 // */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 
 namespace Symbiote.Http.Owin.Impl
@@ -22,6 +23,7 @@ namespace Symbiote.Http.Owin.Impl
     public class Request
         : IRequest
     {
+        private readonly string[] METHODS_WITH_BODIES = new [] { "POST", "PUT", "TRACE", "PATCH" };
         public bool Initialized { get; set; }
         public IPEndPoint ClientEndpoint { get; set; }
         public bool HeadersComplete { get; set; }
@@ -40,6 +42,14 @@ namespace Symbiote.Http.Owin.Impl
         public IBuildResponse Response { get; set; }
         public ParseRequestSegment Parse { get; set; }
         public Action<ArraySegment<byte>> OnBody { get; set; }
+
+        public bool CanHaveBody
+        {
+            get 
+            { 
+                return METHODS_WITH_BODIES.Any( x => string.Compare( x, Method ?? "", true ) == 0 );
+            }
+        }
 
         public bool Valid
         {
