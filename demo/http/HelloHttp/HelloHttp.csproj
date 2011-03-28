@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,12 +37,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NHaml">
-      <HintPath>..\..\..\bin\NHaml.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Net">
-      <HintPath>..\..\..\bin\Symbiote.Net.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -71,17 +65,21 @@
     <Reference Include="System.CoreEx, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\dev\System.CoreEx.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Interactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\dev\System.Interactive.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive, Version=1.0.2838.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\dev\System.Reactive.dll</HintPath>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="NHaml, Version=1.6.0.0, Culture=neutral, PublicKeyToken=d603208bac452365">
+      <HintPath>..\..\..\bin\NHaml.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\Symbiote.Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

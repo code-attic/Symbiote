@@ -15,7 +15,7 @@ namespace HelloHttp
             Assimilate
                                 .Initialize()
                                 .Daemon(x => x.Arguments(args))
-                                .SocketServer( x => x.ListenOn( 8988 ) )
+                                .SocketServer( x => x.ListenOn( 8998 ) )
                                 .HttpHost(x => x
                                                    //.ConfigureHttpListener( l => l.AddPort(8988))
                                                    .ConfigureSocketServer( s => { } )
@@ -34,7 +34,7 @@ namespace HelloHttp
 
     public class Empty : Application
     {
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        public override bool HandleRequestSegment( ArraySegment<byte> data, Action continuation )
         {
             return false;
         }
@@ -44,7 +44,7 @@ namespace HelloHttp
             
         }
 
-        public override void OnComplete()
+        public override void CompleteResponse()
         {
             Response
                 .Submit( HttpStatus.NoContent );
@@ -53,7 +53,7 @@ namespace HelloHttp
 
     public class PersonApp : Application
     {
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        public override bool HandleRequestSegment( ArraySegment<byte> data, Action continuation )
         {
             return false;
         }
@@ -63,7 +63,7 @@ namespace HelloHttp
             
         }
 
-        public override void OnComplete()
+        public override void CompleteResponse()
         {
             Response
                 .RenderView( new Person() { Id = "1", Name = "Dude Man" }, "Detail" )
@@ -73,7 +73,7 @@ namespace HelloHttp
 
     public class IndexApp : Application
     {
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        public override bool HandleRequestSegment( ArraySegment<byte> data, Action continuation )
         {
             return false;
         }
@@ -83,7 +83,7 @@ namespace HelloHttp
             
         }
 
-        public override void OnComplete()
+        public override void CompleteResponse()
         {
             Response
                 .AppendToBody( "You should fiddle around with the site. It's fun." )

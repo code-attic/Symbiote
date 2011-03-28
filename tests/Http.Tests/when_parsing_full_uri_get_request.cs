@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using Machine.Specifications;
+using Symbiote.Http.Owin;
 using Symbiote.Http.Owin.Impl;
 
 namespace Http.Tests

@@ -1,12 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Development" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/Symbiote.Messaging/Impl/Dispatch/DispatcherKeyAccessor.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/Symbiote.Net/Impl/SocketHost.cs">
     <Files>
       <File FileName="../../src/Symbiote.Messaging/Impl/Dispatch/DispatcherKeyAccessor.cs" Line="28" Column="1" />
+      <File FileName="../../src/Symbiote.Net/Impl/SocketHost.cs" Line="50" Column="14" />
+      <File FileName="../../src/Symbiote.Net/Impl/SocketAdapter.cs" Line="31" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

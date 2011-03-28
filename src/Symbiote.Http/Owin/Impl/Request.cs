@@ -74,5 +74,13 @@ namespace Symbiote.Http.Owin.Impl
         {
             OnBody = onBody;
         }
+		
+		public void Dispose()
+		{
+			OnException = null;
+			Body = null;
+			Response = null;
+			OnBody = null;
+		}
     }
 }

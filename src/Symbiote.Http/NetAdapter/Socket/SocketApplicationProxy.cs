@@ -8,6 +8,7 @@ using System.Linq;
 namespace Symbiote.Http.NetAdapter.Socket
 {
     public class SocketApplicationProxy
+		: IDisposable
     {
         public IRouteRequest Router { get; set; }
         public Action<ISocketAdapter> OnClose { get; set; }
@@ -17,6 +18,7 @@ namespace Symbiote.Http.NetAdapter.Socket
         public ResponseHelper Response { get; set; }
         public ResponseWriter Writer { get; set; }
         public HttpWebConfiguration WebConfiguration { get; set; }
+		public bool Disposed { get; protected set; }
 
         public void Close()
         {
@@ -72,5 +74,15 @@ namespace Symbiote.Http.NetAdapter.Socket
             Router = router;
             RequestContext = new Request();
         }
+		public void Dispose ()
+		{
+			Close();
+		}
+
+		~SocketApplicationProxy()
+		{
+			if( !Disposed )
+				Dispose();
+		}
     }
 }

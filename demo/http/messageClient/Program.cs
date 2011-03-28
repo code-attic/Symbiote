@@ -5,6 +5,7 @@ using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.Daemon;
 using Symbiote.Http;
+using Symbiote.Net;
 using Symbiote.StructureMapAdapter;
 
 namespace messageClient
@@ -15,7 +16,8 @@ namespace messageClient
         {
             Assimilate
                 .Initialize()
-                .HttpHost( x => x.ConfigureHttpListener( s => {} ) )
+				.SocketServer( s => s.ListenOn( 8998 ) )
+				.HttpHost( h => h.ConfigureSocketServer( s => { } ) )
                 .Daemon( x => x.Arguments( args ) )
                 .RunDaemon();
         }

@@ -15,7 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
-using Symbiote.Http.NetAdapter.HttpListener;
+//using Symbiote.Http.NetAdapter.HttpListener;
 using Symbiote.Http.NetAdapter.TcpListener;
 using Symbiote.Http.Owin;
 
@@ -23,7 +23,7 @@ namespace Symbiote.Http.Config
 {
     public class HttpConfigurator
     {
-        public HttpListenerConfigurator ListenerConfigurator { get; set; }
+        //public HttpListenerConfigurator ListenerConfigurator { get; set; }
         public HttpServerConfigurator SocketConfigurator { get; set; }
         public IRegisterApplication RegisterApplication { get; set; }
         public HttpWebConfigurator WebConfigurator {get; set; }
@@ -40,16 +40,16 @@ namespace Symbiote.Http.Config
             return this;
         }
 
-        public HttpConfigurator ConfigureHttpListener( Action<HttpListenerConfigurator> configurator )
-        {
-            configurator( ListenerConfigurator );
-            Assimilate.Dependencies( x => 
-                { 
-                    x.For<IHost>().Use<HttpListenerHost>().AsSingleton();
-                    x.For<HttpListenerConfiguration>().Use( ListenerConfigurator.GetConfiguration() );
-                } );
-            return this;
-        }
+        //public HttpConfigurator ConfigureHttpListener( Action<HttpListenerConfigurator> configurator )
+        //{
+        //    configurator( ListenerConfigurator );
+        //    Assimilate.Dependencies( x => 
+        //        { 
+        //            x.For<IHost>().Use<HttpListenerHost>().AsSingleton();
+        //            x.For<HttpListenerConfiguration>().Use( ListenerConfigurator.GetConfiguration() );
+        //        } );
+        //    return this;
+        //}
 
         public HttpConfigurator ConfigureSocketServer( Action<HttpServerConfigurator> configurator )
         {
@@ -62,9 +62,9 @@ namespace Symbiote.Http.Config
             return this;
         }
 
-        public HttpConfigurator( HttpListenerConfigurator listenerConfigurator, IRegisterApplication registerApplication )
+        public HttpConfigurator( IRegisterApplication registerApplication )
         {
-            ListenerConfigurator = listenerConfigurator;
+            //ListenerConfigurator = listenerConfigurator;
             RegisterApplication = registerApplication;
             SocketConfigurator = new HttpServerConfigurator();
             WebConfigurator = new HttpWebConfigurator();

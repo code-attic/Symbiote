@@ -19,7 +19,8 @@ using Symbiote.Http.Owin.Impl;
 namespace Symbiote.Http
 {
     public interface IBuildResponse
-    {
+		: IDisposable
+	{
         IBuildResponse AppendToBody( byte[] bytes );
         IBuildResponse AppendToBody( string text );
         IBuildResponse AppendFileContentToBody( string path );

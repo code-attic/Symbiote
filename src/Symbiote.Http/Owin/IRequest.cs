@@ -23,6 +23,7 @@ using Symbiote.Http.Owin.Impl;
 namespace Symbiote.Http.Owin
 {
     public interface IRequest
+		: IDisposable
     {
         IPEndPoint ClientEndpoint { get; }
         string Method { get; }

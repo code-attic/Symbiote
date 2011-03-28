@@ -30,19 +30,18 @@ namespace Symbiote.Http
         : Application
     {
         public IDispatcher Dispatcher { get; set; }
+		
+		public override bool HandleRequestSegment (ArraySegment<byte> data, Action continuation)
+		{
+			return false;
+		}
 
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
-        {
-            
-            return false;
-        }
+		public override void CompleteResponse ()
+		{
+			
+		}
 
         public override void OnError( Exception exception )
-        {
-            
-        }
-
-        public override void OnComplete()
         {
             
         }

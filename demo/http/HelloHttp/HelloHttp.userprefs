@@ -1,13 +1,25 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" ActiveRuntime="Mono 2.10" ctype="Workspace" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="FileServer.cs" ctype="Workbench">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../messageClient/Program.cs">
     <Files>
-      <File FileName="FileServer.cs" Line="20" Column="42" />
-      <File FileName="Program.cs" Line="28" Column="65" />
+      <File FileName="../../../src/Symbiote.Net/Impl/SocketAdapter.cs" Line="1" Column="1" />
+      <File FileName="FileServer.cs" Line="28" Column="1" />
+      <File FileName="Program.cs" Line="18" Column="73" />
+      <File FileName="../messageClient/Program.cs" Line="8" Column="16" />
     </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State expanded="True">
+          <Node name="HelloHttp" expanded="True" selected="True">
+            <Node name="References" expanded="True" />
+          </Node>
+          <Node name="messageClient" expanded="True" />
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches ctype="PinnedWatchStore" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

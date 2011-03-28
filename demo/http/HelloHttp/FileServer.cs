@@ -6,7 +6,7 @@ namespace HelloHttp
 {
     public class FileServer : Application
     {
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
+        public override bool HandleRequestSegment( ArraySegment<byte> data, Action continuation )
         {
             return false;
         }
@@ -16,7 +16,7 @@ namespace HelloHttp
             
         }
 
-        public override void OnComplete()
+        public override void CompleteResponse()
         {
             Response
                 .AppendFileContentToBody( Request.RequestUri )

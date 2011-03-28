@@ -24,6 +24,7 @@ using Symbiote.Core.Utility;
 using Symbiote.Http.Config;
 using Symbiote.Http.NetAdapter.Socket;
 using Symbiote.Http.ViewAdapter;
+using System.Threading;
 
 namespace Symbiote.Http.Owin.Impl
 {
@@ -53,10 +54,12 @@ namespace Symbiote.Http.Owin.Impl
         public List<object> ResponseChunks { get; set; }
         public Func<string, byte[]> Encoder { get; set; }
         public IDefineHeaders HeaderDefinitions { get; set; }
+		public bool Disposed { get; protected set; }
+		public ManualResetEventSlim PendingWrite { get; protected set; }
 
         public IBuildResponse AppendToBody( byte[] bytes )
         {
-            ResponseChunks.Add( bytes );
+			ResponseChunks.Add( bytes );
             return this;
         }
 
@@ -169,7 +172,7 @@ namespace Symbiote.Http.Owin.Impl
 
         public void Stop()
         {
-
+			Dispose();
         }
 
         public void Submit( string status )
@@ -191,13 +194,14 @@ namespace Symbiote.Http.Owin.Impl
             var header = builder.ToString();
             var headerBuffer = Encoding.UTF8.GetBytes( header );
             var bodyBuffer = responseBody.GetBuffer();
-
+			
+			PendingWrite.Reset();
             OnNextWrite( new ArraySegment<byte>(headerBuffer), () => WriteBody( bodyBuffer ) );
         }
 
         private void WriteBody( byte[] bodyBuffer )
         {
-            OnNextWrite( new ArraySegment<byte>( bodyBuffer ), () => {  } );
+            OnNextWrite( new ArraySegment<byte>( bodyBuffer ), () => { PendingWrite.Set(); } );
             OnWriteComplete();
         }
 
@@ -228,6 +232,21 @@ namespace Symbiote.Http.Owin.Impl
             ResponseChunks = new List<object>();
             Encoder = x => Encoding.UTF8.GetBytes( x );
             HeaderDefinitions = new HeaderBuilder( ResponseHeaders );
+			PendingWrite = new ManualResetEventSlim( true );
         }
+		
+		public void Dispose ()
+		{
+			if( !Disposed )
+			{
+				PendingWrite.Wait();
+				Disposed = true;
+				OnNextWrite = null;
+				OnWriteError = null;
+				OnWriteComplete = null;
+				Encoder = null;
+				PendingWrite.Dispose();
+			}
+		}
     }
 }

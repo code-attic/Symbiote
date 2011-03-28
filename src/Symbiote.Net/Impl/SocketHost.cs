@@ -10,8 +10,8 @@ using Symbiote.Core.Futures;
 
 namespace Symbiote.Net 
 {
-    public class SocketServer 
-        : ISocketServer
+	public class SocketServer 
+		: ISocketServer
     {
         public ConcurrentDictionary<string, ISocketAdapter> Adapters { get; set; }
         public SocketConfiguration Configuration { get; set; }
@@ -22,8 +22,7 @@ namespace Symbiote.Net
 
         public void OnDisconnection( ISocketAdapter adapter )
         {
-            ISocketAdapter junk;
-            //Adapters.TryRemove( adapter.Id, out junk );
+			//Console.WriteLine( "closing...");
             adapter.Close();
         }
 
@@ -37,9 +36,9 @@ namespace Symbiote.Net
             try
             {
                 var socket = Listener.EndAccept( result );
-                var adapter = new SocketAdapter( socket, Configuration );
-                OnConnection( adapter, OnDisconnection );
-                //Adapters[ adapter.Id ] = adapter;
+                WaitForConnection();
+				var adapter = new SocketAdapter( socket, Configuration );
+                OnConnection.BeginInvoke( adapter, OnDisconnection, Completed, null );
             }
             catch( SocketException sockEx )
             {
@@ -47,9 +46,14 @@ namespace Symbiote.Net
             }
             finally
             {
-                WaitForConnection();
+                
             }
         }
+		
+		private void Completed( IAsyncResult result )
+		{
+			result.AsyncWaitHandle.Dispose();
+		}
 
         public void Start( Action<ISocketAdapter, Action<ISocketAdapter>> onConnection )
         {
@@ -58,7 +62,7 @@ namespace Symbiote.Net
             OnConnection = onConnection;
             Listener = new Socket( AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP );
             Listener.Bind( ServerEndpoint );
-            Listener.Listen( 1000 );
+            Listener.Listen( 10000 );
             WaitForConnection();
         }
 

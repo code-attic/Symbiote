@@ -23,18 +23,17 @@ namespace Symbiote.Http.Owin.Impl
     {
         public OwinApplication Application;
         
-        public override bool OnNext( ArraySegment<byte> data, Action continuation )
-        {
-            
-            return false;
-        }
+		public override void CompleteResponse ()
+		{
+			
+		}
+		
+		public override bool HandleRequestSegment (ArraySegment<byte> data, Action continuation)
+		{
+			return false;
+		}        
 
         public override void OnError( Exception exception )
-        {
-            
-        }
-
-        public override void OnComplete()
         {
             
         }
