@@ -77,6 +77,9 @@
     <Compile Include="when_starting_and_stopping_host.cs" />
     <Compile Include="with_assimilation.cs" />
     <Compile Include="with_socket_server.cs" />
+    <Compile Include="Impl\SocketNode.cs" />
+    <Compile Include="Impl\LoopScheduler.cs" />
+    <Compile Include="Impl\ISocket.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

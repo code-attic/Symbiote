@@ -1,10 +1,18 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/Symbiote.Net/Impl/SocketHost.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Development" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../src/Symbiote.Core/Fibers/Mailbox.cs">
     <Files>
-      <File FileName="../../src/Symbiote.Messaging/Impl/Dispatch/DispatcherKeyAccessor.cs" Line="28" Column="1" />
-      <File FileName="../../src/Symbiote.Net/Impl/SocketHost.cs" Line="50" Column="14" />
-      <File FileName="../../src/Symbiote.Net/Impl/SocketAdapter.cs" Line="31" Column="20" />
+      <File FileName="../../src/Symbiote.Net/ISocketAdapter.cs" Line="11" Column="98" />
+      <File FileName="../../src/Symbiote.Net/Impl/SocketAdapter.cs" Line="150" Column="11" />
+      <File FileName="../../src/Symbiote.Net/Impl/SocketHost.cs" Line="67" Column="28" />
+      <File FileName="../../src/Symbiote.Net/Impl/SocketNode.cs" Line="27" Column="3" />
+      <File FileName="../../src/Symbiote.Core/Fibers/LoopNode.cs" Line="18" Column="32" />
+      <File FileName="../../tests/Http.Tests/Net/when_adding_sockets_to_loop.cs" Line="18" Column="26" />
+      <File FileName="../../src/Symbiote.Http/MessagingApplication.cs" Line="58" Column="52" />
+      <File FileName="../../src/Symbiote.Http/Application.cs" Line="25" Column="4" />
+      <File FileName="../../src/Symbiote.Http/Owin/IOwinObservable.cs" Line="1" Column="1" />
+      <File FileName="../../src/Symbiote.Http/Owin/IOwinObserver.cs" Line="10" Column="6" />
+      <File FileName="../../src/Symbiote.Core/Fibers/Mailbox.cs" Line="58" Column="37" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

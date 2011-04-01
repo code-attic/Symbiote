@@ -148,6 +148,7 @@
   <ItemGroup>
     <Folder Include="NetAdapter\IISHandler\" />
     <Folder Include="ViewAdapter\Spark\" />
+    <Folder Include="Html\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Symbiote.Http.nuspec">

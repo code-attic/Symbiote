@@ -899,6 +899,8 @@
     <Compile Include="IKeyAccessor.cs" />
     <Compile Include="Actor\KeyAccessAdapter.cs" />
     <Compile Include="UnitOfWork\ReplayContext.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Fibers\LoopNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Symbiote.Core.nuspec">

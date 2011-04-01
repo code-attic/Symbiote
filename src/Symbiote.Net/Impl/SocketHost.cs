@@ -13,17 +13,17 @@ namespace Symbiote.Net
 	public class SocketServer 
 		: ISocketServer
     {
-        public ConcurrentDictionary<string, ISocketAdapter> Adapters { get; set; }
         public SocketConfiguration Configuration { get; set; }
         public Socket Listener { get; set; }
         public bool Running { get; protected set; }
         public Action<ISocketAdapter, Action<ISocketAdapter>> OnConnection { get; set; }
         public IPEndPoint ServerEndpoint { get; set; }
+		public SocketNode Root { get; set; }
+		public LoopScheduler Scheduler { get; set; }
 
         public void OnDisconnection( ISocketAdapter adapter )
         {
-			//Console.WriteLine( "closing...");
-            adapter.Close();
+			adapter.Close();
         }
 
         public void WaitForConnection()
@@ -38,7 +38,7 @@ namespace Symbiote.Net
                 var socket = Listener.EndAccept( result );
                 WaitForConnection();
 				var adapter = new SocketAdapter( socket, Configuration );
-                OnConnection.BeginInvoke( adapter, OnDisconnection, Completed, null );
+				Root.AddNode( new SocketNode( adapter ) );
             }
             catch( SocketException sockEx )
             {
@@ -50,15 +50,21 @@ namespace Symbiote.Net
             }
         }
 		
-		private void Completed( IAsyncResult result )
+		public void Loop()
 		{
-			result.AsyncWaitHandle.Dispose();
+			var node = Root;
+			while( Running )
+			{
+				if( node.Available )
+					if( !node.ExecuteNextRead() )
+						node.ExecuteNextWrite();
+				node = node.Next;
+			}
 		}
 
         public void Start( Action<ISocketAdapter, Action<ISocketAdapter>> onConnection )
         {
             Running = true;
-
             OnConnection = onConnection;
             Listener = new Socket( AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.IP );
             Listener.Bind( ServerEndpoint );
@@ -69,14 +75,14 @@ namespace Symbiote.Net
         public void Stop()
         {
             Running = false;
-            Adapters.ForEach( x => x.Value.Close() );
         }
 
         public SocketServer( SocketConfiguration configuration )
         {
-            Adapters = new ConcurrentDictionary<string, ISocketAdapter>();
             Configuration = configuration;
             ServerEndpoint = new IPEndPoint( IPAddress.Any, configuration.Port );
+			Root = new SocketNode( null ) { Available = false };
+			Scheduler = new LoopScheduler();
         }
     }
 }

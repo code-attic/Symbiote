@@ -15,9 +15,87 @@
 // */
 
 using System;
+using System.Linq;
 
 namespace Symbiote.Core.Fibers
 {
+	public class IONode
+	{
+		public Func<byte[], Action<IAsyncResult>, object, IAsyncResult> Writer { get; set; }
+		public Action<IAsyncResult> WriterComplete { get; set; }
+		public Func<byte[], int, int, Action<IAsyncResult>, object, IAsyncResult> Reader { get; set; }
+		public Func<IAsyncResult, int> ReaderComplete { get; set; }
+		public Action<IONode> SetPreviousNodesNext { get; set; }
+		public byte[] Buffer { get; set; }
+		public int BufferSize { get; set; }
+		public IONode Next { get; set; }
+		
+		public void Remove()
+		{
+			if( SetPreviousNodesNext != null )
+				SetPreviousNodesNext( Next );
+			Next = null;
+			Writer = null;
+			WriterComplete = null;
+			Reader = null;
+			ReaderComplete = null;
+			SetPreviousNodesNext = null;
+		}
+		
+		public void Read( Action<ArraySegment<byte>> onRead )
+		{
+			Reader( Buffer, 0, BufferSize, ReadComplete, onRead );
+		}
+			       
+		public void ReadComplete( IAsyncResult result )
+        {
+			try 
+			{
+				var read = ReaderComplete( result );
+				var bytes = Buffer.GetRange( 0, read );
+				var action = result.AsyncState as Action<ArraySegment<byte>>;
+				action( new ArraySegment<byte>( bytes, 0, read ) );
+			} 
+			catch (Exception ex) 
+			{
+				
+			}
+		}
+		
+		public void Write( ArraySegment<byte> segment, Action onComplete )
+		{
+			Writer( segment.GetRange(), WriteComplete, onComplete );
+		}
+		
+		public void WriteComplete( IAsyncResult result )
+		{
+			try
+			{
+				WriterComplete( result );
+				Action onComplete = result.AsyncState as Action;
+			}
+			catch
+			{
+			}
+		}
+		
+		public IONode( 
+		              Action<IONode> setPrevious,
+		              Func<byte[], Action<IAsyncResult>, object, IAsyncResult> writer,
+		              Action<IAsyncResult> writerComplete,
+		              Func<byte[], int, int, Action<IAsyncResult>, object, IAsyncResult> reader,
+		              Func<IAsyncResult, int> readerComplete )
+		{
+			SetPreviousNodesNext = setPrevious;
+			Writer = writer;
+			WriterComplete = writerComplete;
+			Reader = reader;
+			ReaderComplete = readerComplete;
+		}
+	}
+	
+	
+	
     public class MailboxNode<T>
     {
         public string Id { get; set; }
@@ -26,7 +104,7 @@ namespace Symbiote.Core.Fibers
         public Mailbox<T> Mailbox { get; set; }
         public Action Remove { get; set; }
 
-        public void Nuke()
+        public void Delete()
         {
             Mailbox = null;
             if( !Next.Id.Equals( Id ) )
