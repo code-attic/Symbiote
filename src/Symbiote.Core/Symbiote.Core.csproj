@@ -769,6 +769,7 @@
     <Compile Include="Collections\MruNode.cs" />
     <Compile Include="Config\CoreDependencies.cs" />
     <Compile Include="Config\CoreScan.cs" />
+    <Compile Include="DI\Impl\Container.cs" />
     <Compile Include="DI\NullOpDependencyAdapter.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Fibers\Director.cs" />

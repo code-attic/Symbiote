@@ -42,6 +42,28 @@ namespace Symbiote.Core.Reflection
                                                     BindingFlags.Public |
                                                     BindingFlags.Instance;
 
+        public static IEnumerable<Tuple<ConstructorInfo, ParameterInfo[]>> GetConstructorInfo<T>()
+        {
+            return GetConstructorInfo( typeof( T ) );
+        }
+
+        public static IEnumerable<Tuple<ConstructorInfo, ParameterInfo[]>> GetConstructorInfo( Type type )
+        {
+            return type.GetConstructors().Select( x => Tuple.Create( x, x.GetParameters() ) );
+        }
+
+        public static Tuple<ConstructorInfo, ParameterInfo[]> GetGreediestConstructor<T>()
+        {
+            return GetGreediestConstructor( typeof( T ) );
+        }
+
+        public static Tuple<ConstructorInfo, ParameterInfo[]> GetGreediestConstructor( Type type )
+        {
+            var constructors = GetConstructorInfo( type );
+            var maxParams = constructors.Max( x => x.Item2.Length );
+            return constructors.First( x => x.Item2.Length == maxParams );
+        }
+
         public static IEnumerable<Type> GetInheritanceChain( Type type )
         {
             Type baseType = type.BaseType;
