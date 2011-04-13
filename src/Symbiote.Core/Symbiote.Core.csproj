@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -769,6 +769,7 @@
     <Compile Include="Collections\MruNode.cs" />
     <Compile Include="Config\CoreDependencies.cs" />
     <Compile Include="Config\CoreScan.cs" />
+    <Compile Include="DI\NullOpDependencyAdapter.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
     <Compile Include="Fibers\Director.cs" />
     <Compile Include="Fibers\IDirector.cs" />
@@ -869,18 +870,13 @@
     <Compile Include="Serialization\SerializationExtensions.cs" />
     <Compile Include="Utility\BaseObservable.cs" />
     <Compile Include="Futures\FutureCallback.cs" />
-    <Compile Include="Locking\DistributedLock.cs" />
     <Compile Include="Collections\ExclusiveConcurrentDictionary.cs" />
     <Compile Include="Futures\FutureAction.cs" />
     <Compile Include="Futures\FutureResult.cs" />
     <Compile Include="Futures\Future.cs" />
     <Compile Include="Utility\HierarchyVisitor.cs" />
-    <Compile Include="Locking\ILockManager.cs" />
-    <Compile Include="Locking\NullLockManager.cs" />
     <Compile Include="Utility\ObserverCollection.cs" />
     <Compile Include="Utility\ObserverToken.cs" />
-    <Compile Include="Utility\Pipeline.cs" />
-    <Compile Include="Locking\SpinLockManager.cs" />
     <Compile Include="UnitOfWork\EventBase.cs" />
     <Compile Include="UnitOfWork\EventConfiguration.cs" />
     <Compile Include="UnitOfWork\DefaultContext.cs" />

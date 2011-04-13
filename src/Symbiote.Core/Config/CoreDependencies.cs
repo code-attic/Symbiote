@@ -16,7 +16,6 @@
 using System;
 using Symbiote.Core.Actor;
 using Symbiote.Core.DI;
-using Symbiote.Core.Locking;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Core.Memento;
@@ -34,7 +33,6 @@ namespace Symbiote.Core
                     container.For<ILogProvider>().Use<NullLogProvider>();
                     container.For<ILogger>().Use<NullLogger>();
                     container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );
-                    container.For<ILockManager>().Use<NullLockManager>();
                     container.For( typeof( KeyAccessAdapter<> ) ).Use( typeof( KeyAccessAdapter<> ) );
                     container.For<IKeyAccessor>().Use<KeyAccessManager>().AsSingleton();
                     container.For<IMemoizer>().Use<Memoizer>();
