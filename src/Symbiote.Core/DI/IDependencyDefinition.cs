@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using Symbiote.Core.DI.Impl;
 
 namespace Symbiote.Core.DI
 {
@@ -28,6 +29,6 @@ namespace Symbiote.Core.DI
         string PluginName { get; set; }
         Type PluginType { get; set; }
         bool HasSingleton { get; set; }
-        Delegate CreatorDelegate { get; set; }
+        Delegate CreatorDelegate { get; }
     }
 }

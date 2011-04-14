@@ -76,6 +76,11 @@ namespace Symbiote.Core.DI
             throw new AssimilationException( _msg );
         }
 
+        public bool HasPluginFor( Type type )
+        {
+            throw new AssimilationException( _msg );
+        }
+
         public void Register( IDependencyDefinition dependency )
         {
             throw new AssimilationException( _msg );

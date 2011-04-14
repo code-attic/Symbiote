@@ -14,6 +14,10 @@
 // limitations under the License.
 // */
 using System;
+using System.Linq.Expressions;
+using Symbiote.Core.Collections;
+using Symbiote.Core.Reflection;
+using System.Linq;
 
 namespace Symbiote.Core.DI
 {
@@ -46,7 +50,6 @@ namespace Symbiote.Core.DI
         IPluginConfiguration
     {
         private object _concreteInstance { get; set; }
-
         public object ConcreteInstance { get; set; }
         public Type ConcreteType { get; set; }
         public bool HasDelegate { get; set; }
@@ -56,7 +59,9 @@ namespace Symbiote.Core.DI
         public bool HasSingleton { get; set; }
         public string PluginName { get; set; }
         public Type PluginType { get; set; }
-        public Delegate CreatorDelegate { get; set; }
+        public Delegate CreatorDelegate { get { return StrongDelegate ?? WeakDelegate; } }
+        public Delegate WeakDelegate { get; set; }
+        public Func<TPlugin> StrongDelegate { get; set; }
 
         public virtual IPluginConfiguration AsSingleton()
         {
@@ -109,11 +114,13 @@ namespace Symbiote.Core.DI
             return this;
         }
 
-        public virtual IPluginConfiguration CreateWith<TConcrete>( Func<TConcrete> factory )
+        public virtual IPluginConfiguration CreateWith<TConcrete>( Expression<Func<TConcrete>> factory )
             where TConcrete : TPlugin
         {
             HasDelegate = true;
-            CreatorDelegate = factory;
+            var castExpr = Expression.Convert( factory, typeof( TPlugin ) );
+            var lambda = Expression.Lambda<Func<TPlugin>>( castExpr );
+            StrongDelegate = lambda.Compile();
             return this;
         }
 

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -131,6 +131,27 @@
     <Compile Include="DI\AnInterfaceOf.cs" />
     <Compile Include="DI\BaseClass.cs" />
     <Compile Include="DI\ClosedClass.cs" />
+    <Compile Include="DI\Container\ClosedImpl.cs" />
+    <Compile Include="DI\Container\IHazzaMessage.cs" />
+    <Compile Include="DI\Container\IMessageProvider.cs" />
+    <Compile Include="DI\Container\IShouldBeSingleton.cs" />
+    <Compile Include="DI\Container\ITakeGenericParams.cs" />
+    <Compile Include="DI\Container\MessageProvider.cs" />
+    <Compile Include="DI\Container\OpenImpl.cs" />
+    <Compile Include="DI\Container\SingletonA.cs" />
+    <Compile Include="DI\Container\SingletonB.cs" />
+    <Compile Include="DI\Container\MessageHazzer.cs" />
+    <Compile Include="DI\Container\when_instantiating_closed_generic.cs" />
+    <Compile Include="DI\Container\when_instantiating_open_generic.cs" />
+    <Compile Include="DI\Container\when_testing_instantiation_baseline.cs" />
+    <Compile Include="DI\Container\when_testing_simple_instantiation_scenario.cs" />
+    <Compile Include="DI\Container\when_testing_structuremap_instantiation_scenario.cs" />
+    <Compile Include="DI\Container\when_verifying_singletons.cs" />
+    <Compile Include="DI\Container\with_container.cs" />
+    <Compile Include="DI\Container\with_generics_registration.cs" />
+    <Compile Include="DI\Container\with_simple_registration.cs" />
+    <Compile Include="DI\Container\with_simple_structuremap_registration.cs" />
+    <Compile Include="DI\Container\with_singleton_registration.cs" />
     <Compile Include="DI\IAmAnInterface.cs" />
     <Compile Include="DI\InheritsBaseClass.cs" />
     <Compile Include="DI\when_loading_auto_wired_types.cs" />
@@ -266,6 +287,7 @@
   <ItemGroup>
     <Compile Include="UnitOfWork\with_EventListenerManager.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

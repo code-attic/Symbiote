@@ -14,20 +14,12 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
 
-namespace Symbiote.Core.DI
+namespace Symbiote.Core.DI.Impl
 {
-    public interface IDependencyRegistry
+    public interface IProvideInstanceFactories
     {
-        IEnumerable<Type> RegisteredPluginTypes { get; }
-        Type GetDefaultTypeFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor( Type type );
-        bool HasPluginFor<T>();
-        bool HasPluginFor( Type type );
-        void Register( IDependencyDefinition dependency );
-        void Reset();
-        void Scan( IScanInstruction scanInstruction );
+        IProvideInstance GetProviderForPlugin<TRequest>( IDependencyDefinition definition, IDependencyAdapter container );
+        IProvideInstance GetProviderForPlugin( Type requested, IDependencyDefinition definition, IDependencyAdapter container );
     }
 }

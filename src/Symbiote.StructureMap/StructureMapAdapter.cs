@@ -69,6 +69,11 @@ namespace Symbiote.StructureMapAdapter
             return ObjectFactory.Container.Model.HasDefaultImplementationFor<T>();
         }
 
+        public bool HasPluginFor( Type type )
+        {
+            return ObjectFactory.Container.Model.HasDefaultImplementationFor( type );
+        }
+
         public object GetInstance( Type serviceType )
         {
             if ( serviceType.IsConcrete() )

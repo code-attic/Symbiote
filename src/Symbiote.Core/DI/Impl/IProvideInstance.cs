@@ -13,21 +13,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using System.Collections.Generic;
-
-namespace Symbiote.Core.DI
+namespace Symbiote.Core.DI.Impl
 {
-    public interface IDependencyRegistry
+    public interface IProvideInstance
     {
-        IEnumerable<Type> RegisteredPluginTypes { get; }
-        Type GetDefaultTypeFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor( Type type );
-        bool HasPluginFor<T>();
-        bool HasPluginFor( Type type );
-        void Register( IDependencyDefinition dependency );
-        void Reset();
-        void Scan( IScanInstruction scanInstruction );
+        object Get();
     }
 }

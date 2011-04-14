@@ -14,20 +14,29 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
 
-namespace Symbiote.Core.DI
+namespace Symbiote.Core.DI.Impl
 {
-    public interface IDependencyRegistry
+    public class SingletonFactory :
+        IProvideInstance
     {
-        IEnumerable<Type> RegisteredPluginTypes { get; }
-        Type GetDefaultTypeFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor<T>();
-        IEnumerable<Type> GetTypesRegisteredFor( Type type );
-        bool HasPluginFor<T>();
-        bool HasPluginFor( Type type );
-        void Register( IDependencyDefinition dependency );
-        void Reset();
-        void Scan( IScanInstruction scanInstruction );
+        public object Instance { get; set; }
+        public Func<object> Factory { get; set; }
+
+        public object Get()
+        {
+            Instance = Instance ?? Factory();
+            return Instance;
+        }
+
+        public SingletonFactory( object instance )
+        {
+            Instance = instance;
+        }
+
+        public SingletonFactory( Func<object> factory )
+        {
+            Factory = factory;
+        }
     }
 }
