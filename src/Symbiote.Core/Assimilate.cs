@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Symbiote.Core.DI;
+using Symbiote.Core.DI.Impl;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
@@ -49,7 +50,10 @@ namespace Symbiote.Core
 
         private static void Wireup()
         {
-            var dependencyAdapterType = ScanIndex.ImplementorsOfType[typeof( IDependencyAdapter )].First( x => !x.Equals( typeof( NullOpDependencyAdapter ) ) );
+            Type defaultAdapter = typeof( SimpleDependencyRegistry );
+            var dependencyAdapterType = ScanIndex
+                .ImplementorsOfType[typeof( IDependencyAdapter )]
+                .FirstOrDefault( x => !x.Equals( defaultAdapter ) ) ?? defaultAdapter;
             var dependencyAdapter = Activator.CreateInstance( dependencyAdapterType ) as IDependencyAdapter;
             Assimilation.DependencyAdapter = dependencyAdapter;
             

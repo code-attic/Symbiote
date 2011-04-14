@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.Core.Locking;
-using Symbiote.StructureMapAdapter;
 using Symbiote.Eidetic;
 using Symbiote.Core.Extensions;
 
@@ -19,7 +14,7 @@ namespace Eidetic.Tests
                                         {
                                             Assimilate
                                                 .Initialize()
-                                                .Eidetic(x => x.AddLocalServer().UseForDistributedLockManagement());
+                                                .Eidetic(x => x.AddLocalServer());
                                         };
     }
 
@@ -44,10 +39,7 @@ namespace Eidetic.Tests
         
         public static void Append()
         {
-            using(var uberLock = DistributedLock.Create(id))
-            {
-                result = "{0}-{1}".AsFormat(result, ++index);   
-            }
+            result = "{0}-{1}".AsFormat(result, ++index);
         }
     }
 }
