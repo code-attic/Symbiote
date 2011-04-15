@@ -10,6 +10,8 @@
             get { return _instance; }
         }
 
+        public string Message { get; set; }
+
         public SingletonB()
         {
             _instance = Instantiated ++;

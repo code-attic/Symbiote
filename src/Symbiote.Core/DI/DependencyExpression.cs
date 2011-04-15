@@ -88,6 +88,7 @@ namespace Symbiote.Core.DI
             where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
+            ConcreteType = typeof( TConcrete );
             IsAdd = true;
             return this;
         }
@@ -109,6 +110,7 @@ namespace Symbiote.Core.DI
             where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
+            ConcreteType = typeof( TConcrete );
             HasSingleton = true;
             IsSingleton = true;
             return this;

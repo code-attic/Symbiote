@@ -75,8 +75,22 @@ namespace Symbiote.Core.DI.Impl
 
         public bool HasPluginFor( Type type )
         {
-            return Definitions.ContainsKey( type ) ||
-                   Definitions.ContainsKey( type.GetGenericTypeDefinition() );
+            return type.IsConcrete() || 
+                    Definitions.ContainsKey( type ) ||
+                    Definitions.ContainsKey( type.GetGenericTypeDefinition() );
+        }
+
+        public bool IsDuplicate( IDependencyDefinition dependency )
+        {
+            var definitions = new List<IDependencyDefinition>();
+            var duplicate = false;
+            if( Definitions.TryGetValue( dependency.PluginType, out definitions ) )
+            {
+                duplicate = definitions
+                    .Any( x =>
+                          x.ConcreteType.Equals( x.ConcreteType ) && x.PluginName == x.PluginName );
+            }
+            return duplicate;
         }
 
         public void Register( IDependencyDefinition dependency )
@@ -89,6 +103,8 @@ namespace Symbiote.Core.DI.Impl
                               x => new List<IDependencyDefinition>() { dependency },
                               ( x, y ) =>
                                   {
+                                      if( IsDuplicate( dependency )  )
+                                        y.RemoveAll( d => d.PluginName == dependency.PluginName );
                                       y.Add( dependency );
                                       return y;
                                   } );

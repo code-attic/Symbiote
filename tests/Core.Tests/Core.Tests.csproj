@@ -137,13 +137,16 @@
     <Compile Include="DI\Container\IShouldBeSingleton.cs" />
     <Compile Include="DI\Container\ITakeGenericParams.cs" />
     <Compile Include="DI\Container\MessageProvider.cs" />
+    <Compile Include="DI\Container\OpenConcrete.cs" />
     <Compile Include="DI\Container\OpenImpl.cs" />
+    <Compile Include="DI\Container\PlainConcrete.cs" />
     <Compile Include="DI\Container\SingletonA.cs" />
     <Compile Include="DI\Container\SingletonB.cs" />
     <Compile Include="DI\Container\MessageHazzer.cs" />
     <Compile Include="DI\Container\when_instantiating_closed_generic.cs" />
     <Compile Include="DI\Container\when_instantiating_open_generic.cs" />
     <Compile Include="DI\Container\when_requesting_concrete_type.cs" />
+    <Compile Include="DI\Container\when_requesting_concrete__open_type.cs" />
     <Compile Include="DI\Container\when_testing_instantiation_baseline.cs" />
     <Compile Include="DI\Container\when_testing_simple_instantiation_scenario.cs" />
     <Compile Include="DI\Container\when_testing_structuremap_instantiation_scenario.cs" />
