@@ -10,6 +10,7 @@ namespace Core.Tests.DI.Container
         protected static bool pass;
         private Because of = () =>
             {
+                Container.GetInstance<IMessageProvider>();
                 watch = Stopwatch.StartNew();
 
                 pass = Enumerable

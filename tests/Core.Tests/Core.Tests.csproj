@@ -143,6 +143,7 @@
     <Compile Include="DI\Container\MessageHazzer.cs" />
     <Compile Include="DI\Container\when_instantiating_closed_generic.cs" />
     <Compile Include="DI\Container\when_instantiating_open_generic.cs" />
+    <Compile Include="DI\Container\when_requesting_concrete_type.cs" />
     <Compile Include="DI\Container\when_testing_instantiation_baseline.cs" />
     <Compile Include="DI\Container\when_testing_simple_instantiation_scenario.cs" />
     <Compile Include="DI\Container\when_testing_structuremap_instantiation_scenario.cs" />

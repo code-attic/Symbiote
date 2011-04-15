@@ -107,10 +107,23 @@ namespace Symbiote.Core.DI.Impl
         public IDependencyDefinition GetDefinitionFor( Type type, string key )
         {
             var definitions = new List<IDependencyDefinition>();
-            if( !Definitions.TryGetValue( type, out definitions ) )
+            if( !Definitions.TryGetValue( type, out definitions ) && type.IsGenericType )
                 Definitions.TryGetValue( type.GetGenericTypeDefinition(), out definitions );
-
-            definitions = definitions ?? new List<IDependencyDefinition>();
+            
+            if( definitions == null && type.IsConcrete() )
+            {
+                var pluginType = type.IsGenericType
+                                     ? type.GetGenericTypeDefinition()
+                                     : type;
+                var definition = DependencyExpression.For( pluginType );
+                definition.Use( type );
+                definitions = new List<IDependencyDefinition>() { definition };
+            }
+            else
+            {
+                definitions = definitions ?? new List<IDependencyDefinition>();    
+            }
+            
             return definitions.FirstOrDefault( x => x.PluginName == key );
         }
 
