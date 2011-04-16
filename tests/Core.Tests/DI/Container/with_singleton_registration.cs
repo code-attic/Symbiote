@@ -7,6 +7,9 @@ namespace Core.Tests.DI.Container
     {
         private Establish context = () =>
             {
+                SingletonA.Reset();
+                SingletonB.Reset();
+
                 var def1 = DependencyExpression.For<IShouldBeSingleton>("a");
                 def1.Use<SingletonA>().AsSingleton();
 

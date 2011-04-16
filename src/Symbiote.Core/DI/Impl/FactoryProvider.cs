@@ -25,7 +25,7 @@ namespace Symbiote.Core.DI.Impl
     public class FactoryProvider :
         IProvideInstanceFactories
     {
-        public ExclusiveConcurrentDictionary<Tuple<Type, string>, IProvideInstance> Providers { get; set; }
+        public ExclusiveConcurrentDictionary<Tuple<Type, Type, string>, IProvideInstance> Providers { get; set; }
 
         public ConstantExpression ContainerReference { get; set; }
         public MethodInfo ResolveMethod { get; set; }
@@ -39,7 +39,7 @@ namespace Symbiote.Core.DI.Impl
         {
             return Providers
                 .ReadOrWrite( 
-                    Tuple.Create( requested, definition.PluginName ?? ""), 
+                    Tuple.Create( requested, definition.ConcreteType, definition.PluginName ?? ""), 
                     () => CreateProvider( requested, definition, container ) );
         }
 
@@ -92,7 +92,7 @@ namespace Symbiote.Core.DI.Impl
 
         public FactoryProvider()
         {
-            Providers = new ExclusiveConcurrentDictionary<Tuple<Type, string>, IProvideInstance>();
+            Providers = new ExclusiveConcurrentDictionary<Tuple<Type, Type, string>, IProvideInstance>();
         }
     }
 }

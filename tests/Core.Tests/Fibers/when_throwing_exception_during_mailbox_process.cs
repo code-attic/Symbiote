@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using Machine.Specifications;
 
 namespace Core.Tests.Fibers
@@ -12,6 +13,7 @@ namespace Core.Tests.Fibers
         private Because of = () =>
             {
                 numbers.ForEach( x => director.Send( x ) );
+                Thread.Sleep( 1 );
             };
 
         private It should_have_correct_result = () => Values[""].ShouldEqual( results );

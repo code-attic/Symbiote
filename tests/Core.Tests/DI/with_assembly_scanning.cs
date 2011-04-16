@@ -5,7 +5,6 @@ using System.Reflection;
 using System.Text;
 using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.StructureMapAdapter;
 
 namespace Core.Tests.DI
 {

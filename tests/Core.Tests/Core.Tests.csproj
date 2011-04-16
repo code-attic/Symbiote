@@ -49,10 +49,6 @@
     </Reference>
     <Reference Include="System.Core">
     </Reference>
-    <Reference Include="StructureMap, Version=2.6.1.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization">
     </Reference>
     <Reference Include="Machine.Specifications, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null">
@@ -133,28 +129,36 @@
     <Compile Include="DI\ClosedClass.cs" />
     <Compile Include="DI\Container\ClosedImpl.cs" />
     <Compile Include="DI\Container\IHazzaMessage.cs" />
+    <Compile Include="DI\Container\IMark.cs" />
     <Compile Include="DI\Container\IMessageProvider.cs" />
     <Compile Include="DI\Container\IShouldBeSingleton.cs" />
     <Compile Include="DI\Container\ITakeGenericParams.cs" />
     <Compile Include="DI\Container\MessageProvider.cs" />
+    <Compile Include="DI\Container\Multiple1.cs" />
+    <Compile Include="DI\Container\Multiple2.cs" />
+    <Compile Include="DI\Container\Multiple3.cs" />
     <Compile Include="DI\Container\OpenConcrete.cs" />
     <Compile Include="DI\Container\OpenImpl.cs" />
     <Compile Include="DI\Container\PlainConcrete.cs" />
     <Compile Include="DI\Container\SingletonA.cs" />
     <Compile Include="DI\Container\SingletonB.cs" />
     <Compile Include="DI\Container\MessageHazzer.cs" />
+    <Compile Include="DI\Container\when_getting_all_instances_for_type.cs" />
     <Compile Include="DI\Container\when_instantiating_closed_generic.cs" />
     <Compile Include="DI\Container\when_instantiating_open_generic.cs" />
+    <Compile Include="DI\Container\when_requesting_closed_type_from_generic.cs" />
     <Compile Include="DI\Container\when_requesting_concrete_type.cs" />
-    <Compile Include="DI\Container\when_requesting_concrete__open_type.cs" />
+    <Compile Include="DI\Container\when_requesting_concrete_open_type.cs" />
+    <Compile Include="DI\Container\when_testing_duplicate_singleton_definition.cs" />
     <Compile Include="DI\Container\when_testing_instantiation_baseline.cs" />
     <Compile Include="DI\Container\when_testing_simple_instantiation_scenario.cs" />
-    <Compile Include="DI\Container\when_testing_structuremap_instantiation_scenario.cs" />
     <Compile Include="DI\Container\when_verifying_singletons.cs" />
+    <Compile Include="DI\Container\with_closed_types_registered.cs" />
     <Compile Include="DI\Container\with_container.cs" />
+    <Compile Include="DI\Container\with_duplicate_singletons_registered.cs" />
     <Compile Include="DI\Container\with_generics_registration.cs" />
+    <Compile Include="DI\Container\with_multiple_classes_register_to_marker.cs" />
     <Compile Include="DI\Container\with_simple_registration.cs" />
-    <Compile Include="DI\Container\with_simple_structuremap_registration.cs" />
     <Compile Include="DI\Container\with_singleton_registration.cs" />
     <Compile Include="DI\IAmAnInterface.cs" />
     <Compile Include="DI\InheritsBaseClass.cs" />
@@ -282,10 +286,6 @@
     <ProjectReference Include="..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
-      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
-      <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -59,10 +59,8 @@ namespace Symbiote.Core.DI
         public bool HasSingleton { get; set; }
         public string PluginName { get; set; }
         public Type PluginType { get; set; }
-        public Delegate CreatorDelegate { get { return StrongDelegate ?? WeakDelegate; } }
-        public Delegate WeakDelegate { get; set; }
-        public Func<TPlugin> StrongDelegate { get; set; }
-
+        public Delegate CreatorDelegate { get; set; }
+        
         public virtual IPluginConfiguration AsSingleton()
         {
             IsSingleton = true;
@@ -116,13 +114,11 @@ namespace Symbiote.Core.DI
             return this;
         }
 
-        public virtual IPluginConfiguration CreateWith<TConcrete>( Expression<Func<TConcrete>> factory )
+        public virtual IPluginConfiguration CreateWith<TConcrete>( Func<TConcrete> factory )
             where TConcrete : TPlugin
         {
             HasDelegate = true;
-            var castExpr = Expression.Convert( factory, typeof( TPlugin ) );
-            var lambda = Expression.Lambda<Func<TPlugin>>( castExpr );
-            StrongDelegate = lambda.Compile();
+            CreatorDelegate = factory;
             return this;
         }
 

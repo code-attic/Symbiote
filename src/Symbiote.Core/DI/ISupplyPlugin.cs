@@ -36,7 +36,7 @@ namespace Symbiote.Core.DI
 
         IPluginConfiguration Use( Type concreteType );
 
-        IPluginConfiguration CreateWith<TConcrete>( Expression<Func<TConcrete>> factory )
+        IPluginConfiguration CreateWith<TConcrete>( Func<TConcrete> factory )
             where TConcrete : TPlugin;
     }
 }
