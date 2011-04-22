@@ -44,7 +44,7 @@ namespace Messaging.Tests.Pipes
 
         private Because of = () =>
                                  {
-                                     result = bus.Request<TestMessage, string>("client", new TestMessage() { Text = "Hi." }).WaitFor( 250 );
+                                     result = bus.Request<TestMessage, string>("client", new TestMessage() { Text = "Hi." }).WaitFor( 400 );
                                  };
         
         private It should_get_response = () => result.ShouldEqual( "I got your message." );

@@ -1,4 +1,5 @@
-﻿using Symbiote.Core.Extensions;
+﻿using System;
+using Symbiote.Core.Extensions;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Mesh;
 
@@ -9,10 +10,11 @@ namespace Node.Console
     {
         public INodeIdentityProvider IdentityProvider { get; set; }
 
-        public void Handle( IEnvelope<Message> envelope )
+        public Action<IEnvelope> Handle( Message message )
         {
             "{0} got a message: {1}"
-                .ToDebug<NodeService>(IdentityProvider.Identity, envelope.Message.Text);
+                .ToDebug<NodeService>(IdentityProvider.Identity, message.Text);
+            return x => x.Acknowledge();
         }
 
         public MessageHandler( INodeIdentityProvider identityProvider )

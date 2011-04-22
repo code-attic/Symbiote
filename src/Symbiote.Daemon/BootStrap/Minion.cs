@@ -52,7 +52,9 @@ namespace Symbiote.Daemon.BootStrap
                         (MinionLocator)
                         DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
                     var host = (IMinion) locator.GetMinionHost(MinionPath);
-                    Future.WithoutResult(() => host.Start( null )).Start();
+                    Future
+                        .WithoutResult(() => host.Start( null ))
+                        .Start();
                     Running = true;
                     
                     // Create a cool-down period where the service cannot be

@@ -106,32 +106,6 @@ namespace Symbiote.Core.DI
 
         protected void RegisterClosingType( Type type, Type match, IDependencyRegistry registry )
         {
-            //Type pluginType = null;
-            //Type baseType = match.BaseType;
-            //while ( pluginType == null && baseType != typeof( object ) )
-            //{
-            //    if ( baseType != null && baseType.IsGenericType )
-            //    {
-            //        var genericTypeDefinition = baseType.GetGenericTypeDefinition();
-            //        if ( genericTypeDefinition.Equals( type ) )
-            //        {
-            //            pluginType = baseType;
-            //        }
-            //        else
-            //        {
-            //            baseType = baseType.BaseType;
-            //        }
-            //    }
-            //}
-            //if ( pluginType != null )
-            //{
-            //    var name = HasNamingStrategy ? NamingStrategy( pluginType ) : string.Empty;
-            //    var dependencyExpression = HasNamingStrategy
-            //                          ? DependencyExpression.For( name, pluginType )
-            //                          : DependencyExpression.For( pluginType );
-            //    dependencyExpression.Use( match );
-            //    registry.Register( dependencyExpression );
-            //}
             var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
                 var dependencyExpression = HasNamingStrategy
                                       ? DependencyExpression.For( name, type )
@@ -142,55 +116,23 @@ namespace Symbiote.Core.DI
 
         protected void RegisterTypeClosingInterface( Type type, Type match, IDependencyRegistry registry )
         {
-            //var pluginTypes = match
-            //    .GetInterfaces()
-            //    .Where( y => y.IsGenericType && y.GetGenericTypeDefinition().Equals( type ) );
+            match.GetInterfaces()
+                .Where( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ) )
+                .ForEach( x =>
+                    {
+                        var pluginType = type.MakeGenericType( x.GetGenericArguments() );
 
-            //foreach( var pluginType in pluginTypes )
-            //{
-            //    var name = HasNamingStrategy ? NamingStrategy(pluginType) : string.Empty;
-            //    var dependencyExpression = HasNamingStrategy
-            //                          ? DependencyExpression.For( name, pluginType )
-            //                          : DependencyExpression.For( pluginType);
-            //    dependencyExpression.Add( match );
-            //    registry.Register( dependencyExpression );
-            //}
-
-            var pluginType = type.MakeGenericType( match.GetInterfaces()
-                .First( x => x.IsGenericType && x.GetGenericTypeDefinition().Equals( type ))
-                .GetGenericArguments() );
-
-            var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
-            var dependencyExpression = HasNamingStrategy
-                                    ? DependencyExpression.For( name, pluginType )
-                                    : DependencyExpression.For( pluginType );
-            dependencyExpression.Add( match );
-            registry.Register( dependencyExpression );
+                        var name = HasNamingStrategy ? NamingStrategy( type ) : string.Empty;
+                        var dependencyExpression = HasNamingStrategy
+                                                ? DependencyExpression.For( name, pluginType )
+                                                : DependencyExpression.For( pluginType );
+                        dependencyExpression.Add( match );
+                        registry.Register( dependencyExpression );
+                    } );
         }
 
         protected void RegisterSingleImplementations( IDependencyRegistry registry )
         {
-            //var interfaces = filteredTypes
-            //    .Where( t => t.IsInterface )
-            //    .Distinct();
-            //var lookups = interfaces.ToDictionary(
-            //    x => x,
-            //    x => filteredTypes.Where( f => f.IsConcreteAndAssignableTo( x ) ) );
-            //lookups
-            //    .Where( kp => kp.Value.Count() == 1 )
-            //    .ForEach( kp =>
-            //                  {
-            //                      try
-            //                      {
-            //                          var dependencyExpression = DependencyExpression.For( kp.Key );
-            //                          dependencyExpression.Use( kp.Value.First() );
-            //                          registry.Register( dependencyExpression );
-            //                      }
-            //                      catch ( Exception e )
-            //                      {
-            //                      }
-            //                  } );
-
             Assimilate
                 .ScanIndex
                 .SingleImplementations

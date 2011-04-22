@@ -68,7 +68,6 @@ namespace Symbiote.Core.Collections
                 {
                     SlimLock.EnterWriteLock();
                     UpdateWaiting();
-                    Console.WriteLine(  );
                     if ( !Dictionary.TryGetValue( key, out value ) )
                         value = Dictionary.GetOrAdd( key, valueProvider() );
                 }
@@ -78,6 +77,20 @@ namespace Symbiote.Core.Collections
                 }
             }
             return value;
+        }
+
+        public void Remove( TKey key )
+        {
+            try
+            {
+                SlimLock.EnterWriteLock();
+                TValue value;
+                Dictionary.TryRemove( key, out value );
+            }
+            catch ( Exception ex )
+            {
+                SlimLock.ExitWriteLock();
+            }
         }
 
         public void UpdateWaiting()

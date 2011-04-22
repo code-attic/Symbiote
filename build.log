@@ -1,0 +1,1250 @@
+XBuild Engine Version 2.10.1.0
+Mono, Version 2.10.1.0
+Copyright (C) Marek Sieradzki 2005-2008, Novell 2008-2011.
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Log4Net../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+Build started 3/25/2011 2:26:12 PM.
+__________________________________________________
+Project "/git/Symbiote/Solutions/Symbiote/Symbiote.sln" (default target(s)):
+	Target ValidateSolutionConfiguration:
+		Building solution configuration "Debug|Mixed Platforms".
+	Target Build:
+		Project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj".
+		Project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.nuspec' to '/git/Symbiote/bin/Symbiote.Eidetic.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj".
+		Project "/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Log4Net../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.nuspec' to '/git/Symbiote/bin/Symbiote.Log4Net.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj".
+		Project "/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Hibernate../../../tools/MSBuildCommunityTasks/MSBuild.Community.Tasks.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.nuspec' to '/git/Symbiote/bin/Symbiote.Hibernate.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj".
+		Project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.nuspec' to '/git/Symbiote/bin/Symbiote.Wcf.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj".
+		Project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.nuspec' to '/git/Symbiote/bin/Symbiote.Lucene.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj".
+		Project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/bin/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj".
+		Project "/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Redis../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.nuspec' to '/git/Symbiote/bin/Symbiote.Redis.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.csproj".
+		Project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/bin/Symbiote.Messaging.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj".
+		Project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.nuspec' to '/git/Symbiote/bin/Symbiote.Couch.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj".
+		Project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.nuspec' to '/git/Symbiote/bin/Symbiote.Riak.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj".
+		Project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.nuspec' to '/git/Symbiote/bin/Symbiote.Mikado.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj".
+		Project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/bin/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.nuspec' to '/git/Symbiote/bin/Symbiote.Daemon.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj".
+		Project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Core.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Core.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Core.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Core.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Core.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj".
+		Project "/git/Symbiote/tests/Wcf.Tests/Wcf.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'Microsoft.Practices.ServiceLocation' not resolved
+				For searchpath {CandidateAssemblyFiles}
+				Warning: {CandidateAssemblyFiles} not supported currently
+				For searchpath {HintPathFromItem}
+				Considered ../../lib/Microsoft/Microsoft.Practices.ServiceLocation.dll, but it does not exist.
+				For searchpath {TargetFrameworkDirectory}
+				Considered target framework dir /opt/mono-2.10/lib/mono/4.0, assembly named 'Microsoft.Practices.ServiceLocation' not found.
+				For searchpath {PkgConfig}
+				Considered Microsoft.Practices.ServiceLocation, but could not find in any pkg-config files.
+				For searchpath {GAC}
+				Considered Microsoft.Practices.ServiceLocation, but could not find in the GAC.
+				For searchpath {RawFileName}
+				Considered '/git/Symbiote/tests/Wcf.Tests/Microsoft.Practices.ServiceLocation' as a file, but the file does not exist
+				For searchpath bin/Debug/
+				Considered '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Microsoft.Practices.ServiceLocation' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Microsoft.Practices.ServiceLocation.exe' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Microsoft.Practices.ServiceLocation.dll' as a file, but the file does not exist
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.nuspec' to '/git/Symbiote/tests/Wcf.Tests/bin/Debug/Symbiote.Wcf.nuspec'
+		Done building project "/git/Symbiote/tests/Wcf.Tests/Wcf.Tests.csproj".
+		Project "/git/Symbiote/tests/Lucene.Tests/Lucene.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Lucene.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Lucene.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.nuspec' to '/git/Symbiote/tests/Lucene.Tests/bin/Debug/Symbiote.Lucene.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Lucene.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Lucene.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Lucene.Tests/Lucene.Tests.csproj".
+		Project "/git/Symbiote/tests/Messaging.Tests/Messaging.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'protobuf-net' not resolved
+				For searchpath {CandidateAssemblyFiles}
+				Warning: {CandidateAssemblyFiles} not supported currently
+				For searchpath {HintPathFromItem}
+				Considered ../../lib/protobuf-net/protobuf-net.dll, but it does not exist.
+				For searchpath {TargetFrameworkDirectory}
+				Considered target framework dir /opt/mono-2.10/lib/mono/4.0, assembly named 'protobuf-net' not found.
+				For searchpath {PkgConfig}
+				Considered protobuf-net, but could not find in any pkg-config files.
+				For searchpath {GAC}
+				Considered protobuf-net, but could not find in the GAC.
+				For searchpath {RawFileName}
+				Considered '/git/Symbiote/tests/Messaging.Tests/protobuf-net' as a file, but the file does not exist
+				For searchpath bin/Debug/
+				Considered '/git/Symbiote/tests/Messaging.Tests/bin/Debug/protobuf-net' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Messaging.Tests/bin/Debug/protobuf-net.exe' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Messaging.Tests/bin/Debug/protobuf-net.dll' as a file, but the file does not exist
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Messaging.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Messaging.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Messaging.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Messaging.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Messaging.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Messaging.Tests/Messaging.Tests.csproj".
+		Project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/bin/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.nuspec' to '/git/Symbiote/bin/Symbiote.Rabbit.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj".
+		Project "/git/Symbiote/tests/Mikado.Tests/Mikado.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Mikado.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Mikado.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.nuspec' to '/git/Symbiote/tests/Mikado.Tests/bin/Debug/Symbiote.Mikado.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Mikado.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Mikado.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Mikado.Tests/Mikado.Tests.csproj".
+		Project "/git/Symbiote/tests/Riak.Tests/Riak.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Riak.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Riak.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.nuspec' to '/git/Symbiote/tests/Riak.Tests/bin/Debug/Symbiote.Riak.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Riak.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Riak.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Riak.Tests/Riak.Tests.csproj".
+		Project "/git/Symbiote/tests/Couch.Tests/Couch.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Couch.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Couch.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.nuspec' to '/git/Symbiote/tests/Couch.Tests/bin/Debug/Symbiote.Couch.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Couch.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Couch.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Couch.Tests/Couch.Tests.csproj".
+		Project "/git/Symbiote/src/Symbiote.Net/Symbiote.Net.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/bin/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/bin/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/src/Symbiote.Net/Symbiote.Net.csproj".
+		Project "/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj".
+				Project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj" (GetTargetPath target(s)):
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+				Done building project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'Microsoft.Practices.ServiceLocation' not resolved
+				For searchpath {CandidateAssemblyFiles}
+				Warning: {CandidateAssemblyFiles} not supported currently
+				For searchpath {HintPathFromItem}
+				Considered ../../lib/Microsoft/Microsoft.Practices.ServiceLocation.dll, but it does not exist.
+				For searchpath {TargetFrameworkDirectory}
+				Considered target framework dir /opt/mono-2.10/lib/mono/4.0, assembly named 'Microsoft.Practices.ServiceLocation' not found.
+				For searchpath {PkgConfig}
+				Considered Microsoft.Practices.ServiceLocation, but could not find in any pkg-config files.
+				For searchpath {GAC}
+				Considered Microsoft.Practices.ServiceLocation, but could not find in the GAC.
+				For searchpath {RawFileName}
+				Considered '/git/Symbiote/tests/Eidetic.Tests/Microsoft.Practices.ServiceLocation' as a file, but the file does not exist
+				For searchpath bin/Debug/
+				Considered '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Microsoft.Practices.ServiceLocation' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Microsoft.Practices.ServiceLocation.exe' as a file, but the file does not exist
+				Considered '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Microsoft.Practices.ServiceLocation.dll' as a file, but the file does not exist
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj".
+				Project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+				Done building project "/git/Symbiote/tests/Core.Tests/Core.Tests.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Eidetic.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Eidetic.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj".
+		Project "/git/Symbiote/tests/Rabbit.Tests/Rabbit.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Rabbit.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Rabbit.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Rabbit.Tests/Rabbit.Tests.csproj".
+		Project "/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj" (default target(s)):
+			Target _ValidateEssentialProperties:
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+				Tool /opt/mono-2.10/bin/dmcs execution started with arguments: /noconfig /debug:full /debug+ /optimize- /out:obj/Debug/Symbiote.Http.dll ConvenienceExtensions.cs BaseApplication.cs Config/HttpWebConfiguration.cs Config/HttpWebConfigurator.cs ContentType.cs Config/HttpConfigurator.cs Config/HttpListenerConfigurator.cs Config/HttpDependencies.cs NetAdapter/Channel/ChannelConfigurator.cs NetAdapter/Channel/ChannelDefinition.cs NetAdapter/Channel/HttpChannel.cs HttpChannelExtensions.cs NetAdapter/Channel/HttpChannelFactory.cs NetAdapter/Channel/HttpEnvelope.cs NetAdapter/Channel/IChannelAdapter.cs Owin/IOwinObservable.cs Owin/IOwinObserver.cs IServerAdapter.cs NetAdapter/Socket/RequestReader.cs NetAdapter/Socket/ResponseWriter.cs NetAdapter/Socket/SocketApplicationProxy.cs NetAdapter/Socket/SocketServerAdapter.cs OwinBody.cs OwinResponse.cs Owin/Impl/ConsumableSegment.cs Owin/Impl/RequestParser.cs Owin/Impl/ParseRequestSegment.cs Owin/Impl/RequestExtensions.cs Owin/Impl/ResponseEncoder.cs Owin/Impl/HeaderKeyEqualityComparer.cs Owin/Impl/HttpConstants.cs Config/HttpServerConfiguration.cs Config/HttpServerConfigurator.cs ViewAdapter/IView.cs ViewAdapter/DefaultViewLocator.cs ViewAdapter/IViewEngine.cs ViewAdapter/IViewLocator.cs ViewAdapter/NHamlAdapter/CompiledTemplateWrapper.cs ViewAdapter/NHamlAdapter/NHamlEngine.cs ViewAdapter/NHamlAdapter/NHamlView.cs MessagingApplication.cs NetAdapter/Channel/WebClientChannelAdapter.cs Owin/Impl/HeaderBuilder.cs HttpHostAssimilation.cs IBuildResponse.cs Owin/Impl/IDefineHeaders.cs Owin/Impl/Context.cs Config/HttpListenerConfiguration.cs Owin/Impl/ApplicationFactory.cs Owin/Impl/DelegateApplication.cs Owin/Impl/DelegateApplicationFactory.cs Owin/Impl/HttpStatusCode.cs Owin/Impl/IApplicationFactory.cs MissingApplicationException.cs OwinApplication.cs Owin/IRouteRequest.cs Owin/Impl/IContextTransformer.cs Owin/Impl/IResponseProvider.cs Owin/Impl/Request.cs Owin/Impl/ApplicationRouter.cs Owin/Impl/HttpStatus.cs Owin/Impl/Owin.cs Owin/Impl/OwinCodes.cs Owin/IContext.cs IApplication.cs Owin/IHost.cs Owin/IRegisterApplication.cs Owin/IRequest.cs Owin/IResponseAdapter.cs Properties/AssemblyInfo.cs Owin/Impl/ResponseHelper.cs /target:library /define:"DEBUG;TRACE" /doc:../../bin/Symbiote.Http.XML /reference:/opt/mono-2.10/lib/mono/4.0/System.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Net.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Runtime.Serialization.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Web.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Xml.Linq.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Data.DataSetExtensions.dll /reference:/opt/mono-2.10/lib/mono/4.0/Microsoft.CSharp.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Data.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Xml.dll /reference:../../lib/NHaml/NHaml.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Core.dll /reference:/git/Symbiote/bin//Symbiote.Core.dll /reference:/git/Symbiote/bin//Symbiote.Messaging.dll /reference:/git/Symbiote/bin//Symbiote.Net.dll /reference:/opt/mono-2.10/lib/mono/4.0/mscorlib.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Configuration.dll /reference:/git/Symbiote/bin/Machine.Specifications.dll /warn:4
+Config/HttpConfigurator.cs(18,32): error CS0234: The type or namespace name `HttpListener' does not exist in the namespace `Symbiote.Http.NetAdapter'. Are you missing an assembly reference?
+			Task "Csc" execution -- FAILED
+			Done building target "CoreCompile" in project "/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj".-- FAILED
+		Done building project "/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj".-- FAILED
+		Project "/git/Symbiote/tests/Daemon.Tests/Daemon.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+			Skipping target "CoreCompile" because its outputs are up-to-date.
+			Target GetCopyToOutputDirectoryItems:
+				Project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj" (GetCopyToOutputDirectoryItems target(s)):
+					Target AssignTargetPaths:
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj".
+			Target _CopyDeployFilesToOutputDirectoryAlways:
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Messaging.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Daemon.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.Core/Symbiote.Core.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.Core.nuspec'
+				Copying file from '/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.nuspec' to '/git/Symbiote/tests/Daemon.Tests/bin/Debug/Symbiote.StructureMap.nuspec'
+		Done building project "/git/Symbiote/tests/Daemon.Tests/Daemon.Tests.csproj".
+		Project "/git/Symbiote/tests/Http.Tests/Http.Tests.csproj" (default target(s)):
+			Target PrepareForBuild:
+				Configuration: Debug Platform: AnyCPU
+			Target ResolveProjectReferences:
+				Project "/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj" (GetTargetPath target(s)):
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+				Done building project "/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj".
+			Target ResolveAssemblyReferences:
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+			Target GenerateSatelliteAssemblies:
+			No input files were specified for target GenerateSatelliteAssemblies, skipping.
+			Target CoreCompile:
+				Tool /opt/mono-2.10/bin/dmcs execution started with arguments: /noconfig /debug:full /debug+ /optimize- /out:obj/Debug/Http.Tests.dll with_timer.cs Properties/AssemblyInfo.cs when_parsing_full_uri_get_request.cs when_parsing_relative_get_request.cs when_parsing_relative_put_request.cs with_full_uri_get_request.cs with_relative_get_request.cs with_relative_put_request.cs /target:library /define:"DEBUG;TRACE" /reference:../../lib/MSpec/Machine.Specifications.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Xml.Linq.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Data.DataSetExtensions.dll /reference:/opt/mono-2.10/lib/mono/4.0/Microsoft.CSharp.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Data.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Xml.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Core.dll /reference:/git/Symbiote/bin//Symbiote.Core.dll /reference:/git/Symbiote/bin//Symbiote.Http.dll /reference:/git/Symbiote/bin//Symbiote.Messaging.dll /reference:/git/Symbiote/bin//Symbiote.StructureMap.dll /reference:/opt/mono-2.10/lib/mono/4.0/mscorlib.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Runtime.Serialization.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Configuration.dll /reference:/git/Symbiote/bin/NHaml.dll /reference:/opt/mono-2.10/lib/mono/4.0/System.Web.dll /reference:/git/Symbiote/bin/StructureMap.dll /warn:4
+when_parsing_full_uri_get_request.cs(5,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+when_parsing_relative_get_request.cs(4,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+when_parsing_relative_put_request.cs(5,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+			Task "Csc" execution -- FAILED
+			Done building target "CoreCompile" in project "/git/Symbiote/tests/Http.Tests/Http.Tests.csproj".-- FAILED
+		Done building project "/git/Symbiote/tests/Http.Tests/Http.Tests.csproj".-- FAILED
+	Task "MSBuild" execution -- FAILED
+	Done building target "Build" in project "/git/Symbiote/Solutions/Symbiote/Symbiote.sln".-- FAILED
+Done building project "/git/Symbiote/Solutions/Symbiote/Symbiote.sln".-- FAILED
+
+Build FAILED.
+
+Warnings:
+
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Log4Net../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Core/Symbiote.Core.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Core../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Log4Net../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Log4Net/Symbiote.Log4Net.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Hibernate../../../tools/MSBuildCommunityTasks/MSBuild.Community.Tasks.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Hibernate/Symbiote.Hibernate.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Redis/Symbiote.Redis.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Redis../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Messaging/Symbiote.Messaging.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Messaging../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.StructureMap/Symbiote.StructureMap.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.StructureMap../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Wcf.Tests/Wcf.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Wcf.Tests/Wcf.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'Microsoft.Practices.ServiceLocation' not resolved
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Wcf.Tests/Wcf.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.WCF/Symbiote.Wcf.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.WCF../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Lucene.Tests/Lucene.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Lucene.Tests/Lucene.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Lucene.Tests/Lucene.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Lucene/Symbiote.Lucene.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Lucene../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Messaging.Tests/Messaging.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'protobuf-net' not resolved
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Mikado.Tests/Mikado.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Mikado.Tests/Mikado.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Mikado.Tests/Mikado.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Mikado/Symbiote.Mikado.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Mikado../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Riak.Tests/Riak.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Riak.Tests/Riak.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Riak.Tests/Riak.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Riak/Symbiote.Riak.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Riak../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Couch.Tests/Couch.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Couch.Tests/Couch.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Couch.Tests/Couch.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Couch/Symbiote.Couch.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Couch../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Net/Symbiote.Net.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (GetTargetPath) ->
+
+	/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Reference 'Microsoft.Practices.ServiceLocation' not resolved
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Eidetic/Symbiote.Eidetic.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Eidetic../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Eidetic.Tests/Eidetic.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/tests/Core.Tests/Core.Tests.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/tests/Core.Tests/Core.Tests.csproj:  warning : A circular reference was found involving the import of $(MSBuildBinPath)\Microsoft.CSharp.targets. Only the first import of this file will be used, ignoring others.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Rabbit.Tests/Rabbit.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Rabbit.Tests/Rabbit.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Rabbit.Tests/Rabbit.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Rabbit/Symbiote.Rabbit.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Rabbit../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (_ValidateEssentialProperties target) ->
+
+	/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Daemon.Tests/Daemon.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Daemon.Tests/Daemon.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Daemon.Tests/Daemon.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (GetCopyToOutputDirectoryItems target) ->
+/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj (GetCopyToOutputDirectoryItems) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (AssignTargetPaths target) ->
+
+	/git/Symbiote/src/Symbiote.Daemon/Symbiote.Daemon.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Daemon../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Http.Tests/Http.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveProjectReferences target) ->
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj (GetTargetPath) ->
+
+	/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj:  warning : Could not find project file /git/Symbiote/src/Symbiote.Http../../../tools/CustomBuildTargets/Symbiote.Targets, to import. Ignoring.
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Http.Tests/Http.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets (ResolveAssemblyReferences target) ->
+
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Core, Version=3.5.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' and 'System.Xml, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089'. Using 'System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089' reference.
+	/opt/mono-2.10/lib/mono/4.0/Microsoft.Common.targets:  warning : Found a conflict between : 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' and 'System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a'. Using 'System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a' reference.
+
+Errors:
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/src/Symbiote.Http/Symbiote.Http.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.CSharp.targets (CoreCompile target) ->
+
+	Config/HttpConfigurator.cs(18,32): error CS0234: The type or namespace name `HttpListener' does not exist in the namespace `Symbiote.Http.NetAdapter'. Are you missing an assembly reference?
+
+/git/Symbiote/Solutions/Symbiote/Symbiote.sln (default targets) ->
+(Build target) ->
+/git/Symbiote/tests/Http.Tests/Http.Tests.csproj (default targets) ->
+/opt/mono-2.10/lib/mono/4.0/Microsoft.CSharp.targets (CoreCompile target) ->
+
+	when_parsing_full_uri_get_request.cs(5,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+	when_parsing_relative_get_request.cs(4,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+	when_parsing_relative_put_request.cs(5,26): error CS0234: The type or namespace name `Impl' does not exist in the namespace `Symbiote.Http.Owin'. Are you missing an assembly reference?
+
+	 146 Warning(s)
+	 4 Error(s)
+
+Time Elapsed 00:00:04.4608160

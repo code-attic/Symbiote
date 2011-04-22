@@ -14,6 +14,10 @@
 // limitations under the License.
 // */
 using System;
+using System.Linq.Expressions;
+using Symbiote.Core.Collections;
+using Symbiote.Core.Reflection;
+using System.Linq;
 
 namespace Symbiote.Core.DI
 {
@@ -46,7 +50,6 @@ namespace Symbiote.Core.DI
         IPluginConfiguration
     {
         private object _concreteInstance { get; set; }
-
         public object ConcreteInstance { get; set; }
         public Type ConcreteType { get; set; }
         public bool HasDelegate { get; set; }
@@ -57,7 +60,7 @@ namespace Symbiote.Core.DI
         public string PluginName { get; set; }
         public Type PluginType { get; set; }
         public Delegate CreatorDelegate { get; set; }
-
+        
         public virtual IPluginConfiguration AsSingleton()
         {
             IsSingleton = true;
@@ -83,6 +86,7 @@ namespace Symbiote.Core.DI
             where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
+            ConcreteType = typeof( TConcrete );
             IsAdd = true;
             return this;
         }
@@ -104,6 +108,7 @@ namespace Symbiote.Core.DI
             where TConcrete : TPlugin
         {
             ConcreteInstance = instance;
+            ConcreteType = typeof( TConcrete );
             HasSingleton = true;
             IsSingleton = true;
             return this;

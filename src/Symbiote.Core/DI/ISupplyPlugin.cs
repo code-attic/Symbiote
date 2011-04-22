@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using System.Linq.Expressions;
 
 namespace Symbiote.Core.DI
 {

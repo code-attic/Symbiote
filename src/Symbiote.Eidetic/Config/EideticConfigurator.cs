@@ -18,7 +18,6 @@ using System.Linq;
 using System.Net;
 using Enyim.Caching.Configuration;
 using Symbiote.Core;
-using Symbiote.Core.Locking;
 using Symbiote.Eidetic.Impl;
 
 namespace Symbiote.Eidetic.Config
@@ -66,12 +65,6 @@ namespace Symbiote.Eidetic.Config
         public EideticConfigurator AddLocalServer()
         {
             Configuration.Servers.Add( GetEndPoint( "localhost", 11211 ) );
-            return this;
-        }
-
-        public EideticConfigurator UseForDistributedLockManagement()
-        {
-            Assimilate.Dependencies( x => x.For<ILockManager>().Use<CacheLockManager>() );
             return this;
         }
 

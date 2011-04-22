@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -21,6 +21,11 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="bash mspec.sh ${ProjectFile} ${ProjectDir}/bin/${ProjectConfigName}/${ProjectName}.dll" workingdir="/git/machine.specifications/Build/Debug/" externalConsole="true" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,6 +35,11 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="bash mspec_html ${ProjectDir}/bin/${ProjectConfigName}/${ProjectName}.dll" workingdir="/git/machine.specifications/Build/Debug" externalConsole="true" pauseExternalConsole="true" />
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,10 +57,20 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Machine.Specifications, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\lib\MSpec\Machine.Specifications.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="with_timer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="when_parsing_full_uri_get_request.cs" />
+    <Compile Include="when_parsing_relative_get_request.cs" />
+    <Compile Include="when_parsing_relative_put_request.cs" />
+    <Compile Include="with_full_uri_get_request.cs" />
+    <Compile Include="with_relative_get_request.cs" />
+    <Compile Include="with_relative_put_request.cs" />
+    <Compile Include="Net\when_adding_sockets_to_loop.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
@@ -69,46 +89,11 @@
       <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
       <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\Symbiote.Net\Symbiote.Net.csproj">
+      <Project>{4FDBCC6D-F199-4A31-A6D1-B5265EA49BA0}</Project>
+      <Name>Symbiote.Net</Name>
+    </ProjectReference>
   </ItemGroup>
-  <Choose>
-    <When Condition=" '$(Configuration)'=='Development' ">
-      <ItemGroup>
-        <ProjectReference Include="..\..\src\Symbiote.Fibers\Symbiote.Fibers.fsproj">
-          <Project>{D59C4A03-AA90-4891-BC64-2634DA41BDA5}</Project>
-          <Name>Symbiote.Fibers</Name>
-        </ProjectReference>
-        <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\JSON.Net\Newtonsoft.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="protobuf-net">
-          <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
-        </Reference>
-        <Reference Include="ServiceStack.Text">
-          <HintPath>..\..\lib\ServiceStack\ServiceStack.Text.dll</HintPath>
-        </Reference>
-        <Reference Include="System.CoreEx, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.CoreEx.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Interactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Interactive.dll</HintPath>
-        </Reference>
-        <Reference Include="System.Reactive, Version=1.0.2698.104, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-          <SpecificVersion>False</SpecificVersion>
-          <HintPath>..\..\lib\ReactiveExtensions\System.Reactive.dll</HintPath>
-        </Reference>
-        <Reference Include="RabbitMQ.Client">
-          <HintPath>..\..\lib\RabbitMQ\RabbitMQ.Client.dll</HintPath>
-        </Reference>
-        <Reference Include="StructureMap">
-          <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-          <IlMerge>True</IlMerge>
-        </Reference>
-      </ItemGroup>
-    </When>
-  </Choose>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
@@ -117,4 +102,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Net\" />
+  </ItemGroup>
 </Project>

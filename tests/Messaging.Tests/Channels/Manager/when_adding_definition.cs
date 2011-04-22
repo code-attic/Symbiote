@@ -167,7 +167,7 @@ namespace Messaging.Tests.Channels.Manager
         };
 
         private It should_cause_exception = () =>
-            Exception.Message.ShouldEqual("There was no definition provided for a channel named test of message type Messaging.Tests.Channels.Manager.DummyMessage. Please check that you have defined a channel before attempting to use it.");
+            Exception.Message.ShouldEqual("There was no definition provided for a channel named test1. Please check that you have defined a channel before attempting to use it.");
     }
 
     public class when_getting_channel_list_for_message

@@ -52,7 +52,9 @@ namespace Symbiote.Messaging
             Action<IEnvelope> reply = null;
             if ( StateMachine.MutuallyExclusive )
             {
-                reply = transitions.First().Execute( actor, message );
+                var transition = transitions.FirstOrDefault();
+                if( transition != null )
+                    reply = transition.Execute( actor, message );
             }
             else
             {
