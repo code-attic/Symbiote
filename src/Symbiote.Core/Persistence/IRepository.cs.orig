@@ -13,21 +13,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using Symbiote.Core;
-using Symbiote.Core.Persistence;
-using Symbiote.Riak.Config;
+<<<<<<< HEAD
 
-namespace Symbiote.Riak
+=======
+>>>>>>> 987a65d821e03b3ca202d27e7896927eff1ab6aa
+namespace Symbiote.Core.Persistence
 {
-    public static class RiakAssimilation
+    public interface IRepository :
+        IDeleteByKey, IGetByKey, IGetAll
     {
-        public static IAssimilate Riak( this IAssimilate assimilate, Action<RiakConfigurator> configurate )
-        {
-            var configurator = new RiakConfigurator();
-            configurate( configurator );
-            Assimilate.Dependencies( x => x.For<IRiakConfiguration>().Use( configurator.Configuration ) );
-            return assimilate;
-        }
+<<<<<<< HEAD
+        bool Delete<T>( T instance );
+        bool Persist<T>( T instance );
+=======
+        bool Delete<T>( T instance ) where T : class;
+        bool Persist<T>( T instance ) where T : class;
+>>>>>>> 987a65d821e03b3ca202d27e7896927eff1ab6aa
     }
 }

@@ -16,7 +16,9 @@ limitations under the License.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using Symbiote.Core.Reflection;
 
 namespace Symbiote.Mikado.Impl
 {
@@ -33,15 +35,22 @@ namespace Symbiote.Mikado.Impl
 
         public virtual void ApplyRules( object target )
         {
-            var rulesToRun = new List<IRule>();
             if( RuleIndex.Rules.ContainsKey( target.GetType() ) )
             {
+                var rulesToRun = new List<IRule>();
                 RuleIndex
                     .Rules[target.GetType()]
                     .ToList()
-                    .ForEach( rulesToRun.Add );
+                    .ForEach(rulesToRun.Add);
+                rulesToRun.ForEach(rule => rule.ApplyRule(target, x => _observers.ForEach(a => a.OnNext(x))));
             }
-            rulesToRun.ForEach( rule => rule.ApplyRule( target, x => _observers.ForEach( a => a.OnNext( x ) ) ) );
+            var targetProps = Reflector.GetProperties( target.GetType() ).Where( x => !x.PropertyType.IsPrimitive && x.PropertyType != typeof(string) && x.PropertyType != typeof(Guid));
+            foreach(var prop in targetProps)
+            {
+                var instanceValue = Reflector.ReadMember( target, prop.Name );
+                if(instanceValue != null)
+                    ApplyRules(instanceValue);
+            }
         }
 
         public virtual IDisposable Subscribe( IObserver<IBrokenRuleNotification> observer )

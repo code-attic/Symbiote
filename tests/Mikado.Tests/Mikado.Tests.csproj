@@ -55,6 +55,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Model\AddressMemento.cs" />
+    <Compile Include="Domain\Model\IHaveAge.cs" />
+    <Compile Include="Domain\Model\IHaveDepartment.cs" />
+    <Compile Include="Domain\Model\IHaveFirstName.cs" />
+    <Compile Include="Domain\Model\IHaveLastName.cs" />
+    <Compile Include="Domain\Model\IManager.cs" />
+    <Compile Include="Domain\Model\IPerson.cs" />
+    <Compile Include="Domain\Model\ITestKey.cs" />
+    <Compile Include="Domain\Model\Manager.cs" />
+    <Compile Include="Domain\Model\ManagerMemento.cs" />
+    <Compile Include="Domain\Model\PersonMemento.cs" />
+    <Compile Include="Domain\Model\TestKeyAccessor.cs" />
     <Compile Include="Mikado Context Tests - Manager.cs" />
     <Compile Include="Domain\Model\Person.cs" />
     <Compile Include="Domain\Rules\AgeMustBePositiveInteger.cs" />
