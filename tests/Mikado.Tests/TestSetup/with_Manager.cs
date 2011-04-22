@@ -14,7 +14,14 @@ namespace Mikado.Tests.TestSetup
                                                               Age = 37,
                                                               FirstName = "Jim",
                                                               LastName = "Cowart",
-                                                              Department = "Development"
+                                                              Department = "Development",
+                                                              Address = new PersonAddress()
+                                                                              {
+                                                                                  Address = "123 Anywhere St.",
+                                                                                  City = "Nashvegas",
+                                                                                  State = "TN",
+                                                                                  ZipCode = "12345"
+                                                                              }
                                                           };
                                         };
     }
