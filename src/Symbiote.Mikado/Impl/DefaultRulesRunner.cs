@@ -47,7 +47,6 @@ namespace Symbiote.Mikado.Impl
             var targetProps = Reflector.GetProperties( target.GetType() ).Where( x => !x.PropertyType.IsPrimitive && x.PropertyType != typeof(string) && x.PropertyType != typeof(Guid));
             foreach(var prop in targetProps)
             {
-                Debug.WriteLine( prop );
                 var instanceValue = Reflector.ReadMember( target, prop.Name );
                 if(instanceValue != null)
                     ApplyRules(instanceValue);
