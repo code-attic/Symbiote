@@ -1,4 +1,5 @@
 ﻿using System;
+using Symbiote.Core;
 using Symbiote.Couch.Impl.Model;
 
 namespace Couch.Tests
@@ -12,6 +13,19 @@ namespace Couch.Tests
         {
             _documentId = Guid.NewGuid();
             CreatedOn = DateTime.Now;
+        }
+    }
+
+    public class TestDocumentKeyAccessor : IKeyAccessor<TestDocument>
+    {
+        public string GetId( TestDocument actor )
+        {
+            return actor.DocumentId.ToString();
+        }
+
+        public void SetId<TKey>( TestDocument actor, TKey key )
+        {
+            actor.DocumentId = Guid.Parse( key.ToString() );
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using Machine.Specifications;
+﻿using System.Linq;
+using Machine.Specifications;
 using Symbiote.Couch.Config;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Core;
-using Symbiote.Couch;
-using Symbiote.StructureMapAdapter;
 
 namespace Couch.Tests
 {
@@ -19,6 +18,7 @@ namespace Couch.Tests
         protected static void WireUpCommandMock(IHttpAction commandMock)
         {
             Assimilate.Dependencies( x => x.For<IHttpAction>().Use( commandMock ) );
+            var total = Assimilate.Assimilation.DependencyAdapter.GetAllInstances<IHttpAction>().Count();
         }
     }
 }

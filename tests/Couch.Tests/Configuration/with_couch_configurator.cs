@@ -1,7 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Couch.Config;
-using Symbiote.StructureMapAdapter;
 
 namespace Couch.Tests.Configuration
 {

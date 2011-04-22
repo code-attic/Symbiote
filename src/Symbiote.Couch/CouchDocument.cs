@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using Symbiote.Core;
 using Symbiote.Core.Serialization;
 using Symbiote.Couch.Impl.Model;
 using Newtonsoft.Json;
@@ -60,6 +61,19 @@ namespace Symbiote.Couch
         public virtual void UpdateKeyFromJson( string jsonKey )
         {
             DocumentId = jsonKey.FromJson<string>();
+        }
+    }
+
+    public class DocumentKeyAccessor : IKeyAccessor<CouchDocument>
+    {
+        public string GetId( CouchDocument actor )
+        {
+            return actor.GetDocumentIdAsJson();
+        }
+
+        public void SetId<TKey>( CouchDocument actor, TKey key )
+        {
+            actor.UpdateKeyFromJson( key.ToString() );
         }
     }
 }

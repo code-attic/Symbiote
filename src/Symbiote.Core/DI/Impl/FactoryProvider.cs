@@ -61,6 +61,9 @@ namespace Symbiote.Core.DI.Impl
 
         public Func<object> BuildFactory( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
         {
+            if (definition.HasDelegate)
+                return () => definition.CreatorDelegate.DynamicInvoke();
+
             ContainerReference = ContainerReference ?? Expression.Constant( container );
             ResolveMethod = ResolveMethod ?? container.GetType().GetMethod( "GetInstance", new Type[] { typeof( Type ) } );
 

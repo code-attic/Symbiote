@@ -149,6 +149,7 @@
     <Compile Include="DI\Container\when_requesting_closed_type_from_generic.cs" />
     <Compile Include="DI\Container\when_requesting_concrete_type.cs" />
     <Compile Include="DI\Container\when_requesting_concrete_open_type.cs" />
+    <Compile Include="DI\Container\when_requesting_type_created_by_delegate_factory.cs" />
     <Compile Include="DI\Container\when_testing_duplicate_singleton_definition.cs" />
     <Compile Include="DI\Container\when_testing_instantiation_baseline.cs" />
     <Compile Include="DI\Container\when_testing_simple_instantiation_scenario.cs" />

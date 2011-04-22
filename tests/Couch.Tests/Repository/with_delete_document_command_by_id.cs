@@ -1,6 +1,7 @@
 ﻿using System;
 using Couch.Tests.Commands;
 using Machine.Specifications;
+using Moq;
 using Symbiote.Core.Serialization;
 using Symbiote.Couch.Impl.Http;
 
@@ -11,9 +12,11 @@ namespace Couch.Tests.Repository
         protected static Guid id;
         protected static CouchUri getUri;
         protected static TestDoc document;
+        protected static Mock<IHttpAction> commandMock;
 
         private Establish context = () =>
                                         {
+                                            commandMock = new Mock<IHttpAction>();
                                             id = Guid.NewGuid();
                                             document = new TestDoc() { DocumentId = id.ToString(), DocumentRevision = "1"};
                                             uri = new CouchUri("http", "localhost", 5984, "symbiotecouch").IdAndRev(id, "1");
@@ -21,7 +24,8 @@ namespace Couch.Tests.Repository
 
                                             commandMock.Setup(x => x.Delete(couchUri));
                                             commandMock
-                                                .Setup(x => x.Get(Moq.It.Is<CouchUri>(u => u.ToString().Equals(getUri.ToString()))))
+                                                //.Setup(x => x.Get(Moq.It.Is<CouchUri>(u => u.ToString().Equals(getUri.ToString()))))
+                                                .Setup( x => x.Get( Moq.It.IsAny<CouchUri>()) )
                                                 .Returns(document.ToJson());
 
                                             WireUpCommandMock(commandMock.Object);

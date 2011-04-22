@@ -1,4 +1,5 @@
 ﻿using Machine.Specifications;
+using Moq;
 using Symbiote.Couch.Impl.Http;
 
 namespace Couch.Tests.Repository
@@ -6,6 +7,7 @@ namespace Couch.Tests.Repository
     public abstract class with_from_view_command : with_document_repository
     {
         protected static string jsonResult;
+        protected static Mock<IHttpAction> commandMock;
 
         private Establish context = () =>
                                         {
@@ -29,7 +31,7 @@ namespace Couch.Tests.Repository
         ]
 }
 ";
-
+                                            commandMock = new Mock<IHttpAction>();
                                             commandMock
                                                 .Setup(x => x.Get(couchUri))
                                                 .Returns(jsonResult);

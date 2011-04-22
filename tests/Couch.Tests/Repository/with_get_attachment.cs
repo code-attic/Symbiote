@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Machine.Specifications;
+using Moq;
 using Symbiote.Couch.Impl.Http;
 
 namespace Couch.Tests.Repository
@@ -9,6 +10,7 @@ namespace Couch.Tests.Repository
     {
         protected static Tuple<string, byte[]> attachment;
         protected static string content;
+        protected static Mock<IHttpAction> commandMock;
 
         private Establish context = () =>
                                         {
@@ -19,7 +21,7 @@ namespace Couch.Tests.Repository
                                             content = "This is some content. Huzzah.";
                                             var bytes = Encoding.UTF8.GetBytes(content);
                                             attachment = Tuple.Create("myattachment", bytes);
-
+                                            commandMock = new Mock<IHttpAction>();
                                             commandMock.Setup(x => x.GetAttachment(couchUri))
                                                 .Returns(attachment);
 

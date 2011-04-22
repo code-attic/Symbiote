@@ -1,5 +1,6 @@
 ﻿using System;
 using Machine.Specifications;
+using Moq;
 using Symbiote.Core.Serialization;
 using Symbiote.Couch.Impl.Http;
 using Symbiote.Couch.Impl.Json;
@@ -11,6 +12,7 @@ namespace Couch.Tests.Repository
     {
         protected static Guid id;
         protected static string json;
+        protected static Mock<IHttpAction> commandMock;
 
         private Establish context = () =>
                                         {
@@ -26,6 +28,7 @@ namespace Couch.Tests.Repository
                                             uri = new CouchUri("http", "localhost", 5984, "symbiotecouch").Id(id);
                                             var saveResponse = new SaveResponse() {Id = id.ToString(), Revision = "3", Success = true};
 
+                                            commandMock = new Mock<IHttpAction>();
                                             commandMock.Setup(x => x.Put(couchUri, It.Is<string>(s => s.Equals(json))))
                                                 .Returns(saveResponse.ToJson(false));
                                             WireUpCommandMock(commandMock.Object);

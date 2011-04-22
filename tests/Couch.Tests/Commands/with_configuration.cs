@@ -1,7 +1,5 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
-using Symbiote.StructureMapAdapter;
-using Symbiote.Couch;
 
 namespace Couch.Tests.Commands
 {

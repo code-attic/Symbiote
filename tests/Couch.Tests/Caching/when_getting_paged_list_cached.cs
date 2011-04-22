@@ -5,7 +5,6 @@ using Moq;
 using Symbiote.Couch;
 using Symbiote.Couch.Impl.Cache;
 using Symbiote.Core;
-using Symbiote.StructureMapAdapter;
 using It = Machine.Specifications.It;
 
 namespace Couch.Tests.Caching
