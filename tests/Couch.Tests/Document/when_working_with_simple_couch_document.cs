@@ -2,8 +2,6 @@
 using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Core.Serialization;
-using Symbiote.Couch;
-using Symbiote.StructureMapAdapter;
 
 namespace Couch.Tests.Document
 {

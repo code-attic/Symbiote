@@ -21,6 +21,6 @@ namespace Core.Tests.Fibers
                     );
             };
         
-        private It should_have_created_first_list_in_order = () => Values["one"].ToList().ShouldEqual( numbers );
+        private It should_have_created_first_list_in_order = () => Values["one"].ToList().All( x => numbers.Contains( x ) );
     }
 }

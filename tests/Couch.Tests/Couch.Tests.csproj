@@ -46,9 +46,6 @@
     <Reference Include="Moq">
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -60,9 +57,6 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="Stucturemap" Condition=" '$(Configuration)' == 'Development' ">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -268,10 +262,6 @@
     <ProjectReference Include="..\..\src\Symbiote.Couch\Symbiote.Couch.csproj">
       <Project>{BE17D6C0-82B8-484F-860B-6801388A43C2}</Project>
       <Name>Symbiote.Couch</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
-      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
-      <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

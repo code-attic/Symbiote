@@ -11,7 +11,7 @@ namespace Couch.Tests.Repository
     {
         protected static IDocumentRepository repository;
         protected static CouchUri uri;
-        protected static Mock<IHttpAction> commandMock;
+        //protected static Mock<IHttpAction> commandMock;
         protected static CouchUri couchUri 
         {
             get
@@ -22,7 +22,7 @@ namespace Couch.Tests.Repository
         
         private Establish context = () =>
                                         {
-                                            commandMock = new Mock<IHttpAction>();
+                                            //commandMock = new Mock<IHttpAction>();
                                             repository = Assimilate.GetInstanceOf<DocumentRepository>();
                                         };
     }

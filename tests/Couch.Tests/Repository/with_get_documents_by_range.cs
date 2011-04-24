@@ -1,12 +1,15 @@
 ﻿using Machine.Specifications;
+using Moq;
 using Symbiote.Couch.Impl.Http;
 
 namespace Couch.Tests.Repository
 {
     public abstract class with_get_documents_by_range : with_document_repository
     {
+        protected static Mock<IHttpAction> commandMock;
         private Establish context = () =>
                                         {
+                                            commandMock = new Mock<IHttpAction>();
                                             uri = new CouchUri("http", "localhost", 5984, "symbiotecouch")
                                                 .ListAll()
                                                 .IncludeDocuments()

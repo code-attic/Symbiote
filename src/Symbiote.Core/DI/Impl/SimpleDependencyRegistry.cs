@@ -23,8 +23,15 @@ namespace Symbiote.Core.DI.Impl
     public class SimpleDependencyRegistry :
         IDependencyAdapter
     {
+        private Func<IDependencyDefinition, IDependencyDefinition, bool> IsDuplicateAdd = 
+            ( x, y ) => x.ConcreteType.Equals( y.ConcreteType ) && x.PluginName == y.PluginName;
+
+        private Func<IDependencyDefinition, IDependencyDefinition, bool> IsDuplicateFor = 
+            ( x, y ) => x.PluginName == y.PluginName;
+
         public ConcurrentDictionary<Type, List<IDependencyDefinition>> Definitions { get; set; }
         public IProvideInstanceFactories Providers { get; set; }
+        
 
         public IEnumerable<Type> RegisteredPluginTypes
         {
@@ -80,22 +87,32 @@ namespace Symbiote.Core.DI.Impl
                     Definitions.ContainsKey( type.GetGenericTypeDefinition() );
         }
 
+        /// <summary>
+        /// If the dependency is a For
+        ///     AND the plugin name matches
+        /// Else If the dependency is an Add
+        ///     AND the concrete type matches
+        /// </summary>
+        /// <param name="dependency"></param>
+        /// <returns></returns>
         public bool IsDuplicate( IDependencyDefinition dependency )
         {
             var definitions = new List<IDependencyDefinition>();
             var duplicate = false;
+            var predicate = dependency.IsAdd
+                            ? IsDuplicateAdd
+                            : IsDuplicateFor;
             if( Definitions.TryGetValue( dependency.PluginType, out definitions ) )
             {
                 duplicate = definitions
-                    .Any( x =>
-                          x.ConcreteType.Equals( x.ConcreteType ) && x.PluginName == x.PluginName );
+                    .Any( x => predicate(x, dependency) );
             }
             return duplicate;
         }
 
         public void Register( IDependencyDefinition dependency )
         {
-            var key = dependency.PluginType.IsGenericType
+            var key = dependency.PluginType.IsGenericType && dependency.ConcreteType.IsGenericType
                           ? dependency.PluginType.GetGenericTypeDefinition()
                           : dependency.PluginType;
             Definitions
@@ -157,14 +174,8 @@ namespace Symbiote.Core.DI.Impl
         public IEnumerable<object> GetAllInstances( Type serviceType )
         {
             var definitions = new List<IDependencyDefinition>();
-            if( Definitions.TryGetValue( serviceType, out definitions ) )
-            {
-                foreach( var definition in definitions )
-                {
-                    yield return GetInstanceFromDefinition( serviceType, definition );
-                }
-            }
-            yield break;
+            Definitions.TryGetValue( serviceType, out definitions );
+            return definitions.Select( x => GetInstanceFromDefinition( serviceType, x ) );
         }
 
         public object GetInstanceFromDefinition( Type serviceType, IDependencyDefinition definition )

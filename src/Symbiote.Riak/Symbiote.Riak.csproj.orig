@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D416A024-3C8A-47CD-A0F3-FC19EC9F1222}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Symbiote.Riak</RootNamespace>
+    <AssemblyName>Symbiote.Riak</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Development|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\dev\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\dev\Symbiote.Riak.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\bin\debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+<<<<<<< HEAD
+    <DocumentationFile>..\..\bin\Symbiote.Riak.XML</DocumentationFile>
+=======
+    <DocumentationFile>..\..\bin\debug\Symbiote.Riak.XML</DocumentationFile>
+>>>>>>> 2e74d6f74cfe2ff807c969605e3fd432198b8ea2
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\bin\release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\bin\release\Symbiote.Riak.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\BucketConfiguration.cs" />
+    <Compile Include="Config\BucketConfigurator.cs" />
+    <Compile Include="Config\IConfigureBucket.cs" />
+    <Compile Include="Impl\Data\BucketProperties.cs" />
+    <Compile Include="Impl\Data\Link.cs" />
+    <Compile Include="IDocumentRepository.cs" />
+    <Compile Include="Impl\ProtoBuf\RequestCode.cs" />
+    <Compile Include="IRiakClient.cs" />
+    <Compile Include="Impl\ITrackVectors.cs" />
+    <Compile Include="Impl\ProtoBuf\BigEndianExtensions.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\ConnectionFactory.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\ConnectionPool.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\IConnectionFactory.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\IConnectionHandle.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\IConnectionPool.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\IConnectionProvider.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\IProtoBufConnection.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\SingleConnectionHandle.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\LockingConnectionPool.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\PooledConnectionHandle.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\PooledConnectionProvider.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\SingleConnectionProvider.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\RiakCommand.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\MapReduceResult.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\RunMapReduce.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\Bucket.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\BucketList.cs" />
+    <Compile Include="Impl\ProtoBuf\BucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\BucketPropertiesSet.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\ClientIdSet.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\Delete.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\Deleted.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\GetBucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\GetClientId.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\GetServerInfo.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\ListBuckets.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\Ping.cs" />
+    <Compile Include="Impl\ICommandFactory.cs" />
+    <Compile Include="Impl\ProtoBuf\RiakSerializer.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\RiakLink.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\Error.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\Client.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\Get.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\ListKeys.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\GetResult.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\KeyList.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\SetClientId.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\Persist.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\Persisted.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\RiakContent.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\RiakPair.cs" />
+    <Compile Include="Impl\ProtoBuf\Response\ServerInformation.cs" />
+    <Compile Include="Impl\ProtoBuf\ByteExtensions.cs" />
+    <Compile Include="Impl\ProtoBuf\Request\SetBucketProperties.cs" />
+    <Compile Include="Impl\ProtoBuf\ProtoBufCommandFactory.cs" />
+    <Compile Include="Impl\ProtoBuf\Connection\ProtoBufConnection.cs" />
+    <Compile Include="Impl\Data\Document.cs" />
+    <Compile Include="Impl\Data\ResponseCode.cs" />
+    <Compile Include="Impl\Data\ServerInfo.cs" />
+    <Compile Include="Impl\RiakClient.cs" />
+    <Compile Include="Impl\VectorRegistry.cs" />
+    <Compile Include="RiakAssimilation.cs" />
+    <Compile Include="Config\IRiakConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Config\RiakConfiguration.cs" />
+    <Compile Include="Config\RiakConfigurator.cs" />
+    <Compile Include="Impl\RiakNode.cs" />
+    <Compile Include="Config\RiakDependencies.cs" />
+    <Compile Include="RiakException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Impl\Http\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">
+      <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
+      <Name>Symbiote.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Symbiote.Riak.nuspec">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildProjectDirectory)..\..\..\tools\CustomBuildTargets\Symbiote.Targets" Condition=" '$(Configuration)'!='Development' " />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

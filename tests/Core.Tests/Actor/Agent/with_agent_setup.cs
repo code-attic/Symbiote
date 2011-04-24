@@ -24,6 +24,7 @@ namespace Core.Tests.Actor.Agent
 
         public static void WireupAgentMocks()
         {
+            ActorFactory.Called = 0;
             MockActorCache = new Mock<IActorCache<DummyActor>>();
             ActorCache = MockActorCache.Object;
 

@@ -15,7 +15,7 @@ namespace Core.Tests.UnitOfWork
 
                                      count = EventListenerManager.Instance;
                                  };
-
+        
         private It should_result_in_singleton_instances = () => count.ShouldEqual( 1 );
     }
 }

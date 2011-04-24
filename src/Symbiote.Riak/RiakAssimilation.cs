@@ -15,6 +15,7 @@
 // */
 using System;
 using Symbiote.Core;
+using Symbiote.Core.Persistence;
 using Symbiote.Riak.Config;
 
 namespace Symbiote.Riak

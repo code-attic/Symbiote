@@ -4,7 +4,6 @@ using Machine.Specifications;
 using Symbiote.Couch;
 using Symbiote.Couch.Impl.Cache;
 using Symbiote.Core;
-using Symbiote.StructureMapAdapter;
 
 namespace Couch.Tests.Caching
 {

@@ -1,5 +1,6 @@
 ﻿using Couch.Tests.Commands;
 using Machine.Specifications;
+using Moq;
 using Symbiote.Couch.Impl.Http;
 
 namespace Couch.Tests.Repository
@@ -8,6 +9,7 @@ namespace Couch.Tests.Repository
     {
         protected static string attachmentName;
         protected static TestDoc document;
+        protected static Mock<IHttpAction> commandMock;
         
         private Establish context = () =>
                                         {
@@ -17,6 +19,7 @@ namespace Couch.Tests.Repository
                                                 .Id(document.DocumentId)
                                                 .Attachment(attachmentName)
                                                 .Revision(document.DocumentRevision);
+                                            commandMock = new Mock<IHttpAction>();
                                             commandMock
                                                 .Setup(x => x.Delete(couchUri));
                                             WireUpCommandMock(commandMock.Object);

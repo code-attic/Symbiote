@@ -14,18 +14,20 @@
 // limitations under the License.
 // */
 <<<<<<< HEAD
-=======
-using System.IO.Pipes;
 
->>>>>>> Beginning work on app domain hot loading
-namespace Symbiote.Messaging.Impl.Adapter
+=======
+>>>>>>> 987a65d821e03b3ca202d27e7896927eff1ab6aa
+namespace Symbiote.Core.Persistence
 {
-    public class NamedPipeListener
+    public interface IRepository :
+        IDeleteByKey, IGetByKey, IGetAll
     {
 <<<<<<< HEAD
+        bool Delete<T>( T instance );
+        bool Persist<T>( T instance );
 =======
-        public NamedPipeServerStream ServerStream { get; set; }
-
->>>>>>> Beginning work on app domain hot loading
+        bool Delete<T>( T instance ) where T : class;
+        bool Persist<T>( T instance ) where T : class;
+>>>>>>> 987a65d821e03b3ca202d27e7896927eff1ab6aa
     }
 }

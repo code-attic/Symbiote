@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Serialization;
 using Newtonsoft.Json;

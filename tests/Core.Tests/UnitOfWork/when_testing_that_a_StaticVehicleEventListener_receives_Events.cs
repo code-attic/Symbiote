@@ -33,7 +33,7 @@ namespace Core.Tests.UnitOfWork
                                                      {
                                                          var dlist = new List<IEventListener>();
                                                          Manager.Listeners.TryGetValue(typeof(VehicleGenericEvent), out dlist);
-                                                         ShouldExtensionMethods.ShouldEqual( dlist.OfType<StaticVehicleEventListener>().First().Events.Count, 1);
+                                                         dlist.OfType<StaticVehicleEventListener>().First().Events.Count.ShouldEqual( 1 );
                                                      };
         private It should_have_heard_the_event_with_the_correct_eventid = () =>
                                                                               {
