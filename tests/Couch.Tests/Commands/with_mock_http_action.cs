@@ -2,6 +2,7 @@
 using Moq;
 using Symbiote.Core;
 using Symbiote.Couch.Impl.Http;
+using It = Machine.Specifications.It;
 
 namespace Couch.Tests.Commands
 {
@@ -15,5 +16,10 @@ namespace Couch.Tests.Commands
                                             mockAction = new Mock<IHttpAction>();
                                             Assimilate.Dependencies( x => x.For<IHttpAction>().CreateWith( () => action ) );
                                         };
+    }
+
+    public class when_testing_blank_action : with_mock_http_action
+    {
+        It should_not_be_null = () => { mockAction.ShouldNotBeNull(); };
     }
 }

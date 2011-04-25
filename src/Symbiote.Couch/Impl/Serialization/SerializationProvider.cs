@@ -81,7 +81,7 @@ namespace Symbiote.Couch.Impl.Metadata
                         (ViewResult<DocumentMetadata>)
                         MetadataSerialzier.Deserialize( reader, typeof( ViewResult<DocumentMetadata> ) );
 
-                    for( int i = 0; i < viewResult.TotalRows; i++ )
+                    for( int i = 0; i < viewResult.Rows.Length; i++ )
                     {
                         var metadata = metadataView.Rows[i];
                         var document = viewResult.Rows[i];

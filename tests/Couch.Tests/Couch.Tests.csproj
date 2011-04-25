@@ -190,9 +190,9 @@
     <Compile Include="Server\when_checking_database_existence.cs" />
     <Compile Include="Server\when_creating_database.cs" />
     <Compile Include="Server\when_deleteing_database.cs" />
-    <Compile Include="Repository\when_deleting_document.cs" />
-    <Compile Include="Repository\when_getting_all_docuemnts.cs" />
-    <Compile Include="Repository\when_getting_all_docuemnts_with_paging.cs" />
+    <Compile Include="Repository\when_deleting_document_by_id_and_rev.cs" />
+    <Compile Include="Repository\when_getting_all_documents.cs" />
+    <Compile Include="Repository\when_getting_all_documents_with_paging.cs" />
     <Compile Include="Repository\when_getting_a_document_by_key.cs" />
     <Compile Include="Repository\when_getting_a_document_by_key_and_rev.cs" />
     <Compile Include="Server\when_getting_list_of_databases.cs" />

@@ -4,7 +4,7 @@ using Machine.Specifications;
 
 namespace Couch.Tests.Repository
 {
-    public class when_getting_all_docuemnts : with_get_all_documents_command
+    public class when_getting_all_documents : with_get_all_documents_command
     {
         private static Exception exception = null;
         private static IList<TestDocument> records;
@@ -23,6 +23,6 @@ namespace Couch.Tests.Repository
                                                      records[0].Message.ShouldEqual("Hello");
                                                      records[0].DocumentRevision.ShouldEqual("2");
                                                  };
-        private It should_call_get_correctly = () => commandMock.Verify(x => x.Get(couchUri));
+        private It should_call_get_correctly = () => commandMock.VerifyAll();
     }
 }
