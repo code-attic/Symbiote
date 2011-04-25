@@ -19,24 +19,26 @@ namespace Symbiote.Core.Log.Impl
 {
     public class NullLogger : ILogger
     {
+        public static bool Called { get; set; }
+
         public void Log( LogLevel level, object message )
         {
-            // do nothing
+            Called = true;
         }
 
         public void Log( LogLevel level, object message, Exception exception )
         {
-            // do nothing
+            Called = true;
         }
 
         public void Log( LogLevel level, string format, params object[] args )
         {
-            // do nothing
+            Called = true;
         }
 
         public void Log( LogLevel level, IFormatProvider provider, string format, params object[] args )
         {
-            // do nothing
+            Called = true;
         }
     }
 }

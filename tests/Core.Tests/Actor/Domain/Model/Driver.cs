@@ -24,8 +24,11 @@ namespace Core.Tests.Actor.Domain.Model
             memento.LastName = LastName;
             memento.DateOfBirth = DateOfBirth;
 
-            memento.CurrentAddress = memento.CreateAddressMemento();
-            CurrentAddress.Populate( memento.CurrentAddress );
+            if( CurrentAddress != null )
+            {
+                memento.CurrentAddress = memento.CreateAddressMemento();
+                CurrentAddress.Populate( memento.CurrentAddress );
+            }
 
             memento.FormerAddresses = FormerAddresses.Select( x =>
             {
@@ -49,25 +52,16 @@ namespace Core.Tests.Actor.Domain.Model
             LastName = memento.LastName;
             DateOfBirth = memento.DateOfBirth;
 
-            CurrentAddress = new Address( memento.CurrentAddress );
+            if( memento.CurrentAddress != null )
+                CurrentAddress = new Address( memento.CurrentAddress );
             FormerAddresses = memento.FormerAddresses.Select( x => new Address( x ) ).ToList();
             Vehicles = memento.Vehicles.Select( x => new Vehicle( x ) ).ToList();
         }
 
         public void ChangeName(string firstName, string lastName)
         {
-            using(var context = Context.CreateFor( this ))
-            {
-                FirstName = firstName;
-                LastName = lastName;
-
-                context.PublishOnCommit<DriverChangedName>(x =>
-                {
-                    x.FirstName = firstName;
-                    x.LastName = lastName;
-                } );
-
-            }
+            FirstName = firstName;
+            LastName = lastName;
         }
 
         public void NewAddress(int streetNumber, string streetName, string city, string state, string zip)

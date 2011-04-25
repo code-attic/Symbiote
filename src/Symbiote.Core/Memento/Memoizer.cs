@@ -42,18 +42,5 @@ namespace Symbiote.Core.Memento
         {
             memento.Reset( instance );
         }
-
-        public Func<IMemento> GetFactoryFor<T>()
-        {
-            return Factories.GetOrAdd( typeof( T ), BuildFactoryFor<T>() );
-        }
-
-        public Func<IMemento> BuildFactoryFor<T>()
-        {
-            var type = Assimilate.Assimilation.DependencyAdapter.GetTypesRegisteredFor<IMemento<T>>().First();
-            var constructor = Expression.New( type );
-            var lambda = Expression.Lambda<Func<IMemento>>( constructor, null );
-            return lambda.Compile();
-        }
     }
 }

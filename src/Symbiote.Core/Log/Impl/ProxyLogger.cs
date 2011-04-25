@@ -19,6 +19,8 @@ namespace Symbiote.Core.Log.Impl
 {
     public class ProxyLogger<T> : ILogger<T>
     {
+        protected ILogManager LogManager { get; set; }
+
         public void Log( LogLevel level, object message )
         {
             LogManager.Log<T>( level, message );
@@ -37,6 +39,11 @@ namespace Symbiote.Core.Log.Impl
         public void Log( LogLevel level, IFormatProvider provider, string format, params object[] args )
         {
             LogManager.Log<T>( level, provider, format, args );
+        }
+
+        public ProxyLogger( ILogManager logManager )
+        {
+            LogManager = logManager;
         }
     }
 }

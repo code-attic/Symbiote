@@ -47,6 +47,7 @@
   <ItemGroup>
     <Reference Include="System">
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
     </Reference>
     <Reference Include="System.Runtime.Serialization">
@@ -59,6 +60,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor\Agency\DummyAgent.cs" />
@@ -117,6 +119,7 @@
     <Compile Include="Collections\when_attempting_writes_in_parallel_to_exclusive_dictionary.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
+    <Compile Include="Config\when_pulling_values_from_config_fluently.cs" />
     <Compile Include="DecisionTree\ProcessThingy.cs" />
     <Compile Include="DecisionTree\ThingyFactory.cs" />
     <Compile Include="DecisionTree\ThingySaga.cs" />
@@ -180,6 +183,7 @@
     <Compile Include="Domain\Listeners\DriverGenericEvent.cs" />
     <Compile Include="Domain\Listeners\VehicleGenericEvent.cs" />
     <Compile Include="Domain\Listeners\VehicleGenericEventChild.cs" />
+    <Compile Include="Extensions\when_converting_from_string_with_extensions.cs" />
     <Compile Include="Extensions\when_parsing_a_lambda.cs" />
     <Compile Include="Extensions\when_enumerable_has_four_elements.cs" />
     <Compile Include="Extensions\when_enumerable_has_one_element.cs" />
@@ -221,6 +225,11 @@
     <Compile Include="Json\when_deserializing_attachments.cs" />
     <Compile Include="Json\when_serializing_objects.cs" />
     <Compile Include="Extensions\with_exception.cs" />
+    <Compile Include="Log\when_logging_without_initialization.cs" />
+    <Compile Include="Log\when_logging_with_test_logger.cs" />
+    <Compile Include="Log\with_log_manager.cs" />
+    <Compile Include="Log\with_test_logger.cs" />
+    <Compile Include="Mementos\when_resetting_instance_from_memento.cs" />
     <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProtoBuf\Base.cs" />
@@ -245,6 +254,14 @@
     <Compile Include="Distributor\Basic\with_simple_distributor_of_lists.cs" />
     <Compile Include="Distributor\Basic\with_value_list.cs" />
     <Compile Include="Serialization\Additive.cs" />
+    <Compile Include="Serialization\Extensions\FullyMarkedWithContract.cs" />
+    <Compile Include="Serialization\Extensions\HasADefaultConstructor.cs" />
+    <Compile Include="Serialization\Extensions\MarkedReadonlyProperties.cs" />
+    <Compile Include="Serialization\Extensions\MarkedWithContractButNoDefaultConstructor.cs" />
+    <Compile Include="Serialization\Extensions\NoDefaultConstructor.cs" />
+    <Compile Include="Serialization\Extensions\PartiallyMarkedWithContract.cs" />
+    <Compile Include="Serialization\Extensions\UnmarkedReadonlyProperties.cs" />
+    <Compile Include="Serialization\Extensions\when_using_serialization_extensions.cs" />
     <Compile Include="Serialization\IHazId.cs" />
     <Compile Include="Serialization\JsonSerializer.cs" />
     <Compile Include="Serialization\JsonTypeSerializationBuilder.cs" />
@@ -272,6 +289,9 @@
     <Compile Include="Utility\Futures\when_using_future_func_with_retries.cs" />
     <Compile Include="Utility\Futures\with_callback.cs" />
     <Compile Include="Utility\Futures\with_function_call.cs" />
+    <Compile Include="Utility\ObserverCollection\TestObserver.cs" />
+    <Compile Include="Utility\ObserverCollection\when_disposing_observer_token.cs" />
+    <Compile Include="Utility\ObserverCollection\with_observer.cs" />
     <Compile Include="Utility\RingBuffer\when_doing_simple_math.cs" />
     <Compile Include="Utility\RingBuffer\when_instantiating_buffer.cs" />
     <Compile Include="Utility\RingBuffer\with_buffer.cs" />
@@ -290,6 +310,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="UnitOfWork\with_EventListenerManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

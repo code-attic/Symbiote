@@ -171,8 +171,9 @@ namespace Symbiote.Core
 
         public static IAssimilate UseTestLogAdapter( this IAssimilate assimilate )
         {
-            assimilate.Dependencies( x => { x.For<ILogProvider>().Use<TestLogProvider>().AsSingleton(); } );
-            LogManager.Initialized = true;
+            assimilate.Dependencies( x => x.For<ILogProvider>().Use<TestLogProvider>().AsSingleton() );
+            var logManager = GetInstanceOf<ILogManager>();
+            logManager.Initialize();
             return assimilate;
         }
     }

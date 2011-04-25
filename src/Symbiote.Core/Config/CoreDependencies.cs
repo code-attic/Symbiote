@@ -30,6 +30,7 @@ namespace Symbiote.Core
         {
             return container =>
                 {
+                    container.For<ILogManager>().Use<LogManager>().AsSingleton();
                     container.For<ILogProvider>().Use<NullLogProvider>();
                     container.For<ILogger>().Use<NullLogger>();
                     container.For( typeof( ILogger<> ) ).Add( typeof( ProxyLogger<> ) );

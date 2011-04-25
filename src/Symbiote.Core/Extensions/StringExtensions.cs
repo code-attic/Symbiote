@@ -89,6 +89,8 @@ namespace Symbiote.Core.Extensions
                           },
                   };
 
+        private static ILogManager LogManager { get { return Assimilate.GetInstanceOf<ILogManager>(); } }
+
         public static string AsFormat( this string format, params object[] args )
         {
             return string.Format( format, args );

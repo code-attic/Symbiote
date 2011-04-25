@@ -7,8 +7,8 @@ namespace Symbiote.Log4Net.Config
     {
         public void Initialize()
         {
-            if( !LogManager.Initialized )
-                LogManager.Initialize();
+            var logManager = Assimilate.GetInstanceOf<ILogManager>();
+            logManager.Initialize();
         }
     }
 }

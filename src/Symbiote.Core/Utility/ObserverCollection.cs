@@ -23,13 +23,15 @@ namespace Symbiote.Core.Utility
     {
         protected ConcurrentDictionary<Guid, IObserver<TEvent>> Observers { get; set; }
 
-        public IDisposable AddObserver( IObserver<TEvent> observer )
+        public int Count { get { return Observers.Count; } }
+
+            public IDisposable AddObserver( IObserver<TEvent> observer )
         {
             var token = new ObserverToken( RemoveObserver );
             Observers.TryAdd( token.Id, observer );
             return token;
         }
-
+        
         public void OnEvent( TEvent e )
         {
             Notify( x => x.OnNext( e ) );

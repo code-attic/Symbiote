@@ -878,7 +878,6 @@
     <Compile Include="Futures\FutureAction.cs" />
     <Compile Include="Futures\FutureResult.cs" />
     <Compile Include="Futures\Future.cs" />
-    <Compile Include="Utility\HierarchyVisitor.cs" />
     <Compile Include="Utility\ObserverCollection.cs" />
     <Compile Include="Utility\ObserverToken.cs" />
     <Compile Include="UnitOfWork\EventBase.cs" />
