@@ -5,13 +5,12 @@ using Symbiote.Messaging;
 
 namespace Core.Tests.DecisionTree
 {
-    public class when_running_thingy_saga
+    public class when_running_thingy_saga : with_assimilation
     {
         static IBus Bus { get; set; }
 
         private Establish context = () => 
                                         { 
-                                            Assimilate.Initialize();
                                             Bus = Assimilate.GetInstanceOf<IBus>(  );
                                             Bus.AddLocalChannel( x => x.CorrelateBy<ProcessThingy>( p => p.ThingyId ) );
 

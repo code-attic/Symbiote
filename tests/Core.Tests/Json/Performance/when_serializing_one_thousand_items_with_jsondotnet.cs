@@ -28,7 +28,7 @@ namespace Core.Tests.Json.Performance
                                      watch.Stop();
                                  };
 
-        private It should_not_take_for_freaking_ever = () => watch.ElapsedMilliseconds.ShouldBeLessThan(100);
+        private It should_not_take_for_freaking_ever = () => watch.ElapsedMilliseconds.ShouldBeLessThan(400);
 
     }
 }

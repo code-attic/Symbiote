@@ -19,7 +19,7 @@ namespace Core.Tests.Actor.Agency
 
         private It should_create_one_agent = () => DummyAgent.Instantiated.ShouldEqual(1);
         private It should_request_agent_specified_times = () => MockAgentFactory.Verify(x => x.GetAgentFor<DummyActor>(), Times.AtMost( 1 ));
-        private It should_have_several_in_waiting = () => TestAgency.Agents.MostWaiting.ShouldBeGreaterThan( 1 );
+        //private It should_have_several_in_waiting = () => TestAgency.Agents.MostWaiting.ShouldBeGreaterThan( 1 );
         private It should_retain_first_instance = () => (TestAgency.Agents[typeof(DummyActor)] as DummyAgent).InstanceId = 1;
     }
 }

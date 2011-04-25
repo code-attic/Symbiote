@@ -16,8 +16,10 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Symbiote.Core.Extensions;
+using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core.DI.Impl
 {
@@ -189,7 +191,7 @@ namespace Symbiote.Core.DI.Impl
             }
             else
             {
-                definitions = definitions ?? new List<IDependencyDefinition>();    
+                definitions = definitions ?? new List<IDependencyDefinition>();
             }
 
             var matches = definitions

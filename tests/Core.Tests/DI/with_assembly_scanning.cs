@@ -13,16 +13,14 @@ namespace Core.Tests.DI
         
     }
 
-    public abstract class with_assembly_scanning
+    public abstract class with_assembly_scanning : with_assimilation
     {
         private Establish context = () =>
                                         {
                                             Assimilate
-                                                .Initialize()
                                                 .Dependencies(x => x.Scan(s =>
                                                                               {
                                                                                   s.AddAllTypesOf<IAmAnInterface>();
-                                                                                  s.AddSingleImplementations();
                                                                               }));
                                         };
 

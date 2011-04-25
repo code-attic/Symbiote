@@ -20,6 +20,12 @@ namespace Core.Tests.Actor.Agent
                                      var instance2 = testAgent.GetActor( "test" );
                                  };
 
+        Cleanup reset_counter = () =>
+                                    {
+                                        Factory.Called = 0;
+                                        DummyActor.Instantiated = 0;
+                                    };
+
         private It should_have_cached_instance_in_memory = () => Agent.Actors.Count.ShouldEqual( 1 );
     }
 }

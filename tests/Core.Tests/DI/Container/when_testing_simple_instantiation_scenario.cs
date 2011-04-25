@@ -20,6 +20,6 @@ namespace Core.Tests.DI.Container
                 watch.Stop();
             };
 
-        private It should_run_in_under_10_ms = () => watch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 10 );
+        private It should_run_in_under_10_ms = () => watch.ElapsedMilliseconds.ShouldBeLessThanOrEqualTo( 20 );
     }
 }

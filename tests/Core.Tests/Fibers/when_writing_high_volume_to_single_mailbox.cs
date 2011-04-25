@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Machine.Specifications;
 
 namespace Core.Tests.Fibers
@@ -10,7 +11,7 @@ namespace Core.Tests.Fibers
     {
         private static List<int> numbers;
         private static Stopwatch watch;
-        private static int total = 1000000;
+        private static int total = 10000;
 
         private Because of = () =>
             {
@@ -21,6 +22,8 @@ namespace Core.Tests.Fibers
                 numbers.ForEach( x => director.Send( x ) );
 
                 watch.Stop();
+
+                Thread.Sleep( 200 );
             };
 
         private It should_finish_in_1_second = () => 

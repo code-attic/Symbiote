@@ -5,7 +5,7 @@ using Symbiote.Core.Serialization;
 namespace Core.Tests.Json
 {
     [Subject("JSON Deserialization")]
-    public class when_deserializing_attachments : with_core_assimilation
+    public class when_deserializing_attachments : with_assimilation
     {
         protected static string test = @"{""_id"":""attachment_doc"",""_attachments"":{""foo.txt"":{""content_type"":""text/plain"",""data"":""abcdef""},""bar.txt"":{""content_type"":""text/plain"",""data"":""abcdef""}}}";
 

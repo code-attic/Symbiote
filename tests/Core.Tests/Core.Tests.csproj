@@ -220,7 +220,6 @@
     <Compile Include="Json\when_adding_attachment_stub.cs" />
     <Compile Include="Json\when_deserializing_attachments.cs" />
     <Compile Include="Json\when_serializing_objects.cs" />
-    <Compile Include="Json\with_core_assimilation.cs" />
     <Compile Include="Extensions\with_exception.cs" />
     <Compile Include="Mementos\with_driver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

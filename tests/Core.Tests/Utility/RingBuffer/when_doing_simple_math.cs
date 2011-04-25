@@ -36,6 +36,6 @@ namespace Core.Tests.Utility.RingBuffer
 
         private It should_have_completed_all_steps = () => ShouldExtensionMethods.ShouldBeTrue( Counts.All(x => x == 100) );
         private It should_have_all_items = () => Counts.Count.ShouldEqual(TOTAL_WRITES);
-        private It should_take_1_second = () => Watch.ElapsedMilliseconds.ShouldBeLessThan(1000);
+        private It should_take_1_second = () => Watch.ElapsedMilliseconds.ShouldBeLessThan(1500);
     }
 }
