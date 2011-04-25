@@ -16,6 +16,6 @@ namespace Couch.Tests.Server
 
         private It should_check_without_exception = () => exception.ShouldBeNull();
         private It should_find_database = () => exists.ShouldBeTrue();
-        private It should_call_get_correctly = () => commandMock.Verify(x => x.Get(couchUri));
+        private It should_call_get_correctly = () => commandMock.VerifyAll();
     }
 }

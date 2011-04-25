@@ -30,6 +30,6 @@ namespace Couch.Tests.Commands.GettingDocuments
                 watch.Stop();
             };
 
-        private It should_not_take_longer_than_2_seconds = () => watch.ElapsedMilliseconds.ShouldBeLessThan( 2000 );
+        private It should_not_take_longer_than_2_seconds = () => watch.ElapsedMilliseconds.ShouldBeLessThan( 3000 );
     }
 }

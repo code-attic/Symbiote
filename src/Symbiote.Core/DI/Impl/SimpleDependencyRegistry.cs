@@ -84,7 +84,7 @@ namespace Symbiote.Core.DI.Impl
         {
             return type.IsConcrete() || 
                     Definitions.ContainsKey( type ) ||
-                    Definitions.ContainsKey( type.GetGenericTypeDefinition() );
+                    ( type.IsGenericType && Definitions.ContainsKey( type.GetGenericTypeDefinition() ) );
         }
 
         /// <summary>
@@ -125,14 +125,41 @@ namespace Symbiote.Core.DI.Impl
                                   {
                                       if( IsDuplicate( dependency )  )
                                       {
-                                          if( dependency.IsAdd )
-                                            y.RemoveAll( d => d.PluginName == dependency.PluginName && d.ConcreteType == dependency.ConcreteType );
-                                          else
-                                            y.RemoveAll( d => d.PluginName == dependency.PluginName );
+                                          EliminateDuplicateDependencies( dependency, y, key );
                                       }
                                       y.Add( dependency );
                                       return y;
                                   } );
+        }
+
+        public void EliminateDuplicateDependencies( IDependencyDefinition newDependency, List<IDependencyDefinition> dependencies, Type requestedType )
+        {
+            if( newDependency.IsAdd )
+            {
+                dependencies.RemoveAll( d => 
+                                 {
+                                     var remove = false;
+                                     if( d.PluginName == newDependency.PluginName && d.ConcreteType == newDependency.ConcreteType )
+                                     {
+                                         Providers.RemoveProvider( requestedType, d );
+                                         remove = true;
+                                     }
+                                     return remove;
+                                 } );
+            }
+            else
+            {
+                dependencies.RemoveAll( d => 
+                                 {
+                                     var remove = false;
+                                     if( d.PluginName == newDependency.PluginName )
+                                     {
+                                         Providers.RemoveProvider( requestedType, d );
+                                         remove = true;
+                                     }
+                                     return remove;
+                                 } );
+            }
         }
 
         public void Reset()

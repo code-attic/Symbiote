@@ -19,7 +19,8 @@ namespace Couch.Tests.Repository
         {
             get
             {
-                return Moq.It.Is<CouchUri>(u => u.ToString().Equals(uri.ToString()));
+                //return Moq.It.Is<CouchUri>(u => u.ToString().Equals(uri.ToString()));
+                return Moq.It.IsAny<CouchUri>();
             }
         }
 
@@ -27,10 +28,10 @@ namespace Couch.Tests.Repository
                                         {
                                             repository = Assimilate.GetInstanceOf<DocumentRepository>();
                                             commandMock = new Mock<IHttpAction>();
-                                            id = Guid.NewGuid();
+                                            id = Guid.Empty;
                                             uri = new CouchUri("http", "localhost", 5984, "symbiotecouch").Id(id);
                                             commandMock
-                                                .Setup(x => x.Get( couchUri ))
+                                                .Setup(x => x.Get( Moq.It.IsAny<CouchUri>() ))
                                                 .Returns(@"{{_id : ""{0}"", _rev : ""1"", Message : ""Hello"" }}".AsFormat(id));
                                             WireUpCommandMock(commandMock.Object);
                                         };

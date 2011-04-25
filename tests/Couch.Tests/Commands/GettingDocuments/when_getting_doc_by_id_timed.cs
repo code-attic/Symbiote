@@ -25,6 +25,6 @@ namespace Couch.Tests.Commands.GettingDocuments
                 watch.Stop();
             };
 
-        private It should_take_less_than_1_second = () => watch.ElapsedMilliseconds.ShouldBeLessThan( 1000 );
+        private It should_take_less_than_1_second = () => watch.ElapsedMilliseconds.ShouldBeLessThan( 1100 );
     }
 }

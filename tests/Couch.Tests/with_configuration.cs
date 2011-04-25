@@ -17,6 +17,8 @@ namespace Couch.Tests
 
         protected static void WireUpCommandMock(IHttpAction commandMock)
         {
+            var mock = Assimilate.GetAllInstancesOf<IHttpAction>();
+            
             Assimilate.Dependencies( x => x.For<IHttpAction>().Use( commandMock ) );
         }
     }
