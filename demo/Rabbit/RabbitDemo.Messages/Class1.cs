@@ -3,14 +3,14 @@ using System.Runtime.Serialization;
 
 namespace RabbitDemo.Messages
 {
-    [DataContract]
+    //[DataContract]
     public class Message
     {
-        [DataMember(Order = 1)]
+        //[DataMember(Order = 1)]
         public string CorrelationId { get; set; }
-        [DataMember(Order = 2)]
+        //[DataMember(Order = 2)]
         public int MessageId { get; set; }
-        [DataMember(Order = 3)]
+        //[DataMember(Order = 3)]
         public DateTime TimeStamp { get; set; }
 
         public Message() {}

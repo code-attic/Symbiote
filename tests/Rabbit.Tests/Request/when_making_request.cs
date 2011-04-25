@@ -15,7 +15,7 @@ namespace Rabbit.Tests.Request
         {
             Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
-            Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 75 );
+            Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 750 );
         };
         
         private It should_have_response = () => Reply.Text.ShouldEqual("I have an answer!");

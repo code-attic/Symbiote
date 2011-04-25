@@ -13,14 +13,14 @@ namespace Symbiote.Rabbit.Config
     {
         public Action<DependencyConfigurator> DefineDependencies()
         {
-            var configuration = Assimilate.GetInstanceOf<RabbitConfiguration>();
             return x =>
                        {
+                           x.For<RabbitConfiguration>()
+                               .Use<RabbitConfiguration>()
+                               .AsSingleton();
                            x.For<IConnectionManager>()
                                .Use<ConnectionManager>()
                                .AsSingleton();
-                           x.For<RabbitConfiguration>()
-                               .Use( configuration );
                            x.For<IChannelProxyFactory>()
                                .Use<ChannelProxyFactory>();
                            x.For<IEndpointManager>()

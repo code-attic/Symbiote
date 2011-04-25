@@ -30,35 +30,6 @@ namespace Symbiote.Core.DI.Impl
         public ConstantExpression ContainerReference { get; set; }
         public MethodInfo ResolveMethod { get; set; }
         
-        public IProvideInstance GetProviderForPlugin<TRequest>( IDependencyDefinition definition, IDependencyAdapter container )
-        {
-            return GetProviderForPlugin( typeof( TRequest ), definition, container );
-        }
-
-        public IProvideInstance GetProviderForPlugin( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
-        {
-            return Providers
-                .ReadOrWrite( 
-                    Tuple.Create( requested, definition.ConcreteType, definition.PluginName ?? ""), 
-                    () => CreateProvider( requested, definition, container ) );
-        }
-
-        public IProvideInstance CreateProvider( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
-        {
-            IProvideInstance valueProvider = null;
-            if( definition.IsSingleton )
-            {
-                valueProvider = definition.HasSingleton
-                                    ? new SingletonFactory( definition.ConcreteInstance )
-                                    : new SingletonFactory( BuildFactory( requested, definition, container ) );
-            }
-            else
-            {
-                valueProvider = new InstanceFactory( BuildFactory( requested, definition, container ) );
-            }
-            return valueProvider;
-        }
-
         public Func<object> BuildFactory( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
         {
             if (definition.HasDelegate)
@@ -92,6 +63,46 @@ namespace Symbiote.Core.DI.Impl
             var castExpr = Expression.Convert( newExpr, typeof( object ) );
             return Expression.Lambda<Func<object>>( castExpr ).Compile();
         }
+
+        public IProvideInstance CreateProvider( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
+        {
+            IProvideInstance valueProvider = null;
+            if( definition.IsSingleton )
+            {
+                valueProvider = definition.HasSingleton
+                                    ? new SingletonFactory( definition.ConcreteInstance )
+                                    : new SingletonFactory( BuildFactory( requested, definition, container ) );
+            }
+            else
+            {
+                valueProvider = new InstanceFactory( BuildFactory( requested, definition, container ) );
+            }
+            return valueProvider;
+        }
+
+        public IProvideInstance GetProviderForPlugin<TRequest>( IDependencyDefinition definition, IDependencyAdapter container )
+        {
+            return GetProviderForPlugin( typeof( TRequest ), definition, container );
+        }
+
+        public IProvideInstance GetProviderForPlugin( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
+        {
+            return Providers
+                .ReadOrWrite( 
+                    Tuple.Create( requested, definition.ConcreteType, definition.PluginName ?? ""), 
+                    () => CreateProvider( requested, definition, container ) );
+        }
+
+        public void RemoveProvider<TRequest>( IDependencyDefinition definition )
+        {
+            RemoveProvider( typeof( TRequest), definition );
+        }
+
+        public void RemoveProvider( Type requested, IDependencyDefinition definition )
+        {
+            Providers.Remove( Tuple.Create( requested, definition.ConcreteType, definition.PluginName ?? "") );
+        }
+
 
         public FactoryProvider()
         {

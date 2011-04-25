@@ -76,6 +76,7 @@
     <Compile Include="Local\HandleInterface\MessageA.cs" />
     <Compile Include="Local\HandleInterface\MessageB.cs" />
     <Compile Include="Local\HandleInterface\when_testing_handling_messages_with_common_interface.cs" />
+    <Compile Include="Local\Performance\when_sending_a_million_messages.cs" />
     <Compile Include="MessageSerializers\BinaryAndJsonMessage.cs" />
     <Compile Include="MessageSerializers\IncompatibleMessage.cs" />
     <Compile Include="MessageSerializers\JsonOnlyMessage.cs" />

@@ -26,8 +26,8 @@ namespace Symbiote.Rabbit
         {
             var configuration = Assimilate.GetInstanceOf<RabbitConfiguration>();
             configurate( configuration );
-            Assimilate.Dependencies( x => x.For<RabbitConfiguration>()
-                                              .Use( configuration ) );
+            //Assimilate.Dependencies( x => x.For<RabbitConfiguration>()
+            //                                  .Use( configuration ) );
             if ( configuration.AsNode )
             {
                 var initializer = Assimilate.GetInstanceOf<INodeChannelManager>();

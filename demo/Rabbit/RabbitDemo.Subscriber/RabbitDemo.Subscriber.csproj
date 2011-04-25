@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\bin\debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\..\bin\debug\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Daemon">
+      <HintPath>..\..\..\bin\debug\Symbiote.Daemon.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Log4Net">
+      <HintPath>..\..\..\bin\debug\Symbiote.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Messaging">
+      <HintPath>..\..\..\bin\debug\Symbiote.Messaging.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,14 +59,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Symbiote.Log4Net, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -61,25 +68,17 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RabbitDemo.Messages\RabbitDemo.Messages.csproj">
-      <Project>{5045939B-F75D-42AD-95B3-C87B824715A6}</Project>
-      <Name>RabbitDemo.Messages</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
-      <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
-      <Name>Symbiote.Messaging</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\Symbiote.Rabbit\Symbiote.Rabbit.csproj">
       <Project>{8E1293E3-E238-4C04-8291-3CF6299E5222}</Project>
       <Name>Symbiote.Rabbit</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\src\Symbiote.Daemon\Symbiote.Daemon.csproj">
-      <Project>{CB367053-4CC6-4F58-BD6B-434FF601D765}</Project>
-      <Name>Symbiote.Daemon</Name>
+    <ProjectReference Include="..\RabbitDemo.Messages\RabbitDemo.Messages.csproj">
+      <Project>{5045939B-F75D-42AD-95B3-C87B824715A6}</Project>
+      <Name>RabbitDemo.Messages</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
