@@ -35,7 +35,8 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected RabbitEndpoint RabbitEndpoint { get; set; }
         protected IMessageSerializer Serializer { get; set; }
         protected bool Running { get; set; }
-        protected RingBuffer RingBuffer { get; set; }
+        //protected RingBuffer RingBuffer { get; set; }
+        protected IEventLoop Loop { get; set; }
 
         public override void HandleBasicDeliver(
             string consumerTag,
@@ -46,18 +47,24 @@ namespace Symbiote.Rabbit.Impl.Adapter
             IBasicProperties properties,
             byte[] body )
         {
-            var envelope = GetEnvelope( properties );
-            envelope.ByteStream = body;
-            envelope.Initialize(
-                consumerTag,
-                properties,
-                deliveryTag,
-                exchange,
-                Proxy,
-                redelivered,
-                routingKey
-                );
-            RingBuffer.Write( envelope );
+            Loop.Enqueue( () =>
+                {
+                    var envelope = GetEnvelope( properties );
+                    envelope.ByteStream = body;
+                    envelope.Initialize(
+                        consumerTag,
+                        properties,
+                        deliveryTag,
+                        exchange,
+                        Proxy,
+                        redelivered,
+                        routingKey
+                        );
+
+                    var translatedEnvelope = DeserializeMessage( envelope );
+                    DispatchResult( translatedEnvelope );
+                } );
+            //RingBuffer.Write( envelope );
         }
 
         public RabbitEnvelope GetEnvelope( IBasicProperties basicProperties )
@@ -133,10 +140,12 @@ namespace Symbiote.Rabbit.Impl.Adapter
         public RabbitQueueListener( IChannelProxy proxy, IDispatcher dispatch, RabbitEndpoint endpoint )
         {
             Serializer = Assimilate.GetInstanceOf(endpoint.SerializerType) as IMessageSerializer;
-            RingBuffer = new RingBuffer(10000);
-            RingBuffer.AddTransform(DeserializeMessage);
-            RingBuffer.AddTransform(DispatchResult);
-            RingBuffer.Start();
+            //RingBuffer = new RingBuffer(10000);
+            //RingBuffer.AddTransform(DeserializeMessage);
+            //RingBuffer.AddTransform(DispatchResult);
+            //RingBuffer.Start();
+            Loop = new EventLoop();
+            Loop.Start( 8 );
             Running = true;
             Proxy = proxy;
             Dispatch = dispatch;

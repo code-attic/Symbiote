@@ -3,10 +3,9 @@ using System.Linq;
 using RabbitDemo.Messages;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
-using Symbiote.StructureMapAdapter;
+using Symbiote.Log4Net;
 using Symbiote.Messaging;
 using Symbiote.Rabbit;
-using Symbiote.Log4Net;
 using Symbiote.Daemon;
 
 namespace RabbitDemo.Publisher
@@ -17,10 +16,10 @@ namespace RabbitDemo.Publisher
         {
             Assimilate
                 .Initialize()
-                .Rabbit(x => x.AddBroker(r => r.Defaults().Address("192.168.1.103").Port(5672)))
+                .Rabbit(x => x.AddBroker(r => r.Defaults()))
+                .Daemon(x => x.Name("publisher").Arguments(args))
                 .AddConsoleLogger<Publisher>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
                 .AddConsoleLogger<IDaemon>(x => x.Info().MessageLayout(m => m.TimeStamp().Message().Newline()))
-                .Daemon(x => x.Name("publisher").Arguments(args))
                 .RunDaemon();
         }
     }

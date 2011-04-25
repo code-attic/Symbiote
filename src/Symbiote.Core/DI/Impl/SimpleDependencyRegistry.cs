@@ -17,6 +17,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Core.DI.Impl
 {
@@ -32,7 +33,6 @@ namespace Symbiote.Core.DI.Impl
         public ConcurrentDictionary<Type, List<IDependencyDefinition>> Definitions { get; set; }
         public IProvideInstanceFactories Providers { get; set; }
         
-
         public IEnumerable<Type> RegisteredPluginTypes
         {
             get
@@ -112,16 +112,24 @@ namespace Symbiote.Core.DI.Impl
 
         public void Register( IDependencyDefinition dependency )
         {
-            var key = dependency.PluginType.IsGenericType && dependency.ConcreteType.IsGenericType
-                          ? dependency.PluginType.GetGenericTypeDefinition()
-                          : dependency.PluginType;
+            //var key = dependency.PluginType.IsGenericType && dependency.ConcreteType.IsGenericType
+            //              ? dependency.PluginType.GetGenericTypeDefinition()
+            //              : dependency.PluginType;
+
+            var key = dependency.PluginType;
+
             Definitions
                 .AddOrUpdate( key,
                               x => new List<IDependencyDefinition>() { dependency },
                               ( x, y ) =>
                                   {
                                       if( IsDuplicate( dependency )  )
-                                        y.RemoveAll( d => d.PluginName == dependency.PluginName );
+                                      {
+                                          if( dependency.IsAdd )
+                                            y.RemoveAll( d => d.PluginName == dependency.PluginName && d.ConcreteType == dependency.ConcreteType );
+                                          else
+                                            y.RemoveAll( d => d.PluginName == dependency.PluginName );
+                                      }
                                       y.Add( dependency );
                                       return y;
                                   } );
@@ -156,8 +164,11 @@ namespace Symbiote.Core.DI.Impl
             {
                 definitions = definitions ?? new List<IDependencyDefinition>();    
             }
-            
-            return definitions.FirstOrDefault( x => x.PluginName == key );
+
+            var matches = definitions
+                .Where( x => x.PluginName == key );
+
+            return matches.FirstOrDefault( x => x.IsSingleton ) ?? matches.FirstOrDefault();
         }
 
         public object GetInstance( Type serviceType )

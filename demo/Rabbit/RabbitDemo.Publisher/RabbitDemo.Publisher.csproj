@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -37,6 +37,27 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\bin\debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\..\bin\debug\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Core">
+      <HintPath>..\..\..\bin\debug\Symbiote.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Daemon">
+      <HintPath>..\..\..\bin\debug\Symbiote.Daemon.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Log4Net">
+      <HintPath>..\..\..\bin\debug\Symbiote.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Messaging">
+      <HintPath>..\..\..\bin\debug\Symbiote.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Rabbit">
+      <HintPath>..\..\..\bin\debug\Symbiote.Rabbit.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,30 +65,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Daemon, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Log4Net, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Messaging, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Messaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Rabbit, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />

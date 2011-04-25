@@ -56,10 +56,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Actor.cs" />
+    <Compile Include="ActorKeyAccessor.cs" />
+    <Compile Include="with_rabbit_configuration.cs" />
     <Compile Include="Envelope\when_starting_with_untyped_envelope.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request\when_making_request.cs" />
+    <Compile Include="when_sending_400000_messages_to_60_actors.cs" />
+    <Compile Include="when_sending_messages.cs" />
     <Compile Include="with_assimilation.cs" />
   </ItemGroup>
   <ItemGroup>

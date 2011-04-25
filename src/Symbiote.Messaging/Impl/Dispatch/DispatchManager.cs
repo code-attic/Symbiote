@@ -18,6 +18,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Symbiote.Core;
 using Symbiote.Core.Actor;
 using Symbiote.Core.Extensions;
@@ -31,34 +32,60 @@ namespace Symbiote.Messaging.Impl.Dispatch
         : IDispatcher
     {
         public ConcurrentDictionary<Type, IDispatchMessage> Dispatchers { get; set; }
-        public Director<IEnvelope> Fibers { get; set; }
+        //public Director<IEnvelope> Fibers { get; set; }
         public ConcurrentDictionary<string, IDispatchMessage> ResponseDispatchers { get; set; }
         public ManualResetEventSlim Signal { get; set; }
+        public IEventLoop Loop { get; set; }
         public Random RandomMailbox { get; set; }
 
         public int Count { get; set; }
 
         public void Send<TMessage>( IEnvelope<TMessage> envelope )
         {
-            Count++;
-            Fibers.Send(
-                string.IsNullOrEmpty(
-                    envelope.CorrelationId )
-                    ? (envelope.MessageId.GetHashCode() % 100).ToString()
-                    : envelope.CorrelationId,
-                envelope );
+            var id = string.IsNullOrEmpty(
+                envelope.CorrelationId )
+                         ? ( envelope.MessageId.GetHashCode()%100 ).ToString()
+                         : envelope.CorrelationId;
+
+            Loop.Enqueue( () =>
+                {
+                    SendToHandler( id, envelope );
+                });
         }
 
         public void Send( IEnvelope envelope )
         {
-            Count++;
-            Fibers.Send(
-                string.IsNullOrEmpty(
-                    envelope.CorrelationId )
-                    ? (envelope.MessageId.GetHashCode() % 100).ToString()
-                    : envelope.CorrelationId,
-                envelope );
+            var id = string.IsNullOrEmpty(
+                envelope.CorrelationId )
+                         ? ( envelope.MessageId.GetHashCode()%100 ).ToString()
+                         : envelope.CorrelationId;
+            Loop.Enqueue( () =>
+                {
+                    SendToHandler( id, envelope );
+                });
         }
+
+        //public void Send<TMessage>( IEnvelope<TMessage> envelope )
+        //{
+        //    Count++;
+        //    Fibers.Send(
+        //        string.IsNullOrEmpty(
+        //            envelope.CorrelationId )
+        //            ? (envelope.MessageId.GetHashCode() % 100).ToString()
+        //            : envelope.CorrelationId,
+        //        envelope );
+        //}
+
+        //public void Send( IEnvelope envelope )
+        //{
+        //    Count++;
+        //    Fibers.Send(
+        //        string.IsNullOrEmpty(
+        //            envelope.CorrelationId )
+        //            ? (envelope.MessageId.GetHashCode() % 100).ToString()
+        //            : envelope.CorrelationId,
+        //        envelope );
+        //}
 
         public void ExpectResponse<TResponse>( string correlationId, Action<TResponse> onResponse )
         {
@@ -102,7 +129,8 @@ namespace Symbiote.Messaging.Impl.Dispatch
             var agency = Assimilate.GetInstanceOf<IAgency>();
             agency.RegisterActorOf( "", this );
             // prime director
-            Fibers.Send("", new Envelope<PrimeDirector>(new PrimeDirector()) { CorrelationId = "" });
+            //Fibers.Send("", new Envelope<PrimeDirector>(new PrimeDirector()) { CorrelationId = "" });
+            Loop.Enqueue( () => SendToHandler( "", new Envelope<PrimeDirector>( new PrimeDirector()) { CorrelationId = "" } ) );
             Signal.Wait( 100 );
         }
 
@@ -110,9 +138,82 @@ namespace Symbiote.Messaging.Impl.Dispatch
         {
             Dispatchers = new ConcurrentDictionary<Type, IDispatchMessage>();
             ResponseDispatchers = new ConcurrentDictionary<string, IDispatchMessage>();
-            Fibers = new Director<IEnvelope>( SendToHandler );
+            //Fibers = new Director<IEnvelope>( SendToHandler );
+            Loop = new EventLoop();
+            Loop.Start( 2 );
             Signal = new ManualResetEventSlim();
             WireupDispatchers();
+        }
+    }
+
+    public interface IEventLoop
+    {
+        void Enqueue( Action action );
+        void Start( int workers );
+        void Stop();
+    }
+
+    public class EventLoop :
+        IEventLoop
+    {
+        public bool Running { get; set; }
+        public ConcurrentQueue<Action> ActionQueue { get; set; }
+        //public ManualResetEventSlim Wait { get; set; }
+        public ManualResetEvent Wait { get; set; }
+        public CancellationToken Cancel { get; set; }
+        
+        public void Loop()
+        {
+            Action action = null;
+            while( Running )
+            {
+                if( ActionQueue.TryDequeue( out action ) )
+                {
+                    try
+                    {
+                        action();
+                    }
+                    catch( Exception ex )
+                    {
+                        Console.WriteLine( ex );
+                    }
+                }
+                else 
+                {
+                    //Thread.Sleep( 0 );
+                    Wait.Reset();
+                    //Wait.Wait( Cancel );
+                    Wait.WaitOne();
+                }
+            }
+        }
+
+        public void Enqueue( Action action ) 
+        {
+            ActionQueue.Enqueue( action );
+            Wait.Set();
+        }
+
+        public void Start( int workers ) 
+        {
+            Running = true;
+            for( int i = 0; i < workers; i ++ )
+                Task.Factory.StartNew( Loop );
+        }
+
+        public void Stop() 
+        {
+            Running = false;
+            Cancel.WaitHandle.Close();
+            Wait.Set();
+        }
+
+        public EventLoop( ) 
+        {
+            ActionQueue = new ConcurrentQueue<Action>();
+            //Wait = new ManualResetEventSlim( false, 10 );
+            Wait = new ManualResetEvent( false );
+            Cancel = new CancellationToken();
         }
     }
 }

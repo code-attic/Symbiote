@@ -21,5 +21,7 @@ namespace Symbiote.Core.DI.Impl
     {
         IProvideInstance GetProviderForPlugin<TRequest>( IDependencyDefinition definition, IDependencyAdapter container );
         IProvideInstance GetProviderForPlugin( Type requested, IDependencyDefinition definition, IDependencyAdapter container );
+        void RemoveProvider<TRequest>( IDependencyDefinition definition );
+        void RemoveProvider( Type requested, IDependencyDefinition definition );
     }
 }
