@@ -184,6 +184,7 @@
     <Compile Include="Domain\Listeners\VehicleGenericEvent.cs" />
     <Compile Include="Domain\Listeners\VehicleGenericEventChild.cs" />
     <Compile Include="Extensions\when_converting_from_string_with_extensions.cs" />
+    <Compile Include="Extensions\when_converting_to_unix_time_and_back.cs" />
     <Compile Include="Extensions\when_parsing_a_lambda.cs" />
     <Compile Include="Extensions\when_enumerable_has_four_elements.cs" />
     <Compile Include="Extensions\when_enumerable_has_one_element.cs" />
@@ -275,6 +276,7 @@
     <Compile Include="Serialization\IHazIdKeyAccessor.cs" />
     <Compile Include="Serialization\with_ridiculous_model_instance.cs" />
     <Compile Include="StateMachine\when_transitioning_state.cs" />
+    <Compile Include="Trees\when_adding_nodes_to__trees.cs" />
     <Compile Include="UnitOfWork\when_testing_lifecycle.cs" />
     <Compile Include="UnitOfWork\when_testing_Static_Event_Listeners.cs" />
     <Compile Include="UnitOfWork\when_testing_that_a_StaticDriverEventListener_receives_Events.cs" />

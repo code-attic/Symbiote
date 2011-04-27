@@ -21,7 +21,7 @@ namespace Symbiote.Messaging.Impl.Mesh
     public class NodeRegistry
         : INodeRegistry
     {
-        protected Distributor<string> Nodes { get; set; }
+        protected LoadBalancer<string> Nodes { get; set; }
 
         #region INodeRegistry Members
 
@@ -57,7 +57,7 @@ namespace Symbiote.Messaging.Impl.Mesh
 
         public NodeRegistry()
         {
-            Nodes = new Distributor<string>( 10000 );
+            Nodes = new LoadBalancer<string>( 10000 );
         }
     }
 }

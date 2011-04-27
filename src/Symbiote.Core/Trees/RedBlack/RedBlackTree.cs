@@ -18,14 +18,34 @@ using System.Threading;
 
 namespace Symbiote.Core.Trees
 {
-    public abstract class RedBlackTreeBase<TKey, TValue>
+    public class RedBlackTree<TKey, TValue> : IBalancedTree<TKey, TValue>
     {
         protected ReaderWriterLockSlim Lock { get; set; }
         public IRedBlackLeaf<TKey, TValue> Root { get; set; }
 
+        public virtual void Add( TKey key, TValue value )
+        {
+            Lock.EnterWriteLock();
+            try
+            {
+                var leaf = CreateLeaf( key, value );
+                Root = Insert( Root, leaf );
+                Root.Color = LeafColor.BLACK;
+            }
+            finally
+            {
+                Lock.ExitWriteLock();
+            }
+        }
+
         public virtual int Count
         {
             get { return Root.Count; }
+        }
+
+        public virtual IRedBlackLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
+        {
+            return new RedBlackLeaf<TKey, TValue>( key, value, null );
         }
 
         public virtual void Delete( TKey key )
@@ -69,23 +89,6 @@ namespace Symbiote.Core.Trees
             return leaf.IsEmpty() ? default(TValue) : leaf.Value;
         }
 
-        public virtual void Add( TKey key, TValue value )
-        {
-            Lock.EnterWriteLock();
-            try
-            {
-                var leaf = CreateLeaf( key, value );
-                Root = Insert( Root, leaf );
-                Root.Color = LeafColor.BLACK;
-            }
-            finally
-            {
-                Lock.ExitWriteLock();
-            }
-        }
-
-        protected abstract IRedBlackLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value );
-
         public virtual TValue GetNearest<T>( T key )
         {
             IRedBlackLeaf<TKey, TValue> leaf = Root;
@@ -117,7 +120,7 @@ namespace Symbiote.Core.Trees
                 return last.Value;
         }
 
-        protected IRedBlackLeaf<TKey, TValue> GetMaxLeaf()
+        public IRedBlackLeaf<TKey, TValue> GetMaxLeaf()
         {
             IRedBlackLeaf<TKey, TValue> leaf;
             leaf = Root;
@@ -132,8 +135,8 @@ namespace Symbiote.Core.Trees
             return leaf;
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> Insert( IRedBlackLeaf<TKey, TValue> root,
-                                                              IRedBlackLeaf<TKey, TValue> leaf )
+        public virtual IRedBlackLeaf<TKey, TValue> Insert( IRedBlackLeaf<TKey, TValue> root,
+                                                           IRedBlackLeaf<TKey, TValue> leaf )
         {
             if ( root.IsEmpty() )
             {
@@ -149,7 +152,7 @@ namespace Symbiote.Core.Trees
             return root;
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> Remove( IRedBlackLeaf<TKey, TValue> root, TKey key, ref bool done )
+        public virtual IRedBlackLeaf<TKey, TValue> Remove( IRedBlackLeaf<TKey, TValue> root, TKey key, ref bool done )
         {
             if ( root.IsEmpty() )
             {
@@ -197,8 +200,8 @@ namespace Symbiote.Core.Trees
             return root;
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> BalancePostInsert( IRedBlackLeaf<TKey, TValue> root,
-                                                                         bool direction )
+        public virtual IRedBlackLeaf<TKey, TValue> BalancePostInsert( IRedBlackLeaf<TKey, TValue> root,
+                                                                      bool direction )
         {
             if ( root[direction].IsRed() )
             {
@@ -219,8 +222,8 @@ namespace Symbiote.Core.Trees
             return root;
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> BalancePostDelete( IRedBlackLeaf<TKey, TValue> root,
-                                                                         bool direction, ref bool done )
+        public virtual IRedBlackLeaf<TKey, TValue> BalancePostDelete( IRedBlackLeaf<TKey, TValue> root,
+                                                                      bool direction, ref bool done )
         {
             IRedBlackLeaf<TKey, TValue> worker = root;
             IRedBlackLeaf<TKey, TValue> leaf = root[!direction];
@@ -268,13 +271,13 @@ namespace Symbiote.Core.Trees
             return root;
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> DoubleRotate( IRedBlackLeaf<TKey, TValue> leaf, bool direction )
+        public virtual IRedBlackLeaf<TKey, TValue> DoubleRotate( IRedBlackLeaf<TKey, TValue> leaf, bool direction )
         {
             leaf[!direction] = Rotate( leaf[!direction], !direction );
             return Rotate( leaf, direction );
         }
 
-        protected virtual IRedBlackLeaf<TKey, TValue> Rotate( IRedBlackLeaf<TKey, TValue> leaf, bool direction )
+        public virtual IRedBlackLeaf<TKey, TValue> Rotate( IRedBlackLeaf<TKey, TValue> leaf, bool direction )
         {
             var working = leaf[!direction];
 
@@ -290,7 +293,7 @@ namespace Symbiote.Core.Trees
             return leaf;
         }
 
-        protected RedBlackTreeBase()
+        public RedBlackTree()
         {
             Lock = new ReaderWriterLockSlim();
         }

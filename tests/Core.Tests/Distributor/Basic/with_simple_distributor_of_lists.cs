@@ -9,7 +9,7 @@ namespace Core.Tests.Distributor.Basic
     {
         protected static int listCount { get; set; }
         protected static List<List<long>> lists { get; set; }
-        protected static Distributor<List<long>> distributor { get; set; }
+        protected static LoadBalancer<List<long>> LoadBalancer { get; set; }
         protected static Stopwatch treeWatch { get; set; }
         protected static Stopwatch fetchTimer { get; set; }
         protected static double totalFetched { get; set; }
@@ -20,14 +20,14 @@ namespace Core.Tests.Distributor.Basic
                                         {
                                             listCount = 10;
                                             lists = new List<List<long>>(listCount);
-                                            distributor = new Distributor<List<long>>(1000);
+                                            LoadBalancer = new LoadBalancer<List<long>>(1000);
 
                                             treeWatch = Stopwatch.StartNew();
                                             for (int i = 0; i < listCount; i++)
                                             {
                                                 var list = new List<long>(1000);
                                                 lists.Add(list);
-                                                distributor.AddNode(i.ToString(), list);
+                                                LoadBalancer.AddNode(i.ToString(), list);
                                             }
                                             treeWatch.Stop();
                                         };
@@ -35,7 +35,7 @@ namespace Core.Tests.Distributor.Basic
         protected static void Write(long value)
         {
             fetchTimer = Stopwatch.StartNew();
-            var list = distributor.GetNode(value);
+            var list = LoadBalancer.GetNode(value);
             fetchTimer.Stop();
             totalFetched++;
             totalFetchTime += fetchTimer.ElapsedMilliseconds;

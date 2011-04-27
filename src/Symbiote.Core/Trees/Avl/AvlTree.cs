@@ -18,8 +18,8 @@ using Symbiote.Core.Hashing;
 
 namespace Symbiote.Core.Trees
 {
-    public abstract class AvlTreeBase<TKey, TValue>
-        : ITree<TKey, TValue>
+    public class AvlTree<TKey, TValue>
+        : IBalancedTree<TKey, TValue>
     {
         public IAvlLeaf<TKey, TValue> Root { get; set; }
 
@@ -46,7 +46,10 @@ namespace Symbiote.Core.Trees
             Root = Insert( Root, leaf, ref done );
         }
 
-        protected abstract IAvlLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value );
+        public virtual IAvlLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
+        {
+            return new AvlLeaf<TKey, TValue>( key, value, null );
+        }
 
         public virtual TValue GetNearest<T>( T key )
         {

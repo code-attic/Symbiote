@@ -19,17 +19,17 @@ namespace Symbiote.Core.Extensions
 {
     public static class DateTimeExtensions
     {
-        public static readonly DateTime UnixEpoch = new DateTime( 1970, 1, 1, 0, 0, 0 );
+        public static readonly DateTime UnixEpoch = new DateTime( 1970, 1, 1, 0, 0, 0, DateTimeKind.Utc );
         public static readonly long UnixEpochInTicks = UnixEpoch.Ticks;
 
         public static long ToUnixTimestamp( this DateTime dt )
         {
-            return (dt.Ticks - UnixEpochInTicks)/10000000;
+            return (long) ( dt.ToUniversalTime() - UnixEpoch ).TotalSeconds;
         }
 
         public static DateTime FromUnixTimestamp( this long timestamp )
         {
-            return UnixEpoch.AddSeconds( timestamp );
+            return UnixEpoch.AddSeconds( timestamp ).ToLocalTime();
         }
     }
 }

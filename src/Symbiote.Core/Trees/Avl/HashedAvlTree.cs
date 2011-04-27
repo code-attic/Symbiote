@@ -13,14 +13,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using Symbiote.Core.Hashing;
+
 namespace Symbiote.Core.Trees
 {
-    public class RedBlackTree<TKey, TValue>
-        : RedBlackTreeBase<TKey, TValue>
+    public class HashedAvlTree<TKey, TValue>
+        : AvlTree<TKey, TValue>
     {
-        protected override IRedBlackLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
+        protected IHashingProvider HashProvider { get; set; }
+
+        public override IAvlLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
         {
-            return new RedBlackLeaf<TKey, TValue>( key, value, null );
+            return new HashedAvlLeaf<TKey, TValue>
+                       {
+                           Key = key,
+                           Value = value,
+                           HashKey = HashProvider.Hash( key ),
+                       };
+        }
+
+        public HashedAvlTree()
+        {
+            HashProvider = new MD5HashProvider();
         }
     }
 }

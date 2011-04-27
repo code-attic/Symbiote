@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using Symbiote.Core.Hashing;
 
 namespace Symbiote.Core.Trees
@@ -23,7 +24,7 @@ namespace Symbiote.Core.Trees
         protected static IHashingProvider HashProvider = new MD5HashProvider();
         protected HashedAvlLeaf<TKey, TValue>[] _children = new HashedAvlLeaf<TKey, TValue>[2];
         public long HashKey { get; set; }
-
+        
         public int Balance { get; set; }
         public TKey Key { get; set; }
         public IAvlLeaf<TKey, TValue> Parent { get; set; }

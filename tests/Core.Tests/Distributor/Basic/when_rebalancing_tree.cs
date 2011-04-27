@@ -15,7 +15,7 @@ namespace Core.Tests.Distributor.Basic
                                      {
                                          try
                                          {
-                                             distributor.RebalanceNodeTo( i.ToString(), rebalance_to );
+                                             LoadBalancer.RebalanceNodeTo( i.ToString(), rebalance_to );
                                          }
                                          catch (Exception e)
                                          {
@@ -25,6 +25,6 @@ namespace Core.Tests.Distributor.Basic
                                  };
 
         private It all_nodes_should_have_100_virtual_nodes = () => 
-                                                             ShouldExtensionMethods.ShouldBeTrue( distributor.Nodes.Keys.Select( x => distributor.AliasLookup[x].Count ).All( x => x == rebalance_to ) );
+                                                             ShouldExtensionMethods.ShouldBeTrue( LoadBalancer.Nodes.Keys.Select( x => LoadBalancer.AliasLookup[x].Count ).All( x => x == rebalance_to ) );
     }
 }

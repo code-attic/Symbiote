@@ -18,41 +18,36 @@ using System.Globalization;
 
 namespace Symbiote.Core.Trees
 {
-    public class RedBlackLeaf<TKey, TValue>
-        : IRedBlackLeaf<TKey, TValue>
+    public class AvlLeaf<TKey, TValue>
+        : IAvlLeaf<TKey, TValue>
     {
-        protected IRedBlackLeaf<TKey, TValue>[] _children = new IRedBlackLeaf<TKey, TValue>[2];
+        protected AvlLeaf<TKey, TValue>[] _children = new AvlLeaf<TKey, TValue>[2];
         protected Comparer Comparer { get; set; }
-
-        public LeafColor Color { get; set; }
+        public int Balance { get; set; }
         public TKey Key { get; set; }
-        public IRedBlackLeaf<TKey, TValue> Parent { get; set; }
+        public IAvlLeaf<TKey, TValue> Parent { get; set; }
         public TValue Value { get; set; }
 
-        public IRedBlackLeaf<TKey, TValue> Right
+        public IAvlLeaf<TKey, TValue> Right
         {
             get { return _children[1]; }
             set
             {
-                if ( value != null && !value.Key.Equals( Key ) )
-                    _children[1] = value;
+                var leaf = value as AvlLeaf<TKey, TValue>;
+                if ( leaf != null && !leaf.Key.Equals( Key ) )
+                    _children[1] = leaf;
             }
         }
 
-        public IRedBlackLeaf<TKey, TValue> Left
+        public IAvlLeaf<TKey, TValue> Left
         {
             get { return _children[0]; }
             set
             {
-                if ( value != null && !value.Key.Equals( Key ) )
-                    _children[0] = value;
+                var leaf = value as AvlLeaf<TKey, TValue>;
+                if ( leaf != null && !leaf.Key.Equals( Key ) )
+                    _children[0] = leaf;
             }
-        }
-
-        public IRedBlackLeaf<TKey, TValue> this[ bool right ]
-        {
-            get { return _children[right ? 1 : 0]; }
-            set { _children[right ? 1 : 0] = value; }
         }
 
         public bool IsRoot
@@ -65,14 +60,16 @@ namespace Symbiote.Core.Trees
             get { return GetCount(); }
         }
 
-        public bool GreaterThan( IRedBlackLeaf<TKey, TValue> leaf )
+        public IAvlLeaf<TKey, TValue> this[ bool right ]
         {
-            return GreaterThan( leaf.Key );
+            get { return _children[right ? 1 : 0]; }
+            set { _children[right ? 1 : 0] = value as AvlLeaf<TKey, TValue>; }
         }
 
-        public bool LessThan( IRedBlackLeaf<TKey, TValue> leaf )
+        public TValue Get( TKey key )
         {
-            return LessThan( leaf.Key );
+            var leaf = Seek( key );
+            return leaf.IsEmpty() ? default(TValue) : leaf.Value;
         }
 
         protected int GetCount()
@@ -85,20 +82,35 @@ namespace Symbiote.Core.Trees
 
         public bool GreaterThan( TKey key )
         {
-            return Comparer.Compare( Key, key ) >= 1;
+            return Comparer.Compare( Key, key) > 0;
         }
 
         public bool LessThan( TKey key )
         {
-            return Comparer.Compare( Key, key ) < 0;
+            return Comparer.Compare( Key, key) < 0;
         }
 
-        public RedBlackLeaf( TKey key, TValue value, RedBlackLeaf<TKey, TValue> parent )
+        public IAvlLeaf<TKey, TValue> Seek( TKey key )
         {
-            Parent = parent;
+            if ( key.Equals( Key ) )
+            {
+                return this;
+            }
+            else if ( LessThan( key ) )
+            {
+                return Right.IsEmpty() ? null : _children[1].Seek( key );
+            }
+            else
+            {
+                return Left.IsEmpty() ? null : _children[0].Seek( key );
+            }
+        }
+
+        public AvlLeaf( TKey key, TValue value, IAvlLeaf<TKey, TValue> parent )
+        {
             Key = key;
+            Parent = parent;
             Value = value;
-            Color = LeafColor.RED;
             Comparer = new Comparer( CultureInfo.InvariantCulture );
         }
     }

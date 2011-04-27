@@ -21,32 +21,6 @@ namespace Symbiote.Core.Extensions
 {
     public static class IEnumerableExtenders
     {
-        public static IEnumerable<T> Flatten<T>( this IEnumerable<IEnumerable<T>> nestedCollection )
-        {
-            return nestedCollection.SelectMany( c => c );
-        }
-
-        public static Dictionary<K, V> ZipToDictionary<K, V>( this IEnumerable<K> keys, IEnumerable<V> values )
-        {
-            var keyList = new List<K>();
-            return keys.Take( values.Count() ).ToDictionary(
-                key =>
-                    {
-                        keyList.Add( key );
-                        return key;
-                    },
-                key => values.ElementAt( keyList.Count - 1 ) );
-        }
-
-        public static List<Tuple<K, V>> Zip<K, V>( this IEnumerable<K> collection1, IEnumerable<V> collection2 )
-        {
-            var index = 0;
-            return collection1
-                .Take( collection2.Count() )
-                .Select( value1 => Tuple.Create( value1, collection2.ElementAt( index++ ) ) )
-                .ToList();
-        }
-
         public static void ForEach<T>( this IEnumerable<T> enumerable, Action<T> action )
         {
             if ( enumerable == null )
@@ -59,11 +33,6 @@ namespace Symbiote.Core.Extensions
             {
                 action( t );
             }
-        }
-
-        public static string BuildString( this IEnumerable<string> source, string delimiter )
-        {
-            return String.Join( delimiter, source );
         }
 
         public static IEnumerable<IEnumerable<T>> UniquePermutations<T>( this IEnumerable<T> enumerable )
@@ -79,13 +48,6 @@ namespace Symbiote.Core.Extensions
                 permutations
                     .Take( total )
                     .Select( x => x ).ToList();
-        }
-
-        public static T TakeRandomly<T>( this IEnumerable<T> enumerable )
-        {
-            var rnd = new Random( (int) DateTime.UtcNow.TimeOfDay.TotalSeconds );
-            var index = rnd.Next( 0, enumerable.Count() );
-            return enumerable.Skip( index ).Take( 1 ).First();
         }
     }
 }

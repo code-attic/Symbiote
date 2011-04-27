@@ -18,11 +18,11 @@ using Symbiote.Core.Hashing;
 namespace Symbiote.Core.Trees
 {
     public class HashedRedBlackTree<TKey, TValue>
-        : RedBlackTreeBase<TKey, TValue>, ITree<TKey, TValue>
+        : RedBlackTree<TKey, TValue>
     {
         protected IHashingProvider HashProvider { get; set; }
 
-        protected override IRedBlackLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
+        public override IRedBlackLeaf<TKey, TValue> CreateLeaf( TKey key, TValue value )
         {
             var newLeaf = new HashedRedBlackLeaf<TKey, TValue>
                               {
@@ -34,7 +34,7 @@ namespace Symbiote.Core.Trees
             return newLeaf;
         }
 
-        protected override IRedBlackLeaf<TKey, TValue> Insert( IRedBlackLeaf<TKey, TValue> root,
+        public override IRedBlackLeaf<TKey, TValue> Insert( IRedBlackLeaf<TKey, TValue> root,
                                                                IRedBlackLeaf<TKey, TValue> leaf )
         {
             if ( Root.IsEmpty() )

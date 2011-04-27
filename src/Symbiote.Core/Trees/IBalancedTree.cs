@@ -13,13 +13,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-namespace Symbiote.Core.Hashing
+namespace Symbiote.Core.Trees
 {
-    public interface ITree<TKey, TValue>
+    public interface IBalancedTree<TKey, TValue>
     {
+        void Add( TKey key, TValue value );
         int Count { get; }
         void Delete( TKey key );
         TValue Get( TKey key );
-        void Add( TKey key, TValue value );
+        TValue GetNearest<T>( T key );
     }
 }

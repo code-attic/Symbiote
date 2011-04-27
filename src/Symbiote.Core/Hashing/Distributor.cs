@@ -26,11 +26,11 @@ namespace Symbiote.Core.Hashing
     /// A consistent hashing facility intended to make keyspace mapping problems
     /// simple to solve. Includes support for live rebalancing.
     /// </summary>
-    public class Distributor<TNode>
+    public class LoadBalancer<TNode>
     {
         protected IHashingProvider HashProvider { get; set; }
         protected object Lock { get; set; }
-        protected RedBlackTree<long, string> Map { get; set; }
+        protected IBalancedTree<long, string> Map { get; set; }
         public ConcurrentDictionary<string, List<long>> AliasLookup { get; set; }
         public ConcurrentDictionary<string, TNode> Nodes { get; set; }
 
@@ -184,7 +184,7 @@ namespace Symbiote.Core.Hashing
         /// Initializes a consistent hashing key space where the alias count is the
         /// number of default virtual nodes assigned to a given node
         /// </summary>
-        public Distributor( int aliasCount )
+        public LoadBalancer( int aliasCount )
         {
             AliasCount = aliasCount;
             Map = new RedBlackTree<long, string>();
