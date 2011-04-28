@@ -81,7 +81,7 @@ namespace Symbiote.Core.Trees
                 return last.Value;
         }
 
-        protected IAvlLeaf<TKey, TValue> GetMaxLeaf()
+        public virtual IAvlLeaf<TKey, TValue> GetMaxLeaf()
         {
             IAvlLeaf<TKey, TValue> leaf;
             leaf = Root;

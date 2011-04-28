@@ -35,6 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommandLine">
+      <HintPath>..\..\..\..\bin\debug\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=2.1.1.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\bin\debug\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap">
+      <HintPath>..\..\..\..\bin\debug\StructureMap.dll</HintPath>
+    </Reference>
     <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Symbiote.Core.dll</HintPath>
@@ -55,9 +69,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+    <Reference Include="Symbiote.StructureMap">
+      <HintPath>..\..\..\..\bin\debug\Symbiote.StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
