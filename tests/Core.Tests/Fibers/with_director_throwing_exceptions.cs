@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using Machine.Specifications;
-using Symbiote.Core.Fibers;
+using Symbiote.Core.Concurrency;
 
 namespace Core.Tests.Fibers
 {
     public abstract class with_director_throwing_exceptions
     {
-        public static Director<int> director;
+        public static MailboxManager<int> MailboxManager;
 
         public static Dictionary<string, List<int>> Values;
 
@@ -21,7 +21,7 @@ namespace Core.Tests.Fibers
                         {"three", new List<int>()},
                     };
 
-                director = new Director<int>( ( id, m ) =>
+                MailboxManager = new MailboxManager<int>( ( id, m ) =>
                     {
                         if( m % 3 == 0 )
                             throw new Exception( "AHHH!" );

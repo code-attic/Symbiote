@@ -17,7 +17,7 @@ namespace Core.Tests.Fibers
                     .ForAll( x => 
                              numbers
                                  .AsParallel()
-                                 .ForAll( i => director.Send( x, i ) )
+                                 .ForAll( i => MailboxManager.Send( x, i ) )
                     );
             };
         

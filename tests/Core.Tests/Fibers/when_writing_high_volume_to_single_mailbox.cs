@@ -19,7 +19,7 @@ namespace Core.Tests.Fibers
 
                 watch = Stopwatch.StartNew();
 
-                numbers.ForEach( x => director.Send( x ) );
+                numbers.ForEach( x => MailboxManager.Send( x ) );
 
                 watch.Stop();
 

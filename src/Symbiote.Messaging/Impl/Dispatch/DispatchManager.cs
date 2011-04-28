@@ -21,10 +21,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Symbiote.Core;
 using Symbiote.Core.Actor;
+using Symbiote.Core.Concurrency;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Reflection;
 using Symbiote.Messaging.Impl.Envelope;
-using Symbiote.Core.Fibers;
 
 namespace Symbiote.Messaging.Impl.Dispatch
 {
@@ -143,77 +143,6 @@ namespace Symbiote.Messaging.Impl.Dispatch
             Loop.Start( 2 );
             Signal = new ManualResetEventSlim();
             WireupDispatchers();
-        }
-    }
-
-    public interface IEventLoop
-    {
-        void Enqueue( Action action );
-        void Start( int workers );
-        void Stop();
-    }
-
-    public class EventLoop :
-        IEventLoop
-    {
-        public bool Running { get; set; }
-        public ConcurrentQueue<Action> ActionQueue { get; set; }
-        //public ManualResetEventSlim Wait { get; set; }
-        public ManualResetEvent Wait { get; set; }
-        public CancellationToken Cancel { get; set; }
-        
-        public void Loop()
-        {
-            Action action = null;
-            while( Running )
-            {
-                if( ActionQueue.TryDequeue( out action ) )
-                {
-                    try
-                    {
-                        action();
-                    }
-                    catch( Exception ex )
-                    {
-                        Console.WriteLine( ex );
-                    }
-                }
-                else 
-                {
-                    //Thread.Sleep( 0 );
-                    Wait.Reset();
-                    //Wait.Wait( Cancel );
-                    Wait.WaitOne();
-                }
-            }
-        }
-
-        public void Enqueue( Action action ) 
-        {
-            ActionQueue.Enqueue( action );
-            Wait.Set();
-        }
-
-        public void Start( int workers ) 
-        {
-            Running = true;
-            for( int i = 0; i < workers; i ++ )
-                Task.Factory.StartNew( Loop );
-        }
-
-        public void Stop() 
-        {
-            Running = false;
-            Cancel.WaitHandle.Close();
-            Wait.Set();
-        }
-
-        public EventLoop( ) 
-        {
-            ActionQueue = new ConcurrentQueue<Action>();
-            //Wait = new ManualResetEventSlim( false, 10 );
-            Wait = new ManualResetEvent( false );
-            Cancel = new CancellationToken();
         }
     }
 }

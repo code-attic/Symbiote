@@ -17,6 +17,7 @@ using System;
 using System.IO;
 using System.IO.Pipes;
 using System.Text;
+using Symbiote.Core.Concurrency;
 using Symbiote.Core.Futures;
 using Symbiote.Core.Serialization;
 using Symbiote.Core.Utility;

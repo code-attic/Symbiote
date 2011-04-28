@@ -119,6 +119,10 @@
     <Compile Include="Collections\when_attempting_writes_in_parallel_to_exclusive_dictionary.cs" />
     <Compile Include="Collections\when_writes_exceed_limit.cs" />
     <Compile Include="Collections\with_mrudictionary.cs" />
+    <Compile Include="Concurrency\EventLoop\when_enqueuing_work_to_started_loop.cs" />
+    <Compile Include="Concurrency\EventLoop\when_enqueuing_work_to_stopped_loop.cs" />
+    <Compile Include="Concurrency\EventLoop\when_restarting_loop.cs" />
+    <Compile Include="Concurrency\EventLoop\with_event_loop.cs" />
     <Compile Include="Config\when_pulling_values_from_config_fluently.cs" />
     <Compile Include="DecisionTree\ProcessThingy.cs" />
     <Compile Include="DecisionTree\ThingyFactory.cs" />

@@ -12,7 +12,7 @@ namespace Core.Tests.Fibers
 
         private Because of = () =>
             {
-                numbers.ForEach( x => director.Send( x ) );
+                numbers.ForEach( x => MailboxManager.Send( x ) );
                 Thread.Sleep( 1 );
             };
 

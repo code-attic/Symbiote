@@ -17,8 +17,8 @@ using System;
 using System.Text;
 using RabbitMQ.Client;
 using Symbiote.Core;
+using Symbiote.Core.Concurrency;
 using Symbiote.Core.Extensions;
-using Symbiote.Core.Utility;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Dispatch;
 using Symbiote.Messaging.Impl.Serialization;
@@ -35,7 +35,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
         protected RabbitEndpoint RabbitEndpoint { get; set; }
         protected IMessageSerializer Serializer { get; set; }
         protected bool Running { get; set; }
-        //protected RingBuffer RingBuffer { get; set; }
         protected IEventLoop Loop { get; set; }
 
         public override void HandleBasicDeliver(
@@ -64,7 +63,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
                     var translatedEnvelope = DeserializeMessage( envelope );
                     DispatchResult( translatedEnvelope );
                 } );
-            //RingBuffer.Write( envelope );
         }
 
         public RabbitEnvelope GetEnvelope( IBasicProperties basicProperties )
@@ -140,10 +138,6 @@ namespace Symbiote.Rabbit.Impl.Adapter
         public RabbitQueueListener( IChannelProxy proxy, IDispatcher dispatch, RabbitEndpoint endpoint )
         {
             Serializer = Assimilate.GetInstanceOf(endpoint.SerializerType) as IMessageSerializer;
-            //RingBuffer = new RingBuffer(10000);
-            //RingBuffer.AddTransform(DeserializeMessage);
-            //RingBuffer.AddTransform(DispatchResult);
-            //RingBuffer.Start();
             Loop = new EventLoop();
             Loop.Start( 8 );
             Running = true;

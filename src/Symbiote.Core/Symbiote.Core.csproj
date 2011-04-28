@@ -766,6 +766,8 @@
     <Compile Include="AssimilationException.cs" />
     <Compile Include="Collections\MruDictionary.cs" />
     <Compile Include="Collections\MruNode.cs" />
+    <Compile Include="Concurrency\EventLoop.cs" />
+    <Compile Include="Concurrency\IEventLoop.cs" />
     <Compile Include="Config\CoreDependencies.cs" />
     <Compile Include="Config\CoreScan.cs" />
     <Compile Include="DI\Impl\InstanceFactory.cs" />
@@ -775,10 +777,10 @@
     <Compile Include="DI\Impl\SimpleDependencyRegistry.cs" />
     <Compile Include="DI\Impl\SingletonFactory.cs" />
     <Compile Include="Extensions\DictionaryExtensions.cs" />
-    <Compile Include="Fibers\Director.cs" />
-    <Compile Include="Fibers\IDirector.cs" />
-    <Compile Include="Fibers\Mailbox.cs" />
-    <Compile Include="Fibers\MailboxNode.cs" />
+    <Compile Include="Concurrency\MailboxManager.cs" />
+    <Compile Include="Concurrency\IMailboxManager.cs" />
+    <Compile Include="Concurrency\Mailbox.cs" />
+    <Compile Include="Concurrency\MailboxNode.cs" />
     <Compile Include="IDefineScanningInstructions.cs" />
     <Compile Include="IDefineStandardDependencies.cs" />
     <Compile Include="DI\ScanIndex.cs" />
@@ -864,8 +866,8 @@
     <Compile Include="Log\Impl\NullLogger.cs" />
     <Compile Include="Log\LogManager.cs" />
     <Compile Include="UnitOfWork\EventListenerBase.cs" />
-    <Compile Include="Utility\RingBuffer.cs" />
-    <Compile Include="Utility\RingBufferCell.cs" />
+    <Compile Include="Concurrency\RingBuffer.cs" />
+    <Compile Include="Concurrency\RingBufferCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reflection\Reflector.cs" />
     <Compile Include="DI\IDependencyContainer.cs" />
@@ -898,7 +900,6 @@
     <Compile Include="Actor\KeyAccessAdapter.cs" />
     <Compile Include="UnitOfWork\ReplayContext.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
-    <Compile Include="Fibers\LoopNode.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Symbiote.Core.nuspec">
