@@ -29,6 +29,11 @@ namespace Symbiote.Core.Concurrency
         void Enqueue( Action action );
 
         /// <summary>
+        /// Indicates whether or not the loop is currently dequeueing and executing actions
+        /// </summary>
+        bool Running { get; }
+
+        /// <summary>
         /// Starts the event loop with a specific number of threads to
         /// dequeue and execute queued actions
         /// </summary>
