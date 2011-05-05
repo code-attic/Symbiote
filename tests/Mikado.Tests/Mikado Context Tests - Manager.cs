@@ -44,22 +44,22 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Age = -24;
-                Manager.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-                Manager.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-                Manager.Department = "";
-                Manager.Address.Address = "";
-                Manager.Address.City = "";
-                Manager.Address.State = "";
-                Manager.Address.ZipCode = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Age = -24;
+                                         Manager.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                         Manager.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                         Manager.Department = "";
+                                         Manager.Address.Address = "";
+                                         Manager.Address.City = "";
+                                         Manager.Address.State = "";
+                                         Manager.Address.ZipCode = "";
+                                     }
+                                 };
 
         private It should_have_eight_broken_rules = () => Subscriber.BrokenRules.Count.ShouldEqual(8);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -85,15 +85,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -112,15 +112,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -139,15 +139,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Age = -24;
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Age = -24;
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -166,15 +166,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Department = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Department = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -193,15 +193,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Address.Address = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Address.Address = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -220,15 +220,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Address.City = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Address.City = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -247,15 +247,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Address.State = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Address.State = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");
@@ -274,15 +274,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Manager))
-            {
-                Manager.Address.ZipCode = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Manager ) )
+                                     {
+                                         Manager.Address.ZipCode = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Manager_FirstName_to_Jim = () => Manager.FirstName.ShouldEqual("Jim");

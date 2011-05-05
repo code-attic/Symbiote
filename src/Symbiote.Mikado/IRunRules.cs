@@ -18,9 +18,19 @@ using System;
 
 namespace Symbiote.Mikado
 {
-    public interface IRunRules : IObservable<IBrokenRuleNotification>
+    public interface IRunRules : IPublishBrokenRules
     {
         IRulesIndex RuleIndex { get; set; }
         void ApplyRules(object target);
+    }
+
+    public interface IPublishBrokenRules
+    {
+        IDisposable Subscribe( IListenToBrokenRules subscriber );
+    }
+
+    public interface IListenToBrokenRules
+    {
+        void OnBrokenRule(IBrokenRuleNotification brokenRuleNotification);
     }
 }

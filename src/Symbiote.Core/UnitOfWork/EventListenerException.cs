@@ -14,25 +14,15 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Generic;
 
 namespace Symbiote.Core.UnitOfWork
 {
-    public interface IContext
-        : IDisposable
+    public class EventListenerException : Exception
     {
-        void Commit();
-        void PublishOnCommit<TEvent>( Action<TEvent> populateEvent );
-        void Rollback();
-    }
+        public IEvent Event { get; set; }
 
-    public interface IContext<TActor> : IContext
-    {
-        TActor Actor { get; set; }
-        Action<TActor> CommitAction { get; set; }
-        Action<TActor> SuccessAction { get; set; }
-        Action<TActor, Exception> ExceptionAction { get; set; }
-        IEventPublisher Publisher { get; set; }
-        IList<IDisposable> Disposables { get; set; }
+        public EventListenerException(string msg) : base(msg) { }
+
+        public EventListenerException(string msg, Exception innerException): base(msg, innerException) { }
     }
 }

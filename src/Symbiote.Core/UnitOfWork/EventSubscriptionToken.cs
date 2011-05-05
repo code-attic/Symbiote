@@ -1,5 +1,5 @@
 ﻿// /* 
-// Copyright 2008-2011 Alex Robson
+// Copyright 2008-2011 Jim Cowart & Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,8 +21,8 @@ namespace Symbiote.Core.UnitOfWork
     public class EventSubscriptionToken
         : IDisposable
     {
-        private readonly IObserver<IEvent> _listener;
-        private readonly IList<IObserver<IEvent>> _listeners;
+        private readonly IEventListener _listener;
+        private readonly IList<IEventListener> _listeners;
 
         public void Dispose()
         {
@@ -31,7 +31,7 @@ namespace Symbiote.Core.UnitOfWork
                 _listeners.Remove( _listener );
         }
 
-        public EventSubscriptionToken( IObserver<IEvent> listener, IList<IObserver<IEvent>> listeners )
+        public EventSubscriptionToken( IEventListener listener, IList<IEventListener> listeners )
         {
             _listener = listener;
             _listeners = listeners;

@@ -1,5 +1,5 @@
 ﻿// /* 
-// Copyright 2008-2011 Alex Robson
+// Copyright 2008-2011 Jim Cowart & Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,19 +30,15 @@ namespace Symbiote.Core.UnitOfWork
         {
             try
             {
-                OnNext( (T) evnt );
+                OnEvent((T)evnt);
             }
             catch ( Exception exception )
             {
-                OnError( exception );
+                throw new EventListenerException("An exception occurred while attempting to listen to an event.\r\nPlease see inner exception for more details.  You may also inspect the Event property of this exception.", exception);
             }
         }
 
-        public abstract void OnCompleted();
-
-        public abstract void OnError( Exception error );
-
-        public abstract void OnNext( T value );
+        public abstract void OnEvent( T evnt );
 
         protected EventListenerBase( bool listenToSubTypesOfEvent )
         {

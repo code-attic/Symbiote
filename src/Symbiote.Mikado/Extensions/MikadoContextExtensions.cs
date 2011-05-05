@@ -29,5 +29,8 @@ namespace Symbiote.Mikado.Extensions
                 return context;
             }
         }
+
+        //public static IContext<TActor> AddSubscriber<TActor>(this IContext<TActor> context, IEventListener subscriber)
+        
     }
 }

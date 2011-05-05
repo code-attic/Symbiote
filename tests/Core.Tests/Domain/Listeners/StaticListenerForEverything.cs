@@ -13,17 +13,7 @@ namespace Core.Tests.Domain.Listeners
             Events = new List<IEvent>();
         }
 
-        public override void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnNext(IEvent value)
+        public override void OnEvent(IEvent value)
         {
             Events.Add( value );
         }

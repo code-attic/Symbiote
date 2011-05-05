@@ -43,20 +43,20 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            using ( var subscription = runner.Subscribe( Subscriber ) )
-            using ( var context = Context.CreateFor( Person ) )
-            {
-                Person.Age = -24;
-                Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-                Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-                Person.Address.Address = "";
-                Person.Address.City = "";
-                Person.Address.State = "";
-                Person.Address.ZipCode = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = Context.CreateFor( Person ) )
+                                     {
+                                         Person.Age = -24;
+                                         Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                         Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                         Person.Address.Address = "";
+                                         Person.Address.City = "";
+                                         Person.Address.State = "";
+                                         Person.Address.ZipCode = "";
+                                     }
+                                 };
 
         private It should_have_three_broken_rules = () => Subscriber.BrokenRules.Count.ShouldEqual( 7 );
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -80,15 +80,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -106,15 +106,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -132,15 +132,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.Age = -24;
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.Age = -24;
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -158,15 +158,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.Address.Address = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.Address.Address = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -184,15 +184,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.Address.City = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.Address.City = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -210,15 +210,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.Address.State = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.Address.State = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -236,15 +236,15 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person))
-            {
-                Person.Address.ZipCode = "";
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person ) )
+                                     {
+                                         Person.Address.ZipCode = "";
+                                     }
+                                 };
 
         private It should_have_one_broken_rule = () => Subscriber.BrokenRules.Count.ShouldEqual(1);
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
@@ -265,18 +265,18 @@ namespace Mikado.Tests
         public static bool BrokenRuleAction;
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person)
-                                         .OnSuccess(x => SuccessActionFired = true)
-                                         .OnException((a, e) => FailureActionFired = true)
-                                         .HandleBrokenRules<Person>((actor,rules) => BrokenRuleAction = true))
-            {
-                Person.Age = -24;
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person )
+                                         .OnSuccess( x => SuccessActionFired = true )
+                                         .OnException( ( a, e ) => FailureActionFired = true )
+                                         .HandleBrokenRules<Person>( ( actor, rules ) => BrokenRuleAction = true ) )
+                                     {
+                                         Person.Age = -24;
+                                     }
+                                 };
 
         private It should_not_have_fired_the_onSuccess_action = () => SuccessActionFired.ShouldBeFalse();
         private It should_have_fired_the_BrokenRuleAction_action = () => BrokenRuleAction.ShouldBeTrue();
@@ -291,18 +291,18 @@ namespace Mikado.Tests
         public static bool BrokenRuleAction;
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person)
-                                         .OnSuccess(x => SuccessActionFired = true)
-                                         .OnException((a, e) => FailureActionFired = true)
-                                         .HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
-            {
-                Person.Age = 35;
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person )
+                                         .OnSuccess( x => SuccessActionFired = true )
+                                         .OnException( ( a, e ) => FailureActionFired = true )
+                                         .HandleBrokenRules<Person>( ( actor, rules ) => BrokenRuleAction = true ) )
+                                     {
+                                         Person.Age = 35;
+                                     }
+                                 };
 
         private It should_have_fired_the_onSuccess_action = () => SuccessActionFired.ShouldBeTrue();
         private It should_not_have_fired_the_BrokenRuleAction_action = () => BrokenRuleAction.ShouldBeFalse();
@@ -317,18 +317,18 @@ namespace Mikado.Tests
         public static bool BrokenRuleAction;
 
         private Because of = () =>
-        {
-            var runner = Assimilate.GetInstanceOf<IRunRules>();
-            var provider = Assimilate.GetInstanceOf<IContextProvider>();
-            using (var subscription = runner.Subscribe(Subscriber))
-            using (var context = provider.GetContext(Person)
-                                         .OnSuccess(x => SuccessActionFired = true)
-                                         .OnException((a, e) => FailureActionFired = true)
-                                         .HandleBrokenRules<Person>((actor, rules) => BrokenRuleAction = true))
-            {
-                Person.Age = -24;
-            }
-        };
+                                 {
+                                     var runner = Assimilate.GetInstanceOf<IRunRules>();
+                                     var provider = Assimilate.GetInstanceOf<IContextProvider>();
+                                     using( var subscription = runner.Subscribe( Subscriber ) )
+                                     using( var context = provider.GetContext( Person )
+                                         .OnSuccess( x => SuccessActionFired = true )
+                                         .OnException( ( a, e ) => FailureActionFired = true )
+                                         .HandleBrokenRules<Person>( ( actor, rules ) => BrokenRuleAction = true ) )
+                                     {
+                                         Person.Age = -24;
+                                     }
+                                 };
 
         private It should_not_have_fired_the_onSuccess_action = () => SuccessActionFired.ShouldBeFalse();
         private It should_not_have_fired_the_BrokenRuleAction_action = () => BrokenRuleAction.ShouldBeFalse();

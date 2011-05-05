@@ -1,5 +1,5 @@
 ﻿// /* 
-// Copyright 2008-2011 Alex Robson
+// Copyright 2008-2011 Jim Cowart & Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace Symbiote.Core.UnitOfWork
     public class EventListenerManager : IEventListenerManager
     {
         public ConcurrentDictionary<Type, List<IEventListener>> Listeners { get; set; }
-        public static int Instance { get; set; }
+        public static int Instance { get; private set; } // TODO: Re-evaluate need for static instance counter - it was added for testing IoC only
 
         public void PublishEvent( IEvent evnt )
         {
@@ -72,7 +72,7 @@ namespace Symbiote.Core.UnitOfWork
         {
             Listeners = new ConcurrentDictionary<Type, List<IEventListener>>();
             WireUpListeners();
-            ++Instance;
+            Instance++;
         }
     }
 }
