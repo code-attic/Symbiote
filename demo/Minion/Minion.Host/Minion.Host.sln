@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minion.Messages", "..\Minio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minion.Hosted", "..\Minion.Hosted\Minion.Hosted.csproj", "{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Watcher.Test", "Watcher.Test\Watcher.Test.csproj", "{E15FD5B5-7CEA-43CA-87B1-3E5390696E42}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -27,10 +25,6 @@ Global
 		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Debug|x86.Build.0 = Debug|x86
 		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Release|x86.ActiveCfg = Release|x86
 		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Release|x86.Build.0 = Release|x86
-		{E15FD5B5-7CEA-43CA-87B1-3E5390696E42}.Debug|x86.ActiveCfg = Debug|x86
-		{E15FD5B5-7CEA-43CA-87B1-3E5390696E42}.Debug|x86.Build.0 = Debug|x86
-		{E15FD5B5-7CEA-43CA-87B1-3E5390696E42}.Release|x86.ActiveCfg = Release|x86
-		{E15FD5B5-7CEA-43CA-87B1-3E5390696E42}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

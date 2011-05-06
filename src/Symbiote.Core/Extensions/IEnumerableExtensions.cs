@@ -16,6 +16,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Symbiote.Core.Reflection;
 
 namespace Symbiote.Core.Extensions
 {
@@ -33,6 +35,14 @@ namespace Symbiote.Core.Extensions
             {
                 action( t );
             }
+        }
+
+        public static object ToListOf<T>( this IEnumerable<T> enumerable, Type type )
+        {
+            var list = Activator.CreateInstance( typeof( List<> ).MakeGenericType( type ) );
+            var add = list.GetType().GetMethod( "Add" );
+            enumerable.ForEach( x => add.Invoke( list, new object[] { Reflector.Cast( x, type ) } ) );
+            return list;
         }
 
         public static IEnumerable<IEnumerable<T>> UniquePermutations<T>( this IEnumerable<T> enumerable )

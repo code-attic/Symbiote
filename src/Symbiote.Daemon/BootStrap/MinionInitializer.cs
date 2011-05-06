@@ -18,22 +18,22 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 
 namespace Symbiote.Daemon.BootStrap
 {
     [Serializable]
-    public class MinionLocator : MarshalByRefObject
+    public class MinionInitializer : MarshalByRefObject
     {
-        public object GetMinionHost(string fullPath)
+        public void InitializeMinion(string fullPath)
         {
             var match = AnalyzeAssembliesInPath( fullPath );
             if(!match.Item1)
             {
                 throw new Exception("No assemblies containing a type implementing IMinion were found at path '{0}'".AsFormat( fullPath ));
             }
-            var minionHost = Activator.CreateInstance( match.Item3 );
-            return minionHost;
+            Assimilate.Initialize();
         }
 
         public Tuple<bool, Assembly, Type> AnalyzeAssembliesInPath(string path)
@@ -74,7 +74,7 @@ namespace Symbiote.Daemon.BootStrap
             return minion;
         }
 
-        public MinionLocator()
+        public MinionInitializer()
         {
         }
     }

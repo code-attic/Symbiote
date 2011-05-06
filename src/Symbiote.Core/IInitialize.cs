@@ -13,31 +13,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System;
-using System.Collections.Generic;
 
-namespace Symbiote.Daemon.BootStrap
+namespace Symbiote.Core 
 {
-    public class MinionHost : MarshalByRefObject
+    public interface IInitialize
     {
-        public IMinion Minion { get; set; }
-
-        public bool LoadMinion(Type type, IDictionary<string, object> startupData)
-        {
-            try
-            {
-                Minion = Activator.CreateInstance( type ) as IMinion;
-                Minion.Start( startupData );
-                return true;
-            }
-            catch ( Exception e )
-            {
-                return false;
-            }
-        }
-
-        public MinionHost()
-        {
-        }
+        void Initialize();
     }
 }

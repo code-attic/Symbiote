@@ -43,8 +43,9 @@ namespace Symbiote.Core
         {
             if( Initialized )
                 return Assimilation;
-            Wireup();
+            
             Initialized = true;
+            Wireup();
             return Assimilation;
         }
 
@@ -59,19 +60,26 @@ namespace Symbiote.Core
             
             var initializers = new List<Type>();
             ScanIndex.ConfiguredSymbiotes.Keys.ToList().ForEach( x => LoadSymbioteDependencies( x, initializers ) );
-            initializers
+            var uniqueInitializers = initializers
+                .Distinct();
+
+            uniqueInitializers
+                .ForEach( InitializeSymbiote );
+
+            ScanIndex
+                .SymbioteInitializers
+                .Except( uniqueInitializers )
                 .Distinct()
                 .ForEach( InitializeSymbiote );
         }
 
-        private static List<Type> LoadSymbioteDependencies( Assembly assembly, List<Type> initializers )
+        private static void LoadSymbioteDependencies( Assembly assembly, List<Type> initializers )
         {
             if ( ScanIndex.ConfiguredSymbiotes[assembly] )
-                return initializers;
+                return;
 
             var dependencies = GetDependencies( assembly );
-            var types = dependencies.SelectMany( x => LoadSymbioteDependencies( x, initializers ) ).ToList();
-            initializers.AddRange( types );
+            dependencies.ForEach( x => LoadSymbioteDependencies( x, initializers ) );
 
             var scanInstructionType = ScanIndex.ScanningInstructions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
             var dependencyDefinitionType = ScanIndex.DependencyDefinitions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
@@ -95,14 +103,14 @@ namespace Symbiote.Core
 
             ScanIndex.ConfiguredSymbiotes[ assembly ] = true;
             var initializerType = ScanIndex.SymbioteInitializers.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
-            initializers.Add( initializerType );
-            return initializers;
+            if( initializerType != null )
+                initializers.Add( initializerType );
         }
 
         private static void InitializeSymbiote( Type initializerType )
         {
             var initializer = initializerType != null
-                ? Activator.CreateInstance( initializerType ) as IInitializeSymbiote
+                ? Activator.CreateInstance( initializerType ) as IInitialize
                 : null;
 
             if ( initializer != null )

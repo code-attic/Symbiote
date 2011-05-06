@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Minion.Hosted", "Minion.Hosted.csproj", "{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Debug|x86.ActiveCfg = Debug|x86
+		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Debug|x86.Build.0 = Debug|x86
+		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Release|x86.ActiveCfg = Release|x86
+		{FEB8AC32-94A1-44ED-BF0E-2A0870909FD0}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

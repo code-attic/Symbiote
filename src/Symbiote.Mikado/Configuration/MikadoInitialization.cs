@@ -4,7 +4,7 @@ using Symbiote.Core.Extensions;
 
 namespace Symbiote.Mikado.Configuration
 {
-    public class MikadoInitialization : IInitializeSymbiote
+    public class MikadoInitialization : IInitialize
     {
         public void Initialize()
         {

@@ -16,8 +16,10 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Policy;
 using System.Threading;
+using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Futures;
 
@@ -29,9 +31,10 @@ namespace Symbiote.Daemon.BootStrap
         public AppDomain DomainHandle { get; set; }
         public AppDomainSetup Setup { get; set; }
         public Evidence MinionEvidence { get; set; }
-        public IMinion Instance { get; set; }
+        public IInitialize Intializer { get; set; }
         public string DaemonDisplayName { get; set; }
         public string MinionPath { get; set; }
+        public string CopyPath { get; set; }
         public bool Running { get; set; }
         public bool Starting { get; set; }
         public bool Stopping { get; set; }
@@ -49,12 +52,19 @@ namespace Symbiote.Daemon.BootStrap
                     Starting = true;
                     DomainHandle = AppDomain.CreateDomain(Setup.ApplicationName, AppDomain.CurrentDomain.Evidence, Setup);
                     var locator =
-                        (MinionLocator)
-                        DomainHandle.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionLocator ).FullName );
-                    var host = (IMinion) locator.GetMinionHost(MinionPath);
-                    Future
-                        .WithoutResult(() => host.Start( null ))
-                        .Start();
+                        (MinionInitializer) DomainHandle
+                        .CreateInstanceFromAndUnwrap( 
+                            Path.Combine( CopyPath, "Symbiote.Daemon.dll" ),
+                            typeof( MinionInitializer ).FullName,
+                            false,
+                            BindingFlags.Public | BindingFlags.CreateInstance | BindingFlags.Instance,
+                            null,
+                            null,
+                            null,
+                            null
+                        );
+                        //.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionInitializer ).FullName );
+                    locator.InitializeMinion( MinionPath );
                     Running = true;
                     
                     // Create a cool-down period where the service cannot be
@@ -102,13 +112,24 @@ namespace Symbiote.Daemon.BootStrap
         public Minion( string path )
         {
             MinionPath = Path.GetFullPath( path );
+            var environment = Environment.CurrentDirectory;
+            var applicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
+            var shadowPath = Path.Combine( applicationName, "shadows" );
+            CopyPath = Path.Combine( shadowPath, "references", applicationName );
+            Directory.CreateDirectory( CopyPath );
+
+            foreach (string newPath in Directory.GetFiles(MinionPath, "*.*", SearchOption.AllDirectories))
+                File.Copy( newPath, newPath.Replace( MinionPath, CopyPath ), true );
+
             Setup = new AppDomainSetup();
-            Setup.LoaderOptimization = LoaderOptimization.MultiDomain;
+            Setup.LoaderOptimization = LoaderOptimization.MultiDomainHost;
             Setup.ShadowCopyFiles = "true";
             Setup.ShadowCopyDirectories = MinionPath;
-            Setup.CachePath = @"c:\shadows";
-            Setup.ApplicationName = MinionPath.Split( Path.DirectorySeparatorChar ).Last();
-            Setup.PrivateBinPath = MinionPath;
+            Setup.CachePath = shadowPath;
+            Setup.ApplicationName = applicationName;
+            Setup.PrivateBinPath = CopyPath;
+            //Setup.ApplicationBase = MinionPath;
+            Setup.ApplicationBase = CopyPath;
             MinionEvidence = AppDomain.CurrentDomain.Evidence;
             MinionLock = new object();
 
