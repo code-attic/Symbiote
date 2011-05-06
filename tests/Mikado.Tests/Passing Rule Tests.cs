@@ -17,13 +17,13 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Establish context = () =>
-        {
-            RulesRunner = new DefaultRulesRunner(new DefaultRulesIndex());
-            using (var subscriber = RulesRunner.Subscribe(Subscriber))
-            {
-                RulesRunner.ApplyRules(Person);
-            }
-        };
+                                        {
+                                            RulesRunner = new DefaultRulesRunner( new DefaultRulesIndex() );
+                                            using( var subscriber = RulesRunner.Subscribe( Subscriber ) )
+                                            {
+                                                RulesRunner.ApplyRules( Person );
+                                            }
+                                        };
 
         private It should_have_zero_broken_rules_in_the_Subscriber = () => Subscriber.BrokenRules.Count.ShouldEqual(0);
     }
@@ -34,13 +34,13 @@ namespace Mikado.Tests
         public static TestSubscriber Subscriber = new TestSubscriber();
 
         private Establish context = () =>
-        {
-            RulesRunner = new DefaultRulesRunner(new DefaultRulesIndex());
-            using (var subscriber = RulesRunner.Subscribe(Subscriber))
-            {
-                RulesRunner.ApplyRules(Manager);
-            }
-        };
+                                        {
+                                            RulesRunner = new DefaultRulesRunner( new DefaultRulesIndex() );
+                                            using( var subscriber = RulesRunner.Subscribe( Subscriber ) )
+                                            {
+                                                RulesRunner.ApplyRules( Manager );
+                                            }
+                                        };
 
         private It should_have_zero_broken_rules_in_the_Subscriber = () => Subscriber.BrokenRules.Count.ShouldEqual(0);
     }

@@ -19,21 +19,11 @@ using System.Collections.Generic;
 
 namespace Symbiote.Mikado.Impl
 {
-    public class BrokenRulesCollection : List<IBrokenRuleNotification>, IObserver<IBrokenRuleNotification>
+    public class BrokenRulesCollection : List<IBrokenRuleNotification>, IListenToBrokenRules
     {
-        public void OnCompleted()
+        public void OnBrokenRule(IBrokenRuleNotification value)
         {
-            // NoOp
-        }
-
-        public void OnError(Exception error)
-        {
-            // NoOp
-        }
-
-        public void OnNext(IBrokenRuleNotification value)
-        {
-            this.Add(value);
+            Add(value);
         }
     }
 }

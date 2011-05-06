@@ -21,10 +21,10 @@ namespace Symbiote.Mikado.Impl
 {
     public class RuleUnsubscriber : IDisposable
     {
-        private List<IObserver<IBrokenRuleNotification>> _observers;
-        private IObserver<IBrokenRuleNotification> _observer;
+        private readonly List<IListenToBrokenRules> _observers;
+        private readonly IListenToBrokenRules _observer;
 
-        public RuleUnsubscriber(List<IObserver<IBrokenRuleNotification>> observers, IObserver<IBrokenRuleNotification> observer)
+        public RuleUnsubscriber(List<IListenToBrokenRules> observers, IListenToBrokenRules observer)
         {
             _observers = observers;
             _observer = observer;

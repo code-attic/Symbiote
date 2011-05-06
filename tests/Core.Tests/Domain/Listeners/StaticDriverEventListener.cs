@@ -12,18 +12,8 @@ namespace Core.Tests.Domain.Listeners
         {
             Events = new List<DriverGenericEvent>();
         }
-
-        public override void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnNext(DriverGenericEvent value)
+        
+        public override void OnEvent(DriverGenericEvent value)
         {
             Events.Add( value );
         }

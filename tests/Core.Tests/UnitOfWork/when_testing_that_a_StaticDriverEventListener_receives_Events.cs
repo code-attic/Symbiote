@@ -38,38 +38,38 @@ namespace Core.Tests.UnitOfWork
                                                                             {
                                                                                 var dlist = new List<IEventListener>();
                                                                                 Manager.Listeners.TryGetValue(typeof(DriverGenericEvent), out dlist);
-                                                                                ShouldExtensionMethods.ShouldEqual( dlist
-                                                                                                      .OfType<StaticDriverEventListener>()
-                                                                                                      .First()
-                                                                                                      .Events
-                                                                                                      .OfType<DriverGenericEvent>()
-                                                                                                      .Where(x => x is DriverGenericEventChild == false)
-                                                                                                      .Count(), 1);
+                                                                                dlist
+                                                                                    .OfType<StaticDriverEventListener>()
+                                                                                    .First()
+                                                                                    .Events
+                                                                                    .OfType<DriverGenericEvent>()
+                                                                                    .Where(x => x is DriverGenericEventChild == false)
+                                                                                    .Count().ShouldEqual( 1 );
                                                                             };
         private It should_have_heard_the_DriverGenericEvent_with_the_correct_eventid = () =>
                                                                                            {
                                                                                                var dlist = new List<IEventListener>();
                                                                                                Manager.Listeners.TryGetValue(typeof(DriverGenericEvent), out dlist);
-                                                                                               ShouldExtensionMethods.ShouldEqual( dlist
-                                                                                                                     .OfType<StaticDriverEventListener>()
-                                                                                                                     .First()
-                                                                                                                     .Events
-                                                                                                                     .OfType<DriverGenericEvent>()
-                                                                                                                     .Where(x => x is DriverGenericEventChild == false)
-                                                                                                                     .First()
-                                                                                                                     .EventId, EventId);
+                                                                                               dlist
+                                                                                                   .OfType<StaticDriverEventListener>()
+                                                                                                   .First()
+                                                                                                   .Events
+                                                                                                   .OfType<DriverGenericEvent>()
+                                                                                                   .Where(x => x is DriverGenericEventChild == false)
+                                                                                                   .First()
+                                                                                                   .EventId.ShouldEqual( EventId );
                                                                                            };
         private It should_have_heard_one_event_for_DriverGenericEventChild = () =>
                                                                                  {
                                                                                      var dlist = new List<IEventListener>();
                                                                                      Manager.Listeners.TryGetValue(typeof(DriverGenericEventChild), out dlist);
-                                                                                     ShouldExtensionMethods.ShouldEqual( dlist.OfType<StaticDriverEventListener>().First().Events.OfType<DriverGenericEventChild>().Count(), 1);
+                                                                                     dlist.OfType<StaticDriverEventListener>().First().Events.OfType<DriverGenericEventChild>().Count().ShouldEqual( 1 );
                                                                                  };
         private It should_have_heard_the_DriverGenericEventChild_with_the_correct_eventid = () =>
                                                                                                 {
                                                                                                     var dlist = new List<IEventListener>();
                                                                                                     Manager.Listeners.TryGetValue(typeof(DriverGenericEventChild), out dlist);
-                                                                                                    ShouldExtensionMethods.ShouldEqual( dlist.OfType<StaticDriverEventListener>().First().Events.OfType<DriverGenericEventChild>().First().EventId, EventId);
+                                                                                                    dlist.OfType<StaticDriverEventListener>().First().Events.OfType<DriverGenericEventChild>().First().EventId.ShouldEqual( EventId );
                                                                                                 };
     }
 }

@@ -805,6 +805,7 @@
     <Compile Include="Trees\RedBlack\RedBlackTree.cs" />
     <Compile Include="UnitOfWork\Context.cs" />
     <Compile Include="UnitOfWork\ContextExtensions.cs" />
+    <Compile Include="UnitOfWork\EventListenerException.cs" />
     <Compile Include="Utility\DelimitedBuilder.cs">
       <SubType>Code</SubType>
     </Compile>

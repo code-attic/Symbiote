@@ -1,5 +1,5 @@
 ﻿// /* 
-// Copyright 2008-2011 Alex Robson
+// Copyright 2008-2011 Jim Cowart & Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,8 @@ namespace Symbiote.Core.UnitOfWork
         void ListenTo( IEvent evnt );
     }
 
-    public interface IEventListener<T> : IEventListener, IObserver<T> where T : IEvent
+    public interface IEventListener<T> : IEventListener where T : IEvent
     {
+        void OnEvent(T evnt);
     }
 }

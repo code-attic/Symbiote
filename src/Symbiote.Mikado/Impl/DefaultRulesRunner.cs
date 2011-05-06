@@ -24,7 +24,7 @@ namespace Symbiote.Mikado.Impl
 {
     public class DefaultRulesRunner : IRunRules
     {
-        private readonly List<IObserver<IBrokenRuleNotification>> _observers = new List<IObserver<IBrokenRuleNotification>>();
+        private readonly List<IListenToBrokenRules> _observers = new List<IListenToBrokenRules>();
 
         public IRulesIndex RuleIndex { get; set; }
 
@@ -42,7 +42,7 @@ namespace Symbiote.Mikado.Impl
                     .Rules[target.GetType()]
                     .ToList()
                     .ForEach(rulesToRun.Add);
-                rulesToRun.ForEach(rule => rule.ApplyRule(target, x => _observers.ForEach(a => a.OnNext(x))));
+                rulesToRun.ForEach(rule => rule.ApplyRule(target, x => _observers.ForEach(a => a.OnBrokenRule(x))));
             }
             var targetProps = Reflector.GetProperties( target.GetType() ).Where( x => !x.PropertyType.IsPrimitive && x.PropertyType != typeof(string) && x.PropertyType != typeof(Guid));
             foreach(var prop in targetProps)
@@ -53,7 +53,7 @@ namespace Symbiote.Mikado.Impl
             }
         }
 
-        public virtual IDisposable Subscribe( IObserver<IBrokenRuleNotification> observer )
+        public virtual IDisposable Subscribe(IListenToBrokenRules observer)
         {
             _observers.Add(observer);
             return new RuleUnsubscriber(_observers, observer);

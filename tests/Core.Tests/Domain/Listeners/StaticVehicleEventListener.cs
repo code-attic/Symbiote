@@ -13,17 +13,7 @@ namespace Core.Tests.Domain.Listeners
             Events = new List<VehicleGenericEvent>();
         }
 
-        public override void OnCompleted()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnError(Exception error)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void OnNext(VehicleGenericEvent value)
+        public override void OnEvent(VehicleGenericEvent value)
         {
             Events.Add( value );
         }

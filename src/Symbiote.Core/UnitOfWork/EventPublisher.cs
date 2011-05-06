@@ -1,5 +1,5 @@
 ﻿// /* 
-// Copyright 2008-2011 Alex Robson
+// Copyright 2008-2011 Jim Cowart & Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,10 +21,10 @@ namespace Symbiote.Core.UnitOfWork
 {
     public class EventPublisher : IEventPublisher
     {
-        private readonly IList<IObserver<IEvent>> _subscribers = new List<IObserver<IEvent>>();
-        private IEventListenerManager _manager;
+        private readonly IList<IEventListener> _subscribers = new List<IEventListener>();
+        private readonly IEventListenerManager _manager;
 
-        public IDisposable Subscribe( IObserver<IEvent> listener )
+        public IDisposable Subscribe( IEventListener listener )
         {
             _subscribers.Add( listener );
             return new EventSubscriptionToken( listener, _subscribers );
@@ -36,7 +36,7 @@ namespace Symbiote.Core.UnitOfWork
                 .ForEach( evnt =>
                               {
                                   _subscribers
-                                      .ForEach( x => x.OnNext( evnt ) );
+                                      .ForEach( x => x.ListenTo( evnt ) );
                                   if ( _manager != null )
                                   {
                                       _manager.PublishEvent( evnt );
