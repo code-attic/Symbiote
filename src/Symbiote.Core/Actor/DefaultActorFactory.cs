@@ -1,4 +1,4 @@
-﻿// /* 
+﻿    // /* 
 // Copyright 2008-2011 Alex Robson
 // 
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core.Actor
@@ -24,6 +25,13 @@ namespace Symbiote.Core.Actor
         protected IKeyAccessor KeyAccessor { get; set; }
 
         public TActor CreateInstance<TKey>( TKey id )
+        {
+            var actor = Assimilate.GetInstanceOf<TActor>();
+            KeyAccessor.SetId( actor, id );
+            return actor;
+        }
+
+        public TActor CreateInstanceFrom<TKey>( TKey id, object command )
         {
             var actor = Assimilate.GetInstanceOf<TActor>();
             KeyAccessor.SetId( actor, id );
