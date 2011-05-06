@@ -114,7 +114,7 @@ namespace Symbiote.Core.DI
             return this;
         }
 
-        public virtual IPluginConfiguration CreateWith<TConcrete>( Func<TConcrete> factory )
+        public virtual IPluginConfiguration CreateWith<TConcrete>( Func<RequestContext, TConcrete> factory )
             where TConcrete : TPlugin
         {
             HasDelegate = true;
@@ -145,5 +145,10 @@ namespace Symbiote.Core.DI
             PluginName = pluginName;
             IsNamed = true;
         }
+    }
+
+    public class RequestContext
+    {
+        public Type[] TypeArguments { get; set; }
     }
 }

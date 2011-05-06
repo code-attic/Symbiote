@@ -21,7 +21,7 @@ namespace Minion.Host
             Assimilate
                 .Initialize()
                 .AddConsoleLogger<IMinion>( l => l.Info().MessageLayout( m => m.Message().Newline() ) )
-                .Daemon( x => x.Arguments( args ).AsDynamicHost( b => b.HostApplicationsFrom( @"C:\git\Symbiote\demo\Minion\Minions" ) ) )
+                .Daemon( x => x.Arguments( args ).AsDynamicHost( b => b.HostApplicationsFrom( @"C:\active-git\Symbiote\demo\Minion\Minions" ) ) )
                 .Rabbit( x => x.EnrollAsMeshNode( false ).AddBroker( r => r.Defaults() ) )
                 .RunDaemon();
         }

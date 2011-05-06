@@ -246,6 +246,21 @@ namespace Symbiote.Core.DI.Impl
         {
             Providers = new FactoryProvider();
             Definitions = new ConcurrentDictionary<Type, List<IDependencyDefinition>>();
+
+            var enumerableFactory = DependencyExpression.For( typeof(IEnumerable<>) );
+            enumerableFactory.CreateWith( x =>
+                                              {
+                                                  var type = x.TypeArguments.First();
+                                                  var list = GetAllInstances( type );
+                                                  var converted = list.ToListOf( type );
+                                                  return converted;
+                                              } );
+
+            var listFactory = DependencyExpression.For( typeof(IList<>) );
+            listFactory.CreateWith( x => GetAllInstances( x.TypeArguments.First() ).ToList() );
+
+            Register( enumerableFactory );
+            Register( listFactory );
         }
     }
 }

@@ -3,7 +3,7 @@ using Symbiote.Core.Log;
 
 namespace Symbiote.Log4Net.Config
 {
-    public class Log4NetInitializer : IInitializeSymbiote
+    public class Log4NetInitializer : IInitialize
     {
         public void Initialize()
         {

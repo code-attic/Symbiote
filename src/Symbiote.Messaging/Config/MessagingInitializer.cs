@@ -8,7 +8,7 @@ using Symbiote.Messaging.Impl.Saga;
 
 namespace Symbiote.Messaging.Config
 {
-    public class MessagingInitializer : IInitializeSymbiote
+    public class MessagingInitializer : IInitialize
     {
         public void Initialize()
         {

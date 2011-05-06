@@ -35,25 +35,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Symbiote.Core">
-      <HintPath>..\..\..\bin\Symbiote.Core.dll</HintPath>
+    <Reference Include="CommandLine">
+      <HintPath>..\..\..\bin\debug\CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\bin\debug\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client">
+      <HintPath>..\..\..\bin\debug\RabbitMQ.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Core, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\debug\Symbiote.Core.dll</HintPath>
     </Reference>
     <Reference Include="Symbiote.Daemon, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.Daemon.dll</HintPath>
+      <HintPath>..\..\..\bin\debug\Symbiote.Daemon.dll</HintPath>
     </Reference>
-    <Reference Include="Symbiote.Log4Net">
-      <HintPath>..\..\..\bin\Symbiote.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Messaging">
-      <HintPath>..\..\..\bin\Symbiote.Messaging.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.Rabbit">
-      <HintPath>..\..\..\bin\Symbiote.Rabbit.dll</HintPath>
-    </Reference>
-    <Reference Include="Symbiote.StructureMap, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Symbiote.Log4Net, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\bin\Symbiote.StructureMap.dll</HintPath>
+      <HintPath>..\..\..\bin\debug\Symbiote.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Messaging, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\debug\Symbiote.Messaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Symbiote.Rabbit, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\bin\debug\Symbiote.Rabbit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

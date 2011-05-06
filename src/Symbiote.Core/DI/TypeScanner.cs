@@ -86,11 +86,12 @@ namespace Symbiote.Core.DI
         public IEnumerable<Assembly> GetAssembliesFromBaseDirectory()
         {
 #if !SILVERLIGHT
-            var basePath = AppDomain.CurrentDomain.BaseDirectory;
+            var basePath = AppDomain.CurrentDomain.ShadowCopyFiles ? null : AppDomain.CurrentDomain.BaseDirectory;
             var binPath = AppDomain.CurrentDomain.SetupInformation.PrivateBinPath;
             var assembliesFromBase = GetAssembliesFromPath( basePath );
             var assembliesFromBin = GetAssembliesFromPath( binPath );
-            return assembliesFromBase.Concat( assembliesFromBin );
+            var assemblies = assembliesFromBase.Concat( assembliesFromBin );
+            return assemblies;
 #endif
 #if SILVERLIGHT
             return Deployment

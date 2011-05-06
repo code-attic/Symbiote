@@ -14,7 +14,6 @@
 // limitations under the License.
 // */
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -54,18 +53,18 @@ namespace Symbiote.Core.DI {
         {
             var dependencies = ImplementorsOfType.TryGet( typeof( IDefineStandardDependencies ) );
             var scanners = ImplementorsOfType.TryGet( typeof( IDefineScanningInstructions ) );
-            var initializers = ImplementorsOfType.TryGet( typeof( IInitializeSymbiote ) );
+            var initializers = ImplementorsOfType.TryGet( typeof( IInitialize ) );
 
             DependencyDefinitions = dependencies.Item1
-                ? dependencies.Item2
+                ? dependencies.Item2.Where( x => x.IsConcrete() ).ToList()
                 : new List<Type>();
 
             ScanningInstructions = scanners.Item1
-                ? scanners.Item2
+                ? scanners.Item2.Where( x => x.IsConcrete() ).ToList()
                 : new List<Type>();
             
             SymbioteInitializers = initializers.Item1
-                ? initializers.Item2
+                ? initializers.Item2.Where( x => x.IsConcrete() ).ToList()
                 : new List<Type>();
 
             var containingAssemblies =
@@ -145,7 +144,9 @@ namespace Symbiote.Core.DI {
                     "Newtonsoft",
                     "protobuf-net",
                     "ServiceStack",
-                    "WindowsBase"
+                    "WindowsBase",
+                    "RabbitMQ.Client",
+                    "log4net",
                 } );
         }
 		
@@ -186,7 +187,7 @@ namespace Symbiote.Core.DI {
             var references = initialList
                 .SelectMany( GetReferenceList )
                 .ToList();
-            initialList.AddRange( references );
+            initialList.AddRange( references.Where( r => !initialList.Any( a => a.FullName.Equals( r.FullName ) ) ) );
 
             var uniqueList = initialList.Distinct();
             var filtered = uniqueList.Where( x => !AssemblyExclusionList.Any( e => x.FullName.StartsWith( e ) ) );

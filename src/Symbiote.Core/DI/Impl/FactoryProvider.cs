@@ -14,13 +14,11 @@
 // limitations under the License.
 // */
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Symbiote.Core.Collections;
 using Symbiote.Core.Reflection;
-using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core.DI.Impl
 {
@@ -35,7 +33,9 @@ namespace Symbiote.Core.DI.Impl
         public Func<object> BuildFactory( Type requested, IDependencyDefinition definition, IDependencyAdapter container )
         {
             if (definition.HasDelegate)
-                return () => definition.CreatorDelegate.DynamicInvoke();
+            {
+                return BuildDelegateCall( requested, definition );
+            }
 
             ContainerReference = ContainerReference ?? Expression.Constant( container );
             ResolveMethod = ResolveMethod ?? container.GetType().GetMethod( "GetInstance", new Type[] { typeof( Type ) } );
@@ -64,6 +64,18 @@ namespace Symbiote.Core.DI.Impl
             var newExpr = Expression.New( constructor.Item1, parameters );
             var castExpr = Expression.Convert( newExpr, typeof( object ) );
             return Expression.Lambda<Func<object>>( castExpr ).Compile();
+        }
+
+        public Func<object> BuildDelegateCall( Type requested, IDependencyDefinition definition )
+        {
+            var context = new RequestContext();
+
+            if( definition.PluginType.IsOpenGeneric() )
+            {
+                context.TypeArguments = requested.GetGenericArguments();
+            }
+
+            return () => definition.CreatorDelegate.DynamicInvoke( context );
         }
 
         public IProvideInstance CreateProvider( Type requested, IDependencyDefinition definition, IDependencyAdapter container )

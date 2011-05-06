@@ -12,7 +12,7 @@ namespace Core.Tests.DI.Container
         private Establish context = () =>
                                         {
                                             var def1 = DependencyExpression.For<string>();
-                                            def1.CreateWith( () => "Hello World!" );
+                                            def1.CreateWith( x => "Hello World!" );
 
                                             Container.Register( def1 );
                                         };

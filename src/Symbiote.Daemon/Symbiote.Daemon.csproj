@@ -105,14 +105,13 @@
     <Compile Include="BootStrap\ApplicationDeleted.cs" />
     <Compile Include="BootStrap\HaltMinion.cs" />
     <Compile Include="BootStrap\HaltMinionHandler.cs" />
-    <Compile Include="BootStrap\MinionLocator.cs" />
+    <Compile Include="BootStrap\MinionInitializer.cs" />
     <Compile Include="BootStrap\BootStrapper.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfiguration.cs" />
     <Compile Include="BootStrap\Config\BootStrapConfigurator.cs" />
     <Compile Include="BootStrap\IBootStrapper.cs" />
     <Compile Include="BootStrap\Minion.cs" />
     <Compile Include="BootStrap\MinionFactory.cs" />
-    <Compile Include="BootStrap\MinionHost.cs" />
     <Compile Include="BootStrap\MinionKeyAccessor.cs" />
     <Compile Include="BootStrap\MinionSaga.cs" />
     <Compile Include="BootStrap\NewApplication.cs" />
@@ -136,6 +135,7 @@
     <Compile Include="Host\DaemonHost.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Host\ShutdownHandler.cs" />
     <Compile Include="Host\ShutdownMinion.cs" />
     <Compile Include="IDaemon.cs" />
     <Compile Include="IMinion.cs" />

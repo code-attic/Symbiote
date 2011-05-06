@@ -14,39 +14,20 @@ namespace Minion.Hosted
     {
         static void Main(string[] args)
         {
-            var minion = new Minion();
-            minion.Start( new Dictionary<string, object> {{ "args", args }} );
+           Assimilate.Initialize();
         }
     }
-    [Serializable]
-    public class Minion : MarshalByRefObject, IMinion
+    
+    public class Initializer : IMinion
     {
-        public void Start( IDictionary<string, object> startupData )
+        public void Initialize() 
         {
-            object val = null;
-            var args = new string[] {};
-            if(startupData != null && startupData.TryGetValue( "args", out val ))
-            {
-                args = (string[]) val;
-            }
-
-            try
-            {
-                Assimilate
+            Assimilate
                     .Initialize()
-                    .Daemon(x => x.Arguments(args))
+                    .Daemon(x => x.Arguments(new string[]{}))
                     .AddConsoleLogger<IMinion>(l => l.Info().MessageLayout(m => m.Message().Newline()))
                     .Rabbit(x => x.AddBroker(r => r.Defaults()))
                     .RunDaemon();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine( e );
-            }
-        }
-
-        public void Stop()
-        {
         }
     }
 

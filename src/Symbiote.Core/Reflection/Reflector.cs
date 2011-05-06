@@ -25,6 +25,7 @@ namespace Symbiote.Core.Reflection
 {
     public class Reflector
     {
+        private static MethodInfo _castMethod;
         private static List<Type> initializedTypes = new List<Type>();
 
         private static
@@ -41,6 +42,22 @@ namespace Symbiote.Core.Reflection
         private static BindingFlags propertyFlags = BindingFlags.FlattenHierarchy |
                                                     BindingFlags.Public |
                                                     BindingFlags.Instance;
+
+        private static MethodInfo CastMethod
+        {
+            get { return _castMethod = _castMethod ?? typeof(Reflector).GetMethod( "Cast", BindingFlags.Static | BindingFlags.NonPublic ); }
+        }
+
+        public static object Cast( object instance, Type type )
+        {
+            var closeCast = CastMethod.MakeGenericMethod( type );
+            return closeCast.Invoke( instance, new[] { instance } );
+        }
+
+        private static T Cast<T>( object instance )
+        {
+            return (T) instance;
+        }
 
         public static IEnumerable<Tuple<ConstructorInfo, ParameterInfo[]>> GetConstructorInfo<T>()
         {
