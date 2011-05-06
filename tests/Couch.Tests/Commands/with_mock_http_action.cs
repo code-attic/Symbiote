@@ -14,7 +14,7 @@ namespace Couch.Tests.Commands
         private Establish context = () =>
                                         {
                                             mockAction = new Mock<IHttpAction>();
-                                            Assimilate.Dependencies( x => x.For<IHttpAction>().CreateWith( () => action ) );
+                                            Assimilate.Dependencies( x => x.For<IHttpAction>().CreateWith( c => action ) );
                                         };
     }
 
