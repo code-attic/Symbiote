@@ -10,27 +10,24 @@ namespace Redis.Tests.Commands.KeyValue
     class when_expiring_key :
         with_clean_db
     {
-        protected static string key;
         protected static bool expireSet;
         protected static bool valExistsAfterExpire;
+        protected static bool valExistsBeforeExpire;
 
         private Because of = () =>
         {
-            key = "Expire Key";
+            var key = "Expire Key";
             client.Set(key, 1);
             expireSet = client.Expire(key, 1);
+            Thread.Sleep( 500 );
+            valExistsBeforeExpire = client.Exists(key);
             Thread.Sleep( 1500 );
-      //      valExistsAfterExpire = 
-
-
-
-
-
+            valExistsAfterExpire = client.Exists(key);
         };
 
-        //private It should_step_down_by_one = () => dbVal2.ShouldEqual(dbVal1 - 1);
-        //private It should_step_down_by_one_repeatedly = () => dbVal3.ShouldEqual(dbVal2 - 4);
-//        private It should_step_down_multiple_in_one_call = () => dbVal2.ShouldEqual(dbVal3 - 5);
+        private It should_accept_an_expire_time = () => expireSet.ShouldBeTrue();
+        private It should_exist_before_expire_time = () => valExistsBeforeExpire.ShouldBeTrue();
+        private It should_not_exist_after_expire_time = () => valExistsAfterExpire.ShouldBeFalse();
 
     }
 }

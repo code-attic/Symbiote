@@ -21,8 +21,8 @@ namespace Symbiote.Redis.Impl.Command
     public class IncrementCommand
         : RedisCommand<int>
     {
-        protected const string INCREMENT_BY = "INCRBY {0} {1}\r\n";
-        protected const string INCREMENT = "INCR {0}\r\n";
+        protected const string INCREMENT_BY = "*3\r\n$6\r\nINCRBY\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
+        protected const string INCREMENT = "*2\r\n$4\r\nINCR\r\n${0}\r\n{1}\r\n";
         protected int IncrementBy { get; set; }
         protected string Key { get; set; }
 
@@ -30,8 +30,8 @@ namespace Symbiote.Redis.Impl.Command
         {
             var command =
                 IncrementBy > 1
-                    ? INCREMENT_BY.AsFormat( Key, IncrementBy )
-                    : INCREMENT.AsFormat( Key );
+                    ? INCREMENT_BY.AsFormat( Key.Length, Key, IncrementBy/10 + 1, IncrementBy )
+                    : INCREMENT.AsFormat( Key.Length, Key );
 
             return connection.SendDataExpectInt( null, command );
         }
@@ -42,5 +42,6 @@ namespace Symbiote.Redis.Impl.Command
             Key = key;
             Command = Increment;
         }
+
     }
 }

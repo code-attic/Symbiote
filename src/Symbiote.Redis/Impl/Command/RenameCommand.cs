@@ -21,13 +21,21 @@ namespace Symbiote.Redis.Impl.Command
     public class RenameCommand
         : RedisCommand<bool>
     {
-        protected const string RENAME_KEY = "RENAME {0} {1}\r\n";
+        protected const string RENAME_KEY = "*3\r\n$6\r\nRENAME\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         public string OriginalKey { get; set; }
         public string NewKey { get; set; }
 
         public bool Rename( IConnection connection )
         {
-            return connection.SendExpectString( RENAME_KEY.AsFormat( OriginalKey, NewKey ) )[0] == '+';
+            try
+            {
+                var rslt = connection.SendExpectString(RENAME_KEY.AsFormat(OriginalKey.Length, OriginalKey, NewKey.Length, NewKey));
+                return rslt == "OK";
+            }
+            catch (ResponseException ex)
+            {
+                return false;
+            }
         }
 
         public RenameCommand( string originalKey, string newKey )

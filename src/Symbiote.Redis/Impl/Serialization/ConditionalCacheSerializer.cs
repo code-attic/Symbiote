@@ -27,8 +27,8 @@ namespace Symbiote.Redis.Impl.Serialization
 
         private void ConfigureDicts(Dictionary<Type, Func<object, byte[]>> pDict, Dictionary<Type, Func<byte[], object>> pDeDict)
         {
-            //AddDefaultCondition(typeof(int));
-            //AddDefaultCondition(typeof(string));
+            AddDefaultCondition(typeof(int));
+            AddDefaultCondition(typeof(string));
 
         }
 
@@ -45,18 +45,18 @@ namespace Symbiote.Redis.Impl.Serialization
 
         public byte[] Serialize<T>(T value)
         {
-            //Func<object, byte[]> serializeit;
-            //return (SerializeDict.TryGetValue( typeof( T ), out serializeit )? serializeit( value ): CacheSerializer.Serialize(value));
+            Func<object, byte[]> serializeit;
+            return (SerializeDict.TryGetValue( typeof( T ), out serializeit )? serializeit( value ): CacheSerializer.Serialize(value));
 
-            return CacheSerializer.Serialize(value);
+            //return CacheSerializer.Serialize(value);
         }
 
         public T Deserialize<T>(byte[] bytes)
         {
-            //Func<byte[], object> deserializeit;
-            //return (DeserializeDict.TryGetValue(typeof(T), out deserializeit) ? (T)Convert.ChangeType(deserializeit(bytes), typeof(T)) : CacheSerializer.Deserialize<T>(bytes));
+            Func<byte[], object> deserializeit;
+            return (DeserializeDict.TryGetValue(typeof(T), out deserializeit) ? (T)Convert.ChangeType(deserializeit(bytes), typeof(T)) : CacheSerializer.Deserialize<T>(bytes));
 
-            return CacheSerializer.Deserialize<T>(bytes);
+            //return CacheSerializer.Deserialize<T>(bytes);
         }
 
 

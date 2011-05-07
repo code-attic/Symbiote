@@ -13,26 +13,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Server
 {
-    public class TimeToLiveCommand
-        : RedisCommand<int>
+    public class ShutdownCommand
+        : RedisCommand<bool>
     {
-        protected const string TTL = "*2\r\n$3\r\nTTL\r\n${0}\r\n{1}\r\n";
-        public string Key { get; set; }
+        protected const string SHUTDOWN = "*1\r\n$8\r\nSHUTDOWN\r\n";
 
-        public int GetTime( IConnection connection )
+        public bool Shutdown( IConnection connection )
         {
-            return connection.SendDataExpectInt( null, TTL.AsFormat( Key.Length, Key ) );
+            connection.SendExpectString( SHUTDOWN );
+            return true;
         }
 
-        public TimeToLiveCommand( string key )
+        public ShutdownCommand()
         {
-            Key = key;
-            Command = GetTime;
+            Command = Shutdown;
         }
     }
 }

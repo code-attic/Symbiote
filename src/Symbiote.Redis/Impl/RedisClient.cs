@@ -21,8 +21,10 @@ using Symbiote.Redis.Impl.Command;
 using Symbiote.Redis.Impl.Command.Connection;
 using Symbiote.Redis.Impl.Command.Hash;
 using Symbiote.Redis.Impl.Command.List;
+using Symbiote.Redis.Impl.Command.Server;
 using Symbiote.Redis.Impl.Command.Set;
 using Symbiote.Redis.Impl.Config;
+using Symbiote.Redis.Impl.Connection;
 using Symbiote.Redis.Impl.Serialization;
 
 namespace Symbiote.Redis.Impl
@@ -39,9 +41,12 @@ namespace Symbiote.Redis.Impl
             get { return _dbInstance; }
             set
             {
-                _dbInstance = value;
-                var command = new SetDatabaseCommand( value );
-                command.Execute();
+                if (_dbInstance != value)
+                {
+                    _dbInstance = value;
+                    var command = new SelectDbCommand( value );
+                    command.Execute();
+                }
             }
         }
 
@@ -56,8 +61,8 @@ namespace Symbiote.Redis.Impl
 
         public bool SelectDb(int dbIndex)
         {
-            var command = new SelectDbCommand(dbIndex);
-            return command.Execute();
+            DbInstance = dbIndex;
+            return true;
         }
 
         public string[] Keys
@@ -84,10 +89,11 @@ namespace Symbiote.Redis.Impl
             GC.SuppressFinalize( this );
         }
 
-        public bool Set<T>( string key, T value )
+        public bool Set<T>(string key, T value)
         {
             ValidateKeyVal( key );
             ValidateInputValueNotDefault( value );
+
             var command = new SetValueCommand<T>( key, value );
             return command.Execute();
         }
@@ -145,7 +151,7 @@ namespace Symbiote.Redis.Impl
             return command.Execute();
         }
 
-        public int IncrementBy( string key, int count )
+        public int Increment( string key, int count )
         {
             ValidateKeyVal( key );
             var command = new IncrementCommand( count, key );
@@ -163,6 +169,14 @@ namespace Symbiote.Redis.Impl
         {
             ValidateKeyVal( key );
             var command = new DecrementCommand( count, key );
+            return command.Execute();
+        }
+
+        public bool Exists(string key)
+        {
+            ValidateKeyVal(key);
+
+            var command = new ExistsCommand(key);
             return command.Execute();
         }
 
@@ -195,16 +209,16 @@ namespace Symbiote.Redis.Impl
             return command.Execute();
         }
 
-        public void Save()
+        public bool Save()
         {
             var command = new SaveDatabaseCommand( true );
-            command.Execute();
+            return command.Execute();
         }
 
-        public void BackgroundSave()
+        public bool BackgroundSave()
         {
             var command = new SaveDatabaseCommand( false );
-            command.Execute();
+            return command.Execute();
         }
 
         public void Shutdown()
@@ -562,7 +576,7 @@ namespace Symbiote.Redis.Impl
             }
         }
 
-        public RedisClient( RedisConfiguration configuration, ICacheSerializer serializer )
+        public RedisClient( RedisConfiguration configuration, ICacheSerializer serializer)
         {
             Configuration = configuration;
             Serializer = serializer;

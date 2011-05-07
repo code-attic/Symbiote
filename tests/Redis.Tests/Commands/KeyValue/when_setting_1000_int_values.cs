@@ -8,7 +8,7 @@ using Symbiote.Core.Extensions;
 
 namespace Redis.Tests.Commands.KeyValue
 {
-    class when_setting_1000_int_values: with_redis_client
+    class when_setting_1000_int_values: with_clean_db
     {
         protected static string key;
         protected static int dbVal;
@@ -17,8 +17,6 @@ namespace Redis.Tests.Commands.KeyValue
 
         private Because of = () =>
         {
-            client.SelectDb(1);
-            client.FlushDb();
 
             Stopwatch sw = Stopwatch.StartNew();
             for( int i = 0; i < 1000; i++ )

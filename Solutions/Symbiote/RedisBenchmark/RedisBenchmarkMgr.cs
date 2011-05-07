@@ -22,7 +22,7 @@ namespace RedisBenchmark
 
         public void Execute()
         {
-            for (int j = 0; j < 10; j++)
+            for (int j = 0; j < 4; j++)
             {
                 Console.WriteLine("Run {0} ***************".AsFormat(j));
                 //int ctOfValInDb = 0;
@@ -39,6 +39,26 @@ namespace RedisBenchmark
 
                 Console.WriteLine("Set/Get first execution in {0} ms ({1:0.####} ms/operation)".AsFormat(FirstExeMs, FirstExeMs / (2.0)));
                 Console.WriteLine("Set/Get {0} executions in {1} ms ({2:0.####} ms/operation)".AsFormat(ctOfLoops, runMilliseconds, runMilliseconds / (ctOfLoops * 2.0)));
+
+                Client.FlushDb();
+
+                watch.Restart();
+                var dict = new Dictionary<string, int>();
+                for (int i = 0; i < ctOfLoops; i++)
+                {
+                    dict.Add("Int Set Key{0}".AsFormat(i),i); 
+                }
+                Client.Set(dict);
+                //for (int i = 0; i < ctOfLoops; i++)
+                //{
+                //    var dbVal = Client.Get<int>("Int Set Key{0}".AsFormat(i));
+                //}
+
+                runMilliseconds = watch.ElapsedMilliseconds;
+
+                Console.WriteLine("MultiSet/Get {0} executions in {1} ms ({2:0.####} ms/operation)".AsFormat(ctOfLoops, runMilliseconds, runMilliseconds / (ctOfLoops * 2.0)));
+
+
             }
         }
         private void ExecuteReadWrite(int val)
@@ -46,16 +66,16 @@ namespace RedisBenchmark
             var key = "Int Set Key{0}".AsFormat(val);
             Client.Set(key, val);
 
-            try
-            {
-                var dbVal = Client.Get<int>(key);
-                //if (dbVal == val)
-                //    ctOfValInDb++;
-            }
-            catch (Exception e)
-            {
-                //valInDb = false;
-            }
+            //try
+            //{
+            //    var dbVal = Client.Get<int>(key);
+            //    //if (dbVal == val)
+            //    //    ctOfValInDb++;
+            //}
+            //catch (Exception e)
+            //{
+            //    //valInDb = false;
+            //}
         }
     }
 }

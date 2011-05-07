@@ -11,7 +11,6 @@ namespace Redis.Tests.Commands.KeyValue
     {
         protected static int initialVal;
         protected static int replacementVal;
-        protected static string key;
         protected static int dbVal1;
         protected static int dbVal2;
         protected static bool valInDb;
@@ -20,9 +19,9 @@ namespace Redis.Tests.Commands.KeyValue
         {
             initialVal = 0;
             replacementVal = 1;
-            key = "Int GetSet Key";
+            var key = "Int GetSet Key";
             client.Set(key, initialVal);
-            dbVal1 = client.GetSet<int>(key, replacementVal);
+            dbVal1 = client.GetSet(key, replacementVal);
             dbVal2 = client.Get<int>(key  );
             valInDb = true;
         };

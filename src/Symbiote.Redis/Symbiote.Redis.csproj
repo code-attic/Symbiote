@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
     <Compile Include="Impl\Command\Connection\SelectDbCommand.cs" />
+    <Compile Include="Impl\Command\ExistsCommand.cs" />
     <Compile Include="Impl\Command\Hash\HDelCommand.cs" />
     <Compile Include="Impl\Command\Hash\HExistsCommand.cs" />
     <Compile Include="Impl\Command\Hash\HGetAllCommand.cs" />
@@ -112,13 +113,13 @@
     <Compile Include="IRedisClient.cs" />
     <Compile Include="Impl\Serialization\ICacheSerializer.cs" />
     <Compile Include="Impl\Command\IncrementCommand.cs" />
-    <Compile Include="Impl\Command\InfoCommand.cs" />
+    <Compile Include="Impl\Command\Server\InfoCommand.cs" />
     <Compile Include="Impl\Connection\IConnection.cs" />
     <Compile Include="Impl\Connection\IConnectionFactory.cs" />
     <Compile Include="Impl\Serialization\JsonCacheSerializer.cs" />
     <Compile Include="Impl\Command\KeyListCommand.cs" />
     <Compile Include="Impl\KeyType.cs" />
-    <Compile Include="Impl\Command\LastSaveCommand.cs" />
+    <Compile Include="Impl\Command\Server\LastSaveCommand.cs" />
     <Compile Include="Impl\RedisClient.cs" />
     <Compile Include="Impl\Command\RedisCommand.cs" />
     <Compile Include="Impl\Config\RedisConfiguration.cs" />
@@ -132,10 +133,9 @@
     <Compile Include="RedisConfigurator.cs" />
     <Compile Include="Impl\Config\RedisDependencies.cs" />
     <Compile Include="ResponseException.cs" />
-    <Compile Include="Impl\Command\SaveDatabaseCommand.cs" />
-    <Compile Include="Impl\Command\SetDatabaseCommand.cs" />
+    <Compile Include="Impl\Command\Server\SaveDatabaseCommand.cs" />
     <Compile Include="Impl\Command\SetValueCommand.cs" />
-    <Compile Include="Impl\Command\ShutdownCommand.cs" />
+    <Compile Include="Impl\Command\Server\ShutdownCommand.cs" />
     <Compile Include="Impl\SortOptions.cs" />
     <Compile Include="Impl\Command\TimeToLiveCommand.cs" />
     <Compile Include="RedisAssimilation.cs" />

@@ -22,8 +22,8 @@ namespace Symbiote.Redis.Impl.Command
     public class ExpireCommand
         : RedisCommand<bool>
     {
-        protected const string EXPIRE = "*3\r\n$6\r\nEXPIRE\r\n${0}\r\n{1}\r\n$2\r\n{3}\r\n";
-        protected const string EXPIRE_AT = "*3\r\n$8\r\nEXPIREAT\r\n${0}\r\n{1}\r\n$2\r\n{3}\r\n";
+        protected const string EXPIRE = "*3\r\n$6\r\nEXPIRE\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
+        protected const string EXPIRE_AT = "*3\r\n$8\r\nEXPIREAT\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected DateTime ExpireOn { get; set; }
         protected int ExpireIn { get; set; }
         protected string CommandBody { get; set; }
@@ -40,6 +40,7 @@ namespace Symbiote.Redis.Impl.Command
             ExpireOn = expireOn;
             long fileTime = expireOn.ToFileTime();
             CommandBody = EXPIRE_AT.AsFormat( key.Length,key, fileTime/10+1,  fileTime );
+            Command = SetExpiration;
         }
 
         public ExpireCommand( string key, int expireIn )
@@ -47,6 +48,7 @@ namespace Symbiote.Redis.Impl.Command
             Key = key;
             ExpireIn = expireIn;
             CommandBody = EXPIRE.AsFormat(key.Length, key, expireIn / 10 + 1, expireIn);
+            Command = SetExpiration;
         }
     }
 }

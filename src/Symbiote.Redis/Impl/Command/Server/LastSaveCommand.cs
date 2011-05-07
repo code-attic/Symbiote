@@ -13,26 +13,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Core.Extensions;
+using System;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Server
 {
-    public class TimeToLiveCommand
-        : RedisCommand<int>
+    public class LastSaveCommand
+        : RedisCommand<DateTime>
     {
-        protected const string TTL = "*2\r\n$3\r\nTTL\r\n${0}\r\n{1}\r\n";
-        public string Key { get; set; }
+        protected const long EPOCH = 621355968000000000L;
+        protected const string LAST_SAVE = "*1\r\n$8\r\nLASTSAVE\r\n";
 
-        public int GetTime( IConnection connection )
+        public DateTime GetLast( IConnection connection )
         {
-            return connection.SendDataExpectInt( null, TTL.AsFormat( Key.Length, Key ) );
+            var last = connection.SendDataExpectInt( null, LAST_SAVE );
+            return new DateTime( EPOCH ).AddSeconds( last );
         }
 
-        public TimeToLiveCommand( string key )
+        public LastSaveCommand()
         {
-            Key = key;
-            Command = GetTime;
+            Command = GetLast;
         }
     }
 }

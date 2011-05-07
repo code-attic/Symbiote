@@ -44,14 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Database\when_decrementing.cs" />
+    <Compile Include="Commands\Database\when_checking_size.cs" />
+    <Compile Include="Commands\KeyValue\when_checking_if_key_exists.cs" />
+    <Compile Include="Commands\KeyValue\when_checking_ttl.cs" />
+    <Compile Include="Commands\KeyValue\when_decrementing.cs" />
     <Compile Include="Commands\KeyValue\when_check_setting_value.cs" />
     <Compile Include="Commands\KeyValue\when_expiring_key.cs" />
     <Compile Include="Commands\KeyValue\when_getting_and_setting_int_value.cs" />
+    <Compile Include="Commands\KeyValue\when_getting_a_list_of_keys.cs" />
+    <Compile Include="Commands\KeyValue\when_incrementing.cs" />
+    <Compile Include="Commands\KeyValue\when_renaming_a_key.cs" />
     <Compile Include="Commands\KeyValue\when_setting_1000_int_values.cs" />
     <Compile Include="Commands\KeyValue\when_setting_int_value.cs" />
     <Compile Include="Commands\Database\when_flushing_db.cs" />
     <Compile Include="Commands\Database\when_select_db.cs" />
+    <Compile Include="Commands\KeyValue\when_setting_multiple_values_in_one_call.cs" />
+    <Compile Include="Commands\Server\when_checking_last_save.cs" />
+    <Compile Include="Commands\Server\when_getting_server_info.cs" />
+    <Compile Include="Commands\Server\when_saving_db.cs" />
     <Compile Include="with_assimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="with_clean_db.cs" />

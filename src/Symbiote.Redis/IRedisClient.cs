@@ -20,6 +20,7 @@ namespace Symbiote.Redis
 {
     public interface IRedisClient
     {
+        int DbSize { get; }
         bool Set<T>( string key, T value );
         bool Set<T>( IDictionary<string, T> pairs );
         bool Set<T>( IEnumerable<T> values, Func<T, string> getKey );
@@ -28,20 +29,23 @@ namespace Symbiote.Redis
         T GetSet<T>( string key, T value );
         bool Remove( params string[] args );
         int Increment( string key );
-        int IncrementBy( string key, int count );
+        int Increment( string key, int count );
         int Decrement( string key );
         int Decrement( string key, int count );
+        bool Exists(string key);
         bool Rename( string oldKeyname, string newKeyname );
         bool Expire( string key, int seconds );
         bool ExpireAt( string key, DateTime time );
         int TimeToLive( string key );
-        void Save();
-        void BackgroundSave();
+        bool Save();
+        bool BackgroundSave();
         void Shutdown();
         void FlushAll();
         void FlushDb();
         Dictionary<string, string> GetInfo();
         string[] GetKeys( string pattern );
+        string[] Keys { get; }
+        DateTime LastSave { get; }
 
         //Connection commands
         bool SelectDb(int dbIndex);

@@ -13,26 +13,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Server
 {
-    public class TimeToLiveCommand
-        : RedisCommand<int>
+    public class SaveDatabaseCommand
+        : RedisCommand<bool>
     {
-        protected const string TTL = "*2\r\n$3\r\nTTL\r\n${0}\r\n{1}\r\n";
-        public string Key { get; set; }
+        protected const string SAVE = "*1\r\n$4\r\nSAVE\r\n";
+        protected const string SAVE_ASYNC = "*1\r\n$6\r\nBGSAVE\r\n";
+        public bool Synchronous { get; set; }
+        protected string CommandStr;
 
-        public int GetTime( IConnection connection )
+        public bool Save( IConnection connection )
         {
-            return connection.SendDataExpectInt( null, TTL.AsFormat( Key.Length, Key ) );
+            var rslt = connection.SendExpectString(Synchronous ? SAVE : SAVE_ASYNC);
+            return rslt == (Synchronous ? "OK" : "Background saving started");
         }
 
-        public TimeToLiveCommand( string key )
+        public SaveDatabaseCommand(bool synchronously)
         {
-            Key = key;
-            Command = GetTime;
+            Synchronous = synchronously;
+
+            Command = Save;
         }
+
     }
 }

@@ -23,8 +23,8 @@ namespace Symbiote.Redis.Impl.Command
     public class KeyListCommand
         : RedisCommand<IEnumerable<string>>
     {
-        protected const string KEY_LIST = "KEYS *\r\n";
-        protected const string KEYS_LIST_MATCHING = "KEYS {0}\r\n";
+        protected const string KEY_LIST = "*2\r\n$4\r\nKEYS\r\n$1\r\n*\r\n";
+        protected const string KEYS_LIST_MATCHING = "*2\r\n$4\r\nKEYS\r\n${0}\r\n{1}\r\n";
         protected string CommandBody { get; set; }
 
         public IEnumerable<string> GetList( IConnection connection )
@@ -39,7 +39,7 @@ namespace Symbiote.Redis.Impl.Command
         public KeyListCommand( string pattern )
         {
             Command = GetList;
-            CommandBody = KEYS_LIST_MATCHING.AsFormat( pattern );
+            CommandBody = KEYS_LIST_MATCHING.AsFormat( pattern.Length, pattern );
         }
 
         public KeyListCommand()
