@@ -14,6 +14,8 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
+using System.Text;
 using Symbiote.Core;
 using Symbiote.Redis.Impl.Connection;
 using Symbiote.Redis.Impl.Serialization;
@@ -31,7 +33,8 @@ namespace Symbiote.Redis.Impl.Command
             return Serializer.Serialize( value );
         }
 
-        public T Deserialize<T>( byte[] bytes )
+
+        public T Deserialize<T>(byte[] bytes)
         {
             return Serializer.Deserialize<T>( bytes );
         }
@@ -48,7 +51,7 @@ namespace Symbiote.Redis.Impl.Command
 
         protected RedisCommand()
         {
-            Serializer = Assimilate.GetInstanceOf<ICacheSerializer>();
+            Serializer = Assimilate.GetInstanceOf<IConditionalCacheSerializer>();
             ConnectionProvider = Assimilate.GetInstanceOf<IConnectionProvider>();
         }
     }

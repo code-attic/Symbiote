@@ -47,7 +47,13 @@ namespace Symbiote.Redis.Impl.Connection
             return ExpectSuccess();
         }
 
-        public IEnumerable<bool> SendExpectSuccess( IEnumerable<Tuple<byte[], string>> pairs )
+        public bool SendExpectSuccess(byte[] data, byte[] commandBytes)
+        {
+            SendCommand(data, commandBytes);
+            return ExpectSuccess();
+        }
+
+        public IEnumerable<bool> SendExpectSuccess(IEnumerable<Tuple<byte[], string>> pairs)
         {
             pairs.ForEach( p => SendCommand( p.Item1, p.Item2 ) );
             var rslt = new List<bool>();
@@ -90,7 +96,13 @@ namespace Symbiote.Redis.Impl.Connection
             return ReadData();
         }
 
-        public List<byte[]> SendExpectDataList( byte[] data, string command )
+        public byte[] SendExpectData(byte[] data, byte[] commandBytes)
+        {
+            SendCommand(data, commandBytes);
+            return ReadData();
+        }
+
+        public List<byte[]> SendExpectDataList(byte[] data, string command)
         {
             SendCommand( data, command );
             return ReadDataList();
@@ -361,7 +373,39 @@ namespace Symbiote.Redis.Impl.Connection
             }
         }
 
-        public Connection( RedisConfiguration configuration )
+        protected void SendCommand(byte[] data, byte[] commandBytes)
+        {
+            if (Socket == null)
+                Connect();
+            if (Socket == null)
+                throw new Exception(UNABLE_TO_CONNECT);
+
+            try
+            {
+                Socket.Send(commandBytes);
+                if (data != null && data.Length > 0)
+                {
+                    var sent = 0;
+                    var buffer = (1024 ^ 2) * 7;
+                    while (sent < data.Length)
+                    {
+                        var left = data.Length - sent;
+                        var send = left > buffer ? buffer : left;
+                        sent += Socket.Send(data, sent, send, SocketFlags.None);
+                    }
+                    Socket.Send(end_data);
+                }
+            }
+            catch (SocketException socketException)
+            {
+                // timeout;
+                Socket.Close();
+                Socket = null;
+                throw new Exception(UNABLE_TO_CONNECT);
+            }
+        }
+
+        public Connection(RedisConfiguration configuration)
         {
             Configuration = configuration;
         }

@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Command;
+using Symbiote.Redis.Impl.Command.Connection;
 using Symbiote.Redis.Impl.Command.Hash;
 using Symbiote.Redis.Impl.Command.List;
 using Symbiote.Redis.Impl.Command.Set;
@@ -51,6 +52,12 @@ namespace Symbiote.Redis.Impl
                 var command = new DatabaseSizeCommand();
                 return command.Execute();
             }
+        }
+
+        public bool SelectDb(int dbIndex)
+        {
+            var command = new SelectDbCommand(dbIndex);
+            return command.Execute();
         }
 
         public string[] Keys

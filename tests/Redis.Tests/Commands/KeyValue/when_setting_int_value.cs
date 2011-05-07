@@ -16,6 +16,9 @@ namespace Redis.Tests.Commands.KeyValue
 
         private Because of = () =>
                                  {
+                                     client.SelectDb(1);
+                                     client.FlushDb();
+
                                      initialVal = 234;
                                      key = "Int Set Key";
                                      client.Set(key, initialVal);
@@ -30,7 +33,8 @@ namespace Redis.Tests.Commands.KeyValue
                                         valInDb = false;
 	 	                                throw;
 	                                 }
-                                      
+
+                                     client.FlushDb();
                                  };
 
         private It should_exist_in_the_db = () => 

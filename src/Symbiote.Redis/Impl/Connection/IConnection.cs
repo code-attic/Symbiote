@@ -24,10 +24,12 @@ namespace Symbiote.Redis.Impl.Connection
         void Connect();
         bool InUse { get; set; }
         bool SendExpectSuccess( byte[] data, string command );
+        bool SendExpectSuccess( byte[] data, byte[] commandBytes );
         IEnumerable<bool> SendExpectSuccess( IEnumerable<Tuple<byte[], string>> pairs );
         int SendDataExpectInt( byte[] data, string command );
         byte[] SendExpectData( byte[] data, string command );
-        List<byte[]> SendExpectDataList( byte[] data, string command );
+        byte[] SendExpectData(byte[] data, byte[] commandBytes);
+        List<byte[]> SendExpectDataList(byte[] data, string command);
         IDictionary<string, byte[]> SendExpectDataDictionary( byte[] data, string command );
         string SendExpectString( string command );
     }

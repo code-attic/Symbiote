@@ -20,7 +20,7 @@ namespace Symbiote.Redis.Impl.Command
     public class DatabaseSizeCommand
         : RedisCommand<int>
     {
-        protected const string DBSIZE = "DBSIZE\r\n";
+        protected const string DBSIZE = "*1\r\n$6\r\nDBSIZE\r\n";
 
         public int GetSize( IConnection connection )
         {

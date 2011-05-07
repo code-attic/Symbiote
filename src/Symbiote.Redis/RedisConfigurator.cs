@@ -76,5 +76,9 @@ namespace Symbiote.Redis
         {
             Configuration = new RedisConfiguration();
         }
+        public RedisConfigurator(RedisConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
     }
 }

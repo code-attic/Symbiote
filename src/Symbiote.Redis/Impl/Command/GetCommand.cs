@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
@@ -21,19 +22,22 @@ namespace Symbiote.Redis.Impl.Command
     public class GetCommand<TValue>
         : RedisCommand<TValue>
     {
-        protected const string GET = "GET {0}\r\n";
+        //protected const string GET = "GET {0}\r\n";
+        protected const string GET = "*2\r\n$3\r\nGET\r\n${0}\r\n{1}\r\n";
+
         protected string Key { get; set; }
 
         public TValue Get( IConnection connection )
         {
-            var data = connection.SendExpectData( null, GET.AsFormat( Key ) );
+            var data = connection.SendExpectData( null, GET.AsFormat( Key.Length, Key ) );
             return Deserialize<TValue>( data );
         }
 
-        public GetCommand( string key )
+        public GetCommand(string key)
         {
             Key = key;
             Command = Get;
         }
+
     }
 }

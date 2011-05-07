@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        private const string CHECK_AND_SET = "SETNX {0} {1}\r\n";
+        private const string CHECK_AND_SET = "*3\r\n$5\r\nSETNX\r\n${0}\r\n{1}\r\n${2}\r\n";
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
@@ -32,7 +32,7 @@ namespace Symbiote.Redis.Impl.Command
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendDataExpectInt( data, CHECK_AND_SET.AsFormat( Key, data.Length ) ) > 0 ? true : false;
+            return connection.SendDataExpectInt( data, CHECK_AND_SET.AsFormat( Key.Length, Key, data.Length ) ) > 0 ? true : false;
         }
 
         public CheckAndSetCommand( string key, TValue value )

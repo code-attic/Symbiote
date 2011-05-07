@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
@@ -23,8 +24,12 @@ namespace Symbiote.Redis.Impl.Command
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string SET_VALUE = "SET {0} {1}\r\n";
+        protected const string SET_VALUE = "*3\r\n$3\r\nSET\r\n${0}\r\n{1}\r\n${2}\r\n";
+
+        //protected readonly byte[] set_command_bytes = new byte[] { 42, 51, 13, 10, 36, 51, 13, 10, 83, 69, 84, 13, 10, 36 };
+
         protected string Key { get; set; }
+        protected byte[] KeyBytes { get; set; }
         protected TValue Value { get; set; }
 
         public bool Set( IConnection connection )
@@ -32,14 +37,50 @@ namespace Symbiote.Redis.Impl.Command
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendExpectSuccess( data, SET_VALUE.AsFormat( Key, data.Length ) );
+            return connection.SendExpectSuccess( data, SET_VALUE.AsFormat( Key.Length, Key, data.Length ) );
         }
 
-        public SetValueCommand( string key, TValue value )
+        //public bool Set(IConnection connection)
+        //{
+        //    var data = Serialize(Value);
+        //    if (data.Length > 1073741824)
+        //        throw new ArgumentException(VALUE_EXCEEDS_1GB, "value");
+        //    return connection.SendExpectSuccess(data, GetCommandBytes(data)); //SET_VALUE.AsFormat(Key.Length, Key, data.Length));
+        //}
+
+        public SetValueCommand(string key, TValue value)
         {
             Key = key;
+            //KeyBytes = Encoding.UTF8.GetBytes(Key);
             Value = value;
             Command = Set;
         }
+
+        //protected byte[] GetCommandBytes(byte[] data)
+        //{
+        //    int keyLen = KeyBytes.Length;
+        //    byte[] keyLenbytes = Encoding.UTF8.GetBytes(keyLen.ToString());
+        //    byte[] dataLenBytes = Encoding.UTF8.GetBytes(data.Length.ToString());
+        //    byte[] retArray = new byte[21 + keyLenbytes.Length + keyLen + dataLenBytes.Length]  ;
+        //    set_command_bytes.CopyTo( retArray,0 );
+        //    int curIdx = set_command_bytes.Length;
+        //    keyLenbytes.CopyTo(retArray, curIdx);
+        //    curIdx += keyLenbytes.Length;
+        //    retArray[curIdx++] = 13; //\r
+        //    retArray[curIdx++] = 10; //\n
+        //    KeyBytes.CopyTo(retArray, curIdx);
+        //    curIdx += keyLen;
+        //    retArray[curIdx++] = 13; //\r
+        //    retArray[curIdx++] = 10; //\n
+        //    retArray[curIdx++] = 36; //$
+        //    dataLenBytes.CopyTo( retArray,curIdx );
+        //    curIdx += dataLenBytes.Length;
+        //    retArray[curIdx++] = 13; //\r
+        //    retArray[curIdx] = 10; //\n
+
+        //    return retArray;
+
+        //    
+        //}
     }
 }

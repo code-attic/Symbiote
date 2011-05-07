@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
+    <Compile Include="Impl\Command\Connection\SelectDbCommand.cs" />
     <Compile Include="Impl\Command\Hash\HDelCommand.cs" />
     <Compile Include="Impl\Command\Hash\HExistsCommand.cs" />
     <Compile Include="Impl\Command\Hash\HGetAllCommand.cs" />
@@ -105,6 +106,8 @@
     <Compile Include="Impl\Connection\PooledConnectionProvider.cs" />
     <Compile Include="Impl\Connection\SingleConnectionProvider.cs" />
     <Compile Include="Impl\RedisProxy.cs" />
+    <Compile Include="Impl\Serialization\ConditionalCacheSerializer.cs" />
+    <Compile Include="Impl\Serialization\IConditionalCacheSerializer.cs" />
     <Compile Include="Impl\Serialization\ProtobufCacheSerializer.cs" />
     <Compile Include="IRedisClient.cs" />
     <Compile Include="Impl\Serialization\ICacheSerializer.cs" />

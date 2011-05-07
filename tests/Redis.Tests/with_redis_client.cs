@@ -14,7 +14,8 @@ namespace Redis.Tests
 
         private Establish context = () =>
                                     {
-                                        Assimilate.Assimilation.Redis( x => x.AddServer("10.15.198.71") );
+                                        Assimilate.Assimilation.Redis( x => x.AddServer("10.15.198.71").LimitPoolConnections( 1 ) );
+                                        //Assimilate.Assimilation.Redis( x => x.AddServer("127.0.0.1").LimitPoolConnections( 1 ) );
                                         client = Assimilate.GetInstanceOf<IRedisClient>();
                                     };
 

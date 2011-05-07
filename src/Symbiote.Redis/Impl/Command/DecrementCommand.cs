@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
@@ -21,17 +22,18 @@ namespace Symbiote.Redis.Impl.Command
     public class DecrementCommand
         : RedisCommand<int>
     {
-        protected const string DECREMENT = "DECR {0}\r\n";
-        protected const string DECREMENT_BY = "DECRBY {0} {1}\r\n";
+        protected const string DECREMENT = "*2\r\n$4\r\nDECR\r\n${0}\r\n{1}\r\n";
+        protected const string DECREMENT_BY = "*3\r\n$6\r\nDECRBY\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected int IncrementBy { get; set; }
         protected string Key { get; set; }
 
         public int Increment( IConnection connection )
         {
+            
             var command =
                 IncrementBy > 1
-                    ? DECREMENT_BY.AsFormat( Key, IncrementBy )
-                    : DECREMENT.AsFormat( Key );
+                    ? DECREMENT_BY.AsFormat( Key.Length, Key, IncrementBy/10 +1, IncrementBy )
+                    : DECREMENT.AsFormat( Key.Length, Key );
 
             return connection.SendDataExpectInt( null, command );
         }

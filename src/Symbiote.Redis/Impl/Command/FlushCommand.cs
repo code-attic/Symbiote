@@ -20,8 +20,8 @@ namespace Symbiote.Redis.Impl.Command
     public class FlushCommand
         : RedisCommand<bool>
     {
-        protected const string FLUSH_ALL = "FLUSHALL\r\n";
-        protected const string FLUSH_DATABASE = "FLUSHDB\r\n";
+        protected const string FLUSH_ALL = "*1\r\n$8\r\nFLUSHALL\r\n";
+        protected const string FLUSH_DATABASE = "*1\r\n$7\r\nFLUSHDB\r\n";
         protected bool FlushAll { get; set; }
 
         public bool Flush( IConnection connection )

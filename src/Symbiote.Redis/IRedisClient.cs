@@ -43,6 +43,9 @@ namespace Symbiote.Redis
         Dictionary<string, string> GetInfo();
         string[] GetKeys( string pattern );
 
+        //Connection commands
+        bool SelectDb(int dbIndex);
+
         //List commands
         int LLen( string key );
         IEnumerable<T> LRange<T>( string key, int startIndex, int endIndex );

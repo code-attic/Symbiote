@@ -2,18 +2,20 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{33271166-CE54-4ED8-B089-F95F6D748AAA}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{93D22B78-81E9-4EA9-B659-E856AB324A89}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Redis.Tests</RootNamespace>
-    <AssemblyName>Redis.Tests</AssemblyName>
+    <RootNamespace>RedisBenchmark</RootNamespace>
+    <AssemblyName>RedisBenchmark</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,7 +24,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Machine.Specifications, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\mspec\machine.specifications\Build\Debug\Machine.Specifications.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,25 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\Database\when_decrementing.cs" />
-    <Compile Include="Commands\KeyValue\when_check_setting_value.cs" />
-    <Compile Include="Commands\KeyValue\when_expiring_key.cs" />
-    <Compile Include="Commands\KeyValue\when_getting_and_setting_int_value.cs" />
-    <Compile Include="Commands\KeyValue\when_setting_1000_int_values.cs" />
-    <Compile Include="Commands\KeyValue\when_setting_int_value.cs" />
-    <Compile Include="Commands\Database\when_flushing_db.cs" />
-    <Compile Include="Commands\Database\when_select_db.cs" />
-    <Compile Include="with_assimilation.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="with_clean_db.cs" />
-    <Compile Include="with_redis_client.cs" />
+    <Compile Include="RedisBenchmarkMgr.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Symbiote.Core\Symbiote.Core.csproj">
+    <ProjectReference Include="..\..\..\src\Symbiote.Core\Symbiote.Core.csproj">
       <Project>{DFE559D0-8A63-4798-83A9-CA781A6D627C}</Project>
       <Name>Symbiote.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.Redis\Symbiote.Redis.csproj">
+    <ProjectReference Include="..\..\..\src\Symbiote.Log4Net\Symbiote.Log4Net.csproj">
+      <Project>{2A11B3F6-CBDF-463C-A507-5694AA5236BC}</Project>
+      <Name>Symbiote.Log4Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\Symbiote.Redis\Symbiote.Redis.csproj">
       <Project>{29F73967-24AC-438D-957E-7FF3EDC6840E}</Project>
       <Name>Symbiote.Redis</Name>
     </ProjectReference>

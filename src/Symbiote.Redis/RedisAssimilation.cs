@@ -23,9 +23,9 @@ namespace Symbiote.Redis
     {
         public static IAssimilate Redis( this IAssimilate assimilate, Action<RedisConfigurator> configure )
         {
-            var configurator = new RedisConfigurator();
+            var configurator = new RedisConfigurator(Assimilate.GetInstanceOf<RedisConfiguration>());
             configure( configurator );
-            Assimilate.Dependencies( x => x.For<RedisConfiguration>().Use( configurator.Configuration ) );
+//            Assimilate.Dependencies( x => x.For<RedisConfiguration>().Use( configurator.Configuration ) );
             return assimilate;
         }
     }
