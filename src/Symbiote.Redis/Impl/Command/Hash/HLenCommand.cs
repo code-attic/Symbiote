@@ -21,14 +21,12 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HLenCommand
         : RedisCommand<int>
     {
-        protected const string HLEN = "HLEN {0}\r\n";
+        protected const string HLEN = "*2\r\n$4\r\nHLEN\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
 
         public int HLen( IConnection connection )
         {
-            var command = HLEN.AsFormat( Key );
-
-            return connection.SendDataExpectInt( null, command );
+            return connection.SendDataExpectInt( null, HLEN.AsFormat( Key.Length, Key ) );
         }
 
         public HLenCommand( string key )

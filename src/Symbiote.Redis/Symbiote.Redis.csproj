@@ -140,6 +140,7 @@
     <Compile Include="Impl\Command\TimeToLiveCommand.cs" />
     <Compile Include="RedisAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ValueNotInDatabaseException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Symbiote.Core\Symbiote.Core.csproj">

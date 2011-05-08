@@ -40,7 +40,6 @@ namespace Symbiote.Redis.Impl.Serialization
         protected static object DeserializeAsString(byte[] value)
         {
             return Encoding.UTF8.GetString(value);
-            
         }
 
         public byte[] Serialize<T>(T value)

@@ -21,22 +21,22 @@ namespace Symbiote.Redis.Impl.Command.Hash
     internal class HGetCommand<TValue>
         : RedisCommand<TValue>
     {
-        protected const string HGET = "HGET {0} {1}\r\n";
+        protected const string HGET = "*3\r\n$4\r\nHGET\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected string Key { get; set; }
         protected string Field { get; set; }
 
         public TValue HGet( IConnection connection )
         {
             //For some reason HGet isn't working properly.  Workaround is to use HMGet until I have time to sort it out
-            //var data = connection.SendExpectData(null, HGET.AsFormat(Key, Field));
-            //return Deserialize<TValue>(data);
-            var fields = new System.Collections.Generic.List<string>();
-            fields.Add( Field );
-            var manyCmd = new HGetManyCommand<TValue>( Key, fields );
-            var mreturns = manyCmd.HGet( connection );
-            TValue rslt = default(TValue);
-            mreturns.ForEach( v => rslt = v );
-            return rslt;
+            var data = connection.SendExpectData(null, HGET.AsFormat(Key.Length, Key, Field.Length, Field));
+            return Deserialize<TValue>(data);
+            //var fields = new System.Collections.Generic.List<string>();
+            //fields.Add( Field );
+            //var manyCmd = new HGetManyCommand<TValue>( Key, fields );
+            //var mreturns = manyCmd.HGet( connection );
+            //TValue rslt = default(TValue);
+            //mreturns.ForEach( v => rslt = v );
+            //return rslt;
         }
 
         public HGetCommand( string key, string field )

@@ -6,7 +6,7 @@ using Machine.Specifications;
 
 namespace Redis.Tests.Commands.Server
 {
-    class when_getting_server_info :
+    public class when_getting_server_info :
         with_clean_db
     {
         protected static Dictionary<string, string> infoResults;

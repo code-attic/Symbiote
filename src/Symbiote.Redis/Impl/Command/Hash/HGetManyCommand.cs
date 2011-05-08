@@ -13,6 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,7 +46,15 @@ namespace Symbiote.Redis.Impl.Command.Hash
 
             var response = connection.SendExpectDataList( stream.ToArray(),
                                                           HGET_MANY.AsFormat( Values.Count() + 2, Key.Length, Key ) );
-            return response.Select( item => Deserialize<T>( item ) ); //.ToList();
+            try
+            {
+                return response.Select(item => Deserialize<T>(item)).ToList();
+            }
+            catch (ArgumentNullException ex)
+            {
+                
+                throw new ValueNotInDatabaseException("HMGET invalid field value");
+            }
         }
 
         public HGetManyCommand( string key, IEnumerable<string> values )

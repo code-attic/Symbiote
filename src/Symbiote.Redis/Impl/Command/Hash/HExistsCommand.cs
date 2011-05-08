@@ -21,13 +21,13 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HExistsCommand
         : RedisCommand<bool>
     {
-        protected const string EXISTS = "HEXISTS {0} {1}\r\n";
+        protected const string EXISTS = "*3\r\n$7\r\nHEXISTS\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected string Key { get; set; }
         protected string Field { get; set; }
 
         public bool Exists( IConnection connection )
         {
-            return connection.SendExpectSuccess( null, EXISTS.AsFormat( Key, Field ) );
+            return connection.SendDataExpectInt( null, EXISTS.AsFormat( Key.Length, Key, Field.Length, Field ) ) == 1;
         }
 
         public HExistsCommand( string key, string field )

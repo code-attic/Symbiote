@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string HSET = "HSET {0} {1} {2}\r\n";
+        protected const string HSET = "*4\r\n$4\r\nHSET\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n${4}\r\n";
         protected string Key { get; set; }
         protected string Field { get; set; }
         protected TValue Value { get; set; }
@@ -33,7 +33,7 @@ namespace Symbiote.Redis.Impl.Command.Hash
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendExpectSuccess( data, HSET.AsFormat( Key, Field, data.Length ) );
+            return connection.SendDataExpectInt(data, HSET.AsFormat(Key.Length, Key, Field.Length, Field, data.Length)) == 1;
         }
 
         public HSetCommand( string key, string field, TValue value )

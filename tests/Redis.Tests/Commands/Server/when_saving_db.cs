@@ -6,7 +6,7 @@ using Machine.Specifications;
 
 namespace Redis.Tests.Commands.Server
 {
-    class when_saving_db :
+    public class when_saving_db :
         with_clean_db
     {
         protected static bool SaveRslt;

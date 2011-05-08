@@ -23,12 +23,12 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HGetAllCommand<T>
         : RedisCommand<IDictionary<string, T>>
     {
-        protected const string HVALS = "HGETALL {0}\r\n";
+        protected const string HVALS = "*2\r\n$7\r\nHGETALL\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
 
         public IDictionary<string, T> HGetAll<T>( IConnection connection )
         {
-            var response = connection.SendExpectDataDictionary( null, HVALS.AsFormat( Key ) );
+            var response = connection.SendExpectDataDictionary( null, HVALS.AsFormat( Key.Length, Key ) );
             return response.ToDictionary( x => x.Key, x => Deserialize<T>( x.Value ) );
         }
 

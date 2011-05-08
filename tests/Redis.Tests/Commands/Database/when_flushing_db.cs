@@ -3,7 +3,7 @@ using Machine.Specifications;
 
 namespace Redis.Tests.Commands.Database
 {
-    class when_flushing_all : with_redis_client
+    public class when_flushing_all : with_redis_client
     {
         protected static string key;
         protected static int dbVal;

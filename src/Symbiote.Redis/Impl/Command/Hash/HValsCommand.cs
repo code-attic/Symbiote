@@ -23,13 +23,13 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HValsCommand<T>
         : RedisCommand<IEnumerable<T>>
     {
-        protected const string HVALS = "HVALS {0}\r\n";
+        protected const string HVALS = "*2\r\n$5\r\nHVALS\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
 
         public IEnumerable<T> HVals<T>( IConnection connection )
         {
-            var response = connection.SendExpectDataList( null, HVALS.AsFormat( Key ) );
-            return response.Select( item => Deserialize<T>( item ) ); //.ToList();
+            var response = connection.SendExpectDataList( null, HVALS.AsFormat( Key.Length, Key ) );
+            return response.Where(item => item.Length > 0 ).Select( item => Deserialize<T>( item ) ); //.ToList();
         }
 
         public HValsCommand( string key )

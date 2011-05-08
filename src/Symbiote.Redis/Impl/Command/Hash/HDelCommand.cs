@@ -21,13 +21,13 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HDelCommand
         : RedisCommand<bool>
     {
-        protected const string DEL = "HDEL {0} {1}\r\n";
+        protected const string DEL = "*3\r\n$4\r\nHDEL\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected string Key { get; set; }
         protected string Field { get; set; }
 
         public bool Delete( IConnection connection )
         {
-            return connection.SendExpectSuccess( null, DEL.AsFormat( Key, Field ) );
+            return connection.SendDataExpectInt(null, DEL.AsFormat(Key.Length, Key, Field.Length, Field)) == 1;
         }
 
         public HDelCommand( string key, string field )

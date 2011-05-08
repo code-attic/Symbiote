@@ -6,7 +6,7 @@ using Machine.Specifications;
 
 namespace Redis.Tests.Commands.Server
 {
-    class when_checking_last_save :
+    public class when_checking_last_save :
         with_clean_db
     {
         protected static DateTime saveDate;

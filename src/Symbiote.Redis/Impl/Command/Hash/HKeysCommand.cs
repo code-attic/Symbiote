@@ -24,13 +24,13 @@ namespace Symbiote.Redis.Impl.Command.Hash
     public class HKeysCommand
         : RedisCommand<IEnumerable<string>>
     {
-        protected const string HKEYS = "HKEYS {0}\r\n";
+        protected const string HKEYS = "*2\r\n$5\r\nHKEYS\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
 
         public IEnumerable<string> HKeys( IConnection connection )
         {
-            var response = connection.SendExpectDataList( null, HKEYS.AsFormat( Key ) );
-            return response.Select( item => Encoding.UTF8.GetString( item ) ); //.ToList();
+            var response = connection.SendExpectDataList( null, HKEYS.AsFormat( Key.Length, Key ) );
+            return response.Where(item => item.Length > 0).Select(item => Encoding.UTF8.GetString(item)); //.ToList();
         }
 
         public HKeysCommand( string key )
