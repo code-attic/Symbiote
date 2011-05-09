@@ -13,27 +13,27 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command.List
+namespace Symbiote.Redis.Impl.Command.Server
 {
-    internal class LPopCommand<TValue>
-        : RedisCommand<TValue>
+    public class FlushCommand
+        : RedisCommand<bool>
     {
-        protected const string LPOP = "*2\r\n$4\r\nLPOP\r\n${0}\r\n{1}\r\n";
-        protected string Key { get; set; }
+        protected const string FLUSH_ALL = "*1\r\n$8\r\nFLUSHALL\r\n";
+        protected const string FLUSH_DATABASE = "*1\r\n$7\r\nFLUSHDB\r\n";
+        protected bool FlushAll { get; set; }
 
-        public TValue LPop( IConnection connection )
+        public bool Flush( IConnection connection )
         {
-            var data = connection.SendExpectData( null, LPOP.AsFormat( Key.Length, Key ) );
-            return Deserialize<TValue>( data );
+            connection.SendExpectString( FlushAll ? FLUSH_ALL : FLUSH_DATABASE );
+            return true;
         }
 
-        public LPopCommand( string key )
+        public FlushCommand( bool flushAll )
         {
-            Key = key;
-            Command = LPop;
+            FlushAll = flushAll;
+            Command = Flush;
         }
     }
 }

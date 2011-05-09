@@ -21,14 +21,15 @@ namespace Symbiote.Redis.Impl.Command.List
     internal class LIndexCommand<TValue>
         : RedisCommand<TValue>
     {
-        protected const string LINDEX = "LINDEX {0} {1}\r\n";
+        protected const string LINDEX = "*3\r\n$6\r\nLINDEX\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected string Key { get; set; }
         protected int Index { get; set; }
         protected TValue Value { get; set; }
 
         public TValue LIndex( IConnection connection )
         {
-            var data = connection.SendExpectData( null, LINDEX.AsFormat( Key, Index ) );
+            var indexLen = Index / 10 + 1 + (Index < 0 ? 1 : 0);
+            var data = connection.SendExpectData( null, LINDEX.AsFormat( Key.Length, Key, indexLen, Index ) );
             return Deserialize<TValue>( data );
         }
 

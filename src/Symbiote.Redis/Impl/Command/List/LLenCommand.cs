@@ -21,12 +21,12 @@ namespace Symbiote.Redis.Impl.Command.List
     public class LLenCommand
         : RedisCommand<int>
     {
-        protected const string LLEN = "LLEN {0}\r\n";
+        protected const string LLEN = "*2\r\n$4\r\nLLEN\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
 
         public int LLen( IConnection connection )
         {
-            var command = LLEN.AsFormat( Key );
+            var command = LLEN.AsFormat(Key.Length, Key );
 
             return connection.SendDataExpectInt( null, command );
         }

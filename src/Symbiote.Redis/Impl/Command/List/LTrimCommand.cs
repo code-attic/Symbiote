@@ -21,14 +21,16 @@ namespace Symbiote.Redis.Impl.Command.List
     internal class LTrimCommand
         : RedisCommand<bool>
     {
-        protected const string LTRIM = "LTRIM {0} {1} {2}\r\n";
+        protected const string LTRIM = "*4\r\n$5\r\nLTRIM\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n${4}\r\n{5}\r\n";
         protected string Key { get; set; }
         protected int StartIndex { get; set; }
         protected int EndIndex { get; set; }
 
         public bool LTrim( IConnection connection )
         {
-            return connection.SendExpectSuccess( null, LTRIM.AsFormat( Key, StartIndex, EndIndex ) );
+            var startLength = StartIndex / 10 + 1 + (StartIndex < 0 ? 1 : 0);
+            var endLength = EndIndex / 10 + 1 + (EndIndex < 0 ? 1 : 0);
+            return connection.SendExpectSuccess(null, LTRIM.AsFormat(Key.Length, Key, startLength, StartIndex, endLength, EndIndex));
         }
 
         public LTrimCommand( string key, int startIndex, int endIndex )

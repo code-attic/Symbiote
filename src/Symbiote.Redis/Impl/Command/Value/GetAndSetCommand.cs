@@ -13,31 +13,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
-using System.Text;
+using System;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Value
 {
-    public class GetCommand<TValue>
+    public class GetAndSetCommand<TValue>
         : RedisCommand<TValue>
     {
-        //protected const string GET = "GET {0}\r\n";
-        protected const string GET = "*2\r\n$3\r\nGET\r\n${0}\r\n{1}\r\n";
-
+        protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
+        protected const string GET_AND_REPLACE = "*3\r\n$6\r\nGETSET\r\n${0}\r\n{1}\r\n${2}\r\n";
         protected string Key { get; set; }
+        protected TValue Value { get; set; }
 
-        public TValue Get( IConnection connection )
+        public TValue GetAndSet( IConnection connection )
         {
-            var data = connection.SendExpectData( null, GET.AsFormat( Key.Length, Key ) );
-            return Deserialize<TValue>( data );
+            var data = Serialize( Value );
+            if ( data.Length > 1073741824 )
+                throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
+            var rslt = connection.SendExpectData(data, GET_AND_REPLACE.AsFormat(Key.Length, Key, data.Length));
+            return Deserialize<TValue>( rslt );
         }
 
-        public GetCommand(string key)
+        public GetAndSetCommand( string key, TValue value )
         {
             Key = key;
-            Command = Get;
+            Value = value;
+            Command = GetAndSet;
         }
-
     }
 }

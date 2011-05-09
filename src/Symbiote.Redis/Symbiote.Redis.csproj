@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Impl\Command\CheckAndSetCommand.cs" />
+    <Compile Include="Impl\Command\Value\CheckAndSetCommand.cs" />
     <Compile Include="Impl\Command\Connection\SelectDbCommand.cs" />
-    <Compile Include="Impl\Command\ExistsCommand.cs" />
+    <Compile Include="Impl\Command\Keys\ExistsCommand.cs" />
     <Compile Include="Impl\Command\Hash\HDelCommand.cs" />
     <Compile Include="Impl\Command\Hash\HExistsCommand.cs" />
     <Compile Include="Impl\Command\Hash\HGetAllCommand.cs" />
@@ -74,7 +74,7 @@
     <Compile Include="Impl\Command\List\RPopCommand.cs" />
     <Compile Include="Impl\Command\List\RPopLPushCommand.cs" />
     <Compile Include="Impl\Command\List\RPushCommand.cs" />
-    <Compile Include="Impl\Command\SetManyCommand.cs" />
+    <Compile Include="Impl\Command\Value\SetManyCommand.cs" />
     <Compile Include="Impl\Command\Set\SAddCommand.cs" />
     <Compile Include="Impl\Command\Set\SAddMultiCommand.cs" />
     <Compile Include="Impl\Command\Set\SCardCommand.cs" />
@@ -93,12 +93,12 @@
     <Compile Include="Impl\Command\Set\SUnionCommand.cs" />
     <Compile Include="Impl\Command\Set\SUnionStoreCommand.cs" />
     <Compile Include="Impl\Connection\SingleConnectionHandle.cs" />
-    <Compile Include="Impl\Command\DatabaseSizeCommand.cs" />
-    <Compile Include="Impl\Command\DecrementCommand.cs" />
-    <Compile Include="Impl\Command\ExpireCommand.cs" />
-    <Compile Include="Impl\Command\FlushCommand.cs" />
-    <Compile Include="Impl\Command\GetAndSetCommand.cs" />
-    <Compile Include="Impl\Command\GetCommand.cs" />
+    <Compile Include="Impl\Command\Server\DatabaseSizeCommand.cs" />
+    <Compile Include="Impl\Command\Value\DecrementCommand.cs" />
+    <Compile Include="Impl\Command\Keys\ExpireCommand.cs" />
+    <Compile Include="Impl\Command\Server\FlushCommand.cs" />
+    <Compile Include="Impl\Command\Value\GetAndSetCommand.cs" />
+    <Compile Include="Impl\Command\Value\GetCommand.cs" />
     <Compile Include="Impl\Connection\ConnectionPool.cs" />
     <Compile Include="Impl\Connection\IConnectionHandle.cs" />
     <Compile Include="Impl\Connection\IConnectionPool.cs" />
@@ -112,12 +112,12 @@
     <Compile Include="Impl\Serialization\ProtobufCacheSerializer.cs" />
     <Compile Include="IRedisClient.cs" />
     <Compile Include="Impl\Serialization\ICacheSerializer.cs" />
-    <Compile Include="Impl\Command\IncrementCommand.cs" />
+    <Compile Include="Impl\Command\Value\IncrementCommand.cs" />
     <Compile Include="Impl\Command\Server\InfoCommand.cs" />
     <Compile Include="Impl\Connection\IConnection.cs" />
     <Compile Include="Impl\Connection\IConnectionFactory.cs" />
     <Compile Include="Impl\Serialization\JsonCacheSerializer.cs" />
-    <Compile Include="Impl\Command\KeyListCommand.cs" />
+    <Compile Include="Impl\Command\Keys\KeyListCommand.cs" />
     <Compile Include="Impl\KeyType.cs" />
     <Compile Include="Impl\Command\Server\LastSaveCommand.cs" />
     <Compile Include="Impl\RedisClient.cs" />
@@ -127,17 +127,17 @@
     <Compile Include="Impl\Connection\ConnectionFactory.cs" />
     <Compile Include="Impl\Connection\LockingConnectionPool.cs" />
     <Compile Include="Impl\Config\RedisHost.cs" />
-    <Compile Include="Impl\Command\RemoveCommand.cs" />
-    <Compile Include="Impl\Command\RenameCommand.cs" />
+    <Compile Include="Impl\Command\Keys\RemoveCommand.cs" />
+    <Compile Include="Impl\Command\Keys\RenameCommand.cs" />
     <Compile Include="Impl\UnImplementedCommands.cs" />
     <Compile Include="RedisConfigurator.cs" />
     <Compile Include="Impl\Config\RedisDependencies.cs" />
     <Compile Include="ResponseException.cs" />
     <Compile Include="Impl\Command\Server\SaveDatabaseCommand.cs" />
-    <Compile Include="Impl\Command\SetValueCommand.cs" />
+    <Compile Include="Impl\Command\Value\SetValueCommand.cs" />
     <Compile Include="Impl\Command\Server\ShutdownCommand.cs" />
     <Compile Include="Impl\SortOptions.cs" />
-    <Compile Include="Impl\Command\TimeToLiveCommand.cs" />
+    <Compile Include="Impl\Command\Keys\TimeToLiveCommand.cs" />
     <Compile Include="RedisAssimilation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValueNotInDatabaseException.cs" />

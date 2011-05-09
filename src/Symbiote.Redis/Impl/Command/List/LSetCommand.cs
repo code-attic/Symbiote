@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command.List
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string LSET = "LSET {0} {1} {2}\r\n";
+        protected const string LSET = "*4\r\n$4\r\nLSET\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n${4}\r\n";
         protected string Key { get; set; }
         protected int Index { get; set; }
         protected TValue Value { get; set; }
@@ -33,7 +33,8 @@ namespace Symbiote.Redis.Impl.Command.List
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendExpectSuccess( data, LSET.AsFormat( Key, Index, data.Length ) );
+            var indexLen = Index / 10 + 1 + (Index < 0 ? 1 : 0);
+            return connection.SendExpectSuccess( data, LSET.AsFormat( Key.Length, Key, indexLen, Index, data.Length ) );
         }
 
         public LSetCommand( string key, TValue value, int index )

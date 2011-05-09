@@ -17,7 +17,7 @@ using System;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Keys
 {
     public class ExpireCommand
         : RedisCommand<bool>

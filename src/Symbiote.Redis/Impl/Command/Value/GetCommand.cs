@@ -13,27 +13,30 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 // */
+using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Value
 {
-    public class FlushCommand
-        : RedisCommand<bool>
+    public class GetCommand<TValue>
+        : RedisCommand<TValue>
     {
-        protected const string FLUSH_ALL = "*1\r\n$8\r\nFLUSHALL\r\n";
-        protected const string FLUSH_DATABASE = "*1\r\n$7\r\nFLUSHDB\r\n";
-        protected bool FlushAll { get; set; }
+        //protected const string GET = "GET {0}\r\n";
+        protected const string GET = "*2\r\n$3\r\nGET\r\n${0}\r\n{1}\r\n";
 
-        public bool Flush( IConnection connection )
+        protected string Key { get; set; }
+
+        public TValue Get( IConnection connection )
         {
-            connection.SendExpectString( FlushAll ? FLUSH_ALL : FLUSH_DATABASE );
-            return true;
+            var data = connection.SendExpectData( null, GET.AsFormat( Key.Length, Key ) );
+            return Deserialize<TValue>( data );
         }
 
-        public FlushCommand( bool flushAll )
+        public GetCommand(string key)
         {
-            FlushAll = flushAll;
-            Command = Flush;
+            Key = key;
+            Command = Get;
         }
+
     }
 }

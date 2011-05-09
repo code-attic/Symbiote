@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command.List
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string RPUSH = "RPUSH {0} {1}\r\n";
+        protected const string RPUSH = "*3\r\n$5\r\nRPUSH\r\n${0}\r\n{1}\r\n${2}\r\n";
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
@@ -32,7 +32,7 @@ namespace Symbiote.Redis.Impl.Command.List
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendExpectSuccess( data, RPUSH.AsFormat( Key, data.Length ) );
+            return connection.SendExpectSuccess( data, RPUSH.AsFormat( Key.Length, Key, data.Length ) );
         }
 
         public RPushCommand( string key, TValue value )

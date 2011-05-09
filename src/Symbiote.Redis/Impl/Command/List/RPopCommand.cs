@@ -21,13 +21,13 @@ namespace Symbiote.Redis.Impl.Command.List
     internal class RPopCommand<TValue>
         : RedisCommand<TValue>
     {
-        protected const string RPOP = "RPOP {0}\r\n";
+        protected const string RPOP = "*2\r\n$4\r\nRPOP\r\n${0}\r\n{1}\r\n";
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 
         public TValue RPop( IConnection connection )
         {
-            var data = connection.SendExpectData( null, RPOP.AsFormat( Key ) );
+            var data = connection.SendExpectData( null, RPOP.AsFormat( Key.Length, Key ) );
             return Deserialize<TValue>( data );
         }
 

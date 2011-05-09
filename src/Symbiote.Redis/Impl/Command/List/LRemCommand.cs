@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command.List
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string LREM = "LREM {0} {1} {2}\r\n";
+        protected const string LREM = "*4\r\n$4\r\nLREM\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n${4}\r\n";
         protected string Key { get; set; }
         protected int Count { get; set; }
         protected TValue Value { get; set; }
@@ -33,7 +33,8 @@ namespace Symbiote.Redis.Impl.Command.List
             var data = Serialize( Value );
             if ( data.Length > 1073741824 )
                 throw new ArgumentException( VALUE_EXCEEDS_1GB, "value" );
-            return connection.SendExpectSuccess( data, LREM.AsFormat( Key, Count, data.Length ) );
+            var countLen = Count / 10 + 1 + (Count < 0 ? 1 : 0);
+            return connection.SendExpectSuccess( data, LREM.AsFormat( Key.Length, Key, countLen, Count, data.Length ) );
         }
 
         public LRemCommand( string key, TValue value, int count )

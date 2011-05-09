@@ -23,14 +23,16 @@ namespace Symbiote.Redis.Impl.Command.List
     public class LRangeCommand<T>
         : RedisCommand<IEnumerable<T>>
     {
-        protected const string LRANGE = "LRANGE {0} {1} {2}\r\n";
+        protected const string LRANGE = "*4\r\n$6\r\nLRANGE\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n${4}\r\n{5}\r\n";
         protected string Key { get; set; }
         protected int StartIndex { get; set; }
         protected int EndIndex { get; set; }
 
         public IEnumerable<T> LRange( IConnection connection )
         {
-            var response = connection.SendExpectDataList( null, LRANGE.AsFormat( Key, StartIndex, EndIndex ) );
+            var startLength = StartIndex / 10 + 1 + (StartIndex < 0 ? 1 : 0);
+            var endLength = EndIndex / 10 + 1 + (EndIndex < 0 ? 1 : 0);
+            var response = connection.SendExpectDataList( null, LRANGE.AsFormat( Key.Length, Key, startLength, StartIndex, endLength, EndIndex ) );
             return response.Select( item => Deserialize<T>( item ) ); //.ToList();
         }
 

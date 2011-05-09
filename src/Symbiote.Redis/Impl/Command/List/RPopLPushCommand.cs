@@ -21,13 +21,13 @@ namespace Symbiote.Redis.Impl.Command.List
     internal class RPopLPushCommand
         : RedisCommand<bool>
     {
-        protected const string RPLP = "RPOPLPUSH {0} {1}\r\n";
+        protected const string RPLP = "*3\r\n$9\r\nRPOPLPUSH\r\n${0}\r\n{1}\r\n${2}\r\n{3}\r\n";
         protected string SrcKey { get; set; }
         protected string DestKey { get; set; }
 
         public bool RPopLPush( IConnection connection )
         {
-            return connection.SendExpectSuccess( null, RPLP.AsFormat( SrcKey, DestKey ) );
+            return connection.SendExpectSuccess( null, RPLP.AsFormat( SrcKey.Length, SrcKey, DestKey.Length, DestKey ) );
         }
 
         public RPopLPushCommand( string srcKey, string destKey )

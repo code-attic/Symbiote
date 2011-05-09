@@ -15,7 +15,7 @@
 // */
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Server
 {
     public class DatabaseSizeCommand
         : RedisCommand<int>

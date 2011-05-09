@@ -14,11 +14,10 @@
 // limitations under the License.
 // */
 using System;
-using System.Text;
 using Symbiote.Core.Extensions;
 using Symbiote.Redis.Impl.Connection;
 
-namespace Symbiote.Redis.Impl.Command
+namespace Symbiote.Redis.Impl.Command.Value
 {
     public class SetValueCommand<TValue>
         : RedisCommand<bool>
