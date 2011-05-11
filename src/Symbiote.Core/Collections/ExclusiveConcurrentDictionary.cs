@@ -66,10 +66,16 @@ namespace Symbiote.Core.Collections
             {
                 try
                 {
-                    SlimLock.EnterWriteLock();
-                    UpdateWaiting();
-                    if ( !Dictionary.TryGetValue( key, out value ) )
-                        value = Dictionary.GetOrAdd( key, valueProvider() );
+                    if ( SlimLock.TryEnterWriteLock( 1000 ) )
+                    {
+                        UpdateWaiting();
+                        if ( !Dictionary.TryGetValue( key, out value ) )
+                            value = Dictionary.GetOrAdd( key, valueProvider() );
+                    }
+                    else
+                    {
+                        throw new Exception("THIS IS CRAP");
+                    }
                 }
                 finally
                 {
@@ -87,7 +93,7 @@ namespace Symbiote.Core.Collections
                 TValue value;
                 Dictionary.TryRemove( key, out value );
             }
-            catch ( Exception ex )
+            finally
             {
                 SlimLock.ExitWriteLock();
             }

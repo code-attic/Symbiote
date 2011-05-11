@@ -36,7 +36,7 @@ namespace Symbiote.Core.UnitOfWork
                 .ForEach( evnt =>
                               {
                                   _subscribers
-                                      .ForEach( x => x.ListenTo( evnt ) );
+                                      .ForEach( x => x.HandleEvent( evnt ) );
                                   if ( _manager != null )
                                   {
                                       _manager.PublishEvent( evnt );

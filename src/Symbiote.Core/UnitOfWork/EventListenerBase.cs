@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Core.UnitOfWork
 {
@@ -26,7 +27,7 @@ namespace Symbiote.Core.UnitOfWork
             get { return typeof( T ); }
         }
 
-        public void ListenTo( IEvent evnt )
+        public virtual void HandleEvent( IEvent evnt )
         {
             try
             {

@@ -32,7 +32,7 @@ namespace Symbiote.Core.UnitOfWork
             List<IEventListener> listeners;
             if ( Listeners.TryGetValue( evnt.GetType(), out listeners ) )
             {
-                listeners.ForEach( a => a.ListenTo( evnt ) );
+                listeners.ForEach( a => a.HandleEvent( evnt ) );
             }
         }
 
@@ -43,7 +43,7 @@ namespace Symbiote.Core.UnitOfWork
                                    {
                                        if ( listener.ListenSubTypesOfEvent )
                                        {
-                                           var includedTargeTypes = Reflector.GetSubTypes( listener.EventType ).ToList();
+                                           var includedTargeTypes = Reflector.GetSubTypes( listener.EventType );
                                            includedTargeTypes.ForEach( eventType => AddListener( listener, eventType ) );
                                        }
                                        else

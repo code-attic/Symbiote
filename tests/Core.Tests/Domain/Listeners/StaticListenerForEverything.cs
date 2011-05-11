@@ -13,7 +13,7 @@ namespace Core.Tests.Domain.Listeners
             Events = new List<IEvent>();
         }
 
-        public override void OnEvent(IEvent value)
+        public override void OnEvent( IEvent value )
         {
             Events.Add( value );
         }

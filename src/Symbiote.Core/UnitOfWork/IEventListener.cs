@@ -14,6 +14,7 @@
 // limitations under the License.
 // */
 using System;
+using System.Collections.Generic;
 
 namespace Symbiote.Core.UnitOfWork
 {
@@ -21,7 +22,7 @@ namespace Symbiote.Core.UnitOfWork
     {
         bool ListenSubTypesOfEvent { get; }
         Type EventType { get; }
-        void ListenTo( IEvent evnt );
+        void HandleEvent( IEvent evnt );
     }
 
     public interface IEventListener<T> : IEventListener where T : IEvent
