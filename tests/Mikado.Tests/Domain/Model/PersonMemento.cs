@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Symbiote.Core;
 
 namespace Mikado.Tests.Domain.Model
 {
     public class PersonMemento : IMemento<Person>
     {
+        public PersonMemento()
+        {
+            AddressMementos = new List<AddressMemento>();
+        }
+
         public void Capture(Person instance)
         {
             FirstName = instance.FirstName;
@@ -12,8 +19,16 @@ namespace Mikado.Tests.Domain.Model
             Age = instance.Age;
             Id = instance.Id;
             Ssn = instance.Ssn;
-            AddressMemento = new AddressMemento();
-            AddressMemento.Capture(instance.Address);
+            AddressMementos.Clear();
+            instance
+                .Addresses
+                .ToList()
+                .ForEach( a =>
+                              {
+                                  var addrMemento = new AddressMemento();
+                                  addrMemento.Capture( a );
+                                  AddressMementos.Add( addrMemento );
+                              } );
         }
 
         public string FirstName { get; set; }
@@ -21,7 +36,7 @@ namespace Mikado.Tests.Domain.Model
         public int Age { get; set; }
         public Guid Id { get; set; }
         public string Ssn { get; set; }
-        public AddressMemento AddressMemento { get; set; }
+        public IList<AddressMemento> AddressMementos { get; set; }
 
         public void Reset(Person instance)
         {
@@ -30,7 +45,7 @@ namespace Mikado.Tests.Domain.Model
             instance.LastName = LastName;
             instance.Id = Id;
             instance.Ssn = Ssn;
-            AddressMemento.Reset(instance.Address);
+            instance.Addresses = AddressMementos.Select( s => s.Retrieve() ).ToList();
         }
 
         public Person Retrieve()
@@ -42,7 +57,7 @@ namespace Mikado.Tests.Domain.Model
                            LastName = LastName,
                            Ssn = Ssn,
                            Id = Id,
-                           Address = AddressMemento.Retrieve()
+                           Addresses = AddressMementos.Select( s => s.Retrieve() ).ToList()
                        };
         }
     }

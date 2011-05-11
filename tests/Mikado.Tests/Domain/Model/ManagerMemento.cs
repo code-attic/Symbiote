@@ -1,10 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Symbiote.Core;
 
 namespace Mikado.Tests.Domain.Model
 {
     public class ManagerMemento : IMemento<Manager>
     {
+        public ManagerMemento()
+        {
+            AddressMementos = new List<AddressMemento>();
+        }
+
         public void Capture(Manager instance)
         {
             FirstName = instance.FirstName;
@@ -13,8 +20,16 @@ namespace Mikado.Tests.Domain.Model
             Id = instance.Id;
             Ssn = instance.Ssn;
             Department = instance.Department;
-            AddressMemento = new AddressMemento();
-            AddressMemento.Capture(instance.Address);
+            AddressMementos.Clear();
+            instance
+                .Addresses
+                .ToList()
+                .ForEach( a =>
+                              {
+                                  var addrMemento = new AddressMemento();
+                                  addrMemento.Capture( a );
+                                  AddressMementos.Add( addrMemento );
+                              } );
         }
 
         public string FirstName { get; set; }
@@ -23,7 +38,7 @@ namespace Mikado.Tests.Domain.Model
         public Guid Id { get; set; }
         public string Ssn { get; set; }
         public string Department { get; set; }
-        public AddressMemento AddressMemento { get; set; }
+        public IList<AddressMemento> AddressMementos { get; set; }
 
         public void Reset(Manager instance)
         {
@@ -33,7 +48,7 @@ namespace Mikado.Tests.Domain.Model
             instance.Id = Id;
             instance.Ssn = Ssn;
             instance.Department = Department;
-            AddressMemento.Reset( instance.Address );
+            instance.Addresses = AddressMementos.Select(s => s.Retrieve()).ToList();
         }
 
         public Manager Retrieve()
@@ -46,7 +61,7 @@ namespace Mikado.Tests.Domain.Model
                            Ssn = Ssn,
                            Id = Id,
                            Department = Department,
-                           Address = AddressMemento.Retrieve()
+                           Addresses = AddressMementos.Select( s => s.Retrieve() ).ToList()
                        };
         }
     }

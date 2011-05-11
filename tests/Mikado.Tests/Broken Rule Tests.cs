@@ -1,5 +1,6 @@
 ﻿using Machine.Specifications;
 using Mikado.Tests.Domain;
+using Mikado.Tests.Domain.Model;
 using Mikado.Tests.Domain.Rules;
 using Mikado.Tests.TestSetup;
 using Symbiote.Mikado.Impl;
@@ -17,10 +18,13 @@ namespace Mikado.Tests
                                             Person.Age = -3;
                                             Person.FirstName = "ThisNameIsLongerThanTwentyCharacters";
                                             Person.LastName = "ThisNameIsLongerThanTwentyCharacters";
-                                            Person.Address.Address = "";
-                                            Person.Address.City = "";
-                                            Person.Address.State = "";
-                                            Person.Address.ZipCode = "";
+                                            Person.Addresses.Add( new PersonAddress()
+                                                                      {
+                                                                          Address = "",
+                                                                          City = "",
+                                                                          State = "",
+                                                                          ZipCode = ""
+                                                                      } );
                                             RulesRunner = new DefaultRulesRunner(new DefaultRulesIndex());
                                             using (var subscriber = RulesRunner.Subscribe(Subscriber))
                                             {
@@ -49,10 +53,13 @@ namespace Mikado.Tests
                                             Manager.FirstName = "ThisNameIsLongerThanTwentyFiveCharacters";
                                             Manager.LastName = "ThisNameIsLongerThanTwentyCharacters";
                                             Manager.Department = "";
-                                            Manager.Address.Address = "";
-                                            Manager.Address.City = "";
-                                            Manager.Address.State = "";
-                                            Manager.Address.ZipCode = "";
+                                            Manager.Addresses.Add( new PersonAddress()
+                                                                       {
+                                                                           Address = "",
+                                                                           City = "",
+                                                                           State = "",
+                                                                           ZipCode = ""
+                                                                       } );
                                             RulesRunner = new DefaultRulesRunner( new DefaultRulesIndex() );
                                             using( var subscriber = RulesRunner.Subscribe( Subscriber ) )
                                             {

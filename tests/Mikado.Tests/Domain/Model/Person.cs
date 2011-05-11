@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Mikado.Tests.Domain.Model
 {
@@ -9,11 +10,12 @@ namespace Mikado.Tests.Domain.Model
         public string Ssn { get; set; }
         public int Age { get; set; }
         public Guid Id { get; set; }
-        public PersonAddress Address { get; set; }
+        public IList<PersonAddress> Addresses { get; set; }
 
         public Person()
         {
             Id = new Guid();    
+            Addresses = new List<PersonAddress>();
         }
     }
 

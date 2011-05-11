@@ -51,10 +51,13 @@ namespace Mikado.Tests
                                          Person.Age = -24;
                                          Person.FirstName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
                                          Person.LastName = "ThisValueIsWayTooLongForTheRuleToAllowItToPass";
-                                         Person.Address.Address = "";
-                                         Person.Address.City = "";
-                                         Person.Address.State = "";
-                                         Person.Address.ZipCode = "";
+                                         Person.Addresses.Add( new PersonAddress()
+                                                                   {
+                                                                       Address = "",
+                                                                       City = "",
+                                                                       State = "",
+                                                                       ZipCode = ""
+                                                                   } );
                                      }
                                  };
 
@@ -62,10 +65,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_AgeMustBePositiveInteger_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(AgeMustBePositiveInteger)).ShouldEqual(1);
         private It should_break_the_FirstNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(FirstNameCannotExceedLengthLimit)).ShouldEqual(1);
         private It should_break_the_LastNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(LastNameCannotExceedLengthLimit)).ShouldEqual(1);
@@ -94,10 +97,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_FirstNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(FirstNameCannotExceedLengthLimit)).ShouldEqual(1);
     }
 
@@ -120,10 +123,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_LastNameCannotExceedLengthLimit_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(LastNameCannotExceedLengthLimit)).ShouldEqual(1);
     }
 
@@ -146,10 +149,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_AgeMustBePositiveInteger_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(AgeMustBePositiveInteger)).ShouldEqual(1);
     }
 
@@ -164,7 +167,7 @@ namespace Mikado.Tests
                                      using( var subscription = runner.Subscribe( Subscriber ) )
                                      using( var context = provider.GetContext( Person ) )
                                      {
-                                         Person.Address.Address = "";
+                                         Person.Addresses[0].Address = "";
                                      }
                                  };
 
@@ -172,10 +175,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_AddressIsRequired_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(AddressIsRequired)).ShouldEqual(1);
     }
 
@@ -190,7 +193,7 @@ namespace Mikado.Tests
                                      using( var subscription = runner.Subscribe( Subscriber ) )
                                      using( var context = provider.GetContext( Person ) )
                                      {
-                                         Person.Address.City = "";
+                                         Person.Addresses[0].City = "";
                                      }
                                  };
 
@@ -198,10 +201,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_CityIsRequired_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(CityIsRequired)).ShouldEqual(1);
     }
 
@@ -216,7 +219,7 @@ namespace Mikado.Tests
                                      using( var subscription = runner.Subscribe( Subscriber ) )
                                      using( var context = provider.GetContext( Person ) )
                                      {
-                                         Person.Address.State = "";
+                                         Person.Addresses[0].State = "";
                                      }
                                  };
 
@@ -224,10 +227,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_StateIsRequired_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(StateIsRequired)).ShouldEqual(1);
     }
 
@@ -242,7 +245,7 @@ namespace Mikado.Tests
                                      using( var subscription = runner.Subscribe( Subscriber ) )
                                      using( var context = provider.GetContext( Person ) )
                                      {
-                                         Person.Address.ZipCode = "";
+                                         Person.Addresses[0].ZipCode = "";
                                      }
                                  };
 
@@ -250,10 +253,10 @@ namespace Mikado.Tests
         private It should_have_reverted_the_Person_FirstName_to_Jim = () => Person.FirstName.ShouldEqual("Jim");
         private It should_have_reverted_the_Person_LastName_to_Cowart = () => Person.LastName.ShouldEqual("Cowart");
         private It should_have_reverted_the_Person_Age_to_37 = () => Person.Age.ShouldEqual(37);
-        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Address.Address.ShouldEqual("123 Anywhere St.");
-        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Address.City.ShouldEqual("Nashvegas");
-        private It should_have_reverted_the_State_to_TN = () => Person.Address.State.ShouldEqual("TN");
-        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Address.ZipCode.ShouldEqual("12345");
+        private It should_have_reverted_the_Address_to_123_Anywhere_St = () => Person.Addresses[0].Address.ShouldEqual("123 Anywhere St.");
+        private It should_have_reverted_the_City_to_Nashvegas = () => Person.Addresses[0].City.ShouldEqual("Nashvegas");
+        private It should_have_reverted_the_State_to_TN = () => Person.Addresses[0].State.ShouldEqual("TN");
+        private It should_have_reverted_the_ZipCode_to_12345 = () => Person.Addresses[0].ZipCode.ShouldEqual("12345");
         private It should_break_the_ZipCodeIsRequired_rule = () => Subscriber.BrokenRules.Count(s => s.BrokenRuleType == typeof(ZipCodeIsRequired)).ShouldEqual(1);
     }
 

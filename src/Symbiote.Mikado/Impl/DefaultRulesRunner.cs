@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +51,14 @@ namespace Symbiote.Mikado.Impl
                 var instanceValue = Reflector.ReadMember( target, prop.Name );
                 if(instanceValue != null)
                     ApplyRules(instanceValue);
+            }
+            if(target.GetType().IsEnumerable())
+            {
+                var tgt = target as IEnumerable;
+                foreach(var item in tgt)
+                {
+                    ApplyRules( item );
+                }
             }
         }
 

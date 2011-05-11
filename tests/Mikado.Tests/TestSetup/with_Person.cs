@@ -1,4 +1,5 @@
-﻿using Machine.Specifications;
+﻿using System.Collections.Generic;
+using Machine.Specifications;
 using Mikado.Tests.Domain.Model;
 
 namespace Mikado.Tests.TestSetup
@@ -14,13 +15,16 @@ namespace Mikado.Tests.TestSetup
                                                              Age = 37,
                                                              FirstName = "Jim",
                                                              LastName = "Cowart",
-                                                             Address = new PersonAddress()
-                                                                           {
-                                                                               Address = "123 Anywhere St.",
-                                                                               City = "Nashvegas",
-                                                                               State = "TN",
-                                                                               ZipCode = "12345"
-                                                                           }
+                                                             Addresses = new List<PersonAddress>()
+                                                                          {
+                                                                              new PersonAddress()
+                                                                                          {
+                                                                                              Address = "123 Anywhere St.",
+                                                                                              City = "Nashvegas",
+                                                                                              State = "TN",
+                                                                                              ZipCode = "12345"
+                                                                                          }
+                                                                          }
                                                          };
                                         };
     }
