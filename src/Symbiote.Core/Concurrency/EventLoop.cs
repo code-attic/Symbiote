@@ -26,7 +26,7 @@ namespace Symbiote.Core.Concurrency
     {
         public bool Running { get; set; }
         public ConcurrentQueue<Action> ActionQueue { get; set; }
-        public ManualResetEvent Wait { get; set; }
+        public ManualResetEventSlim Wait { get; set; }
         
         public void Loop()
         {
@@ -47,7 +47,7 @@ namespace Symbiote.Core.Concurrency
                 else 
                 {
                     Wait.Reset();
-                    Wait.WaitOne();
+                    Wait.Wait();
                 }
             }
         }
@@ -74,7 +74,7 @@ namespace Symbiote.Core.Concurrency
         public EventLoop( ) 
         {
             ActionQueue = new ConcurrentQueue<Action>();
-            Wait = new ManualResetEvent( false );
+            Wait = new ManualResetEventSlim( false );
         }
     }
 }

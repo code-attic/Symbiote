@@ -72,8 +72,9 @@ namespace Symbiote.Rabbit.Impl.Node
             //Now for the magic
             Bus.BindExchangeToQueue( meshExchange, nodeExchange, NodeConfiguration.NodeChannel );
 
-            //Add 'self' to the node registry
-            NodeRegistry.AddNode( NodeConfiguration.IdentityProvider.Identity );
+            //If not an 'edge' node then add 'self' to the node registry
+            if( !NodeConfiguration.AsProxy )
+                NodeRegistry.AddNode( NodeConfiguration.IdentityProvider.Identity );
 
             //Start the monitor
             if ( !NodeConfiguration.AsProxy )

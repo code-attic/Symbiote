@@ -150,6 +150,7 @@
     <Compile Include="DI\Container\SingletonA.cs" />
     <Compile Include="DI\Container\SingletonB.cs" />
     <Compile Include="DI\Container\MessageHazzer.cs" />
+    <Compile Include="DI\Container\when_asking_for_non_defined_type.cs" />
     <Compile Include="DI\Container\when_getting_all_instances_for_type.cs" />
     <Compile Include="DI\Container\when_instantiating_closed_generic.cs" />
     <Compile Include="DI\Container\when_instantiating_open_generic.cs" />

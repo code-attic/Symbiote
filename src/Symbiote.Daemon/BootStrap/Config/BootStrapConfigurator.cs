@@ -26,13 +26,13 @@ namespace Symbiote.Daemon.BootStrap.Config
         public BootStrapConfigurator HostApplicationsFrom(string path)
         {
             var fullPath = Path.GetFullPath( path );
-            if(!Directory.Exists(path))
+            if( !Directory.Exists( fullPath ) )
             {
                 throw new AssimilationException( 
                     "The path '{0}' does not exist, Daemon cannot host applications from non-existent directories or directories its process does not have permissions to."
-                        .AsFormat(path) );
+                        .AsFormat( fullPath ) );
             }
-            Configuration.WatchPaths.Add(path);
+            Configuration.WatchPaths.Add( fullPath );
             return this;
         }
 

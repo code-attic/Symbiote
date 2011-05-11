@@ -208,22 +208,23 @@ namespace Symbiote.Core.DI.Impl
         public object GetInstance( Type serviceType, string key )
         {
             var definition = GetDefinitionFor( serviceType, key );
+            if( definition == null )
+                throw new ArgumentException( "No dependency has been configured for the request type: {0}",
+                                             serviceType.ToString() );
             return GetInstanceFromDefinition( serviceType, definition );
         }
 
         public IEnumerable<object> GetAllInstances( Type serviceType )
         {
             var definitions = new List<IDependencyDefinition>();
-            Definitions.TryGetValue( serviceType, out definitions );
-            return definitions.Select( x => GetInstanceFromDefinition( serviceType, x ) );
+            if( Definitions.TryGetValue( serviceType, out definitions ) )
+                return definitions.Select( x => GetInstanceFromDefinition( serviceType, x ) );
+            return new object[] {};
         }
 
         public object GetInstanceFromDefinition( Type serviceType, IDependencyDefinition definition )
         {
             var provider = Providers.GetProviderForPlugin( serviceType, definition, this );
-            if( provider == null )
-                throw new ArgumentException( "No dependency has been configured for the request type: {0}",
-                                             serviceType.ToString() );
             return provider.Get();
         }
 
