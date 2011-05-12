@@ -12,8 +12,6 @@ namespace Core.Tests.Trees
         private It should_not_have_node_i = () => Avl.Get( "I" ).ShouldBeNull();
         private It should_not_have_node_j = () => Avl.Get( "J" ).ShouldBeNull();
 
-        private It should_correcty_get_nearest_node = () => Avl.GetNearest( "I" ).ShouldEqual( "7" );
-
         private It should_have_balanced = () => ShouldExtensionMethods.ShouldBeLessThanOrEqualTo( Math.Abs(
                                                         ( Avl as AvlTree<string,string> ).Root.Left.Count -
                                                         ( Avl as AvlTree<string,string> ).Root.Right.Count

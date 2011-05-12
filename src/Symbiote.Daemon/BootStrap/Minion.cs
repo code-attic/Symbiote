@@ -118,8 +118,15 @@ namespace Symbiote.Daemon.BootStrap
             CopyPath = Path.Combine( shadowPath, "references", applicationName );
             Directory.CreateDirectory( CopyPath );
 
+            foreach( var newDir in Directory.GetDirectories( MinionPath, "*", SearchOption.AllDirectories ) )
+            {
+                Directory.CreateDirectory( newDir.Replace( MinionPath, CopyPath ) );
+            }
+
             foreach (string newPath in Directory.GetFiles(MinionPath, "*.*", SearchOption.AllDirectories))
+            {
                 File.Copy( newPath, newPath.Replace( MinionPath, CopyPath ), true );
+            }
 
             Setup = new AppDomainSetup();
             Setup.LoaderOptimization = LoaderOptimization.MultiDomainHost;
@@ -128,7 +135,6 @@ namespace Symbiote.Daemon.BootStrap
             Setup.CachePath = shadowPath;
             Setup.ApplicationName = applicationName;
             Setup.PrivateBinPath = CopyPath;
-            //Setup.ApplicationBase = MinionPath;
             Setup.ApplicationBase = CopyPath;
             MinionEvidence = AppDomain.CurrentDomain.Evidence;
             MinionLock = new object();

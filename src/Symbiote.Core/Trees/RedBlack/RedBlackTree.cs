@@ -281,26 +281,16 @@ namespace Symbiote.Core.Trees
         {
             var working = leaf[!direction];
 
-            leaf[!direction] = working.IsEmpty() ? null : working[direction];
-            if( !working.IsEmpty() )
+            if ( !working.IsEmpty() )
             {
+                leaf[!direction] = working[direction];
                 working[direction] = leaf;
+
+                leaf.Color = LeafColor.RED;
                 working.Color = LeafColor.BLACK;
+                return working;
             }
-            leaf.Color = LeafColor.RED;
-
-            return working ?? leaf;
-
-            //if ( !working.IsEmpty() )
-            //{
-            //    leaf[!direction] = working[direction];
-            //    working[direction] = leaf;
-
-            //    leaf.Color = LeafColor.RED;
-            //    working.Color = LeafColor.BLACK;
-            //    return working;
-            //}
-            //return leaf;
+            return leaf;
         }
 
         public RedBlackTree()

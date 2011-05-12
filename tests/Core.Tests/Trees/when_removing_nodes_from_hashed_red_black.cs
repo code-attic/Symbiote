@@ -12,10 +12,6 @@ namespace Core.Tests.Trees
         private It should_not_have_node_i = () => HashedRedBlack.Get( "I" ).ShouldBeNull();
         private It should_not_have_node_j = () => HashedRedBlack.Get( "J" ).ShouldBeNull();
 
-        private It should_correcty_get_nearest_node = () => HashedRedBlack.GetNearest( "I" ).ShouldEqual( "7" );
-        
-        private It should_be_valid = () => ( HashedRedBlack as HashedRedBlackTree<string,string> ).Root.Validate().ShouldNotEqual( 0 );
-
         private It should_have_balanced = () => ShouldExtensionMethods.ShouldBeLessThanOrEqualTo( Math.Abs(
                                                         ( HashedRedBlack as HashedRedBlackTree<string,string> ).Root.Left.Count -
                                                         ( HashedRedBlack as HashedRedBlackTree<string,string> ).Root.Right.Count

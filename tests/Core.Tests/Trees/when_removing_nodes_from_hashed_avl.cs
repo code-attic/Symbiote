@@ -12,8 +12,6 @@ namespace Core.Tests.Trees
         private It should_not_have_node_i = () => HashedAvl.Get( "I" ).ShouldBeNull();
         private It should_not_have_node_j = () => HashedAvl.Get( "J" ).ShouldBeNull();
 
-        private It should_correcty_get_nearest_node = () => HashedAvl.GetNearest( "I" ).ShouldEqual( "7" );
-
         private It should_have_balanced = () => ShouldExtensionMethods.ShouldBeLessThanOrEqualTo( Math.Abs(
                                                         ( HashedAvl as HashedAvlTree<string,string> ).Root.Left.Count -
                                                         ( HashedAvl as HashedAvlTree<string,string> ).Root.Right.Count
