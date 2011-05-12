@@ -36,12 +36,15 @@ namespace Symbiote.Messaging.Impl.Mesh
             try
             {
                 var nodeId = message.NodeId;
-                if ( !Registry.HasNode( nodeId ) )
+                if ( nodeId != null )
                 {
-                    NodeChannelManager.AddNewOutgoingChannel( nodeId );
-                    Registry.AddNode( nodeId );
+                    if ( !Registry.HasNode( nodeId ) )
+                    {
+                        NodeChannelManager.AddNewOutgoingChannel( nodeId );
+                        Registry.AddNode( nodeId );
+                    }
+                    Registry.RebalanceNode( nodeId, message.LoadScore );
                 }
-                Registry.RebalanceNode( nodeId, message.LoadScore );
                 return x => x.Acknowledge();
             }
             catch ( Exception e )

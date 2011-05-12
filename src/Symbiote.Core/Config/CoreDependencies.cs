@@ -47,9 +47,13 @@ namespace Symbiote.Core
                     container.For( typeof( IAgentFactory ) ).Use<DefaultAgentFactory>();
                     container.For( typeof( IAgent<> ) ).Use( typeof( DefaultAgent<> ) ).AsSingleton();
                     container.For<IAgency>().Use<Agency>().AsSingleton();
-                    container.For( typeof( IActorCache<> ) ).Use( typeof( NullActorCache<> ) );
-                    container.For( typeof( IActorStore<> ) ).Use( typeof( NullActorStore<> ) );
-                    container.For( typeof( IActorFactory<> ) ).Use( typeof( DefaultActorFactory<> ) );
+
+                    if( !Assimilate.Assimilation.DependencyAdapter.HasPluginFor( typeof(IActorCache<> ) ) )
+                        container.For( typeof( IActorCache<> ) ).Use( typeof( NullActorCache<> ) );
+                    if( !Assimilate.Assimilation.DependencyAdapter.HasPluginFor( typeof( IActorStore<> ) ) )
+                        container.For( typeof( IActorStore<> ) ).Use( typeof( NullActorStore<> ) );
+                    if( !Assimilate.Assimilation.DependencyAdapter.HasPluginFor( typeof( IActorFactory<> ) ) )
+                        container.For( typeof( IActorFactory<> ) ).Use( typeof( DefaultActorFactory<> ) );
                 };
         }
     }

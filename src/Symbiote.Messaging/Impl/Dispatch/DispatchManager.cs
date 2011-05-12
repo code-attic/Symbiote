@@ -42,6 +42,12 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Send<TMessage>( IEnvelope<TMessage> envelope )
         {
+            if(envelope.Message == null )
+            {
+                envelope.Acknowledge();
+                return;
+            }
+
             var id = string.IsNullOrEmpty(
                 envelope.CorrelationId )
                          ? ( envelope.MessageId.GetHashCode()%100 ).ToString()
@@ -55,6 +61,12 @@ namespace Symbiote.Messaging.Impl.Dispatch
 
         public void Send( IEnvelope envelope )
         {
+            if(envelope.Message == null )
+            {
+                envelope.Acknowledge();
+                return;
+            }
+
             var id = string.IsNullOrEmpty(
                 envelope.CorrelationId )
                          ? ( envelope.MessageId.GetHashCode()%100 ).ToString()
