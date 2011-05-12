@@ -45,20 +45,33 @@ namespace Symbiote.Mikado.Impl
                     .ForEach(rulesToRun.Add);
                 rulesToRun.ForEach(rule => rule.ApplyRule(target, x => _observers.ForEach(a => a.OnBrokenRule(x))));
             }
-            var targetProps = Reflector.GetProperties( target.GetType() ).Where( x => !x.PropertyType.IsPrimitive && x.PropertyType != typeof(string) && x.PropertyType != typeof(Guid));
+            var targetProps = Reflector.GetProperties( target.GetType() )
+                                       .Where( x => !x.PropertyType.IsPrimitive &&
+                                                     x.PropertyType != typeof(string) &&
+                                                     x.PropertyType != typeof(Guid))
+                                       .ToList(); // No deferred exec - we're traversing this below 2x
+
             foreach(var prop in targetProps)
             {
-                var instanceValue = Reflector.ReadMember( target, prop.Name );
-                if(instanceValue != null)
-                    ApplyRules(instanceValue);
-            }
-            if(target.GetType().IsEnumerable())
-            {
-                var tgt = target as IEnumerable;
-                foreach(var item in tgt)
+                var instanceValue = Reflector.ReadMember(target, prop.Name);
+                if (instanceValue != null)
                 {
-                    ApplyRules( item );
-                }
+                    if (!prop.PropertyType.IsEnumerable())
+                    {
+                        ApplyRules(instanceValue);
+                    }
+                    else
+                    {
+                        var enumerable = instanceValue as IEnumerable;
+                        if (enumerable != null)
+                        {
+                            foreach (var item in enumerable)
+                            {
+                                ApplyRules(item);
+                            }
+                        }
+                    }
+                }   
             }
         }
 
