@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Symbiote.Daemon.Host;
 using Symbiote.Messaging;
 
 namespace Symbiote.Daemon.BootStrap 
@@ -24,13 +25,17 @@ namespace Symbiote.Daemon.BootStrap
     public class HaltMinionHandler 
         : IHandle<HaltMinion>
     {
+        public IServiceCoordinator Coordinator { get; set; }
+
         public Action<IEnvelope> Handle( HaltMinion message )
         {
+            Coordinator.Stop();
             return x => x.Acknowledge();
         }
 
-        public HaltMinionHandler()
+        public HaltMinionHandler( IServiceCoordinator coordinator )
         {
+            Coordinator = coordinator;
         }
     }
 }

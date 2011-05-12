@@ -16,12 +16,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Symbiote.Daemon.BootStrap 
 {
+    [Serializable]
+    [DataContract]
     public class HaltMinion 
     {
+        [DataMember(Order = 1 )]
         public string DirectoryPath { get; set; }
     }
 }

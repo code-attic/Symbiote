@@ -42,7 +42,7 @@ namespace Symbiote.Core.Actor
 
         public void RegisterActor<TKey>( TKey key, TActor actor )
         {
-            Actors.ReadOrWrite( key.ToString(), () => actor );
+            Actors[ key.ToString() ] = actor;
         }
 
         public void Memoize( TActor actor )

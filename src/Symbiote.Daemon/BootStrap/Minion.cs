@@ -22,6 +22,7 @@ using System.Threading;
 using Symbiote.Core;
 using Symbiote.Core.Extensions;
 using Symbiote.Core.Futures;
+using Symbiote.Messaging;
 
 namespace Symbiote.Daemon.BootStrap
 {
@@ -63,9 +64,10 @@ namespace Symbiote.Daemon.BootStrap
                             null,
                             null
                         );
-                        //.CreateInstanceFromAndUnwrap( "Symbiote.Daemon.dll", typeof( MinionInitializer ).FullName );
-                    locator.InitializeMinion( MinionPath );
+                    
                     Running = true;
+                    
+                    locator.InitializeMinion( MinionPath );
                     
                     // Create a cool-down period where the service cannot be
                     // reloaded due to files changing
