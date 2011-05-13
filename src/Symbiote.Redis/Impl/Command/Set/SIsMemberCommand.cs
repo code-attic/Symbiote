@@ -23,7 +23,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         : RedisCommand<bool>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string SISMEMBER = "SISMEMBER {0} {1}\r\n";
+        protected const string SISMEMBER = "*3\r\n$9\r\nSISMEMBER\r\n${0}\r\n{1}\r\n${2}\r\n";
         protected string Key { get; set; }
         protected TValue Value { get; set; }
 

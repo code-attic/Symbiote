@@ -24,7 +24,7 @@ namespace Symbiote.Redis.Impl.Command.Set
         : RedisCommand<IEnumerable<bool>>
     {
         protected const string VALUE_EXCEEDS_1GB = "Value must not exceed 1 GB";
-        protected const string SADD = "SADD {0} {1}\r\n";
+        protected const string SADD = "*3\r\n$4\r\nSADD\r\n${0}\r\n{1}\r\n${2}\r\n";
         protected IEnumerable<Tuple<string, TValue>> Pairs { get; set; }
 
         public IEnumerable<bool> SAddMulti( IConnection connection )
