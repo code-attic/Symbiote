@@ -49,9 +49,6 @@
     <Reference Include="protobuf-net">
       <HintPath>..\..\lib\protobuf-net\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap">
-      <HintPath>..\..\lib\StructureMap\StructureMap.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -95,7 +92,14 @@
     <Compile Include="RequestResponse\Reply.cs" />
     <Compile Include="RequestResponse\Request.cs" />
     <Compile Include="RequestResponse\RequestHandler.cs" />
+    <Compile Include="Sagas\Person.cs" />
+    <Compile Include="Sagas\PersonFactory.cs" />
+    <Compile Include="Sagas\PersonKeyAccessor.cs" />
+    <Compile Include="Sagas\SetPersonName.cs" />
+    <Compile Include="Sagas\TestSaga.cs" />
     <Compile Include="Sagas\when_requesting_saga.cs" />
+    <Compile Include="Sagas\when_sending_command_to_saga.cs" />
+    <Compile Include="Sagas\with_bus.cs" />
     <Compile Include="with_assimilation.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -114,10 +118,6 @@
     <ProjectReference Include="..\..\src\Symbiote.Messaging\Symbiote.Messaging.csproj">
       <Project>{22173E83-BA63-4C4D-A1B3-D0D06DC55333}</Project>
       <Name>Symbiote.Messaging</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Symbiote.StructureMap\Symbiote.StructureMap.csproj">
-      <Project>{DDC65B9C-20CC-4ECA-82A9-DC98D78CC12A}</Project>
-      <Name>Symbiote.StructureMap</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

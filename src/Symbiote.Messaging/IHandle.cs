@@ -21,10 +21,15 @@ namespace Symbiote.Messaging
     {
     }
 
-    public interface IHandle<in TMessage>
+    public interface IHandle<TMessage>
         : IHandle
     {
         Action<IEnvelope> Handle( TMessage message );
+    }
+
+    public interface IHandleCompetitively<TMessage>
+        : IHandle<TMessage>
+    {
     }
 
     public interface IHandle<in TActor, in TMessage>

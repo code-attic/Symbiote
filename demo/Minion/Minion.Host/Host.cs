@@ -13,6 +13,7 @@ namespace Minion.Host
         {
             "Host has started."
                 .ToInfo<IMinion>();
+
             Bus.AddLocalChannel();
             Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
             Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Host").ExchangeName("Host").StartSubscription().NoAck());

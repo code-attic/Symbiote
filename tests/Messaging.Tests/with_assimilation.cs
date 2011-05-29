@@ -1,7 +1,6 @@
 ﻿using Machine.Specifications;
 using Symbiote.Core;
 using Symbiote.Messaging;
-using Symbiote.StructureMapAdapter;
 
 namespace Messaging.Tests
 {

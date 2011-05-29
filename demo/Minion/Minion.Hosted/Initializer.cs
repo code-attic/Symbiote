@@ -9,12 +9,13 @@ namespace Minion.Hosted
     {
         public void Initialize() 
         {
-            DaemonAssimilation.RunDaemon( Assimilate
-                                .Initialize()
-                                .Daemon(x => x.Arguments(new string[]{}))
-                                .AddConsoleLogger<IMinion>(l => l.Info().MessageLayout(m => m.Message().Newline()))
-                                .AddColorConsoleLogger<IDaemon>( l => l.Info().MessageLayout( m => m.Message().Newline() ).DefineColor().Text.IsWhite().BackGround.IsRed().ForAllOutput() )
-                                .Rabbit(x => x.AddBroker(r => r.Defaults())) );
+           Assimilate
+                .Initialize()
+                .Daemon(x => x.Arguments(new string[]{}))
+                .AddConsoleLogger<IMinion>(l => l.Info().MessageLayout(m => m.Message().Newline()))
+                .AddColorConsoleLogger<IDaemon>( l => l.Info().MessageLayout( m => m.Message().Newline() ).DefineColor().Text.IsWhite().BackGround.IsRed().ForAllOutput() )
+                .Rabbit(x => x.AddBroker(r => r.Defaults()))
+                .RunDaemon();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Minion.Hosted
             "Hosted Daemon has been summoned!"
                 .ToInfo<IMinion>();
             Bus.AddLocalChannel();
-            Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete());
+            Bus.AddRabbitChannel(x => x.Direct("Host").AutoDelete().Durable().PersistentDelivery());
 
             Bus.AddRabbitChannel(x => x.Direct("Hosted").AutoDelete());
             Bus.AddRabbitQueue(x => x.AutoDelete().QueueName("Hosted").ExchangeName("Hosted").StartSubscription().NoAck());
