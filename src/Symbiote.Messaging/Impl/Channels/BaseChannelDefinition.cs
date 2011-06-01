@@ -53,13 +53,27 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IConfigureChannel CorrelateBy<TMessage>( string correlationId )
         {
-            CorrelationMethods.Add( typeof( TMessage ), o => correlationId );
+            if(CorrelationMethods.ContainsKey( typeof( TMessage ) ) )
+            {
+                CorrelationMethods[typeof( TMessage )] = o => correlationId;
+            }
+            else
+            {
+                CorrelationMethods.Add(typeof(TMessage), o => correlationId);
+            }
             return this;
         }
 
         public IConfigureChannel CorrelateBy<TMessage>( Func<TMessage, string> messageProperty )
         {
-            CorrelationMethods.Add( typeof( TMessage ), o => messageProperty( (TMessage) o ) );
+            if(CorrelationMethods.ContainsKey( typeof(TMessage) ))
+            {
+                CorrelationMethods[typeof( TMessage )] = o => messageProperty( (TMessage) o );
+            }
+            else
+            {
+                CorrelationMethods.Add(typeof( TMessage ), o => messageProperty( ( TMessage ) o ) );
+            }
             return this;
         }
 

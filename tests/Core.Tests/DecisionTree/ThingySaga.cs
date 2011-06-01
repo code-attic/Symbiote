@@ -12,14 +12,14 @@ namespace Core.Tests.DecisionTree
 
         public override Action<StateMachine<Thingy>> Setup()
         {
-            return x => 
-                       { 
+            return x =>
+                       {
                            x.When( t => t.Flag1 )
-                               .On<ProcessThingy>( t => 
-                               {
-                                   Hit1 = true;
-                                   return e => e.Acknowledge();
-                               } );
+                               .On<ProcessThingy>( t =>
+                                                       {
+                                                           Hit1 = true;
+                                                           return e => e.Acknowledge();
+                                                       } );
 
                            x.When(t => t.Flag2)
                                .On<ProcessThingy>(t =>

@@ -2,6 +2,7 @@
 using System.Linq;
 using Machine.Specifications;
 using Moq;
+using Symbiote.Core;
 using Symbiote.Messaging;
 using Symbiote.Messaging.Impl.Channels;
 using Symbiote.Messaging.Impl.Channels.Local;
@@ -30,6 +31,11 @@ namespace Messaging.Tests.Channels.Manager
     public class DummyMessage
     {
         
+    }
+
+    public class DummyCorrelatableMessage
+    {
+        public string Id { get; set; }
     }
 
     public class with_channel_index
@@ -120,9 +126,54 @@ namespace Messaging.Tests.Channels.Manager
     }
 
     public class when_adding_duplicate_channel_definition
-        : with_channel_manager
+        : with_channel_index
     {
-        
+        public static bool ExceptionThrown { get; set; }
+
+        private Because of = () =>
+                                 {
+                                     try
+                                     {
+                                         Index.AddDefinition(new TestChannelDefinition("duplicate", typeof(DummyMessage)));
+                                         Index.AddDefinition(new TestChannelDefinition("duplicate", typeof(DummyMessage)));
+                                         Index.AddDefinition(new TestChannelDefinition("duplicate", typeof(DummyMessage)));
+                                     }
+                                     catch ( Exception )
+                                     {
+                                         ExceptionThrown = true;
+                                     }
+                                     
+                                 };
+
+        private It should_not_throw_an_exception = () => ExceptionThrown.ShouldBeFalse();
+    }
+
+    public class when_adding_duplicate_channels_via_AddLocalChannel
+    {
+        public static IBus Bus { get; set; }
+        public static bool ExceptionThrown { get; set; }
+
+        private Establish context = () =>
+                                        {
+                                            Assimilate.Initialize();
+                                            Bus = Assimilate.GetInstanceOf<IBus>();
+                                        };
+
+        private Because of = () =>
+                                 {
+                                     try
+                                     {
+                                         Bus.AddLocalChannel(x => x.CorrelateBy<DummyCorrelatableMessage>(d => d.Id));
+                                         Bus.AddLocalChannel(x => x.CorrelateBy<DummyCorrelatableMessage>(d => d.Id));
+                                     }
+                                     catch ( Exception ex )
+                                     {
+                                         ExceptionThrown = true;
+                                     }
+
+                                 };
+
+        private It should_not_throw_an_exception = () => ExceptionThrown.ShouldBeFalse();
     }
 
     public class when_adding_definitions_in_parallel
