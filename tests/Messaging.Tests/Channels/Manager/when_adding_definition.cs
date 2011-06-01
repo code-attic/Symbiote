@@ -176,6 +176,34 @@ namespace Messaging.Tests.Channels.Manager
         private It should_not_throw_an_exception = () => ExceptionThrown.ShouldBeFalse();
     }
 
+    public class when_adding_duplicate_channel_with_routeby
+    {
+        public static IBus Bus { get; set; }
+        public static bool ExceptionThrown { get; set; }
+
+        private Establish context = () =>
+                                        {
+                                            Assimilate.Initialize();
+                                            Bus = Assimilate.GetInstanceOf<IBus>();
+                                        };
+
+        private Because of = () =>
+                                 {
+                                     try
+                                     {
+                                         Bus.AddLocalChannel(x => x.CorrelateBy<DummyCorrelatableMessage>(c => c.Id).RouteBy<DummyCorrelatableMessage>(s => s.Id));
+                                         Bus.AddLocalChannel(x => x.CorrelateBy<DummyCorrelatableMessage>(c => c.Id).RouteBy<DummyCorrelatableMessage>(s => s.Id));
+                                     }
+                                     catch ( Exception )
+                                     {
+                                         ExceptionThrown = true;
+                                     }
+
+                                 };
+
+        private It should_not_throw_an_exception = () => ExceptionThrown.ShouldBeFalse();
+    }
+
     public class when_adding_definitions_in_parallel
         : with_channel_index
     {
