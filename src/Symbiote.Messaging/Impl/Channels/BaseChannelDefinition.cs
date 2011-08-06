@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using Symbiote.Messaging.Impl.Channels.Local;
 using Symbiote.Messaging.Impl.Serialization;
+using Symbiote.Core.Extensions;
 
 namespace Symbiote.Messaging.Impl.Channels
 {
@@ -53,25 +54,25 @@ namespace Symbiote.Messaging.Impl.Channels
 
         public IConfigureChannel CorrelateBy<TMessage>( string correlationId )
         {
-            CorrelationMethods.Add( typeof( TMessage ), o => correlationId );
+            CorrelationMethods.AddOrUpdate( typeof( TMessage ),x => o => correlationId, (k,v) => o => correlationId );
             return this;
         }
 
         public IConfigureChannel CorrelateBy<TMessage>( Func<TMessage, string> messageProperty )
         {
-            CorrelationMethods.Add( typeof( TMessage ), o => messageProperty( (TMessage) o ) );
+            CorrelationMethods.AddOrUpdate(typeof(TMessage), x => o => messageProperty((TMessage)o), (k, v) => o => messageProperty((TMessage)o));
             return this;
         }
 
         public IConfigureChannel RouteBy<TMessage>( string routingKey )
         {
-            RoutingMethods.Add( typeof( TMessage ), o => routingKey );
+            RoutingMethods.AddOrUpdate(typeof(TMessage), k => o => routingKey, (k, v) => o => routingKey);
             return this;
         }
 
         public IConfigureChannel RouteBy<TMessage>( Func<TMessage, string> messageProperty )
         {
-            RoutingMethods.Add( typeof( TMessage ), o => messageProperty( (TMessage) o ) );
+            RoutingMethods.AddOrUpdate(typeof(TMessage), k => o => messageProperty((TMessage)o), (k, v) => o => messageProperty((TMessage)o));
             return this;
         }
 

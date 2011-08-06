@@ -42,8 +42,7 @@ namespace Symbiote.Messaging
                     ? Index.GetDefinition("local") as LocalChannelDefinition
                     : new LocalChannelDefinition {Name = "local"};
             
-            if(!hasChannelFor)
-                Index.AddDefinition( definition );
+            Index.AddDefinition( definition );
             
             return bus;
         }
@@ -76,8 +75,7 @@ namespace Symbiote.Messaging
 
             configure(definition);
 
-            if (!hasChannelFor)
-                Index.AddDefinition(definition);
+            Index.AddDefinition(definition);
             return bus;
         }
     }
