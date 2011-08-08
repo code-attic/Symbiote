@@ -18,7 +18,7 @@ using Symbiote.Core.DI;
 
 namespace Symbiote.Core
 {
-    public interface IDefineScanningInstructions
+    public interface IProvideScan
     {
         Action<IScanInstruction> Scan();
     }

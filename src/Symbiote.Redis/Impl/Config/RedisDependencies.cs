@@ -8,9 +8,9 @@ using Symbiote.Redis.Impl.Serialization;
 
 namespace Symbiote.Redis
 {
-    public class RedisDependencies : IDefineStandardDependencies
+    public class RedisDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             var configurator = new RedisConfigurator();
             return x =>

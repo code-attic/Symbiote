@@ -6,9 +6,9 @@ using Symbiote.Log4Net.Impl;
 
 namespace Symbiote.Log4Net.Config
 {
-    public class Log4NetDependencies : IDefineStandardDependencies
+    public class Log4NetDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container =>
                        {

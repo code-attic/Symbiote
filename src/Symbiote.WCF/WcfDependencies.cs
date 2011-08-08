@@ -5,9 +5,9 @@ using Symbiote.Wcf.Client;
 
 namespace Symbiote.Wcf
 {
-    public class WcfDependencies : IDefineStandardDependencies
+    public class WcfDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container =>
                        {

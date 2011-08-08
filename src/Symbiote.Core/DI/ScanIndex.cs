@@ -51,8 +51,8 @@ namespace Symbiote.Core.DI {
 
         public void PopulateSymbioteList()
         {
-            var dependencies = ImplementorsOfType.TryGet( typeof( IDefineStandardDependencies ) );
-            var scanners = ImplementorsOfType.TryGet( typeof( IDefineScanningInstructions ) );
+            var dependencies = ImplementorsOfType.TryGet( typeof( IDefineDependencies ) );
+            var scanners = ImplementorsOfType.TryGet( typeof( IProvideScan ) );
             var initializers = ImplementorsOfType.TryGet( typeof( IInitialize ) );
 
             DependencyDefinitions = dependencies.Item1

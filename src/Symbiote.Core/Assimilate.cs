@@ -85,11 +85,11 @@ namespace Symbiote.Core
             var dependencyDefinitionType = ScanIndex.DependencyDefinitions.FirstOrDefault( x => x.Assembly.Equals( assembly ) );
             
             var scanInstructions = scanInstructionType != null 
-                ? Activator.CreateInstance( scanInstructionType ) as IDefineScanningInstructions
+                ? Activator.CreateInstance( scanInstructionType ) as IProvideScan
                 : null;
 
             var dependencyDefinitions = dependencyDefinitionType != null
-                ? Activator.CreateInstance( dependencyDefinitionType ) as IDefineStandardDependencies
+                ? Activator.CreateInstance( dependencyDefinitionType ) as IDefineDependencies
                 : null;
 
             Assimilation.Dependencies( x =>
@@ -98,7 +98,7 @@ namespace Symbiote.Core
                         x.Scan( scanInstructions.Scan() );
                     
                     if ( dependencyDefinitions != null )
-                        dependencyDefinitions.DefineDependencies()( x );
+                        dependencyDefinitions.Dependencies()( x );
                 } );
 
             ScanIndex.ConfiguredSymbiotes[ assembly ] = true;

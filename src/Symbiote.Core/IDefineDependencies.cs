@@ -18,8 +18,8 @@ using Symbiote.Core.DI;
 
 namespace Symbiote.Core
 {
-    public interface IDefineStandardDependencies
+    public interface IDefineDependencies
     {
-        Action<DependencyConfigurator> DefineDependencies();
+        Action<DependencyConfigurator> Dependencies();
     }
 }

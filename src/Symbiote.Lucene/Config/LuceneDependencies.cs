@@ -5,9 +5,9 @@ using Symbiote.Lucene.Impl;
 
 namespace Symbiote.Lucene.Config
 {
-    public class LuceneDependencies : IDefineStandardDependencies
+    public class LuceneDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             var configurator = new LuceneConfigurator();
             var configuration = configurator.GetConfiguration();

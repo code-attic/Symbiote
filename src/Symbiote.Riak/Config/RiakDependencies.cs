@@ -8,9 +8,9 @@ using Symbiote.Riak.Impl.ProtoBuf.Connection;
 
 namespace Symbiote.Riak.Config
 {
-    public class RiakDependencies : IDefineStandardDependencies
+    public class RiakDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             var configurator = new RiakConfigurator();
             return container =>

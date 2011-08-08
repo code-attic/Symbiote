@@ -8,9 +8,9 @@ using System.Diagnostics;
 
 namespace Symbiote.Daemon
 {
-    public class DaemonDependencies : IDefineStandardDependencies
+    public class DaemonDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             Type hostType = null;
             var canHazMono = Type.GetType("Mono.Runtime") != null;

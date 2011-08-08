@@ -781,8 +781,8 @@
     <Compile Include="Concurrency\IMailboxManager.cs" />
     <Compile Include="Concurrency\Mailbox.cs" />
     <Compile Include="Concurrency\MailboxNode.cs" />
-    <Compile Include="IDefineScanningInstructions.cs" />
-    <Compile Include="IDefineStandardDependencies.cs" />
+    <Compile Include="IProvideScan.cs" />
+    <Compile Include="IDefineDependencies.cs" />
     <Compile Include="DI\ScanIndex.cs" />
     <Compile Include="Actor\Agency.cs" />
     <Compile Include="Actor\IActorCache.cs" />

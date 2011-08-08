@@ -24,9 +24,9 @@ using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core
 {
-    public class CoreDependencies : IDefineStandardDependencies
+    public class CoreDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container =>
                 {

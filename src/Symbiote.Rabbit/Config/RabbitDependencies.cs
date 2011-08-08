@@ -9,9 +9,9 @@ using Symbiote.Rabbit.Impl.Server;
 
 namespace Symbiote.Rabbit.Config
 {
-    public class RabbitDependencies : IDefineStandardDependencies
+    public class RabbitDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return x =>
                        {

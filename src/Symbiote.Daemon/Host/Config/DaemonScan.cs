@@ -4,7 +4,7 @@ using Symbiote.Core.DI;
 
 namespace Symbiote.Daemon
 {
-    public class DaemonScan : IDefineScanningInstructions
+    public class DaemonScan : IProvideScan
     {
         public Action<IScanInstruction> Scan()
         {

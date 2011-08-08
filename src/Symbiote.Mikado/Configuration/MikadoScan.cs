@@ -4,7 +4,7 @@ using Symbiote.Core.DI;
 
 namespace Symbiote.Mikado.Configuration
 {
-    public class MikadoScan : IDefineScanningInstructions
+    public class MikadoScan : IProvideScan
     {
         public Action<IScanInstruction> Scan()
         {

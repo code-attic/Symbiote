@@ -6,7 +6,7 @@ using Symbiote.Messaging.Impl.Saga;
 
 namespace Symbiote.Messaging.Config
 {
-    public class MessagingScan : IDefineScanningInstructions
+    public class MessagingScan : IProvideScan
     {
         public Action<IScanInstruction> Scan()
         {

@@ -20,7 +20,7 @@ using Symbiote.Core.UnitOfWork;
 
 namespace Symbiote.Core
 {
-    public class CoreScan : IDefineScanningInstructions
+    public class CoreScan : IProvideScan
     {
         public Action<IScanInstruction> Scan()
         {

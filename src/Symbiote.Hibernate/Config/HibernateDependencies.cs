@@ -5,9 +5,9 @@ using Symbiote.Hibernate.Impl;
 
 namespace Symbiote.Hibernate
 {
-    public class HibernateDependencies : IDefineStandardDependencies
+    public class HibernateDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container => 
                        {

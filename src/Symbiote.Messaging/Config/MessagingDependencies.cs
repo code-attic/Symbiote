@@ -9,9 +9,9 @@ using Symbiote.Messaging.Impl.Subscriptions;
 
 namespace Symbiote.Messaging.Config
 {
-    public class MessagingDependencies : IDefineStandardDependencies
+    public class MessagingDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container =>
                        {

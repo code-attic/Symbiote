@@ -22,9 +22,9 @@ using Symbiote.Mikado.Impl;
 
 namespace Symbiote.Mikado.Configuration
 {
-    public class MikadoDependencies : IDefineStandardDependencies
+    public class MikadoDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             return container =>
                 {

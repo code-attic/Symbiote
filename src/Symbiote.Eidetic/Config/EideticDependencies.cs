@@ -9,9 +9,9 @@ using Symbiote.Eidetic.Impl;
 
 namespace Symbiote.Eidetic
 {
-    public class EideticDependencies : IDefineStandardDependencies
+    public class EideticDependencies : IDefineDependencies
     {
-        public Action<DependencyConfigurator> DefineDependencies()
+        public Action<DependencyConfigurator> Dependencies()
         {
             var config = new EideticConfigurator();
             Assimilate.Dependencies( x => x.For<IMemcachedClientConfiguration>()
