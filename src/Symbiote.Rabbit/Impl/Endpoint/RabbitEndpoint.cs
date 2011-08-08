@@ -42,6 +42,9 @@ namespace Symbiote.Rabbit.Impl.Endpoint
 
         public void BindQueue( IModel channel )
         {
+            if ( string.IsNullOrEmpty( ExchangeName ) )
+                return;
+
             if ( RoutingKeys.Count == 0 )
                 RoutingKeys = new List<string>( new[] {""} );
 

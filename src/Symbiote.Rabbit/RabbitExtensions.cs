@@ -47,6 +47,23 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
+        public static IBus BindExchangeToExchange( this IBus bus, string source, string destination,
+                                                params string[] routingKeys )
+        {
+            var connectionManager = Assimilate.GetInstanceOf<IConnectionManager>();
+            var connection = connectionManager.GetConnection();
+            using( var channel = connection.CreateModel() )
+            {
+                if ( routingKeys.Length == 0 )
+                    channel.ExchangeBind( destination, source, "", null );
+                else
+                    routingKeys
+                        .ForEach( x => channel.ExchangeBind( destination, source, x, null ) );
+            }
+
+            return bus;
+        }
+
         public static IBus BindExchangeToQueue( this IBus bus, string exchange, string queue,
                                                 params string[] routingKeys )
         {
@@ -55,10 +72,10 @@ namespace Symbiote.Rabbit
             using( var channel = connection.CreateModel() )
             {
                 if ( routingKeys.Length == 0 )
-                    channel.ExchangeBind( queue, exchange, "", null );
+                    channel.QueueBind( queue, exchange, "", null );
                 else
                     routingKeys
-                        .ForEach( x => channel.ExchangeBind( queue, exchange, x, null ) );
+                        .ForEach( x => channel.QueueBind( queue, exchange, x, null ) );
             }
 
             return bus;
