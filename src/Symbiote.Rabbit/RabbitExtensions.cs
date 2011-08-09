@@ -33,7 +33,7 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
-        public static IBus AddRabbitChannel( this IBus bus, Action<ChannelConfigurator> configurate )
+        public static IBus AddRabbitExchange( this IBus bus, Action<ChannelConfigurator> configurate )
         {
             var channels = Assimilate.GetInstanceOf<IChannelIndex>();
             var connectionManager = Assimilate.GetInstanceOf<IConnectionManager>();
@@ -81,14 +81,14 @@ namespace Symbiote.Rabbit
             return bus;
         }
 
-        public static void CommitChannelOf( this IBus bus, string channelName )
+        public static void CommitExchange( this IBus bus, string channelName )
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
             var channel = channels.GetChannelFor( channelName ) as IHaveChannelProxy;
             channel.Proxy.Channel.TxCommit();
         }
 
-        public static void RollbackChannelOf( this IBus bus, string channelName )
+        public static void RollbackExchange( this IBus bus, string channelName )
         {
             var channels = Assimilate.GetInstanceOf<IChannelManager>();
             var channel = channels.GetChannelFor( channelName ) as IHaveChannelProxy;

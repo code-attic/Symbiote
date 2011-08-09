@@ -108,7 +108,7 @@ namespace Symbiote.Rabbit
             var bus = Assimilate.GetInstanceOf<IBus>();
             if ( !bus.HasChannelFor( ReplyToExchange ) )
             {
-                bus.AddRabbitChannel( x => x.AutoDelete().Direct( ReplyToExchange ) );
+                bus.AddRabbitExchange( x => x.AutoDelete().Direct( ReplyToExchange ) );
             }
             bus.Publish( ReplyToExchange, response, x =>
                                                         {

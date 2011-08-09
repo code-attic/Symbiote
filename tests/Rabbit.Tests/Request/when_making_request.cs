@@ -13,7 +13,7 @@ namespace Rabbit.Tests.Request
 
         private Because of = () =>
         {
-            Bus.AddRabbitChannel(x => x.Direct("request").AutoDelete());
+            Bus.AddRabbitExchange(x => x.Direct("request").AutoDelete());
             Bus.AddRabbitQueue(x => x.ExchangeName("request").QueueName("request").NoAck().AutoDelete().StartSubscription());
             Reply = Bus.Request<Request, Reply>("request", new Request()).WaitFor( 750 );
         };

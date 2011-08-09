@@ -209,6 +209,13 @@
     <Compile Include="Fibers\when_writing_high_volume_to_single_mailbox.cs" />
     <Compile Include="Fibers\when_writing_in_parallel.cs" />
     <Compile Include="Fibers\with_director_throwing_exceptions.cs" />
+    <Compile Include="Hashing\Extensions.cs" />
+    <Compile Include="Hashing\with_substantial_keyset.cs" />
+    <Compile Include="Hashing\MD5HashProvider.cs" />
+    <Compile Include="Hashing\MurmurExtensions.cs" />
+    <Compile Include="Hashing\when_hashing_32.cs" />
+    <Compile Include="Hashing\when_hashing_64.cs" />
+    <Compile Include="Hashing\when_hashing_md5.cs" />
     <Compile Include="Json\Collections\Car.cs" />
     <Compile Include="Json\Collections\IGotsaNameYo.cs" />
     <Compile Include="Json\Collections\Person.cs" />

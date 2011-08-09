@@ -82,7 +82,7 @@ namespace Symbiote.Rabbit.Impl.Channels
             var baseName = RabbitBroker.ResponseId;
             var messageType = typeof( TReply ).Name;
 
-            RabbitExtensions.AddRabbitChannel( null, x => x
+            RabbitExtensions.AddRabbitExchange( null, x => x
                                                               .AutoDelete()
                                                               .Direct( baseName ) );
 

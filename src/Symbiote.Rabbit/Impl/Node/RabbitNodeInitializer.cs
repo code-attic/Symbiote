@@ -29,7 +29,7 @@ namespace Symbiote.Rabbit.Impl.Node
         public void AddNewOutgoingChannel( string channelName )
         {
             var nodeExchange = NodeConfiguration.GetNodeChannelForId( channelName );
-            Bus.AddRabbitChannel( x => x
+            Bus.AddRabbitExchange( x => x
                                            .Direct( nodeExchange )
                                            .Immediate()
                                            .Mandatory()
@@ -45,7 +45,7 @@ namespace Symbiote.Rabbit.Impl.Node
             var nodeQueue = NodeConfiguration.NodeChannel + "Q";
             var meshExchange = NodeConfiguration.MeshChannel;
 
-            Bus.AddRabbitChannel( x => x
+            Bus.AddRabbitExchange( x => x
                                            .Direct( nodeExchange )
                                            .Immediate()
                                            .Mandatory()
@@ -63,7 +63,7 @@ namespace Symbiote.Rabbit.Impl.Node
                                          .StartSubscription() );
 
 
-            Bus.AddRabbitChannel( x => x
+            Bus.AddRabbitExchange( x => x
                                            .Fanout( meshExchange )
                                            .Durable()
                 );

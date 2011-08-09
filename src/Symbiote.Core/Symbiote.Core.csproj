@@ -781,6 +781,8 @@
     <Compile Include="Concurrency\IMailboxManager.cs" />
     <Compile Include="Concurrency\Mailbox.cs" />
     <Compile Include="Concurrency\MailboxNode.cs" />
+    <Compile Include="Hashing\MurmurProvider.cs" />
+    <Compile Include="Hashing\Murmurhash.cs" />
     <Compile Include="IProvideScan.cs" />
     <Compile Include="IDefineDependencies.cs" />
     <Compile Include="DI\ScanIndex.cs" />
@@ -819,7 +821,7 @@
     <Compile Include="Futures\CallbackResult.cs" />
     <Compile Include="Reflection\ReflectionExtensions.cs" />
     <Compile Include="Trees\Avl\AvlTree.cs" />
-    <Compile Include="Hashing\Distributor.cs" />
+    <Compile Include="Hashing\LoadBalancer.cs" />
     <Compile Include="Trees\Avl\HashedAvlLeaf.cs" />
     <Compile Include="Trees\Avl\HashedAvlTree.cs" />
     <Compile Include="Trees\RedBlack\HashedRedBlackLeaf.cs" />

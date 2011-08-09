@@ -16,6 +16,7 @@
 using System;
 using Symbiote.Core.Actor;
 using Symbiote.Core.DI;
+using Symbiote.Core.Hashing;
 using Symbiote.Core.Log;
 using Symbiote.Core.Log.Impl;
 using Symbiote.Core.Memento;
@@ -46,6 +47,7 @@ namespace Symbiote.Core
                     container.For<IEventListenerManager>().Use<EventListenerManager>().AsSingleton();
                     container.For( typeof( IAgentFactory ) ).Use<DefaultAgentFactory>();
                     container.For( typeof( IAgent<> ) ).Use( typeof( DefaultAgent<> ) ).AsSingleton();
+                    container.For<IHashingProvider>().Use<MurmurProvider>();
                     container.For<IAgency>().Use<Agency>().AsSingleton();
 
                     if( !Assimilate.Assimilation.DependencyAdapter.HasPluginFor( typeof(IActorCache<> ) ) )
